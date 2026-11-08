@@ -8,11 +8,9 @@ pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no 
 pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'lighterBlend'	3	2026-06-24-blend-system-architecture-and-oklch-alignment.md
 pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'saturate'	2	2026-06-24-blend-system-architecture-and-oklch-alignment.md
 pkg:src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift | argument 'size' must precede argument 'icon'	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | cannot find 'ButtonIconTokens' in scope	3	2026-10-02-consumer-generation-completeness-spec.md
 pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale096'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale100'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | cannot convert return expression of type 'Animation.Type' to return type 'Animation'	2	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot find 'VerticalListItemTokens' in scope	2	2026-10-02-consumer-generation-completeness-spec.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetPreview.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'borderEmphasis' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md

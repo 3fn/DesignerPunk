@@ -274,7 +274,17 @@ export class TokenFileGenerator {
    * 
    * @see Requirements 5.1, 5.2, 5.3, 5.4 in .kiro/specs/037-component-token-generation-pipeline/requirements.md
    */
-  generateComponentTokens(options: BaseGenerationOptions = {}): ComponentTokenGenerationResult[] {
+  generateComponentTokens(
+    options: BaseGenerationOptions & {
+      /**
+       * Tokens left out of the WEB file only. `generate` passes DesignerPunk's harvested tokens
+       * here: on web they stay in the package's own `component-tokens.css`, which binds late to
+       * the consumer's primitives, so emitting them again would define each property twice
+       * (design § 9, Web: not harvested in 129).
+       */
+      excludeFromWeb?: (token: RegisteredComponentToken) => boolean;
+    } = {},
+  ): ComponentTokenGenerationResult[] {
     const { outputDir = 'dist', version = getCoreVersion(), includeComments = true } = options;
     const results: ComponentTokenGenerationResult[] = [];
 
@@ -286,7 +296,10 @@ export class TokenFileGenerator {
     const componentCount = Object.keys(tokensByComponent).length;
 
     // Generate for each platform
-    results.push(this.generateWebComponentTokens(tokensByComponent, outputDir, version, includeComments));
+    const webTokensByComponent = options.excludeFromWeb
+      ? this.groupTokensByComponent(allTokens.filter(t => !options.excludeFromWeb!(t)))
+      : tokensByComponent;
+    results.push(this.generateWebComponentTokens(webTokensByComponent, outputDir, version, includeComments));
     results.push(this.generateiOSComponentTokens(tokensByComponent, outputDir, version, includeComments));
     results.push(this.generateAndroidComponentTokens(tokensByComponent, outputDir, version, includeComments));
 

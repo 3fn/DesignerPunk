@@ -1,0 +1,434 @@
+tokens:
+  progress.connector.thickness:
+    component: Progress
+    primitiveReferences:
+      value: borderWidth100
+    platforms:
+      web: '--progress-connector-thickness'
+      ios: ProgressTokens.connectorThickness
+      android: ProgressTokens.connectorThickness
+    consumers:
+      - Progress-Indicator-Connector-Base
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
+  progress.node.size.sm:
+    component: Progress
+    primitiveReferences:
+      value: size150
+    platforms:
+      web: '--progress-node-size-sm'
+      ios: ProgressTokens.nodeSizeSm
+      android: ProgressTokens.nodeSizeSm
+    consumers:
+      - Progress-Indicator-Node-Base
+      - Progress-Pagination-Base
+  progress.node.size.md:
+    component: Progress
+    primitiveReferences:
+      value: size200
+    platforms:
+      web: '--progress-node-size-md'
+      ios: ProgressTokens.nodeSizeMd
+      android: ProgressTokens.nodeSizeMd
+    consumers:
+      - Progress-Indicator-Node-Base
+      - Progress-Pagination-Base
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
+  progress.node.size.lg:
+    component: Progress
+    primitiveReferences:
+      value: size250
+    platforms:
+      web: '--progress-node-size-lg'
+      ios: ProgressTokens.nodeSizeLg
+      android: ProgressTokens.nodeSizeLg
+    consumers:
+      - Progress-Indicator-Node-Base
+      - Progress-Pagination-Base
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
+  progress.node.size.sm.current:
+    component: Progress
+    primitiveReferences:
+      value: size200
+    platforms:
+      web: '--progress-node-size-sm-current'
+      ios: ProgressTokens.nodeSizeSmCurrent
+      android: ProgressTokens.nodeSizeSmCurrent
+    consumers:
+      - Progress-Indicator-Node-Base
+      - Progress-Pagination-Base
+  progress.node.size.md.current:
+    component: Progress
+    primitiveReferences:
+      value: size250
+    platforms:
+      web: '--progress-node-size-md-current'
+      ios: ProgressTokens.nodeSizeMdCurrent
+      android: ProgressTokens.nodeSizeMdCurrent
+    consumers:
+      - Progress-Indicator-Node-Base
+      - Progress-Pagination-Base
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
+  progress.node.size.lg.current:
+    component: Progress
+    primitiveReferences:
+      value: size300
+    platforms:
+      web: '--progress-node-size-lg-current'
+      ios: ProgressTokens.nodeSizeLgCurrent
+      android: ProgressTokens.nodeSizeLgCurrent
+    consumers:
+      - Progress-Indicator-Node-Base
+      - Progress-Pagination-Base
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
+  progress.node.gap.sm:
+    component: Progress
+    primitiveReferences:
+      value: space075
+    platforms:
+      web: '--progress-node-gap-sm'
+      ios: ProgressTokens.nodeGapSm
+      android: ProgressTokens.nodeGapSm
+    consumers: []
+  progress.node.gap.md:
+    component: Progress
+    primitiveReferences:
+      value: space100
+    platforms:
+      web: '--progress-node-gap-md'
+      ios: ProgressTokens.nodeGapMd
+      android: ProgressTokens.nodeGapMd
+    consumers:
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
+  progress.node.gap.lg:
+    component: Progress
+    primitiveReferences:
+      value: space150
+    platforms:
+      web: '--progress-node-gap-lg'
+      ios: ProgressTokens.nodeGapLg
+      android: ProgressTokens.nodeGapLg
+    consumers:
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
+  avatar.size.xs:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: size300
+    platforms:
+      web: '--avatar-size-xs'
+      ios: AvatarTokens.sizeXs
+      android: AvatarTokens.sizeXs
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  avatar.size.sm:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: size400
+    platforms:
+      web: '--avatar-size-sm'
+      ios: AvatarTokens.sizeSm
+      android: AvatarTokens.sizeSm
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  avatar.size.md:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: size500
+    platforms:
+      web: '--avatar-size-md'
+      ios: AvatarTokens.sizeMd
+      android: AvatarTokens.sizeMd
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  avatar.size.lg:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: size600
+    platforms:
+      web: '--avatar-size-lg'
+      ios: AvatarTokens.sizeLg
+      android: AvatarTokens.sizeLg
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  avatar.size.xl:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: size1000
+    platforms:
+      web: '--avatar-size-xl'
+      ios: AvatarTokens.sizeXl
+      android: AvatarTokens.sizeXl
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  avatar.size.xxl:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: size1600
+    platforms:
+      web: '--avatar-size-xxl'
+      ios: AvatarTokens.sizeXxl
+      android: AvatarTokens.sizeXxl
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  avatar.icon.size.xs:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: '12'
+    platforms:
+      web: '--avatar-icon-size-xs'
+      ios: AvatarTokens.iconSizeXs
+      android: AvatarTokens.iconSizeXs
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  avatar.icon.size.xxl:
+    component: Avatar
+    definedBy: Avatar-Base
+    primitiveReferences:
+      value: '64'
+    platforms:
+      web: '--avatar-icon-size-xxl'
+      ios: AvatarTokens.iconSizeXxl
+      android: AvatarTokens.iconSizeXxl
+    consumers:
+      - Avatar-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  badgelabelbase.maxWidth:
+    component: BadgeLabelBase
+    definedBy: Badge-Label-Base
+    primitiveReferences:
+      value: '120'
+    platforms:
+      web: '--badgelabelbase-max-width'
+      ios: BadgeLabelBaseTokens.maxWidth
+      android: BadgeLabelBaseTokens.maxWidth
+    consumers:
+      - Badge-Label-Base
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  buttonicon.inset.large:
+    component: ButtonIcon
+    definedBy: Button-Icon
+    primitiveReferences:
+      value: space150
+    platforms:
+      web: '--buttonicon-inset-large'
+      ios: ButtonIconTokens.insetLarge
+      android: ButtonIconTokens.insetLarge
+    consumers:
+      - Button-Icon
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  buttonicon.inset.medium:
+    component: ButtonIcon
+    definedBy: Button-Icon
+    primitiveReferences:
+      value: space125
+    platforms:
+      web: '--buttonicon-inset-medium'
+      ios: ButtonIconTokens.insetMedium
+      android: ButtonIconTokens.insetMedium
+    consumers:
+      - Button-Icon
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  buttonicon.inset.small:
+    component: ButtonIcon
+    definedBy: Button-Icon
+    primitiveReferences:
+      value: space100
+    platforms:
+      web: '--buttonicon-inset-small'
+      ios: ButtonIconTokens.insetSmall
+      android: ButtonIconTokens.insetSmall
+    consumers:
+      - Button-Icon
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  buttonicon.size.large:
+    component: ButtonIcon
+    definedBy: Button-Icon
+    primitiveReferences:
+      value: size600
+    platforms:
+      web: '--buttonicon-size-large'
+      ios: ButtonIconTokens.sizeLarge
+      android: ButtonIconTokens.sizeLarge
+    consumers:
+      - Button-Icon
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  buttonicon.size.medium:
+    component: ButtonIcon
+    definedBy: Button-Icon
+    primitiveReferences:
+      value: size500
+    platforms:
+      web: '--buttonicon-size-medium'
+      ios: ButtonIconTokens.sizeMedium
+      android: ButtonIconTokens.sizeMedium
+    consumers:
+      - Button-Icon
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  buttonicon.size.small:
+    component: ButtonIcon
+    definedBy: Button-Icon
+    primitiveReferences:
+      value: size400
+    platforms:
+      web: '--buttonicon-size-small'
+      ios: ButtonIconTokens.sizeSmall
+      android: ButtonIconTokens.sizeSmall
+    consumers:
+      - Button-Icon
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  verticallistitem.paddingBlock.rest:
+    component: VerticalListItem
+    definedBy: Button-VerticalList-Item
+    primitiveReferences:
+      value: '11'
+    platforms:
+      web: '--verticallistitem-padding-block-rest'
+      ios: VerticalListItemTokens.paddingBlockRest
+      android: VerticalListItemTokens.paddingBlockRest
+    consumers:
+      - Button-VerticalList-Item
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  verticallistitem.paddingBlock.selected:
+    component: VerticalListItem
+    definedBy: Button-VerticalList-Item
+    primitiveReferences:
+      value: space125
+    platforms:
+      web: '--verticallistitem-padding-block-selected'
+      ios: VerticalListItemTokens.paddingBlockSelected
+      android: VerticalListItemTokens.paddingBlockSelected
+    consumers:
+      - Button-VerticalList-Item
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  inputcheckbox.box.sm:
+    component: InputCheckbox
+    definedBy: Input-Checkbox-Base
+    primitiveReferences:
+      value: size300
+    platforms:
+      web: '--inputcheckbox-box-sm'
+      ios: InputCheckboxTokens.boxSm
+      android: InputCheckboxTokens.boxSm
+    consumers: []
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  inputcheckbox.box.md:
+    component: InputCheckbox
+    definedBy: Input-Checkbox-Base
+    primitiveReferences:
+      value: size400
+    platforms:
+      web: '--inputcheckbox-box-md'
+      ios: InputCheckboxTokens.boxMd
+      android: InputCheckboxTokens.boxMd
+    consumers: []
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  inputcheckbox.box.lg:
+    component: InputCheckbox
+    definedBy: Input-Checkbox-Base
+    primitiveReferences:
+      value: size500
+    platforms:
+      web: '--inputcheckbox-box-lg'
+      ios: InputCheckboxTokens.boxLg
+      android: InputCheckboxTokens.boxLg
+    consumers: []
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  inputradio.box.sm:
+    component: InputRadio
+    definedBy: Input-Radio-Base
+    primitiveReferences:
+      value: size300
+    platforms:
+      web: '--inputradio-box-sm'
+      ios: InputRadioTokens.boxSm
+      android: InputRadioTokens.boxSm
+    consumers: []
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  inputradio.box.md:
+    component: InputRadio
+    definedBy: Input-Radio-Base
+    primitiveReferences:
+      value: size400
+    platforms:
+      web: '--inputradio-box-md'
+      ios: InputRadioTokens.boxMd
+      android: InputRadioTokens.boxMd
+    consumers: []
+    source:
+      package: '@3fn/core'
+      version: 16.2.0
+  inputradio.box.lg:
+    component: InputRadio
+    definedBy: Input-Radio-Base
+    primitiveReferences:
+      value: size500
+    platforms:
+      web: '--inputradio-box-lg'
+      ios: InputRadioTokens.boxLg
+      android: InputRadioTokens.boxLg
+    consumers: []
+    source:
+      package: '@3fn/core'
+      version: 16.2.0

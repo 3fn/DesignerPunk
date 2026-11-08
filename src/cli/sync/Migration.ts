@@ -281,6 +281,8 @@ export interface MigrationAssessment {
   /** Consumer-side token files found in the copied tree (Lina A5; token-side report strings). */
   oldNameReferenceMaps: string[];
   brandedTokenFiles: string[];
+  /** Copied component-token files in the pre-fix single-family form the family guard rejects (Spec 129 Req 5.7; row 18 R1). */
+  singleFamilyTokenFiles: string[];
   /** The installed version, judged from `node_modules/@3fn/core` on disk before any fetch (R2 (a)); absent when it ships no copies' directory. */
   judgedInstalled?: string;
   /** The first login refusal the fetcher met (R2 (b)) — reported once, as a login problem. */
@@ -378,6 +380,7 @@ export function assessComponentCopies(
     components: [],
     oldNameReferenceMaps: [],
     brandedTokenFiles: [],
+    singleFamilyTokenFiles: [],
   };
 
   // Per-file state.
@@ -512,6 +515,7 @@ export function assessComponentCopies(
     assessment.components.push({ name, kind, verdict, files, deletedFiles: deletedFiles.sort() });
   }
   scanTokenFiles(projectRoot, assessment);
+  scanSingleFamilyTokenFiles(projectRoot, assessment);
   return assessment;
 }
 
@@ -549,6 +553,43 @@ function scanTokenFiles(projectRoot: string, a: MigrationAssessment): void {
       else if (c.kind === 'copy') a.brandedTokenFiles.push(rel);
     }
   }
+}
+
+/** Where pre-123 `init` copied token source for the Progress tokens. */
+const LEGACY_TOKEN_SOURCE_COMPONENT_ROOT = 'src/tokens/component';
+
+/**
+ * A TEXT approximation of the v14.1.0 family-mismatch guard (#127), as `scanTokenFiles` is of the brand
+ * count (the migration never executes the consumer's copied `.ts`). A file is in the single-family form
+ * when, outside comments, it makes ONE `defineComponentTokens(` call and imports primitives from two or
+ * more token families: the call's `family` is stamped on every token, so a second family's primitive
+ * emits a member no generated file defines. The shipped split form makes one call per family.
+ * Row 18 R1; Spec 129 Req 5.7.
+ */
+export function isSingleFamilyTokenFile(source: string): boolean {
+  const code = stripComments(source);
+  const calls = (code.match(/\bdefineComponentTokens\s*\(/g) ?? []).length;
+  if (calls !== 1) return false;
+  const families = new Set<string>();
+  for (const m of code.matchAll(/from\s+['"][^'"]*\/tokens\/(\w+Tokens)['"]/g)) families.add(m[1]);
+  return families.size >= 2;
+}
+
+/** Row 18 R1: under `src/tokens/component/` and `src/components/core/`, the copied files that fail the family guard. */
+function scanSingleFamilyTokenFiles(projectRoot: string, a: MigrationAssessment): void {
+  const candidates: string[] = [];
+  const tokenDir = path.join(projectRoot, LEGACY_TOKEN_SOURCE_COMPONENT_ROOT);
+  for (const f of listFiles(tokenDir)) if (f.endsWith('.ts')) candidates.push(`${LEGACY_TOKEN_SOURCE_COMPONENT_ROOT}/${f}`);
+  for (const c of a.components) {
+    for (const f of listFiles(path.join(projectRoot, LEGACY_COMPONENT_ROOT, c.name))) {
+      const base = path.posix.basename(f);
+      if (base === 'tokens.ts' || base.endsWith('.tokens.ts')) candidates.push(`${LEGACY_COMPONENT_ROOT}/${c.name}/${f}`);
+    }
+  }
+  for (const rel of candidates) {
+    if (isSingleFamilyTokenFile(fs.readFileSync(path.join(projectRoot, rel), 'utf-8'))) a.singleFamilyTokenFiles.push(rel);
+  }
+  a.singleFamilyTokenFiles.sort();
 }
 
 // ---------------------------------------------------------------------------
@@ -627,6 +668,11 @@ export const TOKEN_SIDE_SLOTS = {
     `${files.length} copied component token file${files.length === 1 ? '' : 's'} (${files.join(', ')}) now register as YOUR component tokens when you run generate — they're yours while the copies stay, and DesignerPunk's release won't overwrite them. Keep the copy and they stay registered; remove it (see above) and they go with it.`,
 };
 
+/** Row 18 R1 / Spec 129 Req 5.7: names each file and offers the record's fix. */
+export function singleFamilyTokenFilesMessage(files: string[]): string {
+  return `${files.length} copied component token file${files.length === 1 ? '' : 's'} (${files.join(', ')}) make${files.length === 1 ? 's' : ''} one defineComponentTokens() call across more than one primitive family, the form the family guard has rejected since 14.1.0, so ${files.length === 1 ? 'it' : 'they'} will fail on 'npx designerpunk generate'. These are your copies, so sync leaves them alone. Fix: re-copy the package's split version (one call per family) from node_modules/@3fn/core, or split the call yourself.`;
+}
+
 export function migrationReportLines(a: MigrationAssessment): string[] {
   const lines: string[] = [];
   const bound = a.upperBound.version
@@ -647,6 +693,7 @@ export function migrationReportLines(a: MigrationAssessment): string[] {
   if (unknown.length > 0) lines.push(cannotTellRemedyMessage(unknown.map((c) => c.name)));
   if (a.oldNameReferenceMaps.length > 0) lines.push(TOKEN_SIDE_SLOTS.oldNameReferenceMaps(a.oldNameReferenceMaps));
   if (a.brandedTokenFiles.length > 0) lines.push(TOKEN_SIDE_SLOTS.brandedTokenFiles(a.brandedTokenFiles));
+  if (a.singleFamilyTokenFiles.length > 0) lines.push(singleFamilyTokenFilesMessage(a.singleFamilyTokenFiles));
   return lines;
 }
 

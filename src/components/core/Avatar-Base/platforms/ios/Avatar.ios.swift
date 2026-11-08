@@ -19,93 +19,13 @@ import SwiftUI
 
 // MARK: - Avatar Tokens
 
-/**
- * Avatar-specific design tokens.
- * 
- * These tokens are component-level tokens specific to the Avatar component.
- * They reference or extend the core DesignTokens where possible.
- * 
- * Icon size tokens use the existing DesignTokens.iconSizeXXX values where available,
- * with component-specific gap fillers for xs and xxl sizes.
- * 
- * @see Requirements: 3.1, 3.6 - Icon sizing at 50% ratio
- * @see Requirements: 4.1, 4.2 - Background colors
- * @see Requirements: 7.1-7.4 - Border styles
- */
-enum AvatarTokens {
-    // MARK: - Avatar Icon Size Tokens (Gap Fillers)
-    
-    /// Icon size for xs avatar (12px = 1.5 × base)
-    /// Component token gap filler - no existing icon token at this size
-    /// @see Requirements: 3.1 - xs avatar icon size
-    static let iconSizeXs: CGFloat = 12
-    
-    /// Icon size for xxl avatar (64px = 8 × base)
-    /// Component token gap filler - no existing icon token at this size
-    /// @see Requirements: 3.6 - xxl avatar icon size
-    static let iconSizeXxl: CGFloat = 64
-    
-    // MARK: - Avatar Color Tokens
-    // These reference DesignTokens semantic color tokens for consistency with the Rosetta pipeline.
-    // When semantic tokens change, regenerate DesignTokens via: npx ts-node src/generators/generateTokenFiles.ts
-    //
-    // Spec 058 Migration: Avatar color tokens now reference semantic tokens directly.
-    // The component-level token definitions in avatar.tokens.ts provide the mapping:
-    // - human.background → color.identity.human
-    // - agent.background → color.identity.agent
-    // - human.icon → color.contrast.onDark
-    // - agent.icon → color.contrast.onDark
-    // - default.border → color.structure.border
-    
-    /// Background color for human avatars
-    /// References: color.identity.human → orange300
-    /// @see Requirements: 4.1 - Human type background color
-    /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    
-    /// Background color for agent avatars
-    /// References: color.identity.agent → teal200
-    /// @see Requirements: 4.2 - Agent type background color
-    /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    
-    /// Icon color on human avatar background
-    /// References: color.contrast.onDark → white100
-    /// @see Requirements: 6.1 - Human type icon contrast color
-    /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    
-    /// Icon color on agent avatar background
-    /// References: color.contrast.onDark → white100
-    /// @see Requirements: 6.2 - Agent type icon contrast color
-    /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    
-    /// Border color for avatars (xs through xl sizes)
-    /// References: color.structure.border → gray100
-    /// @see Requirements: 7.2 - Border color for xs-xl sizes
-    /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    
-    /// Border color for xxl size avatars
-    /// References: color.contrast.onDark → white100
-    /// @see Requirements: 7.4 - Border color for xxl size
-    static let borderColorXxl: Color = .white
-    
-    // MARK: - Avatar Border Tokens
-    
-    /// Default border width (1px)
-    /// References: borderDefault → borderWidth100
-    /// @see Requirements: 7.1 - Border width for xs-xl sizes
-    static let borderWidthDefault: CGFloat = DesignTokens.borderWidth100
-    
-    /// Emphasis border width (2px)
-    /// References: borderEmphasis → borderWidth200
-    /// @see Requirements: 7.3 - Border width for xxl size
-    static let borderWidthEmphasis: CGFloat = DesignTokens.borderWidth200
-    
-    // MARK: - Avatar Opacity Tokens
-    
-    /// Heavy opacity for border (48%)
-    /// References: opacity.heavy → opacity048 (0.48)
-    /// @see Requirements: 7.2 - Border opacity for xs-xl sizes
-    static let opacityHeavy: Double = 0.48
-}
+// The Avatar component tokens are generated: `AvatarTokens` (iconSizeXs, iconSizeXxl) comes from
+// the consumer's `ComponentTokens.ios.swift`, written by `designerpunk generate` from
+// avatar.tokens.ts. This file declares no token type of its own (Spec 129 Req 5.1).
+// The border width and opacity read DesignTokens directly:
+//   borderDefault -> DesignTokens.borderWidth100, borderEmphasis -> DesignTokens.borderWidth200,
+//   opacity.heavy -> DesignTokens.opacity048.
+// Colors read the theme (color.structure.border, color.contrast.onDark).
 
 // MARK: - Avatar Type Enum
 
@@ -193,8 +113,8 @@ public enum AvatarSize: String, CaseIterable {
     /// @see Requirements: 7.1, 7.3 - Border width per size
     var borderWidth: CGFloat {
         switch self {
-        case .xxl: return AvatarTokens.borderWidthEmphasis  // 2px
-        default: return AvatarTokens.borderWidthDefault     // 1px
+        case .xxl: return DesignTokens.borderWidth200  // 2px
+        default: return DesignTokens.borderWidth100     // 1px
         }
     }
 }
@@ -582,7 +502,7 @@ public struct Avatar: View {
         case .xxl:
             return theme.colorContrastOnDark
         default:
-            return theme.colorStructureBorder.opacity(AvatarTokens.opacityHeavy)
+            return theme.colorStructureBorder.opacity(DesignTokens.opacity048)
         }
     }
     
@@ -619,7 +539,7 @@ public struct Avatar: View {
      */
     private var currentBorderWidth: CGFloat {
         if interactive && isHovered {
-            return AvatarTokens.borderWidthEmphasis  // 2px on hover
+            return DesignTokens.borderWidth200  // 2px on hover
         }
         return size.borderWidth
     }

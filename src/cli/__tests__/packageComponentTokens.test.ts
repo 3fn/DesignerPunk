@@ -215,6 +215,17 @@ describe('the token index against the installed package (the staleness check syn
     expect(assess(scratch, pkgRoot)).toMatchObject({ state: 'stale', missing: 1, example: 'buttonicon.size.medium' });
   });
 
+  it('a group the consumer declares is theirs alone: the rest of DesignerPunk\'s group is not expected (Spec 129 design § 9)', () => {
+    const { scratch, pkgRoot } = consumer();
+    // Their own Avatar group (untagged), and nothing of ours for it; the other two tokens are ours and current.
+    writeFile(scratch, 'token-index/components.yaml', yaml.dump({ tokens: {
+      'avatar.size.xl': { component: 'Avatar', primitiveReferences: { value: 'size1000' }, platforms: platforms('--avatar-size-xl', 'AvatarTokens.sizeXl'), consumers: [] },
+      'buttonicon.size.medium': { ...SHIPPED.tokens['buttonicon.size.medium'], source: { package: '@3fn/core', version: '16.1.0' } },
+    } }));
+    // avatar.size.md (ours, same group) is not expected: the index is current.
+    expect(assess(scratch, pkgRoot)).toEqual({ state: 'current' });
+  });
+
   it('no token index yet: nothing to judge', () => {
     const { scratch, pkgRoot } = consumer();
     expect(assess(scratch, pkgRoot)).toEqual({ state: 'no-index' });

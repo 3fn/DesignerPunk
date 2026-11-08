@@ -19,19 +19,23 @@ import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
 import { generateTokenIndex, type TokenIndexResult } from '../generators/generateTokenIndex';
 import { resolveTokens } from './resolveTokens';
-import { loadComponentTokens, componentTokenSourceFile } from './loadComponentTokens';
+import { loadComponentTokens, componentTokenSourceFile, isPackageComponentToken, type PackageComponentTokenSource } from './loadComponentTokens';
 import { runValidate } from './validate';
 import { runInit } from './init';
 import { runAttach } from './attach';
 import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
-import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
+import { isProductTokenStale } from './staleness';
 import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import { resolveComponentRoots } from './shared/mcpDataRoots';
-import { readPackageComponentTokenIndex, PACKAGE_COMPONENT_TOKEN_INDEX_REL } from './shared/packageComponentTokens';
+import { resolvePackageComponentSource } from './packageComponentSource';
+import {
+  readDeclaredNames, readPackagePrimitiveNames, findMissingReferences, missingReferenceMessage,
+} from './shared/componentTokenReferences';
+import { scanReservedKotlinPackages, packageComponentSourceNames, reservedPackageMessage } from './shared/reservedKotlinPackages';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import {
   partialCaseMessage,
@@ -224,9 +228,28 @@ export async function runGenerate(force = false) {
   // family-mismatch guard on a pre-123 copied file) stops generate with a catalogued
   // message naming the file — never the CLI's "Unexpected error" stack trace
   // (.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md).
+  // The third source (Spec 129 U8, design § 9): in a consumer repo, DesignerPunk's own definition
+  // files from the installed package, for every package component the consumer has not replaced.
+  // Never in DesignerPunk's own repo, whose component directory is already the second source.
+  const packageRoot = resolvePackageRoot(__dirname);
+  const packageSourceResult = resolvePackageComponentSource(
+    resolveGenerateComponentRoots(dsRoot, packageRoot), packageRoot, generateRoot,
+  );
+  let packageSource: PackageComponentTokenSource | undefined;
+  if (packageSourceResult.state === 'ready') {
+    packageSource = packageSourceResult.source;
+  } else if (packageSourceResult.state === 'damaged') {
+    console.warn(`⚠️  ${consumerDegradationMessage(
+      "DesignerPunk's component token definitions",
+      'src/components/core',
+      "DesignerPunk's own component tokens (for example avatar.size.md) are not in your token index or your native token output",
+    )}\n`);
+  }
   let componentTokens: ReturnType<typeof loadComponentTokens>;
   try {
-    componentTokens = loadComponentTokens(config);
+    componentTokens = packageSource
+      ? loadComponentTokens(config, undefined, { packageSource })
+      : loadComponentTokens(config);
   } catch (err) {
     console.error(`❌ ${componentTokenLoadFailureMessage(err, generateRoot)}`);
     process.exit(1);
@@ -269,32 +292,19 @@ export async function runGenerate(force = false) {
   try {
     // Single shared mode resolution (Spec 117 Task 3): generateTokenFiles writes dist AND
     // returns the resolved truth; the index consumes the SAME object — no re-derivation.
-    const modeResolved = generateTokenFiles(tokens, config);
+    const modeResolved = generateTokenFiles(tokens, config, { excludeComponentTokenFromWeb: isPackageComponentToken });
 
     // The component root set the consumer map reads: the consumer's components, then
     // DesignerPunk's, through the Application MCP's own resolver (R1-7; see
     // `resolveGenerateComponentRoots` above). Resolved HERE, passed into the generator,
     // which stays a pure function of its inputs.
-    const packageRoot = resolvePackageRoot(__dirname);
     const componentSchemaDir = resolveGenerateComponentRoots(dsRoot, packageRoot);
 
-    // Shape (c) (`.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`):
-    // in a consumer repo, DesignerPunk's own component tokens come into the index from the
-    // installed package's shipped index, for every package component you have not replaced.
-    // Never in DesignerPunk's own repo, whose index IS that shipped index.
-    let packageComponentTokens: ReturnType<typeof readPackageComponentTokenIndex>['index'] = null;
-    if (path.resolve(packageRoot) !== path.resolve(generateRoot)) {
-      const shipped = readPackageComponentTokenIndex(packageRoot);
-      packageComponentTokens = shipped.index;
-      if (!shipped.index) {
-        console.warn(`⚠️  ${consumerDegradationMessage(
-          "DesignerPunk's token index",
-          PACKAGE_COMPONENT_TOKEN_INDEX_REL,
-          `${shipped.reason}; DesignerPunk's own component tokens (for example avatar.size.md) are not in your token index, so get_token_details does not find them`,
-        )}\n`);
-      }
-    }
+    // DesignerPunk's own component tokens come into the index from the same harvest that wrote
+    // the native output (the third source above), so the index and the output cannot differ:
+    // there is no second read of the package's shipped index (Spec 129 Req 5.2, 5.10).
     const registered = ComponentTokenRegistry.getAll();
+    const harvestedNames = new Set(registered.filter(isPackageComponentToken).map(t => t.name));
 
     // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
     const indexResult = generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
@@ -304,7 +314,9 @@ export async function runGenerate(force = false) {
       modeResolved,
       componentSchemaDir,
       componentTokenFiles: new Map(registered.map(t => [t.name, componentTokenSourceFile(t)])),
-      ...(packageComponentTokens ? { packageComponentTokens } : {}),
+      ...(packageSource && harvestedNames.size > 0
+        ? { harvestedPackageTokens: { names: harvestedNames, package: packageSource.name, version: packageSource.version } }
+        : {}),
       // DD24: the live tier this index's data came from — written into
       // token-index/meta.json so the theme readers can follow it later,
       // wherever this index ends up being served from.
@@ -314,6 +326,31 @@ export async function runGenerate(force = false) {
     if (indexResult) {
       const report = schemaTokenReport(indexResult, packageRoot, generateRoot);
       if (report.warning) console.warn(`⚠️  ${report.warning}\n`);
+    }
+    // The name contract over the component tier (Req 5.4): REPORT a primitive DesignerPunk's component
+    // tokens read that your generated output no longer defines, on any platform. A report, never a failure.
+    const harvested = registered.filter(isPackageComponentToken);
+    if (harvested.length > 0) {
+      const packageNames = readPackagePrimitiveNames(packageRoot);
+      if (packageNames.names) {
+        const missing = findMissingReferences(
+          harvested.filter(t => t.primitiveReference).map(t => ({ token: t.name, primitive: t.primitiveReference! })),
+          readDeclaredNames(config.outputDir),
+          packageNames.names,
+        );
+        const tierPath = `${(path.relative(process.cwd(), config.tokenSourceRoot) || '.').split(path.sep).join('/')}/`;
+        for (const m of missing) console.warn(`⚠️  ${missingReferenceMessage(m, tierPath)}\n`);
+      }
+    }
+    // The reserved Kotlin packages (O-11): a warning naming each file, never a failure.
+    if (packageSource) {
+      const reserved = scanReservedKotlinPackages({
+        root: generateRoot,
+        skipDirs: [config.outputDir, config.tokenSourceRoot],
+        componentSourceNames: packageComponentSourceNames(packageRoot),
+      });
+      for (const f of reserved) console.warn(`⚠️  ${reservedPackageMessage(f)}`);
+      if (reserved.length > 0) console.warn('');
     }
     console.log('✅ System tokens generated');
   } catch (err) {
@@ -326,9 +363,7 @@ export async function runGenerate(force = false) {
   if (config.productTokens) {
     try {
       if (!isProductTokenStale(config, force)) {
-        const outputPaths = getProductTokenOutputPaths(config);
-        const oldest = Math.min(...outputPaths.map(p => fs.statSync(p).mtimeMs));
-        console.log(`⏭ Product tokens up-to-date (source unchanged since ${new Date(oldest).toLocaleString()})`);
+        console.log('⏭ Product tokens up-to-date (the output equals a fresh generation)');
       } else {
         if (force) console.log('🔄 Product tokens regenerated (--force)');
         generateProductTokens(config);
@@ -371,9 +406,7 @@ export async function runProductOnly(force = false) {
   }
 
   if (!isProductTokenStale(config, force)) {
-    const outputPaths = getProductTokenOutputPaths(config);
-    const oldest = Math.min(...outputPaths.map(p => fs.statSync(p).mtimeMs));
-    console.log(`⏭ Product tokens up-to-date (source unchanged since ${new Date(oldest).toLocaleString()})`);
+    console.log('⏭ Product tokens up-to-date (the output equals a fresh generation)');
     return;
   }
 

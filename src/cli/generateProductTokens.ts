@@ -15,16 +15,22 @@ import { emitSwift } from '../build/product/emitters/SwiftEmitter';
 import { emitKotlin } from '../build/product/emitters/KotlinEmitter';
 import type { ResolvedConfig } from '../config/ConfigLoader';
 
-export function generateProductTokens(config: ResolvedConfig): void {
+export interface GenerateProductTokensOptions {
+  /** Write here instead of `<outputDir>/product`, and print nothing: the freshness check renders into a temporary directory. */
+  renderTo?: string;
+}
+
+export function generateProductTokens(config: ResolvedConfig, options: GenerateProductTokensOptions = {}): void {
+  const quiet = options.renderTo !== undefined;
   if (!config.productTokens || !fs.existsSync(config.productTokens)) {
-    if (config.productTokens) {
+    if (config.productTokens && !quiet) {
       console.warn(`⚠️  Product tokens path not found: ${config.productTokens}`);
     }
     return;
   }
 
   const tokenIndexDir = path.resolve(config.configDir, 'token-index');
-  const outputDir = path.join(config.outputDir, 'product');
+  const outputDir = options.renderTo ?? path.join(config.outputDir, 'product');
 
   const generator = new ProductTokenGenerator({
     productTokensDir: config.productTokens,
@@ -62,6 +68,8 @@ export function generateProductTokens(config: ResolvedConfig): void {
   fs.writeFileSync(path.join(outputDir, 'ProductTokens.web.css'), css);
   fs.writeFileSync(path.join(outputDir, 'ProductTokens.ios.swift'), swift);
   fs.writeFileSync(path.join(outputDir, 'ProductTokens.android.kt'), kotlin);
+
+  if (quiet) return;
 
   // Report summary
   console.log(`🏷️  Product tokens: ${result.tokenCount} tokens, ${result.categoryCount} categories`);
