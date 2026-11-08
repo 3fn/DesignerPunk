@@ -1,2 +1,0 @@
-
-*(2026-11-08, Lina, appended under rule 9: `Badge-Count-Notification/tokens.ts` was renamed to `badgeNotificationColorMap.ts` (`2026-10-26-badge-count-notification-tokens-file-misnamed.md`). The bare path `tokens.ts` now matches one tracked path, `Badge-Label-Base/tokens.ts`, so item 3's ambiguity argument no longer holds for that reason; L-1 (no `defineComponentTokens` call) still fails the block. Six token files match the loader's name rule, not seven. Earlier text unchanged.)*
