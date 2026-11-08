@@ -74,7 +74,14 @@ The identity is not a settings toggle. It is credential and workflow plumbing wi
 
 The one-time re-attestation of Spec 123's interim C1 records is owed by `.kiro/issues/2026-10-15-123-125b-u3-re-attestation.md` (Owners: Stacy, Thurgood). This charter holds the duty by that pointer and does not restate the record's enumeration or scope question. Its event is **an identity that distinguishes seats existing**, which is not the same event as this charter's trigger: if § 5 item 1 answers "one identity", the re-attestation's event has not happened, and the record says so in its own walk line.
 
-*Reserved for Stacy (rule 9): her re-rule of the record's Trigger, and any line she adds here, land in this record's PR.*
+**What the duty is, and what this charter owes it** *(Stacy, 2026-11-08, rule 9)*:
+
+1. **The event.** The record's Trigger is `manual`, on an identity that distinguishes seats existing (re-ruled in this PR, with its reason and authority in the record). One distinct PR-authoring identity, which this charter's trigger and § 3 precondition #4 ask for, separates Peter from the agents. It does not separate one seat from another (signing-act ballot L265). So this charter's trigger firing is not the record's event, and neither is the arming PR merging. A re-attestation made under one shared agent identity would attest nothing that the `Agent:` trailers do not already say.
+2. **What this charter owes the record at its trigger.** § 5 item 1 records the per-seat answer. The answer is appended to the record as a dated line, by me or by Thurgood:
+   - **One per seat**: the record's event is the first commit or PR authored under a per-seat identity. At that event, Thurgood re-runs the record's listing command and I re-attest by whatever that identity makes available (the record's § "Open at the trigger").
+   - **One identity, or a decline**: the record's event has not happened and may never happen. I put the record to Peter with two options: keep it open on the per-seat event, or close it under rule 5 with a dated line that names what stays unauthenticated (the 124 `signer:` rows and ten confirmation files of its listing, as moved since). I do not choose between them.
+3. **Order.** No re-attestation act starts before the signing-act shape review's PR 2 has merged (§ 4 item 1).
+4. **What I read.** At 125-B's CLOSEOUT pass (step 4), I check two things: that step 3's tasks amendment fired no record of mine, and that Task 6's carried-obligation line now points here or at the record. At each release walk and claims pass, a PR that claims the re-attestation was made under an identity that does not tell seats apart is a finding. I route it to the PR's author.
 
 ## 7. Walk
 
