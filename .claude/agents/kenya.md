@@ -53,7 +53,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 ### In Scope
 
 - iOS screen implementation using SwiftUI
-- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.{abbreviation}Theme)`
+- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.dpTheme)`
 - Implementing DesignerPunk component specifications in Swift (referencing existing platforms/ios/ implementations)
 - Writing iOS-specific tests for product screens
 - iOS navigation, state management, and data binding
@@ -64,9 +64,12 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 
 ### iOS Theming (Spec 094)
 
-- `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet.
-- Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
-- Dark mode: select theme struct based on `@Environment(\.colorScheme)`
+- `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and a theme surface beside them. Every colour semantic is read through the theme with `@Environment(\.dpTheme)`; the semantic colours are not on `DesignTokens`
+- **The fixed contract** is DesignerPunk's, whatever your config `name` or `abbreviation`: `public protocol DesignerPunkTheme: Sendable` (one property per colour semantic), the environment key `DPThemeKey`, and the key path `\.dpTheme`. Without a provider above a view, `\.dpTheme` is the base light theme and does not follow the system scheme
+- **Your product's names** come from your config `name` and `abbreviation`: the holder `<Name>Themes` (`baseLight`, `baseDark`, `wcagLight`, `wcagDark`, then one per instance a registered theme covers), each backed by a generated `Equatable` struct `<Name><Instance>Theme`, and an implicit member `.<abbreviation><Instance>` for each (`.dpBaseDark` under the default abbreviation), so `.environment(\.dpTheme, .dpBaseDark)` works for a fixed instance
+- **The family and its provider**: `<Name>ThemeFamily` is a `Sendable, Hashable, CaseIterable` enum with the cases `base`, `wcag`, then one per other registered theme in config order. It has no `dark` case, because dark is a mode the provider takes from the system scheme, and it has no raw value, so persisting a case needs a mapping of your own. Wrap content with `.<name>Theme(_ family:)` (lower-camel `<Name>`; `.<name>Theme()` means `.base`): it reads `@Environment(\.colorScheme)` and sets `\.dpTheme` to the family's instance for that scheme. Each case's doc comment names its instance in each scheme
+- **A theme of one mode falls back to base in the other scheme**: a theme registered in mode `light` shows its own look in the light scheme and `baseDark` in the dark scheme; one registered in mode `dark` shows `baseLight` in the light scheme. Nothing warns you. To give it its own look in both schemes, register it in mode `both`, or force the scheme with `.preferredColorScheme`. `wcag` is exempt: it always has both instances
+- Product tokens that reference a theme-varying colour are members of `public extension DesignerPunkTheme`, read as `theme.product{Category}{Name}` from `\.dpTheme`; the others stay static as `Product{Category}.{name}`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
 - **Ground truth for these token values is LIVE, not a file** — never read the built `dist/*.ios.swift` snapshots (see the Ground truth section); query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
 
@@ -74,7 +77,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 
 - Product tokens are generated to `dist/product/ProductTokens.ios.swift`
 - Static tokens: `public enum Product{Category} { public static let name: CGFloat = value }`
-- Theme-varying tokens: protocol extension on `{Name}Theme` — access via `theme.product{Category}{Name}`
+- Theme-varying tokens: protocol extension on `DesignerPunkTheme` — access via `theme.product{Category}{Name}`
 - Ref tokens reference `DesignTokens.*` constants (full qualified paths including nested namespaces like `Duration.duration350`)
 - Query available tokens via the Product MCP's `get_product_tokens` for the iOS platform (see your routing section)
 - Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is surfaced to Leonardo and never filled silently or with a hard-coded value (Product-Token-Governance § "Authoring Workflow", routed, says when it may be written). Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections
@@ -381,7 +384,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 
 ## Commands
 
-- regenerate the platform token output (iOS/Android/web) from token source. Note that the Swift output has no Spec-094 theme surface (no theme protocol, per-theme structs or environment key), in this repo or in a consumer's `generate` output; see § iOS Theming (Spec 094): `npm run generate:platform-tokens`
+- regenerate the platform token output (iOS/Android/web) from token source. The Swift output carries the theme surface described in § iOS Theming (Spec 094): `npm run generate:platform-tokens`
 - run the Swift-theme-types Jest suite (a jest name-pattern selecting src/generators/__tests__/SwiftThemeTypes.test.ts — the in-repo test of the Swift theme-type generator, the closest in-repo signal for iOS theming correctness; Jest, never vitest/--run): `npm test -- SwiftThemeTypes`
 - the full build including validate (type-check + validation + browser + MCP): `npm run build`
 - audit component token usage / compliance across the token pipeline: `npm run audit:tokens`
