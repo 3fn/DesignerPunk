@@ -1461,7 +1461,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 18.4 Confirm the Token-Governance ballot was ratified and applied in time
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Thurgood (Sonnet)
     - _Requirements: 15.6_
-  - [ ] 18.5 The retired `dist/` names in the shipped consumer layer and three component comments *(added 2026-11-08, tasks amendment 13)*
+  - [x] 18.5 The retired `dist/` names in the shipped consumer layer and three component comments *(added 2026-11-08, tasks amendment 13)*
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet), Kenya (Sonnet), Data (Sonnet), Lina (Sonnet)
     - Task 17 stopped shipping `dist/{Design,Component}Tokens.{ios.swift,android.kt}`; the consumer agent layer still says, in Kenya's six and Data's five places, to avoid or read those snapshots. The mentions come from the consumer overlays, not the charters, so no `canonicalHash` moves.
     - Order, read from git history (each step a commit after the one before): (1) Thurgood, as profile author, commits the overlay and disposition text from Kenya's and Data's drafts verbatim, with credit, changing each `trims[dist/ComponentTokens.*]` disposition from `re-pointed` to `superseded-by` (the how-to-use unit) and deleting its overlay entry; (2) Lina regenerates `canonical/_consumer-output/**`; (3) Kenya and Data re-sign, each act fresh, using `verify-signing-chain.ts --print`; (4) Lina rewords the three comments; (5) Lina refreshes the lock last.
