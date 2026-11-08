@@ -38,3 +38,7 @@ Add comment lines to the file header of `scripts/harness/d2-check.ts`. No code l
 - The PR body cites this record as the grant and names the ballot block (R-4).
 - The PR touches an instrument path, so it fires Stacy's ARMING instrument-path limb and the F-4 (b) read: the cited grant, the writer not the `src/generators/**` holder, R-1's case passing, R-2's deletions-zero, R-3's runs (for a comment-only change the two counts are equal by construction; the PR says so).
 - The grant is activated by Peter's merge of the PR that carries this record, and the fixing PR is diffed against the list as it stands then. It archives at the fixing PR's merge (rule 5).
+
+## Outcome (2026-11-08)
+
+Closed by the fixing PR #762 (branch `chore/129-d2-check-header-fix`, commit `8720b23d2`). `git diff -U0` shows 8 comment lines added to `scripts/harness/d2-check.ts` and 0 deleted; no other file changed. R-1: `d2-check.test.ts` 27/27, grep case included. R-3's two runs were not made: a comment-only change prints equal counts by construction. One departure from the header text above: the last sentence does not name the glob `src/generators/**` literally, because R-1's grep bans that literal in the file; it reads "never to the seat holding the generator sources in that unit (the ballot names the glob)". Archived at #762's merge, per rule 5 (the move is in this PR). — Thurgood
