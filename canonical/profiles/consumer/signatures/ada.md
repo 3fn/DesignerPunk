@@ -183,11 +183,15 @@ signer: ada
 - The consumer's rendered Task Completion Protocol is self-contained: its completion-doc elements and tiers are inline, and nothing points to the guide.
 - The route's function (depth on DesignerPunk's two-document workflow) has no consumer counterpart. The disposition is uniform across all seven agents that carry this route.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:routes.docs[dev-workflow-detail]`
 
 signer: ada
 
 **ASSENT — no consumer counterpart (`surviving: []`).** `process-development-workflow` is DesignerPunk's development-workflow law. The consumer's workflow law is its rendered always-set, which never routes here.
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:routes.docs[file-organization]`
 
@@ -197,6 +201,8 @@ signer: ada
 - `process-file-organization` governs DesignerPunk's own file layout, which a consumer repo does not share.
 - Side note, not this row: the consumer's rendered `always-set/civitas-system-overview.md` line 92 still says "see Process-File-Organization". It is flagged in the summary for the profile author.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:routes.cues[6]`
 
 signer: ada
@@ -205,11 +211,15 @@ signer: ada
 - The cue is "changed governance/token-family docs → docs MCP `rebuild_index`". A consumer does not change the docs the docs MCP serves, because the corpus is package-owned.
 - This is the same judgment as `rebuild-docs` under `#mcp-practice-notes`.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:commands[validator-tests]`
 
 signer: ada
 
 **ASSENT — no consumer counterpart (`surviving: []`).** `src/validators/**` does not ship in the package's `files`, and a consumer has no validator suite. The consumer rendering has no function "run the validator suites" anywhere.
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:commands[full-suite-with-performance]`
 
@@ -219,11 +229,15 @@ signer: ada
 - `npm run test:all` runs DesignerPunk's performance lanes, which are DesignerPunk's infrastructure. A consumer's suite has no such lanes.
 - The consumer body's "run token tests with your repo's own runner and scripts" does not carry a performance lane. Nothing survives elsewhere.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:knowledgeBases[TokenValidators]`
 
 signer: ada
 
 **ASSENT — no consumer counterpart (`surviving: []`).** The knowledge base indexes `src/validators/**`, which neither exists in a consumer repo nor ships in the package. The route cannot resolve.
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:knowledgeBases[TokenGenerators]`
 
@@ -231,17 +245,23 @@ signer: ada
 
 **ASSENT — no consumer counterpart (`surviving: []`).** It indexes `src/generators/**`, which neither exists in a consumer repo nor ships. The route cannot resolve.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[src/validators/**]`
 
 signer: ada
 
 **ASSENT — no consumer counterpart (`surviving: []`).** A consumer has no validators tree to write.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[src/generators/**]`
 
 signer: ada
 
 **ASSENT — no consumer counterpart (`surviving: []`).** A consumer has no generators tree to write.
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[docs/specs/**]`
 
@@ -254,11 +274,15 @@ signer: ada
 - The function "write the task summary docs" therefore survives in the re-pointed `specs/**` scope. `superseded-by` is more accurate than my phase-two absence assent, which it replaces.
 - The cite (subtraction-4, DesignerPunk's `docs/specs/` layout) applies.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[src/cli/**]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `src/cli/**`: The CLI source, granted whole (§ 2.1). Only `src/cli/templates/` ships, as read-only package contents. `init` copies those templates to paths the consumer owns (`product/`, the starter specs, the personal note, the MCP config), and those paths sit under other scopes, never under `src/cli/`. A consumer has no CLI source to write; a change to it goes upstream (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/generate-platform-tokens.ts]`
 
@@ -266,11 +290,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/generate-platform-tokens.ts`: This repo's platform-token build step (§ 2.2). A consumer generates through the installed `designerpunk` bin, not this script. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/generate-token-types.ts]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/generate-token-types.ts`: This repo's token-type generation step (§ 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/verify-opacity-types.ts]`
 
@@ -278,11 +306,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/verify-opacity-types.ts`: This repo's build-time check on the generated opacity types (§ 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/build-browser-bundles.js]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/build-browser-bundles.js`: Builds the `dist/browser` bundles the package ships (§ 2.2). The bundles ship; the builder does not. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/build-name-contract.ts]`
 
@@ -290,11 +322,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/build-name-contract.ts`: Builds `dist/name-contract.json` (§ 2.2). The contract ships; the builder does not. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/build-tool-manifest.ts]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/build-tool-manifest.ts`: Builds `dist/mcp/tool-manifest.json` (§ 2.2). The manifest ships; the builder does not. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/floor-closure.ts]`
 
@@ -302,11 +338,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/floor-closure.ts`: This repo's package-floor closure check (§ 2.2), a packaging instrument. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/pack-assert.ts]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/pack-assert.ts`: Asserts this repo's tarball contents before publish (§ 2.2), a release instrument. A consumer does not publish `@3fn/core`. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/release-publish.ts]`
 
@@ -314,11 +354,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/release-publish.ts`: This repo's only publish path (§ 2.2; ballot 2026-10-03-hermetic-publish-path), a release instrument. A consumer does not publish `@3fn/core`. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/verify-publish-rail.sh]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/verify-publish-rail.sh`: This repo's post-publish rail (§ 2.2), a release instrument. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/check-package-name-drift.js]`
 
@@ -326,11 +370,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/check-package-name-drift.js`: Checks this repo's package-name and registry-scope drift (§ 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/jest.config.js]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/jest.config.js`: This repo's `test:scripts` lane config (§ 2.2). The consumer's root `jest.config.js`, which `init` writes, is a different path and the consumer's own file. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/esbuild-css-plugin.js]`
 
@@ -338,11 +386,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/esbuild-css-plugin.js`: The CSS-as-string plugin `build-browser-bundles.js` requires (§ 2.2, confirmed at consult). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/fix-tokens-css.js]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/fix-tokens-css.js`: A post-processor for this repo's generated `tokens.css` (§ 2.2, confirmed at consult). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/audience-banner/**]`
 
@@ -350,11 +402,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/audience-banner/**`: The banner predicate (my text, Spec 123 Req 20.3) and its presence guard over this repo's `governance/*.md` (§ 2.2, confirmed at consult). The banners reach the consumer inside the shipped `governance/`, where their agents read them; the predicate and the guard do not ship. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/__bites__/**]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/__bites__/**`: The publish-rail fixtures for `verify-publish-rail.sh` (§ 2.2, confirmed at consult). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[mcp-server/package.json]`
 
@@ -362,11 +418,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/package.json`: The docs MCP's packaging, with Thurgood consulted (§ 2.3). A consumer runs the built `dist/mcp/docs-mcp.js`. It ships, but only as read-only package contents (`files`): a change to it goes upstream to DesignerPunk, and a consumer has no copy of its own to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[mcp-server/package-lock.json]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/package-lock.json`: The docs MCP's lockfile (§ 2.3). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[mcp-server/tsconfig.json]`
 
@@ -374,11 +434,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/tsconfig.json`: The docs MCP's module-resolution config, with Thurgood consulted (§ 2.3). It ships, but only as read-only package contents (`files`): a change to it goes upstream to DesignerPunk, and a consumer has no copy of its own to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[mcp-server/jest.config.js]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/jest.config.js`: The docs MCP's test config (§ 2.3). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[.kiro/hooks/ada-*.kiro.hook]`
 
@@ -386,11 +450,15 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `.kiro/hooks/ada-*.kiro.hook`: This repo's own Kiro hooks for my seat (§ 2.4). The package ships no hooks, and `init` and `attach` emit none. A consumer has nothing to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[.kiro/issues/**]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `.kiro/issues/**`: This repo's issue records, written under its own `.kiro/issues/README.md` rule 9 (§ 2.5). The convention is a stewardship instrument of this repo. The package ships neither the records nor the convention, and the consumer's tracking practice is theirs to set (subtraction 3, as cited).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:writeScope[scripts/harness/consumer.ts]`
 
@@ -398,17 +466,23 @@ signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `scripts/harness/consumer.ts`: The harness consumer driver, which runs my CLI's `pack`, `init` and `generate`. The native-lane ownership ballot (`2026-11-07-native-lane-ownership`, item 5; RATIFIED by Peter) gives it to my seat from Spec 129 U12's merge. It is this repo's native harness, which the package does not ship, and a consumer has no harness. Rendered into a consumer project's `allowedPaths`, it would name a path that does not exist there, so `retained` would be untrue and `no-consumer-counterpart` is the only true shape (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[scripts/harness/__tests__/consumer.test.ts]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `scripts/harness/__tests__/consumer.test.ts`: The driver's test file. The native-lane ownership ballot (`2026-11-07-native-lane-ownership`, item 5; RATIFIED by Peter) gives it to my seat from Spec 129 U12's merge. It is this repo's native harness, which the package does not ship, and a consumer has no harness. Rendered into a consumer project's `allowedPaths`, it would name a path that does not exist there, so `retained` would be untrue and `no-consumer-counterpart` is the only true shape (subtraction 1).
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:writeScope[harness/pins.yaml]`
 
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `harness/pins.yaml`: The harness pins file, mine for `consumer.name` and `consumer.abbreviation` only; the other sections stay Data's, Kenya's and Thurgood's, and only P2 and C6 hold that line, since a glob cannot carry a section. The same file sits in Data's and Kenya's scope too, with its own signature each, which is expected. The native-lane ownership ballot (`2026-11-07-native-lane-ownership`, item 5; RATIFIED by Peter) gives it to my seat from Spec 129 U12's merge. It is this repo's native harness, which the package does not ship, and a consumer has no harness. Rendered into a consumer project's `allowedPaths`, it would name a path that does not exist there, so `retained` would be untrue and `no-consumer-counterpart` is the only true shape (subtraction 1).
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#the-process`
 
@@ -432,6 +506,8 @@ signer: ada
 - The destination's rendering is unchanged and still carries the function: "Run token tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything."
 - This is exactly the disposition my refusal asked for. Thurgood's function-grain rule settles the fork I surfaced.
 
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
+
 ## `#frontmatter:commands[token-tests]`
 
 signer: ada
@@ -439,6 +515,8 @@ signer: ada
 **RE-SIGNED 2026-09-29 — refusal 3 RESOLVED by re-disposition; ASSENT to `superseded-by #what-you-dont-own` (`surviving: []`).**
 - The same ground as `commands[functional-suite]`. "Run the token-specific suites" is carried by the destination's "Run token tests with your repo's own test runner and scripts …".
 - The cite (subtraction-1, the repo-specific `npm test -- src/tokens/__tests__/`) applies.
+
+**Re-sign 2026-11-08 (shape review PR 2, F-4 (a)).** Re-judged against the committed rendering: the row still renders nothing, and the disposition and destination are unchanged. The canonicalHash is unchanged. Only the renderedHash moved, because a row that renders nothing now hashes `{disposition, destination}`. The assent stands, `surviving: []`.
 
 ## `#frontmatter:description`
 
