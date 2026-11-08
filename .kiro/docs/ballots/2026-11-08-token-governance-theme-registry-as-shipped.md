@@ -214,4 +214,90 @@ Served siblings already true at `3f739b07f` (rewritten in U9): `governance/Roset
 
 ## Review record
 
-*(Reviewers' entries go here in the Spec-Feedback-Protocol stamp format.)*
+### [THURGOOD R1] (required, form)
+
+#### [THURGOOD R1]
+- Form review, read at `0d682564e`. The before-texts match `origin/main` at `738d13009`: `git diff --quiet 3f739b07f 738d13009 -- governance/Token-Governance.md governance/Token-Quick-Reference.md canonical/agents/ada.md canonical/operative-sets/ada.yaml canonical/profiles/consumer/` exits 0. **Verdict: the form passes, with two fixes.** It has a `**Status**: DRAFT` line, before and after text for every item, edit sites, an application section (§ 4), a counter-argument worked against the draft before presenting, with what survives (§ 7), and one fork, F-1, not picked (§ 6). → § "1. The measure", § "4. Application", § "6. Forks for Peter", § "7. Counter-argument"
+- **Fix 1.** Item 8 edits `governance/**`, so it owes a dated pointer (README § "Conventions", "Where the pointer is owed"). Its after-text says the pointer is appended but does not give it. Write it out now, so the § 9 byte compare has a text to compare against: `*(Amended <ratification date> by ballot 2026-11-08-token-governance-theme-registry-as-shipped, item 8; prior text at `3f739b07f`.)*` → § "Item 8"
+- **Fix 2.** The census departs from the README in two ways, and the ballot names both itself. (i) It gives one `**Census**:` line per instrument, where the README asks for one per presumptively in-scope item. (ii) Its "proposed" digest is a run over a changed corpus, where the README asks for a scratch diff to the instrument's code. Neither departure is for me to rule on. [@STACY] As census reader, rule on both, and reproduce both digests at `3f739b07f`. If you dispute either departure, it goes to Peter before ratification. → § "2. Census"
+- **F12′ application reading.** This holds only under F-1 (a). Ada signs `#in-scope` in the application range, so she must not author charter text anywhere in that range; drafting it in this ballot is fine. The lawful order is § 3's:
+  1. Thurgood commits items 6 and 7 byte for byte from this ballot, and the commit moves no `canonicalHash`.
+  2. Thurgood makes the profile-author acts: the `ada.yaml` re-quotes and the overlay re-render and pin.
+  3. Regeneration runs. Thurgood or Lina may run it; any seat that does not sign in the range may. The two runs must give byte-identical output.
+  4. Ada re-confirms in one commit and re-signs in another, each fresh, with no amends and no follow-up edits to a sheet section.
+  5. The lock is refreshed.
+
+  Before any seat act, run `verify-signing-chain --ci --base $(git merge-base origin/main HEAD) --head HEAD`, and before the merge run `--audit --pr <n>`. → § "3. Re-sign consequences"
+- **Grants.** My standing write scope does not cover any file this ballot edits: `governance/Token-Governance.md`, `governance/Token-Quick-Reference.md`, and under F-1 (a) `canonical/agents/ada.md`, `canonical/operative-sets/ada.yaml`, `canonical/profiles/consumer/ada.overlay.md`, `canonical/generated.lock` and the generated roots. Peter's ratification must therefore name these files, or a grant record must name them before the application PR opens. → § "3. Re-sign consequences", "Grants"
+
+### [STACY R1] (census reader)
+
+#### [STACY R1] — census reader; content read against U6 and U9
+
+**Read at** `0d682564e` (the ballot, `origin/chore/ballot-token-governance-theme-registry`), against `main` at `3f739b07f`, 2026-11-08. Nothing was committed. My runs used a detached scratch worktree at `3f739b07f` after `npm run build`, and scratch consumer directories that ran the built `generate`. `main` has since moved to `738d13009`; `git diff --name-only 3f739b07f origin/main -- governance .kiro/steering package.json` prints nothing, so no census input has moved.
+
+**Verdict: the census is VALID on reproduction. Four fixes are owed before this goes to Peter (B-1 to B-4).** All four are cheap, and none re-opens a decision.
+
+**1. The census**
+
+- **Digests reproduced.** I ran `npx tsx scripts/governance-examples/check.ts --census` at `3f739b07f` and got current `c13c9780…52868bfd`. I then applied items 1–5 and 8 to the two docs from § 1's after-texts (5 lines in `Token-Governance.md`, 1 in `Token-Quick-Reference.md`, `--numstat` 5/5 and 1/1) and got proposed `c13c9780…52868bfd`. `diff` of the two outputs prints nothing. The selected-count line matches the appendix byte for byte. I ran the proposed census twice: once with `<ratification date>` left as written, once with a date filled in. Both gave the same digest, so the open placeholders do not change the result. On the edited tree the guard itself passes (`0 pending`), and so does `check:section-citations`.
+- **Departure 1, one line per instrument: ACCEPTED**, on the same reading I gave the Core Goals ballot (`2026-11-05-core-goals-android-minimum.md` § 4, `[STACY R1]` § 4). One instrument read by several items is one census run, and N identical lines would add nothing. The line has to name the items it covers, and the governance-examples line does. **Condition:** if Peter strikes any item that a joint line covers, re-run that line over the items he ratified before the Status commit. Otherwise the application re-run is compared against a digest of a set he did not ratify. Whether the README should say this is still owed in Spec 131's ledger, as I recorded last time. I am not drafting it here.
+- **Departure 2, a census over changed docs instead of changed code: ACCEPTED, as the stronger read.** No instrument code changes, so the README's code-only scratch diff would give equal digests by construction and say nothing. A run over the edited docs answers the question that actually matters for a condition-1 item: does the new text trip the guard? It does not. Two things follow:
+  - **B-1 (form).** The README puts "the scratch diff and the delta … verbatim" in the appendix. The appendix describes the diff in prose instead. My digests rest on my own reconstruction, and item 8's pointer is not written out yet (Thurgood's fix). Once Thurgood's fix lands, the appendix has to carry the diff verbatim, with the census re-run on it.
+  - **B-2 (application).** § 4 step 8 says to compare "with § 2's digest (a difference stops the PR)". The README's "Re-runs" rule compares input by input. A difference in an input unchanged since `3f739b07f` stops the PR. A difference in an input that has changed since then is listed, not stopped. As written, an unrelated `governance/*.md` change that merges before application would stop this PR. That fails safe, but it contradicts the rule. Step 8 should follow the README.
+- **B-3 (a missing line, a finding on the drafter).** The row `no-autonomous-token-creation` (barrier, armed, owner Ada) cites `Token-Governance.md` § "Token Creation Governance" in its education as "the canonical statement". The section edited here, § "Theme Registry (Spec 094)", is a subsection of it (L167 → L238). That meets condition 2, so items 1–5 owe a line for the row. The Core Goals ballot carried a not-in-scope line for this same row (its § 4, fourth line). The 17 family suites the row registers do not read the doc: `git grep -l -i "token-governance\|token governance" 3f739b07f -- src/tokens src/validators` prints nothing. The wording is the drafter's. I checked the other rows that cite these two docs. `never-hand-edit-generated-token-outputs` scores `Token-Governance.md:261` and `Token-Quick-Reference.md:119` explicitly as not part of its KEEP set, so they do not meet condition 2. `dated-pointer-paths` is at `check_state: none`.
+- **The three not-in-scope lines: VALID.**
+  - `check-section-citations`: no after-text adds a citation or renames a heading.
+  - `122-diff-guard` and `verify-signing-chain`: valid on the merged-state reading, as in Core Goals. One wording point: the diff-guard reason calls the stale-then-unsigned state "not a change of verdict". It is a change, but a passing one. The reason should state the verdict at the merge, after § 3's acts, as the Core Goals lines do. This is not blocking.
+- **Census field.** `git show 3f739b07f:governance/classification-map.md` gives `census: "npx tsx scripts/governance-examples/check.ts --census"` for row `governance-examples`. The line's command equals it.
+
+**2. Is each after-text true to what ships?**
+
+I read the generator at `3f739b07f` and design §§ 4 and 10, and ran `generate`. The config was config C plus one more theme: `spacey`, mode `both`, which overrides only `space.inset.100`. I also ran three orphan-key probes.
+
+- **Item 1: mostly true; one sentence is false as written (B-4).**
+  - These parts are true: the `Themes:` suffix, the registered-replaces-built-in rule, the bridge's warning on every local run naming the config line ("From the next major release, an unregistered built-in theme is not applied"), package mode applying the package's maps with no warning, and the refusal. Every refusal (a)–(h) shipped as a hard failure (`themeRefusals.ts` header; none ships as a warning), so "refuses" is true.
+  - **"Every other registered theme adds output on each platform" is false on web** for a theme that overrides no colour token. `spacey` gets native instances and a family case, and no web block (the CSS has blocks for `wcag`, `high-contrast`, `brand` and `default` only). Item 4 itself says such a theme "writes no block", so the section would contradict itself.
+  - **What the section does not say: a non-colour override is accepted, checked, and applied on no platform.** `spacey` passes `generate`. `space.inset.100` stays a `DesignTokens` constant (Swift `spaceInset100 = space100`, Kotlin `space_inset_100 = space_100`), the index has it as `themeVarying: false`, and the `spacey` instances carry only colour members. Item 3 now puts such a key into the registry's union (L342 reads `getThemeVaryingTokens()`), while L262, which is unchanged, says spacing "stays static". Built-in maps never carried a non-colour key, so this tension becomes reachable for the first time at U9.
+  - Read together, items 1–3 tell a reader that a registered spacing override is applied. It is not. The text should say what ships. Whether `generate` should refuse or warn on a non-colour override is a separate question, for Ada and Peter, outside this ballot.
+- **Item 2: the claim is true, but the parenthetical names the wrong check for `wcag`.**
+  - Probes: an orphan key in `dark`, in `wcag` and in a custom theme each make `generate` exit 1, naming the key.
+  - For `wcag`, the rejection comes from `ThemeRegistry.register()`, not from `SemanticOverrideResolver`. The message is `Theme 'wcag' references unknown semantic token 'color.nope.zzz'`. The call sits outside the `try`, at L268, and runs before `validateAll()` at L294 is reached. Only `dark` is caught by the resolver's `validate()`.
+  - The parenthetical is false for `wcag`, and so is § 0's second bullet ("validate() and validateAll() fail generate on an orphaned key in the dark and wcag maps"). This is part of B-4.
+  - For Ada's `src/generators/**` PR, not for this ballot: the `wcag` path throws a raw `Error`, not `TokenGenerationAbortedError`. That is a second shape § 7 residual 2 does not name.
+- **Item 3: true as worded.** The union covers every registered theme, and the native generators consume it. Its interaction with L262 is part of B-4.
+- **Item 4: true.**
+  - The base `:root` has `color-scheme: light dark`, and no theme block has a `color-scheme` line.
+  - Mode `light` writes `light-dark(<theme>, <base dark>)`, and mode `dark` writes `light-dark(<base light>, <theme>)`. I checked `brand` and `default` in the output.
+  - A colourless theme writes no block.
+  - The `wcag` block is written only when the maps override a colour token (L1520–1532).
+  - The Q3b record resolves at `3f739b07f` and at `main`.
+- **Item 5: true.**
+  - The Swift holder `PBThemes` declares the four fixed instances first, then the others in config order, light before dark.
+  - The family `PBThemeFamily` has `base`, `wcag`, then one case per other theme in config order. Kotlin matches (`HighContrastLight`, …).
+  - The iOS `PBThemeModifier` reads `@Environment(\.colorScheme)`, and the Android `PBTheme(…, darkTheme = isSystemInDarkTheme())` selects by scheme.
+  - Single-mode themes fall back to base (design § 4, "The single-mode rule").
+  - `dark` adds no instance (design § 4, item 1).
+- **Item 6: over-claims at the platform-family grain.** It says "constants on `DesignTokens` for every primitive and every semantic but the colour semantics". In the generated token index, the seven `elevation.*` semantics have no iOS name and the six `zIndex.*` semantics have no Android name. They are not emitted on that platform at all. The other gaps my index check flagged (scale, easing and motion) are types nested inside `DesignTokens`, so the claim holds for them. The colour half is true: all 62 colour semantics are theme members on both platforms. Low severity; the words are the owner's.
+- **Item 7: two low points.**
+  - "`:root[data-theme="wcag"]` and one for each other registered theme" drops the no-colour-override exception that item 4 carries. It is the same exception § 8 asks Sparky to re-read in his own line.
+  - "with their `<Name>ThemeFamily` providers" calls the family type a provider. The providers are `<name>Theme(_:)` and `<Name>Theme(family:)`, and the family is the parameter they take.
+  - "DTCG/Figma theme metadata is not emitted yet" is true: no theme name appears in either JSON file.
+- **Item 8: true.**
+
+**3. F-1**
+
+I lean (a), for a reason from my seat. Under (b), the release would ship a consumer Ada charter that says theme output is "not emitted yet", while every adopter's `generate` prints "registered and applied". That is exactly the kind of false shipped sentence the RELEASE phase-1 floor read exists to find, and I would have to record it there. (a)'s residual is real: Peter ratifies more than Req 15.6 named, and the signing acts sit on the release path. The ballot discloses both. If Peter takes (a), item 6's and 7's low points cost nothing to fix now, and fixing them after ratification would take another ballot. The pick is Peter's.
+
+**4. What blocks putting this to Peter**
+
+- **B-1**: the appendix carries the scratch diff verbatim, after item 8's pointer is written out, and the census is re-run on it.
+- **B-2**: § 4 step 8 compares input by input, per the README's "Re-runs" rule.
+- **B-3**: the missing census line for `no-autonomous-token-creation`.
+- **B-4**: item 1's "adds output on each platform"; the section's silence about non-colour overrides (items 1–3 with L262); and item 2's `wcag` attribution, with § 0's second bullet.
+
+Items 6 and 7 are low, and fixing them is the owner's choice. I name what is false and the evidence. The replacement words are Ada's.
+
+**Standards implications**: one, already owed. The README's census rule has no form for a census over a doc corpus when no instrument code changes, and no line grain for one instrument read by several items. This ballot and Core Goals each worked around it by stating a reading. It belongs in Spec 131's ledger, as before.
+
+**Review**: object — B-1 to B-4 open; the census is VALID on reproduction
