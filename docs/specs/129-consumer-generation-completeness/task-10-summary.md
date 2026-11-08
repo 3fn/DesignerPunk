@@ -14,4 +14,4 @@
 
 ## Open
 
-The four harness contexts are owed at head H (completion doc, criterion 7). `docs/tokens.css` lags the generator from U8 until the next release rebuild. Integration Guide L407 and L584 repeat the old `validate` defect and are owed to the release batching PR. The lock refresh (Lina) is the last act before the PR opens.
+`generate`'s off-grid warning covers spacing and sizing custom values; radius, fontSize and color custom values are checked by the repository's lane and not warned (`.kiro/issues/2026-11-08-generate-component-token-warning-spacing-sizing-only.md`, `release:next:phase-1`). The four harness contexts are owed at head H (completion doc, criterion 7). `docs/tokens.css` lags the generator from U8 until the next release rebuild. Integration Guide L407 and L584 repeat the old `validate` defect and are owed to the release batching PR. The lock refresh (Lina) is the last act before the PR opens.
