@@ -38,6 +38,28 @@
 #
 # Environment: ISSUES_OWNED_FETCH_TIMEOUT (seconds, default 15); ISSUES_OWNED_LOG (path, or
 # /dev/null to disable).
+#
+# PR MODE (warn-only; `fired-records`): scripts/issues-owned.sh --pr <N> --base <ref> --head <ref>
+# lists the root records that the merge of PR #<N> fires, by the same token reading and the same
+# `:(glob)` pathspec matching as the seat mode: a path: token (or list) with a glob that matches a
+# file in `git diff --name-only <merge-base> <head>`, and a merge:#<N> token naming this PR. The
+# records are read at <head>, so a record the PR adds is seen; <merge-base> is
+# `git merge-base <base> <head>`. No fetch, no seat, no run log. One line per fired record:
+#   fires-here       it fires at this merge and this diff does not re-rule or archive it; under
+#                    README rule 11 it lapses at the merge unless this diff closes it (a dated
+#                    outcome line is not read: the reason says when this diff edits the record)
+#   re-ruled-here    a **Trigger**: line changed in this diff (its dated reason is not read); the
+#                    record is read by its base token
+# A record ADDED in this diff fires here only by merge:#<N>. An added path: record does not fire at
+# the merge that adds it, as the seat mode and compare.ts read it (that merge is its last Trigger
+# change), so it is not listed. The diff is read with --no-renames.
+#   closed-here      it is at the root at the merge base and in archive/ at <head>
+#   already-fired@<sha>  a path: record that fired at an earlier first-parent commit of the base
+# A fires-here grant (`**Class**: … · grant`) carries the reason `grant`: grants do not lapse
+# (rule 11); one still open after its fixing PR's merge is a walk finding (rule 5).
+# Under GITHUB_ACTIONS=true each fires-here line is also a `::warning title=fired-records::`
+# annotation (a `::notice` when this diff edits the record, which may be its closing outcome line). The last line counts each state. Exits 0 always; an error prints the unavailable
+# line. A READ, NEVER A GATE (warn-only, .kiro/issues/2026-11-08-fired-records-warn-workflow-grant.md).
 
 REF=origin/main
 TIMEOUT="${ISSUES_OWNED_FETCH_TIMEOUT:-15}"
@@ -62,6 +84,22 @@ unavailable() {
   exit 0
 }
 
+PR_MODE=""
+if [ "$SEAT_ARG" = "--pr" ]; then
+  PR_MODE=1
+  PR_NUM=""; PR_BASE=""; PR_HEAD=""
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --pr) PR_NUM="${2:-}"; shift 2 || shift ;;
+      --base) PR_BASE="${2:-}"; shift 2 || shift ;;
+      --head) PR_HEAD="${2:-}"; shift 2 || shift ;;
+      *) shift ;;
+    esac
+  done
+  SEAT_ARG="(pr mode)"
+  ISSUES_OWNED_LOG=/dev/null
+fi
+
 TOP=$(git rev-parse --show-toplevel 2>/dev/null) || unavailable "not inside a git repository"
 cd "$TOP" 2>/dev/null || unavailable "cannot enter the repository root"
 if [ -n "${ISSUES_OWNED_LOG+x}" ]; then
@@ -72,6 +110,8 @@ fi
 
 [ -n "$SEAT_ARG" ] || unavailable "no seat given; usage: ./scripts/issues-owned.sh <YourName>"
 case "$TIMEOUT" in '' | *[!0-9]*) TIMEOUT=15 ;; esac
+
+if [ -z "$PR_MODE" ]; then
 
 # --- the fetch, under a timeout (portable: no coreutils `timeout` on macOS) ---
 GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=true git fetch -q origin main >/dev/null 2>&1 &
@@ -100,6 +140,7 @@ if [ -z "$SEAT" ]; then
   known=$(for s in $SEATS; do printf '%s' "$(printf '%s' "${s:0:1}" | tr '[:lower:]' '[:upper:]')${s:1} "; done)
   unavailable "unknown seat '$SEAT_ARG'; seats at $REF: ${known% }"
 fi
+fi # end of the seat mode's fetch and seat read; the PR mode reads <head> instead
 
 # --- the owner names on an Owner line ---
 # README rule 9: the seats named in a record's **Owner**:/**Owners**: header are its owners. The
@@ -133,6 +174,114 @@ owner_names() {
     print "$r\n";
   '
 }
+
+# --- the PR mode (see the header) ---
+pr_owners() { # the seats on a record's Owner line, comma-separated
+  local names s out=""
+  names=$(owner_names "$1")
+  for s in $SEATS; do
+    s="$(printf '%s' "${s:0:1}" | tr '[:lower:]' '[:upper:]')${s:1}"
+    printf '%s\n' "$names" | grep -qw -- "$s" && out="$out${out:+, }$s"
+  done
+  printf '%s' "${out:-no seat}"
+}
+
+pr_mode() {
+  case "$PR_NUM" in '' | *[!0-9]*) unavailable "PR mode needs --pr <number>, --base <ref> and --head <ref>" ;; esac
+  [ -n "$PR_BASE" ] && [ -n "$PR_HEAD" ] || unavailable "PR mode needs --pr <number>, --base <ref> and --head <ref>"
+  local H B
+  H=$(git rev-parse -q --verify "$PR_HEAD^{commit}" 2>/dev/null) || unavailable "no commit $PR_HEAD"
+  git rev-parse -q --verify "$PR_BASE^{commit}" >/dev/null 2>&1 || unavailable "no commit $PR_BASE"
+  B=$(git merge-base "$PR_BASE" "$H" 2>/dev/null) || unavailable "no merge base of $PR_BASE and $PR_HEAD"
+  SEATS=$(git ls-tree --name-only "$H" -- canonical/agents/ 2>/dev/null | sed -n 's|^canonical/agents/\([a-z][a-z0-9-]*\)\.md$|\1|p')
+  local f files body tok state globs g reason own fc tc parts grant
+  local nf=0 nr=0 nc=0 na=0 out="" level
+  roots() { git ls-tree --name-only "$1" -- .kiro/issues/ 2>/dev/null | grep -E '^\.kiro/issues/[^/]+\.md$' | grep -v '^\.kiro/issues/README\.md$'; }
+  # The records at <head>, and the base's root records that <head> has moved to archive/.
+  files=$(roots "$H")
+  for f in $(roots "$B"); do
+    git cat-file -e "$H:$f" 2>/dev/null && continue
+    git cat-file -e "$H:.kiro/issues/archive/${f#.kiro/issues/}" 2>/dev/null && files="$files
+$f"
+  done
+  # tok_fires <token>: does this merge fire it? Sets specs to its pathspecs (empty for merge:).
+  tok_fires() {
+    specs=()
+    case "$1" in
+      path:?*)
+        globs=${1#path:}
+        case ",$globs," in *,,* | *', '* | *' ,'*) return 1 ;; esac
+        IFS=',' read -r -a parts <<<"$globs"
+        for g in "${parts[@]}"; do specs+=(":(glob)$g"); done
+        [ -n "$(git diff --name-only --no-renames "$B" "$H" -- "${specs[@]}" 2>/dev/null)" ]
+        ;;
+      merge:\#[0-9]*) [ "${1#merge:#}" = "$PR_NUM" ] ;;
+      *) return 1 ;;
+    esac
+  }
+  # shellcheck disable=SC2016 # the backticks are literal: the token is backticked in the record
+  token_of() { printf '%s\n' "$1" | grep -m1 '^\*\*Trigger\*\*: ' | sed -nE 's/^\*\*Trigger\*\*: `([^`]*)`.*/\1/p'; }
+  for f in $files; do
+    if git cat-file -e "$H:$f" 2>/dev/null; then body=$(git show "$H:$f"); else body=$(git show "$B:$f"); fi
+    tok=$(token_of "$body")
+    if ! tok_fires "$tok"; then
+      # A record re-ruled in this diff is read by the token it had at the base.
+      git cat-file -e "$B:$f" 2>/dev/null || continue
+      tok=$(token_of "$(git show "$B:$f")")
+      tok_fires "$tok" || continue
+    fi
+    reason=""
+    if ! git cat-file -e "$H:$f" 2>/dev/null; then
+      state=closed-here
+    elif ! git cat-file -e "$B:$f" 2>/dev/null; then
+      # Added in this diff. The seat mode and compare.ts (firedState) bound a path: fire below by the
+      # commit that last changed a Trigger line, and the adding merge is that commit, so a path: record
+      # does not fire at the merge that adds it. A merge:#<N> token is not bounded, so it does.
+      [ "${#specs[@]}" -gt 0 ] && continue
+      state=fires-here; reason="added in this diff"
+    elif git diff "$B" "$H" -- "$f" 2>/dev/null | grep -q '^[-+]\*\*Trigger\*\*: '; then
+      state=re-ruled-here
+    else
+      state=fires-here
+      if [ "${#specs[@]}" -gt 0 ]; then
+        tc=$(git log -1 --format=%H -G'^\*\*Trigger\*\*: ' "$B" -- "$f" 2>/dev/null)
+        if [ -n "$tc" ]; then fc=$(git log --first-parent --reverse --format=%h "$tc..$B" -- "${specs[@]}" 2>/dev/null | head -1)
+        else fc=$(git log --first-parent --reverse --format=%h "$B" -- "${specs[@]}" 2>/dev/null | head -1); fi
+        [ -n "$fc" ] && state="already-fired@$fc"
+      fi
+      if [ "$state" = fires-here ] && [ -n "$(git diff --name-only "$B" "$H" -- "$f" 2>/dev/null)" ]; then reason="this diff edits the record"; fi
+    fi
+    # A grant does not lapse (README rule 11): it archives at its fixing PR's merge (rule 5).
+    grant=""
+    printf '%s\n' "$body" | head -15 | grep -m1 '^\*\*Class\*\*:' | grep -q '· grant' && grant=1
+    if [ -n "$grant" ] && [ "$state" = fires-here ]; then reason="grant${reason:+; $reason}"; fi
+    own=$(pr_owners "$(printf '%s\n' "$body" | head -15 | grep -m1 -E '\*\*Owners?\*\*:')")
+    case "$state" in
+      fires-here) nf=$((nf + 1)) ;;
+      re-ruled-here) nr=$((nr + 1)) ;;
+      closed-here) nc=$((nc + 1)) ;;
+      *) na=$((na + 1)) ;;
+    esac
+    out="$out$(printf '%s\t%s\t%s\t%s%s' "$state" "$f" "$own" "$tok" "${reason:+	($reason)}")
+"
+    if [ "$state" = fires-here ] && [ "${GITHUB_ACTIONS:-}" = "true" ]; then
+      # An edited record may carry its outcome line in this diff, which is not read: a notice, not a warning.
+      level=warning; case "$reason" in *"this diff edits the record"*) level=notice ;; esac
+      if [ -n "$grant" ]; then
+        out="$out::$level title=fired-records::$f ($own) fires at this merge ($tok); a grant archives at its fixing PR's merge (README rule 5), and one still open after it is a walk finding${reason:+ ($reason)}
+"
+      else
+        out="$out::$level title=fired-records::$f ($own) fires at this merge ($tok); under README rule 11 it lapses here unless this diff closes or re-rules it${reason:+ ($reason)}
+"
+      fi
+    fi
+  done
+  printf '%s' "$out"
+  echo "fired-records: $nf fire(s) here, $nr re-ruled here, $nc closed here, $na already fired; PR #$PR_NUM, merge base $(git rev-parse --short "$B"), head $(git rev-parse --short "$H")"
+  exit 0
+}
+
+[ -n "$PR_MODE" ] && pr_mode
 
 # --- the records ---
 FILES=$(git ls-tree --name-only "$REF" -- .kiro/issues/ 2>/dev/null | grep -E '^\.kiro/issues/[^/]+\.md$' | grep -v '^\.kiro/issues/README\.md$')

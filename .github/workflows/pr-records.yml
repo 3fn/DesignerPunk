@@ -1,0 +1,39 @@
+# pr-records.yml — warn-only PR-time reads of the records a merge fires.
+# Grant: .kiro/issues/2026-11-08-fired-records-warn-workflow-grant.md (README rule 8). Not a required
+# context: it is in neither EXPECTED_CONTEXTS nor complete-task.sh's REQUIRED_WORKFLOWS, and it never
+# fails a PR. A failing version is ballot 2026-11-08-closeout-cracks item 3 (e)'s, and Peter's.
+name: pr-records
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fired-records:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout (full history; the read compares the merge base with the head)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: The records this merge fires (scripts/issues-owned.sh --pr)
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          out=$(bash scripts/issues-owned.sh --pr "$PR_NUMBER" --base "$BASE_SHA" --head "$HEAD_SHA") || true
+          printf '%s\n' "$out"
+          {
+            echo '### Records this merge fires (warn-only)'
+            echo
+            echo 'Under `.kiro/issues/README.md` rule 11, a `fires-here` record lapses at this merge unless this diff closes or re-rules it. A grant does not lapse; one still open after its fixing PR merges is a walk finding.'
+            echo
+            echo '```'
+            printf '%s\n' "$out" | grep -v '^::' || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
