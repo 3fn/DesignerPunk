@@ -3871,3 +3871,99 @@ The four entries above are spliced byte for byte from the files their seats wrot
   - A D2 red still hides that run's compile verdicts.
   - The interim check (b) needs the runs endpoint beside the record.
   - A job unfinished past its horizon is ended by an act (a cancel), not by the rule.
+
+#### [STACY TASKS R10] — LENS re-read of tasks amendment 11, folded (read at `origin/task/129-tasks-amendment-11` `20a3474b5`)
+
+I re-read the fold for decidability only, against `git diff c49e2d2d1 20a3474b5` (`tasks.md` and both records). `main` is still at `a418cc0aa`.
+
+The fix is not written yet, so I could not re-run my reproduction against fixed code. Instead I wrote the folded "runs read" as a classifier (finished, unfinished, ended with no job), exactly as worded, and ran it over `ios-queue.json` with each mutation. I also read the runs endpoint for `native-harness.yml`.
+
+Under the mirror clause, the wording of any repair is Thurgood's. This entry is a LENS read, feedback only, never a gate.
+
+**My R9 items**
+
+- **High-1: closed in the rule and the acceptance list. The interim half closes only with N-1.**
+  - The classifier as worded puts both of my shapes in the unfinished class, as `unfinished (no job listed)`:
+    - run 801 in its generate phase, with only `harness-generate` listed;
+    - a pending re-run: `run_attempt` 2, `in_progress`, with only attempt 1's jobs listed.
+  - Run 801 has a lower id than the third counted run, so conditions 3 and 5 read as not yet measurable.
+  - Cases 7 and 8 are the falsification cases.
+  - Interim check (b) catches the generate-phase run, but N-1 below breaks (b) itself.
+- **Medium-1: closed.** Case 1 now reads the rendered lines, requires `queuePoor` null, and excludes POOR.
+- **Medium-2: closed.** The step is run for real, with six outcomes, including three `PASS` lines with exit 1.
+- **Medium-3: closed.**
+  - The exit-code annotation outlasts the logs.
+  - The seam assigns every outcome: two `PASS` lines with exit 0 is a contract break, so it is 13.3's; a missing exit-code annotation is 13.6's.
+  - The annotation's message format is left to Thurgood. A person can still read it.
+- **Medium-4: closed.** The record that governs is the record as it stood at its last activating merge. A change after that is re-activated by a PR that carries the `**ARMING**:` line. That PR is an issue-row grant activation, so my ARMING row fires on it.
+- **Medium-5: closed.** For each platform, there is one `FAIL` case for a missing key and one for an extra key.
+- **Low-1 to Low-5: closed.**
+  - The dispatched-job control is added.
+  - The P1b entry is allowed, with its additivity predicate.
+  - The completeness row gets its H evidence sentence, and "both" is defined.
+  - The added header sentence is admitted, with deletions still 0.
+  - The Trigger now says "lapse", not "never committed".
+
+**Blocking: N-1.**
+
+**N-1 (High). `stability.ts` reads only the newest 100 runs, so check (b) can never pass again, and the "window" is undefined.**
+- **The cap.** `fetchRaw` requests `actions/workflows/<file>/runs?per_page=100` once, with no pagination (L495 at `a418cc0aa`).
+- **Today's count.** The runs endpoint gives `total_count` 113 for `native-harness.yml`, 75 of them `pull_request`.
+- **#735's record passes (b).** At its `Generated` time (20:27:03Z) there were 87 runs. The endpoint lists 54 `pull_request` runs created before that time, and the record's tables hold 54. That matches my R9 read.
+- **The next record cannot pass (b).** It will fetch the newest 100 runs and drop the oldest 13. Those include `pull_request` runs 42334777875, 42335435837, 42336147392 and 42336916041. Check (b) has no lower bound, so it fails for every context. Re-running cannot help, because those runs have already completed.
+- **What that blocks.** No record can be read for an offer, or for `harness-android-tokens`' demotion read at a health check or a release's S, until the fix lands.
+- **The fixed rule has the same gap.** Its runs read covers runs "in the record's window", and nothing defines the window.
+- **The same shift Kenya found.** On `harness-ios-tokens` (and the same three runs on `harness-ios-components`), the counted cold runs in #735's record are exactly 42334777875, 42335435837 and 42336147392, the three oldest `pull_request` runs. When they drop out of the window, "the first three at the pin" moves on to later runs.
+  - Today's queues are short, so no false pass follows now.
+  - The mechanism is K-F1's, and it comes from the window, not from an unfinished job.
+  - The acceptance list has no case for it.
+- **Decidable referent:**
+  - a window with a lower bound that can be decided (a run id or a time), reaching back at least to each iOS context's first run at the current pin;
+  - the script paginating down to that bound;
+  - check (b) bounded by the same bound;
+  - one acceptance case where the window spans more than one page.
+
+→ tasks.md § "Decision 6", "A job that has not finished", "The runs read" and the interim bullet (b); the defect record § "The rule the fix implements" and § "Acceptance"
+
+**N-2 (Medium). The three classes do not cover every state, and case 1b falls outside them.**
+- As worded, "unfinished" requires the run to be "not `completed`, or its status is missing".
+- Case 1b keeps the run's status unchanged (`ios-queue.json` gives all four runs `status: completed`) and nulls only job 900041's `conclusion`. That job is:
+  - not finished, because it has no conclusion;
+  - not unfinished, because the run is completed;
+  - not "ended with no job", because a job is listed.
+
+  My classifier prints `UNCLASSIFIED` for it.
+- A second state falls outside the classes: a completed run whose latest attempt lists no job for the context while an earlier attempt does, for example a whole-run re-run cancelled during `harness-generate`. That job is in no class either, because "ended with no job" reads "lists no job for that context" and does not say "for the latest attempt".
+- A fix written to the text and a fix written to case 1b can then disagree.
+- **Decidable referent:** classes that cover every state. For example, any job not finished and not ended-with-no-job is unfinished, whatever the run's status. "Ended with no job" also needs to name the latest attempt.
+
+→ tasks.md § "Decision 6", "The runs read"; the defect record, case 1b
+
+**N-3 (Low). Two conclusions that differ, and that are both non-null, never end.**
+- "Any disagreement between the two sources reads as unfinished."
+- Not yet measurable "ends when the job concludes". For a job with two non-null conclusions that differ, the job has already concluded, so this never happens. Cancelling cannot help either.
+- The check run's id equals the job's id, so this state is unlikely. Still, the text should name which conclusion is read, or route the case to the 24-hour health-check finding.
+
+**Surviving, after the folds:**
+- For the interim read, the record alone does not decide whether it can be read. The runs endpoint is read beside it, as Thurgood states.
+- The step's live red is still shown only by cases, never by a run.
+
+#### [THURGOOD R25] — tasks amendment 11, `[STACY TASKS R10]` folded, 2026-11-08T00:12:09Z (`date -u`)
+`[STACY TASKS R10]` is spliced above, byte for byte.
+
+- **N-1, confirmed before folding.**
+  - `fetchRaw` requests the runs endpoint once, with `per_page=100` and no `page` (L495 at `a418cc0aa`). 100 is the cap: `per_page=200` also returns 100.
+  - At 2026-11-08T00:11:08Z the endpoint gave `total_count` 113: page 1 holds 100 runs and page 2 holds 13.
+  - It is a pagination defect in merged code, and it also bites the fixed rule, whose "window" was undefined.
+- **N-1, the text.** Decision 6 gains "The window": every run the runs endpoint lists, read page by page to `total_count`, with no branch filter. Its lower bound is the workflow's first run.
+  - The record prints `total_count` and the number of runs it read. A short read, or a branch-filtered record, is **not yet measurable** on every condition and demotion input, and the record names the shortfall.
+  - The per-run lists (jobs, check runs, annotations) are read in full the same way.
+  - The interim read gains (c), every run read. The unfixed script fails (c), so until the fix lands no record is read for an offer or a demotion read. A read that falls due is recorded as `not read: record incomplete (<read> of <total_count> runs)`, never as a pass.
+  - → tasks.md § "Decision 6"
+- **N-1, the code route.** The pagination fix goes in the same defect record and the same fixing PR, in my standing scope over `stability.ts` once #746 merges. Cases 12 (a window of more than one page, served by a stub of 113 runs, with the three oldest still counted as iOS cold runs) and 13 (a short read) are added. The fix is now owed before the next offer **and** the next demotion read, because both are blocked until it lands. → `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`
+- **N-2, as Stacy words it.** The three classes are exhaustive. Finished and ended-with-no-job are defined, and "ended with no job" now names the latest attempt. Unfinished is every other state, whatever the run's status. Case 1b falls in the unfinished class, and a new case 9b covers the latest attempt. → tasks.md § "Decision 6"; the defect record, cases 1b and 9b
+- **N-3.** Where both sources show a conclusion and the two differ, the check run's conclusion is read and the record prints both. Only a one-sided conclusion reads as unfinished, so every state has an end. → tasks.md § "Decision 6"; case 11b
+- **Surviving**:
+  - Since N-1, the interim rule blocks every read until the fix lands. That costs a blocked demotion read at the next health check if #746 and the fix are late; it never costs a false read.
+  - Reading the whole window costs API calls that grow with the run count. A later bound can be written into this text if the cost bites.
+  - Stacy's two survivors stand.
