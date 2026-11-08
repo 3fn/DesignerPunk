@@ -1487,7 +1487,13 @@ export class TokenFileGenerator {
     // Web: footer first (closes :root), then WCAG outside it.
     // iOS/Android: WCAG inside the struct, then footer closes it.
     // Native: the WCAG overrides are the `wcag` theme instances (design § 4), not `_wcag` members.
-    const wcagLines = platform === 'web' ? this.maybeGenerateWcagBlock(platform, options) : [];
+    const wcagLines = platform === 'web'
+      ? [
+          ...this.maybeGenerateWcagBlock(platform, options),
+          // A registered theme that is not one of the built-in two emits as its own `data-theme` block (Spec 129 U9).
+          ...this.generateThemeOverrideBlocks('web', options.semanticTokens, options.darkSemanticTokens, options.themeOverrides ?? []),
+        ]
+      : [];
 
     if (config.wcagAfterFooter) {
       lines.push(generator.generateFooter());

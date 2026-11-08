@@ -118,6 +118,9 @@ export const TOKEN_MODULE_KEYS: readonly TokenModuleKey[] = [
  */
 export const OPTIONAL_TOKEN_MODULE_KEYS: ReadonlySet<TokenModuleKey> = new Set<TokenModuleKey>(['ColorTokens']);
 
+/** The directories of DesignerPunk's built-in override maps under `src/tokens/themes/`. */
+export type BuiltinThemeDir = 'dark' | 'wcag' | 'dark-wcag';
+
 export interface TokenSet {
   /** The directory the modules were read from (for messages). */
   readonly root: string;
@@ -125,4 +128,9 @@ export interface TokenSet {
   mod<K extends TokenModuleKey>(key: K): TokenModules[K];
   /** True when the source has the module (only optional keys can be absent). */
   has(key: TokenModuleKey): boolean;
+  /**
+   * DesignerPunk's built-in override map for `dir`, read from the installed package at run time (never
+   * the consumer's copy): the bridge for a built-in theme the config does not register (design § 10).
+   */
+  builtinTheme(dir: BuiltinThemeDir): import('../tokens/themes/types').SemanticOverrideMap;
 }

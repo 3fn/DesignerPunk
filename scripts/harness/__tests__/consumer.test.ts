@@ -22,6 +22,7 @@ import {
   isInside,
   listFiles,
   main,
+  manifestThemes,
   parseArgs,
   platformOutputFolders,
   pruneNodeModules,
@@ -266,6 +267,31 @@ describe('runDriver — pack, install, init, generate, one consumer root', () =>
     expect(Object.keys(onDisk.themes[0]).sort()).toEqual(['mode', 'name']);
     // a config that registers none (the loader resolves `[]`; the older fake omits the key) reads as an empty list
     expect(runDriver(options(fakeRunner().run, { out: path.join(sandbox, 'out', 'consumer2') })).themes).toEqual([]);
+  });
+
+  it('carries an entry in the { light, dark } form as mode "both" with pair: true, and a plain entry without a pair key (Spec 129 U9)', () => {
+    const { run: inner } = fakeRunner();
+    const run: Runner = (command, args, opts) =>
+      command === process.execPath && args[0] === '-e'
+        ? {
+            status: 0,
+            stdout: JSON.stringify({
+              outputDir: path.join(opts.cwd, 'dist', 'tokens'),
+              themes: [
+                { name: 'dark', mode: 'dark', overrides: { 'color.action.primary': { primitiveReferences: { value: 'x' } } } },
+                { name: 'wcag', mode: 'both', overrides: { light: { 'color.action.primary': {} }, dark: {} } },
+              ],
+            }),
+            stderr: '',
+          }
+        : inner(command, args, opts);
+    const manifest = runDriver(options(run));
+    expect(manifest.themes).toEqual([{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'both', pair: true }]);
+    const onDisk = JSON.parse(fs.readFileSync(path.join(outDir, 'harness-consumer.json'), 'utf8')) as ConsumerManifest;
+    expect(onDisk.themes[1]).toEqual({ name: 'wcag', mode: 'both', pair: true });
+    expect(Object.keys(onDisk.themes[0]).sort()).toEqual(['mode', 'name']);
+    // an object that merely has a `light` key is not the pair form
+    expect(manifestThemes({ outputDir: '/o', themes: [{ name: 'x', mode: 'light', overrides: { light: {} } }] })).toEqual([{ name: 'x', mode: 'light' }]);
   });
 
   it('copies the fixture in and points the consumer config at it', () => {

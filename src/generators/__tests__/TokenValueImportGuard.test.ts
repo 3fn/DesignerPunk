@@ -24,7 +24,6 @@ const ALLOWED: Record<string, string> = {
   'generators/BlendValueGenerator.ts': 'not constructed by `generate`; reads the package blend primitives for the repository build',
   'generators/ResponsiveGridGenerator.ts': 'not constructed by `generate`; reads the package breakpoint and grid tokens for the repository build',
   'providers/WebUnitConverter.ts': 'a unit provider the translation layer uses; `generate` never constructs it',
-  'generators/generateTokenFiles.ts': 'the built-in override maps, until Task 14.2 reads them by registration',
 };
 
 export function valueImportsOf(file: string, text: string): string[] {

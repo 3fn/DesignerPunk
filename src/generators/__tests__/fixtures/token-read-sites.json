@@ -52,16 +52,6 @@
       "generateReach": "generate: no - imported by no pipeline file (tests only)"
     },
     {
-      "file": "src/generators/generateTokenFiles.ts",
-      "modules": [
-        "themes/dark-wcag/SemanticOverrides",
-        "themes/dark/SemanticOverrides",
-        "themes/wcag/SemanticOverrides"
-      ],
-      "part": "The built-in dark, WCAG light and WCAG dark override maps (until Task 14.2 reads them by registration)",
-      "generateReach": "generate: yes - every run"
-    },
-    {
       "file": "src/generators/ResponsiveGridGenerator.ts",
       "modules": [
         "BreakpointTokens",

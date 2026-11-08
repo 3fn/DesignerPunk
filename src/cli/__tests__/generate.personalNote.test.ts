@@ -176,7 +176,7 @@ describe('runGenerate — the personal note (Task 22.1)', () => {
       await runGenerate();
       const themeLines = out().filter((l) => l.trim().startsWith('Themes:'));
       expect(themeLines).toHaveLength(1);
-      expect(themeLines[0]).toContain('dark (dark), wcag (light) — registered, not applied yet');
+      expect(themeLines[0]).toContain('dark (dark), wcag (light) — registered and applied');
       log.mockClear();
       born({ git: 'ignored', themes: [] });
       await runGenerate();

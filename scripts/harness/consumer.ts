@@ -111,11 +111,13 @@ export interface ConsumerManifest {
   /** Generated native files per platform: paths relative to that platform's output folder, sorted. */
   generated: { ios: string[]; android: string[] };
   /**
-   * The themes the consumer's config registers, as the installed loader resolved them (`name` and `mode` only, in
-   * config order; the overrides are not copied). Additive to schema 1: a lane reads it instead of reloading the
-   * consumer's config with the repository's own `node_modules`.
+   * The themes the consumer's config registers, as the installed loader resolved them (`name` and `mode`, in
+   * config order; the overrides are not copied). `pair: true` marks an entry in the `{ light, dark }` form, which the
+   * shared module's `ThemeEntry.pair` reads for refusals (c) and (g); a plain entry carries no `pair` key.
+   * Additive to schema 1: a lane reads it instead of reloading the consumer's config with the repository's own
+   * `node_modules`.
    */
-  themes: { name: string; mode: string }[];
+  themes: { name: string; mode: string; pair?: true }[];
 }
 
 export interface DriverOptions {
@@ -300,20 +302,27 @@ export interface ResolvedConfigLike {
   configDir?: string;
   /** Present once Task 15 adds per-platform output: `platforms.<platform>.output`, resolved to an absolute path. */
   platforms?: Partial<Record<Platform, { output?: string }>>;
-  /** The registered themes; only `name` and `mode` are read. `loadConfig` always resolves an array (`[]` when none). */
-  themes?: { name: string; mode: string }[];
+  /** The registered themes; `name`, `mode` and whether `overrides` is the `{ light, dark }` form are read. `loadConfig` always resolves an array (`[]` when none). */
+  themes?: { name: string; mode: string; overrides?: unknown }[];
 }
 
 /** The manifest's `themes`: `name` and `mode` of each registered theme, in config order. An absent field reads as none. */
-export function manifestThemes(config: ResolvedConfigLike): { name: string; mode: string }[] {
+export function manifestThemes(config: ResolvedConfigLike): { name: string; mode: string; pair?: true }[] {
   if (config.themes === undefined) return [];
   if (!Array.isArray(config.themes)) throw new HarnessStepError('package', 'the consumer\'s resolved config has `themes` that is not an array');
   return config.themes.map((t, i) => {
     if (!t || typeof t.name !== 'string' || typeof t.mode !== 'string') {
       throw new HarnessStepError('package', `the consumer's resolved config has themes[${i}] without a string name and mode`);
     }
-    return { name: t.name, mode: t.mode };
+    return isPairOverrides(t.overrides) ? { name: t.name, mode: t.mode, pair: true } : { name: t.name, mode: t.mode };
   });
+}
+
+/** True for the `{ light, dark }` registration form: an object whose keys are exactly `light` and `dark`. */
+function isPairOverrides(overrides: unknown): boolean {
+  if (!overrides || typeof overrides !== 'object') return false;
+  const keys = Object.keys(overrides).sort();
+  return keys.length === 2 && keys[0] === 'dark' && keys[1] === 'light';
 }
 
 /** Each platform's output folder, relative to the consumer root: `platforms.<platform>.output`, else `output`. */

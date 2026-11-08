@@ -10,9 +10,12 @@
 
 import * as path from 'path';
 import { scopedTsRequire, scopedTsRequireMany, type TsModuleLoader } from './scopedTsRequire';
+import { resolvePackageRoot } from '../cli/shared/resolvePackageRoot';
+import type { SemanticOverrideMap } from '../tokens/themes/types';
 import {
   OPTIONAL_TOKEN_MODULE_KEYS,
   TOKEN_MODULE_KEYS,
+  type BuiltinThemeDir,
   type TokenModuleKey,
   type TokenModules,
   type TokenSet,
@@ -75,8 +78,16 @@ export function loadTokenSet(root: string, loadModule: TsModuleLoader = scopedTs
     return loaded;
   };
 
+  const builtins = new Map<BuiltinThemeDir, SemanticOverrideMap>();
   return {
     root,
+    builtinTheme: (dir) => {
+      if (!builtins.has(dir)) {
+        const file = path.join(resolvePackageRoot(__dirname), 'src', 'tokens', 'themes', dir, 'SemanticOverrides');
+        builtins.set(dir, builtinExport(loadModule(file, __filename), dir, file));
+      }
+      return builtins.get(dir)!;
+    },
     has: (key) => load().has(key),
     mod: <K extends TokenModuleKey>(key: K): TokenModules[K] => {
       const m = load();
@@ -84,6 +95,20 @@ export function loadTokenSet(root: string, loadModule: TsModuleLoader = scopedTs
       return m.get(key) as TokenModules[K];
     },
   };
+}
+
+const BUILTIN_EXPORT: Record<BuiltinThemeDir, string> = {
+  dark: 'darkSemanticOverrides',
+  wcag: 'wcagSemanticOverrides',
+  'dark-wcag': 'darkWcagSemanticOverrides',
+};
+
+function builtinExport(mod: unknown, dir: BuiltinThemeDir, file: string): SemanticOverrideMap {
+  const map = (mod as Record<string, SemanticOverrideMap | undefined>)[BUILTIN_EXPORT[dir]];
+  if (!map || typeof map !== 'object') {
+    throw new Error(`DesignerPunk's built-in '${dir}' override map is missing: ${file} does not export ${BUILTIN_EXPORT[dir]}. Reinstall @3fn/core.`);
+  }
+  return map;
 }
 
 let cachedPackageSet: TokenSet | undefined;
@@ -103,6 +128,7 @@ export function packageTokenSet(): TokenSet {
   };
   cachedPackageSet = {
     root,
+    builtinTheme: (dir) => builtinExport(read(`themes/${dir}/SemanticOverrides`), dir, `themes/${dir}/SemanticOverrides`),
     has: (key) => {
       try { read(key); return true; } catch { return false; }
     },
