@@ -10,6 +10,7 @@
 # harness-android-components) each download it, run their lane (harness/ios/lane.ts or
 # harness/android/lane.ts), then run the comparator (scripts/harness/compare.ts) on the run file the
 # lane wrote. Each context fails, never skips, when harness-generate failed or its artifact is absent.
+# The last step of harness-generate runs the D2 check (scripts/harness/d2-check.ts); see .kiro/issues/2026-11-07-d2-check-step-grant.md.
 #
 # Triggers: `pull_request` with no `paths:` filter (every unit PR runs all four contexts, Req 2.10), and
 # `workflow_dispatch`. A dispatched run has no merge base, so its comparator runs `--no-base`.
@@ -83,6 +84,42 @@ jobs:
           if-no-files-found: error
           include-hidden-files: true
           retention-days: 7
+
+      # The D2 check (Req 1.3, with its completeness half, Req 5.10), run by the invocation contract of
+      # .kiro/issues/2026-11-07-d2-check-step-grant.md. The step has no `if:`, `continue-on-error` or
+      # `working-directory`. It annotates in its own shell because a failing step stops before any later one:
+      # a notice per PASS line, an error per FAIL line and for the setup line, "no d2-check line" when the script
+      # printed none, and on every run one exit annotation (exit code, contract lines matched) that outlives the logs.
+      # The step fails on a non-zero exit, or when any of the three verdict lines is missing or reads FAIL.
+      - name: D2 check (scripts/harness/d2-check.ts)
+        run: |
+          set +e
+          out=$(npx tsx scripts/harness/d2-check.ts --consumer "${RUNNER_TEMP}/harness-consumer")
+          status=$?
+          set -e
+          printf '%s\n' "$out"
+          matched=0
+          bad=0
+          for k in completeness ios android; do
+            line=$(printf '%s\n' "$out" | grep "^d2-check $k: " | head -n 1 || true)
+            if [ -z "$line" ]; then bad=1; continue; fi
+            matched=$((matched + 1))
+            case "$line" in
+              "d2-check $k: PASS"*) echo "::notice title=d2-check::$line" ;;
+              *) echo "::error title=d2-check::$line"; bad=1 ;;
+            esac
+          done
+          line=$(printf '%s\n' "$out" | grep '^d2-check: FAIL setup (' | head -n 1 || true)
+          if [ -n "$line" ]; then echo "::error title=d2-check::$line"; fi
+          if [ -z "$(printf '%s\n' "$out" | grep '^d2-check' || true)" ]; then
+            echo "::error title=d2-check::no d2-check line"
+          fi
+          if [ "$status" -eq 0 ] && [ "$bad" -eq 0 ]; then
+            echo "::notice title=d2-check::exit=$status lines=$matched/3"
+          else
+            echo "::error title=d2-check::exit=$status lines=$matched/3"
+            exit 1
+          fi
 
   # ---------------------------------------------------------------------------------------------
   # iOS

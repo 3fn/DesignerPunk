@@ -182,3 +182,111 @@ describe('harness-android-tokens: the default-name step (Task 20, U7a)', () => {
     }
   });
 });
+
+describe('harness-generate: the d2-check step (Task 13.6, U8; grant .kiro/issues/2026-11-07-d2-check-step-grant.md)', () => {
+  const NAME = 'D2 check (scripts/harness/d2-check.ts)';
+  const COMMAND = 'npx tsx scripts/harness/d2-check.ts --consumer "${RUNNER_TEMP}/harness-consumer"';
+  const steps = doc.jobs['harness-generate'].steps as Array<Step & { 'continue-on-error'?: unknown; 'working-directory'?: unknown }>;
+  const names = steps.map((s) => s.name);
+  const step = steps.find((s) => s.name === NAME)!;
+  const run = step?.run ?? '';
+
+  it('is exactly one step running d2-check.ts, in harness-generate only', () => {
+    expect(step).toBeDefined();
+    expect(steps.filter((s) => (s.run ?? '').includes('d2-check.ts')).length).toBe(1);
+    for (const [id, job] of Object.entries(doc.jobs)) {
+      if (id === 'harness-generate') continue;
+      expect(job.steps.some((s) => (s.run ?? '').includes('d2-check'))).toBe(false);
+    }
+  });
+  it('is the job\'s last step, directly after "Upload the consumer root"', () => {
+    expect(names[names.length - 1]).toBe(NAME);
+    expect(names[names.length - 2]).toBe('Upload the consumer root');
+  });
+  it('has no working-directory, if or continue-on-error key', () => {
+    for (const k of ['working-directory', 'if', 'continue-on-error']) expect(Object.keys(step)).not.toContain(k);
+  });
+  it('runs the record\'s command line exactly, with no platform argument', () => {
+    expect(run).toContain(COMMAND);
+    expect(run.split('d2-check.ts').length - 1).toBe(1);
+    expect(run).not.toMatch(/d2-check\.ts[^\n]*--(ios|android|platform)/);
+  });
+  it('annotates notice on PASS, error on FAIL and on the setup line, and error when no line was printed', () => {
+    expect(run).toContain('::notice title=d2-check::$line');
+    expect(run).toContain('::error title=d2-check::$line');
+    expect(run).toContain('::error title=d2-check::no d2-check line');
+    expect(run).toContain('for k in completeness ios android');
+    expect(run).toContain('"^d2-check $k: "');
+    expect(run).toContain('d2-check: FAIL setup (');
+  });
+  it('writes an exit-code annotation on every run, notice when the step passes and error when it fails', () => {
+    expect(run).toMatch(/::notice title=d2-check::exit=/);
+    expect(run).toMatch(/::error title=d2-check::exit=/);
+  });
+
+  describe('the step\'s shell, run for real against a stub script', () => {
+    const exec = (stdout: string, exitCode: number): { out: string; status: number } => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'harness-d2-'));
+      try {
+        fs.mkdirSync(path.join(dir, 'bin'));
+        fs.writeFileSync(path.join(dir, 'bin', 'npx'), `#!/bin/bash\ncat <<'EOT'\n${stdout}EOT\nexit ${exitCode}\n`, { mode: 0o755 });
+        const r = require('child_process').spawnSync('bash', ['-e', '-c', run], {
+          cwd: dir,
+          encoding: 'utf8',
+          env: { ...process.env, PATH: `${dir}/bin:${process.env.PATH}`, RUNNER_TEMP: dir },
+        });
+        return { out: r.stdout as string, status: r.status as number };
+      } finally {
+        fs.rmSync(dir, { recursive: true, force: true });
+      }
+    };
+    const P = (k: string): string => `d2-check ${k}: PASS count=3 x\n`;
+    const ALL = P('completeness') + P('ios') + P('android');
+
+    it('three PASS lines and exit 0: three notices, a notice exit annotation, step passes', () => {
+      const r = exec(ALL, 0);
+      expect(r.status).toBe(0);
+      expect(r.out.match(/::notice title=d2-check::d2-check /g)?.length).toBe(3);
+      expect(r.out).toContain('::notice title=d2-check::exit=0 lines=3/3');
+      expect(r.out).not.toContain('::error');
+    });
+    it('a FAIL line (exit 1): error on that line, the others still notices, step fails', () => {
+      const r = exec(P('completeness') + 'd2-check ios: FAIL count=0 x\n' + P('android'), 1);
+      expect(r.status).not.toBe(0);
+      expect(r.out).toContain('::error title=d2-check::d2-check ios: FAIL count=0 x');
+      expect(r.out).toContain('::error title=d2-check::exit=1 lines=3/3');
+    });
+    it('the setup line (exit 2): an error on it, step fails', () => {
+      const r = exec('d2-check: FAIL setup (index missing)\n', 2);
+      expect(r.status).not.toBe(0);
+      expect(r.out).toContain('::error title=d2-check::d2-check: FAIL setup (index missing)');
+      expect(r.out).toContain('::error title=d2-check::exit=2 lines=0/3');
+    });
+    it('no line at all: "no d2-check line" error, step fails', () => {
+      const r = exec('', 0);
+      expect(r.status).not.toBe(0);
+      expect(r.out).toContain('::error title=d2-check::no d2-check line');
+      expect(r.out).toContain('::error title=d2-check::exit=0 lines=0/3');
+    });
+    it('three PASS lines but exit 1: the step fails (the exit code counts)', () => {
+      const r = exec(ALL, 1);
+      expect(r.status).not.toBe(0);
+      expect(r.out).toContain('::error title=d2-check::exit=1 lines=3/3');
+    });
+    it('exit 0 with a verdict line missing: the step fails', () => {
+      const r = exec(P('completeness') + P('ios'), 0);
+      expect(r.status).not.toBe(0);
+      expect(r.out).toContain('::error title=d2-check::exit=0 lines=2/3');
+    });
+  });
+});
+
+describe('the workflow file against the d2-check grant (numstat)', () => {
+  it('keeps every existing job and the four compile contexts\' "Require harness-generate" steps', () => {
+    expect(Object.keys(doc.jobs).sort()).toEqual(['harness-android-components', 'harness-android-tokens', 'harness-generate', 'harness-ios-components', 'harness-ios-tokens']);
+    for (const c of CONTEXTS) {
+      expect(doc.jobs[c].steps[0].name).toBe('Require harness-generate');
+      expect(doc.jobs[c].steps[0].run).toContain('"$GENERATE_RESULT" != "success"');
+    }
+  });
+});
