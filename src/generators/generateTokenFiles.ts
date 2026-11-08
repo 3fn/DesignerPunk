@@ -16,7 +16,7 @@ import { SemanticOverrideResolver } from '../resolvers/SemanticOverrideResolver'
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import { ThemeRegistry } from '../themes/ThemeRegistry';
 import { resolveThemeMaps, isThemePair } from '../themes/resolveThemeMaps';
-import { findThemeRefusals, themeRefusalMessage } from '../themes/themeRefusals';
+import { findThemeRefusals, findNonColourOverrideKeys, themeRefusalMessage } from '../themes/themeRefusals';
 import { getCoreVersion } from './coreVersion';
 import { registeredThemeDiffersNotice } from '../cli/shared/errorCatalog';
 import type { TokenSet } from './TokenSet';
@@ -233,7 +233,11 @@ export function generateTokenFiles(
   const configThemes: ConfigTheme[] = config.themes ?? [];
   // The theme-instance rule's refusals (design § 4, item 5): a registered theme that cannot become an instance
   // and a family case on both native platforms fails `generate` here, naming the config entry.
-  const refusals = findThemeRefusals(configThemes);
+  // A non-colour key in any theme's override map is refused too: the colour emitter would write it as a colour.
+  const refusals = [
+    ...findThemeRefusals(configThemes),
+    ...findNonColourOverrideKeys(configThemes, (name) => semanticRegistry.get(name)?.category),
+  ];
   if (refusals.length > 0) {
     const message = themeRefusalMessage(refusals);
     console.error(`❌ ${message}\n`);

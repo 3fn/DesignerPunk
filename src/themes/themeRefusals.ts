@@ -11,8 +11,9 @@
 
 import type { ConfigTheme } from '../config/defineConfig';
 import { isThemePair } from './resolveThemeMaps';
+import { nonColourOverrideKeyMessage } from '../cli/shared/errorCatalog';
 
-export type ThemeRefusalRule = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h';
+export type ThemeRefusalRule = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'colour';
 
 export interface ThemeRefusal {
   rule: ThemeRefusalRule;
@@ -80,6 +81,34 @@ export function findThemeRefusals(themes: ReadonlyArray<ConfigTheme>): ThemeRefu
       const swiftCase = lowerFirst(pascal(t.name));
       if (swiftCase === 'self' || swiftCase === 'init' || swiftCase === 'allCases') {
         add('h', `the Swift family case would be "${swiftCase}", which a use of the family then reads as something else`);
+      }
+    }
+  });
+  return out;
+}
+
+/**
+ * A non-colour key in any registered theme's override map (`dark`, `wcag` or a custom theme; the plain map or either half
+ * of the `{ light, dark }` form). `categoryOf` returns a semantic token's category, or `undefined` for a name that is not a
+ * semantic token (that is the orphan-key check's, not this one's). Every offending key is returned.
+ */
+export function findNonColourOverrideKeys(
+  themes: ReadonlyArray<ConfigTheme>,
+  categoryOf: (key: string) => string | undefined,
+): ThemeRefusal[] {
+  const out: ThemeRefusal[] = [];
+  themes.forEach((t, i) => {
+    const overrides = t?.overrides as unknown;
+    if (!overrides || typeof overrides !== 'object') return;
+    const maps: Array<[string, Record<string, unknown>]> = isThemePair(overrides)
+      ? [['overrides.light', overrides.light ?? {}], ['overrides.dark', overrides.dark ?? {}]]
+      : [['overrides', overrides as Record<string, unknown>]];
+    for (const [mapName, map] of maps) {
+      for (const key of Object.keys(map ?? {})) {
+        const category = categoryOf(key);
+        if (category !== undefined && category !== 'color') {
+          out.push({ rule: 'colour', entry: i, message: nonColourOverrideKeyMessage(label(i, t), `\`${mapName}\``, key, category) });
+        }
       }
     }
   });
