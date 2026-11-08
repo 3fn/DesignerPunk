@@ -22,9 +22,22 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: stacy
-canonicalHash: sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17, scope-18, scope-19, scope-20, scope-21, scope-22, scope-23, scope-24, scope-25, scope-26, scope-27, scope-28, scope-29, scope-30, scope-31, scope-32, scope-33
-date: 2026-11-07
+canonicalHash: sha256:8652bda6542f96b2d623e8d53e2bd997cd0e79621b700c29958c4401d49d2fd2
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17, scope-18, scope-19, scope-20, scope-21, scope-22, scope-23, scope-24, scope-25, scope-26, scope-27, scope-28, scope-29, scope-30, scope-31, scope-32, scope-33, scope-34, scope-35, scope-36, scope-37, scope-38, scope-39, scope-40, scope-41, scope-42, scope-43
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, sites 7 and 8 (r2).**
+- **Source**: ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 2026-11-08T00:33:06Z; #748), on `chore/apply-native-lane-ownership-r2` @ `0fc2379f0`; Thurgood authored the text, items and removals at `b46dff5d3` (drafters credited there by SHA) and regenerated at `0fc2379f0`. Neither moves this canonicalHash.
+- **What changed in the charter** (two hunks from `main`, read whole in this session): site 7, the frontmatter block (two comment lines and the entries `scripts/harness/compare.ts`, `scripts/harness/__tests__/compare.test.ts` and, under F-5 (a), `harness/README.md`); and site 8 in this unit, where the compile-harness bullet's closing sentence is replaced by Thurgood's `[THURGOOD R4]` text, which ends with the same sentence.
+- **Site 8, byte-checked against the ballot**: with `[, `harness/README.md`]` and `[ and its amendments]` taken under F-5 (a), and the `d2-check` bracket and its limit placeholder struck under F-4 (b), the template matches the charter byte for byte on both sides of the README-limit placeholder, and the bullet before the replaced sentence equals `main`'s. The fill is taken from § 8 F-5 (a), in the second person and without its line numbers. It says what F-5 (a) ratified, and I accept it.
+- **Site 7, byte-checked**: the ballot's block, with `<date>` read as `2026-11-08`, and the F-5 (a) README line after it, occurs once in the frontmatter. No F-4 (a) line is present.
+- **The set: 51 items, up from 41.** The 41 earlier ones are unchanged in id and text. Ten new ones (`scope-34` to `scope-43`), with `scope-33`, cover the inserted text whole: removing their texts leaves only separators. `scope-34`, the grant, is a `member`. `scope-35` to `scope-43`, its limits, reviews and review-entry form, are `obligation`s, since each can be broken by a PR that leaves the grant alone. All 51 are verbatim and occur once. The record lists `scope-33` (the closing sentence) before `scope-34`, though the text now puts it last. Nothing checks record order, and the content is the same.
+- **The removal**: the compile-harness removal equals the whole bullet as it now reads, byte for byte (site 12). It occurs once in the unit and in none of the three renderings.
+- **The hash** moves from `sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55` to the value above. I computed it in this session from the r2 tree as `hashText` over the unit from `partition(splitFrontmatter(...).body)`. No target hash was given, and I used none from a report or from the first-cut branch. The overlay pin at `b46dff5d3` equals it.
+
+**Ruling: CONFIRMED at 51 items.**
+
+**Re-confirmed 2026-11-07 (prior record, superseded)**: canonicalHash `sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55`, 41 items, as below.
 
 **Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, sites 2 and 3.**
 - **What changed**: two bullets. Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`). Thurgood applied both at `a064ea06c` as profile author. I checked both by script: each after-text in § 4 equals the charter, byte for byte.

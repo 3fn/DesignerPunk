@@ -161,7 +161,7 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
-    canonicalHash: sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac
+    canonicalHash: sha256:2b91cd28ee5e1bf3e277ef7a19bedc9f4131dde41be77b57597fd9c3262eb66f
     items:
       - id: trigger-lens
         kind: member
