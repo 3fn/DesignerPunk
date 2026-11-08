@@ -21,3 +21,5 @@
 ## Close
 
 PR 2 merges, and this file gets rule 5's outcome line and moves to `archive/` in that PR. A release whose phase 1 finds a signed row still pinning the constant above, with this file open, is a lapse (rule 11).
+
+**Outcome (2026-11-08, Thurgood, owner; rule 5)**: executed by #823, the shape review's application PR 2. The F-4 (a) pin (`545ae18f6`): `derive.ts` `renderedHashOfRow`, under the grant `.kiro/issues/2026-11-08-shape-review-pr2-derive-pin-grant.md`, with the hunk Lina approved (v2, sha256 `c730ebd3…16a2`). It also carries § 2a's "Re-disposition" paragraph, S4's line, the register history line and fixture D1. The 261 re-signs come from seven seats on seat branches cut from `6c42f20bc`, joined `--no-ff`: Stacy 108, Lina 48, Ada 39, Kenya 22, Data 20, Sparky 20, Leonardo 4. At the head: stale 0; `--ci` PASS on 261 rows; `--audit --branch --exclude-signer stacy` reads 153 anchored. Stacy's 108 are for the § 5.3 delegate. The record closes at #823's merge, which must precede the next release's squash S; phase 1 then reads that no signed row pins `sha256:37517e5f…`. Moved to `archive/` in #823.
