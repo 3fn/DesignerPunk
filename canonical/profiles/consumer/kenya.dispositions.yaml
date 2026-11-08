@@ -13,7 +13,7 @@ body:
   "#the-implement-vs-direct-distinction": {"disposition": "retained"}
   "#operational-mode-screen-implementation:preamble": {"disposition": "retained"}
   "#step-1-review-the-specification": {"disposition": "retained"}
-  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "the stale `dist/*.ios.swift` snapshots — see the Ground truth section", "cites": "subtraction-1"}], "destination": "#step-2-set-up-the-screen", "signature": {"signer": "kenya", "canonicalHash": "sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f", "renderedHash": "sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8", "assent": {"surviving": ["setup-1", "setup-2", "setup-3"]}, "evidence": "canonical/profiles/consumer/signatures/kenya.md#step-2-set-up-the-screen"}}
+  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "the stale `dist/*.ios.swift` snapshots — see the Ground truth section", "cites": "subtraction-1"}], "destination": "#step-2-set-up-the-screen", "signature": {"signer": "kenya", "canonicalHash": "sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f", "renderedHash": "sha256:476df3328475883b0acaa1f3aeb2cf9df660f211ba1c16a89993e098055fa51a", "assent": {"surviving": ["setup-1", "setup-2", "setup-3"]}, "evidence": "canonical/profiles/consumer/signatures/kenya.md#step-2-set-up-the-screen"}}
   "#step-3-implement": {"disposition": "retained"}
   "#step-4-test": {"disposition": "retained"}
   "#step-5-report-back": {"disposition": "retained"}

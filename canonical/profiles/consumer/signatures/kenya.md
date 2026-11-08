@@ -126,8 +126,17 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f
-renderedHash: sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8
-date: 2026-09-29
+renderedHash: sha256:476df3328475883b0acaa1f3aeb2cf9df660f211ba1c16a89993e098055fa51a
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 3 of 3 (`setup-1` to `setup-3`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f`, renderedHash `sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The parenthetical on `setup-2` no longer points at the built `dist/*.ios.swift` snapshots; it reads *"(no token snapshot ships in the package, and the files your own `generate` writes are not the source for values)"*. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `setup-1` and `setup-3` are verbatim. `setup-2` survives: *"Bring in DesignerPunk tokens by querying the application MCP for the resolved values"* is verbatim, and its warning is now stated without naming a retired file, so reading values from a snapshot or a generated file still violates the unit.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f`), as the print-mode output shows. `renderedHash` moves `sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8` to `sha256:476df3328475883b0acaa1f3aeb2cf9df660f211ba1c16a89993e098055fa51a` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 3/3 surviving.** All 3 survive.
 - **`setup-2`** keeps *"Bring in DesignerPunk tokens by querying the application MCP for the resolved values"*. Reading values from a snapshot instead violates it.
