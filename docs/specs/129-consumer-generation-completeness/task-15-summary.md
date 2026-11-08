@@ -15,4 +15,4 @@
 
 ## Open
 
-The README "Getting Started" list still has five steps: two `install-doc.test.ts` cases stay red until grant #776 merges and Thurgood edits the README. The lock (`canonical/generated.lock`) is not refreshed in this diff; the 122 diff-guard reads `input-closure-changed` from the Guide edits, and Lina refreshes it when U10 is next in the queue. The four harness contexts run from the PR and are pasted into the completion doc at head H.
+The lock (`canonical/generated.lock`) is not refreshed in this diff; the 122 diff-guard reads `input-closure-changed` from the Guide edits, and Lina refreshes it when U10 is next in the queue. The four harness contexts run from the PR and are pasted into the completion doc at head H.
