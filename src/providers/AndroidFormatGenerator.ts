@@ -1,9 +1,11 @@
+import type { TokenSet } from '../generators/TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 import { PrimitiveToken, SemanticToken } from '../types';
 import { BaseFormatProvider, FileMetadata } from './FormatProvider';
 import { TargetPlatform, OutputFormat } from '../types/TranslationOutput';
 import { getPlatformTokenName } from '../naming/PlatformNamingRules';
-import { getColorToken } from '../tokens/ColorTokens';
-import { getOpacityToken } from '../tokens/OpacityTokens';
+
+
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
 import { formatKotlinDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
 import { androidFontFamilyMember, parseFontStack } from '../generators/native/FontFamilyStack';
@@ -18,7 +20,7 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
 
   private outputFormat: OutputFormat;
 
-  constructor(outputFormat: OutputFormat = 'kotlin') {
+  constructor(outputFormat: OutputFormat = 'kotlin', private readonly tokens: TokenSet = packageTokenSet()) {
     super();
     this.outputFormat = outputFormat;
   }
@@ -449,6 +451,8 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     colorRef: string,
     opacityRef: string
   ): string {
+    const { getColorToken } = this.tokens.mod('ColorTokens');
+    const { getOpacityToken } = this.tokens.mod('OpacityTokens');
     // Resolve color primitive to get RGB values
     const colorToken = getColorToken(colorRef as any);
     if (!colorToken) {

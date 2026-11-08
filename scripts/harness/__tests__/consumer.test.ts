@@ -22,6 +22,8 @@ import {
   isInside,
   listFiles,
   main,
+  manifestThemes,
+  overlayConsumerNativeCopies,
   parseArgs,
   platformOutputFolders,
   pruneNodeModules,
@@ -266,6 +268,59 @@ describe('runDriver — pack, install, init, generate, one consumer root', () =>
     expect(Object.keys(onDisk.themes[0]).sort()).toEqual(['mode', 'name']);
     // a config that registers none (the loader resolves `[]`; the older fake omits the key) reads as an empty list
     expect(runDriver(options(fakeRunner().run, { out: path.join(sandbox, 'out', 'consumer2') })).themes).toEqual([]);
+  });
+
+  it('carries an entry in the { light, dark } form as mode "both" with pair: true, and a plain entry without a pair key (Spec 129 U9)', () => {
+    const { run: inner } = fakeRunner();
+    const run: Runner = (command, args, opts) =>
+      command === process.execPath && args[0] === '-e'
+        ? {
+            status: 0,
+            stdout: JSON.stringify({
+              outputDir: path.join(opts.cwd, 'dist', 'tokens'),
+              themes: [
+                { name: 'dark', mode: 'dark', overrides: { 'color.action.primary': { primitiveReferences: { value: 'x' } } } },
+                { name: 'wcag', mode: 'both', overrides: { light: { 'color.action.primary': {} }, dark: {} } },
+              ],
+            }),
+            stderr: '',
+          }
+        : inner(command, args, opts);
+    const manifest = runDriver(options(run));
+    expect(manifest.themes).toEqual([{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'both', pair: true }]);
+    const onDisk = JSON.parse(fs.readFileSync(path.join(outDir, 'harness-consumer.json'), 'utf8')) as ConsumerManifest;
+    expect(onDisk.themes[1]).toEqual({ name: 'wcag', mode: 'both', pair: true });
+    expect(Object.keys(onDisk.themes[0]).sort()).toEqual(['mode', 'name']);
+    // an object that merely has a `light` key is not the pair form
+    expect(manifestThemes({ outputDir: '/o', themes: [{ name: 'x', mode: 'light', overrides: { light: {} } }] })).toEqual([{ name: 'x', mode: 'light' }]);
+  });
+
+  describe('one copy of each native file name: the consumer\'s copy of the token-platform sources (Spec 129 Task 14.3)', () => {
+    const write = (root: string, rel: string, text: string): void => {
+      fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
+      fs.writeFileSync(path.join(root, rel), text);
+    };
+    it('writes the consumer\'s file over the package\'s file of the same path, and returns the replaced paths', () => {
+      const pkg = path.join(sandbox, 'ov-pkg');
+      const src = path.join(sandbox, 'ov-src');
+      write(pkg, 'src/tokens/platforms/ios/MotionTokens.swift', 'package copy');
+      write(pkg, 'src/tokens/platforms/android/MotionTokens.kt', 'package copy');
+      write(src, 'platforms/ios/MotionTokens.swift', 'consumer copy');
+      write(src, 'platforms/android/MotionTokens.kt', 'package copy');
+      expect(overlayConsumerNativeCopies(pkg, src)).toEqual(['src/tokens/platforms/android/MotionTokens.kt', 'src/tokens/platforms/ios/MotionTokens.swift']);
+      expect(fs.readFileSync(path.join(pkg, 'src/tokens/platforms/ios/MotionTokens.swift'), 'utf8')).toBe('consumer copy');
+    });
+    it('adds no file the package lacks, skips non-native files, and replaces nothing in package mode', () => {
+      const pkg = path.join(sandbox, 'ov-pkg2');
+      const src = path.join(sandbox, 'ov-src2');
+      write(pkg, 'src/tokens/platforms/ios/MotionTokens.swift', 'package copy');
+      write(src, 'platforms/ios/Extra.swift', 'consumer only');
+      write(src, 'platforms/ios/MotionTokens.md', 'notes');
+      expect(overlayConsumerNativeCopies(pkg, src)).toEqual([]);
+      expect(fs.existsSync(path.join(pkg, 'src/tokens/platforms/ios/Extra.swift'))).toBe(false);
+      expect(overlayConsumerNativeCopies(pkg, undefined)).toEqual([]);
+      expect(fs.readFileSync(path.join(pkg, 'src/tokens/platforms/ios/MotionTokens.swift'), 'utf8')).toBe('package copy');
+    });
   });
 
   it('copies the fixture in and points the consumer config at it', () => {

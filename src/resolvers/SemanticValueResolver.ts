@@ -11,9 +11,8 @@
 
 import type { SemanticToken } from '../types/SemanticToken';
 import type { ColorTokenValue } from '../types/PrimitiveToken';
-import { getColorToken } from '../tokens/ColorTokens';
-import { getOpacityToken } from '../tokens/OpacityTokens';
-
+import type { TokenSet } from '../generators/TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 type Mode = 'light' | 'dark';
 type Theme = 'base' | 'wcag';
 
@@ -21,9 +20,9 @@ type Theme = 'base' | 'wcag';
  * Resolve a color primitive's rgba value for the given mode and theme.
  * Falls back to light if dark slot value is missing.
  */
-function resolveColorPrimitive(name: string, mode: Mode, theme: Theme = 'base'): string | null {
+function resolveColorPrimitive(name: string, mode: Mode, theme: Theme, tokens: TokenSet): string | null {
   // OKLCH path: look up composed color
-  const { composedColorMap } = require('../tokens/color');
+  const { composedColorMap } = tokens.mod('color/index');
   const composed = composedColorMap.get(name);
   if (composed) {
     const { l, c, h } = composed.resolved;
@@ -32,7 +31,8 @@ function resolveColorPrimitive(name: string, mode: Mode, theme: Theme = 'base'):
 
   // Legacy fallback: old ColorTokens.ts RGBA path
   try {
-    const token = getColorToken(name as any);
+    if (!tokens.has('ColorTokens')) return null;
+    const token = tokens.mod('ColorTokens').getColorToken(name as any);
     const colorValue = token.platforms.web.value as ColorTokenValue;
     return colorValue?.[mode]?.[theme] ?? colorValue?.light?.[theme] ?? null;
   } catch {
@@ -53,8 +53,10 @@ function parseRgba(rgba: string): { r: number; g: number; b: number } | null {
 export function resolveSemanticTokenValue(
   token: Omit<SemanticToken, 'primitiveTokens'>,
   mode: Mode,
-  theme: Theme = 'base'
+  theme: Theme = 'base',
+  tokens: TokenSet = packageTokenSet()
 ): Omit<SemanticToken, 'primitiveTokens'> {
+  const { getOpacityToken } = tokens.mod('OpacityTokens');
   const refs = token.primitiveReferences;
   if (!refs) return token;
 
@@ -63,7 +65,7 @@ export function resolveSemanticTokenValue(
     const opacityMod = token.modifiers.find(m => m.type === 'opacity');
     const colorName = refs.value || refs.default;
     if (opacityMod && colorName && typeof colorName === 'string' && !colorName.startsWith('rgba(') && !colorName.startsWith('oklch(')) {
-      const colorResolved = resolveColorPrimitive(colorName, mode, theme);
+      const colorResolved = resolveColorPrimitive(colorName, mode, theme, tokens);
       const opacityToken = getOpacityToken(opacityMod.reference);
       if (colorResolved && opacityToken) {
         // OKLCH path: oklch(L C H / alpha)
@@ -91,7 +93,7 @@ export function resolveSemanticTokenValue(
   // Opacity composition: { color: 'gray100', opacity: 'opacity048' } (exactly 2 keys)
   const refKeys = Object.keys(refs);
   if (refs.color && refs.opacity && refKeys.length === 2) {
-    const colorResolved = resolveColorPrimitive(refs.color, mode, theme);
+    const colorResolved = resolveColorPrimitive(refs.color, mode, theme, tokens);
     const opacityToken = getOpacityToken(refs.opacity);
     if (colorResolved && opacityToken) {
       // OKLCH path
@@ -120,7 +122,7 @@ export function resolveSemanticTokenValue(
 
   if (typeof primitiveName !== 'string' || primitiveName.startsWith('rgba(')) return token;
 
-  const resolved = resolveColorPrimitive(primitiveName, mode, theme);
+  const resolved = resolveColorPrimitive(primitiveName, mode, theme, tokens);
   if (!resolved) return token;
 
   const newRefs = { ...refs };

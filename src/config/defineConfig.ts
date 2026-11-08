@@ -26,11 +26,22 @@
 import type { SemanticOverrideMap } from '../tokens/themes/types';
 import type { ThemeMode } from '../themes/ThemeRegistry';
 
+/**
+ * A theme's two maps, one per mode: `light` applies in the light scheme, `dark` in the dark one.
+ * For `wcag` it is the registration of both built-in WCAG maps (`wcagSemanticOverrides` and
+ * `darkWcagSemanticOverrides`). Requires `mode: 'both'`.
+ */
+export interface ThemeOverridePair {
+  light: SemanticOverrideMap;
+  dark: SemanticOverrideMap;
+}
+
 /** Theme registration in the config file. */
 export interface ConfigTheme {
   name: string;
   mode: ThemeMode;
-  overrides: SemanticOverrideMap;
+  /** One map, or the `{ light, dark }` form (Spec 129 U9): the optional second form, additive to the first. */
+  overrides: SemanticOverrideMap | ThemeOverridePair;
 }
 
 /** DesignerPunk pipeline configuration. */

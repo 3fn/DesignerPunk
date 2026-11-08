@@ -126,7 +126,7 @@ Guiding agents to apply tokens and components to product design specs is the cur
 
 ## Getting Started
 
-This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
+This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a theme you register in `designerpunk.config.ts` is written as a `:root[data-theme="<name>"]` block, which matches the `<html>` element only, so it themes the whole page; light and dark mode work.
 
 **Use it in your project:**
 

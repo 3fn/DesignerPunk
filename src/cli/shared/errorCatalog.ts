@@ -548,14 +548,51 @@ export function personalNoteUnignoredMessage(): string {
 }
 
 /**
- * design.md catalog row **generate — registered theme not emitted** (R3; Ada's draft, Leonardo's FINAL
- * wording — `design-inputs/catalog-wording.md` § 1). `generate` prints its registered themes on ONE
- * comma-joined line, so the line gets one suffix. It comes off by dated amendment when Spec 129 item (i) lands.
+ * The `generate` line that lists the themes the config registers (Spec 129 U9). A registered theme is
+ * applied: it emits as `:root[data-theme="<name>"]` on web, which matches `<html>` only, and as
+ * instances on iOS and Android. It replaces the line "registered, not applied yet" that Spec 094's
+ * registry left in place while the generator read no registered theme.
  */
 export function generateThemesLine(themes: ReadonlyArray<{ name: string; mode: string }>): string {
+  return `Themes: ${themes.map((t) => `${t.name} (${t.mode})`).join(', ')}${GENERATE_THEMES_SUFFIX}`;
+}
+
+/** The one suffix the `Themes:` line carries (design.md catalog row "generate — registered theme not emitted", amended 2026-11-08; wording Leonardo's). */
+export const GENERATE_THEMES_SUFFIX =
+  ' — registered and applied: a dark or wcag theme you register replaces DesignerPunk\'s built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme';
+
+/** The config line that registers all three of DesignerPunk's built-in WCAG and dark maps (the bridge warning names it). */
+export const BUILTIN_THEME_REGISTRATION_LINES: Readonly<Record<'dark' | 'wcagLight' | 'wcagDark', string>> = Object.freeze({
+  dark: "{ name: 'dark', mode: 'dark', overrides: darkSemanticOverrides }",
+  wcagLight: "{ name: 'wcag', mode: 'both', overrides: { light: wcagSemanticOverrides, dark: darkWcagSemanticOverrides } }",
+  wcagDark: "{ name: 'wcag', mode: 'both', overrides: { light: wcagSemanticOverrides, dark: darkWcagSemanticOverrides } }",
+});
+
+/**
+ * The bridge warning (design § 10, `[ADA Q3a R2]`, verbatim): printed on every run, once per built-in map
+ * (`dark`, `wcag` light, `wcag` dark) that the config does not register, in local mode, until the next major.
+ */
+export function unregisteredBuiltinThemeWarning(theme: string, mode: string, version: string, configLine: string): string {
   return (
-    `Themes: ${themes.map((t) => `${t.name} (${t.mode})`).join(', ')} — registered, not applied yet: ` +
-    `a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens`
+    `generate: theme '${theme}' (${mode}) is not registered in designerpunk.config.ts, so DesignerPunk's built-in overrides ` +
+    `from @3fn/core ${version} were applied, as before 129. To use your own, register it: ${configLine}. ` +
+    `From the next major release, an unregistered built-in theme is not applied.`
+  );
+}
+
+/** The first-run count (design § 10): a registered built-in map whose values differ from the package's. */
+export function registeredThemeDiffersNotice(theme: string, mode: string, differing: number, version: string): string {
+  return (
+    `generate: theme '${theme}' (${mode}) is registered, so your own overrides now apply. ` +
+    `${differing} of its values differ from DesignerPunk's built-in overrides in @3fn/core ${version}.`
+  );
+}
+
+/** A registered built-in theme whose override map is missing (design § 10: a registered map's missing file fails `generate`). */
+export function registeredThemeMapMissingMessage(theme: string, half: string, expectedFile: string): string {
+  return (
+    `generate: theme '${theme}' is registered in designerpunk.config.ts, but its ${half} override map is missing. ` +
+    `Expected the export of ${expectedFile}. Restore that file (copy it from node_modules/@3fn/core/src/tokens/themes/) or remove the entry.`
   );
 }
 

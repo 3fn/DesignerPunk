@@ -6,7 +6,7 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 
 > This file is generated from the install region of `governance/DesignerPunk-Integration-Guide.md`. Do not edit it: edit the region there, then run `npx tsx scripts/derive-install-doc.ts`. A test fails if the two differ.
 
-This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
+This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a theme you register in `designerpunk.config.ts` is written as a `:root[data-theme="<name>"]` block, which matches the `<html>` element only, so it themes the whole page; light and dark mode work.
 
 ## Prerequisites
 
@@ -74,7 +74,7 @@ Use this posture when you want a design system of your own. These are the five s
 
 After birth, your repo holds two different kinds of thing.
 
-- **Your language: the tokens.** `init` copied them into your repo, and they are yours. DesignerPunk never adds to them. But part of your copy is not read yet. `generate` takes the following from the installed package, so editing them in your copy does not change your output yet: the colour palette; the dark and WCAG override maps; the opacity values that colours with transparency are built from; the motion tokens (duration, easing and scale) and the layering tokens; the font-size and line-height values that icon sizes are calculated from (your own font-size and line-height tokens are still read from your copy); and the whole DTCG/Figma export. Spacing and the other non-colour primitives, and your semantic references, are read from your copy.
+- **Your language: the tokens.** `init` copied them into your repo, and they are yours. DesignerPunk never adds to them. `generate` reads your copy: the colour palette; the opacity values that colours with transparency are built from; the motion tokens (duration, easing and scale) and the layering tokens; the font-size and line-height values that icon sizes are calculated from; the whole DTCG/Figma export; spacing and the other non-colour primitives; and your semantic references. The exception is the dark and WCAG override maps, which `generate` reads by registration. For each of `dark`, `wcag` light and `wcag` dark that your config registers, it reads your own map (the entries `init` writes register all three). For each it does not register, it still applies DesignerPunk's map from the installed package, as before, and prints a warning on every run naming the config line that would make it yours, until the next major release (planned 17.0.0), after which an unregistered built-in theme is not applied.
 - **Our updating surface: the components.** You use them by name, and they improve when you update the package.
 
 **`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source. One of its four checks, mathematical relationships, currently fails even on unmodified token source, so `validate` exits non-zero; that is a known defect in the checker, not in your tokens. Its other three checks are still worth reading after you edit token source files.
@@ -94,7 +94,7 @@ What `generate` writes, into the `output` directory set in `designerpunk.config.
 - **`npx designerpunk sync`** comes after it: it reports package updates against the installed package — reports, never writes silently. It prints its report before changing anything, and changes DesignerPunk's MCP configuration and generated agent files only on your go.
 - **`npx designerpunk generate`** comes after you change your own tokens.
 
-**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The exceptions above still apply: the colour palette, the dark and WCAG override maps, the opacity in composed colours, the motion and layering tokens, the font-size and line-height values behind icon sizes, and the DTCG/Figma export all come from the installed package, so the next `generate` after an update can change them. If an updated component needs a token your set does not have, `sync` tells you (section 5).
+**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The one exception left is a dark or WCAG override map your config does not register: `generate` applies DesignerPunk's for it, so the next `generate` after an update can change what it produces. Register the entries `init` writes and all three maps are yours. If an updated component needs a token your set does not have, `sync` tells you (section 5).
 
 Commit your lockfile, so that a teammate installs the version you built against.
 
@@ -150,7 +150,7 @@ On web, "yours wins" is **per token, by order**: a token you define under the sa
     <!-- DesignerPunk components on the page use the WCAG theme's values -->
   </html>
   ```
-- **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing yet.
+- **A theme you register in `designerpunk.config.ts` is written as a `:root[data-theme="<name>"]` block in your generated CSS.** Like the WCAG block, its selector matches only the `<html>` element, so set the attribute there; on any other element it matches nothing, and whether a subtree can be themed is not decided yet. A theme of one mode (`mode: 'light'` or `'dark'`) covers one colour scheme: the other scheme shows the base values, so the block writes `light-dark(<its value>, <the base value>)` for it. Register it with `mode: 'both'` (or in the `{ light, dark }` form) to give it its own look in both.
 
 The full import list is under Available Imports, in the reference part of the Integration Guide (`governance/DesignerPunk-Integration-Guide.md` in the `@3fn/core` package; your agent reads it as `designerpunk-integration-guide`).
 

@@ -540,7 +540,7 @@ export const ComponentNameTokens = defineComponentTokens({
 | **Config Loader** | `src/config/ConfigLoader.ts` | Loads `designerpunk.config.ts`, resolves paths |
 | **Generation** | `src/generators/TokenFileGenerator.ts` | Platform output generation |
 | **Platform Generators** | `src/providers/*FormatGenerator.ts` | Platform-specific formatting |
-| **Theme Generators** | `generateThemeOverrideBlocks` → `generateWebThemeBlock`, `generateSwiftThemeTypes`, `generateKotlinThemeTypes` | Platform-specific output for registered themes — built and tested, not yet called by the build (native wiring is Spec 129 scope item (i); whether registered themes reach web is Spec 129's to decide). The build emits the built-in WCAG overrides through `generateWcagOverrideBlock` |
+| **Theme Generators** | `generateThemeOverrideBlocks` → `generateWebThemeBlock`, `generateSwiftThemeTypes`, `generateKotlinThemeTypes` | Platform-specific output for registered themes — called by `generate` for each registered theme that is not `dark` or `wcag`: the web `:root[data-theme="<name>"]` block through `generateWebThemeBlock`, the native instances through the theme emitter. The built-in WCAG overrides are emitted through `generateWcagOverrideBlock` |
 | **Output** | Configured output dir (default: `dist/`) | Generated platform files |
 | **Component Tokens** | `src/build/tokens/defineComponentTokens.ts` | Component token authoring |
 | **Color Tokens** | `src/tokens/ColorTokens.ts` | OKLCH channel-primitive definitions |
@@ -569,7 +569,7 @@ export default defineConfig({
 
 **Path resolution**: Token sources resolve from the installed package. Theme overrides and component tokens resolve relative to the config file. Output directory is configurable. When no config exists, defaults match the DesignerPunk repo structure (backward compatible).
 
-**Theme registration**: Themes are explicitly imported and registered in the config — no directory walking, no auto-discovery. By design the config is the registry, but a registered theme is not applied yet: `generate` lists it as "registered, not applied yet", and it changes no generated output on any platform (whether and how is Spec 129's to decide).
+**Theme registration**: Themes are explicitly imported and registered in the config — no directory walking, no auto-discovery. The config is the registry, and `generate` applies each registered theme. `dark` and `wcag` replace DesignerPunk's built-in override maps, read from the consumer's copy; a built-in map the config does not register is still applied from the installed package, with a warning on every run, until the next major release. Any other theme is written as `:root[data-theme="<name>"]` on web and as a theme instance on iOS and Android.
 
 See: `Token-Governance.md` § "Theme Registry (Spec 094)" for governance rules.
 

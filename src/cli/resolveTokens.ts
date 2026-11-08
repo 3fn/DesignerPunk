@@ -11,11 +11,19 @@ import type { PrimitiveToken } from '../types/PrimitiveToken';
 import type { SemanticToken } from '../types/SemanticToken';
 import type { ResolvedConfig } from '../config/ConfigLoader';
 import { scopedTsRequire, type TsModuleLoader } from '../config/scopedTsRequire';
+import { loadTokenSet } from '../config/TokenSetLoader';
+import type { TokenSet } from '../generators/TokenSet';
 
 /** Token data resolved from the configured source. */
 export interface TokenInput {
   primitiveTokens: PrimitiveToken[];
   semanticTokens: SemanticToken[];
+  /**
+   * The modules of the same token source that generation reads besides the two arrays (the
+   * colour palette, opacity, motion and layering, the icon-size inputs, the DTCG export's inputs;
+   * Spec 129 U9). Absent for a caller that did not load it: the generators then read DesignerPunk's own.
+   */
+  tokenSet?: TokenSet;
 }
 
 /**
@@ -45,6 +53,7 @@ export function resolveTokens(
   return {
     primitiveTokens: tokenBarrel.getAllPrimitiveTokens(),
     semanticTokens: semanticBarrel.getAllSemanticTokens(),
+    tokenSet: loadTokenSet(sourcePath, loadModule),
   };
 }
 

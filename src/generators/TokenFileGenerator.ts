@@ -9,27 +9,23 @@
  */
 
 import { PrimitiveToken, TokenCategory } from '../types/PrimitiveToken';
+import type { TokenSet, TokenModules } from './TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 import { SemanticToken, SemanticCategory } from '../types/SemanticToken';
 import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
 import { FileMetadata } from '../providers/FormatProvider';
-import { getAllPrimitiveTokens, durationTokens, easingTokens, scaleTokens } from '../tokens';
-import { getAllSemanticTokens, getAllZIndexTokens, getAllElevationTokens, motionTokens } from '../tokens/semantic';
+
+
 import { BlendUtilityGenerator, BlendUtilityGenerationOptions } from './BlendUtilityGenerator';
 import { ComponentTokenRegistry, RegisteredComponentToken } from '../registries/ComponentTokenRegistry';
-import { allEmittedColors } from '../tokens/color';
-import { colorHues, neutralHue } from '../tokens/color/channels/hues';
-import {
-  pinkLightness, orangeLightness, yellowLightness, greenLightness,
-  cyanLightness, tealLightness, purpleLightness,
-} from '../tokens/color/channels/lightness/chromatic';
-import {
-  pinkChroma, orangeChroma, yellowChroma, greenChroma,
-  cyanChroma, tealChroma, purpleChroma,
-} from '../tokens/color/channels/chroma/chromatic';
-import { whiteLightness, grayLightness, blackLightness } from '../tokens/color/channels/lightness/neutral';
-import { whiteChroma, grayChroma, blackChroma } from '../tokens/color/channels/chroma/neutral';
+
+
+
+
+
+
 import { generatedByLine, getCoreVersion } from './coreVersion';
 import { formatSwiftDisplayP3, formatKotlinDisplayP3, parseOklchText } from './oklch/NativeColorUtils';
 import { withKotlinImports } from './native/KotlinImports';
@@ -157,10 +153,14 @@ export class TokenFileGenerator {
   private androidGenerator: AndroidFormatGenerator;
   private blendUtilityGenerator: BlendUtilityGenerator;
 
-  constructor() {
-    this.webGenerator = new WebFormatGenerator();
-    this.iosGenerator = new iOSFormatGenerator();
-    this.androidGenerator = new AndroidFormatGenerator('kotlin');
+  /**
+   * @param tokens - The token set the generator reads (Spec 129 U9): `generate` passes the one
+   *   loaded from the consumer's token source. Callers that pass none get DesignerPunk's own.
+   */
+  constructor(private readonly tokens: TokenSet = packageTokenSet()) {
+    this.webGenerator = new WebFormatGenerator(tokens);
+    this.iosGenerator = new iOSFormatGenerator(tokens);
+    this.androidGenerator = new AndroidFormatGenerator('kotlin', tokens);
     this.blendUtilityGenerator = new BlendUtilityGenerator();
   }
 
@@ -1073,9 +1073,14 @@ export class TokenFileGenerator {
   }
 
   /**
-   * Generate a single web CSS theme override block.
-   * Produces `:root[data-theme="name"] { ... }` with overridden tokens.
-   * Dark-only themes include `color-scheme: dark` and use static values (no light-dark()).
+   * Generate a single web CSS theme override block: `:root[data-theme="name"] { ... }` with the overridden tokens.
+   *
+   * The single-mode rule (design § 4, Spec 129 U9): a theme of one mode covers one colour scheme, and its other
+   * half is the base. A theme of mode `light` writes `light-dark(<its light value>, <baseDark value>)`; one of mode
+   * `dark` writes `light-dark(<baseLight value>, <its dark value>)`; a theme of both modes writes both of its own.
+   * A token whose two values are equal is written as a plain value. No block carries a `color-scheme` line: the
+   * block does not set the scheme, it follows the page's. Only the covered mode's tokens are read from the theme,
+   * so a theme built with one mode's tokens is complete.
    */
   private generateWebThemeBlock(
     baseLight: Array<Omit<SemanticToken, 'primitiveTokens'>>,
@@ -1089,21 +1094,23 @@ export class TokenFileGenerator {
     const ltMap = new Map(theme.lightTokens.map(t => [t.name, t]));
     const dtMap = new Map(theme.darkTokens.map(t => [t.name, t]));
 
+    const getVal = (t: Omit<SemanticToken, 'primitiveTokens'> | undefined): string | undefined =>
+      t === undefined
+        ? undefined
+        : t.primitiveReferences?.value ?? t.primitiveReferences?.default ?? Object.values(t.primitiveReferences || {})[0] ?? '';
+
     const overrides: Array<{ token: Omit<SemanticToken, 'primitiveTokens'>; lightVal: string; darkVal: string }> = [];
 
-    for (const [name] of lbMap) {
-      const lbToken = lbMap.get(name)!;
+    for (const [name, lbToken] of lbMap) {
       if (lbToken.category !== SemanticCategory.COLOR) continue;
       if (!theme.overrideKeys.has(name)) continue;
 
-      const ltToken = ltMap.get(name);
-      const dtToken = dtMap.get(name);
-      if (!ltToken || !dtToken) continue;
+      // The covered half comes from the theme; the other half is the base's.
+      const lightVal = theme.mode === 'dark' ? getVal(lbToken) : getVal(ltMap.get(name));
+      const darkVal = theme.mode === 'light' ? getVal(dbMap.get(name)) : getVal(dtMap.get(name));
+      if (lightVal === undefined || darkVal === undefined) continue;
 
-      const getVal = (t: Omit<SemanticToken, 'primitiveTokens'>) =>
-        t.primitiveReferences?.value ?? t.primitiveReferences?.default ?? Object.values(t.primitiveReferences || {})[0] ?? '';
-
-      overrides.push({ token: lbToken, lightVal: getVal(ltToken), darkVal: getVal(dtToken) });
+      overrides.push({ token: lbToken, lightVal, darkVal });
     }
 
     if (overrides.length === 0) return lines;
@@ -1112,27 +1119,13 @@ export class TokenFileGenerator {
     lines.push(`/* ${theme.name.charAt(0).toUpperCase() + theme.name.slice(1)} Theme: Semantic token overrides (Spec 094) */`);
     lines.push(`:root[data-theme="${theme.name}"] {`);
 
-    if (theme.mode === 'dark') {
-      lines.push('  color-scheme: dark;');
-    }
-
     for (const o of overrides) {
       const name = this.webGenerator.getTokenName(o.token.name, o.token.category);
       const cssName = name.startsWith('--') ? name : `--${name}`;
-
-      if (theme.mode === 'dark') {
-        // Dark-only: static value, no light-dark()
-        lines.push(`  ${cssName}: ${o.darkVal};`);
-      } else if (theme.mode === 'light') {
-        // Light-only: static value
-        lines.push(`  ${cssName}: ${o.lightVal};`);
-      } else {
-        // Both modes: light-dark() wrapping when values differ
-        const value = o.lightVal !== o.darkVal
-          ? `light-dark(${o.lightVal}, ${o.darkVal})`
-          : o.lightVal;
-        lines.push(`  ${cssName}: ${value};`);
-      }
+      const value = o.lightVal !== o.darkVal
+        ? `light-dark(${o.lightVal}, ${o.darkVal})`
+        : o.lightVal;
+      lines.push(`  ${cssName}: ${value};`);
     }
 
     lines.push('}');
@@ -1163,10 +1156,10 @@ export class TokenFileGenerator {
       return null;
     }
     
-    // Import primitive tokens and parsing utilities
-    const { fontSizeTokens } = require('../tokens/FontSizeTokens');
-    const { lineHeightTokens } = require('../tokens/LineHeightTokens');
-    const { parseMultiplier, CUSTOM_MULTIPLIER_PREFIX } = require('../tokens/semantic/IconTokens');
+    // The source's primitive tokens and parsing utilities
+    const { fontSizeTokens } = this.tokens.mod('FontSizeTokens');
+    const { lineHeightTokens } = this.tokens.mod('LineHeightTokens');
+    const { parseMultiplier, CUSTOM_MULTIPLIER_PREFIX } = this.tokens.mod('semantic/IconTokens');
     
     // Resolve fontSize primitive token
     const fontSizeToken = fontSizeTokens[fontSizeRef];
@@ -1206,6 +1199,8 @@ export class TokenFileGenerator {
    * @returns Array of formatted token strings
    */
   private generateMotionSection(platform: 'web' | 'ios' | 'android'): string[] {
+    const { durationTokens, easingTokens, scaleTokens } = this.tokens.mod('index');
+    const { motionTokens } = this.tokens.mod('semantic/index');
     const lines: string[] = [];
 
     // Import platform motion-token formatters
@@ -1254,6 +1249,7 @@ export class TokenFileGenerator {
    * @returns Array of formatted token strings
    */
   private generateLayeringSection(platform: 'web' | 'ios' | 'android'): string[] {
+    const { getAllZIndexTokens, getAllElevationTokens } = this.tokens.mod('semantic/index');
     const lines: string[] = [];
 
     // Route z-index tokens to web/iOS, elevation tokens to Android
@@ -1380,6 +1376,7 @@ export class TokenFileGenerator {
     platform: 'web' | 'ios' | 'android',
     options: GenerationOptions
   ): GenerationResult {
+    const { getAllPrimitiveTokens } = this.tokens.mod('index');
     const {
       outputDir = 'output',
       version = getCoreVersion(),
@@ -1483,7 +1480,13 @@ export class TokenFileGenerator {
     // Web: footer first (closes :root), then WCAG outside it.
     // iOS/Android: WCAG inside the struct, then footer closes it.
     // Native: the WCAG overrides are the `wcag` theme instances (design § 4), not `_wcag` members.
-    const wcagLines = platform === 'web' ? this.maybeGenerateWcagBlock(platform, options) : [];
+    const wcagLines = platform === 'web'
+      ? [
+          ...this.maybeGenerateWcagBlock(platform, options),
+          // A registered theme that is not one of the built-in two emits as its own `data-theme` block (Spec 129 U9).
+          ...this.generateThemeOverrideBlocks('web', options.semanticTokens, options.darkSemanticTokens, options.themeOverrides ?? []),
+        ]
+      : [];
 
     if (config.wcagAfterFooter) {
       lines.push(generator.generateFooter());
@@ -1775,6 +1778,7 @@ export class TokenFileGenerator {
     platform: string;
     names: string[];
   }> {
+    const { getAllSemanticTokens } = this.tokens.mod('semantic/index');
     const semantics = getAllSemanticTokens();
     const semanticNames = semantics.map(s => s.name);
 
@@ -1795,6 +1799,7 @@ export class TokenFileGenerator {
     platform: string;
     relationships: Record<string, Record<string, string>>;
   }> {
+    const { getAllSemanticTokens } = this.tokens.mod('semantic/index');
     const semantics = getAllSemanticTokens();
 
     // Build relationships map from semantic tokens
@@ -1814,21 +1819,26 @@ export class TokenFileGenerator {
   // --- OKLCH Color Generation Helpers (Spec 112) ---
 
   /**
-   * The colour primitives every platform file defines: the installed package's composed
-   * palette, never the token source's colour primitives (INSTALL § 4). The web, iOS and Android
+   * The colour primitives every platform file defines: the composed palette of the
+   * token source the set was read from (Spec 129 U9; before it, the installed package's palette). The web, iOS and Android
    * emitters below iterate this list and nothing else, so it is also the set a semantic colour
    * reference must name to resolve in the output (ColorReferenceEmissionValidator).
    */
-  private static emittedColors(): ReadonlyArray<typeof allEmittedColors[number]> {
-    return allEmittedColors;
+  private static emittedColors(tokens: TokenSet): TokenModules['color/index']['allEmittedColors'] {
+    return tokens.mod('color/index').allEmittedColors;
   }
 
   /** Names of the colour primitives every platform file defines (see {@link emittedColors}). */
-  static emittedColorPrimitiveNames(): ReadonlySet<string> {
-    return new Set(TokenFileGenerator.emittedColors().map(c => c.name));
+  static emittedColorPrimitiveNames(tokens: TokenSet = packageTokenSet()): ReadonlySet<string> {
+    return new Set(TokenFileGenerator.emittedColors(tokens).map(c => c.name));
   }
 
   private generateOklchWebColors(): string[] {
+    const { colorHues, neutralHue } = this.tokens.mod('color/channels/hues');
+    const { pinkLightness, orangeLightness, yellowLightness, greenLightness, cyanLightness, tealLightness, purpleLightness } = this.tokens.mod('color/channels/lightness/chromatic');
+    const { pinkChroma, orangeChroma, yellowChroma, greenChroma, cyanChroma, tealChroma, purpleChroma } = this.tokens.mod('color/channels/chroma/chromatic');
+    const { whiteLightness, grayLightness, blackLightness } = this.tokens.mod('color/channels/lightness/neutral');
+    const { whiteChroma, grayChroma, blackChroma } = this.tokens.mod('color/channels/chroma/neutral');
     const lines: string[] = [];
 
     // Channel custom properties
@@ -1854,7 +1864,7 @@ export class TokenFileGenerator {
     lines.push(...this.webGenerator.formatOklchChannels('black', neutralHue, blackLightness as any, blackChroma as any));
 
     // Emit composed colors
-    for (const color of TokenFileGenerator.emittedColors()) {
+    for (const color of TokenFileGenerator.emittedColors(this.tokens)) {
       lines.push(this.webGenerator.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
     }
 
@@ -1865,7 +1875,7 @@ export class TokenFileGenerator {
     const lines: string[] = [];
     const gen = platform === 'ios' ? this.iosGenerator : this.androidGenerator;
 
-    for (const color of TokenFileGenerator.emittedColors()) {
+    for (const color of TokenFileGenerator.emittedColors(this.tokens)) {
       lines.push(gen.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
     }
 

@@ -1,7 +1,7 @@
 # Issue: a plain `generate` decides whether to rebuild product tokens from the product YAML's file times only, so changes to the token source or the config can leave product-token output stale with no message
 
 **Date**: 2026-10-12
-**Status**: ACTIVE
+**Status**: CLOSED 2026-11-08 (see § "Outcome")
 **Owner**: Ada (product-token pipeline correctness). Lina is consulted for the CLI surface (`src/cli/staleness.ts` sits under `src/cli/**`, her surface per `2026-10-03-generate-product-only-resolves-from-cwd.md`).
 **Trigger**: `path:src/cli/staleness.ts` — the PR that edits `isProductTokenStale`, the fix site (it has not changed since v11.9.0; the check still compares only product-YAML mtimes with the oldest output, read 2026-10-20). *(Token set 2026-10-20, Ada, rules 1 and 9. The prior prose trigger follows, kept as the explanation:)* whichever fires first:
 - **a `fix/` PR opened on Peter's go**;
@@ -77,3 +77,11 @@ These paths are outside Ada's write scope. The guide sentence and N1 text are ch
 **No fix is authorized by this record.**
 
 **Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 60, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (guard) · defect` (the staleness check is weaker than "up to date").
+
+## Lapse (2026-11-08)
+
+Firing commit `1686fea35` (#757, Task 13 / U8's merge), which edited `src/cli/staleness.ts` and so fired this record's `path:src/cli/staleness.ts` Trigger. No ancestor of `1686fea35` closed the record (rule 5's dated outcome line, or the archive move) or re-ruled it, so it lapsed (rule 11). The close was owed in U8's PR: Task 13's merge-preconditions table (`tasks.md` L237) said U8's PR closes it through R5's content check, and it did not. This is a U8 finding, named in Task 14's completion doc for Stacy's claims pass. Ada, owner, found it at session start by `issues-owned.sh`, 2026-11-08.
+
+## Outcome (2026-11-08, Ada, rule 5)
+
+**Closed on R5**, in U9's PR. At the firing commit `1686fea35`, `src/cli/staleness.ts` no longer reads file times: `isProductTokenStale` renders the product tokens into a temporary directory and compares each output file with `sameOutput` from `src/cli/freshness.ts`, which compares content, so a change to the token source, the config or the package version reads as stale. `src/cli/__tests__/staleness.test.ts` passes (14 tests, run at `261cd1a3c`). The record is archived in the same commit.
