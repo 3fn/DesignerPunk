@@ -11,7 +11,7 @@
 ## Why the warn-only check needs a grant and not a ballot
 
 - **It changes no rule.** It reads README rules 1 and 11 as written, and lists what they already say a merge does.
-- **The script half is in my standing write scope**: `scripts/issues-owned.sh` and `scripts/__tests__/issues-owned.test.ts`. It is the `--pr` mode on `chore/fired-records-warn-check` at `6b76a744b`.
+- **The script half is in my standing write scope**: `scripts/issues-owned.sh` and `scripts/__tests__/issues-owned.test.ts`. It is the `--pr` mode on `chore/fired-records-warn-check` at `c8fd9640d`.
 - **The CI half is a new workflow file.** No seat's standing scope covers it, so it takes this issue-row grant (rule 8). It is none of M1's excluded acts (below).
 - **The failing, required version is not granted here.** It is the ballot's item 3 (e), and Peter's.
 
@@ -34,7 +34,7 @@ fires-here	.kiro/issues/2026-11-07-native-component-repair-from-first-harness-ru
 fired-records: 5 fire(s) here, 0 re-ruled here, 0 closed here, 0 already fired; PR #791, merge base bf4cd7677, head 693b39b54
 ```
 
-The mode was also replayed over Spec 129's 104 merges (the ballot's Census appendix C). It gave 21 warnings, which include every lapse the MIDPOINT and CLOSEOUT passes reported. Two of the 21 are in the disputed-fire class (MIDPOINT S-5).
+The mode at `c8fd9640d` was also replayed over Spec 129's 106 merges (the ballot's Census appendix C). It gave 20 warnings and 7 notices, which include every lapse the MIDPOINT and CLOSEOUT passes reported. One of the 20 is in the disputed-fire class (MIDPOINT S-5). Since `c8fd9640d`, a record added with a `path:` Trigger does not fire at the merge that adds it, as the seat mode and `compare.ts` read it (`[STACY R1]` B-2).
 
 ---
 
@@ -43,7 +43,7 @@ The mode was also replayed over Spec 129's 104 merges (the ballot's Census appen
 **Grant paths**: `.github/workflows/pr-records.yml`
 
 - **No `.github/in-lane-guards.json` entry is needed.** The PR mode's cases are in `scripts/__tests__/issues-owned.test.ts`, which `scripts/jest.config.js` selects (`testMatch: ['**/__tests__/**/*.test.ts']`). That file is already run by the unconditional step "Run scripts/** test suite (npm run test:scripts)" of the required job `lane-functional-root` (`lane-timing.yml` L259–260). A registry entry for it would be an added entry under my standing P1b scope, which needs no grant, so this list does not name the file.
-- **The fixing PR** is branch `chore/fired-records-warn-check`. It already carries the script half (`6b76a744b`). The workflow file is added to it **after this record's PR merges**, so the grant list is in a merged record before the diff it bounds (rule 10).
+- **The fixing PR** is branch `chore/fired-records-warn-check`. It already carries the script half (`c8fd9640d`). The workflow file is added to it **after this record's PR merges**, so the grant list is in a merged record before the diff it bounds (rule 10).
 
 ## What the job does
 
