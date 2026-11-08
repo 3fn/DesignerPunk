@@ -78,7 +78,7 @@ units:
         text: "Advising Leonardo on Web-specific constraints and opportunities"
     confirmation: canonical/profiles/consumer/confirmations/sparky.md#in-scope
   "#web-theming":
-    canonicalHash: sha256:652f612ef3132d946ee6d1b2f2bfc05646257df9bbc3f51409b92ec6a760514d
+    canonicalHash: sha256:53f54eff9fa5c5276111571328010a676600e3295aaa79a7b23bd24c154108e2
     items:
       - id: theming-1
         kind: obligation
