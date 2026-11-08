@@ -73,11 +73,17 @@ verdict: assent — surviving 6/8; not surviving: `for-parent-tasks-set-3`, `for
 ## `#coherent-units-the-merge-granularity`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-07
 row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#coherent-units-the-merge-granularity` (re-pointed; ROUTED)
-canonicalHash: sha256:4bd3b64a6e82bcdcc9065d9eb7c42162e1da6c6fbd00988fa2d3f74137684632
+canonicalHash: sha256:6d55794d7cc2603763fd52cba47a3870f8d8728107f49fcbd9611fe7ac4eb28a
 renderedHash: sha256:0a669e677ce606e61ffe812a9de2b238170a23e3e1f457283ecab9bbf7f5806a
 verdict: assent — surviving 3/7; not surviving: `coherent-units-the-m-4`, `coherent-units-the-m-5`, `coherent-units-the-m-6`, `coherent-units-the-m-7`
+
+**Re-signed 2026-11-07** (prior signature: assent, 2026-09-29, against `sha256:4bd3b64a…`). It was stale because the canonical unit changed under ballot `2026-11-07-github-grants-are-issue-row-grants` (RATIFIED, #745), item 3: one sentence and a dated pointer added to `-6`, the Write scope bullet. Thurgood applied it at `d60ecface`, I re-confirmed at 7 items (`d2fce53aa`), and Thurgood re-pinned the overlay (`a0b5e15f0`). I checked that the re-pin changes only the `@unit` header line, to the hash I had computed. The overlay text is unchanged.
+- **Judged against**: the consumer rendering of the unit, printed in full first, and the operative set at 7 items.
+- **renderedHash**: I computed it from a fresh rendering through the guard's own path: `generateAll(root)` → `writeOutputs(<temp dir>)` → `readConsumerSpans(<temp dir>)` → `renderedHashOf(rowSpanSource(...))`, over three pieces (the `_canonical` always-set copy, the CC identity doc and the Kiro steering doc). It equals the committed rendering's value and the prior signature's, because the overlay text did not move. Nothing was written under the worktree's tracked tree. One build step rewrote the tracked `docs/tokens.css`, and that change was discarded before any act.
+- **The removal and its cite stay right**: "the tasks-row write-scope grant (ballot 2026-09-26)", citing `subtraction-2`. The new sentence sits inside `-6`, which the rendering omits whole. It names this repository's grant mechanisms (an issue-row grant under `.kiro/issues/README.md` rule 8, and a charter standing scope), and a consumer has neither. The fresh rendering of the unit carries no `.github/**` and no `issue-row`.
+- **Credits**: `-1` to `-3` survive, unchanged from 2026-09-29. `-4` to `-7` are not credited, for the reasons below.
 
 `-1` to `-3` survive. **Not surviving**: `-4` (the subtask and parent commit clauses dropped), `-5` (the stacking clause dropped; its home is the completion-state refusal), `-6` (this repo's write-scope grant), and `-7` (the stale-branch sweep dropped).
 
