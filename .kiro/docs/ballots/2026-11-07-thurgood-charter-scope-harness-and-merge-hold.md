@@ -108,6 +108,8 @@ From the orchestrator's records on `main`. The paraphrase of what each answered 
 
   Each stays with its task's PRIMARY while 129 is open, and with a grant afterwards.
 
+  *(Amended 2026-11-08 by ballot `2026-11-07-native-lane-ownership` item 4: `compare.ts` and `compare.test.ts` join Thurgood's standing scope from Spec 129 U12's merge. Items 1, 2 and 5 of that ballot give the Kotlin, Swift and consumer files to Data, Kenya and Ada. The rest of this list is unchanged.)*
+
 **The limits** — **[author's addition — Peter rules]**. A glob cannot carry these, so the charter states them:
 - **Owning these files never authorizes changing a rule they state.**
   - `native-rules.ts` states design § 4's rules. While Spec 129 is open, a rule change goes into `design.md` § 4 first and into the file second, as its header already says. After 129 closes, it goes into the text of the spec that supersedes § 4.
@@ -120,6 +122,7 @@ From the orchestrator's records on `main`. The paraphrase of what each answered 
   - **Kenya and Data each review** every such change (F-4 (a), as ruled: design.md L477's word). A seat owes no review when every changed hunk lies inside a declaration or `BINDING` key named for the other platform. Swift-named: a top-level declaration named `swift*`, `isSwift*` or `SWIFT_*`, or the key `BINDING.swift`. Kotlin-named: `kotlin*`, `KOTLIN_*`, or `BINDING.kotlin`. A hunk is a hunk of `git diff -U0 <base> <m> -- scripts/harness/native-rules.ts`; it "lies inside" a declaration when its lines fall within that declaration's span in the file at `<m>` (at `<base>`, for a hunk that only deletes). A shared helper therefore goes to all three seats. That is correct: a shared helper changes both platforms' output (`[KENYA R2]`).
   - **The record** (`[KENYA R1]` A-2). Each owed consult or review is a `**Consulted**: <Seat> — <one-line read>` line in the PR body. Where a review is owed, the line cites the seat's review entry. A seat's review entry in the same unit satisfies the duty, cited on that line (`[KENYA R2]`).
   - **Review, as ruled** (F-4 (a), Peter, 2026-11-07T22:16:40Z). Kenya's and Data's duty is a review entry, as design.md L477 states it, not a consult.
+  - *(Amended 2026-11-08 by ballot `2026-11-07-native-lane-ownership` item 4: a change is "outside its comments" when `git diff -U0 <base> <m> -- <file>` has an added or removed line, other than the `+++` and `---` headers, that is not blank and does not start, after leading spaces, with `//`, `/*`, `*` or `*/`.)*
 - **Consults on `stability.ts`**:
   - **The annotation interface** (`[DATA R1]` D-1). The interface between the harness jobs and `stability.ts` is the set of annotation titles a harness job writes (`harness-verdict`, `harness-infra`, `cache`, and any title a later unit adds, such as U7a's `default-name`) and each one's message format. A change to how `stability.ts` reads that set consults the owner of each affected producer: Data for `harness/android/lane.ts` and the Android jobs' annotation steps, and Kenya for the iOS ones. A change to a producer, meaning `lane.ts`'s `infra.json` fields or values, a job's annotation step, or a new title, consults Thurgood. The second half binds producers outside this ballot's paths. It is a consult duty, not a write grant.
   - **The iOS reads** (`[KENYA R1]` A-3). Kenya is consulted on any change to how `stability.ts` computes an iOS context's queue time, reads the Xcode pin, or applies condition 3's iOS rule or condition 5.
@@ -393,6 +396,8 @@ The questions above are as asked at round 1. The answers are in § 9, and `[THUR
   - **What survives either way**: under (a), Spec 132's native work waits on two platform reviews for shared helpers. Under (b), a wrong Swift- or Kotlin-side fix can merge before the platform seat reads it (`[KENYA R1]`, surviving counter-argument).
 
 **Not a fork in this ballot, listed for Peter separately**: after U12, the native lanes' producers have no standing owner. These are `harness/android/lane.ts`'s classifier, `compare.ts`, the annotation steps in `native-harness.yml`, and on iOS `probe-swift.ts`, `parse-swift.ts` and `harness/ios/**` (`[DATA R1]` residual 1; `[KENYA R1]`; `[DATA R2]` item 5). The options are (i) per-event grants for producer fixes, which Data leans to on base rate, or (ii) a later ballot giving the lanes a standing home in the platform seats. This ballot cannot widen Data's or Kenya's charter. Data offers to file one record (owner Data, co-owner Kenya) with the orchestrator's go.
+
+*(Answered 2026-11-08 by ballot `2026-11-07-native-lane-ownership`: the per-role split.)*
 
 ---
 
