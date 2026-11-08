@@ -183,7 +183,7 @@ describe('a non-colour key in a theme override map is refused, naming the key, t
     expect(r[0].message).toContain('"space.inset.100"');
     expect(r[0].message).toContain(`\`${mapName}\``);
     expect(r[0].message).toContain(`name: "${name}"`);
-    expect(r[0].message).toContain('spacing');
+    expect(r[0].message).toContain('is not a colour token');
   });
 
   it('leaves a colour-only map in each kind alone, and leaves an unknown name to the orphan-key check', () => {

@@ -107,7 +107,7 @@ export function findNonColourOverrideKeys(
       for (const key of Object.keys(map ?? {})) {
         const category = categoryOf(key);
         if (category !== undefined && category !== 'color') {
-          out.push({ rule: 'colour', entry: i, message: nonColourOverrideKeyMessage(label(i, t), `\`${mapName}\``, key, category) });
+          out.push({ rule: 'colour', entry: i, message: nonColourOverrideKeyMessage(label(i, t), `\`${mapName}\``, key) });
         }
       }
     }
