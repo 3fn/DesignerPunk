@@ -174,9 +174,12 @@ export interface JobRecord {
 const ms = (iso: string | null): number | null => (iso === null ? null : Date.parse(iso));
 const secs = (a: number | null, b: number | null): number | null => (a === null || b === null ? null : Math.round((b - a) / 1000));
 
-/** `harness-ios-tokens (unit-branch)` -> `harness-ios-tokens`; null for any other job. */
+/**
+ * `harness-ios-tokens (unit-branch)` or `harness-ios-tokens (main)` -> `harness-ios-tokens`; null for any
+ * other job. The `(main)` suffix names a push run on `main` (ballot 2026-11-08-closeout-cracks item 1).
+ */
 export function contextOf(jobName: string): Context | null {
-  const base = jobName.replace(/ \(unit-branch\)$/, '');
+  const base = jobName.replace(/ \((?:unit-branch|main)\)$/, '');
   return (CONTEXTS as readonly string[]).includes(base) ? (base as Context) : null;
 }
 
@@ -358,7 +361,12 @@ export interface ContextAnalysis {
   streakBlock: string | null;
   coldBlock: string | null;
   pullRequestRuns: number;
+  /** `workflow_dispatch` runs only. */
   dispatchedRuns: number;
+  /** `push` runs on `main` (ballot 2026-11-08-closeout-cracks item 1): counted toward neither condition. */
+  pushRuns: number;
+  /** Finished push runs whose job failed or whose verdict is FAIL, listed for the reader of site 1.4. */
+  pushReds: RunSummary[];
   /** Every infra run of the context, in run order, with its host, status and step. */
   infraRuns: RunSummary[];
   /** Infra runs over all recorded runs of the context (0 when it has none). */
@@ -533,7 +541,9 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
       infraRate: runs.length === 0 ? 0 : infraRuns.length / runs.length,
       findings,
       pullRequestRuns: pr.length,
-      dispatchedRuns: runs.length - pr.length,
+      dispatchedRuns: runs.filter((r) => r.event === 'workflow_dispatch').length,
+      pushRuns: runs.filter((r) => r.event === 'push').length,
+      pushReds: runs.filter((r) => r.event === 'push' && r.last.state === 'finished' && (r.last.verdict === 'FAIL' || (r.last.conclusion !== null && r.last.conclusion !== 'success'))),
       streak,
       streakMet: streakBlock === null && streak >= 10,
       streakBlock,
@@ -584,12 +594,16 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
   lines.push('- `commits/<head sha>/check-runs`: the checks API, each context\'s check-run conclusion;');
   lines.push('- `check-runs/<job id>/annotations`: the `harness-verdict` and `cache` annotations, which outlast the logs.');
   lines.push('');
-  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3. A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). A run carrying `harness-infra` (an environment fault found before any comparison) is neither a break nor counted for condition 2 and is never a cold run; two or more consecutive infra runs at one head are printed as a finding. Each pull-request run is read per context and per job, not by the run\'s status: a job is finished when it is listed for the run\'s latest attempt with a conclusion; a completed run whose latest attempt lists no job for the context is a break; every other state is unfinished, and is listed in a skipped-runs table per context, neither a break nor counted. An unfinished pull-request job before the last run a condition reads leaves that condition not yet measurable. The window is every run the runs endpoint lists, read up to its `total_count`; a short read makes every condition not yet measurable. Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
+  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3; nor does a push run on `main`, and red push runs are listed for the reader (ballot 2026-11-08-closeout-cracks item 1). A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). A run carrying `harness-infra` (an environment fault found before any comparison) is neither a break nor counted for condition 2 and is never a cold run; two or more consecutive infra runs at one head are printed as a finding. Each pull-request run is read per context and per job, not by the run\'s status: a job is finished when it is listed for the run\'s latest attempt with a conclusion; a completed run whose latest attempt lists no job for the context is a break; every other state is unfinished, and is listed in a skipped-runs table per context, neither a break nor counted. An unfinished pull-request job before the last run a condition reads leaves that condition not yet measurable. The window is every run the runs endpoint lists, read up to its `total_count`; a short read makes every condition not yet measurable. Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
   lines.push('');
   for (const c of analysis.contexts) {
     lines.push(`## ${c.context}`);
     lines.push('');
-    lines.push(`- Runs recorded: ${c.runs.length} (${c.pullRequestRuns} pull-request, ${c.dispatchedRuns} dispatched).`);
+    const other = c.runs.length - c.pullRequestRuns - c.dispatchedRuns - c.pushRuns;
+    lines.push(`- Runs recorded: ${c.runs.length} (${c.pullRequestRuns} pull-request, ${c.dispatchedRuns} dispatched, ${c.pushRuns} push${other > 0 ? `, ${other} other` : ''}).`);
+    lines.push(
+      `- Push runs on main: ${c.pushRuns}; red: ${c.pushReds.length === 0 ? 'none' : c.pushReds.map((r) => `${r.runId} @ \`${r.headSha.slice(0, 9)}\` (${r.last.verdict ?? (r.last.infra ? 'infra' : fmt(r.last.conclusion))})`).join(', ')}.`,
+    );
     lines.push(`- Infra runs (\`harness-infra\`): ${c.infraRuns.length} of ${c.runs.length} recorded, infra rate ${(c.infraRate * 100).toFixed(1)}%.`);
     for (const r of c.infraRuns) lines.push(`  - run ${r.runId} at \`${r.headSha.slice(0, 9)}\`: ${r.last.infra?.host} ${r.last.infra?.status} ${r.last.infra?.step}`);
     for (const f of c.findings) lines.push(`- **FINDING**: ${f}`);
@@ -618,7 +632,7 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
     lines.push('|---|---|---|---|---|---|---|---|---|---|---|---|---|---|');
     for (const r of c.runs) {
       const l = r.last;
-      const counts = r.excluded !== null ? 'no (dispatched)' : r.infraRun ? 'no (infra)' : r.coldCounts ? 'cond 2, cond 3' : 'cond 2';
+      const counts = r.excluded !== null ? `no (${r.event === 'workflow_dispatch' ? 'dispatched' : r.event})` : r.infraRun ? 'no (infra)' : r.coldCounts ? 'cond 2, cond 3' : 'cond 2';
       lines.push(
         `| ${r.runId} | \`${l.headSha.slice(0, 9)}\` | ${r.event} | ${r.attempts} | ${l.conclusion !== null && l.jobConclusion !== null && l.conclusion !== l.jobConclusion ? `${l.conclusion} (check run; job ${l.jobConclusion})` : fmt(l.conclusion)} | ${l.verdict ?? (l.infra ? 'infra' : '-')} | ${fmt(l.cache)} | ${l.createdAt} | ${fmt(l.startedAt)} | ${fmt(l.completedAt)} | ${dur(l.durationSeconds)} | ${c.platform === 'ios' ? dur(l.queueSeconds) : 'n/a'} | ${counts} | ${r.breaks.length ? r.breaks.join('; ') : '-'} |`,
       );

@@ -616,6 +616,63 @@ describe('consult findings (Kenya D1/D2, Data default-name), fail-safe reads', (
   });
 });
 
+/**
+ * Push runs on `main` (ballot 2026-11-08-closeout-cracks item 1, site 1.2). The recorded dispatch run is
+ * re-read as a push run: event `push`, job names `<context> (main)`. Each case is red at the base, whose
+ * `contextOf` strips only ` (unit-branch)` (so every job is dropped) and whose `dispatchedRuns` counts every
+ * run that is not a pull request.
+ */
+describe('a push run on main counts toward neither condition, and its reds are listed', () => {
+  const asPush = (): RawInput =>
+    JSON.parse(JSON.stringify(load('recorded-dispatch-run.json')).split('(unit-branch)').join('(main)').split('"workflow_dispatch"').join('"push"')) as RawInput;
+
+  it('maps a job name with the (main) suffix to its context', () => {
+    expect(contextOf('harness-android-tokens (main)')).toBe('harness-android-tokens');
+    expect(contextOf('harness-generate (main)')).toBeNull();
+  });
+
+  it('attributes a (main) job to its context and counts it as a push run, not a dispatched one', () => {
+    for (const c of analyze(normalize(asPush())).contexts) {
+      expect(c.runs.length).toBe(1);
+      expect(c.pushRuns).toBe(1);
+      expect(c.dispatchedRuns).toBe(0);
+      expect(c.pullRequestRuns).toBe(0);
+      expect(c.streak).toBe(0);
+      expect(c.coldRuns).toEqual([]);
+      expect(c.runs[0].excluded).toBe('a push run counts toward neither condition 2 nor condition 3');
+      expect(c.pushReds).toEqual([]);
+    }
+  });
+
+  it('lists a red push run, and the record prints it under its context', () => {
+    const raw = asPush();
+    const job = (raw.jobsByRun[42331622121] as unknown as ApiJob[]).find((j) => j.name === 'harness-android-tokens (main)') as ApiJob;
+    (job as { conclusion: string | null }).conclusion = 'failure';
+    const sha = raw.runs[0].head_sha;
+    for (const cr of raw.checkRunsBySha[sha] as unknown as { name: string; conclusion: string | null }[]) {
+      if (cr.name === 'harness-android-tokens (main)') cr.conclusion = 'failure';
+    }
+    const ann = raw.annotationsByJob[job.id] as unknown as { title: string; message: string }[];
+    for (const a of ann) if (a.title === 'harness-verdict') a.message = 'harness-verdict: harness-android-tokens FAIL (toolchain)';
+    const analysis = analyze(normalize(raw));
+    const c = analysis.contexts.find((x) => x.context === 'harness-android-tokens');
+    expect(c?.pushReds.map((r) => r.runId)).toEqual([42331622121]);
+    expect(analysis.contexts.filter((x) => x.context !== 'harness-android-tokens').every((x) => x.pushReds.length === 0)).toBe(true);
+    const text = render(analysis, { repo: '3fn/DesignerPunk', workflow: 'native-harness.yml', generatedAt: '2026-11-08T00:00:00Z' });
+    expect(text).toContain('- Runs recorded: 1 (0 pull-request, 0 dispatched, 1 push).');
+    expect(text).toContain(`- Push runs on main: 1; red: 42331622121 @ \`${sha.slice(0, 9)}\` (FAIL).`);
+    expect(text).toContain('- Push runs on main: 1; red: none.');
+    expect(text).toContain('| no (push) |');
+    expect(text).toContain('nor does a push run on `main`');
+  });
+
+  it('a dispatched run still reads as dispatched in the record', () => {
+    const text = render(analyze(normalize(load('recorded-dispatch-run.json'))), { repo: 'r', workflow: 'w', generatedAt: 't' });
+    expect(text).toContain('- Runs recorded: 1 (0 pull-request, 1 dispatched, 0 push).');
+    expect(text).toContain('| no (dispatched) |');
+  });
+});
+
 function jobIdOf(raw: RawInput, runId: number): number {
   return raw.jobsByRun[runId].find((j) => j.name === 'harness-android-tokens')!.id;
 }
