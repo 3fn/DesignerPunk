@@ -68,9 +68,27 @@ date: 2026-11-08
 ## `#android-theming-spec-094`
 
 confirmer: data
-canonicalHash: sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9
-items: theming-1, theming-2, theming-3, theming-4, theming-5, theming-6
-date: 2026-09-29
+canonicalHash: sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62
+items: theming-1, theming-2, theming-3, theming-4, theming-5, theming-6, theming-7, theming-8, theming-9
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d, C16): Spec 129 U11, Task 16.2's text.** A new act, read fresh. The unit now teaches the theme surface `generate` writes, so the set moves from 6 to 9 items. The note's `items:` line read 6 against the record's 9 after Thurgood's re-quote at `448d4fe7d`; it is rewritten here to the record's 9. The record below is superseded (canonicalHash `sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9`, 6 items).
+- **A false claim caught and corrected before this act**: my first draft of bullet 1 said "the semantic colours are not on `DesignTokens`". `DesignTokens` carries static colour members (`accessibility_focus_color`, `color_icon_optical_balance`). Bullet 1 now says the theme-varying colour semantics are not on `DesignTokens`, which still carries the static colour members; `theming-1` is re-quoted to match. I did not confirm the earlier text.
+- **What changed**: bullets 1 to 4 of the old unit ("generate produces no theme types today", the `CompositionLocalProvider(Local{Abbreviation}Theme …)` bullet, dark mode, the `{Abbreviation}` uppercase rule) are replaced by six bullets: the `LocalDPTheme.current.<name>` read; the fixed contract (`data class DesignerPunkTheme`, `val LocalDPTheme`) and the base-light default outside a provider; the `<Name>Themes` holder; the `<Name>ThemeFamily` enum and the `<Name>Theme(family, darkTheme)` provider; the one-mode fallback to base; and product tokens read as `LocalDPTheme.current.<name>` inside composition scope. The static-tokens bullet and the ground-truth bullet are unchanged. Thurgood committed my drafted text verbatim at `448d4fe7d`; Lina regenerated at `e10072c9d`.
+- **What I read, in this session, through tool results**: the whole unit in `canonical/agents/data.md` (`### Android Theming (Spec 094)`, 12 lines) and as rendered in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md`; the diff of `448d4fe7d` for `canonical/agents/data.md`, `canonical/operative-sets/data.yaml` and `data.overlay.md`. Compared line by line: the three renderings equal the canonical unit except the last bullet, where the removal `subtraction-1` is re-keyed to the installed package's snapshots (unchanged from the prior act).
+- **The hash**: I computed it myself, with `hashText` over `partition(splitFrontmatter(src).body).units` for `#android-theming-spec-094` in `canonical/agents/data.md` at `e10072c9d`: `sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62`. It equals the overlay pin `## @unit #android-theming-spec-094 @ sha256:aa54dd17…` and the sweep's "canonical unit is now" value.
+- **Items re-read against the unit**: each of the 9 item texts is a verbatim substring of the unit and occurs once (checked by script), in the unit's order. Each is operative, since an implementation can break each one:
+  - `theming-1`: read a theme-varying colour semantic from anywhere but `LocalDPTheme.current`, or expect one on `DesignTokens`;
+  - `theming-2`: write against a name other than `DesignerPunkTheme` or `LocalDPTheme`;
+  - `theming-3`: expect `LocalDPTheme.current` to follow the system scheme with no provider;
+  - `theming-4`: write a `Dark` family entry;
+  - `theming-5`: wrap content with the wrong provider call, or never pass `darkTheme`;
+  - `theming-6`: register a one-mode theme and expect its own look in both schemes;
+  - `theming-7`: read a theme-varying product token outside composition scope;
+  - `theming-8`: reach for a CompositionLocal for a static token;
+  - `theming-9`: read the package snapshots for themed values.
+  **Residual, stated rather than absorbed**: the `<Name>Themes` holder bullet, the `<Name>ThemeFamily` entries sentence, the "Each entry's KDoc" sentence, the default-name provider sentence and the `Wcag` exemption are not items. Under the 5c reading (a stated name or shape the implementation builds against is operative) a reviewer could count some of them, and I drafted this set without them. Today the renderings state all of them verbatim, so no floor finding is missed; if a later rendering drops one, no item would catch it. I confirm the set as drafted and leave adding items to a later act.
+- **Ruling: CONFIRMED at 9 items, not corrected.** The 2026-09-29 rulings below stand.
 
 **Ruling: 6 → 4 items.** Removed `theming-1` ("Generated Kotlin output includes: …"), an inventory statement of what the generator emits; nothing in it directs the implementation. Removed `theming-4` (`{Abbreviation}` uppercase), a description of the generator's naming choice and its rationale; code that writes `Dp` is a compile error, not a breached norm. Kept `theming-2`, `theming-3` (directives), `theming-5` ("no CompositionLocal needed" directs where static tokens are read) and `theming-6` (ground truth live).
 

@@ -114,7 +114,7 @@ units:
         text: "Before U12's merge, your write over these paths is Spec 129's task-row grants or an issue-row grant"
     confirmation: canonical/profiles/consumer/confirmations/data.md#in-scope
   "#android-theming-spec-094":
-    canonicalHash: sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9
+    canonicalHash: sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62
     items:
       - id: theming-1
         kind: obligation
