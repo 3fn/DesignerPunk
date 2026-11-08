@@ -30,6 +30,6 @@ Consult: Thurgood owns `harness/expected/**`; the edit is removal of the one ent
 
 ---
 
-## Outcome
+## Outcome (2026-11-08)
 
-Open.
+Fixing PR: U12 #781 (`a17cb2b34`); grant exercised in my `ffa5183f5`. Archived at the fixing PR's merge under rule 5 (CP-12). — Kenya
