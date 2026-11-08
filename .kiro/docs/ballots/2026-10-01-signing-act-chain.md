@@ -99,11 +99,13 @@
 
 ### 4.3 The lookup rule (Stacy's, operative)
 
-> **A candidate** for commit C is the **first `git log` line printed after a successful `git commit` in the same tool call** (one per pass, where the call loops), or the `[<branch> <sha>] <subject>` line printed by that `git commit` in the same tool call. The line must show **a prefix of C's full SHA** (at whatever length the call printed; SHAs are not always on line one) **and C's exact subject**. A SHA appearing anywhere else — a brief that quotes it, a grep, a `git log --oneline -N` not preceded by a successful commit in the same call, a `git log -1` after a failed commit — **is never a candidate**.
+> **A candidate** for commit C is either (i) the `[<branch> <sha>] <subject>` line printed by a `git commit` in the same tool call, or (ii) **the first SHA printed in the result of a tool call that runs a `git commit` and then a `git log`** (one per pass, where the call loops), in any line shape: a run of 7–40 lowercase hex characters bounded by whitespace or the line's ends. The SHA must be **a prefix of C's full SHA**. **C's exact subject must also be shown**, either in the result (the rest of the SHA's line, or the next non-empty line) or in the input: the call's first `git commit` invocation's first `-m` value, or the first line of its `-F -` heredoc. Nothing else in the command is read, and in a call that loops only the result shows the subject. A SHA appearing anywhere else — a brief that quotes it, a grep, a `git log` in a call with no `git commit`, a SHA that is not the first one printed, a `git log -1` after a failed commit — **is never a candidate**.
 >
 > **Success is decided from evidence in the tool result, never assumed.** A `;`-chained call hides the commit's exit status (`commit -q …; git log -1` prints the previous HEAD when the commit fails). **Where the result cannot show the commit succeeded, the act reads `anomaly`, never `anchored`** (fixture H2b).
 >
 > **Success evidence is a closed set:** (a) that commit's `[<branch> <sha>]` line; (b) a `git log` joined by `&&` or under `set -e`. Anything else reads `anomaly`. Seat briefs commit as `git commit … && git log -1 --format='%H %s'`.
+
+*(amended 2026-11-08 by ballot 2026-10-23-link4-candidate-first-sha-after-commit; prior text at `ac4f44687`.)*
 
 **The seat-brief commit convention is in force from `R`.** With a heredoc message, the `&&` sits on the `git commit` line, before the body (`git commit -q -F - <<'EOF' && git log -1 --format='%H %s'`). From `R`, H2b holds by construction for every briefed form. **Why the set is closed** (Stacy R1, re-run at THURGOOD R2 with her scan, `forms2.py`, read-only): of the 50 signing-path commit calls in U2b's 2026-09-29 seat transcripts, **45** are `git commit -q …`, a newline, then `git log` — a form that shows no success; 2 are `;`-chained, 2 `&&`-joined, 1 newline-separated under `set -e`. Without the convention about 90% of acts would read `anomaly`, and § 5.4 would send every seat to J.
 
@@ -112,6 +114,7 @@
 - **candidates only in the main (orchestrator) session** → **`FAIL`** — a primary created a seat-trailered commit (H3);
 - **more than one candidate** → **`anomaly`**;
 - **none** → **`record absent`**, or **`unanchored`** for a seat run under Kiro (no harness meta record exists).
+- **the store's layout is unrecognized** — transcripts exist under the store, but no `tool_use` running a `git commit` pairs with a `tool_result` anywhere in it; or subagent transcripts exist and none has its `.meta.json` record → **every act not run under Kiro reads `anomaly` 4: store layout unrecognized**, never `record absent`. A harness format change is then loud, and is not read as a population of missing records. A store with no transcripts, or with main-session transcripts only, reads as before this amendment (`record absent` 4, `FAIL` 4 where a main-session candidate exists, `unanchored` under `--kiro`).
 
 ### 4.4 The reporting rule
 
@@ -194,6 +197,8 @@ For acts Stacy signed, the C1 collapse-seat rule applies: Stacy does not rule on
 *(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
 
 **A `FAIL`, an `anomaly`, a meta `spawnDepth` ≠ 1, or a meta `model` unlike the seat's plan sends every act by that seat in that PR into J.** This is all that survives of the step-up layer.
+
+An `anomaly` 4 that reads `store layout unrecognized` is evidence about the instrument, not about a seat: it sends no act into J, and it reaches Peter as one `**Open for Peter**:` line per `--audit` run, in place of § 5.3's per-act line for the Stacy-signed acts it covers. *(amended 2026-11-08 by ballot 2026-10-23-link4-candidate-first-sha-after-commit; prior text at `ac4f44687`.)*
 
 For a Stacy-signed act, the J it sends acts into is Peter's (§ 5.3); no annotation removes an act from it.
 
@@ -409,3 +414,4 @@ Pre-step: one mention set, Stacy R1 above; all items answered here. Both measure
 - § 2 clause 3 (M1): the bound now reads "the branch's freshness stale list or its unsigned-routed list". A first signature on a new routed row has no signature to go stale, so the stale list alone never held it, and audit legs (i) and (iv) did not cover it (Stacy's consult on the six-roots application PR, 2026-10-17). The unsigned-routed list holds the routed rows that carry no signature yet, so such a first signature is in bound. Pointers added at clause 6 and under § 3's table. *(erratum RATIFIED 2026-10-21 — Peter, chat: "Re: erratum text, ratify."; record `.kiro/issues/archive/2026-10-17-first-signatures-not-on-stale-list.md`; prior text at `b42874bd0`)*
   - 2026-10-21 — **Peter, chat, verbatim: "Let's go with the class-level fix."**, on the fork the build surfaced: five first signatures already on `main` (#337 `1104117b` kenya `#in-scope`, `625d025a` data `#in-scope`; #378 `c18a02e0` leonardo `#step-3-specify-the-screen:preamble` and `#frontmatter:writeScope[product/**]`, `9e5ede42` sparky `#in-scope`) sit on rows that are on neither list, so the corrected link 1 would have failed them. Read by the orchestrator as: the bound stays as ratified here (no widening erratum; the rule does not reach back, § 2 clause 8), and the floor is amended instead by DRAFT ballot `.kiro/docs/ballots/2026-10-21-routes-floor-re-pointed-frontmatter-members.md`. *(Thurgood)*
 - § 2 clause 6: the hold form added (ballot 2026-10-22-hold-act-recorded-in-pr-body; Peter, 2026-10-22, "Fix now."; hermetic follow-ups item 4).
+- § 4.3: the candidate is the first SHA printed after a proven commit, any line shape, with C's subject from the result or that commit's own message; the store-shape canary added, and in § 5.4 it does not widen (ballot 2026-10-23-link4-candidate-first-sha-after-commit; RATIFIED 2026-10-23 — Peter, chat: "Re: 1, ratified."; drafted under Peter, 2026-10-23, "Proceed with the joint recommendation. 445 and 446 are merged").

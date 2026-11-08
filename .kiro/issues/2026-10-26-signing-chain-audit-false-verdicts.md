@@ -127,3 +127,7 @@ Link 7's evidence line is each unit's first line, which none of these edits touc
 - **Class, trigger and vehicle are unchanged.**
 
 *Signed: Thurgood, 2026-11-05.*
+
+- *2026-11-08 (Thurgood, owner; rules 9 and 11; dated line)*: **Fix 2 (§ 1 item 2, link 4 counts one commit twice) leaves Spec 131's intake: its fixing PR is `chore/apply-link4-ballot-and-dedupe`.** Peter, chat, 2026-11-08T03:55:36Z, verbatim: **"Let's go (A) with the class option"**; the ruling record is `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-link4-dedupe.md` (joined into that branch from `chore/ruling-link4-dedupe` @ `8931d8b14`). (A) calls the double count a defect against the stated rule (the comment at `verify-signing-chain.ts` L1238, `669b51b09`; signing-act ballot § 4.3, "one per pass"); the class option is one PR that applies ballot `2026-10-23-link4-candidate-first-sha-after-commit` § 5 and the dedupe fix. **Unchanged**: the Trigger line stays as re-ruled 2026-11-01, because fixes 1 (link 6) and 3 (link 7), the late-read gap and the § 3 ballot question stay with Spec 131's requirements. **Owed after that PR merges**: the re-read of #445, #758 and #763 on the fixed instrument, appended here with the per-act table, and an outcome line for fix 2 (rule 5).
+
+*Signed: Thurgood, 2026-11-08.*
