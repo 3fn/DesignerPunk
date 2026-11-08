@@ -130,3 +130,12 @@ jobs:
 
 - **A dated outcome line in the diff is not read.** That record prints `fires-here` with "(this diff edits the record)", and its annotation is a notice.
 - **A record whose `path:` is a file another seat writes** is listed on a PR whose author may not close it (rule 9). #791's five are this case. The check reports it; it does not resolve it.
+
+## Outcome (2026-11-08)
+
+Closed by its fixing PR, #803 (branch `chore/fired-records-warn-check`), under rule 5. Thurgood.
+- **The `.github/**` diff** is exactly `.github/workflows/pr-records.yml`, added. `git diff --numstat origin/main...HEAD -- .github` prints `39	0	.github/workflows/pr-records.yml`, so 0 lines are deleted on a CI path and no `**Deleted lines**:` block is owed.
+- **The file is byte-identical** to the `yaml` block above, as that block stood at the activating merge `77958cbb6` (#798). It was extracted from `git show 77958cbb6:<this record>`.
+- **No act outside the list**: no required context, no `EXPECTED_CONTEXTS` change, no change to `complete-task.sh`'s `REQUIRED_WORKFLOWS`, and no `if:` or `continue-on-error`.
+- **The first run** is the workflow's own run on #803. It should list this record as `closed-here`, through this archive move. Its run URL and `fired-records:` count line are in that PR's checks, because the run comes after this line is written.
+- **The warn-only cycle** of ballot `2026-11-08-closeout-cracks` item 3 (d) starts at #803's merge.
