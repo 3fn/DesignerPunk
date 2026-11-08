@@ -2485,7 +2485,9 @@ describe('Consumer Integration (Spec 106 R8)', () => {
           // File times are NOT what decides: put the edited source's mtime far in the past.
           const past = new Date(Date.now() - 86_400_000);
           fs.utimesSync(sizing(), past, past);
-          expect(sync()).toMatch(/your generated token output in dist\/tokens is not what `npx designerpunk generate` would write now: .*DesignTokens\.ios\.swift/);
+          // Since U9 the DTCG and Figma exports read the consumer's copy too, so five files differ and the message lists the first three
+          // (sorted) and "N more": the iOS file is among the "more", so the pattern names the count and the first listed file.
+          expect(sync()).toMatch(/your generated token output in dist\/tokens is not what `npx designerpunk generate` would write now: 5 files differ \(DesignTokens\.android\.kt, /);
           run('npx designerpunk generate');
           expect(sync()).not.toContain('is not what `npx designerpunk generate` would write now');
         } finally {
