@@ -126,6 +126,7 @@ import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
 import { splitFrontmatter, splitFrontmatterText } from '../frontmatter';
 import { partition } from '../partition';
+import { hashText } from './hash';
 
 // ============================================================================
 // Constants
@@ -257,6 +258,8 @@ export interface ListRowView {
 export interface TreeListsView {
   stale: ListRowView[];
   unsignedRouted: ListRowView[];
+  /** Record units with no note block (shape-review ballot § 2a, erratum 2026-11-08). */
+  unconfirmed: ListRowView[];
   orphaned: ListRowView[];
   signedUnrouted: ListRowView[];
   unverifiable: ListRowView[];
@@ -437,6 +440,13 @@ export interface SigningAct {
   withdrawal?: boolean;
   /** The signature at this commit carries `refuse`. */
   refuse?: boolean;
+  /**
+   * A confirmation sheet section ADDED here for a unit whose record `canonicalHash` this commit does
+   * not move: the confirmer's first note block (shape-review ballot § 2a, erratum 2026-11-08, (a′)).
+   */
+  firstBlock?: boolean;
+  /** For a first note block: its `canonicalHash:` line = the record unit's `canonicalHash` = the unit's current hash, all at this commit. */
+  blockHashesEqual?: boolean;
   via: string[];
 }
 
@@ -446,8 +456,10 @@ export interface SigningAct {
  * section) → `re-sign`/`refuse`/`re-confirm`.
  */
 export type ActKind = 'sign' | 'refuse' | 're-sign' | 'confirm' | 're-confirm' | 'withdraw';
+/** (a′): the confirmer's first note block that moves no hash (shape-review ballot § 2a, erratum 2026-11-08). */
+export const isFirstBlock = (a: SigningAct): boolean => a.kind === 'confirmation' && a.firstBlock === true && !a.pinnedTouched;
 export const kindOf = (a: SigningAct): ActKind =>
-  a.withdrawal ? 'withdraw' : a.kind === 'confirmation' ? (a.firstConfirm ? 'confirm' : 're-confirm') : a.refuse ? 'refuse' : a.first ? 'sign' : 're-sign';
+  a.withdrawal ? 'withdraw' : a.kind === 'confirmation' ? (a.firstConfirm || (isFirstBlock(a) && a.blockHashesEqual) ? 'confirm' : 're-confirm') : a.refuse ? 'refuse' : a.first ? 'sign' : 're-sign';
 
 export const actMoved = (a: SigningAct): boolean => (a.pinnedTouched ? a.pinnedMoved : a.sectionMoved);
 
@@ -789,6 +801,19 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
           sheetField(b0, 'canonicalHash') !== sheetField(b1, 'canonicalHash') ||
           sheetField(b0, 'renderedHash') !== sheetField(b1, 'renderedHash');
         a.sectionMoved = a.sectionMoved || moved;
+        // (a′): a confirmation note block added here. Whether the commit also moves the record's pin
+        // is known once every path is read (record paths sort first; checked again in walkRange).
+        if (conf && b0 === undefined && b1 !== undefined) {
+          const tgt = target as ConfirmationTarget;
+          const rec = parseYamlMap(newText(tgt.file)).doc;
+          const units = isMap(rec.units) ? (rec.units as Record<string, unknown>) : {};
+          const u = isMap(units[tgt.unit]) ? (units[tgt.unit] as Record<string, unknown>) : undefined;
+          const src = tgt.source ? newText(tgt.source) : undefined;
+          const cur = src !== undefined ? partition(splitFrontmatter(src, tgt.source).body).units.find((x) => x.anchor === tgt.unit) : undefined;
+          const field = sheetField(b1, 'canonicalHash');
+          a.firstBlock = true;
+          a.blockHashesEqual = u !== undefined && typeof u.canonicalHash === 'string' && cur !== undefined && field === u.canonicalHash && field === hashText(cur.text);
+        }
         const s = sheetField(b1 ?? b0, signerKey);
         if (s !== undefined) a.signerFields.push(s);
       }
@@ -879,7 +904,7 @@ export interface Link1Record {
 }
 
 /** The fixed order of list tokens (the (iv) line's `(<list>)`). */
-export const LIST_TOKENS = ['stale', 'unsigned-routed', 'orphaned', 'signed-unrouted'] as const;
+export const LIST_TOKENS = ['stale', 'unsigned-routed', 'unconfirmed', 'orphaned', 'signed-unrouted'] as const;
 
 /** The charter paths a seat may not edit in a range where it signs (F12′). */
 export const ownCharterPaths = (seat: string): string[] => [`canonical/agents/${seat}.md`, `.claude/agents/${seat}.md`];
@@ -934,6 +959,8 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
     return listsCache.get(key);
   };
   const idsOf = (rows: ListRowView[]): Set<string> => new Set(rows.map((r) => rowIdOf(r.file, r.section, r.key)));
+  const listOf = (L: TreeListsView, tok: (typeof LIST_TOKENS)[number]): ListRowView[] =>
+    tok === 'stale' ? L.stale : tok === 'unsigned-routed' ? L.unsignedRouted : tok === 'unconfirmed' ? L.unconfirmed ?? [] : tok === 'orphaned' ? L.orphaned : L.signedUnrouted;
   const acts1: Link1Record[] = [];
 
   for (const an of analyses) {
@@ -989,6 +1016,23 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
         } else {
           lists = 'unsigned-routed';
         }
+      } else if (isFirstBlock(a)) {
+        // (a′) (shape-review ballot § 2a, erratum 2026-11-08): the confirmer's first note block that
+        // moves no hash needs the unit on the unconfirmed list at the first parent, with the block's
+        // canonicalHash: line = the record unit's canonicalHash = the unit's current hash.
+        const L = listsAtParent(parent);
+        if (!L) {
+          lists = 'undecidable';
+          push(1, `${kind}: the unconfirmed list cannot be computed on this tree (regrounding/freshness.ts listsAt is absent) — a missing link is never green`, a.rowId);
+        } else {
+          const on = (tok: (typeof LIST_TOKENS)[number]): boolean => idsOf(listOf(L, tok)).has(a.rowId);
+          const hit = LIST_TOKENS.filter(on);
+          lists = hit.length ? hit.join('+') : 'none';
+          if (!on('unconfirmed') || !a.blockHashesEqual) {
+            const why = !on('unconfirmed') ? 'the unit is not on the unconfirmed list there' : "the block's canonicalHash: line, the record unit's canonicalHash and the unit's current hash are not all equal";
+            push(1, `${kind}: a first note block that moves no hash at the commit's first parent ${at} (on: ${lists}) — ${why} — ballot § 2a (erratum 2026-11-08)`, a.rowId);
+          }
+        }
       } else if (!actMoved(a)) {
         // F5 first: a re-act that moves no pinned hash fails whatever list the row is on.
         push(1, a.pinnedTouched ? 're-sign leaves canonicalHash and renderedHash unchanged — the row is not on the stale list (F5)' : 'sheet section changed with no hash moved and no pinned hash moved in this commit — not on the stale list', a.rowId);
@@ -1001,8 +1045,7 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
           lists = 'undecidable';
           push(1, `${kind}: the act-kind lists cannot be computed on this tree (regrounding/freshness.ts listsAt is absent) — a missing link is never green`, a.rowId);
         } else {
-          const on = (tok: (typeof LIST_TOKENS)[number]): boolean =>
-            idsOf(tok === 'stale' ? L.stale : tok === 'unsigned-routed' ? L.unsignedRouted : tok === 'orphaned' ? L.orphaned : L.signedUnrouted).has(a.rowId);
+          const on = (tok: (typeof LIST_TOKENS)[number]): boolean => idsOf(listOf(L, tok)).has(a.rowId);
           const hit = LIST_TOKENS.filter(on);
           lists = hit.length ? hit.join('+') : 'none';
           if (!allowed.some(on)) {

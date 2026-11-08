@@ -5,7 +5,8 @@
  * 2026-11-08T17:45:34Z; § 2a, items 1–4, site 4c; application PR 1).
  *
  * Fixtures W1–W7, S1–S3, A1, X1 and K1: specified by Stacy (that ballot § 4, with her R1 § 3 and
- * R2 additions), built by Thurgood. R1 and R2 (link 7) are in verify-signing-chain.audit.test.ts.
+ * R2 additions), built by Thurgood. U1–U6 and the Site 4c case: the ballot's 2026-11-08 erratum
+ * (the unconfirmed state, (a′)), Stacy's. R1 and R2 (link 7) are in verify-signing-chain.audit.test.ts.
  * D1 (F-4 (a)'s pin) is application PR 2's.
  *
  * Each fixture is the T-UR tree (`fixtures/unsigned-routed/build.ts`) committed into a throwaway
@@ -21,7 +22,8 @@ import * as path from 'path';
 import { listsAt, runFreshnessSweep, formatFreshness } from '../regrounding/freshness';
 import { link1CensusLines, runCi, type CiResult, type Regrounding } from '../regrounding/verify-signing-chain';
 import { cleanupTmp, commit, editRow, editSheet, g, hash, head, read, RG, tmp, write } from './fixtures/signing-chain/helpers';
-import { allFiles, CHARTER, DISP, NOTE, OVERLAY, RECORD, RENDERED, SHEET, signatureFor, sheetBlock, treeFiles, STACY_TABLE, type RowState, type TreeSpec } from './fixtures/unsigned-routed/build';
+import { allFiles, canonicalUnit, CHARTER, DISP, NOTE, OVERLAY, RECORD, RENDERED, SHEET, signatureFor, sheetBlock, treeFiles, STACY_TABLE, type RowState, type TreeSpec } from './fixtures/unsigned-routed/build';
+import { hashText } from '../regrounding/hash';
 
 afterAll(() => cleanupTmp());
 
@@ -356,5 +358,105 @@ describe('shape review — the link-1 census mode (site 4c; K1)', () => {
     );
     const r = ci(repo, base);
     expect(r.findings.filter((f) => f.link === 1).map((f) => f.sha)).toEqual([w1]);
+  });
+});
+
+// ------------------------------------------------------------------ the erratum: the unconfirmed state (a′)
+
+/** T-UR with the record unit `#nu`'s note block removed: a drafted unit (its canonicalHash written), unconfirmed. */
+function repoUnconfirmed(spec: TreeSpec = {}): [string, string] {
+  const files = treeFiles(spec);
+  files[NOTE] = files[NOTE].split(/^(?=## )/m).filter((b) => !b.startsWith('## `#nu`')).join('');
+  const repo = tmp('shape-unconf');
+  g(repo, ['init', '-q', '-b', 'main']);
+  g(repo, ['config', 'commit.gpgsign', 'false']);
+  for (const [rel, text] of Object.entries(files)) write(repo, rel, text);
+  write(repo, 'canonical/shared/shared-catalog.yaml', 'members:\n  - id: m-one\n    owner: kenya\n');
+  write(repo, SHARED_DISP, `source: canonical/shared/shared-catalog.yaml\nmembers:\n  "m-one": ${JSON.stringify({ disposition: 'no-consumer-counterpart', cites: 'subtraction-3' })}\n`);
+  commit(repo, 'base: T-UR, #nu drafted and unconfirmed', []);
+  const base = head(repo);
+  g(repo, ['switch', '-q', '-c', 'pr']);
+  return [repo, base];
+}
+const NU_CURRENT = hashText(canonicalUnit('#nu'));
+const recordPin = (repo: string, anchor: string): string => {
+  const lines = read(repo, RECORD).split('\n');
+  return lines[lines.indexOf(`  ${JSON.stringify(anchor)}:`) + 1].replace('    canonicalHash: ', '');
+};
+const noteBlock = (anchor: string, pin: string, confirmer = 'kenya'): string =>
+  `## \`${anchor}\`\n\nconfirmer: ${confirmer}\ncanonicalHash: ${pin}\nitems: ${anchor.slice(1)}-1\ndate: 2026-11-08\n\n`;
+const addBlock = (repo: string, anchor: string, pin: string, confirmer = 'kenya'): void => write(repo, NOTE, read(repo, NOTE) + noteBlock(anchor, pin, confirmer));
+const UNCONF = /^(re-)?confirm: a first note block that moves no hash at the commit's first parent/;
+
+describe('shape review erratum — the unconfirmed state (a′; U1–U6, Site 4c)', () => {
+  test('U1 (link): an unconfirmed unit, one block, the three hashes equal → `confirm`, IN unconfirmed, PASS (K1 prints it)', () => {
+    const [repo, base] = repoUnconfirmed();
+    expect(recordPin(repo, '#nu')).toBe(NU_CURRENT);
+    addBlock(repo, '#nu', NU_CURRENT);
+    const sha = commit(repo, 'First note block for #nu (kenya)', ['Agent: kenya']);
+    expect(ci(repo, base).findings).toEqual([]);
+    expect(link1CensusLines(repo, base, 'HEAD', RG_T)).toContain(`${sha}\t${RECORD}#nu\tconfirm\tunconfirmed\tPASS`);
+  });
+
+  test("U2 (link): the block's canonicalHash ≠ the record's → FAIL 1", () => {
+    const [repo, base] = repoUnconfirmed();
+    addBlock(repo, '#nu', hash('not the record pin'));
+    commit(repo, 'First note block for #nu, wrong hash (kenya)', ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(links(r)).toEqual([1]);
+    expect(link1(r)[0]).toMatch(UNCONF);
+    expect(link1(r)[0]).toMatch(/not all equal/);
+  });
+
+  test("U3 (link): the record's canonicalHash ≠ the current unit's (the stale route, where the hash must move) → FAIL 1", () => {
+    const [repo, base] = repoUnconfirmed({ staleRecord: true });
+    const pin = recordPin(repo, '#nu');
+    expect(pin).not.toBe(NU_CURRENT);
+    addBlock(repo, '#nu', pin);
+    commit(repo, 'First note block for #nu at the stale pin (kenya)', ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(links(r)).toEqual([1]);
+    expect(link1(r)[0]).toMatch(UNCONF);
+  });
+
+  test('U4 (link): a sheet-only block edit on a unit that already has its block → `re-confirm`, FAIL 1 (unchanged)', () => {
+    const [repo, base] = repoUnconfirmed();
+    editSheet(repo, NOTE, '#alpha', { canonicalHash: hash('alpha-elsewhere') });
+    commit(repo, 'Edit the #alpha note block (kenya)', ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(links(r)).toEqual([1]);
+    expect(link1(r)[0]).toMatch(/^re-confirm on a row on none of its kind's lists/);
+  });
+
+  test('U5 (link): the drafter writes the block → FAIL 2 and 3', () => {
+    const [repo, base] = repoUnconfirmed();
+    addBlock(repo, '#nu', NU_CURRENT);
+    commit(repo, 'Note block for #nu (authoring)', ['Agent: thurgood']);
+    expect(links(ci(repo, base))).toEqual(expect.arrayContaining([2, 3]));
+  });
+
+  test('U6 (range, real sweep): two blocks added → the sweep FAILs (want 1) and FAIL 2', () => {
+    const [repo, base] = repoUnconfirmed();
+    addBlock(repo, '#nu', NU_CURRENT);
+    addBlock(repo, '#nu', NU_CURRENT);
+    commit(repo, 'Two note blocks for #nu (kenya)', ['Agent: kenya']);
+    const r = ci(repo, base, realSweep);
+    expect(r.sweepOk).toBe(false);
+    expect(r.lines.some((l) => /resolves to 2 note blocks .* \(want 1\)/.test(l))).toBe(true);
+    expect(links(r)).toContain(2);
+  });
+
+  test('Site 4c: listsAt returns the unconfirmed list, and formatFreshness prints `unconfirmed: N row(s)` before the withdrawal lists', () => {
+    const files = treeFiles({});
+    files[NOTE] = files[NOTE].split(/^(?=## )/m).filter((b) => !b.startsWith('## `#nu`')).join('');
+    const L = listsAt((rel) => files[rel], Object.keys(files), { renderedHash: RENDERED });
+    expect(L.unconfirmed.map((r) => `${r.file}${r.key}`)).toEqual([`${RECORD}#nu`]);
+    const root = tmp('shape-4c');
+    for (const [rel, text] of Object.entries(files)) write(root, rel, text);
+    const out = formatFreshness(runFreshnessSweep(root, { tracked: allFiles(root), renderedHash: RENDERED }));
+    const i = out.indexOf('unconfirmed: 1 row(s)');
+    expect(i).toBeGreaterThan(out.findIndex((l) => l.startsWith('unsigned-routed: ')));
+    expect(out[i + 1]).toBe(`  ${RECORD}#nu`);
+    expect(out[i + 2]).toBe('orphaned: 0 row(s)');
   });
 });

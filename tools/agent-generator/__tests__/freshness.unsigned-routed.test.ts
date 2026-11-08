@@ -123,7 +123,8 @@ describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list
       'unsigned-routed: 2 row(s)',
       `  ${idOf('#alpha')} — re-pointed: below-half`,
       `  ${idOf('#zeta')} — no-consumer-counterpart`,
-      // The withdrawal lists (ballot 2026-11-08-signing-act-shape-review § 2a), always printed.
+      // The unconfirmed and withdrawal lists (ballot 2026-11-08-signing-act-shape-review § 2a and its erratum), always printed.
+      'unconfirmed: 0 row(s)',
       'orphaned: 0 row(s)',
       'signed-unrouted: 0 row(s)',
     ]);
@@ -204,9 +205,9 @@ describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list
     // The two withdrawal lists follow (ballot 2026-11-08-signing-act-shape-review § 2a). The real
     // profile carries signed-unrouted rows (three at 94c5f26a0, the 2026-10-21 Errata's first
     // signatures), so only its count line's form is pinned here.
-    expect(out.slice(0, 4)).toEqual([out[0], 'stale: 0 row(s)', 'unsigned-routed: 0 row(s)', 'orphaned: 0 row(s)']);
-    expect(out[4]).toMatch(/^signed-unrouted: \d+ row\(s\)$/);
-    expect(out).toHaveLength(5 + Number(/^signed-unrouted: (\d+)/.exec(out[4])?.[1]));
+    expect(out.slice(0, 5)).toEqual([out[0], 'stale: 0 row(s)', 'unsigned-routed: 0 row(s)', 'unconfirmed: 0 row(s)', 'orphaned: 0 row(s)']);
+    expect(out[5]).toMatch(/^signed-unrouted: \d+ row\(s\)$/);
+    expect(out).toHaveLength(6 + Number(/^signed-unrouted: (\d+)/.exec(out[5])?.[1]));
     expect(out[0]).toMatch(/^operative-set-freshness: PASS — \d+ record\(s\), \d+ unit\(s\), \d+ note\(s\), \d+ dispositions file\(s\), \d+ overlay\(s\)$/);
   });
 
@@ -283,7 +284,7 @@ describe('FU30–FU31: determinism, no write, the paste', () => {
     const from = out.findIndex((l) => l.startsWith('operative-set-freshness: '));
     const paste = out.slice(from); // through the last list line (formatFreshness ends there)
     // Since ballot 2026-11-08-signing-act-shape-review, the withdrawal lists end the paste.
-    expect(paste.slice(-3)).toEqual([`  ${idOf('#zeta')} — no-consumer-counterpart`, 'orphaned: 0 row(s)', 'signed-unrouted: 0 row(s)']);
+    expect(paste.slice(-4)).toEqual([`  ${idOf('#zeta')} — no-consumer-counterpart`, 'unconfirmed: 0 row(s)', 'orphaned: 0 row(s)', 'signed-unrouted: 0 row(s)']);
     const stale = listed(paste, 'stale');
     const unsigned = listed(paste, 'unsigned-routed');
     for (const act of [idOf('#iota'), idOf('#zeta')]) expect([stale.includes(act), unsigned.includes(act)].filter(Boolean)).toHaveLength(1);

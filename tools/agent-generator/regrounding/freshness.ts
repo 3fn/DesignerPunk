@@ -82,8 +82,10 @@
  * `verify-signing-chain --ci` computes the same list at a first signature's first-parent tree
  * (link 1).
  *
- * Two more information lists follow (ballot 2026-11-08-signing-act-shape-review § 2a, item 3),
- * always printed, never findings:
+ * Three more information lists follow (ballot 2026-11-08-signing-act-shape-review § 2a, item 3,
+ * and its 2026-11-08 erratum), always printed, never findings:
+ *   unconfirmed: N row(s)       record units with no note block in their confirmation sheet — in
+ *                               bound for the confirmer's first note block that moves no hash;
  *   orphaned: N row(s)          dispositions rows and record units whose key names nothing
  *                               current (the `[orphaned-key]` refusal) — in bound for a withdrawal;
  *   signed-unrouted: N row(s)   signed dispositions rows on a current key that do not route —
@@ -152,6 +154,8 @@ export interface FreshnessReport {
   unsignedRouted?: RoutedRow[];
   /** Why the unsigned-routed list could not be decided, where it could not. */
   routedErrors?: RoutedError[];
+  /** The unconfirmed list (shape-review ballot § 2a, erratum 2026-11-08): record units with no note block. */
+  unconfirmed?: ListRow[];
   /** The orphaned list (shape-review ballot § 2a): rows and record units whose key names nothing current. */
   orphaned?: ListRow[];
   /** The signed-unrouted list (shape-review ballot § 2a): signed rows on a current key that do not route. */
@@ -467,6 +471,8 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
   const stale: StaleRow[] = [];
   /** Signed rows whose rendered hash cannot be read (the fail-closed refusal): undecidable. */
   const unverifiable: ListRow[] = [];
+  /** Record units with no note block in their confirmation sheet (shape-review ballot § 2a, erratum). */
+  const unconfirmed: ListRow[] = [];
   /** Profile files something below reaches (the unreferenced-file check at the end). */
   const referenced = new Set<string>();
   let spans: RenderedSpans | undefined | null = null; // null = not read yet
@@ -551,6 +557,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
       if (!notes.has(notePath)) {
         if (!notePath || !fs.existsSync(path.join(repoRoot, notePath))) {
           bad(`confirmation note ${notePath || '(none)'} does not exist`);
+          unconfirmed.push({ file, section: 'unit', key: anchor });
           continue;
         }
         notes.set(notePath, fs.readFileSync(path.join(repoRoot, notePath), 'utf8'));
@@ -559,6 +566,8 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
         else if (!tracked.has(notePath)) bad(`confirmation note ${notePath} is not committed`);
       }
       const blocks = noteBlocksFor(notes.get(notePath) as string, anchor);
+      // The unconfirmed list (shape-review ballot § 2a, erratum 2026-11-08): no note block for the unit.
+      if (blocks.length === 0) unconfirmed.push({ file, section: 'unit', key: anchor });
       if (blocks.length !== 1) {
         bad(`confirmation resolves to ${blocks.length} note blocks in ${notePath} (want 1)`);
         continue;
@@ -728,6 +737,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
     stale: listOrder(stale),
     unsignedRouted: pop.rows.filter((r) => !r.signed),
     routedErrors: pop.errors,
+    unconfirmed: listOrder(unconfirmed),
     orphaned: listOrder(orphaned),
     signedUnrouted: listOrder(signedUnrouted),
     unverifiable: listOrder(unverifiable),
@@ -738,6 +748,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
 export interface TreeLists {
   stale: StaleRow[];
   unsignedRouted: RoutedRow[];
+  unconfirmed: ListRow[];
   orphaned: ListRow[];
   signedUnrouted: ListRow[];
   /** Signed rows whose freshness is undecidable (no rendered hash): never on a list, never green. */
@@ -781,6 +792,7 @@ export function listsAt(
     return {
       stale: report.stale ?? [],
       unsignedRouted: report.unsignedRouted ?? [],
+      unconfirmed: report.unconfirmed ?? [],
       orphaned: report.orphaned ?? [],
       signedUnrouted: report.signedUnrouted ?? [],
       unverifiable: report.unverifiable ?? [],
@@ -806,7 +818,10 @@ export function formatFreshness(report: FreshnessReport): string[] {
   if (errors.length === 0) lines.push(`${UNSIGNED_ROUTED_HEAD}: ${unsigned.length} row(s)`);
   else for (const e of errors) lines.push(`${UNSIGNED_ROUTED_HEAD}: UNDECIDABLE — ${e.message}`);
   lines.push(...unsigned.map((r) => `  ${listRowId(r)} — ${routedLabel(r)}`));
-  // The withdrawal lists (shape-review ballot § 2a) — always printed, information only.
+  // The unconfirmed list and the withdrawal lists (shape-review ballot § 2a and its erratum) —
+  // always printed, information only.
+  const unconfirmed = report.unconfirmed ?? [];
+  lines.push(`unconfirmed: ${unconfirmed.length} row(s)`, ...unconfirmed.map((r) => `  ${listRowId(r)}`));
   const orphaned = report.orphaned ?? [];
   lines.push(`orphaned: ${orphaned.length} row(s)`, ...orphaned.map((r) => `  ${listRowId(r)}`));
   const su = report.signedUnrouted ?? [];
