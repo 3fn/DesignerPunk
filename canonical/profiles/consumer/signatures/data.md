@@ -337,6 +337,13 @@ The entry should re-point its `artifact` / `negative` / `replaces` to the packag
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT to `superseded-by` (destination `#how-to-use-designerpunk-tokens-on-android`, `cites: subtraction-5`), `surviving: []`.** A new act; it changes my 2026-10-12 assent to `retained`. Authoring moved the disposition under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): Thurgood's profile commit `3d479bd4b` set it `superseded-by`, so no empty `## Ground truth` heading renders once the last trim leaves.
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `210a837fe1a6ca2e4e2dbd4912d1267021493d3e`: the canonical entry `"none-trim-stale-snapshots"` and its rendering, which is empty (0 pieces). Because the row is `superseded-by`, I also read the destination unit and its three identical renderings in the same tree (`--print` of `#how-to-use-designerpunk-tokens-on-android`, same sha).
+- **Hashes, from that print**: `canonicalHash` `sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c` (did not move). `renderedHash` `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` (moved: from `04e9b45a...`, the hash over the one rendered line, back to the empty-piece hash).
+- **Why `superseded-by` holds**: the verdict declares that my ground truth is the live MCP and that shipped snapshots are not it. The destination states that function: "**Ground truth for token values is LIVE, not a file** — no token snapshot ships in the package ... Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`), and for a component's tokens (`get_component_full`)". The declaration survives there, in prose a consumer reads; the manifest line it replaced had nothing left to trim.
+- **Surviving**: `[]`; a frontmatter row owes no operative-set items.
+- **Residual, not a refusal**: the destination's `ground-truth-live` is carried by the Task 18.5 assent on that unit (this run), not by this row.
+
 **Refuse: should-re-point** (disposed `no-consumer-counterpart`, subtraction-3). The verdict `none-trim-stale-snapshots` is the manifest's declaration that my ground truth is live and the Kotlin snapshots are trimmed. Because the DesignTokens trim has a consumer counterpart (refused above), the verdict has one too: a consumer seat still needs "ground truth: none — trim the (package's) flattened snapshot".
 
 It should be re-pointed together with that trim (the ComponentTokens trim may stay `no-consumer-counterpart`, see its assent). If the trim is re-disposed, this row follows it.
