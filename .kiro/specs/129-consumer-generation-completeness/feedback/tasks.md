@@ -3584,3 +3584,445 @@ Under the mirror clause, the wording of any repair is the authors'. This entry i
 - **New-1**: Task 20's verdict criterion now says what "names `DesignerPunkTheme`" means: each `// @provider` line's identifier begins with `DesignerPunkTheme`, so `DesignerPunkThemeFamily.<Family>` passes and a `HarnessConsumer` read fails. This is the reading Stacy gave, written into the text so the verifier need not supply it. → tasks.md Task 20, criterion 2
 - **New-2**: the completion doc's disclosure now states the reach: the symlinks supply and mask a runtime dependency missing from `@3fn/core`'s published `dependencies`, and only `harness-generate`'s consumer install exposes it. → tasks.md Task 20, criterion 1
 - **New-3**: none owed; the row already places Ada's pointer in her standing scope.
+
+---
+
+## Tasks amendment 11 (2026-11-07): Task 13's workflow step under an issue-row grant; Decision 6 reads an unfinished job
+
+**Item 1.** Ballot `.kiro/docs/ballots/2026-11-07-github-grants-are-issue-row-grants.md` (#745, `a418cc0aa`). It was RATIFIED by Peter at 2026-11-07T23:28:57Z, verbatim: "Re: F-1, All as recommended and ratified". The orchestrator's record, `evidence/2026-11-07-peter-ruling-github-grants-ballot-ratified.md`, reads that as F-1 (a) and F-2 (a). Its § 5 names this amendment, and says it is valid under current law as well.
+
+**Item 2.** Kenya's K-F1, with Data's Android half, comes from ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` § 9 (`[KENYA R1]`, `[KENYA R2]` item 4, `[DATA R2]`, and my cross-read item 4). In that round Kenya, Stacy (`[STACY R2]` item 4) and I agreed that it is a gap in Decision 6's text, to be fixed by a tasks amendment that also says where the code fix lands.
+
+### Context for Reviewers
+- **Settled, not under review**:
+  - who holds Task 13's grant and who writes what: F-2 (a), with Thurgood writing the step and Ada writing `d2-check.ts` and its test (→ ballot § 5);
+  - the record's form (→ ballot § 5, the U7a record's pattern);
+  - that K-F1 is a text gap and not a claims finding (→ the charter-scope ballot § 9, `[STACY R2]` item 4).
+- **Under review**:
+  - Task 13's criteria, Primary Artifacts, grant limits, § "The seam", and the 13.3 and 13.6 split (→ tasks.md Task 13);
+  - the grant record and its invocation contract (→ `.kiro/issues/2026-11-07-d2-check-step-grant.md`);
+  - Decision 6's new section, "A job that has not finished" (→ tasks.md § "Decision 6");
+  - the defect record and where its fix lands (→ `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`).
+- **Not touched**: Task 20 (U7a, in progress), and every merged unit.
+- **Reviewers**: Stacy (LENS: this changes a merged plan and activates a `.github/**` grant); Ada (the invocation contract and 13.3); Kenya (Decision 6's new section and the record's acceptance); Data (the Android half).
+
+#### [THURGOOD R23] — tasks amendment 11
+- **Task 13's `.github/**` path moves to an issue-row grant.** The new record is `.kiro/issues/2026-11-07-d2-check-step-grant.md` (owner Thurgood; `**Class**: P2 obligation (guard) · grant`; Trigger `path:…/completion/task-13-completion.md`).
+  - It admits one step in `harness-generate`, directly after "Upload the consumer root", plus a comment, and has no deleted line.
+  - Task 13's Primary Artifacts line, its grant limits and its Post-Completion line now take the Task 20 form.
+  - The amendment PR activates the grant, so its body names the record and its path list and carries `**ARMING**: at this merge and at the fixing PR's merge`.
+  - § "Unit preconditions" gains the row, and Stacy's `**Grant activation read**:` line is owed (LIVENESS, read 4).
+  - The Delegated-tier preamble gains the ballot's sentence. → tasks.md Task 13; § "Unit preconditions"; § "Delegated-tier plan"
+- **The invocation contract** (Ada's amendment 1).
+  - It pins the command line, `npx tsx scripts/harness/d2-check.ts --consumer "${RUNNER_TEMP}/harness-consumer"`, run from the repository root with no `working-directory:`.
+  - Both platforms run in one invocation.
+  - The output is three stdout lines, `d2-check completeness:`, `d2-check ios:` and `d2-check android:`, each `PASS` or `FAIL`, or one setup line instead. The rest of each line is Ada's.
+  - Exit codes: 0 when all pass, 1 on any `FAIL`, 2 on setup.
+  - The annotations (`d2-check` title) are the step's.
+  - Two calls in it are mine, for Ada to accept or contest: the third line, for completeness (Req 5.10 is platform-independent, so it gets its own line rather than riding on both platform lines), and exit 2 for setup. → the record, § "The invocation contract"
+- **The step goes after the upload, not before.** A D2 red then still leaves the consumer root downloadable for diagnosis. Either placement fails every compile context at "Require harness-generate" (Req 2.11), so placement changes no verdict. → the record, admitted edit 1
+- **The split.** 13.3 stays Ada's: the script to the contract, plus `d2-check.test.ts`. A new **13.6** is Thurgood's: the step, the workflow test assertions, and the record's outcome line. I numbered it 13.6 and did not renumber, because 13.4 and 13.5 are Lina's, and renumbering moves their references for no reader. Each subtask has one agent and one doc author, which closes Stacy's S-4 point from the ballot round.
+  - The two D2 criteria keep their merged text and gain an evidence sentence, the step's annotation pasted at H.
+  - Three criteria are added: the contract (Ada's side, with a test case per exit code); the step (my side, with the workflow test red at base, then green); and the `.github/**` diff, deletions and gate count.
+  - § "The seam" says which side a red belongs to, decidably from the step's output, without asking either author. → tasks.md Task 13
+- **Decision 6, "A job that has not finished".**
+  - Each context is read from its own job, finished when its last attempt has a `conclusion`, whatever the rest of the run is doing. That is Data's half.
+  - An unfinished job is listed and never skipped over. A condition whose last-read run comes after it is **not yet measurable**: printed as such, never met, never offered on.
+  - For condition 2, the last-read run is the newest finished pull-request run. For iOS condition 3 and condition 5, it is the third counted run at the pin. That is Kenya's case.
+  - Android's condition 3 is exempt, because it counts any three, not the first three.
+  - The demotion inputs read finished jobs only.
+  - **One addition of mine, for Kenya and Stacy to read**: condition 2's interior-gap case. Kenya's text named conditions 3 and 5. The same skip lets the streak count across an older unfinished job that may yet break it, so the rule covers it. A trailing unfinished job leaves the count as it stands, which the existing test already shows.
+  - It is written as a clarification that measures the ruled conditions (the amendment 2 precedent, `[STACY TASKS R3]` Medium-4). It opens no new choice for Peter. → tasks.md § "Decision 6"
+- **Where the `stability.ts` fix lands: in my standing scope, after the charter-scope application PR merges. It is not granted here.**
+  - Once this text merges, the code disagrees with it, and that is the ballot's item 1 defect-fix case: mine, with a red-before falsification case and Kenya's and Data's consults.
+  - A grant here would need a unit, because a tasks-row grant lives only on a unit branch, and that is a fifteenth unit for about a quarter-session fix.
+  - The wait costs no correctness. Decision 6's interim bullet keeps every reader off a record whose skipped-runs table is non-empty.
+  - The defect record's Trigger also names `evidence/harness-stability.md`, so the next committed stability record forces the fix, a re-rule, or a lapse that goes to Peter. → `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`
+- **Surviving counter-arguments**:
+  - **A D2 red hides that run's compile verdicts**, and it fails a required job for a reason that is not a compile. Req 2.11 already accepts this for every failure in `harness-generate`. Only a separate job would avoid it, and that adds a context. The grant excludes that, and so did Task 13 as merged.
+  - **The interim bullet can delay an offer.** On a day of long macOS queues, a record with an empty skipped-runs table may not come before the fix lands. The cost is a delayed offer, never a false one.
+  - **If the application PR stalls**, the next committed stability record lapses the defect record, and that lapse goes to Peter.
+- [@ADA] Do you accept the contract: the three lines, the setup line, exit codes 0, 1 and 2, the cwd, `--consumer` as the only argument, and fixtures under `scripts/harness/__tests__/fixtures/d2-check/**`? If you need another argument or another line, the record is where it changes. → `.kiro/issues/2026-11-07-d2-check-step-grant.md` -- [THURGOOD R23]
+- [@KENYA] Does "A job that has not finished" say what K-F1 meant? Does the record's acceptance list cover your mutation, your control and the pin column? Do you accept or contest my condition 2 addition? → tasks.md § "Decision 6"; the defect record -- [THURGOOD R23]
+- [@DATA] Is your half stated right: per-job finishing, finished Android jobs read under a queued iOS job, and the demotion inputs read over finished jobs only? Is the consult you asked for named right? → tasks.md § "Decision 6"; the defect record -- [THURGOOD R23]
+- [@STACY] LENS: the grant's admitted and excluded edits, and whether § "The seam" makes a red at H attributable without asking either author. Also whether "not yet measurable" is decidable from the record as the fix will print it, and whether the interim bullet is decidable from the record as it prints today. → tasks.md Task 13 and § "Decision 6"; both records -- [THURGOOD R23]
+
+#### [STACY TASKS R9] — LENS read of tasks amendment 11 (read at `origin/task/129-tasks-amendment-11` `c49e2d2d1`)
+
+*(2026-11-08T00:00:12Z, `date -u`.)* I read Task 13, § "Decision 6", § "Unit preconditions", the Delegated-tier preamble and both new records, against `git diff origin/main...origin/task/129-tasks-amendment-11`. `main` is at `a418cc0aa`, and the branch merges cleanly over it (`git merge-tree`). On `main` I also read:
+- `.github/workflows/native-harness.yml`;
+- `scripts/harness/stability.ts` and `stability.test.ts`;
+- `.kiro/issues/README.md` rules 1, 5 and 8 to 12;
+- ballot `2026-11-07-github-grants-are-issue-row-grants` § 5;
+- ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` § 3 item 1 and § 9.
+
+I ran `stability.ts` locally over its fixture, and I read the Actions jobs API for two live runs. Under the mirror clause, the wording of any repair is Thurgood's, and Ada's for the contract. I name each defect and the referent that would make it decidable, not the text. This entry is a LENS read, feedback only, never a gate.
+
+**Verified as stated**
+- The defect record's line citations are right at `a418cc0aa`: `runStatus` is read from the run (L217), the whole run is skipped (L311–313), and `atPin.slice(0, 3)` is at L372–373.
+- I reproduced Kenya's mutation over `ios-queue.json` for `harness-ios-tokens`:
+  - baseline: cold runs 801, 802 and 803, `queuePoor: true`;
+  - 801 unfinished: skipped `[801]`, cold runs 802, 803 and 804, `queuePoor: false`;
+  - control, 804 unfinished: cold runs 801, 802 and 803, `queuePoor: true`.
+- The cited records resolve: the ruling record, `748be5d0b`'s ballot Status, and `[STACY R2]` item 4.
+- `stability.ts` reads no `harness-generate` annotation, because `contextOf` returns null for that job. So the `d2-check` title has no machine reader.
+- U8's grant list is authored outside the diff it bounds (rule 10). The defect record is filed in the PR that writes the rule it breaks (rule 10). Its `path:` list has no space beside the comma (rule 1).
+- S-4 is closed. Each of 13.1 to 13.6 has one agent line.
+
+**Answer to `[@STACY]` (THURGOOD R23), in four parts**
+
+**(1) The grant's admitted and excluded edits.** I can make both ARMING reads from git and the PR bodies.
+- **Activation read (at amendment 11's merge).**
+  - The `**Grant paths**:` block names one `.github/` path and no governance-law path.
+  - None of M1's excluded acts is admitted (no new required context, no count change, no removal or weakening), and none is named.
+  - There is no `**Deleted lines**:` block, and none is owed.
+  - Owner, Class and Trigger are present (rules 1 and 12).
+  - My line will be `**Grant activation read**: .kiro/issues/2026-11-07-d2-check-step-grant.md @ <amendment 11's squash SHA, 9 characters>`. I will check at the merge that the PR body names the record and its path list and carries the `**ARMING**:` line.
+- **Fixing-PR read (at U8's merge).** I read U8's `.github/**` paths, less any standing-scope path, as a subset of the list at the activating merge, with `--numstat` deletions 0. This is the reading I recorded at the ballot's `[STACY R1]` Q2. The admitted edit is bounded by job, position and keys, and I can decide all of it.
+- **Owed by me, not by this amendment.** Amendment 10's merge (`bfead6798`, #742) activated `2026-11-07-default-name-compile-grant.md`. Its `**Grant activation read**:` line is not yet committed in any `completion/arming-*` record. I will commit both activation lines together.
+
+**(2) Does § "The seam" make a red at H attributable without asking either author?** Partly. Medium-3 below gives the gaps.
+
+**(3) Is "not yet measurable" decidable from the record as the fix will print it?** Yes, because the rule requires the record to name the run. Two conditions apply, and both are Medium-1 below:
+- acceptance case 1 has to read the rendered line, not only the analysis;
+- case 1 as written admits a POOR reading.
+
+**(4) Is the interim bullet decidable from the record as it prints today?** Yes, for every run the record can see. `render` prints the `**Skipped runs**` table under a context's `##` heading only when that table is non-empty (L455–461), so whether the table "lists a run" can be read from the record. The run the record cannot see is High-1.
+
+---
+
+**High-1. A run whose context job is not yet listed is invisible to the interim bullet, to the rule and to the acceptance list.**
+- **The shape.** In `native-harness.yml`, the four contexts have `needs: harness-generate`. I read two live runs this session:
+  - run 42427198251: `harness-generate` completed at 23:53:29Z, and all four context jobs have `created_at` 23:53:29Z;
+  - run 42427309603: `harness-generate` completed at 23:55:24Z, and all four context jobs have `created_at` 23:55:25Z.
+
+  So during `harness-generate`, which took about 80 s in both runs, the jobs API most likely lists no job for any context. I infer this from the timestamps; I did not observe the list during that phase.
+- **What it does to the unfixed script.** `normalize` builds records only from listed jobs, and `skippedRuns` is built per context from those records. A run caught in its generate phase therefore produces no row in any context's tables, and nothing marks it as skipped. I modelled this over `ios-queue.json`: run 801 `in_progress`, with only its `harness-generate` job listed. The result is skipped `[]`, cold runs 802, 803 and 804, and `queuePoor: false`.
+- **Why that matters.** That is Kenya's false pass, with an empty table. The interim bullet says an empty table is "the only state in which its output is the reading above". That claim is false for this state.
+- **What it does to the rule.** The new bullet says a job has finished "when the jobs API gives that job's last attempt a `conclusion`". That definition does not reach a job the API does not list yet. The acceptance list has no case for it. So a fix written to the text keeps the hole.
+- **A second shape of the same gap.** In a whole-run re-run, the new attempt's context jobs are probably created only after `harness-generate` re-runs (UNVERIFIED). Until then, the newest *listed* attempt is the earlier one, which has a conclusion, so the fixed rule reads it as finished. `ApiRun` already carries `run_attempt`.
+- **Decidable referent.**
+  - For the rule and the fix: a `pull_request` run that is not `completed` and lists no job for a context, or whose `run_attempt` is higher than that context's newest listed attempt (counted before carried-over copies are dropped), holds an unfinished job of that context. Every `pull_request` run runs all four contexts: there is no `paths:` filter, and their only condition is `!cancelled()`. Add one acceptance case per shape.
+  - For the interim reading of today's record: a run that the runs endpoint shows created before the record's `Generated` time and still active after it, with that context's job created after `Generated`. The endpoint keeps these fields, so the check can be made after the fact.
+- **#735's record, read this way.** None of the 27 runs created from 18:00Z to its `Generated` time (20:27:03Z) has `updated_at` after it. Widened to every earlier run, still none. So `[STACY R2]` item 4's reading holds ("no committed record carries the false green"). It now rests on a check that would have seen this shape.
+- **My own interim rule had the same hole.** In that entry I wrote that I would record condition 5 as `not re-verified — unfinished run precedes the third counted run`. A run that the record cannot see never triggers that rule. Until this is folded, I apply the runs-endpoint read above to every stability record I read.
+
+→ tasks.md § "Decision 6", "A job that has not finished", first bullet and last bullet; `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md` § "Acceptance"
+
+**Medium-1. Acceptance case 1 admits the opposite false reading and does not read the record.**
+- "`queuePoor` is not `false`" is met by `true`. Under condition 5, a POOR queue means that iOS context "is not offered during 129 and becomes a promote-at-closeout offer". So a fix that reads an unfinished job as POOR passes case 1 and contradicts the rule's "read again after the job finishes".
+- The rule says the record "prints it as not yet measurable and names the run". Case 1 "reads" conditions 3 and 5 without saying whether it reads the analysis or `render`'s output. Today `render` prints condition 3 only as "N counted — met / not met". It prints condition 5's "not yet measurable" with one fixed reason ("fewer than three counted runs").
+- **Decidable referent:** the rendered condition 3 and condition 5 lines for case 1, each printing "not yet measurable" and naming run 801. Either `queuePoor` is null, or a field says why.
+
+→ the defect record § "Acceptance", case 1
+
+**Medium-2. "`native-harness-workflow.test.ts` asserts all of this" does not say how a static test asserts behaviour.**
+- Four clauses of the step criterion are about runtime behaviour:
+  - each `PASS` line gets a notice;
+  - each `FAIL` line and the setup line get an error;
+  - the no-line error;
+  - the step fails on a non-zero exit, a missing line or a `FAIL` line.
+- A YAML read can show that the strings are present. It cannot show that the step behaves this way.
+- The same file already has the strong form, "the annotation step, run for real" (L69–L105, `bash -e -c` over the step's `run:`).
+- One case decides something that string presence cannot: three `PASS` lines with exit 1. Unless `shell:` is set, the step runs under `bash -e {0}`, with no `pipefail`. So a step that pipes the script through `tee` and then checks its lines would pass that case green.
+- **Decidable referent:** the step's `run:` executed for real, over a stubbed command or fixture roots, once per contract outcome, including the PASS-lines-with-non-zero-exit case.
+
+→ tasks.md Task 13, the step criterion
+
+**Medium-3. § "The seam" leaves two outcomes unassigned, and its "printed none" limb depends on a log that nothing requires.**
+- **Unassigned outcome 1:** all three lines read `PASS`, and the step is red. The cause is either the script's exit code or the step's own logic.
+- **Unassigned outcome 2:** one or two of the lines are present, none reads `FAIL`, and the step is red.
+- **The "printed none" limb.** "13.3's when the script … printed none, and 13.6's otherwise" needs the script's own stdout and exit code. Both are visible only in the step's log, and only if the step echoes them. No criterion requires that. Logs expire, and annotations outlast them, as the Conventions note.
+- **Decidable referent:** the step records the script's exit code (and its raw stdout, or the count of lines it matched) somewhere that outlasts the log, and the seam assigns the two outcomes above.
+
+→ tasks.md Task 13, § "The seam"
+
+**Medium-4. Which version of the record governs at M?**
+- A contract change is made "in the record first, in a PR merged before either side changes".
+- Admitted edit 1 reads "runs the command line above and writes the annotations above". So a contract change also changes what the grant admits.
+- README rule 8 fixes the path list as it stood at the activating merge. It is silent on the admitted edits.
+- The Task 13 criteria read "the record's command line" and "within the grant's admitted edits", with no SHA.
+- At CLOSEOUT I would have to ask which applies: the record at activation, or the record at M.
+- **Decidable referent:** name the version. One option: the record at M, where a change after activation is itself re-activated by a PR carrying the `**ARMING**:` line. The other: the record at activation, with any contract change made by a new grant.
+
+→ the grant record § "The invocation contract" and § "Grant"; tasks.md Task 13, criteria 3 to 5
+
+**Medium-5. 13.3's falsification set does not tell set equality from inclusion.**
+- The merged D2 rows require "every component token … appears in the generated output **and no other does**".
+- The new contract criterion asks for exit 1 "once each with a `FAIL` line" for completeness, iOS and Android.
+- A script that checks only that every indexed token is present passes all three cases with a missing-key fixture.
+- **Decidable referent:** for each platform, one `FAIL` case with a missing key and one with an extra key.
+
+→ tasks.md Task 13, the contract criterion
+
+**Low-1. The condition 2 bullet does not say `pull_request`.**
+- The iOS condition 3 bullet says "an unfinished pull-request job". The condition 2 bullet does not.
+- Read literally, an unfinished dispatched job older than the newest finished pull-request run makes condition 2 not yet measurable, although a dispatched run counts toward neither condition.
+- The cost is a delay, never a false pass. Still, I would have to ask which reading is meant.
+
+**Low-2. The `.github/**` criterion's "exactly" excludes a P1b entry.** "U8's `.github/**` changes are exactly `.github/workflows/native-harness.yml`" rules out registering `d2-check.test.ts` in `.github/in-lane-guards.json` under Thurgood's P1b scope. The suite runs under `test:scripts` either way. If an entry is wanted, the criterion changes before H.
+
+**Low-3. The completeness row has no H evidence sentence.**
+- The two platform rows now paste their annotation at H. The completeness row does not, although the step writes `d2-check completeness:`.
+- Not this amendment's, and in merged text: "a Jest case that drops one token from **both** fails". If both sides lose the same token, they still match and nothing fails. I will read "both" as both platforms' generated output unless the author says otherwise.
+
+**Low-4. The workflow header becomes incomplete, and the grant forbids fixing it.** The header comment's "Jobs:" paragraph (L8–L12) describes `harness-generate` as building and uploading. The admitted edits allow only a comment above the new step. The header will not be false, but it will be incomplete. Whether to admit that one sentence is Thurgood's call.
+
+**Low-5. The defect record states as fact what its Trigger only makes a lapse.** "So a record computed by the unfixed script is never committed while this record is still open and not re-ruled." A `path:` trigger fires; it does not prevent a commit. The record's own stall bullet says the record lapses at that commit. The sentence claims more than the instrument does.
+
+**Other reads**
+- **Where the fix lands.** In `[STACY R2]` item 4 I said the code fix "can ride the amendment's task row". That was wrong: an amendment PR is not a unit, and a tasks-row grant lives only on a unit's branch. Thurgood's standing-scope route is the right one.
+- **Thurgood's condition 2 addition.** I accept it as a clarification under the amendment 2 precedent. Every new bullet withholds a reading, and none grants one. The per-job reading restores what the conditions said before #735 chose in code. No offer moves earlier.
+- **A side finding on condition 5's UNVERIFIED note.** Both live runs show a `needs:` job's `created_at` equal to its dependency's finish, to within one second. That is two observations, not proof. The `max` holds either way.
+- **Reads I will make at the merges** (not text fixes):
+  - the amendment PR's `**Consulted**:` line, because it carries a non-checkbox `tasks.md` hunk;
+  - the `**ARMING**:` line;
+  - U8's PR body citing its path list (rule 8);
+  - the grant archived at U8's merge. I read the root-records row with rule 3's resolution, as at U7a.
+
+**Blocking:** High-1. It is cheap to fold, and it should be folded before this amendment merges, because this text is the rule the fix implements. The Mediums can be folded at the same time. Each is a referent, not a design change.
+
+**Surviving, after the folds:**
+- The step's live red is shown only by cases, never by a run.
+- A D2 red still hides that run's compile verdicts, as Thurgood states.
+- The interim read in High-1 needs the runs endpoint beside the record, so for that shape the record alone does not decide the read.
+
+#### [ADA TASKS R6] — tasks amendment 11 review (read at `origin/task/129-tasks-amendment-11` `c49e2d2d1`)
+
+Verdict: **ready with fixes**. Nothing blocks. The contract is one I can build to, and no line contradicts merged text. I checked `native-harness.yml` on `main`: the job builds the consumer with `npx tsx scripts/harness/consumer.ts --out "${RUNNER_TEMP}/harness-consumer"`, so the contract's `--consumer "${RUNNER_TEMP}/harness-consumer"` names the same root. `tsx` is a root dependency (`~4.21.0`), and no `working-directory:` is needed.
+
+- **Agreement.** I agree to the invocation contract as worded, with items 1 and 2 below added to the record. My dated agreement line is owed in the record (grant record § "The invocation contract"). I write it once items 1 and 2 are spliced, since my agreement is to the words as they then stand.
+- **Item 1: one exit-code precedence rule is missing.** The contract has three outcomes and does not say which wins when more than one applies. I will build: a setup or usage error prints the one `d2-check: FAIL setup (...)` line and exits 2, and it prints none of the three verdict lines. Otherwise all three verdict lines print, even when completeness is `FAIL`, so iOS and Android are still reported, and the exit is 1 if any reads `FAIL`, else 0. An uncaught exception is caught at the top level and becomes the setup line with exit 2, so a crash never exits 1 with no lines. Please add this to the record. The seam rule in Task 13 depends on it: "none of the record's lines" is 13.3's only if the script cannot exit silently.
+- **Item 2: stdout carries those lines and nothing else.** Everything else the script prints (progress, the reserved-package warning, diagnostics) goes to stderr. The record says "on stdout, exactly three lines" but does not say the other output goes to stderr. Without it, a harmless extra stdout line makes the test and the step disagree. Add "all other output goes to stderr".
+- **Item 3: fixture roots cannot hold `node_modules/`.** `.gitignore` excludes `node_modules/`, and the script reads the installed package's shipped definition files (the completeness half, Req 5.10). The row lists committed fixtures under `scripts/harness/__tests__/fixtures/d2-check/**`. I will commit the index and the generated output there and have the test copy the fixture to a temp dir and write the shipped-definition files into it. The criterion text ("against fixture consumer roots") still holds. This is a note for Thurgood so no one reads the fixtures as complete roots. No text change is needed, and the in-lane-guards entry is unaffected.
+- **Item 4: a usage case is missing from the test criterion.** Add "an unknown argument, or no `--consumer`, exits 2 with the setup line". The contract names it, and the criterion lists only the missing-root case. I will write the case either way, so this only makes the criterion match the test.
+- **Item 5: decidability.** Every criterion is decidable from git and CI except two spots.
+  - The criterion "records the test red once against the workflow at this unit's base" is a claim in the completion doc. A reader can re-run it, and it belongs to 13.6.
+  - The annotation evidence at H ("`d2-check ios: PASS`" with run URL and SHA) is readable from the check-run annotations API. H is the head SHA that the completion doc names, and a later commit moves it, so the doc should be committed last or name the run's head explicitly. This is the same convention as the other U-row annotations; I am only noting it applies here.
+  - The seam rule's "run by the record's command line in that job, printed none" can only be settled by re-running the step. That is acceptable, since item 1 makes the case near-impossible.
+- **Decision 6 half.** Nothing in my seat. I read the "not yet measurable, never a pass" wording and the interim "no record that lists a skipped run is read" rule against `stability.ts`, and I found no conflict. The code fix is Thurgood's, behind the ratified `stability.ts` scope application.
+- **Write scope.** The `d2-check.ts`, test and fixture rows are mine through the Task 13 row grant (`scripts/harness/**` is outside my standing scope). The row grants exactly those paths and I will not touch the others.
+
+Surviving counter-argument: a D2 red takes down every compile context through "Require harness-generate", so a script bug I ship blocks a required job with no compile verdict. Item 1 narrows the crash case but does not remove this. The record already states the cost under F-2 (a); I agree with that reading and ask for nothing further.
+
+#### [KENYA TASKS R7] — tasks amendment 11 (read at `c49e2d2d1`; my last entry under "Tasks Feedback" is `[KENYA R6]`)
+- **Verdict: ready with fixes.** The text closes the false pass I measured (K-F1: run 801 unfinished, cold runs slide to 802–804, `queuePoor` false). Nothing blocks the merge. Items 1–3 should be fixed first because the interim bullet is the only guard until the `stability.ts` fix lands, and item 1 is a hole in it. → tasks.md § "Decision 6", "A job that has not finished"
+- **K-F1 itself, closed.** The iOS condition 3 and 5 sentence puts the "last run read" at the third counted run at the pin. An unfinished pull-request job with a lower run id makes both conditions not yet measurable. That is the 801 case. The control (804 unfinished, 801–803 stay POOR) is in the record as case 2. The pin column is case 6. Android's condition 3 exemption is correct: it counts any three cold runs, not the first three.
+- **Your condition 2 addition: accepted.** The same skip lets the streak count across an older unfinished job. I read the existing test, "an unfinished run after a clean streak leaves the streak where it was", as the control. It stays green.
+1. **The interim bullet's "empty table is the only state" is not true; this is the fix I most want.** The table lists only runs for which this context has a job record whose run status is not `completed` (`stability.ts` L307–313). Two states read as empty and still carry the defect.
+   - **Run with no job record for the context.** `normalize` emits records per job in the jobs API. A queued run whose iOS job has not been created yet (a `needs:` wait on `harness-generate`) gives no record, so no table row, and the run is invisible to every condition. I have not measured whether GitHub lists a waiting job early enough to avoid this. Say it is unverified, or measure it.
+   - **Run status `null`.** `runStatus: … ?? null` and the `!== null` guard (L217, L311) read a null-status run as completed.
+   - **Wording fix.** Either word the bullet as "no record is read unless every pull-request run in the fetched window has a job record for this context and a status of `completed`", or add a second interim check. Do not leave an empty table as the proof. Decidable form: count the window's pull-request run ids against the context's record run ids and compare the two sets.
+2. **The pin of an unfinished job may be unknown.** `xcodePin` comes from `harness/pins.yaml` at the head SHA, and it is `null` when the local clone lacks the SHA (L513–518). The text says the record lists the pin and that only an unfinished job "at that pin" blocks condition 3. It does not say how a null pin reads. Rule: **a null pin is treated as possibly the current pin**, so the condition is not yet measurable, and the table prints `unknown`. A finished run with a null pin is already excluded by the existing filter, so this closes the asymmetry. Add it to the Decision 6 sub-bullet and to acceptance case 6.
+3. **Event scope of "an unfinished job".** Condition 2 and condition 3 count pull-request runs only, and the text's general bullet ("a context's unfinished job … before the last run a condition reads") does not say which events block. Only the iOS sub-bullet says "pull-request job". Say once in the general bullet that **only an unfinished pull-request job makes a condition not yet measurable**, and that an unfinished dispatched job is listed but blocks nothing. Otherwise a stuck manual dispatch could hold condition 2 open forever, which is a stall, not a false pass. The demotion inputs include dispatched runs, so the finished-only rule there is separate and stays.
+4. **Acceptance case 1 needs the printed line, not only `queuePoor`.** The code today gives `queuePoor === null` the reason "not yet measurable (fewer than three counted runs)". After the fix, the reason is the unfinished run, not a count. Case 1 should assert the printed line names run 801 and does not read "fewer than three counted runs". Otherwise a lazy fix can pass the case with the wrong reason. Also add the job-level form of my mutation (null only job 900041's `conclusion`, run status unchanged) as case 1b. The per-job reading is the whole fix, so the case should test it.
+5. **Rerun reading, for the record.** "Last attempt has a `conclusion`" means a job whose attempt 2 is in progress is unfinished, even though attempt 1 finished. That matches the code and is right. I would state it in one clause so nobody reads attempt 1's verdict while a rerun is pending.
+- **Decidable from git and CI?** Yes once items 1 and 2 are in, with one exception: "measured vs unmeasured" for a run with no job record is not decidable from the record (item 1). I can decide everything else from the jobs API, `harness/pins.yaml` and the record's tables.
+- **Contradicts merged text?** No. The amendment measures conditions 2 to 5 and changes none of their thresholds. I found no conflict with Decision 6's merged conditions or the promotion lifecycle.
+- Task 13 (the grant and the step): outside my seat, no read.
+- [@THURGOOD] On item 1, would you take the wording fix in the bullet and add the run-id set comparison as the interim check, or measure whether a waiting job appears in the jobs API first? Either is fine with me. → tasks.md § "Decision 6" -- [KENYA TASKS R7]
+
+#### [DATA TASKS R6] — tasks amendment 11 review (read at `origin/task/129-tasks-amendment-11` `c49e2d2d1`)
+
+Verdict: **ready with fixes**. No blocking item. Three fixes, each small.
+
+What I checked and found as I would build or rule it:
+- **The Android half of Decision 6 is carried.** "Each context is read from its own job", the demotion inputs "over finished jobs only", and Android condition 3 exempt ("any three cold runs, not the first three"; met only on three finished runs) say what I asked for in `[DATA R2]`. The defect record's acceptance cases 3 and 4 are the finished-Android-job-with-`harness-infra`-and-queued-iOS case and the streak-break case. Both are decidable from a recorded fixture.
+- **The interim bullet does cover my case.** `stability.ts` builds `skippedRuns` per context (L307–312, printed per context at L455), and L311 tests the run's status, so a finished Android job in a run whose iOS job is queued lands in the Android context's own table. "No record is read for a context whose skipped-runs table lists a run" therefore blocks the Android demotion read, as it should. The conservative cost is a delayed demotion read, not a wrong one. I accept it.
+- **The D2 step matches the job as it stands.** `${RUNNER_TEMP}/harness-consumer` is the path "Build the scratch consumer" writes to and the compile contexts download. "Upload the consumer root" is the job's last step today. The step takes no `working-directory:`, like every other step in the job. The contract's three lines, three exit codes and annotation rules are decidable from the workflow file and one run. I would write `d2-check.ts` to it as it stands (Android harvest from the generated Kotlin output, the same set equality as iOS).
+- **The seam text is decidable.** The three cases (FAIL or setup line, wrong command line, no line) can each be told apart from the step's output and the log.
+
+Fixes:
+1. **Name one source for "finished"** → tasks.md § "Decision 6", "A job that has not finished", first bullet. It says a job has finished when "the jobs API gives that job's last attempt a `conclusion`". `stability.ts` L132 and L218 take the context's conclusion from the **checks API** and fall back to the job's (`jobConclusion`). Two sources can disagree for a moment, for example job completed and check run not yet concluded. Say which one the fixing PR keys on, and what a disagreement reads as (I would say: unfinished). Otherwise acceptance case 1 is decidable only by the fixture author's choice.
+2. **Say how a D2 red reads in the streak** → tasks.md Task 13, "The seam", and the grant record's "A D2 red hides the compile verdicts". When D2 fails, `harness-android-tokens` fails at "Require harness-generate", which writes no `harness-infra` annotation (workflow L239–246). So `stability.ts` reads a concluded failure with no verdict and no infra tag, which is a break for condition 2 on the promoted Android context, not an infra run. The record says only that a *flake* counts toward attempts-differ. A deterministic D2 FAIL breaking the Android streak is, I think, right (it is a real generate-side regression). State it, so nobody reads a D2 red as an infra run and exempts it. A D2 setup error (exit 2) from a bad artifact is the borderline case. I would also read it as a break and not add an infra path.
+3. **Give "not yet measurable" a horizon** → § "Decision 6", third bullet. An unfinished job that never concludes (an abandoned macOS queue entry) leaves the condition unmeasurable with no end. Either say that GitHub's own conclusion (cancelled or timed out) ends it, which I believe is true but have not verified, or name who re-rules a job unfinished past N days. Not blocking, since the record is re-read at each health check.
+
+Surviving counter-argument to my fix 2: stating "break" in tasks.md fixes a reading of a class (harness-generate-side failures) that Req 2.12 might later want to carry an infra tag for. The residual is a fork for Thurgood and Ada: if D2 setup errors should ever be infra, the Require step would need an annotation, which is outside this grant. I am not picking it.
+
+#### [THURGOOD R24] — tasks amendment 11, the review round folded (`[STACY TASKS R9]`, `[ADA TASKS R6]`, `[KENYA TASKS R7]`, `[DATA TASKS R6]`), 2026-11-08T00:05:14Z (`date -u`)
+The four entries above are spliced byte for byte from the files their seats wrote.
+
+- **Stacy High-1 and Kenya item 1, one class: an unfinished state that never reaches the table.** Folded by deciding "unfinished" at the run level, from the runs endpoint.
+  - Every `pull_request` run runs all four contexts. A context's job is finished only when the jobs API lists it for the run's latest `run_attempt`, with a conclusion that agrees with the check run's.
+  - Unfinished therefore covers: no job listed yet (the `harness-generate` phase), a pending re-run, a null run status, and the two sources disagreeing.
+  - **One addition of mine, same class**: a completed run that lists no job for a context is a break, because it would otherwise hide a cancelled run's break.
+  - **The interim rule gains check (b)**, Kenya's run-id set comparison against the runs endpoint before `Generated`. With it, an empty table is no longer offered as the proof. Its residual is Stacy's: for this state the record alone does not decide the read.
+  - **Kenya's question**: I took the wording fix and the set comparison, not a measurement. Stacy's two live runs (job `created_at` equal to the generate job's finish) already make the case real enough to close by rule.
+  - → tasks.md § "Decision 6"; the defect record § "The defect" and cases 7 to 10
+- **Stacy Medium-1 and Kenya item 4.** Case 1 now reads the rendered lines and requires `queuePoor` to be `null`, so a POOR reading fails it too, and the "fewer than three counted runs" reason is barred. Case 1b is the job-level mutation. The rule text now says the condition is neither POOR nor within the ceiling, and that no promote-at-closeout decision is made on it. → tasks.md § "Decision 6"; the defect record, case 1
+- **Kenya item 2 (null pin)**: printed `unknown`, and it blocks as if at the current pin. → tasks.md § "Decision 6"; case 6
+- **Kenya item 3 and Stacy Low-1 (event scope)**: only an unfinished `pull_request` job blocks. A dispatched one is listed and blocks nothing. → tasks.md § "Decision 6"; case 5's second control
+- **Kenya item 5 (re-runs)**: folded into the latest-attempt rule, and covered by case 8.
+- **Data fix 1 (one source)**: both sources must show a conclusion; a disagreement reads as unfinished; the check run's conclusion is the one read, as today. → case 11
+- **Data fix 3 (a horizon)**: "not yet measurable" ends when the job concludes, through its timeout, GitHub's queue limit (UNVERIFIED) or a cancel. A job still unfinished more than 24 hours after its run's creation is a health-check finding, and I cancel the run or say why not. → tasks.md § "Decision 6"
+- **Data fix 2 (a D2 red in the streak)**: a D2 red, setup included, is a condition 2 break on every context, not an infra run. I left open whether a generate-side setup fault should ever be tagged infra; that is Data's residual, for Ada and me, and not this grant's. → tasks.md Task 13 § "The seam"; the grant record, counter-argument
+- **Ada items 1 and 2**: the precedence rule (setup beats verdict; all three verdict lines otherwise; a crash becomes the setup line with exit 2) and stdout-only lines are in the record. **Item 4**: the usage cases are in the criterion. **Item 3**: the partial-fixture note is on the artifact line. **Item 5**: no text change, because the H convention is the existing one. **Ada's agreement line is still owed in the record**, now that items 1 and 2 are spliced.
+- **Stacy Medium-2**: the workflow test runs the step's `run:` for real over a stub, in six outcomes, including three `PASS` lines with exit 1 (the no-`pipefail` case) and two lines with exit 0.
+- **Stacy Medium-3**: the step writes an exit-code-and-line-count annotation on every run. The seam now assigns every outcome, decided from annotations that outlast the logs.
+- **Stacy Medium-4**: Task 13 reads the record as it stood at its last activating merge. A later change re-activates by a PR carrying the `**ARMING**:` line, with Ada's agreement line.
+- **Stacy Medium-5**: per platform there is a missing-key `FAIL` and an extra-key `FAIL`, with the other verdict lines still printed.
+- **The Lows**:
+  - Low-2: an added P1b entry for `d2-check.test.ts` is admitted beside the workflow.
+  - Low-3: the completeness row gains its H evidence, and "both" is clarified as the index and the output. Stacy's worry does not arise, because the case fails against the definition files.
+  - Low-4: one header sentence is admitted, with no line changed.
+  - Low-5: the defect record's Trigger sentence now claims a lapse, not a prevention.
+- **Surviving, after the folds**:
+  - The step's live red is shown only by cases, never by a run.
+  - A D2 red still hides that run's compile verdicts.
+  - The interim check (b) needs the runs endpoint beside the record.
+  - A job unfinished past its horizon is ended by an act (a cancel), not by the rule.
+
+#### [STACY TASKS R10] — LENS re-read of tasks amendment 11, folded (read at `origin/task/129-tasks-amendment-11` `20a3474b5`)
+
+I re-read the fold for decidability only, against `git diff c49e2d2d1 20a3474b5` (`tasks.md` and both records). `main` is still at `a418cc0aa`.
+
+The fix is not written yet, so I could not re-run my reproduction against fixed code. Instead I wrote the folded "runs read" as a classifier (finished, unfinished, ended with no job), exactly as worded, and ran it over `ios-queue.json` with each mutation. I also read the runs endpoint for `native-harness.yml`.
+
+Under the mirror clause, the wording of any repair is Thurgood's. This entry is a LENS read, feedback only, never a gate.
+
+**My R9 items**
+
+- **High-1: closed in the rule and the acceptance list. The interim half closes only with N-1.**
+  - The classifier as worded puts both of my shapes in the unfinished class, as `unfinished (no job listed)`:
+    - run 801 in its generate phase, with only `harness-generate` listed;
+    - a pending re-run: `run_attempt` 2, `in_progress`, with only attempt 1's jobs listed.
+  - Run 801 has a lower id than the third counted run, so conditions 3 and 5 read as not yet measurable.
+  - Cases 7 and 8 are the falsification cases.
+  - Interim check (b) catches the generate-phase run, but N-1 below breaks (b) itself.
+- **Medium-1: closed.** Case 1 now reads the rendered lines, requires `queuePoor` null, and excludes POOR.
+- **Medium-2: closed.** The step is run for real, with six outcomes, including three `PASS` lines with exit 1.
+- **Medium-3: closed.**
+  - The exit-code annotation outlasts the logs.
+  - The seam assigns every outcome: two `PASS` lines with exit 0 is a contract break, so it is 13.3's; a missing exit-code annotation is 13.6's.
+  - The annotation's message format is left to Thurgood. A person can still read it.
+- **Medium-4: closed.** The record that governs is the record as it stood at its last activating merge. A change after that is re-activated by a PR that carries the `**ARMING**:` line. That PR is an issue-row grant activation, so my ARMING row fires on it.
+- **Medium-5: closed.** For each platform, there is one `FAIL` case for a missing key and one for an extra key.
+- **Low-1 to Low-5: closed.**
+  - The dispatched-job control is added.
+  - The P1b entry is allowed, with its additivity predicate.
+  - The completeness row gets its H evidence sentence, and "both" is defined.
+  - The added header sentence is admitted, with deletions still 0.
+  - The Trigger now says "lapse", not "never committed".
+
+**Blocking: N-1.**
+
+**N-1 (High). `stability.ts` reads only the newest 100 runs, so check (b) can never pass again, and the "window" is undefined.**
+- **The cap.** `fetchRaw` requests `actions/workflows/<file>/runs?per_page=100` once, with no pagination (L495 at `a418cc0aa`).
+- **Today's count.** The runs endpoint gives `total_count` 113 for `native-harness.yml`, 75 of them `pull_request`.
+- **#735's record passes (b).** At its `Generated` time (20:27:03Z) there were 87 runs. The endpoint lists 54 `pull_request` runs created before that time, and the record's tables hold 54. That matches my R9 read.
+- **The next record cannot pass (b).** It will fetch the newest 100 runs and drop the oldest 13. Those include `pull_request` runs 42334777875, 42335435837, 42336147392 and 42336916041. Check (b) has no lower bound, so it fails for every context. Re-running cannot help, because those runs have already completed.
+- **What that blocks.** No record can be read for an offer, or for `harness-android-tokens`' demotion read at a health check or a release's S, until the fix lands.
+- **The fixed rule has the same gap.** Its runs read covers runs "in the record's window", and nothing defines the window.
+- **The same shift Kenya found.** On `harness-ios-tokens` (and the same three runs on `harness-ios-components`), the counted cold runs in #735's record are exactly 42334777875, 42335435837 and 42336147392, the three oldest `pull_request` runs. When they drop out of the window, "the first three at the pin" moves on to later runs.
+  - Today's queues are short, so no false pass follows now.
+  - The mechanism is K-F1's, and it comes from the window, not from an unfinished job.
+  - The acceptance list has no case for it.
+- **Decidable referent:**
+  - a window with a lower bound that can be decided (a run id or a time), reaching back at least to each iOS context's first run at the current pin;
+  - the script paginating down to that bound;
+  - check (b) bounded by the same bound;
+  - one acceptance case where the window spans more than one page.
+
+→ tasks.md § "Decision 6", "A job that has not finished", "The runs read" and the interim bullet (b); the defect record § "The rule the fix implements" and § "Acceptance"
+
+**N-2 (Medium). The three classes do not cover every state, and case 1b falls outside them.**
+- As worded, "unfinished" requires the run to be "not `completed`, or its status is missing".
+- Case 1b keeps the run's status unchanged (`ios-queue.json` gives all four runs `status: completed`) and nulls only job 900041's `conclusion`. That job is:
+  - not finished, because it has no conclusion;
+  - not unfinished, because the run is completed;
+  - not "ended with no job", because a job is listed.
+
+  My classifier prints `UNCLASSIFIED` for it.
+- A second state falls outside the classes: a completed run whose latest attempt lists no job for the context while an earlier attempt does, for example a whole-run re-run cancelled during `harness-generate`. That job is in no class either, because "ended with no job" reads "lists no job for that context" and does not say "for the latest attempt".
+- A fix written to the text and a fix written to case 1b can then disagree.
+- **Decidable referent:** classes that cover every state. For example, any job not finished and not ended-with-no-job is unfinished, whatever the run's status. "Ended with no job" also needs to name the latest attempt.
+
+→ tasks.md § "Decision 6", "The runs read"; the defect record, case 1b
+
+**N-3 (Low). Two conclusions that differ, and that are both non-null, never end.**
+- "Any disagreement between the two sources reads as unfinished."
+- Not yet measurable "ends when the job concludes". For a job with two non-null conclusions that differ, the job has already concluded, so this never happens. Cancelling cannot help either.
+- The check run's id equals the job's id, so this state is unlikely. Still, the text should name which conclusion is read, or route the case to the 24-hour health-check finding.
+
+**Surviving, after the folds:**
+- For the interim read, the record alone does not decide whether it can be read. The runs endpoint is read beside it, as Thurgood states.
+- The step's live red is still shown only by cases, never by a run.
+
+#### [THURGOOD R25] — tasks amendment 11, `[STACY TASKS R10]` folded, 2026-11-08T00:12:09Z (`date -u`)
+`[STACY TASKS R10]` is spliced above, byte for byte.
+
+- **N-1, confirmed before folding.**
+  - `fetchRaw` requests the runs endpoint once, with `per_page=100` and no `page` (L495 at `a418cc0aa`). 100 is the cap: `per_page=200` also returns 100.
+  - At 2026-11-08T00:11:08Z the endpoint gave `total_count` 113: page 1 holds 100 runs and page 2 holds 13.
+  - It is a pagination defect in merged code, and it also bites the fixed rule, whose "window" was undefined.
+- **N-1, the text.** Decision 6 gains "The window": every run the runs endpoint lists, read page by page to `total_count`, with no branch filter. Its lower bound is the workflow's first run.
+  - The record prints `total_count` and the number of runs it read. A short read, or a branch-filtered record, is **not yet measurable** on every condition and demotion input, and the record names the shortfall.
+  - The per-run lists (jobs, check runs, annotations) are read in full the same way.
+  - The interim read gains (c), every run read. The unfixed script fails (c), so until the fix lands no record is read for an offer or a demotion read. A read that falls due is recorded as `not read: record incomplete (<read> of <total_count> runs)`, never as a pass.
+  - → tasks.md § "Decision 6"
+- **N-1, the code route.** The pagination fix goes in the same defect record and the same fixing PR, in my standing scope over `stability.ts` once #746 merges. Cases 12 (a window of more than one page, served by a stub of 113 runs, with the three oldest still counted as iOS cold runs) and 13 (a short read) are added. The fix is now owed before the next offer **and** the next demotion read, because both are blocked until it lands. → `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`
+- **N-2, as Stacy words it.** The three classes are exhaustive. Finished and ended-with-no-job are defined, and "ended with no job" now names the latest attempt. Unfinished is every other state, whatever the run's status. Case 1b falls in the unfinished class, and a new case 9b covers the latest attempt. → tasks.md § "Decision 6"; the defect record, cases 1b and 9b
+- **N-3.** Where both sources show a conclusion and the two differ, the check run's conclusion is read and the record prints both. Only a one-sided conclusion reads as unfinished, so every state has an end. → tasks.md § "Decision 6"; case 11b
+- **Surviving**:
+  - Since N-1, the interim rule blocks every read until the fix lands. That costs a blocked demotion read at the next health check if #746 and the fix are late; it never costs a false read.
+  - Reading the whole window costs API calls that grow with the run count. A later bound can be written into this text if the cost bites.
+  - Stacy's two survivors stand.
+
+#### [STACY TASKS R11] — LENS re-read of tasks amendment 11, R10 folded (read at `origin/task/129-tasks-amendment-11` `30c11d5ad`)
+
+I re-read the fold for decidability only, against `git diff 20a3474b5 30c11d5ad`, which covers `tasks.md` and both records. `main` is still at `a418cc0aa`. Under the mirror clause, the wording of any repair is Thurgood's. This entry is a LENS read, feedback only, never a gate.
+
+**My R10 items**
+
+- **N-1: closed.**
+  - The window is every run the endpoint lists, read page by page up to `total_count`, with no branch filter. Its lower bound is the workflow's first run.
+  - The record prints `total_count` and the number of runs read. Both are decidable from the record and the endpoint.
+  - A short read, or a read with a branch filter, is not yet measurable everywhere and names the shortfall. Case 13 is its falsification case.
+  - Case 12 keeps 42334777875, 42335435837 and 42336147392 as the counted cold runs of `harness-ios-tokens` across two pages.
+  - Interim (c) can be decided after the fact. An unfixed record's "Runs recorded" count is compared with the endpoint's count of runs created before `Generated`.
+  - The consequence is stated and honest. No record can be read until the fix lands. A demotion read that falls due is written `not read: record incomplete (<read> of <total_count> runs)`, never a pass.
+  - The newest health-check record is `2026-10-17.md`, so the next monthly read falls due by 2026-11-16. That makes #746 and the fixing PR the path to a readable demotion read for `harness-android-tokens`. It is a scheduling fact, not a text fix.
+- **N-2: closed.**
+  - The three classes are now exhaustive, because "unfinished" is "every other state, whatever the run's status".
+  - Case 1b names its class.
+  - "Ended with no job" now reads the latest attempt, with case 9b.
+  - Re-run as worded, my classifier puts 1b in the unfinished class, and the completed re-run whose latest attempt lists no context job in "ended with no job". Neither is left unclassified.
+- **N-3: closed.** When both sources show a conclusion and they differ, the check run's conclusion is read and the record prints both (case 11b).
+- **Ada's agreement line** is dated and is scoped to the contract at `20a3474b5`. The grant record's contract text is unchanged between `20a3474b5` and `30c11d5ad`: the diff only appends § "Agreement". So the line covers the text that merges.
+
+**Blocking:** nothing.
+
+**New**
+
+**New-1 (Medium, reach; not a decidability defect). A window that has no upper limit on its size will eventually produce a short read on every record.**
+- **The bound only grows.** The lower bound is the workflow's first run, and it never moves.
+- **The cost per run.** `fetchRaw` makes about six calls for each run:
+  - one jobs list;
+  - at most one check-runs list for each new SHA;
+  - one annotations call for each of the four context jobs, and more with re-run attempts.
+- **The limit and the pace.** The token's core limit is 5,000 an hour (`gh api rate_limit` this session). The endpoint lists 114 runs, created over about 25 hours.
+- **When it bites.** At about 800 runs, one record exceeds the hourly limit, and the per-run lists then cannot be read in full. Under the new rule, every record is then not yet measurable everywhere, for good. That is safe, because it never produces a false pass. But it means:
+  - no offer can be made;
+  - the promoted context's demotion read becomes `not read` permanently.
+- **When that could happen.** At 129's current pace, within about a week of runs. After 129 the pace is lower, but the size still only grows.
+- **Decidable referent:** a lower bound that does not grow with the history and still covers what each read needs. That is:
+  - for each iOS context, its first run at the current pin;
+  - for each promoted context, its promotion's merge;
+  - for condition 2, its streak.
+
+  If the bound stays as written, a check of the hourly limit should be named among the fix's cases.
+- I do not block on this. The text is decidable as written, and the failure is a blocked read, never a false one. But it is the next defect of this class. Thurgood can name it in the defect record, or file it under rule 10, and the choice is his.
+
+**Surviving, after the folds:**
+- Until #746 and the fixing PR merge, no stability record can be read. The next monthly demotion read is due by 2026-11-16.
+- For the interim reads, the runs endpoint is read beside the record.
+- The step's live red is still shown only by cases, never by a run.
+
+#### [THURGOOD R26] — tasks amendment 11, `[STACY TASKS R11]` noted, 2026-11-08T00:14:33Z (`date -u`)
+`[STACY TASKS R11]` is spliced above, byte for byte. It is ready, with nothing blocking.
+
+- **New-1: filed as a record, not fixed here.** The record is `.kiro/issues/2026-11-08-stability-window-grows-past-rate-limit.md`: owner Thurgood, `**Class**: P2 obligation (guard) · defect`, Trigger `path:scripts/harness/stability.ts`.
+  - **Why a record and not a Decision 6 line.** A line naming the ceiling with no record behind it is an obligation stated only in a plan line, which rule 10 makes a finding. The record gives the obligation an owner and an event.
+  - **Why this Trigger.** The next PR to touch `stability.ts` is expected to be the unfinished-job and pagination fixing PR. That PR is owed before the next stability record can be read, and the next monthly read is due by 2026-11-16. The trigger therefore fires about 700 runs before the ceiling (114 runs at 00:14:33Z; about 800 at the limit). That PR either bounds the window, closing the record, or re-rules it with a dated reason and the run count. A count threshold would need a `manual` token, which nothing would fire.
+  - **What closes it**: Stacy's referent, a lower bound that does not grow with the history (iOS first run at the pin, the promotion's merge, the streak's start), written into Decision 6 first, plus a falsification case and a pre-fetch rate-limit check. → the record
+- No `tasks.md` text changes in this round.
