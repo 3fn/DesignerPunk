@@ -137,11 +137,15 @@ signer: data
 - **Surviving**: `[]`. This frontmatter row owes no operative-set items, so the assent covers the re-point itself.
 - **Valve-1 blind spot**: closed for this row. The hash now covers the rendered line, so any future text change makes this signature stale.
 
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `superseded-by`, destination `#how-to-use-designerpunk-tokens-on-android`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `2356811a...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
+
 ## `#frontmatter:routes.docs[completion-doc-guidance]`
 
 signer: data
 
 **Assent.** The completion-doc tiers belong to our spec/task machinery (subtraction-4). A consumer app's agent does not write DesignerPunk completion docs.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:routes.docs[dev-workflow-detail]`
 
@@ -149,17 +153,23 @@ signer: data
 
 **Assent.** It is our development workflow (subtraction-4). The consumer's workflow is its own.
 
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
+
 ## `#frontmatter:routes.docs[file-organization]`
 
 signer: data
 
 **Assent.** It gives our repo's file-organization rules (subtraction-4). They do not govern a consumer app's tree.
 
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
+
 ## `#frontmatter:routes.cues[8]`
 
 signer: data
 
 **Assent.** `platform-resource-map` gives cross-platform file paths in *this* repo (subtraction-1). The consumer's one needed path, the shipped Android component sources, is carried by the re-pointed `knowledgeBases[android-components]` entry and the re-pointed body units.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:routes.cues[9]`
 
@@ -177,17 +187,23 @@ signer: data
 
 **Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `superseded-by #what-you-dont-own`.** It replaces my `no-consumer-counterpart` assent. The destination's rendering ("Your repo's own build and test tooling is the one to use — read it from the app's build setup before you run anything") is where a consumer's run-the-suite function lands. That is a routed claim rather than my "different function" reading, and it is the stronger, correct one. The signature is byte-identical (hashes unchanged); this block records the act.
 
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `superseded-by`, destination `#what-you-dont-own`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `bf968f86...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
+
 ## `#frontmatter:commands[audit-tokens]`
 
 signer: data
 
 **Assent.** `npm run audit:tokens` audits component-token usage across our pipeline (subtraction-1). No `designerpunk` CLI subcommand does this in a consumer (the CLI has `generate`, `validate`, `init`, `mcp:*`, `figma:*`, `sync`).
 
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
+
 ## `#frontmatter:knowledgeBases[android-tests]`
 
 signer: data
 
 **Assent.** Test sources do not ship: the package's `files` excludes `src/components/core/**/platforms/android/*Test.kt` (subtraction-5).
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[docs/specs/**]`
 
@@ -196,6 +212,8 @@ signer: data
 **Assent.** `docs/specs/**` is our summary-doc tree (subtraction-4). The consumer's spec scope is the re-pointed `specs/**`.
 
 **Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `superseded-by writeScope[.kiro/specs/**]`.** The consumer's spec write scope is the re-pointed `specs/**`, which absorbs the summary-doc tree's function. The signature is byte-identical (hashes unchanged); this block records the act.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `superseded-by`, destination `frontmatter:writeScope[.kiro/specs/**]`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c49070d3...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#android-theming-spec-094`
 
@@ -325,6 +343,8 @@ signer: data
 
 **ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-10-17; added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1). `subtraction-3` applies: `.kiro/issues/**` is this repo's stewardship instrument, meaning the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo, so a consumer's Data has nothing there to author, append to, or be walked against, and gets no scope. At consult I noted that rule 9 keys on the singular `**Owner**:` header while several records (including the build-verification harness charter) use `**Owners**:`; that is an ambiguity in the repo's own convention and does not bear on the consumer disposition.
 
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]`
 
 signer: data
@@ -339,6 +359,8 @@ The entry should re-point its `artifact` / `negative` / `replaces` to the packag
 - I read the rendered Ground truth section directly, per the README's blind-spot note (a trim row's `renderedHash` is the empty-piece hash). It no longer lists this trim.
 - The trim's function survives in the destination unit I just assented: it keeps me off the package's flattened DesignTokens snapshot and sends me to the MCP for the per-theme set.
 - **Conditional on Task 16.3**, as the comment above the row states: this artifact leaves the package there. Until then, `dist/android/DesignTokens.android.kt` still ships, and the destination's `dist/*.android.kt` glob does not name it. If 16.3 does not drop `dist/android/**`, this row must be re-opened.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `superseded-by`, destination `#how-to-use-designerpunk-tokens-on-android`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `2356811a...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:ambient.groundTruthManifest.verdict`
 
@@ -371,6 +393,8 @@ It should be re-pointed together with that trim (the ComponentTokens trim may st
 - **What I read, in this session.** The line the row owns, identical in the cc and kiro renderings: cc `data.md` L485 and kiro `data-prompt.md` L279: *"Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:"*. The `## Ground truth` heading and its blank line (cc L483-484, kiro L277-278) are the container span and are not hashed by this row; the Kiro blank line is present. The `_canonical` frontmatter L26 keeps `verdict: none-trim-stale-snapshots`.
 - **Why `retained` still holds.** The manifest still trims one shipped, un-themed snapshot in a consumer: the ComponentTokens trim, re-pointed to `node_modules/@3fn/core/dist/ComponentTokens.android.kt` (cc L486). The reworded line calls the listed artifact a generated build output, which is what it is. It closes the "stale/generated" residual I recorded on 2026-10-02.
 - **Surviving**: `[]`; this frontmatter row owes no operative-set items.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `superseded-by`, destination `#how-to-use-designerpunk-tokens-on-android`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `2356811a...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:commands[platform-tokens]`
 
@@ -435,10 +459,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[harness/android/**]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:6b602a648035b93ee282a3f13c2b25189b919f2c3b5951b1a7b79c4f5ba0f873
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `harness/android/**` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[scripts/harness/probe-kotlin.ts]`
 
@@ -446,10 +472,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/probe-kotlin.ts]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:c7a83cc2df75eb723d1bc64e3c84386ff467bbb7735e45ff3f2625dd075beb32
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/probe-kotlin.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[scripts/harness/parse-kotlin.ts]`
 
@@ -457,10 +485,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/parse-kotlin.ts]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:7b76ab2c094253ffac225cba9be2fdbe761ed05be9a74e4a99307f17a578f9fc
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/parse-kotlin.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[scripts/harness/__tests__/probe-kotlin.test.ts]`
 
@@ -468,10 +498,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/probe-kotlin.test.ts]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:9174976792ac67a36c2cd76e081d85cdc20e4868172367e2e4684d164b75a75f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/probe-kotlin.test.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[scripts/harness/__tests__/parse-kotlin.test.ts]`
 
@@ -479,10 +511,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/parse-kotlin.test.ts]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:32f390bf2e2e9f54c05b6e1eaeb2181212ce23107ec538ca41d95856a57180aa
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/parse-kotlin.test.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/kotlin/**]`
 
@@ -490,10 +524,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/fixtures/kotlin/**]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:846c81ba9045989ba7c22ab4ff6519b2f32a118af3f05b9ee90d9c71a4186a6f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/fixtures/kotlin/**` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/parse-kotlin/**]`
 
@@ -501,10 +537,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/fixtures/parse-kotlin/**]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:5e983ce471832f2632116dacdf748114718170b493caf469e13df4be724dc800
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/fixtures/parse-kotlin/**` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## `#frontmatter:writeScope[harness/pins.yaml]`
 
@@ -512,10 +550,12 @@ signer: data
 date: 2026-11-08
 row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[harness/pins.yaml]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:928141613afeaab9f58b4a771ad4443d82d070551c07284076a0d2e31010da32
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `harness/pins.yaml` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the `android:` section only, under P1–P6, which a glob cannot carry; the In Scope bullet carries the limit). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives. The same glob stands in Kenya's and Ada's charters; one hash in three files with three signatures is expected, not a collision (ballot site 12).
+
+**Re-signed 2026-11-08 (shape review PR 2, F-4 (a)): ASSENT, unchanged, `surviving: []`.** A new act on a stale row. The row renders nothing, so under the pin (`545ae18f6`) its `renderedHash` is the hash of `{disposition, destination}`: `no-consumer-counterpart`. `canonicalHash` did not move. I read the entry and its empty rendering by `--print` on a clean tree at `6c42f20bc`, and recomputed `renderedHashOfRow` myself: `renderedHash` moves `37517e5f...` -> `c29e6217...`. The disposition and destination are the ones I assented to above, and the destination (where there is one) still renders the function.
 
 ## Signing run summary (2026-09-29, phase two)
 

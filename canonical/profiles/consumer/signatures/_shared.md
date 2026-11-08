@@ -7,11 +7,13 @@
 ## `#complete-task-tooling`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/_shared.dispositions.yaml` · members · `complete-task-tooling` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:d9b77a4735ca40f286d5f759f8d35240f6806c482cbc7fde961faecfb7957fcc
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `6c42f20bc`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own completion tool (`.kiro/hooks/complete-task.sh`, `runContext: this-repo`). I assent that nothing survives.
 

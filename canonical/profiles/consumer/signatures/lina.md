@@ -102,11 +102,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: no consumer counterpart. The route reaches DesignerPunk's own completion-doc tiering for `.kiro/specs/**` tasks (subtraction 4, spec workflow as law); a consumer's completion practice is its own.
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:routes.docs[dev-workflow-detail]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: `process-development-workflow` is this repo's task workflow (subtraction 4).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:routes.docs[file-organization]`
 
@@ -114,11 +120,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: `process-file-organization` is this repo's file-organization law (subtraction 4).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:routes.cues[8]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: the cue rebuilds the docs MCP after `governance/` / component doc changes. That is this repo's corpus index over its own governance tree (subtraction 3); a consumer does not edit the docs that index serves. Consistent with `rebuild-docs` not surviving in `#mcp-practice-notes`.
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:knowledgeBases[ApplicationMCPServerSource]`
 
@@ -126,11 +138,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: `application-mcp-server/**` is the steward's server source, not present in a consumer's repo (subtraction 5). Component source stays reachable through the retained `StemmaComponentSource`.
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[docs/specs/**]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Disposition changed by the batch**: `no-consumer-counterpart` → `superseded-by` `frontmatter:writeScope[.kiro/specs/**]`. I assent. The destination renders the glob `specs/**` (both targets' write scope lists `- \`specs/**\``). The row's function is permission to write the spec summaries, which in a consumer's layout live at `specs/[spec]/task-N-summary.md`, so `specs/**` makes that write permitted. **Dependency, stated**: this entailment holds because the consumer's summary location is under `specs/`. If a later re-grounding moves summaries elsewhere, this row must be re-judged. History: signed `no-consumer-counterpart` at `b9e2a919`; the function turned out to have a counterpart, so the new disposition is the more accurate claim.
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c49070d3…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[application-mcp-server/**]`
 
@@ -138,11 +156,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: the steward's MCP server source; no consumer counterpart (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[governance/component-meta-authoring-guide.md]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: this repo's governance doc. The consumer reads DesignerPunk's copy read-only in the package (subtraction 3), consistent with `practice-no-write`'s re-grounding.
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[scripts/extract-component-meta.ts]`
 
@@ -150,11 +174,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/extract-component-meta.ts` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[scripts/figma-component-generator.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/figma-component-generator.ts` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[scripts/audit-component-tokens.js]`
 
@@ -162,11 +192,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/audit-component-tokens.js` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[scripts/validate-examples.js]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/validate-examples.js` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[.kiro/hooks/lina-*.kiro.hook]`
 
@@ -174,11 +210,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: this repo's own Kiro hooks for the Lina seat (§ 2.4). The package installs no hooks and `src/cli/templates/` carries none, so a consumer has nothing at this path to own (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/render.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/render.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/adapters/**]`
 
@@ -186,11 +228,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/adapters/**`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/compose.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/compose.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/derive.ts]`
 
@@ -198,11 +246,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/derive.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/generate.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/generate.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/pipeline.ts]`
 
@@ -210,11 +264,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/pipeline.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/skills.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/skills.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/consumer-entry.ts]`
 
@@ -222,11 +282,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/consumer-entry.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/consumer-profile.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/consumer-profile.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/attribution.ts]`
 
@@ -234,11 +300,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/attribution.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/spans.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/spans.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/registry.ts]`
 
@@ -246,11 +318,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/registry.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/registry-manifest.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/registry-manifest.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/resolve.ts]`
 
@@ -258,11 +336,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/resolve.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/resolve-stdio.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/resolve-stdio.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/workflow-rules-accessor.ts]`
 
@@ -270,11 +354,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/workflow-rules-accessor.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/regrounding/derivation.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/derivation.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/regrounding/dispositions.ts]`
 
@@ -282,11 +372,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/dispositions.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/regrounding/overlay.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/overlay.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/__fixtures__/g1-renderings/**]`
 
@@ -294,11 +390,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/__fixtures__/g1-renderings/**`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/__fixtures__/semantics-guard/**]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/__fixtures__/semantics-guard/**`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/schema.ts]`
 
@@ -306,11 +408,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/schema.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/partition.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/partition.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/frontmatter.ts]`
 
@@ -318,11 +426,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/frontmatter.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/canonical-json.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/canonical-json.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/source.ts]`
 
@@ -330,11 +444,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/source.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/regrounding/hash.ts]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/hash.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/regrounding/operative-sets.ts]`
 
@@ -342,11 +462,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/operative-sets.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/__fixtures__/golden-partition/**]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/__fixtures__/golden-partition/**`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[tools/agent-generator/jest.config.js]`
 
@@ -354,11 +480,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/jest.config.js`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:writeScope[tools/agent-generator/tsconfig.json]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/tsconfig.json`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[.kiro/issues/**]`
 
@@ -366,11 +498,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: this repo's issue records, written under its own `.kiro/issues/README.md` rule 9 (§ 2.5). That convention is a stewardship instrument of this repo; the package ships neither the records nor the convention, and the consumer's tracking practice is theirs to set (subtraction 3, as cited).
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:commands[functional-suite]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Refusal (`928b7980`) resolved by the changed disposition**, per Thurgood's function-grain ruling. The row is now `superseded-by #what-you-dont-own`, and I assent to it. That unit's own rendering ("Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything") entails this command's function: run the tests that validate component work, with the project's actual runner and never a wrong runner's flags. `surviving: []`: a frontmatter leaf carries no operative-set items (C16), and the function lives at the destination.
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:bf968f86…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:commands[component-tests]`
 
@@ -378,11 +516,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Refusal (`3a003c2d`) resolved by the changed disposition**: `superseded-by #what-you-dont-own`, assented. "Run component tests with your repo's own test runner and scripts" entails running the component-specific suites. `surviving: []`, as above.
 
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:bf968f86…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
+
 ## `#frontmatter:commands[full-suite-with-performance]`
 
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Refusal (`6f7b882e`) withdrawn: ASSENT-ON-RULING** (my ruling response below). The disposition is unchanged, `no-consumer-counterpart`, and I now agree with it. Under strict 5e, "run component tests with your repo's own test runner" does not entail "run ALL tests including the performance lanes". No rendering carries the full-suite-with-perf function; its lanes and idle-machine caution are this repo's instruments.
+
+**Re-sign 2026-11-08 (shape-review PR 2, F-4 (a)).** Re-judged from the rendering printed on a clean tree at `6c42f20bc`: the row renders nothing, and `renderedHash` now hashes `{disposition, destination}` (`derive.ts` pin, `545ae18f6`). `canonicalHash` is unchanged; only `renderedHash` moved, to `sha256:c29e6217…`. The disposition and its reason above still hold: ASSENT, `surviving: []`.
+
 
 ## `#frontmatter:writeScope[.kiro/specs/**]`
 

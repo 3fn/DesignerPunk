@@ -24,6 +24,7 @@ import { link1CensusLines, runCi, type CiResult, type Regrounding } from '../reg
 import { cleanupTmp, commit, editRow, editSheet, g, hash, head, read, RG, tmp, write } from './fixtures/signing-chain/helpers';
 import { allFiles, canonicalUnit, CHARTER, DISP, NOTE, OVERLAY, RECORD, RENDERED, SHEET, signatureFor, sheetBlock, treeFiles, STACY_TABLE, type RowState, type TreeSpec } from './fixtures/unsigned-routed/build';
 import { hashText } from '../regrounding/hash';
+import { renderedHashOf, renderedHashOfRow } from '../derive';
 
 afterAll(() => cleanupTmp());
 
@@ -458,5 +459,43 @@ describe('shape review erratum — the unconfirmed state (a′; U1–U6, Site 4c
     expect(i).toBeGreaterThan(out.findIndex((l) => l.startsWith('unsigned-routed: ')));
     expect(out[i + 1]).toBe(`  ${RECORD}#nu`);
     expect(out[i + 2]).toBe('orphaned: 0 row(s)');
+  });
+});
+
+// ------------------------------------------------------------------ PR 2: F-4 (a)'s pin (D1)
+
+describe("shape review PR 2 — F-4 (a)'s disposition pin (D1)", () => {
+  /** T-UR with a signed rendering-less `#zeta` and a committed rendering that gives it no piece (the sweep's default path). */
+  const build = (row: Record<string, unknown>): string => {
+    const files = treeFiles({ rows: { '#zeta': { disposition: 'no-consumer-counterpart' } } });
+    const root = tmp('shape-d1');
+    for (const [rel, text] of Object.entries(files)) write(root, rel, text);
+    write(root, 'canonical/_consumer-output/other.md', 'Another row renders here.\n');
+    write(root, 'canonical/_consumer-output/other.md.attribution.json', `${JSON.stringify({ spans: [{ lines: [1, 1], source: 'canonical/agents/other.md#x' }] })}\n`);
+    const sig = signatureFor('body', '#zeta', 'fresh');
+    sig.renderedHash = renderedHashOfRow(new Map(), `${CHARTER}#zeta`, row);
+    editRow(root, DISP, '#zeta', () => ({ ...row, signature: sig }));
+    write(root, SHEET, `# Signatures — \`kenya\` (fixture)\n\n${sheetBlock('body', '#zeta', sig)}`);
+    return root;
+  };
+  const staleIds = (root: string): string[] => (runFreshnessSweep(root, { tracked: allFiles(root) }).stale ?? []).map((r) => `${r.file}${r.key}`);
+  const NCC = { disposition: 'no-consumer-counterpart', cites: 'subtraction-3' };
+
+  test('D1: a signed no-consumer-counterpart row pins its disposition; re-disposed to superseded-by it reads stale; a superseded-by destination change reads stale', () => {
+    const root = build(NCC);
+    expect(staleIds(root)).toEqual([]);
+    editRow(root, DISP, '#zeta', (r) => ({ ...r, disposition: 'superseded-by', destination: '#epsilon', cites: 'subtraction-4' }));
+    expect(staleIds(root)).toEqual([`${DISP}#zeta`]);
+
+    const sb = { disposition: 'superseded-by', destination: '#epsilon', cites: 'subtraction-4' };
+    const root2 = build(sb);
+    expect(staleIds(root2)).toEqual([]);
+    editRow(root2, DISP, '#zeta', (r) => ({ ...r, destination: '#delta' }));
+    expect(staleIds(root2)).toEqual([`${DISP}#zeta`]);
+  });
+
+  test('D1 control: a row with rendered pieces keeps the hash renderedHashOf gives it (the pin changes only rows that render nothing)', () => {
+    const spans = new Map([['s', [{ artifact: 'a.md', text: 'x\n' }]]]);
+    expect(renderedHashOfRow(spans, 's', NCC)).toBe(renderedHashOf(spans, 's'));
   });
 });

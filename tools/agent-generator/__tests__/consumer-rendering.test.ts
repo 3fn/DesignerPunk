@@ -23,7 +23,7 @@ import { CcAdapter } from '../adapters/cc';
 import { KiroAdapter } from '../adapters/kiro';
 import { checkAttributionTotality } from '../attribution';
 import { CONSUMER_OUTPUT_ROOT } from '../consumer-profile';
-import { readConsumerSpans, renderedHashOf, rowSpanSource } from '../derive';
+import { readConsumerSpans, renderedHashOf, renderedHashOfRow, rowSpanSource } from '../derive';
 import {
   generateConsumerRendering,
   guardedRoots,
@@ -35,7 +35,7 @@ import {
 } from '../generate';
 import { entryTree, partition } from '../partition';
 import { runFreshnessSweep } from '../regrounding/freshness';
-import { hashText } from '../regrounding/hash';
+import { hashEntry, hashText } from '../regrounding/hash';
 import { parseOverlay, toSpanOverlay } from '../regrounding/overlay';
 import type { AgentFrontmatter, CanonicalAgentDoc } from '../schema';
 import type { Dispositions, DispositionRow } from '../spans';
@@ -250,8 +250,14 @@ describe('the rendered hash, read back from the committed rendering (Task 15.1)'
     const after = readConsumerSpans(tmp)!;
     expect(renderedHashOf(after, 'canonical/agents/twin.md#regrounded')).not.toBe(before);
     expect(renderedHashOf(after, 'canonical/agents/twin.md#kept')).toBe(kept);
-    // A row that renders nothing hashes the empty list — defined, not "unverifiable".
-    expect(renderedHashOf(after, 'canonical/agents/twin.md#absent')).toBe(renderedHashOf(new Map(), 'x'));
+    // A row with rendered pieces hashes exactly as renderedHashOf does (F-4 (a) changes only empty rows).
+    expect(renderedHashOfRow(after, 'canonical/agents/twin.md#regrounded', { disposition: 're-pointed', destination: '#regrounded' })).toBe(renderedHashOf(after, 'canonical/agents/twin.md#regrounded'));
+    // A row that renders nothing pins its disposition and destination — defined, not "unverifiable"
+    // (ballot 2026-11-08-signing-act-shape-review F-4 (a)).
+    expect(renderedHashOfRow(after, 'canonical/agents/twin.md#absent', { disposition: 'no-consumer-counterpart' })).toBe(hashEntry({ disposition: 'no-consumer-counterpart' }));
+    // A re-disposition moves it, and so does a destination change.
+    expect(renderedHashOfRow(after, 'canonical/agents/twin.md#absent', { disposition: 'superseded-by', destination: '#kept' })).not.toBe(renderedHashOfRow(after, 'canonical/agents/twin.md#absent', { disposition: 'no-consumer-counterpart' }));
+    expect(renderedHashOfRow(after, 'canonical/agents/twin.md#absent', { disposition: 'superseded-by', destination: '#regrounded' })).not.toBe(renderedHashOfRow(after, 'canonical/agents/twin.md#absent', { disposition: 'superseded-by', destination: '#kept' }));
   });
 });
 
