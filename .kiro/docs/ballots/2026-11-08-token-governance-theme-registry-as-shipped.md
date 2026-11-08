@@ -382,3 +382,59 @@ Both R1 entries are spliced above byte for byte (commit `4d77f8f0c`). Incorporat
 - **F-1**: your lean (a) is noted. The pick stays Peter's.
 
 In my reading, B-1 to B-4 are met. Whether your objection is withdrawn is yours to say at R2.
+
+### [STACY R2] (census reader)
+
+#### [STACY R2] — re-read of the fold at `cded69085`
+
+**Read at** `cded69085`, against `main` at `3f739b07f`, 2026-11-08. Nothing was committed. My R1 entry, as spliced at `4d77f8f0c`, is byte-identical to the entry I handed back. As before, my runs used a detached scratch worktree at `3f739b07f` after `npm run build`, and scratch consumer directories that ran the built `generate`.
+
+**Verdict: the objection is kept, narrowed to one new point, B-5.** B-1 to B-4 are met. B-5 sits under B-4's fold: item 2's new sentence is false for a registered `dark` map, and what the dark map really does is a worse defect than the filed record describes.
+
+**B-1 to B-4: met**
+
+- **B-1.** The appendix diff applies with `git apply --check` at `3f739b07f`. Each of § 1's six after-texts is an added line in it: items 1–5, and item 8's whole line with its pointer. I re-ran the census on that diff myself: current and proposed are both `c13c9780…52868bfd`, `diff` prints nothing, and the selected-count line is unchanged. The guard passes on the edited tree (`0 pending`), and so does `check:section-citations`. **The census stays VALID.**
+- **B-2.** § 4 step 8 now follows the README's "Re-runs" rule.
+- **B-3.** The `no-autonomous-token-creation` line is present, in the not-in-scope form, and its reason is true. The diff-guard line now states the verdict at the merge.
+- **B-4.** Item 1's new sentence agrees with item 4 and is true. Item 2's `dark` / `wcag` attribution and § 0's second bullet now match my three probes. Items 6 and 7 are true as rewritten. The elevation / zIndex exceptions are what the token index shows, and the provider names match the output.
+
+**B-5: item 2's last sentence is false for a registered `dark` map**
+
+Item 2 now says: "Only colour overrides are applied: an override of a non-colour semantic, such as a spacing token, passes this check and changes no output on any platform." Item 3 says: "only its colour keys change any output". Both are true for a custom theme and for `wcag`. They are false for `dark`.
+
+I ran `generate` four times with `name: 'PB'`: once with no themes, then once each with a theme overriding only `space.inset.100` (to `space200`), registered as a custom `both` theme, as `wcag`, and as `dark`. I looked at `space.inset.100` on each platform:
+
+| Registered as | Web | iOS | Android |
+|---|---|---|---|
+| (none) | `--space-inset-100: var(--space-100);` | `spaceInset100 = space100` | `space_inset_100 = space_100` |
+| custom `spacey` | unchanged | unchanged | unchanged |
+| `wcag` | unchanged | unchanged | unchanged |
+| **`dark`** | **`light-dark(var(--space-100), var(--space-200))`** | **`spaceInset100: UIColor = UIColor { $0.userInterfaceStyle == .dark ? space200 : space100 }`** | **`space_inset_100` is gone, replaced by `space_inset_100_light` and `space_inset_100_dark`** |
+
+- **The `dark` key is applied, through the dark context, as if it were a colour.** It reaches every platform. `generate` exits 0, prints no warning, and the index still says `themeVarying: false`, `ios: spaceInset100`.
+- **iOS does not compile.** `xcrun --sdk iphonesimulator swiftc -typecheck -target arm64-apple-ios17.0-simulator` (Swift 6.4.2) exits 0 on the no-theme file. On the `dark` file it exits 1: `DesignTokens.ios.swift:557:89: error: cannot convert value of type 'CGFloat' to closure result type 'UIColor'` (2 errors).
+- **Android renames the token.** DesignerPunk's own components reference `DesignTokens.space_inset_100` (for example `InputRadioBase.android.kt:117`), and that name no longer exists. I have no `kotlinc` here, so whether it fails to compile is a reading, not a run.
+- **Web writes `light-dark()` with lengths.** `light-dark()` accepts colours only, so a property that uses this variable is invalid at computed-value time. That comes from the CSS specification; I did not run it in a browser.
+
+So for `dark`, item 2's sentence would ship into law a claim that is false. The real behaviour is broken output.
+
+The record `2026-11-08-non-colour-theme-override-accepted-not-applied.md` has the same error. Its sentence "The same holds for a non-colour key in an adopter's registered `dark` or `wcag` map" is false for `dark`. The `dark` case is not "accepted, not applied". It is accepted, applied wrongly, and on iOS it breaks the build. That shape is not among the record's options (a)–(c), and its severity is a matter for the owner and Peter, not a floor row I read. Under (b), a warning would still leave the iOS file uncompilable.
+
+It is the same reach as before: no adopter could hit it before U9, because the built-in dark map has no non-colour key. Now any adopter who copies a spacing value into their registered dark map can.
+
+**What B-5 needs (the words are Ada's):**
+- Item 2 and item 3 state what ships for each kind of map: custom and `wcag`, then `dark`. Alternatively, if Peter wants the generator fixed before the text is ratified, they state what ships after that fix.
+- § 0's "Only colour overrides are applied" bullet gets the same correction.
+- The record carries the `dark` shape with this evidence. Kenya should confirm the Swift failure on the 132 harness, and Data the Kotlin one.
+
+**A fork this exposes, for Peter, not picked here:**
+- **(i)** Ratify text that describes the `dark` behaviour as it ships, and fix the generator under the record.
+- **(ii)** Fix the generator first (a refusal or a drop with a warning for non-colour keys in every registered map), then ratify text that describes the fix.
+
+(i) puts a defect into law as described behaviour, and § 7's new residual already names that cost. (ii) puts a generator change on the path to this ballot, before the same S. Both are before the S either way.
+
+**F-1**: unchanged. I lean (a).
+
+**Standards implications**: none new. The R1 item, census forms for a doc corpus and for one instrument read by several items, stays owed in Spec 131's ledger.
+
+**Review**: object — B-5 (item 2's last sentence, item 3's last clause and § 0's bullet are false for a registered `dark` map, whose non-colour key ships as uncompilable Swift); B-1 to B-4 withdrawn as met
