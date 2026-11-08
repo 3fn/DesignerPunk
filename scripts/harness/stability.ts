@@ -155,6 +155,8 @@ export interface JobRecord {
   durationSeconds: number | null;
   /** The run's status (`completed`, `in_progress`, `queued`); null when the API record carries none. */
   runStatus: string | null;
+  /** The run's own conclusion (the runs endpoint); null while it runs. Read for a push run that ended with no job. */
+  runConclusion: string | null;
   /** The job's class: finished; unfinished (every other state); or `ended-no-job` (completed run, latest attempt lists none). */
   state: 'finished' | 'unfinished' | 'ended-no-job';
   /** True when the latest attempt lists no job for the context (the record is synthetic). */
@@ -222,6 +224,7 @@ export function normalize(raw: RawInput): JobRecord[] {
         event: run.event,
         headSha: run.head_sha,
         runStatus: run.status ?? null,
+        runConclusion: run.conclusion ?? null,
         state,
         noJobListed: true,
         unfinishedWhy: why,
@@ -281,6 +284,7 @@ export function normalize(raw: RawInput): JobRecord[] {
           event: runById.get(job.run_id)?.event ?? run.event,
           headSha: job.head_sha,
           runStatus: runById.get(job.run_id)?.status ?? run.status ?? null,
+          runConclusion: runById.get(job.run_id)?.conclusion ?? run.conclusion ?? null,
           state,
           noJobListed: false,
           unfinishedWhy: why,
@@ -365,8 +369,13 @@ export interface ContextAnalysis {
   dispatchedRuns: number;
   /** `push` runs on `main` (ballot 2026-11-08-closeout-cracks item 1): counted toward neither condition. */
   pushRuns: number;
-  /** Finished push runs whose job failed or whose verdict is FAIL, listed for the reader of site 1.4. */
+  /** Finished push runs whose job failed or whose verdict is FAIL, listed for the reader of site 1.4. A cancelled job is not red. */
   pushReds: RunSummary[];
+  /**
+   * Push runs the concurrency group superseded: a job that concluded `cancelled` with no FAIL verdict, or a
+   * run that ended `cancelled` with no job listed (cancelled before its jobs existed). Listed, never red.
+   */
+  pushSuperseded: RunSummary[];
   /** Every infra run of the context, in run order, with its host, status and step. */
   infraRuns: RunSummary[];
   /** Infra runs over all recorded runs of the context (0 when it has none). */
@@ -543,7 +552,13 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
       pullRequestRuns: pr.length,
       dispatchedRuns: runs.filter((r) => r.event === 'workflow_dispatch').length,
       pushRuns: runs.filter((r) => r.event === 'push').length,
-      pushReds: runs.filter((r) => r.event === 'push' && r.last.state === 'finished' && (r.last.verdict === 'FAIL' || (r.last.conclusion !== null && r.last.conclusion !== 'success'))),
+      pushReds: runs.filter((r) => r.event === 'push' && r.last.state === 'finished' && (r.last.verdict === 'FAIL' || (r.last.conclusion !== null && r.last.conclusion !== 'success' && r.last.conclusion !== 'cancelled'))),
+      pushSuperseded: runs.filter(
+        (r) =>
+          r.event === 'push' &&
+          ((r.last.state === 'finished' && r.last.conclusion === 'cancelled' && r.last.verdict !== 'FAIL') ||
+            (r.last.state === 'ended-no-job' && r.last.runConclusion === 'cancelled')),
+      ),
       streak,
       streakMet: streakBlock === null && streak >= 10,
       streakBlock,
@@ -594,7 +609,7 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
   lines.push('- `commits/<head sha>/check-runs`: the checks API, each context\'s check-run conclusion;');
   lines.push('- `check-runs/<job id>/annotations`: the `harness-verdict` and `cache` annotations, which outlast the logs.');
   lines.push('');
-  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3; nor does a push run on `main`, and red push runs are listed for the reader (ballot 2026-11-08-closeout-cracks item 1). A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). A run carrying `harness-infra` (an environment fault found before any comparison) is neither a break nor counted for condition 2 and is never a cold run; two or more consecutive infra runs at one head are printed as a finding. Each pull-request run is read per context and per job, not by the run\'s status: a job is finished when it is listed for the run\'s latest attempt with a conclusion; a completed run whose latest attempt lists no job for the context is a break; every other state is unfinished, and is listed in a skipped-runs table per context, neither a break nor counted. An unfinished pull-request job before the last run a condition reads leaves that condition not yet measurable. The window is every run the runs endpoint lists, read up to its `total_count`; a short read makes every condition not yet measurable. Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
+  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3; nor does a push run on `main`, and red push runs are listed for the reader (ballot 2026-11-08-closeout-cracks item 1); a push run the concurrency group cancelled is listed as superseded, never as red. A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). A run carrying `harness-infra` (an environment fault found before any comparison) is neither a break nor counted for condition 2 and is never a cold run; two or more consecutive infra runs at one head are printed as a finding. Each pull-request run is read per context and per job, not by the run\'s status: a job is finished when it is listed for the run\'s latest attempt with a conclusion; a completed run whose latest attempt lists no job for the context is a break; every other state is unfinished, and is listed in a skipped-runs table per context, neither a break nor counted. An unfinished pull-request job before the last run a condition reads leaves that condition not yet measurable. The window is every run the runs endpoint lists, read up to its `total_count`; a short read makes every condition not yet measurable. Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
   lines.push('');
   for (const c of analysis.contexts) {
     lines.push(`## ${c.context}`);
@@ -602,7 +617,7 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
     const other = c.runs.length - c.pullRequestRuns - c.dispatchedRuns - c.pushRuns;
     lines.push(`- Runs recorded: ${c.runs.length} (${c.pullRequestRuns} pull-request, ${c.dispatchedRuns} dispatched, ${c.pushRuns} push${other > 0 ? `, ${other} other` : ''}).`);
     lines.push(
-      `- Push runs on main: ${c.pushRuns}; red: ${c.pushReds.length === 0 ? 'none' : c.pushReds.map((r) => `${r.runId} @ \`${r.headSha.slice(0, 9)}\` (${r.last.verdict ?? (r.last.infra ? 'infra' : fmt(r.last.conclusion))})`).join(', ')}.`,
+      `- Push runs on main: ${c.pushRuns}; red: ${c.pushReds.length === 0 ? 'none' : c.pushReds.map((r) => `${r.runId} @ \`${r.headSha.slice(0, 9)}\` (${r.last.verdict ?? (r.last.infra ? 'infra' : fmt(r.last.conclusion))})`).join(', ')}; superseded (cancelled, not red): ${c.pushSuperseded.length === 0 ? 'none' : c.pushSuperseded.map((r) => `${r.runId} @ \`${r.headSha.slice(0, 9)}\``).join(', ')}.`,
     );
     lines.push(`- Infra runs (\`harness-infra\`): ${c.infraRuns.length} of ${c.runs.length} recorded, infra rate ${(c.infraRate * 100).toFixed(1)}%.`);
     for (const r of c.infraRuns) lines.push(`  - run ${r.runId} at \`${r.headSha.slice(0, 9)}\`: ${r.last.infra?.host} ${r.last.infra?.status} ${r.last.infra?.step}`);
