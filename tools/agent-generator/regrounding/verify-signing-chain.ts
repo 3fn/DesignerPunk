@@ -3,7 +3,9 @@
  * register row `signing-act-consistency`. Owner: Thurgood. Its verdicts are Stacy's to read and
  * record; it decides nothing. Label, everywhere it prints: **consistency, not identity.**
  *
- * TWO MODES
+ * TWO MODES, AND TWO READ-ONLY ONES (`--census-routed`, below; `--print <record file>#<anchor>`,
+ * {@link printUnit}: the whole canonical unit and its hash — and, for a dispositions row, its
+ * whole consumer rendering and `renderedHash` — in one output, for the seat's read)
  *
  *   --ci        links 1–3, inside the required context `122-diff-guard` (§ 4.1). Order:
  *                 (1) the full `operative-set-freshness` sweep, FIRST, on every PR, independent of
@@ -1888,6 +1890,214 @@ function defaultBase(repo: string, head: string): string {
   throw new HistoryError('no base: pass --base, set BASE_SHA, or fetch main');
 }
 
+// ============================================================================
+// `--print <record file>#<fragment>` — the read a signing act rests on
+// ============================================================================
+
+/**
+ * `--print` (item 1 of `.kiro/issues/2026-11-05-signing-act-prevention-four-fixes.md`; Peter's
+ * ruling of 2026-11-08, `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u11-link7-recut.md`).
+ * Given a record file and a fragment, it prints, in ONE output, the whole canonical unit and then its
+ * hash; for a dispositions row it also prints the row's whole consumer rendering and then its
+ * `renderedHash`. Every value is computed the way the freshness sweep computes it
+ * (`freshness.ts` `runFreshnessSweep`), over the working tree:
+ *   - an operative-set record (`canonical/operative-sets/<f>.yaml#<anchor>`): the body unit
+ *     `#<anchor>` of the record's `source` (`partition(splitFrontmatter(src).body).units`) and
+ *     `hashText` of it — what a CONFIRMER reads, and what link 7 reads for a confirmation;
+ *   - a dispositions row (`canonical/profiles/**\/<f>.dispositions.yaml#<anchor>`, `#frontmatter:<path>`,
+ *     or `#<member id>` in the shared file): the canonical unit, entry or member and its
+ *     `canonicalHash` (`hashText`, or `hashEntry` over the entry's value / the member), then every
+ *     rendered piece of the row's span source under `canonical/_consumer-output/` and
+ *     `renderedHashOf` over them — what a SIGNER reads, and what link 7 reads for a signature.
+ * For an entry or a member the printed canonical text is `canonicalStringify(value)`: the exact
+ * bytes `hashEntry` hashes. Each text sits between a `<<<<< begin` and a `>>>>> end` line; the bytes
+ * between them are the text, ending in one newline.
+ * It never prints a pinned or recorded hash, and never a line range: the seat compares its printed
+ * value with the sweep's afterwards (seat-brief template steps 1–2). Printing is not reading
+ * (Stacy's caveat): the mode is necessary, not sufficient. It decides nothing and is never part of
+ * `--ci` or `--audit`. Exit 0 on a print, 2 when the target does not resolve.
+ */
+export class PrintError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'PrintError';
+  }
+}
+
+export interface PrintedUnit {
+  /** The record file, repo-relative. */
+  record: string;
+  /** The fragment as given (without `#`). */
+  fragment: string;
+  source: string;
+  section: Section;
+  /** The record's or the row's key (`#identity`, `commands[x]`, a member id). */
+  key: string;
+  canonical: { text: string; hash: string };
+  /** Dispositions rows only. */
+  rendering?: { spanSource: string; pieces: { artifact: string; text: string }[]; hash: string };
+  /** `HEAD` of the repo when printed. */
+  at: string;
+  /** Paths read that differ from `HEAD` (working-tree changes), if any. */
+  dirty: string[];
+  lines: string[];
+}
+
+export const PRINT_BEGIN = (what: string): string => `<<<<< begin ${what}`;
+export const PRINT_END = (what: string): string => `>>>>> end ${what}`;
+
+/** The modules the print reads, loaded beside this file (failing loud when one is absent). */
+function printModules(dir: string = __dirname): {
+  partition: typeof partition;
+  entryTree: (fm: Record<string, unknown>) => { units: { path: string; value: unknown }[] };
+  hashText: (t: string) => string;
+  hashEntry: (v: unknown) => string;
+  canonicalStringify: (v: unknown) => string;
+  readConsumerSpans: (root: string) => ReadonlyMap<string, readonly { artifact: string; text: string }[]> | undefined;
+  renderedHashOf: (spans: ReadonlyMap<string, readonly { artifact: string; text: string }[]>, source: string) => string;
+  rowSpanSource: (docSource: string, section: string, key: string) => string;
+  sharedCatalog: string;
+} {
+  for (const m of ['hash', '../derive', '../canonical-json', 'dispositions']) {
+    if (!hasModule(dir, m)) throw new PrintError(`regrounding/${m} is not on this tree — nothing to print against`);
+  }
+  /* eslint-disable @typescript-eslint/no-var-requires */
+  const hash = require(path.join(dir, 'hash'));
+  const derive = require(path.join(dir, '../derive'));
+  const cj = require(path.join(dir, '../canonical-json'));
+  const disp = require(path.join(dir, 'dispositions'));
+  const part = require(path.join(dir, '../partition'));
+  /* eslint-enable @typescript-eslint/no-var-requires */
+  return {
+    partition,
+    entryTree: part.entryTree,
+    hashText: hash.hashText,
+    hashEntry: hash.hashEntry,
+    canonicalStringify: cj.canonicalStringify,
+    readConsumerSpans: derive.readConsumerSpans,
+    renderedHashOf: derive.renderedHashOf,
+    rowSpanSource: derive.rowSpanSource,
+    sharedCatalog: disp.SHARED_CATALOG,
+  };
+}
+
+/** Split `<record file>#<fragment>`; the record path is taken relative to the repo root. */
+export function parsePrintTarget(repo: string, target: string, cwd: string = repo): { record: string; fragment: string } {
+  const at = target.indexOf('#');
+  if (at <= 0 || at === target.length - 1) throw new PrintError(`'${target}' is not <record file>#<anchor>`);
+  const real = (d: string): string => (fs.existsSync(d) ? fs.realpathSync(d) : d);
+  const abs = path.resolve(real(cwd), target.slice(0, at));
+  const record = path.relative(real(repo), abs).split(path.sep).join('/');
+  if (record.startsWith('..')) throw new PrintError(`${target.slice(0, at)} is outside the repo`);
+  return { record, fragment: target.slice(at + 1) };
+}
+
+/** The print for one target (see {@link PrintError}'s block). Throws {@link PrintError} when it does not resolve. */
+export function printUnit(repo: string, target: string, cwd: string = repo): PrintedUnit {
+  const m = printModules();
+  const { record, fragment } = parsePrintTarget(repo, target, cwd);
+  const readFile = (rel: string): string | undefined => (fs.existsSync(path.join(repo, rel)) ? fs.readFileSync(path.join(repo, rel), 'utf8') : undefined);
+  const recordText = readFile(record);
+  if (recordText === undefined) throw new PrintError(`${record} does not exist`);
+  const isRecord = isRecordPath(record);
+  if (!isRecord && !isDispositionsPath(record)) throw new PrintError(`${record} is neither an operative-set record (${RECORDS_DIR}/*.yaml) nor a dispositions file (${PROFILES_DIR}/**/*.dispositions.yaml)`);
+  const { doc, error } = parseYamlMap(recordText);
+  if (error) throw new PrintError(`${record}: YAML failed to parse — ${error}`);
+  const source = doc.source;
+  if (typeof source !== 'string') throw new PrintError(`${record} names no source`);
+  const sourceText = readFile(source);
+  if (sourceText === undefined) throw new PrintError(`${record}: source ${source} does not exist`);
+
+  // The section and key, as the sweep keys the record's units and the dispositions' rows.
+  let section: Section = 'body';
+  let key = `#${fragment}`;
+  if (!isRecord && fragment.startsWith('frontmatter:')) {
+    section = 'frontmatter';
+    key = fragment.slice('frontmatter:'.length);
+  } else if (!isRecord && source === m.sharedCatalog) {
+    section = 'members';
+    key = fragment;
+  }
+  const rows = isRecord ? doc.units : doc[section];
+  if (!isMap(rows) || !(key in rows)) {
+    throw new PrintError(`${record} has no ${isRecord ? 'unit' : `${section} row`} ${JSON.stringify(key)}`);
+  }
+
+  // The canonical side — the sweep's `view(source)`.
+  let text: string | undefined;
+  let hash: string;
+  if (section === 'body') {
+    text = m.partition(splitFrontmatter(sourceText, source).body).units.find((u) => u.anchor === key)?.text;
+    if (text === undefined) throw new PrintError(`the canonical unit ${key} of ${source} does not resolve`);
+    hash = m.hashText(text);
+  } else {
+    let value: unknown;
+    let found = false;
+    if (section === 'members') {
+      const members = (loadYaml(sourceText) as { members?: { id?: unknown }[] } | undefined)?.members ?? [];
+      const hit = members.find((x) => x?.id === key);
+      found = hit !== undefined;
+      value = hit;
+    } else {
+      const hit = m.entryTree((splitFrontmatter(sourceText, source).frontmatter ?? {}) as Record<string, unknown>).units.find((u) => u.path === key);
+      found = hit !== undefined;
+      value = hit?.value;
+    }
+    if (!found) throw new PrintError(`the canonical ${section === 'members' ? 'member' : 'entry'} ${key} of ${source} does not resolve`);
+    text = m.canonicalStringify(value);
+    hash = m.hashEntry(value);
+  }
+
+  const out: PrintedUnit = { record, fragment, source, section, key, canonical: { text, hash }, at: '', dirty: [], lines: [] };
+  const read = [record, source];
+  if (!isRecord) {
+    const spans = m.readConsumerSpans(repo);
+    if (spans === undefined) throw new PrintError(`no consumer rendering under ${CONSUMER_OUTPUT_DIR}/ — run the consumer generation first`);
+    const spanSource = m.rowSpanSource(source, section, key);
+    const pieces = (spans.get(spanSource) ?? []).map((p) => ({ artifact: p.artifact, text: p.text }));
+    out.rendering = { spanSource, pieces, hash: m.renderedHashOf(spans, spanSource) };
+    read.push(CONSUMER_OUTPUT_DIR);
+  }
+  out.at = gitTry(repo, ['rev-parse', 'HEAD'])?.trim() ?? '(no HEAD)';
+  out.dirty = (gitTry(repo, ['status', '--porcelain', '--', ...read]) ?? '')
+    .split('\n')
+    .filter(Boolean)
+    .map((l) => l.slice(3));
+
+  const what = section === 'body' ? 'canonical unit' : section === 'members' ? 'canonical member' : 'canonical entry';
+  const L = out.lines;
+  L.push(`verify-signing-chain --print — ${LABEL} — ${record}#${fragment}`);
+  L.push(`read at ${out.at} (working tree)${out.dirty.length ? `; uncommitted changes in: ${out.dirty.join(', ')}` : '; clean'}`);
+  L.push(`${what}: ${source} ${section === 'body' ? key : section === 'members' ? `member ${key}` : `frontmatter:${key}`}${section === 'body' ? '' : ' (printed as canonicalStringify(value), the bytes hashEntry hashes)'}`);
+  L.push(PRINT_BEGIN(what), text.replace(/\n$/, ''), PRINT_END(what));
+  L.push(`canonicalHash: ${hash}`);
+  if (out.rendering) {
+    const r = out.rendering;
+    L.push(`rendering: ${r.pieces.length} piece(s) for span source ${r.spanSource}`);
+    if (r.pieces.length === 0) L.push('(the row renders nothing — no rendered piece)');
+    for (const p of r.pieces) L.push(PRINT_BEGIN(`rendering ${p.artifact}`), p.text.replace(/\n$/, ''), PRINT_END(`rendering ${p.artifact}`));
+    L.push(`renderedHash: ${r.hash}`);
+  }
+  return out;
+}
+
+/** `--print <record file>#<fragment>`: one output, the unit then its hash. */
+export function printMode(repo: string, argv: string[], cwd: string = repo): number {
+  const target = arg(argv, '--print');
+  if (target === undefined || target.startsWith('--')) {
+    console.error('verify-signing-chain --print: pass <record file>#<anchor> (an operative-set record or a dispositions file)');
+    return 2;
+  }
+  try {
+    console.log(printUnit(repo, target, cwd).lines.join('\n'));
+    return 0;
+  } catch (e) {
+    if (!(e instanceof PrintError)) throw e;
+    console.error(`verify-signing-chain --print: ${e.message}`);
+    return 2;
+  }
+}
+
 /**
  * `--census-routed [--at <sha>]` — the census mode (ballot 2026-10-19-instrument-census-at-draft;
  * register `signing-act-consistency`, field `census`). Prints `freshness.ts` `routedCensus` over the
@@ -1923,6 +2133,7 @@ export function main(argv: string[], cwd: string = process.cwd(), home: string =
   const repo = gitTry(cwd, ['rev-parse', '--show-toplevel'])?.trim() ?? cwd;
   const rgLoaded = loadRegrounding();
   if (argv.includes('--census-routed')) return censusRouted(repo, argv, rgLoaded);
+  if (argv.includes('--print')) return printMode(repo, argv, cwd);
   if (argv.includes('--ci')) {
     try {
       const head = arg(argv, '--head') ?? (process.env.HEAD_SHA || undefined) ?? 'HEAD';
@@ -2003,7 +2214,7 @@ export function main(argv: string[], cwd: string = process.cwd(), home: string =
     }
     return 0;
   }
-  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>]… [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
+  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --print <record file>#<anchor>\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>]… [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
   return 2;
 }
 
