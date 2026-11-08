@@ -391,3 +391,25 @@
 *No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*
 
 *Signed: Stacy, 2026-11-08.*
+
+---
+
+## After Peter's answers (2026-11-08, Stacy; appended, the verdicts above stand as written)
+
+**Authority**: Peter, 2026-11-08T16:53:31Z, "Re: 1 & 2, Proceed as recommended". The record is `evidence/2026-11-08-peter-rulings-closeout-questions.md`, joined into this branch from `origin/chore/ruling-129-closeout-answers` at `d213deda9`.
+
+- **CP-6: discharged; the class point stays.** I verified both runs myself through the runs and jobs APIs:
+  - **Run 42502208361**: `workflow_dispatch`, branch `ci/129-merged-head-a17cb2b34`, head `a17cb2b34`, concluded `success`. All five jobs succeeded: `harness-generate`, `harness-ios-tokens`, `harness-android-tokens`, `harness-ios-components` and `harness-android-components`.
+  - **The summary lines from its logs**: ios-tokens `expected=0 · observed=0`, android-tokens `0 · 0`, ios-components `66 · 66`, android-components `204 · 204`, all with `new=0 · stale=0`, plus `d2-check completeness: PASS count=23`. Each equals U12's H and M.
+  - **Run 42502210216**: `workflow_dispatch` on `main` at `bf4cd7677`, which contains `a17cb2b34`. It concluded `success`, with all five jobs succeeding.
+  - **So the shipped tree is now measured.** The dispatch reports under the `(unit-branch)` context names, so it is feedback, not the gate. That is enough for the measurement this finding asked for.
+  - **What survives is S-1**: nothing in the workflow measures the squash unless someone dispatches it. That stays Thurgood's.
+- **CP-1: Ada's diagnosis is records only.** With 15 and 15.1–15.3 ticked locally, parity reads `parent 15: PASS`, 54 of 54. That agrees with my scratch-copy run. The finding stays open until the checkbox-only PR merges. S-2, the instruments' blind spot, stands.
+- **CP-3: Ada's diagnosis is no live defect, but a guard weaker than its claim.**
+  - The harvest does cross the dual-instance boundary for the six package-tier token files.
+  - The packed test asserts only a `progress.*` token, which never crosses the boundary, so a regression there would not turn it red.
+  - The lapse itself (rule 11's `## Lapse`, then the trace or a re-rule) is still owed. The trace now has its content, so the remaining act is Ada's record edit. The weak guard is a new instance of the class "a guard weaker than its claim", and its remedy is Ada's.
+- **CP-4: Ada's diagnosis is a real but minor generator gap.** `familyComment` in `src/generators/native/ThemeEmitter.ts` cannot name the bridge source, because `ThemeEmitterInput` has no field for it. That confirms the clause is unmet in shipped code, not only in the doc. The row should still read ⚠️, by a dated note below it. The fix is Ada's.
+- **CP-2: still open.** The charter record `2026-10-02-consumer-generation-completeness-spec.md` stays open, under Peter's answer to Q2, until the retag of `ButtonIcon.android.kt | Unresolved reference 'ButtonIconTokens'.` to the repair record merges. Lina owns the move and Data verifies it.
+
+*Signed: Stacy, 2026-11-08.*
