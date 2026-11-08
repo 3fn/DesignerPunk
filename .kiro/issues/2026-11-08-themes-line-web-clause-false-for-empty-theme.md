@@ -3,7 +3,7 @@
 **Date**: 2026-11-08
 **Status**: ACTIVE
 **Owner**: Ada (`generate`'s messages, `src/cli/shared/errorCatalog.ts`). The wording is Leonardo's; the fix is made with him, and his committed source, `.kiro/specs/123-consumer-distribution/design-inputs/catalog-wording.md` § 1, changes in the same PR (`src/cli/__tests__/personalNote.test.ts` L253 compares the two).
-**Trigger**: `release:next:phase-1` — the S of the first release that carries U9 (#763, `c2b844152`), where this line first reaches adopters. Closed by the PR that rewords it, or re-ruled before that S.
+**Trigger**: `manual` *(re-ruled 2026-11-08 by Ada, Coordinator\'s direction: #824 fixes the code and the catalog source only; Thurgood re-rules this to `merge:#<N>` in the PR that corrects the governance and charter sites, and closes it there)*
 **Class**: P0 false-claim · defect *(rule 12, Ada, filer. The sentence is false where its reader meets it, in `generate`'s output to an adopter. M7's list of surfaces does not name CLI output in so many words, and I read it as covered: the adopter meets the line in the package's own response. Only Peter downgrades a P0. If he reads CLI output as outside M7, this is P2 (record).)*
 **Source**: Stacy's notes on ballot `2026-11-08-token-governance-theme-registry-as-shipped`, `[STACY R1]` § 2, item 1, and `[STACY R3]` note 1. First filed as one half of `.kiro/issues/2026-11-08-non-colour-theme-override-accepted-not-applied.md`, moved here when #785 closed that record.
 
@@ -38,6 +38,6 @@ Token-Governance's items 1 and 4 in the ballot above already state the rule corr
 - **Sparky**: his charter line.
 - **Stacy**: the RELEASE phase-1 read; she may dispute the P0 reading.
 
-## Outcome (2026-11-08, Ada)
+## Progress (2026-11-08, Ada)
 
-Fixed by PR `fix/themes-line-empty-theme`. `GENERATE_THEMES_SUFFIX` (`src/cli/shared/errorCatalog.ts`) and its pin in `src/cli/__tests__/personalNote.test.ts` now read "any other theme that overrides a colour is written as :root[data-theme=\"<name>\"] on web (… a theme that overrides no colour writes no web block, and shows your base tokens), and every other theme is written as a theme instance on iOS and Android". Leonardo agreed the wording and edited his source, `catalog-wording.md` § 1, himself (`021b80d80`); the two agree. Not in this PR, routed to their owners: `governance/DesignerPunk-Integration-Guide.md` L557 (the sample copies the message), `governance/Rosetta-System-Architecture.md` L572 and `governance/Token-Quick-Reference.md` L114 (CORRECTIONs, truth: `TokenFileGenerator.ts` L1116), and Sparky's `canonical/agents/sparky.md` L311 and `canonical/operative-sets/sparky.yaml` L90. — Ada
+#824 fixes `GENERATE_THEMES_SUFFIX` (`src/cli/shared/errorCatalog.ts`), its pin in `personalNote.test.ts`, and Leonardo's `catalog-wording.md` § 1 (his edit, `021b80d80`). The record stays open: five sites still carry the false claim and are routed to Thurgood: `governance/DesignerPunk-Integration-Guide.md` L557, `governance/Rosetta-System-Architecture.md` L572, `governance/Token-Quick-Reference.md` L114, `canonical/agents/sparky.md` L311 and `canonical/operative-sets/sparky.yaml` L90. — Ada
