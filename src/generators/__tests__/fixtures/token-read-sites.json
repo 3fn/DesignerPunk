@@ -1,5 +1,5 @@
 {
-  "record": ".kiro/issues/2026-10-15-123-palette-read-from-package.md",
+  "record": ".kiro/issues/archive/2026-10-15-123-palette-read-from-package.md",
   "note": "Ledger of every pipeline-code read of the PACKAGE token source (src/tokens). A site not reachable from generate is listed for completeness. Rows are compared with the observed set by TokenReadSiteInventory.test.ts.",
   "rows": [
     {

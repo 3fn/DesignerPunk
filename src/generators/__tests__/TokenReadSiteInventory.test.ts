@@ -9,7 +9,7 @@
  *
  * Ledger: ./fixtures/token-read-sites.json — one row per file: the `src/tokens` modules it
  * reads, the token part they cover, and whether `generate` reaches the file (`generateReach`).
- * Limitation record: .kiro/issues/2026-10-15-123-palette-read-from-package.md
+ * Limitation record: .kiro/issues/archive/2026-10-15-123-palette-read-from-package.md
  *
  * To update after an intended change: copy the "observed" rows from the failure message into the
  * ledger, fill `part`/`generateReach`, and correct the Known limitations wording to match.
@@ -86,7 +86,7 @@ describe('token read-site inventory (package reads in pipeline code)', () => {
         `  removed/changed (ledger only):\n    ${removed.join('\n    ') || '(none)'}\n` +
         `  observed rows:\n${JSON.stringify(seen, null, 2)}\n` +
         'Update src/generators/__tests__/fixtures/token-read-sites.json, then correct the CHANGELOG ' +
-        'Known limitations wording and .kiro/issues/2026-10-15-123-palette-read-from-package.md.');
+        'Known limitations wording and .kiro/issues/archive/2026-10-15-123-palette-read-from-package.md.');
     }
   });
 

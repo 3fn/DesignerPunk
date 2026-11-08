@@ -20,7 +20,7 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 
 <!-- designerpunk:install-region:begin -->
 
-This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md -->
+This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a theme you register in `designerpunk.config.ts` is written as a `:root[data-theme="<name>"]` block, which matches the `<html>` element only, so it themes the whole page; light and dark mode work.
 
 ## Prerequisites
 
@@ -88,7 +88,7 @@ Use this posture when you want a design system of your own. These are the five s
 
 After birth, your repo holds two different kinds of thing.
 
-- **Your language: the tokens.** `init` copied them into your repo, and they are yours. DesignerPunk never adds to them. But part of your copy is not read yet. `generate` takes the following from the installed package, so editing them in your copy does not change your output yet: the colour palette; the dark and WCAG override maps; the opacity values that colours with transparency are built from; the motion tokens (duration, easing and scale) and the layering tokens; the font-size and line-height values that icon sizes are calculated from (your own font-size and line-height tokens are still read from your copy); and the whole DTCG/Figma export. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md --> Spacing and the other non-colour primitives, and your semantic references, are read from your copy.
+- **Your language: the tokens.** `init` copied them into your repo, and they are yours. DesignerPunk never adds to them. `generate` reads your copy: the colour palette; the opacity values that colours with transparency are built from; the motion tokens (duration, easing and scale) and the layering tokens; the font-size and line-height values that icon sizes are calculated from; the whole DTCG/Figma export; spacing and the other non-colour primitives; and your semantic references. The exception is the dark and WCAG override maps, which `generate` reads by registration. For each of `dark`, `wcag` light and `wcag` dark that your config registers, it reads your own map (the entries `init` writes register all three). For each it does not register, it still applies DesignerPunk's map from the installed package, as before, and prints a warning on every run naming the config line that would make it yours, until the next major release (planned 17.0.0), after which an unregistered built-in theme is not applied.
 - **Our updating surface: the components.** You use them by name, and they improve when you update the package.
 
 **`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source. One of its four checks, mathematical relationships, currently fails even on unmodified token source, so `validate` exits non-zero; that is a known defect in the checker, not in your tokens. <!-- limitation: .kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md --> Its other three checks are still worth reading after you edit token source files.
@@ -108,7 +108,7 @@ What `generate` writes, into the `output` directory set in `designerpunk.config.
 - **`npx designerpunk sync`** comes after it: it reports package updates against the installed package — reports, never writes silently. It prints its report before changing anything, and changes DesignerPunk's MCP configuration and generated agent files only on your go.
 - **`npx designerpunk generate`** comes after you change your own tokens.
 
-**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The exceptions above still apply: the colour palette, the dark and WCAG override maps, the opacity in composed colours, the motion and layering tokens, the font-size and line-height values behind icon sizes, and the DTCG/Figma export all come from the installed package, so the next `generate` after an update can change them. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md --> If an updated component needs a token your set does not have, `sync` tells you (section 5).
+**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The one exception left is a dark or WCAG override map your config does not register: `generate` applies DesignerPunk's for it, so the next `generate` after an update can change what it produces. Register the entries `init` writes and all three maps are yours. If an updated component needs a token your set does not have, `sync` tells you (section 5).
 
 Commit your lockfile, so that a teammate installs the version you built against.
 
@@ -164,7 +164,7 @@ On web, "yours wins" is **per token, by order**: a token you define under the sa
     <!-- DesignerPunk components on the page use the WCAG theme's values -->
   </html>
   ```
-- **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing yet. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md -->
+- **A theme you register in `designerpunk.config.ts` is written as a `:root[data-theme="<name>"]` block in your generated CSS.** Like the WCAG block, its selector matches only the `<html>` element, so set the attribute there; on any other element it matches nothing, and whether a subtree can be themed is not decided yet. A theme of one mode (`mode: 'light'` or `'dark'`) covers one colour scheme: the other scheme shows the base values, so the block writes `light-dark(<its value>, <the base value>)` for it. Register it with `mode: 'both'` (or in the `{ light, dark }` form) to give it its own look in both.
 
 The full import list is under Available Imports, in the reference part of the Integration Guide (`governance/DesignerPunk-Integration-Guide.md` in the `@3fn/core` package; your agent reads it as `designerpunk-integration-guide`).
 
@@ -394,7 +394,7 @@ Replace `purple300` with the palette colour you want.
 
 **How you know it worked**: on your page, anything coloured by the primary action colour shows the new colour in light mode and in dark mode: for example a `Button-CTA` in its primary style (its fill), in its secondary style (its outline and text), or in its tertiary style (its text). With `data-theme="wcag"` on the `<html>` element, it does not change, and that is expected.
 
-**The exceptions**: DesignerPunk's built-in dark and WCAG overrides come from the installed package, not from your copy (see "4. Your language vs our updating surface"). They pin two action colours, so your change does not reach them in the places listed here:
+**The exceptions**: the dark and WCAG override maps `init` registers are your copy's, but if you removed a registration, DesignerPunk's built-in map applies for it instead (see "4. Your language vs our updating surface"). The WCAG map pins two action colours, so your change does not reach them in the places listed here:
 - `color.action.primary`: the WCAG theme pins it to `teal300` inside `data-theme="wcag"`, in light and in dark mode.
 - `color.action.navigation`: the dark override pins it to `cyan100` in dark mode, and the WCAG theme pins it to `teal500` (and to `teal100` in dark mode).
 
@@ -402,15 +402,15 @@ So a change to `color.action.navigation` shows in light mode without the WCAG th
 
 **If not**:
 - Nothing changed on the page: check that the page loads your own `DesignTokens.web.css` from your `output` directory, not `@3fn/core/tokens.css`, and reload it.
-- `generate` stopped with an "Orphaned override key": a token that DesignerPunk's dark or WCAG overrides name is missing from your token source, so no token files were written (see "Token Source Configuration"). Put the token back.
-- You changed a palette colour itself (what `purple300` is) and nothing changed: the colour palette is one of the parts `generate` still takes from the installed package (see "4. Your language vs our updating surface"). Point the token at a different palette colour instead.
+- `generate` stopped with an "Orphaned override key": a token that a dark or WCAG override map names is missing from your token source, so no token files were written (see "Token Source Configuration"). Put the token back.
+- You changed a palette colour itself (what `purple300` is) and a place on the page did not change: check that the page loads your own `DesignTokens.web.css`, and that the token you changed is not pinned by a theme block (see "Themes").
 - `npx designerpunk validate` exits with an error from its mathematical-relationships check: that check currently fails even on unmodified token source, a known defect in the checker (see "Generating tokens — options"). Its other three checks are still worth reading.
 
 ### Walkthrough: Make it look like your brand
 
-**Not available on this release.** A theme you register in `designerpunk.config.ts` does not change your generated output: it produces no `[data-theme="<name>"]` block and no native theme output (see "Themes"). Whether it ever will is not decided yet. Spec 129 (consumer-generation completeness) is where that is decided, and it has not promised it. This walkthrough is written only if that is built.
+**Not written yet.** A theme you register in `designerpunk.config.ts` is applied: on web it is written as a `:root[data-theme="<name>"]` block (see "Themes"), and on iOS and Android as theme instances. A step-by-step walkthrough of building a brand theme is not written; the "Themes" reference below says what each registration produces.
 
-What works today: pointing individual colour tokens at other palette colours ("Walkthrough: Change a token and see it on web"), light and dark mode, and the built-in WCAG theme.
+What you can do now: point individual colour tokens at other palette colours ("Walkthrough: Change a token and see it on web"), register a theme with its own overrides, and use light and dark mode and the built-in WCAG theme.
 
 ### Walkthrough: Build for iOS or Android
 
@@ -463,12 +463,12 @@ export default defineConfig({
 - Path is resolved relative to the config file's directory
 - Must be a **complete** token source — no fallback to the package for missing families
 - Must export `getAllPrimitiveTokens()` from the root barrel and `getAllSemanticTokens()` from a `semantic/` subdirectory
-- Dark and WCAG overrides are not read from `tokenSource` or from `themes`: `generate` applies DesignerPunk's own override maps from the installed package (section 4). Every semantic token those maps name must exist in your token source. If one is missing, `generate` reports an "Orphaned override key", writes no token files, leaves `token-index/` as it was, and exits 1.
+- Dark and WCAG overrides are read by registration: `generate` reads the map of each built-in theme your config registers (`init` registers `dark` and `wcag` with both WCAG maps), and applies DesignerPunk's own map from the installed package, with a warning, for each it does not (section 4). Every semantic token a map names must exist in your token source. If one is missing, `generate` reports an "Orphaned override key", writes no token files, leaves `token-index/` as it was, and exits 1.
 - `npx designerpunk init` copies a complete token source to `src/tokens/` automatically
 
 ### Themes
 
-`designerpunk.config.ts` accepts a `themes` list of `{ name, mode, overrides }`, with `mode` one of `'light'`, `'dark'` or `'both'`. `generate` does not apply it yet. A theme you register produces no `[data-theme]` block and no native theme output. Its overrides are not validated either, so a misspelled token name passes silently. The `dark` and `wcag` entries that `init` writes do not drive output either: `generate` applies DesignerPunk's built-in dark and WCAG overrides regardless. Light and dark mode work, and the `wcag` theme is built in. Whether a theme you register will one day drive output is not decided yet: Spec 129 (consumer-generation completeness) is where that is decided, and it has not promised it.
+`designerpunk.config.ts` accepts a `themes` list of `{ name, mode, overrides }`, with `mode` one of `'light'`, `'dark'` or `'both'`, and `overrides` one map or, for `mode: 'both'`, `{ light, dark }` (two maps). `generate` applies every theme you register. `dark` registers the dark override map (`mode: 'dark'`, one map). `wcag` registers the WCAG maps: `{ light: wcagSemanticOverrides, dark: darkWcagSemanticOverrides }` registers both, and one map registers the light half only (the dark half is then DesignerPunk's built-in, with a warning). Registering `wcag` with empty maps (`{ light: {}, dark: {} }`) applies nothing. Any other name is a theme of your own. On web it is written as a `:root[data-theme="<name>"]` block, whose selector matches only the `<html>` element, so it themes the whole page; a theme of one mode shows the base values in the other colour scheme. On iOS and Android it is a theme instance of the generated theme type. `generate` refuses a theme it cannot name on both platforms and says which entry: a name that is empty, not letters, digits, `-` and `_`, or that begins with a digit; the name `base`; `dark` with another mode or two maps; a spelling of `base`, `dark` or `wcag` that differs in case or separators; two names that give the same Pascal name; a name registered twice; a mode other than the three, or two maps with a mode other than `both`; and a name that would make a Swift family case `self`, `init` or `allCases`. A misspelled token name in the overrides stops `generate`.
 
 ### Starting the MCP servers by hand
 
@@ -553,9 +553,9 @@ The pipeline shows where tokens are being read from. With the config `init` writ
 📦 MyProduct (MP)
    Tokens: src/tokens  (local)
    Output: dist/tokens
-   Themes: dark (dark), wcag (light) — registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens
+   Themes: dark (dark), wcag (both) — registered and applied: dark and wcag replace DesignerPunk's built-in overrides; every other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android
 ```
-The `Themes:` line lists what your config registers, not what was applied (see "Themes").
+The `Themes:` line lists what your config registers; every one is applied (see "Themes").
 
 The `(local)` annotation means tokens resolve from your configured `tokenSource` path. If `tokenSource` is omitted, you'll see `(package)` — meaning tokens come from the installed `@3fn/core` package.
 
