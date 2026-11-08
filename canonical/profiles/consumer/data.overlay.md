@@ -18,7 +18,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ---
 
-## @unit #in-scope @ sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
+## @unit #in-scope @ sha256:fa54f8cf858c8d1c441c911b7c59cbcff4064990a50cb11ae99e5ae9c6f4fd23
 ## Domain Boundaries
 
 Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, and the native token files refer to code nothing in the package defines (see the Integration Guide's § Platforms). Don't start a new native product on this release; DesignerPunk plans to address it.
@@ -26,7 +26,7 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 ### In Scope
 
 - Android screen implementation using Jetpack Compose
-- Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `Local{Abbreviation}Theme.current` once your generated output includes it
+- Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `LocalDPTheme.current`
 - Implementing DesignerPunk component specifications in Kotlin (referencing the Android implementations that ship in the installed package, `node_modules/@3fn/core/src/components/core/*/platforms/android/`)
 - Writing Android-specific tests for product screens
 - Android navigation, state management, and data binding
@@ -34,13 +34,15 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - Android build configuration and project setup
 - Advising Leonardo on Android-specific constraints and opportunities
 
-## @unit #android-theming-spec-094 @ sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9
+## @unit #android-theming-spec-094 @ sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62
 ### Android Theming (Spec 094)
 
-- Your `npx designerpunk generate` produces no theme types for Android today: no `{Name}Theme` data class, no `{Name}Themes` object and no `Local{Abbreviation}Theme` CompositionLocal, and the theme-varying semantic colors are left out of `DesignTokens`. DesignerPunk plans to address this in its consumer-generation completeness work (Spec 129), with no date set. The next two bullets, on providing and selecting a theme, are the intended shape once it does.
-- Product apps wrap content with `CompositionLocalProvider(Local{Abbreviation}Theme provides themeInstance)` for subtree theming
-- Dark mode: select theme instance based on `isSystemInDarkTheme()`
-- `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
+- `npx designerpunk generate` writes your static tokens on the `DesignTokens` object and a theme surface beside them in `package com.designerpunk.tokens`. Every theme-varying colour semantic is read through the theme with `LocalDPTheme.current.<name>`; those colours are not on `DesignTokens`, which still carries the static colour members such as `accessibility_focus_color` and `color_icon_optical_balance`
+- **The fixed contract** is DesignerPunk's, whatever your config `name` or `abbreviation`: `data class DesignerPunkTheme` (one `Color` property per colour semantic) and `val LocalDPTheme = staticCompositionLocalOf { <Name>Themes.BaseLight }`. The `abbreviation` names nothing in the Kotlin output. Read outside any provider, `LocalDPTheme.current` is the base light theme and does not follow the system scheme
+- **Your product's names** come from your config `name`: the holder `object <Name>Themes` (`BaseLight`, `BaseDark`, `WcagLight`, `WcagDark`, then one per instance a registered theme covers), each a `DesignerPunkTheme`
+- **The family and its provider**: `enum class <Name>ThemeFamily` has the entries `Base`, `Wcag`, then one per other registered theme in config order, in Pascal case. It has no `Dark` entry, because dark is the `darkTheme` argument. Wrap content with `<Name>Theme(family = <Name>ThemeFamily.Base, darkTheme = isSystemInDarkTheme()) { content }`: it provides `LocalDPTheme` with the family's instance for that scheme. `darkTheme` forces a scheme; leave it at its default to follow the system. Each entry's KDoc names its instance in each scheme. Under the default config name the provider `DesignerPunkTheme(…)` and the `data class DesignerPunkTheme` share a name; both resolve, one as a function call and one as a type
+- **A theme of one mode falls back to base in the other scheme**: a theme registered in mode `light` shows its own look when `darkTheme` is false and `BaseDark` when it is true; one registered in mode `dark` shows `BaseLight` when `darkTheme` is false. Nothing warns you. To give it its own look in both schemes, register it in mode `both`, or force the scheme with `darkTheme`. `Wcag` is exempt: it always has both instances
+- Product tokens that reference a theme-varying colour are `@Composable @ReadOnlyComposable get()` properties on `object Product{Category}`, read as `LocalDPTheme.current.<name>` and only inside composition scope; the others stay static
 - Static tokens (spacing, sizing, radius, typography, motion) remain on the `DesignTokens` object — no CompositionLocal needed
 - **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
 
