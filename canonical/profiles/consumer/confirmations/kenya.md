@@ -39,7 +39,7 @@ date: 2026-11-08
 
 **Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 4 (my own text).**
 - **What changed**: one bullet, the last of § "In Scope". Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-3 Keep, F-5 (a)). Data applied it at `4be514236` and fixed the F-5 (a) README wording at `bb623ae98`. I checked by script that the charter line equals site 4's after-text with the F-5 (a) hunk ("`harness/README.md` (Thurgood's; you review its hunks in your sections)") substituted, byte for byte. The frontmatter `writeScope` insertion equals site 3 (eight paths and the two-line comment).
-- **Nine new items, `scope-9` to `scope-17`**, drafted by Thurgood as profile author (`{67de94640}`), each a verbatim fragment of the bullet with exactly one occurrence in the charter (checked by script). Read between the fragments, they leave only joining words (". ", "; ", "; and ", the closing "."), so together they cover the bullet.
+- **Nine new items, `scope-9` to `scope-17`**, drafted by Thurgood as profile author (`67de94640`), each a verbatim fragment of the bullet with exactly one occurrence in the charter (checked by script). Read between the fragments, they leave only joining words (". ", "; ", "; and ", the closing "."), so together they cover the bullet.
   - `scope-9`: the grant (the label through "no PR author at fault"), a member.
   - `scope-10`: owning the lane never authorizes changing what it decides; includes the K-4 self-test limit.
   - `scope-11`: a defect fix carries a named falsification case, red at the merge base.
