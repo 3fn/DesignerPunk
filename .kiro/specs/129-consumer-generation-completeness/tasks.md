@@ -1169,7 +1169,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 9 — `generate` reads the consumer's own source
 
-- [ ] 14. The six groups and the theme registry from the consumer's copy (U9)
+- [x] 14. The six groups and the theme registry from the consumer's copy (U9)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — his charter line, the Q3b browser check and the review of the web single-mode form (14.6; added 2026-11-06, `[SPARKY R3]` fix 5) · Lina (Sonnet) — regeneration and the lock · Thurgood (Sonnet) — the profile author's acts
   **Traces**: Req 2.10, 4.1 (as amended: the custom-theme instances from U9), 9.2, 9.3, 9.4, 9.5 (as amended), 10.4, 15.1 (the served sentences); rows 19, 20 (row (g)) · design § 10 (as amended 2026-11-05); § 4 (the theme-instance rule's items 2, 3 and 5, the single-mode rule; amendment 3)
@@ -1244,23 +1244,23 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 14 Complete: generate reads the consumer's own source (129)"` opens U9's PR (Peter-merged: `governance/**` and charter text; `**Edit kind**:` EXECUTION per file, Ada R1); report the URL; STOP.
 
-  - [ ] 14.1 One loaded token set from the consumer's barrel; the value-import guard; the removal case
+  - [x] 14.1 One loaded token set from the consumer's barrel; the value-import guard; the removal case
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.2, 9.5_
-  - [ ] 14.2 The theme registry from config (`src/themes/ThemeRegistry.ts`); the registration-keyed bridge, its warning and first-run count; package mode; the `{ light, dark }` form; the golden capture; cases (a)–(d)
+  - [x] 14.2 The theme registry from config (`src/themes/ThemeRegistry.ts`); the registration-keyed bridge, its warning and first-run count; package mode; the `{ light, dark }` form; the golden capture; cases (a)–(d)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.2, 9.3_
-  - [ ] 14.3 Row (g)'s freshness test; the 133 outline correction; the one-copy rule
+  - [x] 14.3 Row (g)'s freshness test; the 133 outline correction; the one-copy rule
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.4_
-  - [ ] 14.4 The served sentences on registered themes; the web agent line; regeneration, profile-author acts, then Sparky's confirmation and signature
+  - [x] 14.4 The served sentences on registered themes; the web agent line; regeneration, profile-author acts, then Sparky's confirmation and signature
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet), Sparky (Sonnet), Lina (Sonnet), Thurgood (Sonnet)
     - _Requirements: 15.1_
-  - [ ] 14.5 The Q3b browser check and the Q3b record, before U9's PR opens
+  - [x] 14.5 The Q3b browser check and the Q3b record, before U9's PR opens
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Sparky (Sonnet)
     - Runs after 14.6, and also renders one DesignerPunk component under config C's `brand` and `default` in both schemes, recording the colour it resolves in `evidence/q3b-browser-check.md` (`[SPARKY R3]` fix 6, added in the review fold: Jest checks strings, not that `light-dark()` resolves inside a shadow root)
     - _Requirements: 9 (Q3b, carried to design)_
-  - [ ] 14.6 The theme-instance rule at U9: custom themes' native instances and family cases, the WCAG dark composition from config, each refusal measured then shipped or warned, and the web single-mode form *(added 2026-11-06, tasks amendment 3)*
+  - [x] 14.6 The theme-instance rule at U9: custom themes' native instances and family cases, the WCAG dark composition from config, each refusal measured then shipped or warned, and the web single-mode form *(added 2026-11-06, tasks amendment 3)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - Sparky reviews the web form against his consult before U9's PR opens
     - _Requirements: 4.1, 9.2, 10.4_

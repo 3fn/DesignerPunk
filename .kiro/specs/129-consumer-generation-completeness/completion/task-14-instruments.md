@@ -47,4 +47,6 @@ Named before code:
 
 ## Found later
 
-(none yet)
+- **unlisted** (2026-11-08, 14.3): `scripts/generate-platform-tokens.ts` gains `--out <dir>`, which `RootTokenFreshness.test.ts` runs (criterion C25). State: built here. The script is mine (standing scope) but not in Task 14's Primary Artifacts.
+- **unlisted** (2026-11-08, 14.2): Spec 123's `design.md` catalog row and `design-inputs/catalog-wording.md` pin `generateThemesLine`'s 'registered, not applied yet' suffix, and `personalNote.test.ts` reads them (criterion C14). State: built here (amended with the prior text kept; Leonardo's wording to confirm).
+- **unlisted** (2026-11-08, 14.4): the scope sentence is pinned in `scripts/__tests__/install-doc.test.ts` and `README.md` L129 (criterion C29). State: Thurgood's, through the issue-row grant `.kiro/issues/2026-11-08-u9-install-doc-scope-sentence-grant.md` (#761); joined at `3c9ffd6c3`.
