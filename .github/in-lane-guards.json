@@ -312,6 +312,18 @@
       "config": "scripts/jest.config.js",
       "context": "lane-functional-root",
       "record": ".kiro/docs/ballots/2026-11-07-merge-hold-and-law-ratified-checks.md § 2 item 3 (Stacy's falsification fixtures 1 to 17 for the merge-hold and law-ratified checks)"
+    },
+    {
+      "file": "scripts/harness/__tests__/d2-check.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/tasks.md Task 18 (the D2 check's falsification cases; tasks amendment 3 review fold, [LINA R3] fix 2a, [STACY TASKS R4] Low-2)"
+    },
+    {
+      "file": "scripts/harness/__tests__/native-rules-emitter.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/tasks.md Task 18 (the emitter-versus-module comparison on configs S and C and the default-name case; tasks amendment 3 review fold, [LINA R3] fix 2b, [STACY TASKS R4] Low-2)"
     }
   ]
 }
