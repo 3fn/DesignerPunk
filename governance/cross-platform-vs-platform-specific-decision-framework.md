@@ -248,7 +248,7 @@ Button(
 
 // Platform-specific enhancement
 .clickable(
-    indication = rememberRipple(),
+    indication = ripple(),  // corrected 2026-11-07: ripple(...) replaces the removed rememberRipple; allowed only where the component's contract declares it
     interactionSource = remember { MutableInteractionSource() }
 )
 ```
