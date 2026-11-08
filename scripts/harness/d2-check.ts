@@ -23,6 +23,14 @@
  * is the completeness half, which restates the index's `component.key` rule in one line (`indexNameOf`).
  * A directory walk is allowed, and a list is not: the walk has one root and one basename match.
  *
+ * Rules for every later edit: ballot 2026-11-07-native-lane-ownership § 8, "F-4 as ruled" (the law
+ * home; read it before changing this file). It holds R-1 (this design rule, enforced by the grep case
+ * in d2-check.test.ts), R-2 (the falsification cases are append-only), R-3 (the count floor: no
+ * `count=0`, and on a change outside the comments the base and the changed script print equal counts
+ * on the same consumer), and R-4 (the fixing PR cites its spec row or grant and pastes R-1's result and
+ * R-3's two runs). This file has no standing holder: a change needs a spec row or a per-fix grant,
+ * never to the seat holding the generator sources in that unit (the ballot names the glob).
+ *
  * `count=<n>` is the number of expected names the line compared. A line with `count=0` is a FAIL: a check
  * that compared nothing has shown nothing.
  */
