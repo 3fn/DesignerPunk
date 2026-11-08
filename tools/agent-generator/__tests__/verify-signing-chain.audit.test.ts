@@ -19,6 +19,7 @@ import {
   candidateLines,
   filterLine,
   formatAudit,
+  inputSubjectOf,
   logFormProven,
   main,
   parseSignerFilter,
@@ -113,12 +114,26 @@ function standard(s: Seat, over: Partial<StoreSpec['subagents'][string]> & { sna
   return {
     session: SESSION,
     main: mainSpawn(),
-    subagents: {
+    subagents: withMetaSibling({
       k1: {
         lines: seatTranscript({ snapshot: over.snapshot ?? s.snapshot, readRendering: over.readRendering, commitCommand: COMMIT_FORMS.convention, commitOutput: `${s.sha} ${SUBJECT}` }),
         meta: over.meta === undefined ? metaFor('kenya', SPAWN) : over.meta,
       },
-    },
+    }),
+  };
+}
+
+/**
+ * A sibling subagent transcript that HAS its `.meta.json` and makes no commit call. A synthetic store
+ * whose only subagent lacks a meta record is the store-shape canary's C2 (ballot
+ * 2026-10-23-link4-candidate-first-sha-after-commit § 3), not H7's one-act link-5 negative case; a
+ * real store holds metas for the other transcripts (every real store checked has one per subagent).
+ */
+function withMetaSibling(subagents: StoreSpec['subagents'], session: string = SESSION, branch: string = 'seat-kenya'): StoreSpec['subagents'] {
+  if (!Object.values(subagents).some((s) => s.meta === null)) return subagents;
+  return {
+    ...subagents,
+    sib: { meta: metaFor('kenya', 'toolu_spawn_sibling'), lines: [record('subagentUser', { SESSION: session, BRANCH: branch, AGENT_ID: 'sib', TEXT: 'A sibling transcript with its meta record.' })] },
   };
 }
 
@@ -322,6 +337,280 @@ describe('verify-signing-chain --audit — the lookup rule, unit level (§ 4.3; 
 });
 
 // ============================================================================
+// Ballot 2026-10-23-link4-candidate-first-sha-after-commit § 3 — the candidate is the first SHA
+// printed after a proven commit, any line shape, with C's subject from the result or from that
+// commit's own message; the store-shape canary. Exercised file:
+// tools/agent-generator/regrounding/verify-signing-chain.ts. N1–N13, P1–P9, C1–C5 (+C2c).
+// Every fixture satisfies links 5–7 as H1 does, so each verdict is decided at link 4.
+// ============================================================================
+
+interface Call {
+  id: string;
+  command: string;
+  output: string;
+}
+
+const C = (s: Seat, n: number = 40): string => s.sha.slice(0, n);
+const OTHER = 'd'.repeat(40);
+
+/** Seat-transcript lines (links 5–7 satisfied) followed by the given Bash calls. */
+function seatCalls(s: Seat, calls: Call[], agentId = 'k1'): string[] {
+  const v = { SESSION, BRANCH: 'seat-kenya', AGENT_ID: agentId };
+  const lines = seatTranscript({ snapshot: s.snapshot, agentId });
+  for (const c of calls) {
+    lines.push(record('subagentToolUse', { ...v, TOOL_ID: c.id, TOOL_NAME: 'Bash', INPUT: { command: c.command } }));
+    lines.push(record('subagentToolResult', { ...v, TOOL_ID: c.id, OUTPUT: c.output }));
+  }
+  return lines;
+}
+
+const mainCalls = (calls: Call[]): string[] =>
+  calls.flatMap((c) => [
+    record('mainToolUse', { SESSION, BRANCH: 'seat-kenya', TOOL_ID: c.id, TOOL_NAME: 'Bash', INPUT: { command: c.command } }),
+    record('mainToolResult', { SESSION, BRANCH: 'seat-kenya', TOOL_ID: c.id, OUTPUT: c.output }),
+  ]);
+
+/** A store whose one seat transcript holds the given calls. */
+const oneSeatStore = (s: Seat, calls: Call[], main: string[] = mainSpawn()): string =>
+  buildStore({ session: SESSION, main, subagents: { k1: { meta: metaFor('kenya', SPAWN), lines: seatCalls(s, calls) } } });
+
+describe('verify-signing-chain --audit — the amended lookup rule (ballot 2026-10-23 § 3: N, P)', () => {
+  const T = 'Agent: kenya';
+  const fixed = (s: Seat, command: string, output: string): ActVerdict => only(audit(s, oneSeatStore(s, [{ id: 'toolu_c1', command, output }])));
+
+  test('N1: another agent\'s call prints C, with no `git commit` in it → not a candidate', () => {
+    const s = seatRepo();
+    const store = buildStore({
+      session: SESSION,
+      main: mainSpawn(),
+      subagents: {
+        q1: { meta: metaFor('stacy', 'toolu_spawn_stacy'), lines: [record('subagentToolUse', { SESSION, BRANCH: 'seat-kenya', AGENT_ID: 'q1', TOOL_ID: 'toolu_q', TOOL_NAME: 'Bash', INPUT: { command: "git log -1 --format='%H %s'" } }), record('subagentToolResult', { SESSION, BRANCH: 'seat-kenya', AGENT_ID: 'q1', TOOL_ID: 'toolu_q', OUTPUT: `${C(s)} ${SUBJECT}` })] },
+        // An unrelated, paired commit call keeps the store recognized (the canary would otherwise read it).
+        d1: { meta: metaFor('kenya', SPAWN), lines: seatCalls(s, [{ id: 'toolu_d', command: `git commit -q -m 'D subject' && git log -1 --format='%H %s'`, output: `${OTHER} D subject` }], 'd1') },
+      },
+    });
+    expect(only(audit(s, store)).verdict).toBe('record absent');
+  });
+
+  test('N2: the same seat prints C in a later call with no commit → not a candidate', () => {
+    const s = seatRepo();
+    const v = only(audit(s, oneSeatStore(s, [{ id: 'toolu_d', command: `git commit -q -m 'D subject' && git log -1 --format='%H %s'`, output: `${OTHER} D subject` }, { id: 'toolu_c1', command: "git log -1 --format='%H %s'", output: `${C(s)} ${SUBJECT}` }])));
+    expect(v.verdict).toBe('record absent');
+    expect(v.link).toBe(4);
+  });
+
+  test('N3: the call commits D, then `git log -2` prints D, then C → not a candidate for C', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -q -m 'D subject' && git log -2 --format='%H %s'`, `${OTHER} D subject\n${C(s)} ${SUBJECT}`);
+    expect(v.verdict).toBe('record absent');
+  });
+
+  test('N4b: a primary\'s quiet commit C has subject S; the seat\'s `commit -q -m S …; git log -1 --format=%h` fails and prints C\'s SHA alone → `anomaly`, never `anchored`', () => {
+    const s = seatRepo();
+    const main = [...mainSpawn(), ...mainCalls([{ id: 'toolu_main_commit', command: COMMIT_FORMS.quiet, output: '' }])];
+    const v = only(audit(s, oneSeatStore(s, [{ id: 'toolu_c1', command: `git commit -q -m '${SUBJECT}' -m '${T}'; git log -1 --format=%h`, output: `On branch seat-kenya\nnothing to commit, working tree clean\n${C(s)}` }], main)));
+    expect(v.verdict).toBe('anomaly');
+    expect(v.link).toBe(4);
+    expect(v.widen).toBe(true);
+  });
+
+  test('N5: the main session prints C after its own commit (`commit D && git log -2`) → no candidate for C, and no spurious H3 `FAIL`', () => {
+    const s = seatRepo();
+    const main = [...mainSpawn(), ...mainCalls([{ id: 'toolu_main_d', command: `git commit -q -m 'D subject' && git log -2 --format='%H %s'`, output: `${OTHER} D subject\n${C(s)} ${SUBJECT}` }])];
+    const store = buildStore({ session: SESSION, main, subagents: {} });
+    expect(only(audit(s, store)).verdict).toBe('record absent');
+  });
+
+  test('N6: a bare SHA line, no subject in the result and none readable from the input (`-F <file>`, `%h`) → `record absent`', () => {
+    const s = seatRepo();
+    expect(fixed(s, 'git commit -q -F msg.txt && git log -1 --format=%h', C(s, 9)).verdict).toBe('record absent');
+  });
+
+  test('N7: `git commit -q … && git push`, no `git log`; the push output shows `old..C` → `record absent`', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -q -m '${SUBJECT}' && git push`, `To github.com:x/y.git\n   ${OTHER.slice(0, 9)}..${C(s, 9)}  seat-kenya -> seat-kenya`);
+    expect(v.verdict).toBe('record absent');
+  });
+
+  test('N8: `-F <file>`, so no input subject — (a) `%H %s` anchors by the result route; (b) `%h` alone reads `record absent`', () => {
+    const s = seatRepo();
+    expect(fixed(s, "git commit -q -F msg.txt && git log -1 --format='%H %s'", `${C(s)} ${SUBJECT}`).verdict).toBe('anchored');
+    expect(fixed(s, 'git commit -q -F msg.txt && git log -1 --format=%h', C(s, 9)).verdict).toBe('record absent');
+  });
+
+  test('N9: `git commit … && git -C <other> log -1` → the prefix fails: not a candidate for C', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -q -m '${SUBJECT}' && git -C /other/repo log -1 --format='%H %s'`, `${OTHER} other subject`);
+    expect(v.verdict).toBe('record absent');
+  });
+
+  test('N10: `commit -q -m S && git push && git log -1 --format=%h%n%b`; the push prints `old..C` before the log → `anchored` (input route)', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -q -m '${SUBJECT}' && git push && git log -1 --format='%h%n%b'`, `To github.com:x/y.git\n   ${OTHER.slice(0, 9)}..${C(s, 9)}  seat-kenya -> seat-kenya\n${C(s, 9)}\nbody`);
+    expect(v.verdict).toBe('anchored');
+  });
+
+  test('N11: `git rev-parse HEAD~1 && git commit -q -m S && git log …` — a hex token printed before the log → `record absent` (the first SHA is not C\'s)', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git rev-parse HEAD~1 && git commit -q -m '${SUBJECT}' && git log -1 --format='%H %s'`, `${OTHER}\n${C(s)} ${SUBJECT}`);
+    expect(v.verdict).toBe('record absent');
+  });
+
+  test('N12: the main session commits C with `-q -m S -m "Agent: kenya" && git log -1 --format=%h` → `FAIL` 4 (H3)', () => {
+    const s = seatRepo();
+    const main = [...mainSpawn(), ...mainCalls([{ id: 'toolu_main_c', command: `git commit -q -m '${SUBJECT}' -m '${T}' && git log -1 --format=%h`, output: C(s, 9) }])];
+    const v = only(audit(s, buildStore({ session: SESSION, main, subagents: {} })));
+    expect(v.verdict).toBe('FAIL');
+    expect(v.link).toBe(4);
+  });
+
+  test('N13: `git commit -q -m S && git rev-parse HEAD`, no `git log` → `record absent`', () => {
+    const s = seatRepo();
+    expect(fixed(s, `git commit -q -m '${SUBJECT}' && git rev-parse HEAD`, C(s)).verdict).toBe('record absent');
+  });
+
+  test.each([
+    ['P1 `&& … ;`', "&& git status --porcelain; npx tsx tools/x.ts"],
+    ['P2 `&& …`', '&& npx tsx tools/x.ts'],
+    ['P3 `&& … &&`', '&& git status --porcelain && npx tsx tools/x.ts'],
+    ['P4 `; … ;`', '; git status --short; npx tsx tools/x.ts'],
+    ['P5 `; … | head`', '; git status --short | head -3; npx tsx tools/x.ts'],
+  ])('%s: #445\'s `-q -m S -m T && git log -1 --format=%h%n%B` with that tail → `anchored` (result route, next line)', (_n, tail) => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -q -m '${SUBJECT}' -m '${T}' && git log -1 --format='%h%n%B' ${tail}`, `${C(s, 9)}\n${SUBJECT}\n\n${T}\n`);
+    expect(v.verdict).toBe('anchored');
+  });
+
+  test('P6: `%H%n%B | cat` (the full SHA; the pipe sits after the log) → `anchored`', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -q -m '${SUBJECT}' -m '${T}' && git log -1 --format='%H%n%B' | cat; git status --porcelain`, `${C(s)}\n${SUBJECT}\n\n${T}\n`);
+    expect(v.verdict).toBe('anchored');
+  });
+
+  test('P7: `%h%n%b` (Lina\'s: the subject is not in the result) → `anchored` (input route, first `-m`)', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -q -m '${SUBJECT}' -m '${T}' && git log -1 --format='%h%n%b' && git status --porcelain && npx tsx tools/x.ts`, `${C(s, 9)}\n${T}\n`);
+    expect(v.verdict).toBe('anchored');
+  });
+
+  test('P8: the conforming line read from governance/signing-seat-brief.md § "The commit line" → `anchored` (the document and the parser cannot drift apart)', () => {
+    const s = seatRepo();
+    const doc = fs.readFileSync(path.resolve(__dirname, '../../../governance/signing-seat-brief.md'), 'utf8');
+    const section = doc.slice(doc.indexOf('### The commit line'));
+    const block = /```bash\n([\s\S]*?)\n```/.exec(section);
+    expect(block).not.toBeNull();
+    const command = (block as RegExpExecArray)[1]
+      .replace('<Seat> first signatures (C1): <rows> — <assent|refuse>', SUBJECT)
+      .replace(/<Seat>/g, 'Kenya')
+      .replace('<body>', 'body')
+      .replace('<model attribution>', 'Claude');
+    expect(command).toContain('&& git log -1 --format=');
+    const v = fixed(s, command, `${C(s)} ${SUBJECT}`);
+    expect(v.verdict).toBe('anchored');
+  });
+
+  test('P9: no `-q`, only the `[<branch> <sha>] <subject>` line → `anchored` (unchanged)', () => {
+    const s = seatRepo();
+    const v = fixed(s, `git commit -m '${SUBJECT}' -m '${T}' && git status --short`, `[seat-kenya ${C(s, 9)}] ${SUBJECT}\n 1 file changed, 2 insertions(+)`);
+    expect(v.verdict).toBe('anchored');
+  });
+});
+
+describe('verify-signing-chain --audit — the store-shape canary (ballot 2026-10-23 § 2b, § 2d; C1–C5)', () => {
+  const canaryOf = (v: ActVerdict): void => {
+    expect(v.verdict).toBe('anomaly');
+    expect(v.link).toBe(4);
+    expect(v.detail).toBe('store layout unrecognized');
+    expect(v.widen).toBe(false);
+    expect(v.canary).toBe(true);
+  };
+  const peterLines = (acts: ActVerdict[]): string[] => formatAudit(acts, 'branch seat-kenya').filter((l) => l.startsWith('**Open for Peter**:'));
+
+  test('C1: a store with subagent transcripts but no paired commit call → `anomaly` 4 `store layout unrecognized`, sends no act into J', () => {
+    const s = seatRepo();
+    const store = buildStore({ session: SESSION, main: mainSpawn(), subagents: { k1: { meta: metaFor('kenya', SPAWN), lines: seatCalls(s, []) } } });
+    const acts = audit(s, store);
+    canaryOf(only(acts));
+    expect(peterLines(acts)).toHaveLength(1);
+  });
+
+  test('C2: subagent transcripts exist and none has its `.meta.json` → the same', () => {
+    const s = seatRepo();
+    const store = buildStore({ session: SESSION, main: mainSpawn(), subagents: { k1: { meta: null, lines: seatCalls(s, [{ id: 'toolu_c1', command: COMMIT_FORMS.convention, output: `${C(s)} ${SUBJECT}` }]) } } });
+    const acts = audit(s, store);
+    canaryOf(only(acts));
+    expect(peterLines(acts)).toHaveLength(1);
+  });
+
+  test('C2c: one recognized store and one store with no meta → only the second fires; acts in the recognized store read normally', () => {
+    const s = seatRepo();
+    const good = buildStore(standard(s));
+    const bad = buildStore({ session: 'sess-0002', main: [], subagents: { b1: { meta: null, lines: [record('subagentUser', { SESSION: 'sess-0002', BRANCH: 'seat-kenya', AGENT_ID: 'b1', TEXT: 'x' })] } } });
+    const acts = runAudit({ repo: s.repo, base: s.base, head: 'seat-kenya', store: [good, bad], rg: RG });
+    const v = only(acts);
+    expect(v.verdict).toBe('anchored');
+    expect(v.canary).toBeUndefined();
+    expect(v.unrecognizedStores).toEqual([bad]);
+    expect(peterLines(acts)).toHaveLength(1);
+    expect(peterLines(acts)[0]).toContain(bad);
+  });
+
+  test('C2c′: an act with no candidate in the recognized store reads the canary while the unrecognized store is in the run', () => {
+    const s = seatRepo();
+    const good = buildStore({ session: SESSION, main: mainSpawn(), subagents: { k1: { meta: metaFor('kenya', SPAWN), lines: seatCalls(s, [{ id: 'toolu_d', command: `git commit -q -m 'D subject' && git log -1 --format='%H %s'`, output: `${OTHER} D subject` }, { id: 'toolu_c1', command: "git log -1 --format='%H %s'", output: `${C(s)} ${SUBJECT}` }]) } } });
+    const bad = buildStore({ session: 'sess-0002', main: [], subagents: { b1: { meta: null, lines: [record('subagentUser', { SESSION: 'sess-0002', BRANCH: 'seat-kenya', AGENT_ID: 'b1', TEXT: 'x' })] } } });
+    const acts = runAudit({ repo: s.repo, base: s.base, head: 'seat-kenya', store: [good, bad], rg: RG });
+    canaryOf(only(acts));
+    expect(peterLines(acts)).toHaveLength(1);
+  });
+
+  test('C3: control — an empty or missing store → `record absent` 4, or `unanchored` for an act declared under `--kiro`', () => {
+    const s = seatRepo();
+    const empty = buildStore({ session: SESSION, main: [], subagents: {} });
+    const missing = path.join(empty, 'does-not-exist');
+    for (const store of [empty, missing]) {
+      const v = only(runAudit({ repo: s.repo, base: s.base, head: 'seat-kenya', store, rg: RG }));
+      expect(v.verdict).toBe('record absent');
+      expect(v.link).toBe(4);
+      expect(only(runAudit({ repo: s.repo, base: s.base, head: 'seat-kenya', store, rg: RG, kiro: [s.sha.slice(0, 8)] })).verdict).toBe('unanchored');
+    }
+  });
+
+  test('C4: control — main-session transcripts with paired commit calls and no subagent transcripts → `record absent` 4, and `FAIL` 4 (H3) where a main-session candidate exists', () => {
+    const s = seatRepo();
+    const other = buildStore({ session: SESSION, main: [...mainSpawn(), ...mainCalls([{ id: 'toolu_m', command: `git commit -q -m 'D subject' && git log -1 --format='%H %s'`, output: `${OTHER} D subject` }])], subagents: {} });
+    expect(only(audit(s, other)).verdict).toBe('record absent');
+    const mine = buildStore({ session: SESSION, main: [...mainSpawn(), ...mainCalls([{ id: 'toolu_m', command: COMMIT_FORMS.convention, output: `${C(s)} ${SUBJECT}` }])], subagents: {} });
+    expect(only(audit(s, mine)).verdict).toBe('FAIL');
+  });
+
+  test('C5: a run whose acts read the canary sends no act into J (`widen` false) and prints one Peter line for the run', () => {
+    const s = seatRepo();
+    const store = buildStore({ session: SESSION, main: mainSpawn(), subagents: { k1: { meta: null, lines: seatCalls(s, [{ id: 'toolu_c1', command: COMMIT_FORMS.convention, output: `${C(s)} ${SUBJECT}` }]) } } });
+    const acts = audit(s, store);
+    expect(acts.every((a) => !a.widen)).toBe(true);
+    const lines = formatAudit(acts, 'branch seat-kenya');
+    expect(lines.filter((l) => l.startsWith('**Open for Peter**:'))).toHaveLength(1);
+    expect(lines.some((l) => /widening/.test(l))).toBe(false);
+  });
+});
+
+describe('verify-signing-chain --audit — the input subject, unit level (ballot 2026-10-23 § 2a)', () => {
+  test.each([
+    ["git commit -q -m 'S one' -m T", 'S one'],
+    ['git commit -q -m "S two" -m T', 'S two'],
+    ['git commit -qm S3', 'S3'],
+    ['git commit --message=S4 -m T', 'S4'],
+    ["git commit -q -F - <<'EOF' && git log -1\nS five\n\nbody\nEOF", 'S five'],
+    ["git add -A && git commit -q -m 'S; six && x' && git log -1", 'S; six && x'],
+    ['git commit -q -F msg.txt && git log -1', undefined],
+    ['git log -1', undefined],
+  ])('%s → %s', (command, expected) => {
+    expect(inputSubjectOf(command)).toBe(expected);
+  });
+});
+
+// ============================================================================
 // The signer filter — `--signer <seat>` / `--exclude-signer <seat>` (sitting-2 ballot S5).
 // Fixtures F1–F16: Stacy's specification (2026-10-19), built by Thurgood. The oracle for every
 // fixture: a filter is string equality on the printed `seat` column and on nothing else.
@@ -388,7 +677,7 @@ function storeOf(repo: string, txs: Tx[], mainExtra: string[] = []): string {
     });
     subagents[t.id] = { lines, meta: t.meta === null ? null : metaFor(t.meta ?? t.seat, spawn) };
   }
-  return buildStore({ session: SG, main: [...main, ...mainExtra], subagents });
+  return buildStore({ session: SG, main: [...main, ...mainExtra], subagents: withMetaSibling(subagents, SG, BR) });
 }
 
 const reconfirmStacy = (repo: string, seed: string): void => {

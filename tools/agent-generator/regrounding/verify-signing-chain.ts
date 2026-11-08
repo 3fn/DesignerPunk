@@ -66,6 +66,29 @@
  *               stacy` (§ 5.1) — sitting-2 ballot S5. Unfiltered output is unchanged; `--ci`
  *               ignores both flags.
  *
+ * STORE LAYOUT (what `--audit` assumes about the harness store; ballot
+ * 2026-10-23-link4-candidate-first-sha-after-commit § 4). A harness change is diagnosable from
+ * here, and the store-shape canary (`anomaly 4: store layout unrecognized`) has this block as its
+ * referent:
+ *   - the slug rule: `~/.claude/projects/<git-common-dir parent, [^A-Za-z0-9] → '-'>`
+ *     (`defaultStore`);
+ *   - main sessions: `<store>/<session>.jsonl`;
+ *   - subagents: `<store>/<session>/subagents/agent-<id>.jsonl`, with `agent-<id>.meta.json`
+ *     (`agentType`, `model`, `spawnDepth`, `toolUseId`). `agent-<id>.prefix.json` is also present
+ *     and is not read;
+ *   - block fields: `message.content[]` with `tool_use {id, input.command}`, `tool_result
+ *     {tool_use_id, content}`, and the `attachment` `prompt_snapshot` (`systemPrompt[0]`);
+ *   - observed: Claude Code 2.1.299 on 2026-10-23 (the `version` field of #445's seat transcripts).
+ *     The facts were first verified 2026-09-30, version not recorded;
+ *   - `is_error` is never law: it is not read for success evidence, which stays the closed set.
+ *   THE CANARY reads each store on its own (§ 2b, "the store"). A store is unrecognized when
+ *   subagent transcripts exist in it and either no `tool_use` running a `git commit` pairs with a
+ *   `tool_result` anywhere in it, or none of them has its `.meta.json`.
+ *   Every act not declared Kiro-run and without a candidate in a recognized store then reads
+ *   `anomaly 4: store layout unrecognized`, sends no act into J, and the run prints one
+ *   `**Open for Peter**:` line per unrecognized store (signing-act ballot § 5.4). A store with no
+ *   transcripts, or main-session transcripts only, reads as before.
+ *
  * WHAT A SIGNING ACT IS, as this instrument reads it (ballot § 2 clause 1):
  *   - a change to a dispositions row's `signature` sub-object
  *     (`canonical/profiles/**\/*.dispositions.yaml`);
@@ -1013,8 +1036,12 @@ export interface ActVerdict {
   spawnDepth?: number;
   model?: string;
   preRatification: boolean;
-  /** § 5.4: a FAIL, an anomaly, or spawnDepth ≠ 1 sends the seat's acts in the PR into J. */
+  /** § 5.4: a FAIL, an anomaly, or spawnDepth ≠ 1 sends the seat's acts in the PR into J. The store-shape canary does not (§ 5.4, as amended). */
   widen: boolean;
+  /** The verdict is the store-shape canary: evidence about the instrument, not a seat (ballot 2026-10-23 § 2b, § 2d). */
+  canary?: boolean;
+  /** The stores this run found unrecognized (ballot 2026-10-23 § 2b, per store); set on every act when any. */
+  unrecognizedStores?: string[];
 }
 
 interface Candidate {
@@ -1024,7 +1051,8 @@ interface Candidate {
   isMain: boolean;
   toolUseId: string;
   prefix: string;
-  subject: string;
+  /** The subjects this candidate shows: the result's, and the input's (ballot 2026-10-23 § 2a). */
+  subjects: string[];
   proven: boolean;
 }
 
@@ -1054,7 +1082,6 @@ const gitInvocation = (sub: string): RegExp =>
 const GIT_COMMIT_RE = gitInvocation('commit');
 const GIT_LOG_RE = gitInvocation('log');
 const BRACKET_RE = /^\[(.+) ([0-9a-f]{7,40})\] (.*)$/;
-const HEX_LINE_RE = /^([0-9a-f]{7,40}) (.*)$/;
 
 const GIT_COMMIT_G = new RegExp(GIT_COMMIT_RE.source, 'gm');
 const AT_GIT_LOG = /^\s*(?:[A-Za-z_][A-Za-z0-9_]*=\S*\s+)*git(?:\s+-[Cc]\s+(?:"[^"]*"|'[^']*'|\S+))*\s+log\b/;
@@ -1143,28 +1170,157 @@ export const resultText = (content: unknown): string =>
       ? content.map((b) => (isMap(b) && typeof b.text === 'string' ? b.text : '')).join('\n')
       : '';
 
-/** The candidate lines of one `git commit` tool call's result (§ 4.3's lookup rule). */
-export function candidateLines(command: string, output: string): { prefix: string; subject: string; proven: boolean }[] {
-  const out: { prefix: string; subject: string; proven: boolean }[] = [];
+/** A word of a shell command at `i` (quotes and `\\`-escapes removed; adjacent quoted parts concatenate), with where it ends. */
+function shellWord(command: string, i: number): { word: string; end: number } {
+  let word = '';
+  let q: '"' | "'" | undefined;
+  let j = i;
+  for (; j < command.length; j += 1) {
+    const c = command[j];
+    if (q) {
+      if (c === q) q = undefined;
+      else if (c === '\\' && q === '"' && j + 1 < command.length) {
+        j += 1;
+        word += command[j];
+      } else word += c;
+      continue;
+    }
+    if (c === "'" || c === '"') {
+      q = c;
+      continue;
+    }
+    if (c === '\\' && j + 1 < command.length) {
+      j += 1;
+      word += command[j];
+      continue;
+    }
+    if (/\s/.test(c) || c === ';' || c === '&' || c === '|' || c === '<' || c === '>') break;
+    word += c;
+  }
+  return { word, end: j };
+}
+
+/**
+ * The subject the call's INPUT shows (ballot 2026-10-23-link4-candidate-first-sha-after-commit
+ * § 2a): the call's first `git commit` invocation's first `-m` value, or the first line of its
+ * `-F -` heredoc. Nothing else in the command is read. Undefined when neither is present.
+ */
+export function inputSubjectOf(command: string): string | undefined {
+  const m = GIT_COMMIT_RE.exec(command);
+  if (!m) return undefined;
+  let i = m.index + m[0].length;
+  const lineEnd = ((): number => {
+    let q: '"' | "'" | undefined;
+    for (let k = i; k < command.length; k += 1) {
+      const c = command[k];
+      if (q) {
+        if (c === q) q = undefined;
+        else if (c === '\\' && q === '"') k += 1;
+        continue;
+      }
+      if (c === "'" || c === '"') q = c;
+      else if (c === '\\') k += 1;
+      else if (c === '\n' || c === ';' || (c === '&' && command[k + 1] === '&') || (c === '|')) return k;
+    }
+    return command.length;
+  })();
+  // The heredoc marker may sit after an `&&`, on the same line; the line is the commit's text up to the newline.
+  const nl = command.indexOf('\n', i);
+  const firstLine = nl === -1 ? command.slice(i) : command.slice(i, nl);
+  let fromStdin = false;
+  while (i < lineEnd) {
+    while (i < lineEnd && /\s/.test(command[i])) i += 1;
+    if (i >= lineEnd) break;
+    const w = shellWord(command, i);
+    if (w.end === i) {
+      i += 1;
+      continue;
+    }
+    i = w.end;
+    if (w.word === '-m' || w.word === '--message' || /^-[a-zA-Z]+m$/.test(w.word)) {
+      while (i < lineEnd && /\s/.test(command[i])) i += 1;
+      const v = shellWord(command, i);
+      return v.word.split('\n')[0];
+    }
+    if (w.word.startsWith('--message=')) return w.word.slice('--message='.length).split('\n')[0];
+    if (/^-m./.test(w.word) && !w.word.startsWith('--')) return w.word.slice(2).split('\n')[0];
+    if (w.word === '-F' || w.word === '--file') {
+      while (i < lineEnd && /\s/.test(command[i])) i += 1;
+      if (shellWord(command, i).word === '-') fromStdin = true;
+    } else if (w.word === '--file=-' || w.word === '-F-') fromStdin = true;
+  }
+  if (fromStdin && nl !== -1 && /<<-?\s*['"]?[A-Za-z_]/.test(firstLine)) {
+    const rest = command.slice(nl + 1);
+    return rest.split('\n')[0].replace(/\r$/, '');
+  }
+  return undefined;
+}
+
+/** A SHA token: 7–40 lowercase hex characters bounded by whitespace or the line's ends. */
+const SHA_TOKEN_RE = /(^|\s)([0-9a-f]{7,40})(?=\s|$)/;
+
+/**
+ * The candidates of one `git commit` tool call (signing-act ballot § 4.3, as amended by ballot
+ * 2026-10-23-link4-candidate-first-sha-after-commit § 2a): (i) every `[<branch> <sha>] <subject>`
+ * line the commit printed; (ii) where the call runs a `git commit` and then a `git log`, the FIRST
+ * SHA token printed in the result, in any line shape — one per pass where the call loops.
+ * `subject` is what the result shows (the rest of the SHA's line, else the next non-empty line);
+ * `inputSubject` is what the input shows ({@link inputSubjectOf}; never read in a call that loops).
+ */
+export function candidateLines(command: string, output: string): { prefix: string; subject: string; inputSubject?: string; proven: boolean }[] {
+  const out: { prefix: string; subject: string; inputSubject?: string; proven: boolean }[] = [];
   const lines = output.split('\n').map((l) => l.replace(/\r$/, ''));
   for (const l of lines) {
     const m = BRACKET_RE.exec(l);
     if (m) out.push({ prefix: m[2], subject: m[3], proven: true });
   }
-  if (GIT_LOG_RE.test(command)) {
+  // `git commit` anywhere in the call (a function body included), then a `git log` after it.
+  const firstCommit = /\bgit(?:\s+-[Cc]\s+(?:"[^"]*"|'[^']*'|\S+))*\s+commit\b/.exec(command);
+  const logAfterCommit = firstCommit !== null && [...command.matchAll(/\bgit(?:\s+-[Cc]\s+(?:"[^"]*"|'[^']*'|\S+))*\s+log\b/g)].some((x) => (x.index as number) > (firstCommit.index as number));
+  if (logAfterCommit) {
     const proven = logFormProven(command);
     // A call that loops — `for`/`while`/`until`, or a shell function it calls repeatedly — prints
     // one `git log -1` line per pass; each is that pass's candidate ("one per pass").
     const repeats = /(^|[\s;])(for|while|until)\s/.test(command) || /\b[A-Za-z_][\w-]*\s*\(\)\s*\{/.test(command) || /\bfunction\s+[A-Za-z_]/.test(command);
     const loop = repeats && /\blog\b[^\n]*(-1\b|-n\s*1\b|--max-count=1\b)/.test(command);
-    const hex = lines.filter((l) => HEX_LINE_RE.test(l));
-    for (const l of loop ? hex : hex.slice(0, 1)) {
-      const m = HEX_LINE_RE.exec(l) as RegExpExecArray;
-      out.push({ prefix: m[1], subject: m[2], proven });
+    const resultSubject = (idx: number, rest: string): string => {
+      if (rest.trim()) return rest.trim();
+      for (let k = idx + 1; k < lines.length; k += 1) if (lines[k].trim()) return lines[k].trim();
+      return '';
+    };
+    if (loop) {
+      lines.forEach((l, idx) => {
+        const m = /^([0-9a-f]{7,40})(?=\s|$)(.*)$/.exec(l);
+        if (m) out.push({ prefix: m[1], subject: resultSubject(idx, m[2]), proven });
+      });
+    } else {
+      for (let idx = 0; idx < lines.length; idx += 1) {
+        const m = SHA_TOKEN_RE.exec(lines[idx]);
+        if (!m) continue;
+        const rest = lines[idx].slice((m.index as number) + m[0].length);
+        out.push({ prefix: m[2], subject: resultSubject(idx, rest), inputSubject: inputSubjectOf(command), proven });
+        break;
+      }
     }
   }
   return out;
 }
+
+/**
+ * What `--audit` saw of the store(s), counted while indexing: the referent of the store-shape
+ * canary (ballot 2026-10-23 § 2b; the module header's STORE LAYOUT block).
+ */
+export interface StoreShape {
+  /** Transcripts of any kind. */
+  transcripts: number;
+  /** Subagent transcripts, and how many of them have their `.meta.json`. */
+  subagents: number;
+  metas: number;
+  /** `git commit` tool_use blocks that pair with a `tool_result`. */
+  paired: number;
+}
+
+export const CANARY_DETAIL = 'store layout unrecognized';
 
 /** A store argument as the de-duplicated list it names (order kept; `path.resolve` equality). */
 export function storeList(store: string | string[]): string[] {
@@ -1185,12 +1341,15 @@ export function storeList(store: string | string[]): string[] {
  * with the same tool call id, prefix and subject (one record copied into two stores) is one
  * candidate — tool call ids are unique per call, so two distinct calls are never merged.
  */
-export function indexCandidates(store: string | string[]): Candidate[] {
+export function indexCandidates(store: string | string[], shapes?: Map<string, StoreShape>): Candidate[] {
   const out: Candidate[] = [];
   const seenCall = new Set<string>();
   for (const st of storeList(store)) {
-    for (const c of indexStore(st)) {
-      const k = `${c.toolUseId}\0${c.prefix}\0${c.subject}`;
+    const shape: StoreShape | undefined = shapes ? { transcripts: 0, subagents: 0, metas: 0, paired: 0 } : undefined;
+    const found = indexStore(st, shape);
+    if (shapes && shape) shapes.set(st, shape);
+    for (const c of found) {
+      const k = `${c.toolUseId}\0${c.prefix}\0${c.subjects.join('\0')}`;
       if (seenCall.has(k)) continue;
       seenCall.add(k);
       out.push(c);
@@ -1199,9 +1358,16 @@ export function indexCandidates(store: string | string[]): Candidate[] {
   return out;
 }
 
-function indexStore(store: string): Candidate[] {
+function indexStore(store: string, shape?: StoreShape): Candidate[] {
   const out: Candidate[] = [];
   for (const t of listTranscripts(store)) {
+    if (shape) {
+      shape.transcripts += 1;
+      if (!t.isMain) {
+        shape.subagents += 1;
+        if (fs.existsSync(t.file.replace(/\.jsonl$/, '.meta.json'))) shape.metas += 1;
+      }
+    }
     const text = fs.readFileSync(t.file, 'utf8');
     const commands = new Map<string, string>();
     const lines = text.split('\n');
@@ -1234,14 +1400,17 @@ function indexStore(store: string): Candidate[] {
       const content = isMap(d) && isMap(d.message) ? d.message.content : undefined;
       for (const b of Array.isArray(content) ? content : []) {
         if (!isMap(b) || b.type !== 'tool_result' || typeof b.tool_use_id !== 'string' || !commands.has(b.tool_use_id)) continue;
+        if (shape) shape.paired += 1;
         const per = candidateLines(commands.get(b.tool_use_id) as string, resultText(b.content));
         // One candidate per tool call and commit: the [branch sha] line and the log line of one
         // call are the same candidate.
         const byKey = new Map<string, Candidate>();
         for (const c of per) {
-          const k = `${c.prefix}\0${c.subject}`;
+          const subjects = [c.subject, c.inputSubject].filter((s): s is string => !!s);
+          if (subjects.length === 0) continue;
+          const k = `${c.prefix}\0${subjects.join('\0')}`;
           const prev = byKey.get(k);
-          byKey.set(k, { file: t.file, store, isMain: t.isMain, toolUseId: b.tool_use_id, prefix: c.prefix, subject: c.subject, proven: (prev?.proven ?? false) || c.proven });
+          byKey.set(k, { file: t.file, store, isMain: t.isMain, toolUseId: b.tool_use_id, prefix: c.prefix, subjects, proven: (prev?.proven ?? false) || c.proven });
         }
         out.push(...byKey.values());
       }
@@ -1396,7 +1565,15 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
     .map((c) => analyzeCommit(repo, c, rg))
     .filter((a) => !a.merge && a.acts.size > 0);
   const stores = storeList(opts.store);
-  const candidates = indexCandidates(stores);
+  const shapes = new Map<string, StoreShape>();
+  const candidates = indexCandidates(stores, shapes);
+  // The canary (ballot 2026-10-23 § 2b), read PER STORE ("transcripts exist under the store …"): a
+  // store holds subagent transcripts but none shows a paired `git commit` call, or none has its
+  // `.meta.json`. A store with no transcripts, or main-session transcripts only, reads as before
+  // (§ 2b's last sentence) — a harness format change, read as the instrument's
+  // fact and never as a population of missing records. A newer store that changed format is not
+  // masked by an older one that did not.
+  const unrecognized = [...shapes.entries()].filter(([, s]) => s.subagents > 0 && (s.paired === 0 || s.metas === 0)).map(([st]) => st);
   const transcripts = new Map<string, TranscriptInfo>();
   const transcript = (f: string): TranscriptInfo => {
     if (!transcripts.has(f)) transcripts.set(f, readTranscript(f));
@@ -1409,13 +1586,17 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
   };
 
   // Link 4 for every commit first (link 6's fallback needs each transcript's earliest commit).
-  type Lookup = { verdict?: Verdict; link?: 4; detail: string; cand?: Candidate };
+  type Lookup = { verdict?: Verdict; link?: 4; detail: string; cand?: Candidate; canary?: boolean };
   const lookups = new Map<string, Lookup>();
   const earliestByTranscript = new Map<string, CommitAnalysis>();
   for (const an of analyses) {
-    const hits = candidates.filter((c) => an.sha.startsWith(c.prefix) && c.subject === an.subject);
+    // A candidate from an unrecognized store is not evidence either way: it is left out.
+    const hits = candidates.filter((c) => !unrecognized.includes(c.store) && an.sha.startsWith(c.prefix) && c.subjects.includes(an.subject));
+    const kiroRun = (opts.kiro ?? []).some((k) => an.sha.startsWith(k));
     let l: Lookup;
-    if (hits.length === 0) {
+    if (unrecognized.length > 0 && hits.length === 0 && !kiroRun) {
+      l = { verdict: 'anomaly', link: 4, detail: CANARY_DETAIL, canary: true };
+    } else if (hits.length === 0) {
       l = (opts.kiro ?? []).some((k) => an.sha.startsWith(k))
         ? { verdict: 'unanchored', detail: 'declared Kiro-run — no harness record exists' }
         : { verdict: 'record absent', link: 4, detail: 'no transcript shows this commit being created' };
@@ -1504,7 +1685,9 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
           }
         }
       }
-      v.widen = v.verdict === 'FAIL' || v.verdict === 'anomaly' || (v.spawnDepth !== undefined && v.spawnDepth !== 1);
+      if (l.canary) v.canary = true;
+      if (unrecognized.length > 0) v.unrecognizedStores = unrecognized;
+      v.widen = (!l.canary && (v.verdict === 'FAIL' || v.verdict === 'anomaly')) || (v.spawnDepth !== undefined && v.spawnDepth !== 1);
       out.push(v);
     }
   }
@@ -1617,6 +1800,12 @@ export function formatAudit(acts: ActVerdict[], header: string, filter?: SignerF
         `${a.spawnDepth !== undefined ? ` — spawnDepth ${a.spawnDepth}, model ${a.model ?? '?'}` : ''}` +
         `${a.widen ? ' — widening (§ 5.4)' : ''}${a.preRatification ? ' — pre-ratification observation' : ''}`
     );
+  }
+  // Ballot 2026-10-23 § 2d: the canary reaches Peter as one line per unrecognized store per run, never one per act.
+  const bad = [...new Set(acts.flatMap((a) => a.unrecognizedStores ?? []))];
+  for (const st of bad) {
+    const n = acts.filter((a) => a.canary).length;
+    lines.push(`**Open for Peter**: the store layout of ${st} was not recognized — ${n} act(s) in this run read \`anomaly 4: ${CANARY_DETAIL}\`; this is evidence about the instrument, not about a seat, and sends no act into J (signing-act ballot § 5.4). See the module header's STORE LAYOUT block.`);
   }
   const counts: Record<Verdict, number> = { anchored: 0, unanchored: 0, 'record absent': 0, FAIL: 0, anomaly: 0 };
   for (const a of acts) counts[a.verdict] += 1;
