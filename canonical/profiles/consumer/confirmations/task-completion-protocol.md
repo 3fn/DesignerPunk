@@ -73,11 +73,20 @@ date: 2026-09-29
 ## `#completion-state-in-the-pr-flow:preamble`
 
 confirmer: stacy
-canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+canonicalHash: sha256:78a8d803667602a7b4c4cce72a35013543ba131132ec0990b84624ca5591ef17
 items: completion-state-in--1, merge-unit-definition, completion-state-in--2, one-branch-per-unit, completion-state-in--3, completion-state-in--4, completion-state-in--6, completion-state-in--7, completion-state-in--8, completion-state-in--9, completion-state-in--10, completion-state-in--11, complete-at-merge, completion-state-in--12, completion-state-in--13, completion-state-in--14, completion-state-in--15, completion-state-in--16, completion-state-in--17, completion-state-in--18, completion-state-in--19, completion-state-in--20
-date: 2026-09-29
+date: 2026-11-08
 
-**Ruling: CORRECTED 20 → 22.**
+**Re-confirmed 2026-11-08 (Req 11.6.5d).** The whole unit, read at `4386fbe6a`.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-08-125b-u3-rehome.md` (RATIFIED, Peter, 2026-11-08, F-1 (b); #804), item 1. Point 9 of the second list drops "throughout 125-A", and its last sentence now names the register row `record-first-ratification`'s gated-surfaces scope moving from `proposed` to `armed` instead of "125-B's CODEOWNERS layer". A dated pointer follows it. Nothing else in the unit moved (`git diff 1482a0dc1^ 1482a0dc1` on the doc: this line and L129, which is `#the-merge-rule`).
+  - The doc edit (`1482a0dc1`) and the re-quoted item text (`79573e890`) are Thurgood's authoring, not this act.
+- **Text, verified**: the doc's L93 equals the ballot's § 9 item 1 text byte for byte. `-20` is that line without its `9. ` marker and its dated pointer (405 characters) and occurs once. All 22 item texts are verbatim substrings, each occurring once.
+- **Item grain**: `-20` stays one `obligation`. The re-worded last sentence states when the rule's scope changes; it is a condition of the same rule, so a rendering that keeps the rule keeps or drops it with the rule, and splitting would change no credit. Its label (the first 60 characters) is unchanged and still true.
+- **The hash**: the canonicalHash moves from `sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955` to the value above. I computed it myself with `hashText` over `partition(splitFrontmatter(...).body).units`, and again as `sha256` over a raw slice of the file from the unit's heading to `### Coherent Units`; both agree. Only then did I compare it with `operative-set-freshness` and with the overlay pin (`79573e890`), which read the same value.
+
+**Ruling: CONFIRMED at 22 items.**
+
+**Earlier ruling, 2026-09-29: CORRECTED 20 → 22.**
 - Added `merge-unit-definition`, `one-branch-per-unit` and `complete-at-merge`.
 - Removed `completion-state-in--5`, the "AMENDED FROM THE OLD FLOW" paragraph: it is history and justification. Its one operative clause (unit-branch dispatches are feedback, not the gate) is carried by `-4`.
 - The law-source line is history.

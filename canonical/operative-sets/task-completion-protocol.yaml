@@ -126,7 +126,7 @@ units:
         text: "**STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#for-parent-tasks-setup-or-documentation-type
   "#completion-state-in-the-pr-flow:preamble":
-    canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+    canonicalHash: sha256:78a8d803667602a7b4c4cce72a35013543ba131132ec0990b84624ca5591ef17
     items:
       - id: completion-state-in--1
         kind: obligation
