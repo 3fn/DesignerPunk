@@ -1453,6 +1453,39 @@ verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 1) at `f5e6a10a2`. `scripts/harness/__tests__/native-rules-emitter.test.ts` is one of the six compile-harness paths that ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1 adds to the steward's standing scope. They are the stability script, the rules module and their tests, which the demotion read of the promoted harness contexts runs. It is repo-internal tooling: `scripts/harness/` is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` string. The ground is the same as for `writeScope[scripts/completion-claims/**]`. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
 
+## `#frontmatter:writeScope[scripts/harness/compare.ts]`
+
+signer: stacy
+date: 2026-11-08
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/compare.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:62e29f06a5afadcdec8b0cc28ae74421559ed41d94125fe4724ee3ac16ea7e61
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and its cite (subtraction 1), which Thurgood authored unsigned at `67de94640`. `scripts/harness/compare.ts` is the harness comparator, the verdict oracle for every harness context. Ballot `2026-11-07-native-lane-ownership` (RATIFIED, Peter, 2026-11-08T00:24:24Z; #748) item 4 and § 8 F-5 (a) add it to the steward's standing scope from Spec 129 U12's merge, by site 7; Data applied the entry at `4be514236`, and its value equals the ballot's path byte for byte. It is repo-internal tooling: neither `scripts/harness/` nor `harness/` is in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` or `harness/` path (its only `harness` hit, in the start-up tasks, is the word "per-harness"). The ground is the same as for `writeScope[scripts/harness/stability.ts]`. canonicalHash is `hashEntry` of the entry's value, computed with `entryTree` + `regrounding/hash.ts` from a scratchpad script; the same computation reproduces the signed `writeScope[scripts/harness/stability.ts]` (`4c96350b…bafc`). The renderedHash is the empty-span hash: 0 pieces in a fresh temp-tree rendering and in the committed one. I assent that nothing survives. *Not covered by this signature*: the two YAML comment lines above the block differ from site 7's text (they cite "item 4 and § 8 F-5" and add "and its prose form"). A comment is not the entry's value and the generator drops it, so it does not reach this row; I report it rather than sign over it.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/compare.test.ts]`
+
+signer: stacy
+date: 2026-11-08
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/compare.test.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:605d152474d28166942e286e5b6f261a38750e4426d122e4034c33b1ebd082db
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and its cite (subtraction 1), which Thurgood authored unsigned at `67de94640`. `scripts/harness/__tests__/compare.test.ts` is the comparator's test. Ballot `2026-11-07-native-lane-ownership` (RATIFIED, Peter, 2026-11-08T00:24:24Z; #748) item 4 and § 8 F-5 (a) add it to the steward's standing scope from Spec 129 U12's merge, by site 7; Data applied the entry at `4be514236`, and its value equals the ballot's path byte for byte. It is repo-internal tooling: neither `scripts/harness/` nor `harness/` is in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` or `harness/` path (its only `harness` hit, in the start-up tasks, is the word "per-harness"). The ground is the same as for `writeScope[scripts/harness/stability.ts]`. canonicalHash is `hashEntry` of the entry's value, computed with `entryTree` + `regrounding/hash.ts` from a scratchpad script; the same computation reproduces the signed `writeScope[scripts/harness/stability.ts]` (`4c96350b…bafc`). The renderedHash is the empty-span hash: 0 pieces in a fresh temp-tree rendering and in the committed one. I assent that nothing survives. *Not covered by this signature*: the two YAML comment lines above the block differ from site 7's text (they cite "item 4 and § 8 F-5" and add "and its prose form"). A comment is not the entry's value and the generator drops it, so it does not reach this row; I report it rather than sign over it.
+
+## `#frontmatter:writeScope[harness/README.md]`
+
+signer: stacy
+date: 2026-11-08
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[harness/README.md]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:ab44fe9673982e3e6a445287e1865b6936ff7101fa769defc188f2eec795efe2
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and its cite (subtraction 1), which Thurgood authored unsigned at `67de94640`. `harness/README.md` is the comparator's prose form, under F-5 (a). Ballot `2026-11-07-native-lane-ownership` (RATIFIED, Peter, 2026-11-08T00:24:24Z; #748) item 4 and § 8 F-5 (a) add it to the steward's standing scope from Spec 129 U12's merge, by site 7; Data applied the entry at `4be514236`, and its value equals the ballot's path byte for byte. It is repo-internal tooling: neither `scripts/harness/` nor `harness/` is in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` or `harness/` path (its only `harness` hit, in the start-up tasks, is the word "per-harness"). The ground is the same as for `writeScope[scripts/harness/stability.ts]`. canonicalHash is `hashEntry` of the entry's value, computed with `entryTree` + `regrounding/hash.ts` from a scratchpad script; the same computation reproduces the signed `writeScope[scripts/harness/stability.ts]` (`4c96350b…bafc`). The renderedHash is the empty-span hash: 0 pieces in a fresh temp-tree rendering and in the committed one. I assent that nothing survives. *Not covered by this signature*: the two YAML comment lines above the block differ from site 7's text (they cite "item 4 and § 8 F-5" and add "and its prose form"). A comment is not the entry's value and the generator drops it, so it does not reach this row; I report it rather than sign over it.
+
 ## `#frontmatter:writeScope[.kiro/specs/**]`
 
 signer: stacy
