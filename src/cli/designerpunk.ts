@@ -310,6 +310,7 @@ export async function runGenerate(force = false) {
     const indexResult = generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
+      tokenSet: tokens.tokenSet,
       componentTokens: registered,
       modeResolved,
       componentSchemaDir,

@@ -19,7 +19,8 @@ import { ThemeRegistry } from '../themes/ThemeRegistry';
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
-import { composedColorMap } from '../tokens/color';
+import type { TokenSet } from './TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 import { getOklchMetadata } from './oklch/OklchTokenIndexMetadata';
 import {
   findUnemittedColorReferences,
@@ -82,6 +83,9 @@ export function generateTokenFiles(
   } = {},
 ): ModeResolvedTokens {
   const effectiveOutputDir = config.outputDir;
+  // The one token set every generator below reads (Spec 129 U9, design § 10): the consumer's copy.
+  const tokenSet: TokenSet = tokens.tokenSet ?? packageTokenSet();
+  const { composedColorMap } = tokenSet.mod('color/index');
   console.log('🚀 Starting token file generation...\n');
 
   // Validate semantic token references before generation
@@ -103,7 +107,7 @@ export function generateTokenFiles(
   // primitives are emitted from the installed package's palette, so a colour the source adds
   // passes it and is never written out (.kiro/issues/2026-10-25-generate-passes-semantic-
   // references-to-unemitted-primitives.md). Checked again after theme resolution, below.
-  const emittedColorNames = TokenFileGenerator.emittedColorPrimitiveNames();
+  const emittedColorNames = TokenFileGenerator.emittedColorPrimitiveNames(tokenSet);
   const checkColorReferences = (contexts: Array<Array<Omit<SemanticToken, 'primitiveTokens'>>>): void => {
     const findings = findUnemittedColorReferences(contexts, primitiveTokens, emittedColorNames);
     if (findings.length === 0) return;
@@ -113,7 +117,7 @@ export function generateTokenFiles(
     console.error('');
     throw new TokenGenerationAbortedError('unemitted-color-references', messages);
   };
-  checkColorReferences([semanticTokens.map(t => resolveSemanticTokenValue(t, 'light', 'base'))]);
+  checkColorReferences([semanticTokens.map(t => resolveSemanticTokenValue(t, 'light', 'base', tokenSet))]);
 
   const validationResult = validator.validateSemanticReferences(semanticTokens, primitiveTokens);
   
@@ -143,7 +147,7 @@ export function generateTokenFiles(
   }
 
   // Initialize generator
-  const generator = new TokenFileGenerator();
+  const generator = new TokenFileGenerator(tokenSet);
 
   // Mode + theme resolution via ThemeRegistry (Spec 094)
   const themeRegistry = new ThemeRegistry();
@@ -205,10 +209,10 @@ export function generateTokenFiles(
   const contextSets = overrideResolver.resolveAllContexts(semanticTokens, contextOverrides);
 
   // Level 1: Resolve primitive references to concrete rgba values per context
-  const resolvedLight = contextSets['light-base'].map(t => resolveSemanticTokenValue(t, 'light', 'base'));
-  const resolvedDark = contextSets['dark-base'].map(t => resolveSemanticTokenValue(t, 'dark', 'base'));
-  const resolvedLightWcag = contextSets['light-wcag'].map(t => resolveSemanticTokenValue(t, 'light', 'wcag'));
-  const resolvedDarkWcag = contextSets['dark-wcag'].map(t => resolveSemanticTokenValue(t, 'dark', 'wcag'));
+  const resolvedLight = contextSets['light-base'].map(t => resolveSemanticTokenValue(t, 'light', 'base', tokenSet));
+  const resolvedDark = contextSets['dark-base'].map(t => resolveSemanticTokenValue(t, 'dark', 'base', tokenSet));
+  const resolvedLightWcag = contextSets['light-wcag'].map(t => resolveSemanticTokenValue(t, 'light', 'wcag', tokenSet));
+  const resolvedDarkWcag = contextSets['dark-wcag'].map(t => resolveSemanticTokenValue(t, 'dark', 'wcag', tokenSet));
 
   // Every context the platform files carry, after the theme overrides (which can re-point a token).
   checkColorReferences([resolvedLight, resolvedDark, resolvedLightWcag, resolvedDarkWcag]);
@@ -347,7 +351,7 @@ export function generateTokenFiles(
   // --- DTCG Format Generation ---
   try {
     const { DTCGFormatGenerator } = require('./DTCGFormatGenerator');
-    const dtcgGenerator = new DTCGFormatGenerator();
+    const dtcgGenerator = new DTCGFormatGenerator({}, tokenSet, darkSemanticOverrides);
     const dtcgOutputPath = path.join(effectiveOutputDir, 'DesignTokens.dtcg.json');
     dtcgGenerator.writeToFile(dtcgOutputPath);
     console.log(`   DTCG: DesignTokens.dtcg.json`);

@@ -9,27 +9,23 @@
  */
 
 import { PrimitiveToken, TokenCategory } from '../types/PrimitiveToken';
+import type { TokenSet, TokenModules } from './TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 import { SemanticToken, SemanticCategory } from '../types/SemanticToken';
 import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
 import { FileMetadata } from '../providers/FormatProvider';
-import { getAllPrimitiveTokens, durationTokens, easingTokens, scaleTokens } from '../tokens';
-import { getAllSemanticTokens, getAllZIndexTokens, getAllElevationTokens, motionTokens } from '../tokens/semantic';
+
+
 import { BlendUtilityGenerator, BlendUtilityGenerationOptions } from './BlendUtilityGenerator';
 import { ComponentTokenRegistry, RegisteredComponentToken } from '../registries/ComponentTokenRegistry';
-import { allEmittedColors } from '../tokens/color';
-import { colorHues, neutralHue } from '../tokens/color/channels/hues';
-import {
-  pinkLightness, orangeLightness, yellowLightness, greenLightness,
-  cyanLightness, tealLightness, purpleLightness,
-} from '../tokens/color/channels/lightness/chromatic';
-import {
-  pinkChroma, orangeChroma, yellowChroma, greenChroma,
-  cyanChroma, tealChroma, purpleChroma,
-} from '../tokens/color/channels/chroma/chromatic';
-import { whiteLightness, grayLightness, blackLightness } from '../tokens/color/channels/lightness/neutral';
-import { whiteChroma, grayChroma, blackChroma } from '../tokens/color/channels/chroma/neutral';
+
+
+
+
+
+
 import { generatedByLine, getCoreVersion } from './coreVersion';
 import { formatSwiftDisplayP3, formatKotlinDisplayP3, parseOklchText } from './oklch/NativeColorUtils';
 import { withKotlinImports } from './native/KotlinImports';
@@ -157,10 +153,14 @@ export class TokenFileGenerator {
   private androidGenerator: AndroidFormatGenerator;
   private blendUtilityGenerator: BlendUtilityGenerator;
 
-  constructor() {
-    this.webGenerator = new WebFormatGenerator();
-    this.iosGenerator = new iOSFormatGenerator();
-    this.androidGenerator = new AndroidFormatGenerator('kotlin');
+  /**
+   * @param tokens - The token set the generator reads (Spec 129 U9): `generate` passes the one
+   *   loaded from the consumer's token source. Callers that pass none get DesignerPunk's own.
+   */
+  constructor(private readonly tokens: TokenSet = packageTokenSet()) {
+    this.webGenerator = new WebFormatGenerator(tokens);
+    this.iosGenerator = new iOSFormatGenerator(tokens);
+    this.androidGenerator = new AndroidFormatGenerator('kotlin', tokens);
     this.blendUtilityGenerator = new BlendUtilityGenerator();
   }
 
@@ -1163,10 +1163,10 @@ export class TokenFileGenerator {
       return null;
     }
     
-    // Import primitive tokens and parsing utilities
-    const { fontSizeTokens } = require('../tokens/FontSizeTokens');
-    const { lineHeightTokens } = require('../tokens/LineHeightTokens');
-    const { parseMultiplier, CUSTOM_MULTIPLIER_PREFIX } = require('../tokens/semantic/IconTokens');
+    // The source's primitive tokens and parsing utilities
+    const { fontSizeTokens } = this.tokens.mod('FontSizeTokens');
+    const { lineHeightTokens } = this.tokens.mod('LineHeightTokens');
+    const { parseMultiplier, CUSTOM_MULTIPLIER_PREFIX } = this.tokens.mod('semantic/IconTokens');
     
     // Resolve fontSize primitive token
     const fontSizeToken = fontSizeTokens[fontSizeRef];
@@ -1206,6 +1206,8 @@ export class TokenFileGenerator {
    * @returns Array of formatted token strings
    */
   private generateMotionSection(platform: 'web' | 'ios' | 'android'): string[] {
+    const { durationTokens, easingTokens, scaleTokens } = this.tokens.mod('index');
+    const { motionTokens } = this.tokens.mod('semantic/index');
     const lines: string[] = [];
 
     // Import platform motion-token formatters
@@ -1254,6 +1256,7 @@ export class TokenFileGenerator {
    * @returns Array of formatted token strings
    */
   private generateLayeringSection(platform: 'web' | 'ios' | 'android'): string[] {
+    const { getAllZIndexTokens, getAllElevationTokens } = this.tokens.mod('semantic/index');
     const lines: string[] = [];
 
     // Route z-index tokens to web/iOS, elevation tokens to Android
@@ -1380,6 +1383,7 @@ export class TokenFileGenerator {
     platform: 'web' | 'ios' | 'android',
     options: GenerationOptions
   ): GenerationResult {
+    const { getAllPrimitiveTokens } = this.tokens.mod('index');
     const {
       outputDir = 'output',
       version = getCoreVersion(),
@@ -1775,6 +1779,7 @@ export class TokenFileGenerator {
     platform: string;
     names: string[];
   }> {
+    const { getAllSemanticTokens } = this.tokens.mod('semantic/index');
     const semantics = getAllSemanticTokens();
     const semanticNames = semantics.map(s => s.name);
 
@@ -1795,6 +1800,7 @@ export class TokenFileGenerator {
     platform: string;
     relationships: Record<string, Record<string, string>>;
   }> {
+    const { getAllSemanticTokens } = this.tokens.mod('semantic/index');
     const semantics = getAllSemanticTokens();
 
     // Build relationships map from semantic tokens
@@ -1814,21 +1820,26 @@ export class TokenFileGenerator {
   // --- OKLCH Color Generation Helpers (Spec 112) ---
 
   /**
-   * The colour primitives every platform file defines: the installed package's composed
-   * palette, never the token source's colour primitives (INSTALL § 4). The web, iOS and Android
+   * The colour primitives every platform file defines: the composed palette of the
+   * token source the set was read from (Spec 129 U9; before it, the installed package's palette). The web, iOS and Android
    * emitters below iterate this list and nothing else, so it is also the set a semantic colour
    * reference must name to resolve in the output (ColorReferenceEmissionValidator).
    */
-  private static emittedColors(): ReadonlyArray<typeof allEmittedColors[number]> {
-    return allEmittedColors;
+  private static emittedColors(tokens: TokenSet): TokenModules['color/index']['allEmittedColors'] {
+    return tokens.mod('color/index').allEmittedColors;
   }
 
   /** Names of the colour primitives every platform file defines (see {@link emittedColors}). */
-  static emittedColorPrimitiveNames(): ReadonlySet<string> {
-    return new Set(TokenFileGenerator.emittedColors().map(c => c.name));
+  static emittedColorPrimitiveNames(tokens: TokenSet = packageTokenSet()): ReadonlySet<string> {
+    return new Set(TokenFileGenerator.emittedColors(tokens).map(c => c.name));
   }
 
   private generateOklchWebColors(): string[] {
+    const { colorHues, neutralHue } = this.tokens.mod('color/channels/hues');
+    const { pinkLightness, orangeLightness, yellowLightness, greenLightness, cyanLightness, tealLightness, purpleLightness } = this.tokens.mod('color/channels/lightness/chromatic');
+    const { pinkChroma, orangeChroma, yellowChroma, greenChroma, cyanChroma, tealChroma, purpleChroma } = this.tokens.mod('color/channels/chroma/chromatic');
+    const { whiteLightness, grayLightness, blackLightness } = this.tokens.mod('color/channels/lightness/neutral');
+    const { whiteChroma, grayChroma, blackChroma } = this.tokens.mod('color/channels/chroma/neutral');
     const lines: string[] = [];
 
     // Channel custom properties
@@ -1854,7 +1865,7 @@ export class TokenFileGenerator {
     lines.push(...this.webGenerator.formatOklchChannels('black', neutralHue, blackLightness as any, blackChroma as any));
 
     // Emit composed colors
-    for (const color of TokenFileGenerator.emittedColors()) {
+    for (const color of TokenFileGenerator.emittedColors(this.tokens)) {
       lines.push(this.webGenerator.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
     }
 
@@ -1865,7 +1876,7 @@ export class TokenFileGenerator {
     const lines: string[] = [];
     const gen = platform === 'ios' ? this.iosGenerator : this.androidGenerator;
 
-    for (const color of TokenFileGenerator.emittedColors()) {
+    for (const color of TokenFileGenerator.emittedColors(this.tokens)) {
       lines.push(gen.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
     }
 

@@ -2553,6 +2553,131 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     }, TIMEOUT);
   });
 
+  /**
+   * Spec 129 Task 14 (U9) — `generate` reads the consumer's own source (Req 9.2, 9.5; design § 10).
+   *
+   * The six groups INSTALL § 4 named as read from the package: the colour palette; the dark and
+   * WCAG override maps; the opacity values colours with transparency are built from; the motion
+   * and layering tokens; the font-size and line-height values icon sizes are calculated from; and the
+   * DTCG/Figma export. Each case edits the group in the consumer's copied source, runs `generate`,
+   * and finds the edited value in the output (web CSS; the DTCG file for the export), then restores.
+   */
+  describe('Spec 129 Task 14 — the six groups are read from the consumer\'s copy (Req 9.2, 9.5)', () => {
+    let tier: string;
+    const run = (cmd: string): string => execSync(cmd, { cwd: tier, encoding: 'utf-8', timeout: 90_000, stdio: ['ignore', 'pipe', 'pipe'] });
+    const out = (name: string): string => fs.readFileSync(path.join(tier, 'dist', 'tokens', name), 'utf-8');
+    const src = (rel: string): string => path.join(tier, 'src', 'tokens', rel);
+
+    /** Edit one consumer source file, regenerate, read the output, and restore (regenerating after). */
+    const editAndGenerate = (rel: string, edits: Array<[RegExp, string]>, read: () => string): string => {
+      const file = src(rel);
+      const original = fs.readFileSync(file, 'utf-8');
+      let edited = original;
+      for (const [from, to] of edits) {
+        expect(edited).toMatch(from);
+        edited = edited.replace(from, to);
+      }
+      expect(edited).not.toBe(original);
+      try {
+        fs.writeFileSync(file, edited);
+        run('npx designerpunk generate');
+        return read();
+      } finally {
+        fs.writeFileSync(file, original);
+        run('npx designerpunk generate');
+      }
+    };
+
+    beforeAll(() => {
+      tier = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-six-groups-'));
+      execSync('npm init -y', { cwd: tier, stdio: 'pipe' });
+      execSync(`npm install ${tarballPath} --no-audit --no-fund`, { cwd: tier, stdio: 'pipe', timeout: 60_000 });
+      run('npx designerpunk init --name SixGroups --abbreviation SG --skip-agents');
+      run('npx designerpunk generate');
+    }, TIMEOUT);
+
+    afterAll(() => {
+      if (tier) fs.rmSync(tier, { recursive: true, force: true });
+    });
+
+    it('group 1, the colour palette: an edited lightness reaches the generated CSS', () => {
+      expect(out('DesignTokens.web.css')).toContain('--pink-500: oklch(0.4 0.141 10);');
+      const css = editAndGenerate('color/channels/lightness/chromatic.ts', [[/(export const pinkLightness = \{[^}]*?500: )0\.40/, '$10.43']], () => out('DesignTokens.web.css'));
+      expect(css).toContain('--pink-500: oklch(0.43 0.141 10);');
+    }, TIMEOUT);
+
+    it('group 3, the opacity values: an edited opacity reaches a colour built from it', () => {
+      const before = out('DesignTokens.web.css');
+      expect(before).toContain('--color-structure-border-subtle: light-dark(oklch(0.72 0.018 260 / 0.48), oklch(0.32 0.015 260 / 0.48));');
+      const css = editAndGenerate('OpacityTokens.ts', [[/(opacity048: \{[\s\S]*?baseValue: OPACITY_BASE_VALUE \* )6,/, '$17,']], () => out('DesignTokens.web.css'));
+      expect(css).toContain('--color-structure-border-subtle: light-dark(oklch(0.72 0.018 260 / 0.56), oklch(0.32 0.015 260 / 0.56));');
+    }, TIMEOUT);
+
+    it('group 4, motion and layering: an edited duration and an edited z-index reach the generated CSS', () => {
+      expect(out('DesignTokens.web.css')).toContain('--duration-250: 250ms;');
+      const css = editAndGenerate('DurationTokens.ts', [
+        [/(duration250: \{[\s\S]*?baseValue: )DURATION_BASE_VALUE,/, '$1DURATION_BASE_VALUE + 10,'],
+        [/(duration250: \{[\s\S]*?platforms: generateDurationPlatformValues\()DURATION_BASE_VALUE\)/, '$1DURATION_BASE_VALUE + 10)'],
+      ], () => out('DesignTokens.web.css'));
+      expect(css).toContain('--duration-250: 260ms;');
+      expect(out('DesignTokens.web.css')).toContain('--z-index-modal: 400;');
+      const z = editAndGenerate('semantic/ZIndexTokens.ts', [[/('zIndex\.modal': \{[\s\S]*?value: )400,/, '$1410,']], () => out('DesignTokens.web.css'));
+      expect(z).toContain('--z-index-modal: 410;');
+    }, TIMEOUT);
+
+    it('group 5, font size and line height: an edited line height changes the icon size calculated from it', () => {
+      expect(out('DesignTokens.web.css')).toMatch(/--icon-size-100: 24px;/);
+      const css = editAndGenerate('LineHeightTokens.ts', [[/(lineHeight100: \{[\s\S]*?baseValue: )LINE_HEIGHT_BASE_VALUE,/, '$1LINE_HEIGHT_BASE_VALUE + 0.25,']], () => out('DesignTokens.web.css'));
+      expect(css).toMatch(/--icon-size-100: 28px;/);
+    }, TIMEOUT);
+
+    it('group 6, the DTCG/Figma export: an edited primitive reaches the DTCG file', () => {
+      expect(out('DesignTokens.dtcg.json')).toMatch(/"radius100": \{\s*"\$value": "8px"/);
+      const dtcg = editAndGenerate('RadiusTokens.ts', [[/(radius100: \{[\s\S]*?baseValue: )RADIUS_BASE_VALUE,/, '$1RADIUS_BASE_VALUE + 1,']], () => out('DesignTokens.dtcg.json'));
+      expect(dtcg).toMatch(/"radius100": \{\s*"\$value": "9px"/);
+    }, TIMEOUT);
+
+    /**
+     * Req 9.5 as amended: with the package's own copies of the groups removed from the installed
+     * package, `generate` succeeds with byte-identical output. Spacing and Sizing stay because the
+     * package's own component token files (harvested as a third source, Task 13) import them; they
+     * are not among the six groups. Runs last: it removes files and does not restore them.
+     */
+    it('the removal case: generate with the package\'s own token modules removed writes byte-identical output', () => {
+      const snapshot = (): Map<string, string> => {
+        const m = new Map<string, string>();
+        const walk = (dir: string, rel: string): void => {
+          for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+            const p = path.join(dir, e.name);
+            if (e.isDirectory()) walk(p, `${rel}/${e.name}`);
+            else m.set(`${rel}/${e.name}`, fs.readFileSync(p, 'utf-8'));
+          }
+        };
+        walk(path.join(tier, 'dist', 'tokens'), 'dist/tokens');
+        walk(path.join(tier, 'token-index'), 'token-index');
+        return m;
+      };
+      run('npx designerpunk generate --force');
+      const before = snapshot();
+      const pkg = path.join(tier, 'node_modules', '@3fn', 'core');
+      const keep = new Set(['SpacingTokens', 'SizingTokens', 'themes', '__tests__', 'platforms', 'component']);
+      let removed = 0;
+      for (const base of [path.join(pkg, 'src', 'tokens'), path.join(pkg, 'dist', 'tokens')]) {
+        for (const e of fs.readdirSync(base)) {
+          if (keep.has(e.replace(/\.(d\.ts|js|ts|js\.map|d\.ts\.map)$/, ''))) continue;
+          fs.rmSync(path.join(base, e), { recursive: true, force: true });
+          removed++;
+        }
+      }
+      expect(removed).toBeGreaterThan(30);
+      expect(fs.existsSync(path.join(pkg, 'src', 'tokens', 'color'))).toBe(false);
+      run('npx designerpunk generate --force');
+      const after = snapshot();
+      expect([...after.keys()].sort()).toEqual([...before.keys()].sort());
+      for (const [k, v] of before) expect(after.get(k)).toBe(v);
+    }, TIMEOUT);
+  });
+
   describe('Release-3 item 2 — the Jest preset loads @3fn/core/* subpaths in a packed install', () => {
     let presetDir: string;
     const DEV_DEPS = ['jest', 'ts-jest', 'jest-environment-jsdom', '@types/jest', '@types/node', 'typescript'];

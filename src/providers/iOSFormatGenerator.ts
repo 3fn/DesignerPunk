@@ -1,9 +1,11 @@
+import type { TokenSet } from '../generators/TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 import { PrimitiveToken, SemanticToken } from '../types';
 import { BaseFormatProvider, FileMetadata } from './FormatProvider';
 import { TargetPlatform, OutputFormat } from '../types/TranslationOutput';
 import { getPlatformTokenName } from '../naming/PlatformNamingRules';
-import { getColorToken } from '../tokens/ColorTokens';
-import { getOpacityToken } from '../tokens/OpacityTokens';
+
+
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
 import { formatSwiftDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
 import { iosFontFamilyName, swiftStringLiteral } from '../generators/native/FontFamilyStack';
@@ -13,6 +15,10 @@ import { iosFontFamilyName, swiftStringLiteral } from '../generators/native/Font
  * Generates Swift constant declarations for iOS platform token usage
  */
 export class iOSFormatGenerator extends BaseFormatProvider {
+  constructor(private readonly tokens: TokenSet = packageTokenSet()) {
+    super();
+  }
+
   readonly platform: TargetPlatform = 'ios';
   readonly formats: OutputFormat[] = ['swift'];
 
@@ -420,6 +426,8 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     colorRef: string,
     opacityRef: string
   ): string {
+    const { getColorToken } = this.tokens.mod('ColorTokens');
+    const { getOpacityToken } = this.tokens.mod('OpacityTokens');
     // Resolve color primitive to get RGB values
     const colorToken = getColorToken(colorRef as any);
     if (!colorToken) {

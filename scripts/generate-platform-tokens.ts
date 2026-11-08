@@ -118,7 +118,7 @@ async function main() {
     // Errors are logged but don't fail the build — DTCG is additive, not critical path
     try {
       console.log('📊 DTCG Token Format Generation:\n');
-      const dtcgGenerator = new DTCGFormatGenerator();
+      const dtcgGenerator = new DTCGFormatGenerator({}, tokenInput.tokenSet);
       const dtcgOutputPath = path.join(outputDir, 'DesignTokens.dtcg.json');
       dtcgGenerator.writeToFile(dtcgOutputPath);
       console.log('');
@@ -156,6 +156,7 @@ async function main() {
     const indexResult = generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokenInput.primitiveTokens,
       semanticTokens: tokenInput.semanticTokens,
+      tokenSet: tokenInput.tokenSet,
       componentTokens: registered,
       modeResolved,
       componentSchemaDir,
