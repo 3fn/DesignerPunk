@@ -366,110 +366,130 @@ The three ownership lines survive. `jest-not-vitest` is this repo's runner; the 
 ## `#frontmatter:routes.docs[completion-doc-guidance]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `routes.docs[completion-doc-guidance]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:a8aedb1dfe5141050c1a5959aef0079056d721bf98d2c00859a7de26cc0d87a5
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own process-doc route: a DesignerPunk process doc for DesignerPunk's own workflow. A consumer's process lives in its own docs, which the served corpus does not hold. I assent that nothing survives.
 
 ## `#frontmatter:routes.docs[dev-workflow-detail]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `routes.docs[dev-workflow-detail]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own process-doc route: a DesignerPunk process doc for DesignerPunk's own workflow. A consumer's process lives in its own docs, which the served corpus does not hold. I assent that nothing survives.
 
 ## `#frontmatter:routes.docs[file-organization]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `routes.docs[file-organization]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:da2bab5d14c97b35a5a877205a97b280e1000b038fa96836ae08a2853ef35df7
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own process-doc route: a DesignerPunk process doc for DesignerPunk's own workflow. A consumer's process lives in its own docs, which the served corpus does not hold. I assent that nothing survives.
 
 ## `#frontmatter:routes.docs[completion-docs-beyond]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `routes.docs[completion-docs-beyond]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:02e17c6a786cd83d402b3a6d06d750964f9fd6f0cd5c378fa4bf8ce2482357d6
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own process-doc route: a DesignerPunk process doc for DesignerPunk's own workflow. A consumer's process lives in its own docs, which the served corpus does not hold. I assent that nothing survives.
 
 ## `#frontmatter:commands[audit-coverage-map]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `commands[audit-coverage-map]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:f2b4a2b4460cb65ec913cce1dfcc114cd8d088875b46dbd44efd3774417d9ff4
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
 
 ## `#frontmatter:commands[audit-mode-parity]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `commands[audit-mode-parity]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:523e31268c72df1ff47bdf49cc4716075cf18a4c051c8631791360aa616c149c
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
 
 ## `#frontmatter:commands[audit-theme-drift]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `commands[audit-theme-drift]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:9aaaa44f6bce04f642cd94be71760ae2e4a455e522820b6f18ef54a82edf42e9
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
 
 ## `#frontmatter:commands[test-coverage]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `commands[test-coverage]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:6492eef872eb13e233ab9bbdd76e098de2dd13bd9a126b395d174e15969cc2cf
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
 
 ## `#frontmatter:commands[governance-health-check]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `commands[governance-health-check]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:b2b4620fd8fc7de85d014492886972c2af130419693bcf8b29b9b2f6e0ad6e7c
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
 
 ## `#frontmatter:commands[verify-gate-registration]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `commands[verify-gate-registration]` (no-consumer-counterpart; no-consumer-counterpart)
 canonicalHash: sha256:194b68857ae054e223dd422e53d04e7abb2ee5e9f5363f1411f882431b03e7af
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
 
@@ -506,11 +526,13 @@ verdict: assent — surviving 0/0
 ## `#frontmatter:writeScope[docs/specs/**]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `writeScope[docs/specs/**]` (superseded-by)
 canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c49070d3309d4fa6576f182a49ea10dbd5161d31720033f6714ccd22cfed6c14
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: superseded-by, destination: frontmatter:writeScope[.kiro/specs/**]})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 **Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 0). Assent to `superseded-by writeScope[.kiro/specs/**]`, which renders as `specs/**` and covers the summary location.
 
@@ -528,11 +550,13 @@ verdict: assent — surviving 0/0
 ## `#frontmatter:writeScope[.kiro/issues/**]`
 
 signer: stacy
-date: 2026-10-17
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `writeScope[.kiro/issues/**]` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `b68cc4c16`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/0, as the verdict line reads.
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite. **The cite applies (Req 11.6.5e's applicability test for bullets 1–4):** subtraction 3 removes our stewardship cadences and instruments as obligations, and this entry names one. `.kiro/issues/**` is this repo's issue-record convention:
 - its README rules 1–9;
