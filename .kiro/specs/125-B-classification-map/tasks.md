@@ -2,11 +2,11 @@
 
 **Date**: 2026-07-13
 **Spec**: 125-B — Classification Map & Deferred Enforcement Layers
-**Status**: Tasks Phase
+**Status**: Closed — every parent is ticked, Task 6 is re-homed to `.kiro/issues/2026-11-08-125b-u3-governance-layer.md` (#806), and the CLOSEOUT claims pass is `.kiro/specs/125-B-classification-map/completion/claims-pass.md` *(corrected 2026-11-08, Thurgood: was "Tasks Phase"; `.kiro/specs/125-B-classification-map/completion/claims-pass.md` CL-4)*
 **Dependencies**: requirements.md (17, merged PR #72) + design.md (C1–C9, DD1–DD8, merged PR #73 — DD7/DD8 RATIFIED by that merge)
 **Criteria mode**: spec-level
 
-> *Declared 2026-11-08 (Thurgood), in the U3 re-home amendment.* This `tasks.md` predates Spec 127 and was legacy. The amendment that ticks Task 5 and re-homes Task 6 is material, so the parity check asks for a declaration (Spec 127 Req 6.3). `spec-level` matches how this spec was run: its parents have no per-parent criteria in the Spec 127 form. The spec discharges once, at its CLOSEOUT claims pass.
+> *Declared 2026-11-08 (Thurgood), in the U3 re-home amendment.* This `tasks.md` predates Spec 127 and was legacy. The amendment that ticks Task 5 and re-homes Task 6 is material, so the parity check asks for a declaration (Spec 127 Req 6.3). `spec-level` is the workable mode for this file: Tasks 1–4 carry `**Success Criteria:**` blocks, but their completion docs predate the Spec 127 table rule, which does not bind them, and `per-parent` would red them for missing tables. The spec discharges once, at its CLOSEOUT claims pass. *(Corrected 2026-11-08, Thurgood: the reason was "`spec-level` matches how this spec was run: its parents have no per-parent criteria in the Spec 127 form", which is false for Tasks 1–4; `.kiro/specs/125-B-classification-map/completion/claims-pass.md` CL-3.)*
 
 ---
 
