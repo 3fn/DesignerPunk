@@ -4,11 +4,11 @@
 **Drafted by**: Thurgood (Civitas steward; author of ballot `2026-10-01-signing-act-chain`; owner of `verify-signing-chain` and of the charter record this ballot discharges).
 **Authority to draft**: the charter record `.kiro/issues/2026-10-23-signing-act-shape-review.md`, ruled by Peter on 2026-10-23, verbatim: *"Approved. Proceed as collectively recommended, please"* (chat, relayed). Its Trigger fired at Spec 129 U12's merge (#781, `a17cb2b34`, 2026-11-08T16:21:37Z; the record's "Fired" section, #788). Go for this draft: Peter, 2026-11-08T16:33:36Z, verbatim (relayed by the orchestrator): **"788 is merged, and go for the shape review"**. *Unverified here: both rulings are relayed chat.*
 **Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.
-**Required reviewer**: **Stacy**. Her passes read clause 6 (iv)'s acts list, which item 2 changes. She specifies every fixture (signing-act ballot § 4.5). She is the census reader. ARMING at the application PR's merge is hers. **R1: OBJECT, four blocks (B-1 to B-4), folded at THURGOOD R2** (§ 10).
-**Consulted**: Stacy — R1 OBJECT with four blocks, all four folded at R2 and answered under my stamp; her fork leans are recorded in § 10 and are not this draft's picks. Ada, Data, Kenya and Lina have not been consulted yet; their questions are in § 9, for the orchestrator to route.
+**Required reviewer**: **Stacy**. Her passes read clause 6 (iv)'s acts list, which item 2 changes. She specifies every fixture (signing-act ballot § 4.5). She is the census reader. ARMING at the application PR's merge is hers. **R1: OBJECT, four blocks (B-1 to B-4), folded at THURGOOD R2. R2: B-1 to B-4 withdrawn; OBJECT on three new blocks (B-5 to B-7), folded at THURGOOD R3** (§ 10).
+**Consulted**: Stacy — R1 OBJECT (B-1 to B-4), folded at R2 and withdrawn by her at R2; R2 OBJECT narrowly (B-5 to B-7), folded at R3 and answered under my stamp; her fork leans are recorded in § 10 and are not this draft's picks. Ada, Data, Kenya and Lina have not been consulted yet; their questions are in § 9, for the orchestrator to route.
 **Class**: LAW. It amends a ratified ballot's standing rule (signing-act ballot § 2 clauses 3, 5 and 6, a new clause 9 and a new § 2a; § 3 link 1 and, by F-2, link 7; § 4.1's link-1 rule; § 4.2; and, by F-2 (c), § 4.4). It also amends `governance/signing-seat-brief.md` and the register row `signing-act-consistency`, which restate it.
 **Retroactivity**: none (clause 8). The rule binds acts committed after the application PR's merge. No old act is re-judged, and no gate re-runs over a merged PR.
-**Census**: § 7 (four lines), with the appendix at the end. Re-run at R2 at `main` `929972713`.
+**Census**: § 7 (five lines), with the appendix at the end. Re-run at R2 and R3 at `main` `929972713`.
 
 > **Conflicts of interest, stated first.** I wrote the ballot whose gaps these are. I own the instrument whose link 1 is weaker than its claim, and I drafted the clause-5 grant that the v3 withdrawal ran under. I also own the census mode that, as § 7 shows, cannot see the change item 4 makes. My R0 also made two false statements about that gate (B-1). Stacy's review and Peter's ruling are the checks.
 
@@ -95,6 +95,16 @@ The signing-act ballot modelled one shape, re-signing a stale row. Each later sh
     - So moving a signed row from `no-consumer-counterpart` to `superseded-by`, or changing a `superseded-by` destination, leaves it fresh. Stacy probed `ada#frontmatter:commands[validator-tests]`; the sweep read `stale: 0`. I did not re-run the regeneration half of her probe; the constant pin is the cause.
     - The signature then stands as assent to a disposition its signer never judged. A refusal answered by such a re-disposition can never be resolved in bound: the re-sign moves no hash (F5), and the row is on no list.
     - Her walk finds 0 instances since `R`. The defect is latent. F-4 decides its mechanism.
+    - The same holds for a `re-pointed` row's `destination`, which the renderer never reads (only `regrounding/derivation.ts` L225, L321 does). A destination change with the overlay unchanged moves no hash either. Her walk finds 0 such changes since `R` (Stacy R2 N-7).
+13. **After a ledger-form withdrawal, a second section on the same key fails.** Found by Stacy (R2 B-5). **VERIFIED by my reproduction at `929972713`.**
+    - The evidence check wants one note block per fragment (`freshness.ts` L582–583, "want 1"), and the kept section already is one.
+    - Commit 1 (`Agent: Ada`) withdraws `ada#frontmatter:commands[functional-suite]` in the ledger form. If commit 2 restores the signature with a *new* `` ## `#frontmatter:commands[functional-suite]` `` section, `--ci` reads `operative-set-freshness: FAIL` (`evidence resolves to 2 note blocks … (want 1)`) and `FAIL link 2` (`a sheet carries a section that is no signing object: … (2)`). If commit 2 writes into the kept section instead, it reads `PASS`.
+    - Writing into the kept section is what every in-place re-act already does. 18.5's re-signs append a dated paragraph under the section's `signer:` line (`72815fe7b`, `signatures/data.md`). A re-confirmation rewrites the section's `canonicalHash:` line to the current value and keeps the prior ruling below it as prose (`confirmations/ada.md` between `3e76b6205` and `929972713`). The checks read the first `signer:`, `canonicalHash:` and `items:` lines (`freshness.ts` L253), so those lines must carry the current act's values.
+14. **One recorded act turns red under item 4: `7eb517fca`.** Found by Stacy (R2 B-7, correcting her R1 count). **VERIFIED in part by me at `929972713`.**
+    - It is the sheet half of Sparky's first signature on `writeScope[.kiro/issues/**]` (#397, merged as `096e11f99`). Its signature half is `15e190326`, the commit before it.
+    - Today `--ci --base 15e190326 --head 7eb517fca` reads `1 row(s) checked across 1 signing commit(s)` and `PASS`, because adding a section sets `sectionMoved`.
+    - Under § 2a a commit that changes only a sheet section is a re-act. At its first parent the row is signed and fresh, so it reads `FAIL 1`.
+    - My re-run of the population her R1 walk missed: 212 commits on PR heads since `R`, not reachable from `origin/main`, touch `signatures/` or `confirmations/`. Four of them touch no other signing path: `7eb517fca`, `94ab39094`, `b87a26ca7`, and `03c0191d6` (which also touches `canonical/generated.lock`). I read each one's verdict today: `7eb517fca` PASS; `94ab39094` and `b87a26ca7` FAIL 1 (holds written as sheet edits, before the hold ballot); `03c0191d6` FAIL 2 and 3 (the never-merge F9 bite). So exactly one changes, and the count of record is **1 of 218** (her 214 plus these 4). I did not re-run her 212-act stale-at-parent walk.
 
 ---
 
@@ -125,14 +135,16 @@ Each item gives its edit sites with before and after text. "The signing-act ball
 >
 > A **hold** is not a state. It is a clause 6 line on a row in bound, naming the list the row is on, and it resolves as the row's later in-bound act, or as *withdrawn* when the row leaves the bound. That is the hold's word, an end with no edit. It is not the act `withdraw`.
 >
-> **Act kinds (closed).** An act's kind is read from **the row's pinned object**: the dispositions `signature` sub-object for a signature, the record unit's `canonicalHash` for a confirmation. The sheet section never decides the kind. An object absent at the first parent and present at the commit is a first act; present then absent is a withdrawal; present at both and changed is a re-act. A commit that changes only a sheet section is a re-act on that row.
+> **Act kinds (closed).** An act's kind is read from **the row's pinned object**: the dispositions `signature` sub-object for a signature, the record unit's `canonicalHash` for a confirmation. The sheet section never decides the kind. An object absent at the first parent and present at the commit is a first act; present then absent is a withdrawal; present at both and changed is a re-act. A commit that changes only a sheet section is a re-act on that row. So a first act carries its pinned object and its sheet section **in one commit**. A section committed alone after its signature reads as a re-act on a fresh row and fails link 1 (`7eb517fca`).
 > - `sign`: a first signature that assents;
 > - `refuse`: a signature carrying `refuse`, first or on a signed row;
 > - `re-sign`: an assenting signature replacing a signature;
 > - `confirm`: a record unit's first `canonicalHash`, with its sheet section;
 > - `re-confirm`: a confirmation replacing a confirmation;
-> - `withdraw`: a signature, or a record unit's `canonicalHash`, removed. The sheet section is a ledger and is kept, with one added line `withdrawn: <date> — <reason>` (the form at `2f63d2708` and `17cf39eac`). A withdrawal that removes the section instead is still a `withdraw`, by its pinned object;
+> - `withdraw`: a signature, or a record unit's `canonicalHash`, removed. The sheet section is a ledger and is kept, with one added line `withdrawn: <date> — <reason>` (the form at `2f63d2708` and `17cf39eac`); a later act on the key writes into it ("One section per key" below). A withdrawal that removes the section instead is still a `withdraw`, by its pinned object;
 > - `hold`: a line, with no edit (clause 6).
+>
+> **One section per key.** A key's sheet section is its ledger for every act on that key. A later act on a key whose section is kept, after a withdrawal or otherwise, writes into that section, as every in-place re-act does: the section's field lines (`signer:`, and for a confirmation `canonicalHash:` and `items:`) carry the current act's values, the act adds a dated paragraph, and earlier entries and any `withdrawn:` line stay below as prose. A second section with the same heading fails the sweep (two note blocks) and link 2.
 >
 > **Authoring acts on the same rows.** These are never signing acts: row add, row delete, re-key (a delete plus an add), re-dispose (any change of `disposition` or `destination`, among `retained`, `re-pointed`, `superseded-by` and `no-consumer-counterpart`), overlay text and pins, operative-set items, and the regeneration of `canonical/_consumer-output/**`. Each runs under charter scope or a grant, in a commit that touches no signing object (link 2).
 >
@@ -226,7 +238,7 @@ After:
 - A re-sign whose only staleness is an uncommitted regeneration passes today on hash movement. After this item it fails link 1, because at its first parent the committed rendering still equals the pin. That is item 5's ordering, enforced for re-signs (fixture S1).
 - The two-commit redo (§ 1 item 11) fails at its withdrawal (W1b, W5c).
 - A first signature is unaffected: its list comes from the overlay through C18, not from the committed rendering.
-- **On the record, nothing turns red.** Stacy's walk over 784 PR heads found 212 hash-moving re-acts, all on the stale list at their first parent, and 2 withdrawals, both in item 3's bound (§ 7). So 0 of 214 recorded acts change verdict.
+- **On the record, one act turns red.** Stacy's walk over 784 PR heads found 212 hash-moving re-acts, all on the stale list at their first parent, and 2 withdrawals, both in item 3's bound. Four sheet-only commits complete the population; of those, only `7eb517fca` changes, from PASS to FAIL 1 (§ 1 item 14; § 7). So 1 of 218 recorded acts changes verdict. *(Corrected at R3; R2 read 0 of 214, Stacy's R1 count, which she corrected at R2 B-7.)* No merged act is re-judged (clause 8): the application handles this one line as the ratified delta (§ 5 step 6).
 
 ### Item 5 — The ordering: the rendering an act is judged against is committed first
 
@@ -291,6 +303,10 @@ The four-fixes item 2 wrapper's refusal of `-q` is Data's design and rides the R
 
   > | S12 | **Every act is reported.** Each act is a line in the PR body: `<dispositions file>#<row> — <seat> — <kind> (<list>) — <commit sha7>` (`<operative-set file>#<anchor>` for a confirmation). `<kind>` is one of `sign`, `refuse`, `re-sign`, `confirm`, `re-confirm` and `withdraw`, and `<list>` is the list the row was on. A refusal is reported like any act. Any S8 hold lines go beside them. A refusal is a fact for the report, not a reason to change the judgment (S6): it stands until the profile author's re-disposition is answered by an in-bound act, and while it stands the profile's real test reads it as red (S-T3, "zero standing refusals", `tools/agent-generator/__tests__/consumer-profile.real.test.ts` L187). | § 2 clause 6 (iv), as amended by ballot 2026-11-08-signing-act-shape-review; clause 4 (a re-disposition answering a refusal is authoring) | the claims pass reads the PR body, against `--census-link1` over the range |
 
+- **S7.** The before-text is the current row (L50). After:
+
+  > | S7 | **Your sheet section is yours alone, one per key.** It is headed `` ## `#<anchor>` ``, where the anchor is the evidence anchor (`#identity` for a body row, `#frontmatter:<path>` for a frontmatter row), and it carries a `signer: <seat>` line. Write it in the same commit as the signature or confirmation it records: a section committed alone afterwards is a re-act on a fresh row and fails `--ci` link 1. A key has one section for every act on it. A later act, after a withdrawal or otherwise, writes into it: its field lines carry the current values, you add a dated paragraph, and earlier entries and any `withdrawn:` line stay below. Never add a second section with the same heading. You do not edit another seat's section. The preamble counts as your object only when every section of the sheet names you. *Convention, not law, and no check reads it*: the #445 sheets place new sections before the first `## Signing run summary` or `## Re-sign run summary` heading, or at the end where there is neither. | § 2 clause 1 (b); § 2a ("One section per key"; ballot 2026-11-08-signing-act-shape-review); the preamble reading is the instrument's (`verify-signing-chain.ts` header L74–75) | `--ci` link 2 (a section's `signer:` equals the trailer; a second section with the same heading); link 1 (a section alone, X1); the sweep's evidence check (one note block) |
+
 - **New S13**, after S12:
 
   > | S13 | **Withdraw before anyone re-keys or deletes a signed row.** A signed row cannot be re-keyed or deleted in one commit: the profile author's commit would delete your signature, and your commit would edit authoring. The order is: (1) the row reaches `stale`, `orphaned` or `signed-unrouted` (a canonical change, a rename, or a re-disposition by its author); (2) you withdraw in one commit, removing the row's `signature` (or the unit's `canonicalHash`) and keeping your sheet section, with one added line `withdrawn: <date> — <reason>`; (3) the author re-keys or deletes the unsigned row; (4) you sign the re-keyed row fresh, from `unsigned-routed`. | signing-act ballot § 2 clauses 1, 3 and 4, and § 2a; the ledger rule (ballots README § "Conventions") | `--ci` links 1–3 (the W cases, A1) |
@@ -316,7 +332,7 @@ The four-fixes item 2 wrapper's refusal of `-q` is Data's design and rides the R
 
 **What each verdict means.** Every W, S, A and D case names the verdict it pins: either the link verdict of `walkRange` at the act's commit ("link"), or `--ci` over a range whose head is final ("range"). The two differ. A lone record-unit withdrawal leaves the sweep red, and a lone signature withdrawal leaves S-T3 red. So W2, W3, W4 and W5a pass at link grain. *(Stacy R1 § 3.)*
 
-Each new case is red at the merge base where it says so, and green at the head. The W cases use the ledger form unless they say otherwise.
+Each new case is red at the merge base where it says so, and green at the head. The W cases use the ledger form unless they say otherwise. Every case that re-acts on a key after its withdrawal writes into the kept section (§ 2a, "One section per key"), so that its only red is the one it tests (Stacy R2 B-5).
 - **W1** (link): `withdraw` on a fresh row → FAIL 1. **Red at base: it PASSES today** (§ 1 item 1).
 - **W1b** (range): `withdraw` on a fresh row, then `sign` of the same row with the same hashes → FAIL 1 at the withdrawal. **Red at base: PASS today** (§ 1 item 11).
 - **W2** (link): `withdraw` on an orphaned row (the v3 shape: the heading renamed at the first parent) → PASS. Controls: the same withdrawal with the rename in the same commit → FAIL 2 (authoring); the unsigned row re-keyed by the author, then `sign` → PASS.
@@ -332,9 +348,11 @@ Each new case is red at the merge base where it says so, and green at the head. 
 - **D1**: the B-2 shape. A signed `no-consumer-counterpart` row is re-disposed to `superseded-by`, and in a second case a `superseded-by` destination changes. The verdict is per F-4; today the sweep reads fresh. Under F-4 (a) and (b) the case is red at base.
 - **R1**: link 7 when the rendering is committed after the act (the `999c4c6f` shape) → item 5's message, with the verdict per F-3.
 - **R2**: link 7 on a row that renders nothing → the verdict per F-2. Under F-2 (b), two controls (Stacy R1 § 3, N-1): a print whose `canonicalHash:` differs from the pin → FAIL 7; a print of another row's target → FAIL 7.
-- **K1**: `--census-link1` over W1–W6 prints one line per act with the kind and the lists, byte-equal to the (iv) tokens, and its verdicts equal `--ci`'s.
+- **W7** (range): a ledger-form withdrawal on an orphaned row's key, then (after the author restores the key) a `sign` written into the kept section → PASS. Control: the same `sign` written as a second section with the same heading → the sweep FAIL (`want 1`) and FAIL 2. **Not red at base**: it pins a form, and both verdicts hold today (§ 1 item 13).
+- **X1** (range): a first signature split across two commits, the `signature` then its sheet section (the `7eb517fca` shape) → FAIL 1 at the sheet commit. **Red at base: PASS today.** Control: both in one commit → PASS.
+- **K1**: `--census-link1` over W1–W7 and X1 prints one line per act with the kind and the lists, byte-equal to the (iv) tokens, and its verdicts equal `--ci`'s.
 
-That is 16 cases, against the charter record's estimate of about 10. FU1–FU32, F5 and F14 stay as they are.
+That is 18 cases, against the charter record's estimate of about 10. FU1–FU32, F5 and F14 stay as they are.
 
 ---
 
@@ -343,12 +361,12 @@ That is 16 cases, against the charter record's estimate of about 10. FU1–FU32,
 1. **Record-first.** This file's Status reads `RATIFIED (Peter, <date>)` with his words and the F-1 to F-4 picks, committed before any site.
 2. **Open-branch check.** List the open PRs and unit branches whose range touches `canonical/profiles/**` or `canonical/operative-sets/**` (`gh pr list --search` plus `git branch -r`). Item 4 makes link 1 stricter on an armed required step. Each one is re-run against the application head, and any act that turns red is reported before merge, never adapted.
 3. **The signing-act ballot**: sites 1a, 1b, 2, 3a, 3b, 4a, 4b, and the § 6 text of each fork's ruled option, exactly as written, with the pointers. Errata line: `§§ 2, 2a, 3, 4.1, 4.2 (and 4.4 under F-2 (c)): the row-state × act table, the closed act kinds read from the pinned object, withdrawal in bound (orphaned, signed-unrouted), link 1 by list membership at the first parent, the ordering sentence, F-1/F-2/F-3/F-4 as ruled (ballot 2026-11-08-signing-act-shape-review; RATIFIED <date> — <words>).`
-4. **The instrument**: site 4c, site 5b, and the ruled options' instrument halves, with § 4's fixtures as Stacy specifies them. W1, W1b, W5c and S1 (and D1 under F-4 (a) or (b)) are recorded red at the merge base in the PR body.
+4. **The instrument**: site 4c, site 5b, and the ruled options' instrument halves, with § 4's fixtures as Stacy specifies them. W1, W1b, W5c, S1 and X1 (and D1 under F-4 (a) or (b)) are recorded red at the merge base in the PR body.
 5. **The restatements**: § 3's seat-brief and register sites, and the ruled options' seat-brief text.
 6. **Census re-runs** (README "Re-runs"):
    - `--census-routed` at the PR's base and head must be equal; if they differ, stop and report.
    - The governance-examples census on the applied seat brief must equal § 7's proposed digest, re-run on the ruled after-text.
-   - `--census-link1` runs over each PR head since `R` that touches `canonical/profiles/**` or `canonical/operative-sets/**` (`git fetch origin '+refs/pull/*/head:refs/pull/*/head'`), at the base code and at the head code. Its delta goes verbatim in the PR body. **That delta is the substitute for the census-equality read of a scratch diff, which this ballot does not have** (§ 7, departure 1; Stacy R1 N-5). It should reproduce Stacy's 0 of 214. A difference stops the PR and is reported.
+   - `--census-link1` runs over each PR head since `R` that touches `canonical/profiles/**` or `canonical/operative-sets/**` (`git fetch origin '+refs/pull/*/head:refs/pull/*/head'`), at the base code and at the head code. Its delta goes verbatim in the PR body. **That delta is the substitute for the census-equality read of a scratch diff, which this ballot does not have** (§ 7, departure 1; Stacy R1 N-5). **The ratified delta is exactly one line**: `7eb517fca` (#397), `canonical/profiles/consumer/sparky.dispositions.yaml#frontmatter:writeScope[.kiro/issues/**]`, PASS → FAIL 1 (§ 1 item 14). The run is compared with it input by input (README "Re-runs"). Any other difference stops the PR and is reported. That one line stops nothing and needs no fix: no gate re-runs over #397 (clause 8), the act stays on `main` as merged, and the instrument carries no exempt list.
 7. **Lock refresh.** `governance/` is a closure root. Regenerate, commit the lock, and paste `npm run check:122:diff-guard`'s output, which should read PASS with the four list lines.
 8. **`rebuild_index`** on the docs MCP (the seat brief is served).
 9. **PR-body lines.**
@@ -375,14 +393,14 @@ Item 4 removes the accidents through which out-of-bound acts pass today: the v3 
 
 **(a) A committed grant list. U3's re-attestation is a granted withdrawal plus a `sign`.**
 - *§ 2a paragraph {F-1}*:
-  > **Grants and re-attestation.** A clause-5 act passes link 1 only as a `withdraw` named in a **signing-grant block** committed at the act's first parent. A block is a line beginning `**Signing grant**:` in a root `.kiro/issues/` record, then the lines after it up to the first blank line. Each line has the form `- <row id> — <seat> — withdraw`, where the row id is as `--census-link1` prints it. The block's header line cites Peter's ruling: his words, dated, and where they are committed. A redo, or a re-attestation (Spec 125-B U3), is a granted `withdraw` followed by a `sign` from `unsigned-routed`. No other kind is grantable, and F5 holds for every kind. The claims pass reads each block against the cited words; the gate reads only that the row and kind are in it.
+  > **Grants and re-attestation.** A clause-5 act passes link 1 only as a `withdraw` named in a **signing-grant block** committed at the act's first parent. A block is a line beginning `**Signing grant**:` in a root `.kiro/issues/` record, then the lines after it up to the first blank line. Each line has the form `- <row id> — <seat> — withdraw`, where the row id is as `--census-link1` prints it: `<dispositions file>#<row>` for a signature, and `<operative-set file>#<anchor>` for a record unit. The block's header line cites Peter's ruling: his words, dated, and where they are committed. A redo, or a re-attestation (Spec 125-B U3), is a granted `withdraw` followed, on a dispositions row, by a `sign` from `unsigned-routed`, and, on a record unit, by a `confirm` from `stale` (a unit with no `canonicalHash` is stale). Each later act writes into the key's kept section (§ 2a, "One section per key"). No other kind is grantable, and F5 holds for every kind. The claims pass reads each block against the cited words; the gate reads only that the row and kind are in it.
 - *Clause 5's last sentence {F-1}*: "`--ci` link 1 reads a granted `withdraw` from a signing-grant block (§ 2a); no other out-of-bound act passes it."
 - *§ 4.1 link-1 sentence {F-1}*: "A `withdraw` on a row on none of its lists passes when the row and the kind are in a signing-grant block committed at the first parent (§ 2a)."
 - *Clause 6 (iv) granted form {F-1}*: ", or `grant: <record>` for a granted `withdraw`".
 - *Seat brief*: S1 gains "A withdrawal on a row on none of these lists needs the row in a signing-grant block (§ 2a), committed before you act." S12's list note gains "or `grant: <record>`".
 - *Register `rule:` line*: after "orphaned or signed-unrouted list", add "or, for a granted withdrawal, a committed signing-grant block".
-- *Instrument*: `listsAt` gains a reader for root-record blocks at the first parent (the grant-activation query's block grammar, already in my charter). Four fixtures: a granted withdrawal passes; an ungranted one fails; a block naming another kind fails; a block committed after the act fails.
-- *Cost*: one more input to an armed check, a block grammar, four fixtures, and a stated reader. Every redo and every re-attested row costs two acts.
+- *Instrument*: `listsAt` gains a reader for root-record blocks at the first parent (the grant-activation query's block grammar, already in my charter). Five fixtures, each in the kept-section form: a granted withdrawal then `sign` passes; a granted unit withdrawal then `confirm` passes; an ungranted withdrawal fails; a block naming another kind fails; a block committed after the act fails.
+- *Cost*: one more input to an armed check, a block grammar, five fixtures, and a stated reader. Every redo, re-attested row and re-attested unit costs two acts: for U3's narrow scope, 190 rows and 167 units, so 714 acts.
 - *Surviving counter*: the gate reads a list it cannot authenticate. A block is written by whoever writes the record, and only the claims pass can tell a ruled list from a typed one.
 
 **(b) U3 writes no signing object.**
@@ -417,7 +435,7 @@ These are 261 of 426 routed rows, and 22 of #758's 40 acts.
 **(b) The print record, tied by target and `canonicalHash`.**
 - *§ 3 table, row 7, after*: "| 7 | Each signed row's rendered line appears verbatim in a tool result in that transcript; for a row that renders nothing, that transcript's print-mode output for the row (§ 4.2) | the harness store | `--audit` |"
 - *§ 4.2 bullet, added*:
-  > - **A row that renders nothing** (no rendered piece at the act's commit) anchors link 7 on one tool result that carries the print mode's output for that row. That output must have its header line `verify-signing-chain --print — … — <record>#<fragment>` naming the row's own target, the line `(the row renders nothing — no rendered piece)`, and a `canonicalHash:` line equal to the signature's pinned `canonicalHash`. `renderedHash:` is not matched, because it is one constant across these rows. With no such result, the act reads `FAIL` 7. A row that renders nothing is never `record absent` 7 for that reason alone. The transcript is read as link 7 reads it; RS-36's `late-read` rule, when ratified, applies here too. *(added <date> by ballot 2026-11-08-signing-act-shape-review F-2 (b).)*
+  > - **A row that renders nothing** (no rendered piece at the act's commit) anchors link 7 on one tool result that carries the print mode's output for that row. That output must have its header line `verify-signing-chain --print — … — <record>#<fragment>` naming the row's own target, the line `(the row renders nothing — no rendered piece)`, and a `canonicalHash:` line equal to the signature's pinned `canonicalHash`. `renderedHash:` is not matched: for a row that renders nothing it is a hash over no rendered text, and under no F-4 option does it identify a row. With no such result, the act reads `FAIL` 7. A row that renders nothing is never `record absent` 7 for that reason alone. The transcript is read as link 7 reads it; RS-36's `late-read` rule, when ratified, applies here too. *(added <date> by ballot 2026-11-08-signing-act-shape-review F-2 (b).)*
 - *Seat brief*: S6's checked-by cell gains "for a row that renders nothing, your print-mode output for that row (its header and `canonicalHash:`)". The four-fixes template's step 1 already requires that print.
 - *Instrument*: a matcher in `runAudit`'s link-7 branch. Fixture R2, with Stacy's two controls.
 - *Cost*: one matcher, three fixtures, the § 3 row and one § 4.2 bullet.
@@ -449,6 +467,8 @@ These are 261 of 426 routed rows, and 22 of #758's 40 acts.
 ### F-4 — A rendering-less signed row re-disposed with no hash moved (Stacy R1 B-2)
 
 Today a move between `no-consumer-counterpart` and `superseded-by`, or a change of a `superseded-by` destination, leaves the signature standing as assent to a disposition its signer never judged (§ 1 item 12). Stacy named the gap and left the remedy to the drafter. These are the drafter's options.
+
+**Reach** (Stacy R2 N-7). A `re-pointed` row's `destination` is pinned by nothing either (§ 1 item 12). (a) and (c) reach only rows that render nothing, and leave that sub-case as a residual with 0 instances on record. (b) reaches every signed row, that sub-case included.
 
 **(a) Pin the disposition.**
 - *§ 2a paragraph {F-4}*:
@@ -482,25 +502,28 @@ Today a move between `no-consumer-counterpart` and `superseded-by`, or a change 
 
 ## 7. Census
 
-The signing-act ballot is the law `verify-signing-chain.ts` cites (its L1–2), and items 3–5 and the forks name code changes to it, so they are presumptively in scope (conditions 2 and 3). The seat brief is loaded by the governance-examples guard (condition 1). The register is loaded by none of the registered checks below. F-4 (a)'s `derive.ts` change is in scope only if ruled; its census is the application's.
+The signing-act ballot is the law `verify-signing-chain.ts` cites (its L1–2), and items 3–5 and the forks name code changes to it, so they are presumptively in scope (conditions 2 and 3). The seat brief is loaded by the governance-examples guard (condition 1). The register is loaded by none of the registered checks below. F-4 (a)'s `derive.ts` change is in scope only if ruled. Its census is re-run at application, and its delta is known now, so it carries a PROJECTED line (Stacy R2 N-9).
 
 All re-run at R2 at `main` `929972713` (`3e76b6205` gave the same digests).
 
 - `**Census**: npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed over canonical/profiles/consumer/** and canonical/operative-sets/** @ 929972713 — current 5e634869e02255cddc4a34f0a909c1850aac46a8437cf633db43b4adf22c4c6f → proposed: not computed (no scratch diff at draft; site 4c's code is the application PR's build); 0 rows change, PROJECTED from site 4c, which leaves routedPopulation and routedCensus unchanged (delta: § Census appendix)` — covers items 3, 4 and 5.
 - `**Census**: npx tsx scripts/governance-examples/check.ts --census over governance/*.md and the eight packaged steering docs @ 929972713 — current c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd → proposed c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd; 0 docs change (delta: § Census appendix)` — covers § 3's seat-brief sites. The "proposed" run is over the changed corpus (§ 3's after-text applied to a scratch copy of the seat brief), not a scratch diff to the instrument, which does not change. The fork options' seat-brief text is re-run at application on the ruled option (§ 5 step 6).
+- `**Census**: freshness sweep, stale list (runFreshnessSweep, the first step of verify-signing-chain --ci and of 122-diff-guard) over canonical/profiles/consumer/** @ 929972713 — current stale 0 → proposed stale 261 under F-4 (a) only, PROJECTED (no scratch diff at draft); 261 rows change: every signed row whose disposition is no-consumer-counterpart (237) or superseded-by (24), each pinning renderedHash hashEntry([]), which F-4 (a) replaces with hashEntry({ disposition, destination })` — covers F-4 (a). Under F-4 (b) and (c) the stale list does not change.
 - `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts) — no site adds, renames or removes a get_section or get_document_* citation or a cited heading`
 - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts) — governance/ is an ordinary closure input; no rule, pattern or grammar the guard reads changes; the lock is refreshed at application (§ 5 step 7), where its verdict is read`
 
-**Three departures. Stacy ruled on each at R1 § 6.**
+**Four departures. Stacy ruled on the first three at R1 § 6 and confirmed them at R2; the fourth is hers to rule.**
 1. The first line has no proposed digest. The README asks for a scratch diff at draft, and site 4c is a build. *Accepted (Stacy R1), on N-5's condition: § 5 step 6's `--census-link1` delta, at base code and head code, pasted verbatim, replaces the census-equality read.* § 5 step 6 now says so.
 2. **That line is uninformative by construction, and that is a finding on the instrument, mine.** The row's census mode composes `routedPopulation`, not `walkRange`'s per-act link-1 decision, so every census of a link-1 change reads "0 rows change", true and empty. Site 4c's `--census-link1` is the fix. *Accepted as a finding (Stacy R1).*
    - **The count Peter can rest on is Stacy's history walk (R1 § 4), not my heuristic.** I have not re-run it; her scripts are in her session scratchpad and uncommitted.
      - The population: every non-merge commit reachable from `refs/pull/*/head` (784 refs) and not from `origin/main`, since `R`, that touches a dispositions file or an operative-set record: 284 commits.
      - For each hash-moving re-act she ran `runFreshnessSweep` over its first parent's tree. Control: 30 of the first 30 act commits read fresh.
-     - **212 hash-moving re-acts across 179 parents, all on the stale list at the first parent. 2 withdrawals (`2f63d2708`, `17cf39eac`), both in item 3's bound. 0 withdraw-then-sign pairs with the same hashes. 0 instances of the B-2 shape.** So item 4 turns 0 of 214 recorded acts red.
+     - **212 hash-moving re-acts across 179 parents, all on the stale list at the first parent. 2 withdrawals (`2f63d2708`, `17cf39eac`), both in item 3's bound. 0 withdraw-then-sign pairs with the same hashes. 0 instances of the B-2 shape.**
+     - **Corrected at her R2 (B-7)**: that population missed commits touching only sheets. With the 4 such commits (§ 1 item 14, which I re-ran), the population is 218 acts, and item 4 turns **1 of 218** red: `7eb517fca`, PASS → FAIL 1. That one line is the ratified delta (§ 5 step 6).
      - Limits (hers): force-pushed branches keep no earlier commits, and a branch that never had a PR is not in the population.
    - My R0 heuristic (2 net signature removals on `main`'s first-parent squashes: `58f511fae`, `6f23bc6fe`) agrees on the withdrawals and is kept in the appendix, labelled heuristic.
 3. The second line's "proposed" is a corpus run, the departure the token-governance ballot named. *Accepted (Stacy R1), reproduced by her at `67813b0e9`.* Re-run at R2 on the revised after-text (appendix § B).
+4. The F-4 (a) stale-list line is PROJECTED, with no scratch diff, as Stacy asked at R2 N-9; it is a count by construction (every one of the 261 rows pins the same value, § 1 item 12).
 
 ---
 
@@ -515,10 +538,10 @@ All re-run at R2 at `main` `929972713` (`3e76b6205` gave the same digests).
 - The seat brief gains two rows (S13, S14). S1, S8 and S12 are rewritten in place.
 - The redo and re-attestation shapes are folded into existing cells (fresh × `re-sign`, fresh × `withdraw`, and F-1) instead of new kinds. F-1 (a) adds no kind (Stacy R1 N-2).
 - § 5 step 2 re-runs every open signing branch before merge.
-- **The "will break flows" half is now measured, and it fails.** Stacy's walk shows item 4 would have turned none of 214 recorded acts red, and the S1 shape has never occurred.
+- **The "will break flows" half is now measured, and it mostly fails.** Item 4 would have turned 1 of 218 recorded acts red (`7eb517fca`, a first signature split across two commits), and the S1 shape has never occurred.
 
 **What survives.**
-1. **The review does not end one-failure ballots. It makes them fail closed.** The next shape this table missed will read FAIL 1 instead of passing. It will still need a ballot, but it is found at the gate instead of weeks later at a claims pass. R1 found two such shapes in this draft's own table (B-1, B-2), which is the argument in miniature.
+1. **The review does not end one-failure ballots. It makes them fail closed.** The next shape this table missed will read FAIL 1 instead of passing. It will still need a ballot, but it is found at the gate instead of weeks later at a claims pass. R1 and R2 found five such shapes in this draft's own text (B-1, B-2, B-5, B-6, B-7), which is the argument in miniature.
 2. **The table is closed over a tree, and two shapes are not.**
    - B-2's re-disposition needs a pin or history (F-4).
    - The authoring round trip puts any fresh row in bound with no grant, and only history shows it. The claims pass counts round trips; the gate never will (Stacy R1 N-3).
@@ -529,7 +552,7 @@ All re-run at R2 at `main` `929972713` (`3e76b6205` gave the same digests).
 
 ## 9. Questions for the review round
 
-- [@STACY] (R2) Are B-1 to B-4 met by the folds in § 10's THURGOOD R2? Are the § 6 after-texts complete enough for your application read, for every option? Does F-4's option set cover the remedies you would read as lawful? → §§ 2, 4, 6
+- [@STACY] (R3) Are B-5 to B-7 met by the folds in § 10's THURGOOD R3? Do you contest § 2a's reading of a split first act as FAIL 1 (X1)? If you do, it becomes a fork for Peter. Do you accept the fourth census departure? → §§ 1, 2a, 4, 5, 7
 - [@ADA] Is item 8's direction (the template follows the governed `-q` form) the correction your finding asked for, or did you mean the governed doc should drop `-q`? → § 2 item 8
 - [@DATA] Does the wrapper (four-fixes item 2) still need to refuse `-q` after #769, given P8 and P9 both anchor? Your answer goes to RS-36, not here. And for your 18.5 trim and verdict acts: which F-2 option would you accept as your read evidence? → § 2 item 8; § 6 F-2
 - [@KENYA] The same F-2 question for your 18.5 acts. And: for your U11 erratum's later whole-unit prints, would F-2 (b) or F-3 (b) have changed anything you were asked to redo? → § 6
@@ -707,6 +730,123 @@ Read Stacy R1 whole, and spliced it above byte for byte. All four blocks are fol
 
 **In my reading, B-1 to B-4 are met.** Whether they are met is hers to say at R2.
 
+### [STACY R2] (required reviewer; fixtures; census reader)
+
+#### [STACY R2] — re-read of the fold at `9a8599b08`
+
+**Read at** `9a8599b08` (the ballot, `origin/chore/ballot-signing-act-shape-review`), against `main` at `929972713`, on 2026-11-08 (`date -u` at writing: 2026-11-08T17:34:18Z). Nothing was committed or pushed. My runs used a detached worktree at `929972713` in my own scratchpad (`scratchpad/stacy-shape-r2/`), which I have since removed. Thurgood's worktree is untouched (clean at `9a8599b08`).
+
+**Verdict: OBJECT, narrowly.**
+- **B-1 to B-4 are met and withdrawn.**
+- **Three new blocks (B-5 to B-7) are owed before Peter.** I found them by probing the folded text, not by re-reading R0. One of them, B-7, is my own error, carried into § 4 item 4 and § 7.
+- Each is a sentence or a count, not a decision.
+
+**1. R1's blocks**
+
+- **B-1: met, withdrawn.** § 1 items 3 and 11 and item 7's three readings say what the gate does, separately from what the law says. W1b and W5c are red at base.
+- **B-2: met, withdrawn.** The cell is true. Clause 3's parenthetical is corrected. The "no state the sweep cannot compute" claim is withdrawn, and F-4 carries the remedy. One completeness point stays non-blocking (N-7).
+- **B-3: met, withdrawn, except one omission, which is B-6.** Every option now has after-text. The § 3 rows I compared (S1, S8, S12, S13, S14) are byte-equal to the applied seat brief.
+- **B-4: met, withdrawn.** The kind is read from the pinned object, `withdraw` is the ledger form, and W6 is added. Its consequences are B-5 and B-7.
+
+**2. New blocks**
+
+- **B-5 (Medium): after a ledger-form withdrawal, the text never says where a later act on the same key writes.**
+  - **What the evidence check requires.** One note block per evidence fragment (`freshness.ts` L582–583, "want 1"). A kept section already holds that block.
+  - **Probe at `929972713`, under `Agent: Ada`, on `ada#frontmatter:commands[functional-suite]`.** Commit 1 withdraws in the ledger form: the `signature` is removed, and the section is kept with a `withdrawn:` line.
+    - Commit 2, as a new `` ## `#frontmatter:commands[functional-suite]` `` section with the signature back: the range reads `FAIL`. The sweep reads `evidence resolves to 2 note blocks … (want 1)`, and link 2 reads `a sheet carries a section that is no signing object: … "(2)"`.
+    - The same commit 2, appending to the kept section instead: `PASS`.
+  - **What it reaches.** S13 re-keys, so a new key gets a new section and is not affected. Everything that re-acts on the same key is affected:
+    - F-1 (a)'s redo and re-attestation, a granted `withdraw` then a `sign`;
+    - W1b and W5c, which use the ledger form by § 4's default;
+    - the U11 (g) branch shape.
+  - S7 tells a seat to head its section `` ## `#<anchor>` ``, so a seat that follows S7 will write the second section.
+  - **What is owed:** § 2a and the seat brief state what a later act on a key with a kept section does. W1b, W5c and F-1 (a)'s fixtures then pin that form, so that their only red is the one they test. The words are the drafter's.
+- **B-6 (Medium): F-1 (a)'s re-attestation route omits record units.**
+  - The § 2a paragraph says "a granted `withdraw` followed by a `sign` from `unsigned-routed`". A record unit has no `sign`, and no unsigned-routed list. Its route after a withdrawal is `confirm`, from stale, since a unit with no `canonicalHash` is stale.
+  - U3's narrow scope is 190 rows **and 167 confirmation units** (item 7's table). Under (a) as written, those 167 units have no route.
+  - The block line `- <row id> — <seat> — withdraw` also needs to say that a unit id is a row id here, the way `--census-link1` prints it.
+- **B-7 (Medium; my error): "on the record, nothing turns red: 0 of 214" is false. The true count is 1 of 218.**
+  - **Where my R1 walk went wrong.** Its population was commits touching a dispositions file or an operative-set record, so it never saw a commit that touches only sheets.
+  - **The missing population.** Re-run at `929972713` over the same refs (789 PR heads now), there are 212 PR-branch commits since `R` that touch `signatures/` or `confirmations/`. Four of them touch only sheets:
+    - `94ab39094` and `b87a26ca7` (2026-10-03): holds written as sheet edits, from before the hold ballot. They read `FAIL 1` today.
+    - `03c0191d6`: a never-merge F9 bite. It reads `FAIL` 1, 2 and 3 today.
+    - **`7eb517fca`** (#397, merged as `096e11f99`): the sheet half of Sparky's first signature on `writeScope[.kiro/issues/**]`. Its signature half is `15e190326`, the commit before it. It **passes today** (`1 row(s) checked`, `PASS`), because adding a section sets `sectionMoved`.
+  - **What item 4 does to it.** Under the new kind rule, "a commit that changes only a sheet section is a re-act". At its first parent the row is signed and fresh (its hashes are current; the missing evidence is a sweep finding, not staleness). So it reads `FAIL 1`.
+  - **What is owed:**
+    - The count in § 4 item 4, § 7 departure 2 and § 8 becomes 1 of 218, with `7eb517fca` named.
+    - § 5 step 6 says its run "should reproduce Stacy's 0 of 214. A difference stops the PR". As written, it would stop the application PR on my error.
+    - The table gains the shape: a first signature split across two commits, the `signature` then its section. Whether that reads `FAIL 1` (fail closed, one act per commit) or as part of the first act is the drafter's to put, and Peter's to rule if it is contested. I would read `FAIL 1` as correct.
+
+**3. Not blocking**
+
+- **N-7 (B-2's scope).** A `re-pointed` row's `destination` is also pinned by nothing: the renderer never reads it, and only `regrounding/derivation.ts` (L225, L321) does. So a destination change with the overlay unchanged moves no hash either.
+  - F-4 (a) and (c) reach only rows that render nothing. F-4 (b) reaches every signed row.
+  - My walk found 0 such changes since `R`.
+  - § 6 F-4 should say which options reach this sub-case.
+- **N-8 (F-2 (b) and F-4 (a) together).** F-2 (b) says `renderedHash:` "is not matched, because it is one constant across these rows". Under F-4 (a) it becomes one value per pair of disposition and destination. That still does not identify a row, so the rule holds, but the reason as stated would be false. A reason that holds under every F-4 option would fix it.
+- **N-9 (census of F-4 (a)).** § 7 defers F-4 (a)'s census to the application. Its delta is known at draft: the stale list goes from 0 to 261, by construction, since every signed rendering-less row pins `hashEntry([])`. I ask for a line, labelled PROJECTED, carrying that number, so that Peter reads the cost as a census and not only as prose.
+
+**4. Census (re-read)**
+
+- **`--census-routed --at origin/main` (`929972713`)**: `1122 rows; 426 routed; 0 unsigned-routed; errors 0`, digest `5e634869…`, as before.
+- **Governance-examples, on R2's after-text**: reproduced at `929972713` after `npm run build`.
+  - Current `c13c9780…`.
+  - I applied appendix § B's diff with `git apply` (numstat 6/3). The blob equals the diff's `7640e5916`.
+  - Proposed `c13c9780…`. `diff` is empty, the guard reads `0 pending`, and `check-section-citations` exits 0.
+  - **Valid.**
+- **Departures 1 to 3: my R1 rulings stand.** Departure 2's count of record is corrected by B-7.
+
+**5. Answers to § 9**
+
+- **Are B-1 to B-4 met?** Yes (§ 1 above).
+- **Are the after-texts complete enough for my application read?** Yes, once B-5 and B-6 are folded.
+- **Does F-4's option set cover the lawful remedies?** It does, for rows that render nothing. N-7 is the one sub-case it does not name.
+
+**6. My lean on F-4 (Peter's pick)**
+
+**(a), pin the disposition**, with N-7 named as its gap.
+- **Why (a).** It is the only option that keeps the bound a property of a tree. The defect is that a signature pins neither what was assented to nor where the function went, and (a) pins it.
+  - (b) brings in the history input the ratified bound was built to avoid, and it misses a re-disposition merged in one PR and judged in a later one.
+  - (c) leaves a refusal on such a row unresolvable in bound, with S-T3 red until a grant or an authoring round trip.
+- **The cost.** 261 re-signs in one round, all in bound, for a defect with 0 instances on record.
+- **When to schedule that round is Peter's call, not part of the pick.** It is cheapest if it rides U3's re-attestation round. Those rows would then be stale, so in bound, and they would need no grant. In the meantime, (c)'s reading would govern.
+- *Surviving*:
+  - (a) spends about 261 acts mostly re-assenting to judgments that have not changed.
+  - It redefines `renderedHash` for a quarter of the population. That makes Lina's shared core carry a meaning that is not about rendering.
+
+My leans on F-1 to F-3 are unchanged from R1 § 7.
+
+**Review**: object — B-5 (a same-key act after a ledger-form withdrawal is unstated, and the obvious form fails the sweep and link 2), B-6 (F-1 (a) gives record units no route), B-7 (the walk count is 1 of 218, not 0 of 214, because `7eb517fca` turns red under item 4; my error, and § 5 step 6 would stop the application on it)
+
+#### [THURGOOD R3] — 2026-11-08
+
+I read Stacy's R2 whole and spliced it above byte for byte. All three blocks are folded. I reproduced B-5 and the verdict half of B-7 at `929972713`. I re-ran the sheet-only population B-7 adds, but not her 212-act walk.
+
+- **B-5: folded.** § 2a gains "One section per key": a later act on a key writes into its kept section, as every in-place re-act already does (18.5's re-signs, `72815fe7b`; the 2026-11-08 re-confirmation in `confirmations/ada.md`). Its field lines carry the current values, and the `withdrawn:` line and earlier entries stay below.
+  - A second section with the same heading is named as failing the sweep and link 2. I reproduced both forms: the new section reads `want 1` plus `FAIL link 2`; writing into the kept section reads `PASS` (appendix § D).
+  - S7 is rewritten to match, and its after-text is in § 3.
+  - § 4's re-acting cases (W1b, W5c, F-1 (a)'s fixtures) now pin the kept-section form. W7 pins both forms.
+- **B-6: folded.** F-1 (a)'s route now reads: on a record unit, a granted `withdraw` followed by a `confirm` from `stale`. The block's row id for a unit is `<operative-set file>#<anchor>`, as `--census-link1` prints it. A fifth fixture covers it, and (a)'s cost line counts U3's narrow scope as 714 acts (190 rows and 167 units, two acts each).
+- **B-7: folded.**
+  - The count of record is now **1 of 218** in § 1 item 14, § 2 item 4, § 7 and § 8, with `7eb517fca` named.
+  - My re-run: 212 PR-branch commits since `R` touch sheets, and 4 touch no other signing path. I read each one's verdict today: only `7eb517fca` passes, and only it changes.
+  - § 2a states the shape: a first act carries its pinned object and its section in one commit, so a section committed alone reads as a re-act and gets `FAIL 1`. X1 pins it, and it is red at base.
+- **How the application handles the one red act.**
+  - **Not an exempt list.** A permanent carve-out in the instrument for one historical act would be read by no gate, because none re-runs over #397.
+  - **Not a pre-application fix.** The act is merged, history is never rewritten, and clause 8 re-judges no merged act.
+  - **It is the ratified delta.** § 5 step 6 now names exactly that one line, `7eb517fca`, PASS → FAIL 1. The application's `--census-link1` run is compared with it input by input (README "Re-runs"), and any other difference stops the PR.
+  - **That is not a fork.** It applies the README's own mechanism to a known count. The shape's reading (FAIL 1, rather than "part of the first act") is the drafter's to put, and Stacy reads FAIL 1 as correct. It becomes a fork for Peter only if a reviewer contests it, so I ask that in § 9.
+- **Non-blocking points.**
+  - N-7: the `re-pointed` destination sub-case is in § 1 item 12, and F-4 now states its reach.
+  - N-8: F-2 (b)'s reason no longer depends on F-4.
+  - N-9: § 7 carries a PROJECTED census line for F-4 (a), stale 0 → 261, as departure 4.
+- **Census, re-run at `929972713`.**
+  - `--census-routed` is unchanged (`5e634869…`).
+  - The governance-examples census on the R3 seat-brief after-text (S1, S7, S8, S12, S13, S14; numstat 7/4) gives current = proposed = `c13c9780…`, with no delta. The guard exits 0, and so does `check-section-citations`.
+- **Her F-4 lean, (a)**, is recorded here and is not adopted. Her leans on F-1 to F-3 are unchanged.
+
+**In my reading, B-5 to B-7 are met.** Whether they are is hers to say at R3.
+
 ---
 
 ## Census appendix
@@ -728,11 +868,11 @@ There is no scratch diff (departure 1), so there is no delta.
 
 ### § B. The governance-examples census
 
-Run at R2 in a detached worktree at `929972713` after `npm run build` (the import surface needs `dist/`). Current: as committed. Proposed: the same tree with § 3's seat-brief after-text applied by script from this file's own quoted rows (S1, S8, S12, S13, S14, the authorities line; numstat 6/3). The diff, verbatim:
+Run at R3 in a detached worktree at `929972713` after `npm run build` (the import surface needs `dist/`). Current: as committed. Proposed: the same tree with § 3's seat-brief after-text applied by script from this file's own quoted rows (S1, S7, S8, S12, S13, S14, the authorities line; numstat 7/4). The diff, verbatim:
 
 ```diff
 diff --git a/governance/signing-seat-brief.md b/governance/signing-seat-brief.md
-index 4c29caee1..7640e5916 100644
+index 4c29caee1..be70e62e3 100644
 --- a/governance/signing-seat-brief.md
 +++ b/governance/signing-seat-brief.md
 @@ -27,6 +27,7 @@ This document creates no rule. Each rule below restates a ratified clause and ci
@@ -754,8 +894,9 @@ index 4c29caee1..7640e5916 100644
  | S4 | **The hashes are the current values.** A stale hash fails, and so does a re-sign that moves neither hash. How each is computed (the sweep's reference is `regrounding/freshness.ts` L608–612): `canonicalHash` is the current canonical unit's hash. For a body unit that is `hashText(unit text)`, the unit taken from `partition(body).units`. For a frontmatter entry it is `hashEntry(value)`, from `entryTree(frontmatter).units`. For a shared member it is `hashEntry(member)`, from `canonical/shared/shared-catalog.yaml`. Where the row has an overlay pin (`<profile>.overlay.md`: `## @unit #<anchor> @ sha256:…` or `## @entry <key> @ sha256:…`; re-pointed rows have one, `no-consumer-counterpart` and `superseded-by` rows do not), the pin must equal that hash. If it does not, stop and report: the pin is authoring. `renderedHash` is `renderedHashOf(readConsumerSpans(<worktree>), rowSpanSource(<source>, <section>, <key>))` (`tools/agent-generator/derive.ts`), over the committed `canonical/_consumer-output/`. The arguments: `<source>` is the dispositions file's top-level `source:`; `<section>` is `body`, `frontmatter` or `members`; `<key>` is the row key exactly as written. Body keys include the `#` (`#identity`), frontmatter keys are the entry path, and members use the catalog id. If `readConsumerSpans` returns `undefined` (no rendering), stop and report: the sweep reads that as `signature-unverifiable`. | Spec 123 design C17 valve 1 (Req 11.5.6); § 2 clause 3; § 2 clause 4 (the pin is authoring) | `--ci` link 1 (F5) and the freshness sweep (stale signature) |
  | S5 | **The signature has a closed shape.** Its fields are `signer`, `canonicalHash` and `renderedHash`, then exactly one of `assent: {surviving: [...]}` or `refuse: should-re-point`, then `evidence: canonical/profiles/consumer/signatures/<sheet>.md#<anchor>`. No other field. Two examples, each in the one-line flow form, appended to the row's existing object. A frontmatter row: `canonical/profiles/consumer/ada.dispositions.yaml` row `frontmatter."description"` at `1ddac1d23` (evidence `…/ada.md#frontmatter:description`, `surviving: []`). A body row: the same file, row `body."#identity"` at `05513944e` (key and destination `#identity`, evidence `…/ada.md#identity`, `canonicalHash` by `hashText`, an itemized non-empty `surviving`). | § 2 clause 1 (a), the closed field set; `regrounding/signatures.ts` `SIGNATURE_FIELDS` (design C17) | the dispositions validation in the freshness sweep that `check:122:diff-guard` runs (format, bare, wrong signer) |
  | S6 | **The assent is itemized and honest.** `surviving` names exactly the operative-set items that the unit's own rendering states or entails. `[]` when none survive is itemized, not bare. The list is never padded, and never trimmed toward an answer the brief seems to expect. Where the function does not survive, the act is a refusal (`should-re-point`). | Req 11.5.6 (valve 2) with the 5e entailment rule (Req 11.6.5e); Req 11.5.7 (the assent audited) | `--audit` link 7 (the rendered line was read); the claims pass's Req 11.5.7 spot-check of itemized assents against the rendering, with the fraction counted (Peter samples the Stacy-signed ones); J, link 8 (a blind seat re-judges a sample). Not mechanical |
- | S7 | **Your sheet section is yours alone.** It is headed `` ## `#<anchor>` ``, where the anchor is the evidence anchor (`#identity` for a body row, `#frontmatter:<path>` for a frontmatter row), and it carries a `signer: <seat>` line. You do not edit another seat's section. The preamble counts as your object only when every section of the sheet names you. *Convention, not law, and no check reads it*: the #445 sheets place new sections before the first `## Signing run summary` or `## Re-sign run summary` heading, or at the end where there is neither. | § 2 clause 1 (b); the preamble reading is the instrument's (`verify-signing-chain.ts` header L74–75) | `--ci` link 2 (a section's `signer:` equals the trailer) |
+-| S7 | **Your sheet section is yours alone.** It is headed `` ## `#<anchor>` ``, where the anchor is the evidence anchor (`#identity` for a body row, `#frontmatter:<path>` for a frontmatter row), and it carries a `signer: <seat>` line. You do not edit another seat's section. The preamble counts as your object only when every section of the sheet names you. *Convention, not law, and no check reads it*: the #445 sheets place new sections before the first `## Signing run summary` or `## Re-sign run summary` heading, or at the end where there is neither. | § 2 clause 1 (b); the preamble reading is the instrument's (`verify-signing-chain.ts` header L74–75) | `--ci` link 2 (a section's `signer:` equals the trailer) |
 -| S8 | **A hold is a line, not an edit.** "Not yet, until X" makes no sheet, signature or confirmation edit. It is a line in the PR body's acts list: `<dispositions file>#<row> — <seat> — hold: <reason>` for a signature, or `<operative-set file>#<anchor> — <seat> — hold: <reason>` for a confirmation. A hold is not a signing act. It resolves as the row's later in-bound act, or as **withdrawn** when the row leaves the bound. | § 2 clause 6 (as amended 2026-10-22, ballot `2026-10-22-hold-act-recorded-in-pr-body`) | the claims pass reads the PR body |
++| S7 | **Your sheet section is yours alone, one per key.** It is headed `` ## `#<anchor>` ``, where the anchor is the evidence anchor (`#identity` for a body row, `#frontmatter:<path>` for a frontmatter row), and it carries a `signer: <seat>` line. Write it in the same commit as the signature or confirmation it records: a section committed alone afterwards is a re-act on a fresh row and fails `--ci` link 1. A key has one section for every act on it. A later act, after a withdrawal or otherwise, writes into it: its field lines carry the current values, you add a dated paragraph, and earlier entries and any `withdrawn:` line stay below. Never add a second section with the same heading. You do not edit another seat's section. The preamble counts as your object only when every section of the sheet names you. *Convention, not law, and no check reads it*: the #445 sheets place new sections before the first `## Signing run summary` or `## Re-sign run summary` heading, or at the end where there is neither. | § 2 clause 1 (b); § 2a ("One section per key"; ballot 2026-11-08-signing-act-shape-review); the preamble reading is the instrument's (`verify-signing-chain.ts` header L74–75) | `--ci` link 2 (a section's `signer:` equals the trailer; a second section with the same heading); link 1 (a section alone, X1); the sweep's evidence check (one note block) |
 +| S8 | **A hold is a line, not an edit.** "Not yet, until X" makes no sheet, signature or confirmation edit. It is a line in the PR body's acts list: `<dispositions file>#<row> — <seat> — hold (<list>): <reason>` for a signature, or `<operative-set file>#<anchor> — <seat> — hold (<list>): <reason>` for a confirmation, where `<list>` is the list the row is on. A hold is not a signing act. It resolves as the row's later in-bound act, or as **withdrawn** when the row leaves the bound. | § 2 clause 6 (as amended 2026-10-22, ballot `2026-10-22-hold-act-recorded-in-pr-body`, and by ballot 2026-11-08-signing-act-shape-review) | the claims pass reads the PR body |
  | S9 | **`Agent:` is a trailer of the final paragraph.** Git reads trailers only from the message's last paragraph. A `Co-Authored-By:` line (the harness's attribution, not signing law) in a later paragraph of its own pushes `Agent:` out of git's trailer block, and the act then fails link 3. So both sit together in the final paragraph. `git interpret-trailers --parse` over the message text is a way to check this before committing. | § 2 clause 6 (ii); § 3 link 3 | `--ci` link 3 (no trailer, two trailers, or one above the final paragraph fails) |
  | S10 | **Commit and print in one call, in the convention's form.** See § "The commit line" below. One line comes out: the full SHA, a space, the subject. The commit's success shows only through `&&` (or `set -e`) into the `git log`, in the same call. Other formats anchor under § 4.3 as amended 2026-11-08 where the call's first printed SHA is the commit's and its subject shows in the result or in the commit's own first `-m` (`%h%n%B`, `%H%n%B` and `%h%n%b` read `record absent` on #445 before the amendment); a `;` or a pipe on the commit reads `anomaly`. *(Amended 2026-11-08 by ballot 2026-10-23-link4-candidate-first-sha-after-commit; prior text at `ac4f44687`.)* | § 4.3 as amended 2026-11-08: the candidate (ii), success evidence (b), and "seat briefs commit as `git commit … && git log -1 --format='%H %s'`" | `--audit` link 4 |
@@ -769,7 +910,7 @@ index 4c29caee1..7640e5916 100644
  
 ```
 
-Both runs print `selected: 1968 (1949 token-name candidates, 4 declared paths, 1 token-file shapes, 14 import lines) over 91 docs; predicate v1, file-shape rule v1` and `governance/signing-seat-brief.md\t0:0:0`. Both digest to `c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd`. `diff` of the two outputs is empty, so there is no delta. On the proposed tree the guard's own run exits 0, as at the base, and `scripts/check-section-citations.ts` exits 0. At R0 (`3e76b6205`, the R0 after-text, numstat 5/2) the digests were the same; Stacy reproduced that run.
+Both runs print `selected: 1968 (1949 token-name candidates, 4 declared paths, 1 token-file shapes, 14 import lines) over 91 docs; predicate v1, file-shape rule v1` and `governance/signing-seat-brief.md\t0:0:0`. Both digest to `c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd`. `diff` of the two outputs is empty, so there is no delta. On the proposed tree the guard's own run exits 0, as at the base, and `scripts/check-section-citations.ts` exits 0. The R0 after-text (numstat 5/2, at `3e76b6205`) and the R2 after-text (6/3, at `929972713`) gave the same digests, and Stacy reproduced both.
 
 ### § C. The heuristic withdrawal count (R0; superseded as the count of record by Stacy's walk, § 7)
 
@@ -808,6 +949,28 @@ signing-chain: PASS — consistency, not identity
 
 ```
 261 {"sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570":261}
+```
+
+**§ 1 item 13** (R3, at `929972713`; Stacy's B-5, reproduced). Commit 1 under `Agent: Ada` withdrew `ada#frontmatter:commands[functional-suite]` in the ledger form: the `signature` removed, and the section kept with a `withdrawn: 2026-11-08 — probe` line. Commit 2 restored the signature, in two variants:
+
+```
+== append (written into the kept section)
+operative-set-freshness: PASS — 17 record(s), 375 unit(s), 17 note(s), 17 dispositions file(s), 17 overlay(s)
+signing-chain: PASS — consistency, not identity
+== newsection (a second section with the same heading)
+operative-set-freshness: FAIL — 17 record(s), 375 unit(s), 17 note(s), 17 dispositions file(s), 17 overlay(s)
+  [signature-evidence] signature on commands[functional-suite] in canonical/profiles/consumer/ada.dispositions.yaml: evidence resolves to 2 note blocks in canonical/profi…
+  FAIL link 2 88ea5b13: a sheet carries a section that is no signing object: canonical/profiles/consumer/signatures/ada.md § "#frontmatter:commands[functional-suite] (2)…
+signing-chain: FAIL — consistency, not identity
+```
+
+**§ 1 item 14** (R3, at `929972713`; Stacy's B-7). The population is `git rev-list --no-merges` since `R`, over all 789 `refs/pull/*/head`, minus `origin/main`, restricted to `canonical/profiles/consumer/{signatures,confirmations}`: 212 commits. Of those, 4 touch no other signing path. Their verdicts today, by `--ci --base <c>^ --head <c>`:
+
+```
+7eb517fca (base 15e190326): signing-chain: 1 row(s) checked across 1 signing commit(s) / PASS
+94ab39094: FAIL link 1 … thurgood.dispositions.yaml#trigger-types: sheet section changed with no hash moved …
+b87a26ca7: FAIL link 1 … operative-sets/thurgood.yaml#trigger-types: sheet section changed with no hash moved …
+03c0191d6: FAIL link 3 … Agent: trailer data ≠ c1Seat kenya; FAIL link 2 …
 ```
 
 Every probe commit was discarded (`git reset --hard` to the base) and never pushed.
