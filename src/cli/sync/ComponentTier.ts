@@ -21,6 +21,7 @@ import { findDesignSystemRoot } from '../shared/bornRepo';
 import { resolveComponentRoots } from '../shared/mcpDataRoots';
 import { resolveComponentSources } from '../shared/componentSources';
 import { mergePackageComponentTokens, readPackageComponentTokenIndex } from '../shared/packageComponentTokens';
+import { findReplacedGroupGaps, replacedGroupGapLines } from './ReplacedGroups';
 import {
   findMissingReferences,
   missingReferenceMessage,
@@ -91,12 +92,10 @@ export async function componentTierSection(
     const tagged = (e: Record<string, unknown> | undefined) => Boolean(e && e.source && typeof e.source === 'object');
     const own = new Set(Object.keys(indexed).filter(n => !tagged(indexed[n])));
     const ownGroups = new Set(Array.from(own).map(n => indexed[n]?.component).filter((g): g is string => typeof g === 'string'));
-    const expected = mergePackageComponentTokens(
-      shipped.index,
-      resolveComponentSources(resolveComponentRoots({ dsRoot, packageRoot: pkgRoot }).roots),
-      own,
-      ownGroups,
-    );
+    const universe = resolveComponentSources(resolveComponentRoots({ dsRoot, packageRoot: pkgRoot }).roots);
+    const expected = mergePackageComponentTokens(shipped.index, universe, own, ownGroups);
+    // Req 5.11: a group of theirs replaces ours; say which keys our components still read from it.
+    lines.push(...replacedGroupGapLines(findReplacedGroupGaps(shipped.index, universe, own, ownGroups)));
     const references: ComponentTokenReference[] = [];
     const introduced = new Map<string, boolean>();
     for (const m of expected) {

@@ -27,53 +27,10 @@ import SwiftUI
 
 // MARK: - Badge-Label-Base Tokens
 
-/**
- * Badge-Label-Base component tokens.
- * 
- * In a production iOS project, this enum would be imported from the generated
- * `ComponentTokens.ios.swift` file. For this reference implementation, we define
- * the tokens here with the same name and values as the generated file.
- * 
- * Component tokens (from generated ComponentTokens.ios.swift):
- * - maxWidth: 120px - Maximum width for truncated badges
- * 
- * Semantic token references (from DesignTokens):
- * - cornerRadius, backgroundColor, textColor, iconColor
- * 
- * @see dist/ComponentTokens.ios.swift - Generated component tokens
- * @see Requirements: 4.1, 4.2, 4.4, 4.5, 4.6, 4.8 - Token integration
- */
-enum BadgeLabelBaseTokens {
-    // MARK: - Component Token (matches generated ComponentTokens.ios.swift)
-    
-    /// Maximum width for truncated badges (120px)
-    /// Component token: badge.label.maxWidth
-    /// Allows ~12-15 characters before ellipsis while maintaining compact badge appearance
-    /// Value follows spacing family pattern (8 × 15 = 120px)
-    /// @see Requirements: 4.8 - badge.label.maxWidth token
-    static let maxWidth: CGFloat = 120
-    
-    // MARK: - Shape Token
-    
-    /// Border radius for badge shape
-    /// References: radiusSubtle → radius025 (2px)
-    /// @see Requirements: 4.2 - radiusSubtle for border radius
-    static let cornerRadius: CGFloat = DesignTokens.radius025
-    
-    // MARK: - Color Tokens
-    
-    /// Background color for badge
-    /// References: color.surface → white200
-    /// @see Requirements: Design.md - Default colors
-    
-    /// Text color for badge
-    /// References: color.text.default → gray300
-    /// @see Requirements: Design.md - Default colors
-    
-    /// Icon color for badge
-    /// References: color.icon.default → gray200
-    /// @see Requirements: Design.md - Default colors
-}
+// `BadgeLabelBaseTokens` (maxWidth, badge.label.maxWidth) is generated: it comes from the consumer's
+// `ComponentTokens.ios.swift`, written by `designerpunk generate` from tokens.ts. This file declares no
+// token type of its own (Spec 129 Req 5.1). The corner radius reads DesignTokens.radius025
+// (radiusSubtle, 2px) directly. Semantic colors read the theme.
 
 // MARK: - Badge-Label-Base Size Enum
 
@@ -307,7 +264,7 @@ public struct BadgeLabelBase: View {
         .padding(.vertical, size.paddingVertical)
         .padding(.horizontal, size.paddingHorizontal)
         .background(theme.colorStructureSurface)
-        .cornerRadius(BadgeLabelBaseTokens.cornerRadius)
+        .cornerRadius(DesignTokens.radius025)
     }
     
     // MARK: - Icon Content

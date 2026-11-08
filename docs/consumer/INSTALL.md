@@ -131,6 +131,15 @@ import { BlendCalculator } from '@3fn/core/blend';
 
 **Your own tokens.** After you run `npx designerpunk generate`, import your own `DesignTokens.web.css` from your configured `output` directory **in place of** `@3fn/core/tokens.css`. That file carries your token tier's values. Keep `@3fn/core/component-tokens.css`.
 
+**Your own component tokens.** `generate` also writes `ComponentTokens.web.css` to the same directory. It holds the component tokens you define, and it does not carry DesignerPunk's. Import it **after** `@3fn/core/component-tokens.css`, so that yours comes later in the cascade:
+
+```typescript
+import '@3fn/core/component-tokens.css';
+import './<your output directory>/ComponentTokens.web.css';
+```
+
+On web, "yours wins" is **per token, by order**: a token you define under the same name replaces ours, and a name you leave out keeps our value. That differs from iOS and Android, where your group replaces ours whole. The order holds within one entry file. A bundler that code-splits your CSS can reorder the chunks and put ours after yours, so check the built CSS if a token of yours does not take effect.
+
 **A page with no build step** loads the browser bundle with a `<link>` and a `<script type="module">`, as the browser distribution guide shows (`governance/browser-distribution-guide.md` in the `@3fn/core` package; your agent reads it as `browser-distribution-guide`); link your own `DesignTokens.web.css` there too, in place of the bundle's base `tokens.css`. Serve that page over local HTTP (for example `python3 -m http.server`), not by opening the file: browsers do not load the module bundle from a `file://` page.
 
 **Themes, for now:**
@@ -165,6 +174,7 @@ Android: reference source, not a build input. The Compose components under `src/
 What the package ships for Android, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.android.kt` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
 - `node_modules/@3fn/core/dist/ComponentTokens.android.kt` is DesignerPunk's **component token tier**. Three of the shipped components (Avatar, Badge-Label-Base and Button-Icon) read it.
+- The Kotlin packages `com.designerpunk.tokens` and `com.designerpunk.components.*` are reserved to DesignerPunk. Keep your own `.kt` files out of them. `generate` warns, naming the file, when it finds one outside its own output and your token source; it does not fail.
 - Every colour semantic is a member of the generated `DesignerPunkTheme` data class (`color_action_primary` and `color_structure_canvas` among them) and none is a `DesignTokens` member: read it through `LocalDPTheme.current` or a `<YourName>Themes` instance. The WCAG colours are the `WcagLight` and `WcagDark` instances; a theme you register adds none yet.
 - A product token that references a colour semantic is emitted as a read of `LocalDPTheme`, which `DesignTokens.android.kt` defines. A product token that references a composite is refused by `generate`, which names the token.
 

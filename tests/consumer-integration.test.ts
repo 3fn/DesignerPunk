@@ -2528,6 +2528,29 @@ describe('Consumer Integration (Spec 106 R8)', () => {
         run('npx designerpunk generate');
       }
     }, TIMEOUT);
+
+    it('a group of theirs that lacks a key our component reads: sync reports the key and the component (Req 5.11)', () => {
+      const mine = path.join(tier, 'src', 'tokens', 'component', 'avatar.ts');
+      try {
+        // Their Avatar group replaces ours whole, and defines only size.md.
+        fs.writeFileSync(mine, [
+          "import { defineComponentTokens } from '@3fn/core/build';",
+          "import { sizingTokens } from '../SizingTokens';",
+          "export const AvatarTokens = defineComponentTokens({ component: 'Avatar', family: 'sizing', tokens: {",
+          "  'size.md': { reference: sizingTokens.size500, reasoning: 'Mine.' },",
+          "} });",
+          '',
+        ].join('\n'));
+        run('npx designerpunk generate');
+        const printed = runBoth(['designerpunk', 'sync', '--dry-run']).text;
+        expect(printed).toMatch(/your Avatar group replaces DesignerPunk's, and Avatar-Base reads \d+ keys it lacks \(.*avatar\.icon\.size\.xs/);
+        expect(printed).not.toMatch(/Avatar-Base reads .* avatar\.size\.md/);
+      } finally {
+        fs.rmSync(mine, { force: true });
+        run('npx designerpunk generate');
+      }
+      expect(runBoth(['designerpunk', 'sync', '--dry-run']).text).not.toContain('group replaces DesignerPunk');
+    }, TIMEOUT);
   });
 
   describe('Release-3 item 2 — the Jest preset loads @3fn/core/* subpaths in a packed install', () => {

@@ -41,6 +41,8 @@ import {
   classifyNpmAuthError,
   npmRailFetcher,
   registryPinRefusedTokenMessage,
+  isSingleFamilyTokenFile,
+  singleFamilyTokenFilesMessage,
 } from '../sync/Migration';
 import type { PackageFetcher, MigrationAssessment, RegistryAuthFailure } from '../sync/Migration';
 import { registryAuthFailedMessage, cannotTellGroupMessage } from '../shared/errorCatalog';
@@ -625,6 +627,48 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       const a = assess(scratch, snapshotFetcher(scratch).fetcher, '14.1.0');
       expect(a.oldNameReferenceMaps).toEqual(['src/components/core/Badge-Label-Base/tokens.ts']);
       expect(a.brandedTokenFiles).toEqual(['src/components/core/Button-Icon/buttonIcon.tokens.ts']);
+    });
+
+    describe('row 18 R1: a copied token file in the pre-fix single-family form (Spec 129 Req 5.7)', () => {
+      const SINGLE = [
+        "import { defineComponentTokens } from '../../build/tokens';",
+        "import { spacingTokens } from '../../tokens/SpacingTokens';",
+        "import { sizingTokens } from '../../tokens/SizingTokens';",
+        "export const ProgressTokens = defineComponentTokens({ component: 'Progress', family: 'spacing', tokens: {} });",
+      ].join('\n');
+      const SPLIT = SINGLE + "\nexport const ProgressSizeTokens = defineComponentTokens({ component: 'Progress', family: 'sizing', tokens: {} });\n";
+
+      test('isSingleFamilyTokenFile: one call over two primitive families is the pre-fix form; one call per family is not', () => {
+        expect(isSingleFamilyTokenFile(SINGLE)).toBe(true);
+        expect(isSingleFamilyTokenFile(SPLIT)).toBe(false);
+        // one family, one call: fine
+        expect(isSingleFamilyTokenFile(SINGLE.replace("import { sizingTokens } from '../../tokens/SizingTokens';\n", ''))).toBe(false);
+        // a mention in a comment is not a call
+        expect(isSingleFamilyTokenFile('// defineComponentTokens(\n' + SINGLE.split('\n').slice(0, 3).join('\n'))).toBe(false);
+      });
+
+      test('the migration reports the file by path under src/tokens/component/ and under core/, and offers the fix', async () => {
+        setupPackage(scratch, { version: '15.0.0' });
+        lockAt(scratch, '14.1.0');
+        writeCopiesAt(scratch, '14.1.0');
+        writeFile(scratch, 'src/tokens/component/progress.ts', SINGLE);
+        writeFile(scratch, 'src/components/core/Button-Icon/buttonIcon.tokens.ts', SINGLE);
+        const { fetcher } = snapshotFetcher(scratch);
+        const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+        const files = ['src/components/core/Button-Icon/buttonIcon.tokens.ts', 'src/tokens/component/progress.ts'];
+        expect(out.migration!.singleFamilyTokenFiles).toEqual(files);
+        const line = singleFamilyTokenFilesMessage(files);
+        expect(con.output()).toContain(line);
+        expect(line).toContain('src/tokens/component/progress.ts');
+        expect(line).toMatch(/re-copy the package's split version .* or split the call/);
+      });
+
+      test('a split file is not reported', () => {
+        writeCopiesAt(scratch, '14.1.0');
+        writeFile(scratch, 'src/tokens/component/progress.ts', SPLIT);
+        const a = assess(scratch, snapshotFetcher(scratch).fetcher, '14.1.0');
+        expect(a.singleFamilyTokenFiles).toEqual([]);
+      });
     });
 
     test('stripComments blanks block and line comments but keeps "https://" inside strings', () => {

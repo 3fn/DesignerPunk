@@ -51,7 +51,7 @@ import com.designerpunk.components.core.IconBase
 // @see Rosetta System Architecture - Token Consumption Rule
 import com.designerpunk.tokens.DesignTokens
 import com.designerpunk.tokens.LocalDPTheme
-import com.designerpunk.tokens.AvatarTokens as GeneratedAvatarTokens
+import com.designerpunk.tokens.AvatarTokens
 // Import Coil AsyncImage for image loading
 // @see Requirements: 5.1, 5.2, 5.3, 5.5, 5.6 - Image support
 import coil.compose.AsyncImage
@@ -62,115 +62,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 
 // MARK: - Avatar Tokens
 
-/**
- * Avatar-specific design tokens.
- * 
- * These tokens are component-level tokens specific to the Avatar component.
- * They reference or extend the core DesignTokens where possible.
- * 
- * Icon size tokens use the existing DesignTokens.iconSizeXXX values where available,
- * with component-specific gap fillers for xs and xxl sizes.
- * 
- * @see Requirements: 3.1, 3.6 - Icon sizing at 50% ratio
- * @see Requirements: 4.1, 4.2 - Background colors
- * @see Requirements: 7.1-7.4 - Border styles
- */
-object AvatarTokens {
-    // MARK: - Avatar Icon Size Tokens (Gap Fillers)
-    
-    /**
-     * Icon size for xs avatar (12dp = 1.5 × base)
-     * Component token gap filler - no existing icon token at this size
-     * @see Requirements: 3.1 - xs avatar icon size
-     */
-    val iconSizeXs: Dp = GeneratedAvatarTokens.iconSizeXs
-    
-    /**
-     * Icon size for xxl avatar (64dp = 8 × base)
-     * Component token gap filler - no existing icon token at this size
-     * @see Requirements: 3.6 - xxl avatar icon size
-     */
-    val iconSizeXxl: Dp = GeneratedAvatarTokens.iconSizeXxl
-    
-    // MARK: - Avatar Color Tokens
-    // These reference DesignTokens semantic color tokens for consistency with the Rosetta pipeline.
-    // When semantic tokens change, regenerate DesignTokens via: npx ts-node src/generators/generateTokenFiles.ts
-    //
-    // Spec 058 Migration: Avatar color tokens now reference semantic tokens directly.
-    // The component-level token definitions in avatar.tokens.ts provide the mapping:
-    // - human.background → color.identity.human
-    // - agent.background → color.identity.agent
-    // - human.icon → color.contrast.onDark
-    // - agent.icon → color.contrast.onDark
-    // - default.border → color.structure.border
-    
-    /**
-     * Background color for human avatars
-     * References: color.identity.human → orange300
-     * @see Requirements: 4.1 - Human type background color
-     * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-     */
-    
-    /**
-     * Background color for agent avatars
-     * References: color.identity.agent → teal200
-     * @see Requirements: 4.2 - Agent type background color
-     * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-     */
-    
-    /**
-     * Icon color on human avatar background
-     * References: color.contrast.onDark → white100
-     * @see Requirements: 6.1 - Human type icon contrast color
-     * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-     */
-    
-    /**
-     * Icon color on agent avatar background
-     * References: color.contrast.onDark → white100
-     * @see Requirements: 6.2 - Agent type icon contrast color
-     * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-     */
-    
-    /**
-     * Border color for avatars (xs through xl sizes)
-     * References: color.structure.border → gray100
-     * @see Requirements: 7.2 - Border color for xs-xl sizes
-     * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-     */
-    
-    /**
-     * Border color for xxl size avatars
-     * References: color.contrast.onDark → white100
-     * @see Requirements: 7.4 - Border color for xxl size
-     */
-    
-    // MARK: - Avatar Border Tokens
-    
-    /**
-     * Default border width (1dp)
-     * References: borderDefault → borderWidth100
-     * @see Requirements: 7.1 - Border width for xs-xl sizes
-     */
-    val borderWidthDefault: Dp = DesignTokens.border_width_100
-    
-    /**
-     * Emphasis border width (2dp)
-     * References: borderEmphasis → borderWidth200
-     * @see Requirements: 7.3 - Border width for xxl size
-     */
-    val borderWidthEmphasis: Dp = DesignTokens.border_width_200
-    
-    // MARK: - Avatar Opacity Tokens
-    
-    /**
-     * Heavy opacity for border (48%)
-     * References: opacity.heavy → opacity048 (0.48)
-     * @see Requirements: 7.2 - Border opacity for xs-xl sizes
-     */
-    val opacityHeavy: Float = DesignTokens.opacity_heavy
-}
-
+// The Avatar component tokens are generated: `com.designerpunk.tokens.AvatarTokens` (iconSizeXs,
+// iconSizeXxl), written by `designerpunk generate` from avatar.tokens.ts and imported above. This file
+// declares no token object of its own, so the name has one meaning (Spec 129 Req 5.1).
+// The border width and opacity read DesignTokens directly:
+//   borderDefault -> DesignTokens.border_width_100, borderEmphasis -> DesignTokens.border_width_200,
+//   opacity.heavy -> DesignTokens.opacity_heavy.
 // MARK: - Avatar Type Enum
 
 /**
@@ -263,8 +160,8 @@ enum class AvatarSize(
      */
     val borderWidth: Dp
         get() = when (this) {
-            Xxl -> AvatarTokens.borderWidthEmphasis  // 2dp
-            else -> AvatarTokens.borderWidthDefault  // 1dp
+            Xxl -> DesignTokens.border_width_200  // 2dp
+            else -> DesignTokens.border_width_100  // 1dp
         }
 }
 
@@ -391,12 +288,12 @@ fun Avatar(
     // Determine border color based on size
     val borderColor = when (size) {
         AvatarSize.Xxl -> theme.color_contrast_on_dark
-        else -> theme.color_structure_border.copy(alpha = AvatarTokens.opacityHeavy)
+        else -> theme.color_structure_border.copy(alpha = DesignTokens.opacity_heavy)
     }
     
     // Determine current border width (changes on hover for interactive avatars)
     val currentBorderWidth = if (interactive && isHovered) {
-        AvatarTokens.borderWidthEmphasis  // 2dp on hover
+        DesignTokens.border_width_200  // 2dp on hover
     } else {
         size.borderWidth
     }
