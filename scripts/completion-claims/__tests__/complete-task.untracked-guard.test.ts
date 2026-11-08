@@ -120,11 +120,17 @@ function write(fx: Fx, rel: string, body = 'x\n'): void {
 }
 
 function runTool(fx: Fx, ...args: string[]) {
+  return runToolEnv(fx, { DP_AGENT: 'Fixture' }, ...args);
+}
+
+function runToolEnv(fx: Fx, extra: Record<string, string | undefined>, ...args: string[]) {
   const r = spawnSync('bash', [path.join(fx.work, '.kiro/hooks/complete-task.sh'), ...args], {
     cwd: fx.work,
     env: {
       ...process.env,
       ...GIT_ENV,
+      DP_AGENT: undefined,
+      ...extra,
       PATH: `${fx.bin}:${process.env.PATH}`,
       GH_TOKEN: 'stub-token',
       CT_GUARD_TSX: TSX,
@@ -240,7 +246,7 @@ describe('complete-task.sh untracked-paths guard', () => {
     expect(body).toContain('Added-outside-list: extra/two.txt — second fixture');
     // the trailers are the message's final paragraph
     const paragraphs = body.trim().split('\n\n');
-    expect(paragraphs[paragraphs.length - 1]).toMatch(/^Added-outside-list: /);
+    expect(paragraphs[paragraphs.length - 1]).toMatch(/^Agent: .*\nAdded-outside-list: /);
   });
 
   it('parent mode carries every Added-outside-list trailer of the branch into the PR body', () => {
@@ -326,5 +332,53 @@ describe('complete-task.sh untracked-paths guard', () => {
     const r = runTool(fx, '--subtask', '--no-ci', 'Task 1.1: x (900)');
     expect(r.status).toBe(0);
     expect(headFiles(fx)).toEqual(['src/feature.ts']);
+  });
+});
+
+describe('complete-task.sh commit trailers', () => {
+  const CO = 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>';
+  const finalParagraph = (fx: Fx) => git(fx.work, 'log', '-1', '--format=%B').split(/\n\n/).pop()!.trim();
+  const trailersParsed = (fx: Fx) => git(fx.work, 'log', '-1', '--format=%(trailers:only,unfold)').split('\n').filter(Boolean);
+
+  const cases: Array<[string, string[], string]> = [
+    ['subtask', ['--subtask', '--no-ci'], 'Task 1.1: add (900)'],
+    ['unit-member', ['--unit-member', '--no-ci'], 'Task 1 Complete: Demo (900)'],
+    ['parent', ['--no-ci'], 'Task 1 Complete: Demo (900)'],
+  ];
+  it.each(cases)('%s mode: --agent and --trailer land in the final paragraph, git-parsable', (_m, flags, msg) => {
+    const fx = makeFx();
+    write(fx, 'src/feature.ts');
+    write(fx, '.kiro/specs/900-demo/completion/task-1-completion.md');
+    const r = runTool(fx, ...flags, '--agent', 'Ada', '--trailer', CO, msg);
+    expect(r.status).toBe(0);
+    expect(finalParagraph(fx)).toBe(`Agent: Ada\n${CO}`);
+    expect(trailersParsed(fx)).toEqual(['Agent: Ada', CO]);
+  });
+
+  it('with no --agent and DP_AGENT unset the tool refuses before any git change, naming the remedy', () => {
+    const fx = makeFx();
+    write(fx, 'src/feature.ts');
+    const r = runToolEnv(fx, {}, '--subtask', '--no-ci', 'Task 1.1: add (900)');
+    expect(r.status).not.toBe(0);
+    expect(r.out).toContain('--agent <Name>');
+    expect(r.out).toContain('--agent Peter');
+    expect(commitCount(fx)).toBe(0);
+    expect(git(fx.work, 'diff', '--cached', '--name-only')).toBe('');
+  });
+
+  it('DP_AGENT is the fallback when --agent is absent', () => {
+    const fx = makeFx();
+    write(fx, 'src/feature.ts');
+    const r = runToolEnv(fx, { DP_AGENT: 'Lina' }, '--subtask', '--no-ci', 'Task 1.1: add (900)');
+    expect(r.status).toBe(0);
+    expect(finalParagraph(fx)).toBe('Agent: Lina');
+  });
+
+  it('--add trailers share the final paragraph with Agent', () => {
+    const fx = makeFx();
+    write(fx, 'extra/note.md');
+    const r = runTool(fx, '--subtask', '--no-ci', '--agent', 'Ada', '--add', 'extra/note.md', '--reason', 'why', 'Task 1.1: add (900)');
+    expect(r.status).toBe(0);
+    expect(trailersParsed(fx)).toEqual(['Agent: Ada', 'Added-outside-list: extra/note.md — why']);
   });
 });
