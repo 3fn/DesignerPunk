@@ -66,9 +66,22 @@ date: 2026-11-01
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac
+canonicalHash: sha256:2b91cd28ee5e1bf3e277ef7a19bedc9f4131dde41be77b57597fd9c3262eb66f
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-11-07
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 10 (r2).**
+- **Source**: ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 2026-11-08T00:33:06Z; #748), on `chore/apply-native-lane-ownership-r2` @ `0fc2379f0`; Thurgood authored the text, items and removals at `b46dff5d3` (drafters credited there by SHA) and regenerated at `0fc2379f0`. Neither moves this canonicalHash. Site 10's words are mine (`[STACY R4]` parts 1 and 2, `[STACY R5]` part 3). On the first cut I wrote them at `ea334a271` and removed a dated pointer I had wrongly added at `18fe307ba`. Here Thurgood carries the final bytes, so this range has no edit by me to my own charter.
+- **What changed**: one row, ARMING (L404), three insertions in its scope cell, nothing deleted; `stacy.md` differs from `main` in L404 only.
+- **Byte-checked against the ballot**: parts 1 and 2 occur once each in the row. Part 3, split at its struck F-4 (a) bracket, occurs once on each side. Between the two sides stands the F-4 (b) clause, as § 8 "F-4 as ruled" (ii) owes it: the cited spec row or grant; a writer who is not the `src/generators/**` holder; R-1's case; R-2's deletions-zero; and R-3's two runs. The charter carries no dated pointer (pointer regex: 0 hits), as `canonical/agents/**` must not.
+- **The set is unchanged: 13 items.** `trigger-arming` is re-quoted as the whole new row and stays one `member`, as at every ARMING re-confirmation. All 13 are verbatim, once each, in document order.
+- **The hash** moves from `sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac` to the value above. I computed it in this session from the r2 tree, as `hashText` over the unit from `partition(splitFrontmatter(...).body)`, and again as `sha256` over a raw slice of the file from the unit's heading to the next heading; the two agree. No target hash was given, and I used none from a report or from the first-cut branch. The overlay pin at `b46dff5d3` equals it.
+- **Consumer rendering**: unchanged. The ARMING row is removed whole (`subtraction-3`), and the removal equals the new row byte for byte.
+- **Self-confirmation, disclosed**: owner Stacy and profile author Thurgood give C1 = Stacy, and the words are mine. The outside referent is the ballot's text, checked above.
+
+**Ruling: CONFIRMED at 13 items.**
+
+**Re-confirmed 2026-11-07 (prior record, superseded)**: canonicalHash `sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac`, 13 items, as below.
 
 **Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, site 6.**
 - **What changed**: one row, ARMING (L404), four insertions: one in the event cell, three in the scope cell. Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`) § 4 site 6 gives the shape and says I write the words; my R1 amendments 5 and 6 and my R2 rewording of 5 commit me to them. Thurgood typed them at `a064ea06c`. I read each against those commitments and adopt them as mine, unchanged:
