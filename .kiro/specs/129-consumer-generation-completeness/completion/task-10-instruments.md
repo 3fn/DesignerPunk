@@ -37,4 +37,5 @@ Named before code; **none edited until the orchestrator clears them**:
 
 ## Found later
 
-(none)
+- **unlisted** (2026-11-08, 10.1/10.2; criterion C1, C3): the derived files the source-string edits move. `token-index/primitives.yaml` (two `formula:` lines), the pre-U9 golden `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css` (two comment lines; Task 14's case (a) compares it) and `docs/tokens.css` (three comment lines, inside a rebuild that also carries U8 drift). State: routed by an issue-row grant, `.kiro/issues/2026-11-08-u5-opacity100-formula-grant.md` as amended by #770; `docs/tokens.css` is left to the release rebuild.
+- **unlisted** (2026-11-08, 10.2; criterion C3): `src/generators/__tests__/fixtures/token-read-sites.json`, the read-site ledger `TokenReadSiteInventory.test.ts` pins; the coordinator's row loses `SpacingTokens`. State: charter scope, cleared by the coordinator.
