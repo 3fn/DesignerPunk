@@ -217,8 +217,17 @@ date: 2026-11-08
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82
-renderedHash: sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d
-date: 2026-09-29
+renderedHash: sha256:bc78f6d0866acbeb6c9ead93f4ae75b42a1ddf56306e2f7ae38a17a099d4c82f
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 3 of 3 (`ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82`, renderedHash `sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The ground-truth paragraph lost the clauses naming the built `dist/*.ios.swift` outputs and `dist/ios/DesignTokens.ios.swift`; it reads *"no token snapshot ships in the package, and the files your own `generate` writes are not read for values"*. The fallback bullet is unchanged from my last act. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `ground-truth-live-mcp` survives: *"Ground truth is live, never a snapshot"* is verbatim, *"Reach for the application MCP's token verbs for resolved values, not the flat Swift files"* is verbatim, and the per-theme-set reminder is verbatim; the removed clauses were the old file pointers and the "trimmed from your ambient set" and "due to stop shipping" forecasts. `rebuild-product` is verbatim. `mcp-fallback` survives as at my last act: the rendering names the installed package's iOS component sources, and the row's `*Tests.swift` removal (`subtraction-5`) stands.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82`), as the print-mode output shows. `renderedHash` moves `sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d` to `sha256:bc78f6d0866acbeb6c9ead93f4ae75b42a1ddf56306e2f7ae38a17a099d4c82f` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 3/3 surviving.** All 3 survive.
 - **`ground-truth-live-mcp`** keeps *"reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set"*, which still includes a prohibition.
