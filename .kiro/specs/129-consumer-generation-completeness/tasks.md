@@ -1319,7 +1319,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 11 — Charter and overlay text for item (i)
 
-- [ ] 16. Kenya's and Data's theming text, and the consumer overlays, say what is emitted (U11)
+- [x] 16. Kenya's and Data's theming text, and the consumer overlays, say what is emitted (U11)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Kenya (Sonnet) · Data (Sonnet) — his charter and overlay text · Lina (Sonnet) — regeneration and the lock · Thurgood (Sonnet) — the profile author's acts
   **Traces**: Req 2.10, 4.9
@@ -1357,13 +1357,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 16 Complete: Charter and overlay text for item (i) (129)"` opens U11's PR (Peter-merged: charter text; `**Edit kind**:` per file); report the URL; STOP.
 
-  - [ ] 16.1 Charter and overlay text
+  - [x] 16.1 Charter and overlay text
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet), Data (Sonnet)
     - _Requirements: 4.9_
-  - [ ] 16.2 Operative-set re-quotes, overlay pins, dispositions
+  - [x] 16.2 Operative-set re-quotes, overlay pins, dispositions
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 4.9_
-  - [ ] 16.3 Regenerate and lock; then the owners' confirmations and signatures
+  - [x] 16.3 Regenerate and lock; then the owners' confirmations and signatures
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - Signatures are the signers' attestations, outside every delegated-tier line
     - _Requirements: 4.9_

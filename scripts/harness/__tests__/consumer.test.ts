@@ -17,6 +17,7 @@ import * as path from 'path';
 import * as yaml from 'js-yaml';
 import {
   addProductTokens,
+  addPlatforms,
   defaultRunner,
   HarnessStepError,
   isInside,
@@ -44,6 +45,9 @@ const PINS = `consumer:
   abbreviation: HX
   productTokensFixture: harness/fixtures/product-tokens
   productTokens: product/tokens
+  platforms:
+    ios: ios/DesignerPunk
+    android: android/designerpunk
 `;
 
 const INIT_CONFIG = `import { defineConfig } from '@3fn/core/config';
@@ -327,7 +331,7 @@ describe('runDriver — pack, install, init, generate, one consumer root', () =>
     runDriver(options(fakeRunner().run));
     expect(fs.existsSync(path.join(outDir, 'product', 'tokens', 'harness.yaml'))).toBe(true);
     const config = fs.readFileSync(path.join(outDir, 'designerpunk.config.ts'), 'utf8');
-    expect(config).toContain("output: './dist/tokens',\n  productTokens: './product/tokens',\n");
+    expect(config).toContain("output: './dist/tokens',\n  platforms: {\n    ios: { output: './ios/DesignerPunk' },\n    android: { output: './android/designerpunk' },\n  },\n  productTokens: './product/tokens',\n");
   });
 
   it('--keep-node-modules keeps the package dependencies', () => {
@@ -424,6 +428,18 @@ describe('readConsumerPins — the abbreviation is not DP', () => {
     expect(fs.statSync(path.join(REAL_REPO, pins.productTokensFixture)).isDirectory()).toBe(true);
   });
 
+  it('the committed pin file names the D4 layout: ios/<dir> and android/<dir>, distinct, inside the consumer root', () => {
+    const pins = readConsumerPins(path.join(REAL_REPO, 'harness', 'pins.yaml'));
+    expect(pins.platforms.ios).toMatch(/^ios\/[^/]+$/);
+    expect(pins.platforms.android).toMatch(/^android\/[^/]+$/);
+  });
+
+  it('BITES on a missing platform path, an escaping one, and two platforms sharing a folder', () => {
+    expect(() => readConsumerPins(pinsFile(PINS.replace('    ios: ios/DesignerPunk\n', '')))).toThrow(/`platforms.ios` must be a non-empty string/);
+    expect(() => readConsumerPins(pinsFile(PINS.replace('ios/DesignerPunk', '../ios')))).toThrow(/relative path with no `\.\.`/);
+    expect(() => readConsumerPins(pinsFile(PINS.replace('android/designerpunk', 'ios/DesignerPunk')))).toThrow(/each platform needs its own folder/);
+  });
+
   it.each(['DP', 'dp', 'Dp'])('BITES on abbreviation %s', (abbr) => {
     expect(() => readConsumerPins(pinsFile(PINS.replace('HX', abbr)))).toThrow(/must not be DP/);
   });
@@ -458,6 +474,21 @@ describe('addProductTokens', () => {
   it('BITES when there is no output line to anchor on, and when productTokens is already set', () => {
     expect(() => addProductTokens("export default {};\n", 'product/tokens')).toThrow(/no `output:` line/);
     expect(() => addProductTokens(addProductTokens(INIT_CONFIG, 'product/tokens'), 'x')).toThrow(/already sets `productTokens`/);
+  });
+});
+
+describe('addPlatforms — the D4 layout the consumer config names (Spec 129 Task 15.3)', () => {
+  const layout = { ios: 'ios/DesignerPunk', android: 'android/designerpunk' };
+
+  it('adds platforms after the output line, with the same indent', () => {
+    expect(addPlatforms(INIT_CONFIG, layout)).toContain(
+      "  output: './dist/tokens',\n  platforms: {\n    ios: { output: './ios/DesignerPunk' },\n    android: { output: './android/designerpunk' },\n  },\n});",
+    );
+  });
+
+  it('BITES when there is no output line to anchor on, and when platforms is already set', () => {
+    expect(() => addPlatforms("export default {};\n", layout)).toThrow(/no `output:` line/);
+    expect(() => addPlatforms(addPlatforms(INIT_CONFIG, layout), layout)).toThrow(/already sets `platforms`/);
   });
 });
 

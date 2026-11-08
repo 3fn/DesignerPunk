@@ -22,9 +22,18 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
-renderedHash: sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c
+canonicalHash: sha256:43836080021834c69157a5c96f97c19f5b81f471bf18a8ad5ef0546f43baf308
+renderedHash: sha256:95acdf37fac931240c7d10d515fd0bcd90f137ce3c1b34a4ed3cd6cd013cd81a
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, edit (a)): ASSENT, `surviving` 8 of 17 (`scope-1` to `scope-8`).** A new act, read fresh against the committed rendering; nothing is carried from the signature below (canonicalHash `sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a`, renderedHash `sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c`).
+- **What changed**: `scope-2`'s key path, `@Environment(\.{abbreviation}Theme)`, is now `@Environment(\.dpTheme)` in the charter, and the overlay lost "once your generated output includes it". Thurgood committed my text in `448d4fe7d`; I confirmed the unit in `749122fad`. Nothing else in the unit changed.
+- **What I read, in this session, through tool results**: the unit as the second regeneration's committed rendering holds it (`canonical/_consumer-output/_canonical/agents/kenya.md`, the `### In Scope` list, L172 to L181, at `e10072c9d`); this row, with its two `removals`; the overlay unit; the charter's `### In Scope` unit.
+- **Credited**: `scope-1` to `scope-8` survive. The rendered unit carries all eight duties. `scope-2` is now verbatim, and no longer qualified by "once your generated output includes it", which is true without saying so. `scope-3` is re-grounded as before, on the shipped `node_modules/@3fn/core/src/components/core/*/platforms/ios/` sources. The native-scope line from release-3 ruling 11 is unchanged.
+- **Not credited, and I agree**: `scope-9` to `scope-17` (the harness iOS lane) render nothing, as at my last signature (`subtraction-1`, repo-internal tooling). The row's `removals` are unchanged.
+- **Hashes.** `canonicalHash` moves `6a47127f...` to `43836080...` (`hashText` of the unit from `partition(body).units`, equal to the overlay pin and to my confirmation). `renderedHash` moves `9dae5eb7...` to `95acdf37...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/kenya.md', 'body', '#in-scope')`), because `scope-2`'s line changed in the rendering.
+
+**Earlier acts on this row, kept as history (last: 2026-11-08):**
 
 **Re-signed 2026-11-08 (native-lane ownership ballot, items 2 and 3, edit site 4): ASSENT, `surviving` 8 of 17 (`scope-1` to `scope-8`).** A new act, read fresh against the committed rendering; nothing is carried from the 2026-10-13 signature below (canonicalHash `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e`, renderedHash `sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c`).
 - **The ballot**: `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z). Site 4 was applied in Thurgood's commit `b46dff5d3` on `chore/apply-native-lane-ownership-r2`, with the row's second `removals` entry and the re-pinned overlay unit. The rendering was regenerated in the next commit, `0fc2379f0`, and I re-confirmed the set at 17 items in my commit immediately before this one.
@@ -40,9 +49,19 @@ date: 2026-11-08
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
-renderedHash: sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469
-date: 2026-10-25
+canonicalHash: sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4
+renderedHash: sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, item (i) emits a theme surface): ASSENT, `surviving` 10 of 10 (`theming-1` to `theming-10`).** A new act, read fresh against the committed rendering; nothing is carried from the entries below, which judged a unit that said "no theme surface today". Their hashes were canonicalHash `sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9`, renderedHash `sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469`.
+- **What changed**: the whole unit. I drafted the text from the generated Swift and the emitters; Thurgood committed it in `448d4fe7d` and corrected `theming-1` in `89aa1604d` (my first draft said "the semantic colours are not on `DesignTokens`", which was false); I confirmed the set at 10 items in `c08bf6751`.
+- **What I read, in this session, through tool results**: the unit as the second regeneration's committed rendering holds it (`canonical/_consumer-output/_canonical/agents/kenya.md`, L183 to L192, at `e10072c9d`); this row and its one `removals` entry; the overlay unit; the charter's `### iOS Theming (Spec 094)` unit; the generated Swift for each claim (`DesignerPunkTheme: Sendable`, `DPThemeKey`, `\.dpTheme`, the base light default, the family's conformances and cases, the provider, the product-token extension).
+- **Credited**: `theming-1` to `theming-9` survive verbatim in the rendered unit. `theming-10` survives on the rendered directive *"query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set"* and on the re-pointed warning *"never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values"* (5e, in-unit entailment, as at my earlier signatures); reading a value from a Swift file violates both.
+- **The removal**: the row's one `removals` entry (`cites: subtraction-1`, the built `dist/*.ios.swift` snapshots with its "see the Ground truth section" pointer) is the old pointer in `theming-10`, and its re-point is the one I accepted before. The old "no theme surface today" removal is gone with the sentence.
+- **Facts the unit rests on, checked**: the generated struct has no theme-varying colour on `DesignTokens` (the protocol's 62 members share no name with a `static let` in the struct's body), the key's default is the base light instance, the family has no raw value and no `dark` case, and the product-token emitter writes `public extension DesignerPunkTheme`. This replaces my 2026-10-12 erratum's finding that nothing in a consumer's `generate` emitted a theme surface, which was true then and is not now.
+- **Hashes.** `canonicalHash` moves `5c2f0d32...` to `3066f308...` (`hashText` of the unit, equal to the overlay pin and to my confirmation). `renderedHash` moves `48e5f42f...` to `7d0cbb7c...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/kenya.md', 'body', '#ios-theming-spec-094')`).
+
+**Earlier acts on this row, kept as history (last: 2026-10-25):**
 
 **Ruling: ASSENT — 5/5 surviving.** All 5 survive. `theming-1` to `theming-4` are verbatim. In a consumer, `theming-1` is *more* true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`.
 - **`theming-5`** survives on the rendered directive *"query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set"*. Sourcing a value or name from a Swift file violates that directive, so the item's violation is still a violation of this unit's rendering (5e, in-unit entailment).
@@ -252,9 +271,17 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:5af175a1382bb2c8a1ae48571e10071486b5f6404e739702094a12b86d8ffa79
+canonicalHash: sha256:b9f3cb8659e8f7eea3b8ff7a76ef914b693064ae6281dc0be427045d8d1b7151
 renderedHash: sha256:eaed5dad0116f1571c1ed2fd4da6a10c81e5afa85214f1cabe2321fb5e84d34f
-date: 2026-11-01
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, edit (c)): ASSENT to the re-point, `surviving: []`.** A new act, read fresh; the earlier entries below stand as history.
+- **What changed**: the canonical cue lost its second sentence, "Note that the Swift output has no Spec-094 theme surface … in this repo or in a consumer's `generate` output", which was false once item (i) shipped, and now says "The Swift output carries the theme surface described in § iOS Theming (Spec 094)". I drafted it, Thurgood committed it in `448d4fe7d`.
+- **What I read, in this session, through tool results**: the consumer rendering of the cue, unchanged: cc `.claude/agents/kenya.md` and kiro `kenya-prompt.md`, *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*; the canonical member in the charter's frontmatter; the overlay `@entry` pin; this row's `removals`.
+- **Why it holds.** The rendering makes no claim about the theme surface, and what it says is true: `npx designerpunk generate` writes the platform token files and the product tokens. It does not name the theme Swift, which is now emitted; the omission is not false, and the surface is described in `#ios-theming-spec-094`, which I signed in the act before this one. The re-point (`npm run generate:platform-tokens` to `npx designerpunk generate`, subtraction-1) is unchanged.
+- **Hashes.** `canonicalHash` moves `5af175a1...` to `b9f3cb86...` (`hashEntry` over `entryTree(frontmatter)` of `canonical/agents/kenya.md`, recomputed by me; equal to the overlay `@entry` pin). `renderedHash` stays `eaed5dad...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/kenya.md', 'frontmatter', 'commands[platform-tokens]')`).
+
+**Earlier acts on this row, kept as history (last: 2026-11-01):**
 
 **Final re-sign 2026-09-29, after Thurgood's suffix fix `7e5af8be` and regen `8ea88c2f`: ASSENT to the re-point, `surviving: []`. My refusal is RESOLVED.**
 - **The rendering now reads** *"regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*.

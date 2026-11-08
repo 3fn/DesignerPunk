@@ -17,6 +17,7 @@ import { loadConfig, type ConfigModuleLoader } from '../config/ConfigLoader';
 import type { TsModuleLoader } from '../config/scopedTsRequire';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
+import { PLATFORM_KEYS, platformOutputDir } from '../config/platforms';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import { resolveComponentRoots } from './shared/mcpDataRoots';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
@@ -56,10 +57,10 @@ export interface OutputComparison {
 }
 
 /** Compare every file in `freshDir` with the same relative file in `actualDir`. */
-export function compareOutput(freshDir: string, actualDir: string): OutputComparison {
+export function compareOutput(freshDir: string, actualDir: string, skipTop: string[] = []): OutputComparison {
   const differing: string[] = [];
   const missing: string[] = [];
-  const files = listFiles(freshDir);
+  const files = listFiles(freshDir).filter((f) => !skipTop.includes(f.split('/')[0]));
   for (const f of files) {
     const actual = path.join(actualDir, f);
     if (!fs.existsSync(actual)) { missing.push(f); continue; }
@@ -98,7 +99,7 @@ export async function checkGeneratedOutputFresh(opts: FreshnessOptions): Promise
     const dsRoot = findDesignSystemRoot(opts.projectRoot);
     const root = dsRoot.root ?? opts.projectRoot;
     const config = opts.configLoader ? await loadConfig(root, opts.configLoader) : await loadConfig(root);
-    if (!fs.existsSync(path.join(config.outputDir, OUTPUT_MARKER))) return { state: 'no-output' };
+    if (!fs.existsSync(path.join(platformOutputDir(config, 'web'), OUTPUT_MARKER))) return { state: 'no-output' };
 
     scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'dp-fresh-'));
     const packageRoot = resolvePackageRoot(__dirname);
@@ -112,12 +113,23 @@ export async function checkGeneratedOutputFresh(opts: FreshnessOptions): Promise
       const packageSource = sourceResult.state === 'ready' ? sourceResult.source : undefined;
       if (opts.tsLoader) loadComponentTokens(config, opts.tsLoader, { packageSource, report: () => undefined });
       else loadComponentTokens(config, undefined, { packageSource, report: () => undefined });
-      generateTokenFiles(tokens, { ...config, outputDir: scratch }, { excludeComponentTokenFromWeb: isPackageComponentToken });
+      // `platforms:` folders are rendered beside the scratch output, one per named platform, and compared with the real ones.
+      const named = PLATFORM_KEYS.filter((k) => config.platforms?.[k] !== undefined);
+      const scratchPlatforms = Object.fromEntries(named.map((k) => [k, { output: path.join(scratch!, '__platforms', k) }]));
+      generateTokenFiles(tokens, { ...config, outputDir: scratch, ...(named.length > 0 ? { platforms: scratchPlatforms } : {}) }, { excludeComponentTokenFromWeb: isPackageComponentToken });
     } finally {
       Object.assign(console, saved);
       ComponentTokenRegistry.clear();
     }
-    const cmp = compareOutput(scratch, config.outputDir);
+    const cmp = compareOutput(scratch, config.outputDir, ['__platforms']);
+    for (const k of PLATFORM_KEYS) {
+      const own = config.platforms?.[k]?.output;
+      if (!own) continue;
+      const part = compareOutput(path.join(scratch, '__platforms', k), own);
+      cmp.compared += part.compared;
+      cmp.differing.push(...part.differing.map((f) => `${k}/${f}`));
+      cmp.missing.push(...part.missing.map((f) => `${k}/${f}`));
+    }
     return cmp.differing.length === 0 && cmp.missing.length === 0
       ? { state: 'fresh', compared: cmp.compared }
       : { state: 'stale', compared: cmp.compared, differing: cmp.differing, missing: cmp.missing };

@@ -39,11 +39,13 @@ import {
   consumerDegradationMessage,
   namedDefaultNoticeMessage,
   initNextStepsMessage,
+  initGenerateFailedMessage,
   initNeedsNameOffTerminalMessage,
 } from './shared/errorCatalog';
 import type { InitNextStepsContext } from './shared/errorCatalog';
 import { computeGitignoreRegion, applyGitignoreRegion, GITIGNORE_HOST_SEED_LINES } from './shared/gitignoreRegion';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
+import { loadConfig } from '../config/ConfigLoader';
 import type { ConfigModuleLoader } from '../config/ConfigLoader';
 import { emitAgentLayer, previewAgentLayerMissing, resolveAgentTarget } from './attach';
 import { serializeManifest } from './sync/Manifest';
@@ -122,6 +124,50 @@ function hashContent(content: string): string {
 export interface InitDeps {
   /** The config-module loader for the `.gitignore` block's `outputDir` read (default: `loadConfig`'s production loader). */
   configLoader?: ConfigModuleLoader;
+  /**
+   * The `generate` `init` runs once the birth is finished (Spec 129 Req 11.1). Default: the CLI's `runGenerate`. In-process
+   * jest cannot run the production config loader, so a test passes a stub, or one that exits to prove the failure path.
+   */
+  generate?: () => Promise<void>;
+}
+
+/** The exit `generate` asked for while `init` was running it. */
+class GenerateExit extends Error {
+  constructor(public readonly code: number) { super(`generate exited with ${code}`); }
+}
+
+/**
+ * Run `generate` inside `init`. `runGenerate` reports failure by printing to stderr and calling `process.exit(1)`; here
+ * that exit is turned into a result and its stderr is held, so `init` can print it once, led by the re-run command
+ * (Req 11.4), after it has finished everything else.
+ */
+async function runGenerateInInit(generate: () => Promise<void>): Promise<{ ok: boolean; message: string }> {
+  const exit = process.exit;
+  const error = console.error;
+  const held: string[] = [];
+  process.exit = ((code?: number) => { throw new GenerateExit(code ?? 0); }) as typeof process.exit;
+  console.error = (...args: unknown[]) => { held.push(args.map(String).join(' ')); };
+  try {
+    await generate();
+    return { ok: true, message: '' };
+  } catch (err) {
+    if (err instanceof GenerateExit && err.code === 0) return { ok: true, message: '' };
+    if (err instanceof GenerateExit) return { ok: false, message: held.join('\n') };
+    return { ok: false, message: [...held, err instanceof Error ? err.message : String(err)].join('\n') };
+  } finally {
+    process.exit = exit;
+    console.error = error;
+  }
+}
+
+/** The configured output folder, project-relative with `/` separators, for the closing message; `./dist/tokens` is `init`'s own default. */
+async function configuredOutputDir(dest: string, loader?: ConfigModuleLoader): Promise<string> {
+  try {
+    const config = loader ? await loadConfig(dest, loader) : await loadConfig(dest);
+    return (path.relative(dest, config.outputDir) || '.').split(path.sep).join('/');
+  } catch {
+    return 'dist/tokens';
+  }
 }
 
 export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void> {
@@ -415,14 +461,26 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
   fs.writeFileSync(manifestPath, serializeManifest(manifest.build(installedVersion, readContractHash(pkgRoot)) as unknown as DesignerPunkManifest), 'utf-8');
   console.log('✓ Created designerpunk.manifest.json');
 
+  // --- Generate (Spec 129 Req 11.1, 11.4; design § 14). The birth is finished: the config, the copied token source, the
+  // agent layer, the personal note and the manifest are all written, so a `generate` that fails loses none of them. ----
+  let generated = { ok: true, message: '' };
+  let outputDir = 'dist/tokens';
+  const generate = deps.generate ?? (async () => (await import('./designerpunk')).runGenerate(false, { fromInit: true }));
+  generated = await runGenerateInInit(generate);
+  if (generated.ok) outputDir = await configuredOutputDir(dest, deps.configLoader);
+  else console.error(`\n❌ ${initGenerateFailedMessage(generated.message)}\n`);
+
   // --- Next steps (C27 erratum; Req 15.8, 15.9, 19.6) ----------------------
   printNextSteps(opts.name, {
+    generated: generated.ok,
+    outputDir,
     packageInstalledHere: fs.existsSync(path.join(dest, 'node_modules', '@3fn', 'core', 'package.json')),
     jestConfigScaffolded: jestConfigCreated,
     starterSpecNames: starterSpecNames([...starter.written, ...starter.collided]),
     gitignoreBlockInPlace,
     agentLayerEmitted: !opts.skipAgents,
   });
+  if (!generated.ok) process.exit(1);
 }
 
 /** The U1 terminal output — every line true of what U1's `init` actually did, with the sequenced restart row printed LAST (C27 erratum, Le-T5). */

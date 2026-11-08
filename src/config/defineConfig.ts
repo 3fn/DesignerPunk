@@ -25,6 +25,7 @@
 
 import type { SemanticOverrideMap } from '../tokens/themes/types';
 import type { ThemeMode } from '../themes/ThemeRegistry';
+import type { PlatformOutputs } from './platforms';
 
 /**
  * A theme's two maps, one per mode: `light` applies in the light scheme, `dark` in the dark one.
@@ -56,6 +57,15 @@ export interface DesignerPunkConfig {
   componentTokens?: string[];
   /** Output directory for generated files. Default: 'dist' */
   output?: string;
+  /**
+   * Where a platform's files are written, when that is not `output` (Spec 129 Req 12). A key is one of
+   * `PLATFORM_KEYS` (`web`, `ios`, `android`); `output` is a path inside the project, relative to the config file.
+   * A platform named here gets its own folder, holding only that platform's generated files; every other platform,
+   * web included, is written at `output`.
+   *
+   * @example platforms: { ios: { output: './ios/DesignerPunk' }, android: { output: './android/designerpunk' } }
+   */
+  platforms?: PlatformOutputs;
   /**
    * Path to local token source directory. When set, the pipeline resolves
    * primitive and semantic tokens from this path instead of the installed package.

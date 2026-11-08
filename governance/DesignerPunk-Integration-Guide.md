@@ -3,7 +3,7 @@ id: designerpunk-integration-guide
 inclusion: manual
 name: DesignerPunk-Integration-Guide
 description: Everything a product developer needs to integrate DesignerPunk into a product repo
-path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-init: 3 }
+path-steps: { founder: 4, joining: 5, joining-cross-harness: 6, reference-no-init: 3 }
 ---
 
 # DesignerPunk Integration Guide
@@ -66,23 +66,20 @@ Use this posture when you want DesignerPunk's docs and components as a reference
 
 ## 3. BECOME — birth
 
-Use this posture when you want a design system of your own. These are the five steps. Section 4 explains what steps 2 and 3 do, and why there are two of them.
+Use this posture when you want a design system of your own. These are the four steps. Section 4 explains what step 2 does, and when to run `generate` again.
 
-1. `npm install @3fn/core`
-2. `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>`
-3. `npx designerpunk generate`
-4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
-5. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
+1. Install the package (`npm install @3fn/core`).
+2. Run `npx designerpunk init`: it sets up your design system and writes your first token output.
+3. Write your personal note.
+4. Restart your agent session so it connects to DesignerPunk.
 
-**Step 2, `init`, is the birth event — runs once per design system, ever.** It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where no terminal is attached (an agent's shell, or CI), it stops with an error. So pass both.
+**Step 2, `init`, is the birth event — runs once per design system, ever.** The full command is `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>`. It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, runs `generate` to write your first token output, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where no terminal is attached (an agent's shell, or CI), it stops with an error. So pass both, and `--target`. When `init` finishes it prints "Your token output is in `<output>`. Run `npx designerpunk generate` after every token change." If that `generate` fails, `init` still finishes the birth, leads with the re-run command and exits non-zero.
 
-**Step 3, `generate`, is the pipeline — run on every token change.** It builds your platform token output from your own token source. Section 4 says when to run it again.
+**If your repo is a TypeScript project with its own build**, two edits keep `init` from breaking it. Exclude `src/tokens/**` and `src/components/**` from your `tsconfig.json`: DesignerPunk's pipeline reads those files and your build does not, and the token source imports `@3fn/core/types`, which your module resolution may not find. And if your build writes to `dist/`, set `output` in `designerpunk.config.ts` to a directory outside it (for example `design-tokens/`) and run `npx designerpunk generate` again after you set it: the default, `./dist/tokens`, sits inside your build output, which is usually gitignored, and the commit policy commits generated output.
 
-**If your repo is a TypeScript project with its own build**, two edits keep `init` from breaking it. Exclude `src/tokens/**` and `src/components/**` from your `tsconfig.json`: DesignerPunk's pipeline reads those files and your build does not, and the token source imports `@3fn/core/types`, which your module resolution may not find. And if your build writes to `dist/`, set `output` in `designerpunk.config.ts` to a directory outside it (for example `design-tokens/`) and run `npx designerpunk generate` again: the default, `./dist/tokens`, sits inside your build output, which is usually gitignored, and the commit policy commits generated output.
+**Step 3, your personal note**: `.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine).
 
-**Step 4, your personal note**: `.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine).
-
-**Step 5, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. On first open, Claude Code asks twice. First it asks whether you trust the folder, and lists the tool permissions DesignerPunk pre-approved in `.claude/settings.json`; until you trust the folder, it ignores them. Then it asks which of the three new MCP servers to enable. All three are selected, so choose "Enable selected". It keeps that choice per clone, so each person answers once. Kiro asks nothing: the servers run on first open, with their read-only tools pre-approved in `.kiro/settings/mcp.json`.
+**Step 4, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. On first open, Claude Code asks twice. First it asks whether you trust the folder, and lists the tool permissions DesignerPunk pre-approved in `.claude/settings.json`; until you trust the folder, it ignores them. Then it asks which of the three new MCP servers to enable. All three are selected, so choose "Enable selected". It keeps that choice per clone, so each person answers once. Kiro asks nothing: the servers run on first open, with their read-only tools pre-approved in `.kiro/settings/mcp.json`.
 
 ## 4. Your language vs our updating surface
 
@@ -314,7 +311,7 @@ Then, once you have restarted your agent session:
 
 **What the agent does**:
 - Installs `@3fn/core`, reads section "2. CONSUME — the reference corpus, no init" in the install guide the package ships, and runs its `attach` command with `--reference` and your agent tool as the target. That writes the MCP configuration and its approvals, and no agents. Your agent tool may ask you to approve each command.
-- Hands the restart to you. The session that ran the commands cannot see the servers they configured; the reason is step 5 of "3. BECOME — birth".
+- Hands the restart to you. The session that ran the commands cannot see the servers they configured; the reason is step 4 of "3. BECOME — birth".
 - After the restart, asks the Application MCP for `get_component_catalog()`, then `find_components({ context: "forms" })`.
 
 **How you know it worked**: the catalog comes back as a list of components with their names, families and readiness, and the forms query names form components such as `Input-Text-Base` and `Button-CTA`. More checks are in "Verify — Explore the Component Catalog".
@@ -469,6 +466,10 @@ export default defineConfig({
 ### Themes
 
 `designerpunk.config.ts` accepts a `themes` list of `{ name, mode, overrides }`, with `mode` one of `'light'`, `'dark'` or `'both'`, and `overrides` one map or, for `mode: 'both'`, `{ light, dark }` (two maps). `generate` applies every theme you register. `dark` registers the dark override map (`mode: 'dark'`, one map). `wcag` registers the WCAG maps: `{ light: wcagSemanticOverrides, dark: darkWcagSemanticOverrides }` registers both, and one map registers the light half only (the dark half is then DesignerPunk's built-in, with a warning). Registering `wcag` with empty maps (`{ light: {}, dark: {} }`) applies nothing. Any other name is a theme of your own. On web it is written as a `:root[data-theme="<name>"]` block, whose selector matches only the `<html>` element, so it themes the whole page; a theme of one mode shows the base values in the other colour scheme. On iOS and Android it is a theme instance of the generated theme type. `generate` refuses a theme it cannot name on both platforms and says which entry: a name that is empty, not letters, digits, `-` and `_`, or that begins with a digit; the name `base`; `dark` with another mode or two maps; a spelling of `base`, `dark` or `wcag` that differs in case or separators; two names that give the same Pascal name; a name registered twice; a mode other than the three, or two maps with a mode other than `both`; and a name that would make a Swift family case `self`, `init` or `allCases`. A misspelled token name in the overrides stops `generate`.
+
+### Platform output folders
+
+`designerpunk.config.ts` accepts a `platforms` map from a platform to the folder its generated files are written to: `platforms: { ios: { output: './ios/DesignerPunk' }, android: { output: './android/designerpunk' } }`. The keys are `web`, `ios` and `android`, and each value is `{ output: '<path>' }`, relative to the config file. A platform you name gets its own folder, and the folder holds only that platform's generated files, written flat, so it can sit beside your app's `package.json` or Gradle project and be read by that platform's build. Do not point a folder at a place that already holds source files with the same names as the generated ones (`DesignTokens.ios.swift`, `ComponentTokens.ios.swift` and `ProductTokens.ios.swift` on iOS, and the `.android.kt` files on Android): a Swift package refuses a file name used twice. Every platform you do not name, web included, is still written to `output`, along with the DTCG and Figma JSON; name `web` to move those too. `generate` fails, naming the entry, when a key is not `web`, `ios` or `android`, when an entry has no `output`, or when a folder resolves outside your project.
 
 ### Starting the MCP servers by hand
 

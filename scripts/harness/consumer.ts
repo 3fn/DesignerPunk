@@ -89,6 +89,12 @@ export interface ConsumerPins {
   productTokensFixture: string;
   /** Consumer-root-relative POSIX path the fixture is copied to, and the config's `productTokens`. */
   productTokens: string;
+  /**
+   * Where `generate` writes each native platform, as consumer-root-relative POSIX paths: the config's `platforms:`
+   * (Spec 129 Req 12; Spec 132's D4 layout, `ios/<dir>` and `android/<dir>` beside the root `package.json`).
+   * Each folder holds only that platform's generated files, flat, so a `gen:` key is the file name.
+   */
+  platforms: { ios: string; android: string };
 }
 
 export const PLATFORMS = ['web', 'ios', 'android'] as const;
@@ -240,12 +246,24 @@ export function readConsumerPins(pinsPath: string): ConsumerPins {
   if (!/^[A-Za-z][A-Za-z0-9]*$/.test(name)) {
     throw new HarnessStepError('prepare', `${pinsPath} § consumer: \`name\` "${name}" must be letters and digits, starting with a letter`);
   }
-  for (const [key, value] of [['productTokensFixture', productTokensFixture], ['productTokens', productTokens]] as const) {
+  const rawPlatforms = section.platforms as Record<string, unknown> | undefined;
+  const platformPath = (key: 'ios' | 'android'): string => {
+    const v = rawPlatforms && typeof rawPlatforms === 'object' ? rawPlatforms[key] : undefined;
+    if (typeof v !== 'string' || v.trim() === '') {
+      throw new HarnessStepError('prepare', `${pinsPath} § consumer: \`platforms.${key}\` must be a non-empty string (the folder \`generate\` writes ${key} files to)`);
+    }
+    return v.trim();
+  };
+  const platforms = { ios: platformPath('ios'), android: platformPath('android') };
+  for (const [key, value] of [['productTokensFixture', productTokensFixture], ['productTokens', productTokens], ['platforms.ios', platforms.ios], ['platforms.android', platforms.android]] as const) {
     if (path.isAbsolute(value) || value.split('/').includes('..')) {
       throw new HarnessStepError('prepare', `${pinsPath} § consumer: \`${key}\` "${value}" must be a relative path with no \`..\``);
     }
   }
-  return { name, abbreviation, productTokensFixture, productTokens };
+  if (platforms.ios === platforms.android) {
+    throw new HarnessStepError('prepare', `${pinsPath} § consumer: \`platforms.ios\` and \`platforms.android\` are both "${platforms.ios}"; each platform needs its own folder`);
+  }
+  return { name, abbreviation, productTokensFixture, productTokens, platforms };
 }
 
 function prepareOut(repoRoot: string, out: string): void {
@@ -276,6 +294,24 @@ export function addProductTokens(configSource: string, productTokensPath: string
     throw new HarnessStepError('configure', 'the config `init` wrote has no `output:` line to put `productTokens` after');
   }
   const insert = `${anchor[1]}productTokens: './${productTokensPath}',\n`;
+  return configSource.slice(0, anchor.index + anchor[0].length) + insert + configSource.slice(anchor.index + anchor[0].length);
+}
+
+/**
+ * Adds `platforms: { ios: { output: './<dir>' }, android: { output: './<dir>' } }` to the config `init` wrote, on the
+ * line after its `output:` line. Fails (rather than guessing) when that anchor is absent or the config already has a
+ * `platforms:` key.
+ */
+export function addPlatforms(configSource: string, platforms: { ios: string; android: string }): string {
+  if (/^\s*platforms\s*:/m.test(configSource)) {
+    throw new HarnessStepError('configure', 'the config `init` wrote already sets `platforms`; the driver will not overwrite it');
+  }
+  const anchor = /^(\s*)output\s*:[^\n]*\n/m.exec(configSource);
+  if (!anchor) {
+    throw new HarnessStepError('configure', 'the config `init` wrote has no `output:` line to put `platforms` after');
+  }
+  const i = anchor[1];
+  const insert = `${i}platforms: {\n${i}  ios: { output: './${platforms.ios}' },\n${i}  android: { output: './${platforms.android}' },\n${i}},\n`;
   return configSource.slice(0, anchor.index + anchor[0].length) + insert + configSource.slice(anchor.index + anchor[0].length);
 }
 
@@ -458,7 +494,7 @@ export function runDriver(options: DriverOptions): ConsumerManifest {
     if (!fs.existsSync(configPath)) throw new HarnessStepError('configure', '`init` wrote no designerpunk.config.ts');
     const copied = copyDir(fixtureSource, path.join(out, pins.productTokens));
     if (copied === 0) throw new HarnessStepError('configure', `the fixture folder ${fixtureSource} holds no files`);
-    fs.writeFileSync(configPath, addProductTokens(fs.readFileSync(configPath, 'utf8'), pins.productTokens));
+    fs.writeFileSync(configPath, addPlatforms(addProductTokens(fs.readFileSync(configPath, 'utf8'), pins.productTokens), pins.platforms));
     log(`[configure] copied ${copied} fixture file(s) to ${pins.productTokens}/ and set productTokens in designerpunk.config.ts`);
 
     // --- generate --------------------------------------------------------------------------------

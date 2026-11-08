@@ -28,6 +28,8 @@ import {
   machinePathNeedles,
   MIN_MCP_BUNDLES,
   nativeResourceFindings,
+  generatedNativeNameFindings,
+  GENERATED_NATIVE_NAMES_LABEL,
   NATIVE_RESOURCES_LABEL,
   NESTED_ROOTS_HINT,
   parseArgs,
@@ -605,5 +607,40 @@ describe('parseArgs', () => {
     expect(() => parseArgs(['--tarball'])).toThrow(/needs a path/);
     expect(() => parseArgs(['--root'])).toThrow(/needs a directory/);
     expect(() => parseArgs(['--ignore-scripts'])).toThrow(/unknown argument/);
+  });
+});
+
+// ─── Section 12: no generated native file shares a name with a packaged native source (Spec 129 Task 15.3; Req 12.4) ───
+
+describe('generatedNativeNameFindings — a packaged native source must not carry a name `generate` writes (Req 12.4)', () => {
+  const sources = [
+    'src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift',
+    'src/components/core/Button-CTA/platforms/android/ButtonCTA.android.kt',
+    'src/tokens/platforms/ios/MotionTokens.swift',
+  ];
+  const failed = (paths: string[]): string[] => generatedNativeNameFindings(paths).filter((f) => !f.ok).map((f) => f.label);
+
+  it('is green on native sources whose names `generate` never writes', () => {
+    expect(failed(sources)).toEqual([]);
+  });
+
+  it('BITES once on a packaged source named DesignTokens.ios.swift: exactly the file and the summary', () => {
+    const clash = 'src/tokens/platforms/ios/DesignTokens.ios.swift';
+    expect(failed([...sources, clash])).toEqual([
+      `${GENERATED_NATIVE_NAMES_LABEL} ${clash} does not share a name with a generated file`,
+      `${GENERATED_NATIVE_NAMES_LABEL} no packaged native source shares a name with a generated native file`,
+    ]);
+  });
+
+  it('BITES on a Kotlin source named ProductTokens.android.kt, wherever it sits under src/', () => {
+    expect(failed([...sources, 'src/x/ProductTokens.android.kt'])).toHaveLength(2);
+  });
+
+  it('does not read the retired root snapshot under dist/, which is not a source', () => {
+    expect(failed([...sources, 'dist/DesignTokens.ios.swift'])).toEqual([]);
+  });
+
+  it('is not vacuous: no native source at all is red', () => {
+    expect(failed(['package.json'])).toEqual([`${GENERATED_NATIVE_NAMES_LABEL} packaged native sources found to inspect (the rule is not vacuous)`]);
   });
 });

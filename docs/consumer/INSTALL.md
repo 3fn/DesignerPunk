@@ -1,5 +1,5 @@
 ---
-path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-init: 3 }
+path-steps: { founder: 4, joining: 5, joining-cross-harness: 6, reference-no-init: 3 }
 ---
 
 # DesignerPunk install guide
@@ -52,23 +52,20 @@ Use this posture when you want DesignerPunk's docs and components as a reference
 
 ## 3. BECOME — birth
 
-Use this posture when you want a design system of your own. These are the five steps. Section 4 explains what steps 2 and 3 do, and why there are two of them.
+Use this posture when you want a design system of your own. These are the four steps. Section 4 explains what step 2 does, and when to run `generate` again.
 
-1. `npm install @3fn/core`
-2. `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>`
-3. `npx designerpunk generate`
-4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
-5. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
+1. Install the package (`npm install @3fn/core`).
+2. Run `npx designerpunk init`: it sets up your design system and writes your first token output.
+3. Write your personal note.
+4. Restart your agent session so it connects to DesignerPunk.
 
-**Step 2, `init`, is the birth event — runs once per design system, ever.** It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where no terminal is attached (an agent's shell, or CI), it stops with an error. So pass both.
+**Step 2, `init`, is the birth event — runs once per design system, ever.** The full command is `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>`. It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, runs `generate` to write your first token output, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where no terminal is attached (an agent's shell, or CI), it stops with an error. So pass both, and `--target`. When `init` finishes it prints "Your token output is in `<output>`. Run `npx designerpunk generate` after every token change." If that `generate` fails, `init` still finishes the birth, leads with the re-run command and exits non-zero.
 
-**Step 3, `generate`, is the pipeline — run on every token change.** It builds your platform token output from your own token source. Section 4 says when to run it again.
+**If your repo is a TypeScript project with its own build**, two edits keep `init` from breaking it. Exclude `src/tokens/**` and `src/components/**` from your `tsconfig.json`: DesignerPunk's pipeline reads those files and your build does not, and the token source imports `@3fn/core/types`, which your module resolution may not find. And if your build writes to `dist/`, set `output` in `designerpunk.config.ts` to a directory outside it (for example `design-tokens/`) and run `npx designerpunk generate` again after you set it: the default, `./dist/tokens`, sits inside your build output, which is usually gitignored, and the commit policy commits generated output.
 
-**If your repo is a TypeScript project with its own build**, two edits keep `init` from breaking it. Exclude `src/tokens/**` and `src/components/**` from your `tsconfig.json`: DesignerPunk's pipeline reads those files and your build does not, and the token source imports `@3fn/core/types`, which your module resolution may not find. And if your build writes to `dist/`, set `output` in `designerpunk.config.ts` to a directory outside it (for example `design-tokens/`) and run `npx designerpunk generate` again: the default, `./dist/tokens`, sits inside your build output, which is usually gitignored, and the commit policy commits generated output.
+**Step 3, your personal note**: `.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine).
 
-**Step 4, your personal note**: `.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine).
-
-**Step 5, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. On first open, Claude Code asks twice. First it asks whether you trust the folder, and lists the tool permissions DesignerPunk pre-approved in `.claude/settings.json`; until you trust the folder, it ignores them. Then it asks which of the three new MCP servers to enable. All three are selected, so choose "Enable selected". It keeps that choice per clone, so each person answers once. Kiro asks nothing: the servers run on first open, with their read-only tools pre-approved in `.kiro/settings/mcp.json`.
+**Step 4, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. On first open, Claude Code asks twice. First it asks whether you trust the folder, and lists the tool permissions DesignerPunk pre-approved in `.claude/settings.json`; until you trust the folder, it ignores them. Then it asks which of the three new MCP servers to enable. All three are selected, so choose "Enable selected". It keeps that choice per clone, so each person answers once. Kiro asks nothing: the servers run on first open, with their read-only tools pre-approved in `.kiro/settings/mcp.json`.
 
 ## 4. Your language vs our updating surface
 

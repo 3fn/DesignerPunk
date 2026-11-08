@@ -19,6 +19,13 @@ consumer:
   # consumer root, which the driver writes into the consumer's config as `productTokens`.
   productTokensFixture: harness/fixtures/product-tokens
   productTokens: product/tokens
+  # Where `generate` writes each native platform: the config's `platforms:` in Spec 132's D4 layout, `ios/<dir>` and
+  # `android/<dir>` beside the consumer root's `package.json` (Spec 129 Req 12; Kenya and Data, 2026-11-08: no lane change).
+  # Each folder holds only that platform's generated files, flat, and never the packaged source folder, so a `gen:` key is
+  # the file name. The lanes read the folder from `harness-consumer.json` (`platformOutputs`), never from here.
+  platforms:
+    ios: ios/DesignerPunk
+    android: android/designerpunk
 
 # The iOS lanes (Task 3; `harness/ios/lane.ts`). Kenya owns this section.
 #
