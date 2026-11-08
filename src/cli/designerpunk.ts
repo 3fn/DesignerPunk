@@ -203,7 +203,7 @@ function componentTokenLoadFailureMessage(err: unknown, root: string): string {
 }
 
 /** @internal Exported for testing */
-export async function runGenerate(force = false) {
+export async function runGenerate(force = false, opts: { fromInit?: boolean } = {}) {
   // Spec 123 Task 1.5 (C2 consumer #4): BOTH the read side (the config) and the
   // write side (token-index/ and platform output) anchor to the discovered ROOT —
   // never a bare process.cwd() — so `generate` behaves correctly from a
@@ -288,13 +288,16 @@ export async function runGenerate(force = false) {
   // The personal note (C26; Task 22.1, mechanism B): created from the template when absent — the joiner's
   // fresh clone has none — and only in a BORN repo (never the steward checkout or package mode). A creation
   // row, then PR-13's unignored-directory row; or, for an existing unfilled note, the warning — never both.
+  // Run by `init` (Spec 129 Req 11.1), `init` has just created the note and prints its own naming row: `generate` stays silent.
   const note = ensurePersonalNote({ root: generateRoot, pkgRoot: resolvePackageRoot(__dirname), dsState: dsRoot.state });
-  if (note === 'template-missing') {
-    console.warn(`⚠️  ${consumerDegradationMessage('personal-note template', PERSONAL_NOTE_TEMPLATE_REL, 'the personal note was not created')}`);
-  } else {
-    printPersonalNoteRows(note, generateRoot, 'created');
+  if (!opts.fromInit) {
+    if (note === 'template-missing') {
+      console.warn(`⚠️  ${consumerDegradationMessage('personal-note template', PERSONAL_NOTE_TEMPLATE_REL, 'the personal note was not created')}`);
+    } else {
+      printPersonalNoteRows(note, generateRoot, 'created');
+    }
+    if (note === 'created' || note === 'unfilled') console.log('');
   }
-  if (note === 'created' || note === 'unfilled') console.log('');
 
   let systemFailed = false;
   let productFailed = false;

@@ -18,7 +18,7 @@
  * @see Spec 118 Task 3 (consumer-config subprocess boot/smoke guard)
  */
 
-import { execSync, spawn, ChildProcess } from 'child_process';
+import { execSync, spawn, spawnSync, ChildProcess } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -254,20 +254,32 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     if (tarballPath) fs.rmSync(tarballPath, { force: true });
   });
 
+  // What `init` alone wrote under the token output and `token-index/`, so the next case can show `generate` rewrites it byte for byte.
+  const outputSnapshot = (root: string): Record<string, string> => {
+    const snap: Record<string, string> = {};
+    for (const dir of ['dist/tokens', 'token-index']) {
+      for (const f of listFiles(root, dir)) snap[f] = sha256(fs.readFileSync(path.join(root, f), 'utf-8'));
+    }
+    return snap;
+  };
+  let afterInit: Record<string, string> = {};
+
   it('init produces a working project', () => {
     const output = execSync('npx designerpunk init --name TestProduct --abbreviation TP', {
       cwd: tempDir,
       encoding: 'utf-8',
-      timeout: 30_000,
+      timeout: 90_000,
     });
     expect(output).toContain('TestProduct');
     // Task 22.2 (C27 completion): bare `init` names the default it set up FIRST, and its next steps name the
     // `.gitignore` block (written here, with the real config loader) and the `specs/` scaffold.
     expect(output.split('\n')[0]).toMatch(/^no --target given — set up for .+ \(the default\)\./);
     expect(output).toContain('specs/ holds your starter specs (ci-needs, regrounding)');
-    // Review item 2: the numbered list begins at `generate` (install → init → generate), with no bare `npm install`, and the jest install is an OPTIONAL line after it.
+    // Spec 129 Task 15.1 (Req 11.1, 11.3): `init` runs `generate`, so the list has no `generate` step and the closing
+    // message names the output folder and `generate`'s role (design § 14). No bare `npm install`; the jest install is an OPTIONAL line.
     expect(output).not.toMatch(/^ {2}\d+\. npm install/m);
-    expect(output).toMatch(/^ {2}1\. npx designerpunk generate$/m);
+    expect(output).not.toMatch(/^ {2}\d+\. npx designerpunk generate$/m);
+    expect(output).toContain('Your token output is in dist/tokens. Run `npx designerpunk generate` after every token change.');
     expect(output).toContain('Optional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
     expect(output).toContain("commit .gitignore with the rest: DesignerPunk's block in it ignores .designerpunk/ and token-index/");
 
@@ -296,6 +308,12 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     expect(fs.existsSync(path.join(tempDir, 'governance'))).toBe(false);
     expect(fs.existsSync(path.join(tempDir, '.kiro', 'steering'))).toBe(false);
     expect(fs.existsSync(path.join(tempDir, '.kiro', 'agents'))).toBe(false);
+
+    // Spec 129 Task 15.1 (Req 11.1): after `init` alone the token output and `token-index/` exist.
+    expect(fs.existsSync(path.join(tempDir, 'dist', 'tokens', 'DesignTokens.web.css'))).toBe(true);
+    expect(fs.existsSync(path.join(tempDir, 'token-index', 'components.yaml'))).toBe(true);
+    afterInit = outputSnapshot(tempDir);
+    expect(Object.keys(afterInit).length).toBeGreaterThan(0);
   }, TIMEOUT);
 
   it('generate produces output files', () => {
@@ -305,6 +323,9 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       timeout: 60_000,
     });
     expect(output).toContain('✅');
+
+    // Spec 129 Task 15.1 (Req 11.1): a `generate` straight after `init` writes byte-identical output.
+    expect(outputSnapshot(tempDir)).toEqual(afterInit);
 
     // Verify token output files exist with non-zero content.
     // Canonical output path is dist/tokens/ (init configures `output: './dist/tokens'`,
@@ -344,6 +365,31 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     expect(componentsRaw.trim().length).toBeGreaterThan(0); // N>0: not the empty silent-zero
     expect(componentsRaw).toContain('progress.node.size.sm');
   }, TIMEOUT);
+
+  /**
+   * Spec 129 Task 15.1 (Req 11.4): `generate` failing inside `init`. A file named `dist` stands where the output
+   * folder `dist/tokens` belongs, so the system pipeline fails; `init` still finishes the config,
+   * the copied token source and the agent layer, prints `generate`'s message led by the re-run command, and exits non-zero.
+   */
+  it('generate failing inside init: the birth finishes, the message leads with the re-run command, and init exits non-zero', () => {
+    const failDir = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-init-fail-'));
+    try {
+      execSync('npm init -y', { cwd: failDir, stdio: 'pipe' });
+      execSync(`npm install ${tarballPath} --no-save`, { cwd: failDir, stdio: 'pipe', timeout: 60_000 });
+      fs.writeFileSync(path.join(failDir, 'dist'), 'a file where generate needs a folder\n');
+      const result = spawnSync('npx', ['designerpunk', 'init', '--name', 'FailProduct', '--abbreviation', 'FP'], { cwd: failDir, encoding: 'utf-8', timeout: 90_000 });
+      expect(result.status).not.toBe(0);
+      const all = `${result.stdout}\n${result.stderr}`;
+      expect(all).toContain('Run `npx designerpunk generate`');
+      expect(all.indexOf('Run `npx designerpunk generate`')).toBeLessThan(all.indexOf('System token generation failed'));
+      expect(all).not.toContain('Your token output is in');
+      for (const kept of ['designerpunk.config.ts', 'designerpunk.manifest.json', 'src/tokens', '.claude/agents']) {
+        expect(fs.existsSync(path.join(failDir, kept))).toBe(true);
+      }
+    } finally {
+      fs.rmSync(failDir, { recursive: true, force: true });
+    }
+  }, 240_000);
 
   // Spec 129 Task 10.1 (Req 13.1): re-enabled. The relationship check classifies by family
   // (MathematicalRelationshipParser.validateToken), so `validate` passes on unmodified token source

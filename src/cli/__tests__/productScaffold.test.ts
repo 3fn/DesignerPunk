@@ -153,7 +153,7 @@ describe('init scaffolds the product/ tree (22.3: mechanics)', () => {
     jest.restoreAllMocks();
     fs.rmSync(scratch, { recursive: true, force: true });
   });
-  const init = (name = 'Test') => runInit(['--name', name, '--abbreviation', 'T', '--skip-agents']);
+  const init = (name = 'Test') => runInit(['--name', name, '--abbreviation', 'T', '--skip-agents'], { generate: async () => undefined });
   const read = (rel: string) => fs.readFileSync(path.join(scratch, 'product', rel), 'utf8');
 
   test('the scaffolded files equal Leonardo\'s authored files; overview equals the authored file after substituting a fixed test name', async () => {
