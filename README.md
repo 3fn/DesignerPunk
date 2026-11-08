@@ -130,13 +130,12 @@ This release is ready for building web products, with the agent layer for Claude
 
 **Use it in your project:**
 
-1. `npm install @3fn/core`
-2. `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>` — `init` is the birth event — runs once per design system, ever
-3. `npx designerpunk generate` — `generate` is the pipeline — run on every token change
-4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
-5. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
+1. Install the package (`npm install @3fn/core`).
+2. Run `npx designerpunk init`: it sets up your design system and writes your first token output.
+3. Write your personal note.
+4. Restart your agent session so it connects to DesignerPunk.
 
-[Install guide](docs/consumer/INSTALL.md)
+On first open, Claude Code asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing. ([Install guide](docs/consumer/INSTALL.md))
 
 **Study the architecture:**
 - [DesignerPunk Systems Overview](.kiro/steering/DesignerPunk-Systems-Overview.md)
