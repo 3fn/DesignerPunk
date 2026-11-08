@@ -37,3 +37,7 @@ Token-Governance's items 1 and 4 in the ballot above already state the rule corr
 - **Leonardo**: the wording, and his committed source.
 - **Sparky**: his charter line.
 - **Stacy**: the RELEASE phase-1 read; she may dispute the P0 reading.
+
+## Outcome (2026-11-08, Ada)
+
+Fixed by PR `fix/themes-line-empty-theme`. `GENERATE_THEMES_SUFFIX` (`src/cli/shared/errorCatalog.ts`) and its pin in `src/cli/__tests__/personalNote.test.ts` now read "any other theme that overrides a colour is written as :root[data-theme=\"<name>\"] on web (… a theme that overrides no colour writes no web block, and shows your base tokens), and every other theme is written as a theme instance on iOS and Android". Leonardo agreed the wording and edited his source, `catalog-wording.md` § 1, himself (`021b80d80`); the two agree. Not in this PR, routed to their owners: `governance/DesignerPunk-Integration-Guide.md` L557 (the sample copies the message), `governance/Rosetta-System-Architecture.md` L572 and `governance/Token-Quick-Reference.md` L114 (CORRECTIONs, truth: `TokenFileGenerator.ts` L1116), and Sparky's `canonical/agents/sparky.md` L311 and `canonical/operative-sets/sparky.yaml` L90. — Ada
