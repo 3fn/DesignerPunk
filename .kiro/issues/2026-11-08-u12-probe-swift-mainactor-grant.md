@@ -12,11 +12,7 @@
 
 `harness/expected/harness-ios-tokens.tsv` holds one entry, `probe:Probe.swift | non-Sendable 'some View'-typed result … 'harnessConsumerTheme' …` (count 3), tagged to the record above. Its fix is in `scripts/harness/probe-swift.ts`, which Task 18 does not list. My standing scope over that file activates at the later of U12's merge and the first iOS promotion's merge, so until then no one owns it: this grant is the write path.
 
-## Grant paths
-
-`scripts/harness/probe-swift.ts`, only line 310: `'func probeReads() {',` becomes `'@MainActor func probeReads() {',`.
-`harness/expected/harness-ios-tokens.tsv`, only the removal of the one `probe:Probe.swift | non-Sendable …` entry (the comment header stays).
-No probe test or fixture file changes: `probe-swift.test.ts` and the fixtures do not reference `probeReads` (verified by grep); if the fix forces one, this grant is amended before it is touched.
+**Grant paths**: `scripts/harness/probe-swift.ts`, only line 310: `'func probeReads() {',` becomes `'@MainActor func probeReads() {',`. `harness/expected/harness-ios-tokens.tsv`, only the removal of the one `probe:Probe.swift | non-Sendable …` entry (the comment header stays). No probe test or fixture file changes: `probe-swift.test.ts` and the fixtures do not reference `probeReads` (verified by grep); if the fix forces one, this grant is amended before it is touched.
 
 ## The fixing PR
 
