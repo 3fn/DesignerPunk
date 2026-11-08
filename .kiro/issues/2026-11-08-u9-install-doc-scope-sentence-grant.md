@@ -39,3 +39,9 @@ U9's PR. Thurgood writes the granted edits on the seat branch `task/129-14-thurg
 3. `README.md` L129, the Guide's L23 first paragraph and `docs/consumer/INSTALL.md` L9 are byte-identical.
 
 Counter-argument and what survives: the test could instead read the sentence from the Guide, so no pinned copy needs editing. That removes the next forced edit, but it also removes the test's independent check on the README and is a change to the test's design, which this grant does not make. Left to Peter if wanted.
+
+---
+
+## Outcome (2026-11-08, Thurgood, rule 5)
+
+The fixing PR is #763 at head H `ee069f45f`. `git diff --stat 261cd1a3c ee069f45f -- README.md scripts/__tests__/install-doc.test.ts`: `README.md` 1 line changed (hunk `@@ -129 +129 @@`, L129 only); `scripts/__tests__/install-doc.test.ts` 9 insertions, 2 deletions (hunks: `SCOPE_SENTENCE` takes the Guide's L23 sentence, with the frozen `RELEASE_3_SCOPE_SENTENCE` constant added at `@@ -85,0 +86,7 @@`, and the L409 CHANGELOG assertion pointed at it at `@@ -409 +416 @@`). Nothing else is changed in the two granted files. `install-doc.test.ts` passed 81/81 under `scripts/jest.config.js` at seat commit `2750c5072`; the two granted files are byte-identical between `2750c5072` and H (empty `git diff 2750c5072 ee069f45f` on them). The grant expires at #763's merge and is live until then. The record is not archived here; it moves to `archive/` in a later sweep (rule 5).
