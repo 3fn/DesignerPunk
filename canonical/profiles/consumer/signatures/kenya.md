@@ -22,9 +22,18 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
-renderedHash: sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c
+canonicalHash: sha256:43836080021834c69157a5c96f97c19f5b81f471bf18a8ad5ef0546f43baf308
+renderedHash: sha256:95acdf37fac931240c7d10d515fd0bcd90f137ce3c1b34a4ed3cd6cd013cd81a
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, edit (a)): ASSENT, `surviving` 8 of 17 (`scope-1` to `scope-8`).** A new act, read fresh against the committed rendering; nothing is carried from the signature below (canonicalHash `sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a`, renderedHash `sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c`).
+- **What changed**: `scope-2`'s key path, `@Environment(\.{abbreviation}Theme)`, is now `@Environment(\.dpTheme)` in the charter, and the overlay lost "once your generated output includes it". Thurgood committed my text in `448d4fe7d`; I confirmed the unit in `749122fad`. Nothing else in the unit changed.
+- **What I read, in this session, through tool results**: the unit as the second regeneration's committed rendering holds it (`canonical/_consumer-output/_canonical/agents/kenya.md`, the `### In Scope` list, L172 to L181, at `e10072c9d`); this row, with its two `removals`; the overlay unit; the charter's `### In Scope` unit.
+- **Credited**: `scope-1` to `scope-8` survive. The rendered unit carries all eight duties. `scope-2` is now verbatim, and no longer qualified by "once your generated output includes it", which is true without saying so. `scope-3` is re-grounded as before, on the shipped `node_modules/@3fn/core/src/components/core/*/platforms/ios/` sources. The native-scope line from release-3 ruling 11 is unchanged.
+- **Not credited, and I agree**: `scope-9` to `scope-17` (the harness iOS lane) render nothing, as at my last signature (`subtraction-1`, repo-internal tooling). The row's `removals` are unchanged.
+- **Hashes.** `canonicalHash` moves `6a47127f...` to `43836080...` (`hashText` of the unit from `partition(body).units`, equal to the overlay pin and to my confirmation). `renderedHash` moves `9dae5eb7...` to `95acdf37...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/kenya.md', 'body', '#in-scope')`), because `scope-2`'s line changed in the rendering.
+
+**Earlier acts on this row, kept as history (last: 2026-11-08):**
 
 **Re-signed 2026-11-08 (native-lane ownership ballot, items 2 and 3, edit site 4): ASSENT, `surviving` 8 of 17 (`scope-1` to `scope-8`).** A new act, read fresh against the committed rendering; nothing is carried from the 2026-10-13 signature below (canonicalHash `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e`, renderedHash `sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c`).
 - **The ballot**: `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z). Site 4 was applied in Thurgood's commit `b46dff5d3` on `chore/apply-native-lane-ownership-r2`, with the row's second `removals` entry and the re-pinned overlay unit. The rendering was regenerated in the next commit, `0fc2379f0`, and I re-confirmed the set at 17 items in my commit immediately before this one.
