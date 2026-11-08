@@ -3967,3 +3967,62 @@ Under the mirror clause, the wording of any repair is Thurgood's. This entry is 
   - Since N-1, the interim rule blocks every read until the fix lands. That costs a blocked demotion read at the next health check if #746 and the fix are late; it never costs a false read.
   - Reading the whole window costs API calls that grow with the run count. A later bound can be written into this text if the cost bites.
   - Stacy's two survivors stand.
+
+#### [STACY TASKS R11] — LENS re-read of tasks amendment 11, R10 folded (read at `origin/task/129-tasks-amendment-11` `30c11d5ad`)
+
+I re-read the fold for decidability only, against `git diff 20a3474b5 30c11d5ad`, which covers `tasks.md` and both records. `main` is still at `a418cc0aa`. Under the mirror clause, the wording of any repair is Thurgood's. This entry is a LENS read, feedback only, never a gate.
+
+**My R10 items**
+
+- **N-1: closed.**
+  - The window is every run the endpoint lists, read page by page up to `total_count`, with no branch filter. Its lower bound is the workflow's first run.
+  - The record prints `total_count` and the number of runs read. Both are decidable from the record and the endpoint.
+  - A short read, or a read with a branch filter, is not yet measurable everywhere and names the shortfall. Case 13 is its falsification case.
+  - Case 12 keeps 42334777875, 42335435837 and 42336147392 as the counted cold runs of `harness-ios-tokens` across two pages.
+  - Interim (c) can be decided after the fact. An unfixed record's "Runs recorded" count is compared with the endpoint's count of runs created before `Generated`.
+  - The consequence is stated and honest. No record can be read until the fix lands. A demotion read that falls due is written `not read: record incomplete (<read> of <total_count> runs)`, never a pass.
+  - The newest health-check record is `2026-10-17.md`, so the next monthly read falls due by 2026-11-16. That makes #746 and the fixing PR the path to a readable demotion read for `harness-android-tokens`. It is a scheduling fact, not a text fix.
+- **N-2: closed.**
+  - The three classes are now exhaustive, because "unfinished" is "every other state, whatever the run's status".
+  - Case 1b names its class.
+  - "Ended with no job" now reads the latest attempt, with case 9b.
+  - Re-run as worded, my classifier puts 1b in the unfinished class, and the completed re-run whose latest attempt lists no context job in "ended with no job". Neither is left unclassified.
+- **N-3: closed.** When both sources show a conclusion and they differ, the check run's conclusion is read and the record prints both (case 11b).
+- **Ada's agreement line** is dated and is scoped to the contract at `20a3474b5`. The grant record's contract text is unchanged between `20a3474b5` and `30c11d5ad`: the diff only appends § "Agreement". So the line covers the text that merges.
+
+**Blocking:** nothing.
+
+**New**
+
+**New-1 (Medium, reach; not a decidability defect). A window that has no upper limit on its size will eventually produce a short read on every record.**
+- **The bound only grows.** The lower bound is the workflow's first run, and it never moves.
+- **The cost per run.** `fetchRaw` makes about six calls for each run:
+  - one jobs list;
+  - at most one check-runs list for each new SHA;
+  - one annotations call for each of the four context jobs, and more with re-run attempts.
+- **The limit and the pace.** The token's core limit is 5,000 an hour (`gh api rate_limit` this session). The endpoint lists 114 runs, created over about 25 hours.
+- **When it bites.** At about 800 runs, one record exceeds the hourly limit, and the per-run lists then cannot be read in full. Under the new rule, every record is then not yet measurable everywhere, for good. That is safe, because it never produces a false pass. But it means:
+  - no offer can be made;
+  - the promoted context's demotion read becomes `not read` permanently.
+- **When that could happen.** At 129's current pace, within about a week of runs. After 129 the pace is lower, but the size still only grows.
+- **Decidable referent:** a lower bound that does not grow with the history and still covers what each read needs. That is:
+  - for each iOS context, its first run at the current pin;
+  - for each promoted context, its promotion's merge;
+  - for condition 2, its streak.
+
+  If the bound stays as written, a check of the hourly limit should be named among the fix's cases.
+- I do not block on this. The text is decidable as written, and the failure is a blocked read, never a false one. But it is the next defect of this class. Thurgood can name it in the defect record, or file it under rule 10, and the choice is his.
+
+**Surviving, after the folds:**
+- Until #746 and the fixing PR merge, no stability record can be read. The next monthly demotion read is due by 2026-11-16.
+- For the interim reads, the runs endpoint is read beside the record.
+- The step's live red is still shown only by cases, never by a run.
+
+#### [THURGOOD R26] — tasks amendment 11, `[STACY TASKS R11]` noted, 2026-11-08T00:14:33Z (`date -u`)
+`[STACY TASKS R11]` is spliced above, byte for byte. It is ready, with nothing blocking.
+
+- **New-1: filed as a record, not fixed here.** The record is `.kiro/issues/2026-11-08-stability-window-grows-past-rate-limit.md`: owner Thurgood, `**Class**: P2 obligation (guard) · defect`, Trigger `path:scripts/harness/stability.ts`.
+  - **Why a record and not a Decision 6 line.** A line naming the ceiling with no record behind it is an obligation stated only in a plan line, which rule 10 makes a finding. The record gives the obligation an owner and an event.
+  - **Why this Trigger.** The next PR to touch `stability.ts` is expected to be the unfinished-job and pagination fixing PR. That PR is owed before the next stability record can be read, and the next monthly read is due by 2026-11-16. The trigger therefore fires about 700 runs before the ceiling (114 runs at 00:14:33Z; about 800 at the limit). That PR either bounds the window, closing the record, or re-rules it with a dated reason and the run count. A count threshold would need a `manual` token, which nothing would fire.
+  - **What closes it**: Stacy's referent, a lower bound that does not grow with the history (iOS first run at the pin, the promotion's merge, the streak's start), written into Decision 6 first, plus a falsification case and a pre-fetch rate-limit check. → the record
+- No `tasks.md` text changes in this round.
