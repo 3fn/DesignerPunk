@@ -119,7 +119,7 @@ units:
       - id: theming-1
         kind: obligation
         label: "Every colour semantic is read through the theme with @Envi"
-        text: "Every colour semantic is read through the theme with `@Environment(\\.dpTheme)`; the semantic colours are not on `DesignTokens`"
+        text: "Every colour semantic is read through the theme with `@Environment(\\.dpTheme)`; the theme-varying colours are not on `DesignTokens`"
       - id: theming-2
         kind: obligation
         label: "The fixed contract is DesignerPunk's, whatever your config"

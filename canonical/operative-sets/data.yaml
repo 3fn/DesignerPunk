@@ -118,8 +118,8 @@ units:
     items:
       - id: theming-1
         kind: obligation
-        label: "Every colour semantic is read through the theme with Loca"
-        text: "Every colour semantic is read through the theme with `LocalDPTheme.current.<name>`; the semantic colours are not on `DesignTokens`"
+        label: "Every theme-varying colour semantic is read through the them"
+        text: "Every theme-varying colour semantic is read through the theme with `LocalDPTheme.current.<name>`; those colours are not on `DesignTokens`, which still carries the static colour members such as `accessibility_focus_color` and `color_icon_optical_balance`"
       - id: theming-2
         kind: obligation
         label: "The fixed contract is DesignerPunk's, whatever your config"
