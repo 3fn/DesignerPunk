@@ -44,7 +44,7 @@ export const BadgeLabelBaseTokens = defineComponentTokens({
   tokens: {
     'maxWidth': {
       value: SPACING_BASE_VALUE * 15, // 8 × 15 = 120px
-      reasoning: 'Maximum width for truncated badges; allows ~12-15 characters before ellipsis while maintaining compact badge appearance. Value follows spacing family pattern (8 × 15 = 120px) but exceeds standard spacing scale, requiring component-level definition.',
+      reasoning: 'Maximum width for truncated badges; allows ~12-15 characters before ellipsis while maintaining compact badge appearance. Value sits on the spacing grid (8 × 15 = 120px) but no semantic spacing token reaches that size, so it is defined at component level.',
     },
   },
 });

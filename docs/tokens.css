@@ -31,7 +31,7 @@
   --blend-500: 0.2;
 
   /* BLUR TOKENS */
-  /* 0 */
+  /* base × 0 = 16 × 0 = 0 */
   --blur-000: 0px;
   /* base × 0.25 = 16 × 0.25 = 4 */
   --blur-025: 4px;
@@ -232,6 +232,10 @@
   --black-300: oklch(0.14 0.008 260);
   --black-400: oklch(0.07 0.004 260);
   --black-500: oklch(0 0 260);
+  --shadow-black-100: oklch(0 0 0);
+  --shadow-blue-100: oklch(0.2161 0.0306 269.6);
+  --shadow-orange-100: oklch(0.1956 0.0127 67);
+  --shadow-gray-100: oklch(0.1912 0.0219 263.8);
 
   /* DENSITY TOKENS */
   /* base × 0.75 = 1.0 × 0.75 = 0.75 */
@@ -370,7 +374,7 @@
   --opacity-088: 0.88;
   /* base × 12 = 0.08 × 12 = 0.96 */
   --opacity-096: 0.96;
-  /* Special case: full opacity = 1.0 */
+  /* base × 12.5 = 0.08 × 12.5 = 1 */
   --opacity-100: 1;
 
   /* RADIUS TOKENS */
@@ -707,91 +711,91 @@
   --shadow-none-blur: var(--blur-000);
   --shadow-none-opacity: var(--shadow-opacity-none);
   --shadow-none-color: var(--shadow-black-100);
-  --shadow-none: var(--shadow-none-offset-x) var(--shadow-none-offset-y) var(--shadow-none-blur) rgba(0, 0, 0, var(--shadow-none-opacity));
+  --shadow-none: var(--shadow-none-offset-x) var(--shadow-none-offset-y) var(--shadow-none-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-none-opacity) * 100%), transparent);
   --shadow-container-offset-x: var(--shadow-offset-x-000);
   --shadow-container-offset-y: var(--shadow-offset-y-100);
   --shadow-container-blur: var(--blur-075);
   --shadow-container-opacity: var(--shadow-opacity-moderate);
   --shadow-container-color: var(--shadow-black-100);
-  --shadow-container: var(--shadow-container-offset-x) var(--shadow-container-offset-y) var(--shadow-container-blur) rgba(0, 0, 0, var(--shadow-container-opacity));
+  --shadow-container: var(--shadow-container-offset-x) var(--shadow-container-offset-y) var(--shadow-container-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-container-opacity) * 100%), transparent);
   --shadow-navigation-offset-x: var(--shadow-offset-x-000);
   --shadow-navigation-offset-y: var(--shadow-offset-y-100);
   --shadow-navigation-blur: var(--blur-125);
   --shadow-navigation-opacity: var(--shadow-opacity-soft);
   --shadow-navigation-color: var(--shadow-black-100);
-  --shadow-navigation: var(--shadow-navigation-offset-x) var(--shadow-navigation-offset-y) var(--shadow-navigation-blur) rgba(0, 0, 0, var(--shadow-navigation-opacity));
+  --shadow-navigation: var(--shadow-navigation-offset-x) var(--shadow-navigation-offset-y) var(--shadow-navigation-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-navigation-opacity) * 100%), transparent);
   --shadow-dropdown-offset-x: var(--shadow-offset-x-000);
   --shadow-dropdown-offset-y: var(--shadow-offset-y-100);
   --shadow-dropdown-blur: var(--blur-075);
   --shadow-dropdown-opacity: var(--shadow-opacity-moderate);
   --shadow-dropdown-color: var(--shadow-black-100);
-  --shadow-dropdown: var(--shadow-dropdown-offset-x) var(--shadow-dropdown-offset-y) var(--shadow-dropdown-blur) rgba(0, 0, 0, var(--shadow-dropdown-opacity));
+  --shadow-dropdown: var(--shadow-dropdown-offset-x) var(--shadow-dropdown-offset-y) var(--shadow-dropdown-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-dropdown-opacity) * 100%), transparent);
   --shadow-modal-offset-x: var(--shadow-offset-x-000);
   --shadow-modal-offset-y: var(--shadow-offset-y-200);
   --shadow-modal-blur: var(--blur-100);
   --shadow-modal-opacity: var(--shadow-opacity-depth-200);
   --shadow-modal-color: var(--shadow-black-100);
-  --shadow-modal: var(--shadow-modal-offset-x) var(--shadow-modal-offset-y) var(--shadow-modal-blur) rgba(0, 0, 0, var(--shadow-modal-opacity));
+  --shadow-modal: var(--shadow-modal-offset-x) var(--shadow-modal-offset-y) var(--shadow-modal-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-modal-opacity) * 100%), transparent);
   --shadow-toast-offset-x: var(--shadow-offset-x-000);
   --shadow-toast-offset-y: var(--shadow-offset-y-300);
   --shadow-toast-blur: var(--blur-150);
   --shadow-toast-opacity: var(--shadow-opacity-depth-300);
   --shadow-toast-color: var(--shadow-black-100);
-  --shadow-toast: var(--shadow-toast-offset-x) var(--shadow-toast-offset-y) var(--shadow-toast-blur) rgba(0, 0, 0, var(--shadow-toast-opacity));
+  --shadow-toast: var(--shadow-toast-offset-x) var(--shadow-toast-offset-y) var(--shadow-toast-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-toast-opacity) * 100%), transparent);
   --shadow-tooltip-offset-x: var(--shadow-offset-x-000);
   --shadow-tooltip-offset-y: var(--shadow-offset-y-300);
   --shadow-tooltip-blur: var(--blur-150);
   --shadow-tooltip-opacity: var(--shadow-opacity-depth-300);
   --shadow-tooltip-color: var(--shadow-black-100);
-  --shadow-tooltip: var(--shadow-tooltip-offset-x) var(--shadow-tooltip-offset-y) var(--shadow-tooltip-blur) rgba(0, 0, 0, var(--shadow-tooltip-opacity));
+  --shadow-tooltip: var(--shadow-tooltip-offset-x) var(--shadow-tooltip-offset-y) var(--shadow-tooltip-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-tooltip-opacity) * 100%), transparent);
   --shadow-fab-offset-x: var(--shadow-offset-x-300);
   --shadow-fab-offset-y: var(--shadow-offset-y-400);
   --shadow-fab-blur: var(--blur-025);
   --shadow-fab-opacity: var(--shadow-opacity-hard);
   --shadow-fab-color: var(--shadow-blue-100);
-  --shadow-fab: var(--shadow-fab-offset-x) var(--shadow-fab-offset-y) var(--shadow-fab-blur) rgba(0, 0, 0, var(--shadow-fab-opacity));
+  --shadow-fab: var(--shadow-fab-offset-x) var(--shadow-fab-offset-y) var(--shadow-fab-blur) color-mix(in oklab, var(--shadow-blue-100) calc(var(--shadow-fab-opacity) * 100%), transparent);
   --shadow-hover-offset-x: var(--shadow-offset-x-000);
   --shadow-hover-offset-y: var(--shadow-offset-y-100);
   --shadow-hover-blur: var(--blur-125);
   --shadow-hover-opacity: var(--shadow-opacity-soft);
   --shadow-hover-color: var(--shadow-black-100);
-  --shadow-hover: var(--shadow-hover-offset-x) var(--shadow-hover-offset-y) var(--shadow-hover-blur) rgba(0, 0, 0, var(--shadow-hover-opacity));
+  --shadow-hover: var(--shadow-hover-offset-x) var(--shadow-hover-offset-y) var(--shadow-hover-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-hover-opacity) * 100%), transparent);
   --shadow-navigation-indicator-offset-x: var(--shadow-offset-x-000);
   --shadow-navigation-indicator-offset-y: var(--shadow-offset-y-000);
   --shadow-navigation-indicator-blur: var(--blur-025);
   --shadow-navigation-indicator-opacity: var(--shadow-opacity-soft);
   --shadow-navigation-indicator-color: var(--shadow-black-100);
-  --shadow-navigation-indicator: var(--shadow-navigation-indicator-offset-x) var(--shadow-navigation-indicator-offset-y) var(--shadow-navigation-indicator-blur) rgba(0, 0, 0, var(--shadow-navigation-indicator-opacity));
+  --shadow-navigation-indicator: var(--shadow-navigation-indicator-offset-x) var(--shadow-navigation-indicator-offset-y) var(--shadow-navigation-indicator-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-navigation-indicator-opacity) * 100%), transparent);
   --shadow-sunrise-offset-x: var(--shadow-offset-x-n-300);
   --shadow-sunrise-offset-y: var(--shadow-offset-y-200);
   --shadow-sunrise-blur: var(--blur-075);
   --shadow-sunrise-opacity: var(--shadow-opacity-moderate);
   --shadow-sunrise-color: var(--shadow-blue-100);
-  --shadow-sunrise: var(--shadow-sunrise-offset-x) var(--shadow-sunrise-offset-y) var(--shadow-sunrise-blur) rgba(0, 0, 0, var(--shadow-sunrise-opacity));
+  --shadow-sunrise: var(--shadow-sunrise-offset-x) var(--shadow-sunrise-offset-y) var(--shadow-sunrise-blur) color-mix(in oklab, var(--shadow-blue-100) calc(var(--shadow-sunrise-opacity) * 100%), transparent);
   --shadow-morning-offset-x: var(--shadow-offset-x-n-150);
   --shadow-morning-offset-y: var(--shadow-offset-y-200);
   --shadow-morning-blur: var(--blur-075);
   --shadow-morning-opacity: var(--shadow-opacity-moderate);
   --shadow-morning-color: var(--shadow-black-100);
-  --shadow-morning: var(--shadow-morning-offset-x) var(--shadow-morning-offset-y) var(--shadow-morning-blur) rgba(0, 0, 0, var(--shadow-morning-opacity));
+  --shadow-morning: var(--shadow-morning-offset-x) var(--shadow-morning-offset-y) var(--shadow-morning-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-morning-opacity) * 100%), transparent);
   --shadow-noon-offset-x: var(--shadow-offset-x-000);
   --shadow-noon-offset-y: var(--shadow-offset-y-200);
   --shadow-noon-blur: var(--blur-075);
   --shadow-noon-opacity: var(--shadow-opacity-moderate);
   --shadow-noon-color: var(--shadow-black-100);
-  --shadow-noon: var(--shadow-noon-offset-x) var(--shadow-noon-offset-y) var(--shadow-noon-blur) rgba(0, 0, 0, var(--shadow-noon-opacity));
+  --shadow-noon: var(--shadow-noon-offset-x) var(--shadow-noon-offset-y) var(--shadow-noon-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-noon-opacity) * 100%), transparent);
   --shadow-dusk-offset-x: var(--shadow-offset-x-150);
   --shadow-dusk-offset-y: var(--shadow-offset-y-200);
   --shadow-dusk-blur: var(--blur-075);
   --shadow-dusk-opacity: var(--shadow-opacity-moderate);
   --shadow-dusk-color: var(--shadow-black-100);
-  --shadow-dusk: var(--shadow-dusk-offset-x) var(--shadow-dusk-offset-y) var(--shadow-dusk-blur) rgba(0, 0, 0, var(--shadow-dusk-opacity));
+  --shadow-dusk: var(--shadow-dusk-offset-x) var(--shadow-dusk-offset-y) var(--shadow-dusk-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-dusk-opacity) * 100%), transparent);
   --shadow-sunset-offset-x: var(--shadow-offset-x-300);
   --shadow-sunset-offset-y: var(--shadow-offset-y-200);
   --shadow-sunset-blur: var(--blur-075);
   --shadow-sunset-opacity: var(--shadow-opacity-moderate);
   --shadow-sunset-color: var(--shadow-blue-100);
-  --shadow-sunset: var(--shadow-sunset-offset-x) var(--shadow-sunset-offset-y) var(--shadow-sunset-blur) rgba(0, 0, 0, var(--shadow-sunset-opacity));
+  --shadow-sunset: var(--shadow-sunset-offset-x) var(--shadow-sunset-offset-y) var(--shadow-sunset-blur) color-mix(in oklab, var(--shadow-blue-100) calc(var(--shadow-sunset-opacity) * 100%), transparent);
   --opacity-subtle: var(--opacity-088);
   --opacity-medium: var(--opacity-072);
   --opacity-heavy: var(--opacity-048);
@@ -963,7 +967,7 @@
   --avatar-icon-size-xxl: 64;
 
   /* BadgeLabelBase Component Tokens */
-  /* Maximum width for truncated badges; allows ~12-15 characters before ellipsis while maintaining compact badge appearance. Value follows spacing family pattern (8 × 15 = 120px) but exceeds standard spacing scale, requiring component-level definition. */
+  /* Maximum width for truncated badges; allows ~12-15 characters before ellipsis while maintaining compact badge appearance. Value sits on the spacing grid (8 × 15 = 120px) but no semantic spacing token reaches that size, so it is defined at component level. */
   --badgelabelbase-max-width: 120;
 
   /* ButtonIcon Component Tokens */

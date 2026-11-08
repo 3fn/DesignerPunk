@@ -42,6 +42,20 @@ Nothing in the transcripts is lost. If the parser is widened, these 20 acts anch
 
 Her evidentiary note: she hand-confirmed that the transcripts exist and show the commit created. A hand-read is not an anchor and never rolls into `anchored`. The audit is post-acceptance and never a gate.
 
+**Re-read under § 4.3 as amended 2026-11-08 (ballot 2026-10-23-link4-candidate-first-sha-after-commit) @ `e7d82c377`** (Stacy, 2026-11-08; § 5 step 9). Appended here because no RELEASE claims-pass record carries `record absent 20`. The 2026-10-23 line above stays.
+- **Command**: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr 445 --exclude-signer stacy`. It ran on `main` at `2d9944ba9`, whose `tools/agent-generator/` equals `e7d82c377`'s, with the default store set (17 stores) and no `--store`.
+- **Result**: `filter --exclude-signer stacy: 15 of 20 act(s) selected; 5 withheld`; `15 act(s) — anchored 15 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0`.
+- **The 15 acts read `anchored`**, one line each:
+  - Ada `1ddac1d2` ×2;
+  - Data `ea0bfe29` ×4;
+  - Kenya `314e6a01` ×4;
+  - Leonardo `fc6ae901` ×2;
+  - Lina `bd19189e` ×1;
+  - Sparky `81e4f9c7` ×2.
+  All are read through `f6f839ac…/subagents/`. The full output is in the batch-5 ARMING record (`.kiro/specs/129-consumer-generation-completeness/completion/arming-reads-2026-11-08-batch-5.md`).
+- **The 5 withheld acts are Stacy-signed**, `4c0f6977b`'s rows. They are the § 5.3 delegate's: the next seat in the rotation after 16.2.0's Lina is **Leonardo**, whose file is `delegate-audit-link4-reread-leonardo.md`. My hand-read does not count.
+- **Step 10**: this record closes at the re-read, and the re-read is both lines, mine and the delegate's. It does not close here. The owner's rule-5 outcome line, naming both re-read commits, and the archive move follow the delegate's file.
+
 ## 4. The two options Thurgood owns
 
 **A. Widen link 4.** `HEX_LINE_RE` additionally accepts a first `git log` line that is a bare hex run (`/^([0-9a-f]{7,40})$/`) whose **next non-empty line** is the subject, in `candidateLines`. The candidate keeps its existing test: the prefix must be a prefix of C's full SHA **and** the subject must equal C's exact subject.
@@ -103,3 +117,11 @@ The joint recommendation is Thurgood's and Stacy's consult R2 on the orchestrato
 - **2026-10-23 (Thurgood), ballot RATIFIED.** Peter ratified `2026-10-23-link4-candidate-first-sha-after-commit` in chat, 2026-10-23: "Re: 1, ratified." (ballot § 9). The Trigger's event (the re-read commit after the application PR merges, ballot § 5 step 9) now has its authority. Nothing is applied: the application waits for Spec 129's first unit, opens by 2027-03-21, and both re-reads land before 2027-04-21. The record stays ACTIVE and closes at the re-read (step 10).
 
 - **2026-10-23 (Thurgood, owner)**: O9 added (orchestrator practice, 2026-10-23). Cause: `12b3e98f` on branch `chore/stacy-owed-set-heading-rename-v3`.
+
+- **2026-11-08 — Outcome (Thurgood, owner; rule 5): executed and closed.** The record's event, the re-read of #445's 20 acts under § 4.3 as amended (ballot `2026-10-23-link4-candidate-first-sha-after-commit` § 5 steps 9 and 10), has happened, on both halves.
+  - **The application**: #769 (`e7d82c377`) applied the ballot's edit sites, the code and the fixtures. It also fixed the link-4 double count (Peter, 2026-11-08T03:55:36Z, "Let's go (A) with the class option"), which is `.kiro/issues/2026-10-26-signing-chain-audit-false-verdicts.md` fix 2.
+  - **Stacy's re-read**: #771 (`0200fadb6`), `--audit --pr 445 --exclude-signer stacy` at `e7d82c377`: 15 of 20 selected, **anchored 15**, record absent 0, FAIL 0, anomaly 0 (Ada `1ddac1d2` ×2, Data `ea0bfe29` ×4, Kenya `314e6a01` ×4, Leonardo `fc6ae901` ×2, Lina `bd19189e` ×1, Sparky `81e4f9c7` ×2).
+  - **The delegate's re-read of the Stacy-signed act**: #772 (`939931b15`), Leonardo, `.kiro/issues/delegate-audit-link4-reread-leonardo.md`, `--audit --pr 445 --signer stacy`: 5 of 20 selected (`4c0f6977b`'s rows), **anchored 5**, no FAIL, no anomaly.
+  - **Verdicts together**: #445 reads **anchored 20 of 20**; it read `record absent` 20 on 2026-10-23. Links 5–7 had never run on these acts, and none failed.
+  - **Not closed here, by design**: the other findings the re-reads surfaced (#758's `FAIL 7` on `d85aaa85` and its `record absent 7` rows) belong to `2026-10-26-signing-chain-audit-false-verdicts.md` (fix 3 and the rendered-nothing rows), which stays open.
+  - The ballot's step 11 straggler sweep and RS-38's sweep for #769 are recorded in `2026-10-26-signing-chain-audit-false-verdicts.md` and `2026-11-08-signing-chain-restatements-stale-after-link4.md`.

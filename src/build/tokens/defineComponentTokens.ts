@@ -36,6 +36,8 @@
  */
 
 import type { RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
+import { SPACING_BASE_VALUE } from '../../tokens/SpacingTokens';
+import { SIZING_BASE_VALUE } from '../../tokens/SizingTokens';
 
 // Re-export RegisteredComponentToken for convenience
 export type { RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
@@ -101,9 +103,23 @@ export interface TokenWithReference<T extends PrimitiveTokenReference> {
 export interface TokenWithValue {
   /** Value conforming to family's value definition pattern */
   value: number;
+  /**
+   * For a value off the family's grid (spacing and sizing: `BASE × k × step`), how the value is
+   * derived. Required to be non-empty for an off-grid value to conform; a value on the grid needs none.
+   * The check enforces that the reason exists, not that it is good: a reviewer reads it when the
+   * token is created (Spec 129 design § 12).
+   */
+  offGridReason?: string;
   /** Required explanation of why this token exists */
   reasoning: string;
 }
+
+/**
+ * A registered component token as `defineComponentTokens` records it: the registry's shape plus the
+ * `offGridReason` of a value-path token that states one. The field rides on the harvested object;
+ * the registry's own type is unchanged.
+ */
+export type ComponentTokenWithGridReason = RegisteredComponentToken & { offGridReason?: string };
 
 /**
  * Union type for token definitions
@@ -272,13 +288,15 @@ export function defineComponentTokens<T extends Record<string, TokenDefinition>>
     } else {
       // Token with family-conformant value
       values[key] = definition.value;
-      registeredTokens.push({
+      const registered: ComponentTokenWithGridReason = {
         name: tokenName,
         component,
         family,
         value: definition.value,
         reasoning: definition.reasoning,
-      });
+        ...(definition.offGridReason !== undefined ? { offGridReason: definition.offGridReason } : {}),
+      };
+      registeredTokens.push(registered);
     }
   }
 
@@ -325,4 +343,47 @@ export function getTokenContract(candidate: unknown): RegisteredComponentToken[]
     return undefined;
   }
   return (candidate as Record<string, unknown>)[TOKEN_CONTRACT_BRAND] as RegisteredComponentToken[];
+}
+
+/**
+ * The grid rule for a component token's custom value (Spec 129 Task 10.2, design § 12 / D-8), for the
+ * two families that have one: a value conforms when it is on the family's grid, `BASE × k × step`, with
+ * k whole and no upper cap (spacing and sizing: base 8, step 0.25, a 2 px grid). An off-grid value
+ * conforms only with a non-empty `offGridReason`.
+ *
+ * It lives here, beside the value path it checks, so `generate` can warn on it without loading the
+ * validation coordinator (whose other families read token modules `generate` does not need). Returns
+ * `null` for a family with no grid rule, `{ ok: true }` for a conforming value, else the message.
+ */
+export function checkGridConformance(
+  family: string,
+  value: number,
+  offGridReason?: string
+): { ok: true } | { ok: false; message: string } | null {
+  if (family !== 'spacing' && family !== 'sizing') return null;
+  const isSizing = family === 'sizing';
+  const baseValue = isSizing ? SIZING_BASE_VALUE : SPACING_BASE_VALUE;
+  const baseName = isSizing ? 'SIZING_BASE_VALUE' : 'SPACING_BASE_VALUE';
+  const multiplier = value / baseValue;
+  const onGrid = multiplier >= 0 && Math.abs(multiplier * 4 - Math.round(multiplier * 4)) < 1e-9;
+  if (onGrid || (typeof offGridReason === 'string' && offGridReason.trim() !== '')) return { ok: true };
+  return {
+    ok: false,
+    message:
+      `${isSizing ? 'Sizing' : 'Spacing'} value ${value} is not derivable from ${baseName} (${baseValue}). ` +
+      `Use ${baseName} * multiplier (e.g., ${baseValue} * 1.25 = ${baseValue * 1.25}), ` +
+      `or state how the value is derived in an offGridReason.`,
+  };
+}
+
+/**
+ * The errors a component token's value raises under the grid rule alone: empty for a token that
+ * conforms, that references a primitive, or whose family has no grid. What `generate` warns with.
+ */
+export function gridConformanceErrors(token: ComponentTokenWithGridReason): string[] {
+  if (token.primitiveReference) return [];
+  const r = checkGridConformance(token.family, token.value, token.offGridReason);
+  return r && !r.ok
+    ? [`Token "${token.name}" value ${token.value} does not conform to ${token.family} family pattern. ${r.message}`]
+    : [];
 }

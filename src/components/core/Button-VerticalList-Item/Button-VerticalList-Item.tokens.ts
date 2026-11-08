@@ -52,6 +52,7 @@ export const VerticalListItemTokens = defineComponentTokens({
     'paddingBlock.rest': {
       value: SPACING_BASE_VALUE * 1.375, // 11px
       reasoning: 'Block padding at rest state (1px border). 11px padding + 1px border = 12px per side, achieving 48px total with 24px content. Uses TokenWithValue pattern as no primitive token exists for 11px.',
+      offGridReason: 'Padding compensation: (48 target height − 24 content height) / 2 − 1 rest border (borderWidth100) = 11. With the 2 px selected border the same formula gives 10 (space125), so the pair holds the height constant; the value is derived from the tap target, the content height and the border, not from the spacing grid.',
     },
     'paddingBlock.selected': {
       reference: spacingTokens.space125,

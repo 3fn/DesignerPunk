@@ -66,3 +66,9 @@ Appended under ballot `2026-10-25-token-selection-order-one-rule` § 11 step 11,
 *Signed: Ada, 2026-10-25.*
 
 **Routed**: Spec 129 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under DLG `d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 fork 2 (a), batch routing)*. The Trigger is unchanged. Whether it is re-ruled in place to the spec follows Peter's answer to fork B (in place or archived); until then this record's own Trigger, which already names this spec's requirements, is its firing. This record is not due at 16.2.0's S.
+
+---
+
+## Outcome (2026-11-08, Ada, rule 5)
+
+Closed by Spec 129 U5 (Task 10). The ruling this record asked for is design § 12 (D-8): a custom value conforms when it is on its family's grid, `BASE × k × step`, k whole, no upper cap, and `sizing` is validated too; an off-grid value conforms only with a non-empty `offGridReason`. The check now runs on both paths: `generate` warns for a consumer's non-conforming component token, naming it, and does not fail (a `Consumer Guard` case), and the repository's lane fails on a DesignerPunk token that does not conform (`ComponentTokenConformance.test.ts`, shown red once on `verticallistitem.paddingBlock.rest`). The two known cases: Badge-Label-Base `maxWidth` 120 is on the grid once the cap goes (Lina reworded its reasoning only); Button-VerticalList-Item `paddingBlock.rest` 11 carries Lina's `offGridReason` from design § 12. Avatar's 12 and 64 conform. `src/registries/ComponentTokenRegistry.ts` is untouched: the field rides on a type kept in `defineComponentTokens.ts`.

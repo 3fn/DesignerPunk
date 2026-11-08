@@ -801,7 +801,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 5 — Validators and config types
 
-- [ ] 10. The relationship validator, component-token custom values and the override types (U5)
+- [x] 10. The relationship validator, component-token custom values and the override types (U5)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — the two component tokens files
   **Traces**: Req 2.10, 13.1–13.3; rows 1, 21, 22 · design §§ 12, 12a (13.3)
@@ -834,13 +834,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 10 Complete: Validators and config types (129)"` opens U5's PR (Peter-merged: `governance/**`, if row 1 archives here; `**Edit kind**:` EXECUTION per file; amendment 6); report the URL; STOP.
 
-  - [ ] 10.1 Row 1: family classification, `=` and `≈`, the `blur000` correction
+  - [x] 10.1 Row 1: family classification, `=` and `≈`, the `blur000` correction
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 13.1_
-  - [ ] 10.2 Row 21: the grid rule, `offGridReason`, warn for consumers, fail for ours
+  - [x] 10.2 Row 21: the grid rule, `offGridReason`, warn for consumers, fail for ours
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet), Lina (Sonnet)
     - _Requirements: 13.2_
-  - [ ] 10.3 Row 22: the exports
+  - [x] 10.3 Row 22: the exports
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 13.3_
 

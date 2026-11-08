@@ -2739,7 +2739,7 @@ tokens:
   opacity100:
     family: opacity
     value: 1
-    formula: 'Special case: full opacity = 1.0'
+    formula: base × 12.5 = 0.08 × 12.5 = 1
     platforms:
       web: '--opacity-100'
       ios: opacity100
@@ -2976,7 +2976,7 @@ tokens:
   blur000:
     family: blur
     value: 0
-    formula: '0'
+    formula: base × 0 = 16 × 0 = 0
     platforms:
       web: '--blur-000'
       ios: blur000

@@ -22,7 +22,7 @@ The pre-U9 golden `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css` carries
 
 ---
 
-**Grant paths**: `token-index/primitives.yaml` (the `opacity100` `formula:` line only, as `generate` writes it), `docs/tokens.css` (the two comment lines above only, as `scripts/build-browser-bundles.js` writes them), `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css` (a fresh capture with `tests/fixtures/pre-u9-theme-css/capture.sh` at a new SHA, with a new header naming that SHA and the exact command; the diff against the old golden is exactly the `opacity100` comment line, `/* Special case: full opacity = 1.0 */` to `/* base × 12.5 = 0.08 × 12.5 = 1 */`; no hand edit)
+**Grant paths**: `token-index/primitives.yaml` (the `formula:` lines of `blur000` and `opacity100` only, as `generate` writes them), `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css` (a fresh capture with `tests/fixtures/pre-u9-theme-css/capture.sh` at a commit that carries both source edits, with a new header naming its 40-hex SHA and the exact command; the diff against the old golden is exactly two comment lines: `blur000`'s, `/* 0 */` to `/* base × 0 = 16 × 0 = 0 */`, and `opacity100`'s, `/* Special case: full opacity = 1.0 */` to `/* base × 12.5 = 0.08 × 12.5 = 1 */`; no hand edit) *(Amended 2026-11-08T04:55Z, Ada, owner, to the fixing PR's measured set, see § "Amendment"; `docs/tokens.css` is removed from the list. Was, verbatim: `token-index/primitives.yaml` (the `opacity100` `formula:` line only, as `generate` writes it), `docs/tokens.css` (the two comment lines above only, as `scripts/build-browser-bundles.js` writes them), `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css` (a fresh capture with `tests/fixtures/pre-u9-theme-css/capture.sh` at a new SHA, with a new header naming that SHA and the exact command; the diff against the old golden is exactly the `opacity100` comment line, `/* Special case: full opacity = 1.0 */` to `/* base × 12.5 = 0.08 × 12.5 = 1 */`; no hand edit))*
 
 ---
 
@@ -37,3 +37,23 @@ U5's PR (Task 10, branch `task/129-10-validators-config-types`). The diff of the
 3. Nothing under `harness/expected/**`, a signed output or a lock input changes (the 122 diff-guard and the signing chain are run at H).
 
 Counter-argument and what survives: marking `opacity100` strategic flexibility would move no output at all. It was rejected because the flag is defined for tokens that break their family's progression and carries behaviour (analytics, the AI restrictions), so it would mislabel a token to avoid churn. What survives: this route touches a golden and two derived files for one comment string.
+
+---
+
+## Amendment (2026-11-08, Ada)
+
+**What was wrong.** The measurement above was taken on the U5 branch head, which already carried two things the base does not: `blur000`'s string correction (Task 10.1, design § 12 / A § D-9 item 4) and a pack-time rebuild of `docs/tokens.css` and `token-index/primitives.yaml` that a `git add -A` swept in. The measured diff therefore understated the set. Measured against `origin/main` (`e6c74e3d6`) the source edits (`blur000` and `opacity100` strings, and Lina's Badge reword) move:
+
+- `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css`: two comment lines (`blur000`'s and `opacity100`'s). Task 14's case (a) is red on `blur000`'s line today.
+- `token-index/primitives.yaml`: two `formula:` lines (`blur000` and `opacity100`).
+- `docs/tokens.css`: three comment lines (`blur000`, `opacity100`, and the Badge `maxWidth` reasoning), inside a rebuild that also rewrites about 33 lines of U8 drift (shadow `color-mix` composites and four `--shadow-*-100` variables) that `main` has not yet taken.
+
+**What changes in the grant.** `blur000` joins the golden and `token-index/primitives.yaml`. `docs/tokens.css` leaves the list: a validators unit does not ship 36 lines of rebuild noise, and the file is a build output that every release PR rebuilds (16.0.0 #381, 16.1.0 #494, 16.2.0 #633). It lags the generator from U8 until the next release's rebuild, and U5's three comment changes ride that rebuild. U5's completion doc records the lag. No hand edit of it is made.
+
+**Acceptance, as amended.** Items 1 and 2 above read: `token-index/primitives.yaml` changes only its two `formula:` lines and equals what `generate` writes at H; the old golden against the new one is exactly the two lines above. `docs/tokens.css` is unchanged by U5.
+
+---
+
+## Outcome (2026-11-08, Ada, rule 5)
+
+The fixing PR is U5's (Task 10, branch `task/129-10-validators-config-types`). The granted files: `token-index/primitives.yaml` changed by exactly two `formula:` lines (`blur000`, `opacity100`), as `generate` writes them; `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css` was re-captured by the Command in its new header, from `261cd1a3c` with `src/tokens/BlurTokens.ts` and `src/tokens/OpacityTokens.ts` taken from `4e2a22681`, and its diff against the old golden is exactly two lines (34 and 377, the comment text of `blur000` and `opacity100`; the old golden is reproduced byte for byte by the same Command without the `git checkout` step). Task 14's case (a) passes against it. `docs/tokens.css` was not changed. The grant expires at U5's merge.

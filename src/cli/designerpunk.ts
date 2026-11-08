@@ -26,6 +26,7 @@ import { runAttach } from './attach';
 import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
+import { gridConformanceErrors } from '../build/tokens/defineComponentTokens';
 import { isProductTokenStale } from './staleness';
 import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
@@ -41,6 +42,7 @@ import {
   partialCaseMessage,
   componentTokenFamilyMismatchMessage,
   componentTokenFileLoadFailedMessage,
+  componentTokenOffGridMessage,
   consumerDegradationMessage,
   generateThemesLine,
   INSTALL_GUIDE_PATH,
@@ -254,6 +256,15 @@ export async function runGenerate(force = false) {
     console.error(`❌ ${componentTokenLoadFailureMessage(err, generateRoot)}`);
     process.exit(1);
     return;
+  }
+  // Req 13.2: a custom value off its family's grid, with no offGridReason, warns naming the token and
+  // never fails. DesignerPunk's own tokens (the package source) are held to the same rule by the
+  // repository's lane, so they are not re-checked on a consumer's run.
+  for (const token of componentTokens ?? []) {
+    if (isPackageComponentToken(token)) continue;
+    for (const detail of gridConformanceErrors(token)) {
+      console.warn(`⚠️  ${componentTokenOffGridMessage(token.name, detail)}\n`);
+    }
   }
   if (componentTokens.length === 0) {
     console.warn(
