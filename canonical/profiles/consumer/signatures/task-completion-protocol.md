@@ -184,11 +184,17 @@ verdict: assent — surviving 4/9; not surviving: `key-rules-4`, `key-rules-5`, 
 ## `#completion-state-in-the-pr-flow:preamble`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#completion-state-in-the-pr-flow:preamble` (re-pointed)
-canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+canonicalHash: sha256:78a8d803667602a7b4c4cce72a35013543ba131132ec0990b84624ca5591ef17
 renderedHash: sha256:eb5a8ca0e6712c02392b8f44121f051307a602225fde087379d51c4df53b9dc2
 verdict: assent — surviving 15/22; not surviving: `completion-state-in--3`, `completion-state-in--4`, `completion-state-in--6`, `completion-state-in--8`, `completion-state-in--10`, `completion-state-in--11`, `completion-state-in--14`
+
+**Re-signed 2026-11-08** (prior signature: assent 15/22, 2026-09-29, against `sha256:b59a3536…`). It was stale because the canonical unit changed under ballot `2026-11-08-125b-u3-rehome` (RATIFIED, Peter, 2026-11-08, F-1 (b); #804), item 1: point 9's last sentence now names the register row `record-first-ratification`'s gated-surfaces scope instead of "125-B's CODEOWNERS layer", "throughout 125-A" is dropped, and a dated pointer follows. Thurgood applied it at `1482a0dc1` and re-quoted `-20` and re-pinned the overlay at `79573e890`; I re-confirmed at 22 items (`eed6a7758`). I checked that the re-pin changes only the `@unit` header line, to the hash I had computed. The overlay text is unchanged.
+- **Judged against**: the consumer rendering of the unit, printed in full first (`verify-signing-chain --print`, three identical pieces), and the operative set at 22 items.
+- **renderedHash**: I computed it with `renderedHashOf(readConsumerSpans(<worktree>), rowSpanSource(...))` after a fresh `npm run build:generator`, which left the tracked tree clean, so the committed rendering is the fresh one. It equals the prior signature's value, because the overlay text did not move.
+- **The removals stay right**: the third description, "the PR-approval-as-ratification pointer and its amendment pointer" (`subtraction-2`, added at `79573e890`), names what the rendering drops from point 9: the sentence on when PR approval ratifies and the dated pointer. A consumer has no such register row. The other two descriptions are unchanged and still right.
+- **Credits**: unchanged from 2026-09-29. `-20` still survives: point 9 of the rendering states that a checks-only merge is not ratification and that governance changes ratify through the team's own decision record. The re-worded sentence it drops is a condition of this repository's regime, not a rule a consumer acts on. The seven drops are the ones accepted in run 2.
 
 **Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** Both refused rules now survive: `-7` (stacking only on the human lead's direction, with the `Stacked-on:` declaration and base-first merge order) and `-19` (update a green-but-unmergeable branch from `main`). That makes 15/22. The remaining drops are the ones I accepted in run 2.
 
