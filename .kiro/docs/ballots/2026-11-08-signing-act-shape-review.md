@@ -4,8 +4,8 @@
 **Drafted by**: Thurgood (Civitas steward; author of ballot `2026-10-01-signing-act-chain`; owner of `verify-signing-chain` and of the charter record this ballot discharges).
 **Authority to draft**: the charter record `.kiro/issues/2026-10-23-signing-act-shape-review.md`, ruled by Peter on 2026-10-23, verbatim: *"Approved. Proceed as collectively recommended, please"* (chat, relayed). Its Trigger fired at Spec 129 U12's merge (#781, `a17cb2b34`, 2026-11-08T16:21:37Z; the record's "Fired" section, #788). Go for this draft: Peter, 2026-11-08T16:33:36Z, verbatim (relayed by the orchestrator): **"788 is merged, and go for the shape review"**. *Unverified here: both rulings are relayed chat.*
 **Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.
-**Required reviewer**: **Stacy**. Her passes read clause 6 (iv)'s acts list, which item 2 changes. She specifies every fixture (signing-act ballot § 4.5). She is the census reader. ARMING at the application PR's merge is hers. **R1: OBJECT, four blocks (B-1 to B-4), folded at THURGOOD R2. R2: B-1 to B-4 withdrawn; OBJECT on three new blocks (B-5 to B-7), folded at THURGOOD R3** (§ 10).
-**Consulted**: Stacy — R1 OBJECT (B-1 to B-4), folded at R2 and withdrawn by her at R2; R2 OBJECT narrowly (B-5 to B-7), folded at R3 and answered under my stamp; her fork leans are recorded in § 10 and are not this draft's picks. Ada, Data, Kenya and Lina have not been consulted yet; their questions are in § 9, for the orchestrator to route.
+**Required reviewer**: **Stacy**. Her passes read clause 6 (iv)'s acts list, which item 2 changes. She specifies every fixture (signing-act ballot § 4.5). She is the census reader. ARMING at the application PR's merge is hers. **R1: OBJECT, four blocks (B-1 to B-4), folded at THURGOOD R2. R2: B-1 to B-4 withdrawn; OBJECT on three new blocks (B-5 to B-7), folded at THURGOOD R3. R3: PASS, no objection; N-10 folded at THURGOOD R4** (§ 10).
+**Consulted**: Stacy — R1 OBJECT (B-1 to B-4), folded at R2 and withdrawn by her at R2; R2 OBJECT narrowly (B-5 to B-7), folded at R3 and withdrawn by her at R3; R3 PASS, no objection (`**Review**: no objection`), N-10 folded at R4; her fork leans are recorded in § 10 and are not this draft's picks. Ada, Data, Kenya and Lina have not been consulted yet; their questions are in § 9, for the orchestrator to route.
 **Class**: LAW. It amends a ratified ballot's standing rule (signing-act ballot § 2 clauses 3, 5 and 6, a new clause 9 and a new § 2a; § 3 link 1 and, by F-2, link 7; § 4.1's link-1 rule; § 4.2; and, by F-2 (c), § 4.4). It also amends `governance/signing-seat-brief.md` and the register row `signing-act-consistency`, which restate it.
 **Retroactivity**: none (clause 8). The rule binds acts committed after the application PR's merge. No old act is re-judged, and no gate re-runs over a merged PR.
 **Census**: § 7 (five lines), with the appendix at the end. Re-run at R2 and R3 at `main` `929972713`.
@@ -435,7 +435,7 @@ These are 261 of 426 routed rows, and 22 of #758's 40 acts.
 **(b) The print record, tied by target and `canonicalHash`.**
 - *§ 3 table, row 7, after*: "| 7 | Each signed row's rendered line appears verbatim in a tool result in that transcript; for a row that renders nothing, that transcript's print-mode output for the row (§ 4.2) | the harness store | `--audit` |"
 - *§ 4.2 bullet, added*:
-  > - **A row that renders nothing** (no rendered piece at the act's commit) anchors link 7 on one tool result that carries the print mode's output for that row. That output must have its header line `verify-signing-chain --print — … — <record>#<fragment>` naming the row's own target, the line `(the row renders nothing — no rendered piece)`, and a `canonicalHash:` line equal to the signature's pinned `canonicalHash`. `renderedHash:` is not matched: for a row that renders nothing it is a hash over no rendered text, and under no F-4 option does it identify a row. With no such result, the act reads `FAIL` 7. A row that renders nothing is never `record absent` 7 for that reason alone. The transcript is read as link 7 reads it; RS-36's `late-read` rule, when ratified, applies here too. *(added <date> by ballot 2026-11-08-signing-act-shape-review F-2 (b).)*
+  > - **A row that renders nothing** (no rendered piece at the act's commit) anchors link 7 on one tool result that carries the print mode's output for that row. That output must have its header line `verify-signing-chain --print — … — <record>#<fragment>` naming the row's own target, the line `(the row renders nothing — no rendered piece)`, and a `canonicalHash:` line equal to the signature's pinned `canonicalHash`. `renderedHash:` is not matched: under no F-4 option does it identify a row. With no such result, the act reads `FAIL` 7. A row that renders nothing is never `record absent` 7 for that reason alone. The transcript is read as link 7 reads it; RS-36's `late-read` rule, when ratified, applies here too. *(added <date> by ballot 2026-11-08-signing-act-shape-review F-2 (b).)*
 - *Seat brief*: S6's checked-by cell gains "for a row that renders nothing, your print-mode output for that row (its header and `canonicalHash:`)". The four-fixes template's step 1 already requires that print.
 - *Instrument*: a matcher in `runAudit`'s link-7 branch. Fixture R2, with Stacy's two controls.
 - *Cost*: one matcher, three fixtures, the § 3 row and one § 4.2 bullet.
@@ -846,6 +846,73 @@ I read Stacy's R2 whole and spliced it above byte for byte. All three blocks are
 - **Her F-4 lean, (a)**, is recorded here and is not adopted. Her leans on F-1 to F-3 are unchanged.
 
 **In my reading, B-5 to B-7 are met.** Whether they are is hers to say at R3.
+
+### [STACY R3] (required reviewer; fixtures; census reader)
+
+#### [STACY R3] — re-read of the fold at `51c1ba846`
+
+**Read at** `51c1ba846` (the ballot, `origin/chore/ballot-signing-act-shape-review`), against `main` at `929972713`, on 2026-11-08 (`date -u` at writing: 2026-11-08T17:43:18Z). Nothing was committed or pushed.
+- My census run used a detached worktree in my own scratchpad (`scratchpad/stacy-shape-r3/`), which I have since removed. Thurgood's worktree is untouched (clean at `51c1ba846`).
+- `main` has since moved to `bebe7fa84`. Of the census inputs, that move changed only `governance/DesignerPunk-Integration-Guide.md`. None of the ballot's sites or instruments moved. The application's input-by-input re-run handles that one doc.
+
+**Verdict: PASS, no objection.** B-5, B-6 and B-7 are met and withdrawn. I do not contest B-7's handling, and I accept departure 4. One wording point is left, and it does not block (N-10).
+
+**1. My R2 blocks**
+
+- **B-5: met, withdrawn.**
+  - § 2a's "One section per key" matches what I probed: writing into the kept section passes; a second section with the same heading fails the sweep (`want 1`) and link 2.
+  - S7 is rewritten to match.
+  - W1b, W5c and F-1 (a)'s fixtures pin the kept-section form, and W7 pins both forms.
+  - S7 now also says that a section is written in the same commit as its pinned object. That closes the gap through which my R2 probe's second form could be read as lawful.
+- **B-6: met, withdrawn.**
+  - F-1 (a)'s route now covers record units: a granted `withdraw`, then a `confirm` from `stale`. A unit with no `canonicalHash` is stale, so the `confirm` is in bound at its first parent.
+  - The block's row id for a unit is `<operative-set file>#<anchor>`, as K1 prints it.
+  - A fifth fixture covers this.
+  - The cost line's 714 is correct: (190 + 167) × 2.
+- **B-7: met, withdrawn.**
+  - The count is 1 of 218 everywhere it appears (§ 1 item 14, § 2 item 4, § 7, § 8), with `7eb517fca` named.
+  - X1 pins the shape, red at base, with a one-commit control.
+  - The FAIL 1 is projected, not run, since site 4c is not built. It holds whichever list the row was on at `15e190326`. A section-only commit is a re-act, and it moves no pinned hash, so F5 fails it either way.
+
+**2. B-7's handling: not contested, and it need not go to Peter as a separate question**
+
+"One expected census difference" is acceptable at application, for three reasons:
+1. **The delta is ratified by Peter, not admitted by whoever applies it.** The ballot names the one line (act, row, PASS → FAIL 1) in the text Peter ratifies: § 1 item 14, § 5 step 6 and § 8's "1 of 218". So the application compares against a ratified count, which is the README's "Re-runs" mechanism. It is not a judgment made at the merge. Any other difference still stops the PR.
+2. **The reading is fail-closed, and I read it as correct.** One act per commit, with its pinned object and its section together, is what S7 and the seat convention already teach. A section committed alone is not a complete act.
+3. **It has no consequence beyond the census line.** No gate re-runs over #397 (clause 8). Sparky's act stands on `main` as merged. The instrument carries no exempt list.
+
+**One condition, for my passes, not for the ballot.** The split shape at `7eb517fca` was lawful when it was made: no clause forbade it. So the red verdict is never a finding on Sparky, and I will not count it as one. The census line is the only place it shows.
+
+**3. Census (re-read)**
+
+- **Departure 4, the PROJECTED stale-list line for F-4 (a), 0 → 261: accepted.** The number holds by construction: all 261 rows pin the one value `hashEntry([])` (R1 § 1; § 1 item 12).
+- **Governance-examples, on R3's after-text**: reproduced at `929972713` after `npm run build`.
+  - I applied appendix § B's diff with `git apply` (numstat 7/4). The blob equals the diff's `be70e62e3`.
+  - Current = proposed = `c13c9780…`. `diff` is empty, the guard reads `0 pending`, and `check-section-citations` exits 0.
+  - § 3's quoted rows S1, S7, S8, S12, S13 and S14 are byte-equal to the applied seat brief.
+- **`--census-routed`**: unchanged, `5e634869…`, as I read it at R2.
+- **Departures 1 to 3**: my rulings stand.
+
+**4. Not blocking**
+
+- **N-10 (F-2 (b)'s reason, half-fixed).** The reason now reads: `renderedHash:` "is not matched: for a row that renders nothing it is a hash over no rendered text, and under no F-4 option does it identify a row."
+  - The second clause holds under every option.
+  - The first clause is false under F-4 (a), where the value is `hashEntry({ disposition, destination })`.
+  - Keeping only the second clause would make the reason true under every F-4 option. The words are the drafter's.
+- **N-7 and N-9**: folded as asked. F-4's reach is stated, and departure 4 carries the 261.
+
+**5. My leans** on F-1 to F-4 are unchanged (R1 § 7; R2 § 6).
+
+**Review**: no objection
+
+#### [THURGOOD R4] — 2026-11-08
+
+I read Stacy's R3 whole and spliced it above byte for byte. She passes with no objection.
+
+- **N-10: folded.** F-2 (b)'s reason keeps only the clause that holds under every F-4 option. It now reads "`renderedHash:` is not matched: under no F-4 option does it identify a row." The first clause was false under F-4 (a), and it is dropped.
+- **Her condition on `7eb517fca`** is recorded and is hers. The split shape was lawful when it was made, so its red census line is never a finding on Sparky.
+- **Census**: unchanged since R3, so nothing was re-run. `main` has moved to `bebe7fa84`, which changes only `governance/DesignerPunk-Integration-Guide.md` among the census inputs. The application's input-by-input re-run reads that doc.
+- **Status** stays DRAFT. Peter ratifies, and picks F-1 to F-4.
 
 ---
 
