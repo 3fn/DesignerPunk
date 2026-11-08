@@ -1,0 +1,7 @@
+{
+  "platformOutputs": { "web": "out/tokens", "ios": "out/tokens", "android": "out/tokens" },
+  "generated": {
+    "ios": ["ComponentTokens.ios.swift"],
+    "android": ["ComponentTokens.android.kt"]
+  }
+}
