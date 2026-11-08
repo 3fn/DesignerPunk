@@ -126,7 +126,7 @@ units:
         text: "**STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#for-parent-tasks-setup-or-documentation-type
   "#completion-state-in-the-pr-flow:preamble":
-    canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+    canonicalHash: sha256:78a8d803667602a7b4c4cce72a35013543ba131132ec0990b84624ca5591ef17
     items:
       - id: completion-state-in--1
         kind: obligation
@@ -314,7 +314,7 @@ units:
         text: "A required check, `law-ratified`, reads these lines at the PR head. Each LAW line's cited ballot exists at the head, and its first `**Status**:` line reads RATIFIED. Each file the diff changes on a governance path has a line."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-and-pr-conventions
   "#the-merge-rule":
-    canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
+    canonicalHash: sha256:f06850b940f8b08bf324eb6b2f6fc8fbb9ec7c7c5f667a47a2b09751c754d45d
     items:
       - id: the-merge-rule-1
         kind: obligation
