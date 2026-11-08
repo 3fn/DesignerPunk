@@ -229,7 +229,7 @@
  * - Force borders for visibility
  * - Ensure focus indicators are visible
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .chip-base {
     border: var(--border-emphasis) solid currentColor; /* 2px */
   }

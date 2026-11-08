@@ -410,7 +410,7 @@
  * - Ensure focus indicators are visible
  * - Use border.borderEmphasis (2px) for visibility
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .vertical-list-item {
     border-width: 2px !important;
   }

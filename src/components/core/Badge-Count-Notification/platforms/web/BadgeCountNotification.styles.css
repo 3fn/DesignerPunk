@@ -159,7 +159,7 @@
  * ============================================================================ */
 
 /* High contrast mode support */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .badge-count-notification {
     border: 1px solid currentColor;
   }

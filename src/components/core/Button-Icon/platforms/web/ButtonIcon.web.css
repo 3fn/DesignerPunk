@@ -551,7 +551,7 @@
  * - Ensure focus indicators are visible
  * - Use border.borderEmphasis (2px) and border.borderHeavy (4px) tokens
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .button-icon {
     border: var(--_bi-border-emphasis) solid currentColor;
   }

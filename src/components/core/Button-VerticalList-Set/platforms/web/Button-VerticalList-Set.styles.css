@@ -127,7 +127,7 @@
 /**
  * Ensure error message remains visible in Windows High Contrast Mode.
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .vls-error-message {
     /* Ensure error text is visible with system colors */
     color: CanvasText;

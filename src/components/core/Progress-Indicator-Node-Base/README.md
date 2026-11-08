@@ -165,7 +165,7 @@ Semantic variants (Pagination-Base, Stepper-Base, Stepper-Detailed) provide ARIA
 
 ### High Contrast Mode
 
-On web, a 1px `currentColor` border is applied when `prefers-contrast: high` is active.
+On web, a 1px `currentColor` border is applied when `prefers-contrast: more` is active.
 
 ---
 

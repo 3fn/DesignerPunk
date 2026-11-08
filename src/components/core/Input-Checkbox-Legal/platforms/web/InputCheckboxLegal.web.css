@@ -94,7 +94,7 @@
    High Contrast Mode Support
    ========================================================================== */
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .checkbox__required {
     color: currentColor;
     font-weight: bold;

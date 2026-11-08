@@ -322,7 +322,7 @@ describe('Badge-Label-Base Stemma Validators', () => {
         return;
       }
 
-      expect(combinedSource).toContain('prefers-contrast: high');
+      expect(combinedSource).toContain('prefers-contrast: more');
     });
 
     it('should support reduced motion preference', () => {

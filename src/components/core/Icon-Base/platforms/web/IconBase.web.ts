@@ -510,7 +510,7 @@ export class IconBaseElement extends HTMLElement {
           .icon-base { color: var(--color-print-default) !important; }
         }
         
-        @media (prefers-contrast: high) {
+        @media (prefers-contrast: more) {
           .icon-base { stroke: currentColor !important; }
         }
       </style>
