@@ -1,11 +1,11 @@
 # Ballot Measure: standing owners for the native compile harness's producers after Spec 129 (the per-role split)
 
-**Date**: 2026-11-07 (drafted 2026-11-07T23:28:53Z; review round folded 2026-11-07T23:55:17Z, `date -u`)
+**Date**: 2026-11-07 (drafted 2026-11-07T23:28:53Z; review round 1 folded 2026-11-07T23:55:17Z; review round 2 folded 2026-11-08T00:09:10Z, `date -u`)
 **Drafted by**: Data (Android platform engineer; author of `harness/android/**`, `probe-kotlin.ts` and `parse-kotlin.ts` under Spec 129 Task 4), holding the pen at Peter's direction (§ 1). **Kenya writes the iOS clause** (§ 3 item 2, § 4 sites 3, 4 and 9 (b)), written in her seat at 2026-11-07T23:39:02Z.
-**Status**: **DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do. The review round (Ada, Thurgood, Stacy) is spliced in § 11 and folded at `[DATA R2]`. Still owed before ratification: **Lina's entry** (§ 7), and **Kenya's confirmation** of the folds made into her text (item 2 and site 4, each marked "Kenya confirms").
+**Status**: **DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do. Two review rounds are spliced in § 11: round 1 (Ada, Thurgood, Stacy), folded at `[DATA R2]`, and round 2 (Kenya, Ada, Stacy, Lina), folded at `[DATA R3]`. Every reviewer approves with the folds. Nothing is owed from a seat. What is left is Peter's: the five forks and the "Also ruled" list in § 8.
 **Owner**: Data (items 1 and 3's `android:` half), Kenya (item 2 and 3's `ios:` half), Thurgood (item 4), Ada (item 5 and 3's `consumer:` part). Each seat owns the text of its own charter's edit site.
 **Required reviewer**: **Stacy** — mandate: attack the width. She keeps the ARMING read that items 3–5 feed (site 10 is her row, in her words), and she is the census reader.
-**Consulted seats**: Data, Kenya, Thurgood, Stacy and Ada, in three pre-draft rounds (§ 10), and Ada, Thurgood and Stacy in the review round (§ 11). **Lina** is added for the review round **[author's addition — Peter rules]**: § 7 says why.
+**Consulted seats**: Data, Kenya, Thurgood, Stacy and Ada, in three pre-draft rounds (§ 10); Ada, Thurgood and Stacy in review round 1, and Kenya, Ada, Stacy and Lina in review round 2 (§ 11). **Lina** is added for the review rounds **[author's addition — Peter rules]**: § 7 says why.
 **Unit**: a standalone record-first ballot on `main`. It names edits to four charters and to `.kiro/steering/Agent-Directory.md`, so **Peter merges it** under the governance carve-out. Application follows ratification, in its own PR (§ 4 site 12).
 **Class**: LAW. Every item changes a seat's write scope.
 **Amends**: `canonical/agents/data.md`, `kenya.md`, `ada.md` and `thurgood.md` (frontmatter `writeScope` and § "In Scope"); `.kiro/steering/Agent-Directory.md`, four **Owns** lines; ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` (item 1's Excluded list, the meaning of "outside its comments" in item 1's consult rule, and § 7's closing paragraph, by ledger line); in her seat and at her ruling, Stacy's ARMING row; and, under F-5 (a), the owner header and "What is where" table of `harness/README.md`.
@@ -105,6 +105,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
     console.log(v['compile-sdk'] === String(a.compileSdk) && v['min-sdk'] === String(a.minSdk) && v['coil'] === a.libraries['coil-compose'] && v['material-icons-extended'] === a.libraries['material-icons-extended']);
     ```
   - **Why the invariant, not an exclusion**: Stacy offered either. A glob cannot exclude four lines of one file, so an exclusion would rest on prose alone. The invariant is one git read.
+  - **A grant that adds or renames a pinned library amends the query in the same PR** (`[STACY R5]` S-3). The names do not map uniformly (`coil-compose` in the pin file, `coil` in the toml), so the query cannot simply walk the section.
 - **The annotation interface stays as ratified.** A change to `infra.json`'s fields or values, a job's annotation step, or a new annotation title consults Thurgood (ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1, "Consults on `stability.ts`"). This ballot adds nothing to that duty. The annotation steps themselves are in `native-harness.yml`, which is not in this scope (item 6).
 
 **Excluded**: everything item 6 lists; `harness/ios/**` and the iOS files (item 2); `compare.ts` (item 4); `consumer.ts` (item 5); `stability.ts`, `native-rules.ts` and their tests (Thurgood's, by the charter-scope ballot); the `ios:` and `consumer:` sections of `harness/pins.yaml`; and every other file under `scripts/harness/` that the table does not name.
@@ -129,7 +130,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
 **Limits** (Thurgood's clause, as item 1 states it):
 - **Owning the lane never authorizes changing what it decides.** The verdict rules (design § 3), the toolchain, self-test and Xcode-pin rules (design K-4, K-6 and K-7), the infra and run rules (`tasks.md` § "Decision 6" and § "The list file format, the pin file and the run policy", or the records that re-home them after 129), and the parser contract (`compare.ts` part 1) come text first. A change to what they say is a change to that text, made by its owner.
 - **The self-test sources decide what the self-test must catch** **[Kenya's addition — Peter rules]**. `harness/ios/selftest/**` (the missing return and the planted token module) is what K-4 says the compiler must reject. A change that makes the self-test catch less is a change to K-4's text, not a defect fix.
-- **A defect fix is Kenya's**: code that disagrees with the text it implements. It ships with a falsification case, in the test that exercises the file, red at `B`. The PR body names the case (`[STACY R4]` L-2; folded at `[DATA R2]`, Kenya confirms).
+- **A defect fix is Kenya's**: code that disagrees with the text it implements. It ships with a falsification case, in the test that exercises the file, red at `B`. The PR body names the case (`[STACY R4]` L-2; folded at `[DATA R2]`, confirmed at `[KENYA R4]`).
 - **The annotation interface stays as ratified.** A change to a job's annotation step, or a new annotation title, consults Thurgood (ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1, "Consults on `stability.ts`"). The iOS jobs write no `harness-infra` today, so writing one would be a new use of that title and would consult him. This ballot adds nothing to that duty. The annotation steps are in `native-harness.yml`, which is outside this scope (item 6).
 
 **How item 3's P1–P6 read for `ios:`, and P7.** Where a bullet says "as written", item 3's text applies unchanged.
@@ -140,19 +141,19 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
   - `compile` holds the compile flags every stage reads (`harness/ios/lane.ts` L11).
 - **P3, for a `toolchain`-class red: as written.** Each moved field takes the value that `R`'s comparator line reports, `ios.toolchain.<field> observed "<v>"` (`compare.ts` L747).
 - **P3, for a `toolchain missing` red** **[Kenya's addition — Peter rules, with F-2]**. `R` observed nothing, so the head takes its values from two reads, and neither one is a choice:
-  - **(i) The Xcode is K-7's pick, re-read.** `ios.toolchain."xcode.app"`, `"xcode.version"` and `"xcode.build"` at `m` name the newest stable Xcode 26 minor in the Xcode table of `actions/runner-images` `images/macos/macos-26-arm64-Readme.md`, read at a commit of that repository. That readme's image version equals `ios.image.version` at `m`, which item 3's P3 binds to the head run's runner image (`[STACY R4]` A-4; folded at `[DATA R2]`, Kenya confirms), so the anchor is the runner that ran green. The PR body cites the readme's commit URL and pastes the table rows.
+  - **(i) The Xcode is K-7's pick, re-read.** `ios.toolchain."xcode.app"`, `"xcode.version"` and `"xcode.build"` at `m` name the newest stable Xcode 26 minor in the Xcode table of `actions/runner-images` `images/macos/macos-26-arm64-Readme.md`, read at a commit of that repository. That readme's image version equals `ios.image.version` at `m`, which item 3's P3 binds to the head run's runner image (`[STACY R4]` A-4; folded at `[DATA R2]`, confirmed at `[KENYA R4]`), so the anchor is the runner that ran green. The PR body cites the readme's commit URL and pastes the table rows.
   - **(ii) Every other toolchain field** at `m` equals what the head run's lane log prints for it, `harness-ios: toolchain <field> = "<v>"` (`harness/ios/lane.ts` L658), in each iOS context of P5's run.
   - **Not a repair:** if the readme has no stable Xcode 26 minor, because only Xcode 27 or later remains, the move changes the runner line too, and it goes by grant or spec row.
 - **P4, as written, and `harness/ios/selftest` unchanged** **[Kenya's addition — Peter rules]**. The git command gains the path `harness/ios/selftest`.
 - **P5, as written**, for every iOS context. Both use the macOS queue, so `R` and the head run each wait for a `macos-26` runner. That costs time and changes no condition.
 - **P6, as written.**
-- **P7 — the reserved-word re-check (iOS only)** **[Kenya's addition — Peter rules]**. When `ios.toolchain."swift.version"` differs between `B` and `m`, the PR body carries a `**Reserved-word re-check**:` line with one of two things. Design § 4 (L233) re-checks the list "when `harness/pins.yaml` § `ios` moves to a new Swift", and nothing fires that today (K-F2). **P7 applies to every PR whose diff changes that field**, a move by grant or spec row included, because design § 4 does not distinguish them, and Stacy's ARMING read reads it there (`[THURGOOD R4]`; folded at `[DATA R2]`, Kenya confirms).
+- **P7 — the reserved-word re-check (iOS only)** **[Kenya's addition — Peter rules]**. When `ios.toolchain."swift.version"` differs between `B` and `m`, the PR body carries a `**Reserved-word re-check**:` line with one of two things. Design § 4 (L233) re-checks the list "when `harness/pins.yaml` § `ios` moves to a new Swift", and nothing fires that today (K-F2). **P7 applies to every PR whose diff changes that field**, a move by grant or spec row included, because design § 4 does not distinguish them, and Stacy's ARMING read reads it there (`[THURGOOD R4]`; folded at `[DATA R2]`, confirmed at `[KENYA R4]`).
   - **(a)** The re-check's output at the new Swift: each listed word fails as a plain `case` and compiles in backticks, no contextual keyword fails as a plain `case`, and `xcrun swiftc --version` from the same machine is pasted.
-  - **(b)** The path of a record at `m`, owner Kenya, that names the new `swift.version` string, carries the re-check, and has the Trigger `due:<the next release>`, so the deferred check is read at that release's walk (`[THURGOOD R4]`; `[ADA R1]` A4; folded at `[DATA R2]`, Kenya confirms).
+  - **(b)** The path of a record at `m`, owner Kenya, that names the new `swift.version` string, carries the re-check, and has the Trigger `due:<the next release>`, so the deferred check is read at that release's walk (`[THURGOOD R4]`; `[ADA R1]` A4; folded at `[DATA R2]`, confirmed at `[KENYA R4]`).
   - **Why (b) may stand in for (a):**
-    - The risk is one-sided. A word that is reserved at the old Swift and not at the new one still compiles in backticks, so a stale list cannot turn the head red. That holds for the harness only: a word newly reserved at the new Swift is not backticked, so a consumer theme named that word fails in the consumer's project while the harness stays green (`[ADA R1]` A4; folded, Kenya confirms).
+    - The harness side is one-sided: a word reserved at the old Swift and not at the new one still compiles in backticks, so a stale list cannot turn the head red. The consumer side is not: a word newly reserved at the new Swift is emitted without backticks, so a consumer theme named that word fails in the consumer's project while the harness stays green. The pin move does not create that exposure, because consumers compile with their own Xcode. The move is only the event that tells us to look. Deferring to `due:<the next release>` delays the detection to that release's walk, and the walk reads it before the release ships a generator (`[ADA R1]` A4; `[KENYA R4]` K-1, her wording).
     - No CI makes the measurement today, and a repair should not wait for one.
-  - **A re-check that disagrees with the list** is a change to design § 4 first. Then `native-rules.ts` (Thurgood, with Kenya's review under the charter-scope ballot) and `SWIFT_RESERVED` in `src/generators/native/ThemeEmitter.ts` (L68; Ada) change together in one PR, because `native-rules-emitter.test.ts` asserts they agree. That is never the pin-move PR (`[ADA R1]` A4; folded, Kenya confirms).
+  - **A re-check that disagrees with the list** is a change to design § 4 first. Then `native-rules.ts` (Thurgood, with Kenya's review under the charter-scope ballot) and `SWIFT_RESERVED` in `src/generators/native/ThemeEmitter.ts` (L68; Ada) change together in one PR, because `native-rules-emitter.test.ts` asserts they agree. That is never the pin-move PR (`[ADA R1]` A4; folded, confirmed at `[KENYA R4]`).
 - **A pin-move PR may also change item 2's paths**, except `harness/ios/selftest/**` and the fixtures (P4), under the limits above. One case needs this: a new Xcode whose version output `parseToolchain` cannot read (L282–306), where the pin and the lane fix must land together for P5 to be green. The falsification case then sits in the test file, red at `B`.
 
 **Excluded**: everything item 6 lists; `harness/android/**` and the Android files (item 1); `compare.ts` (item 4); `consumer.ts` (item 5); `stability.ts`, `native-rules.ts` and their tests (Thurgood's, by the charter-scope ballot, which Kenya reviews); the `android:` and `consumer:` sections of `harness/pins.yaml`; and every other file under `scripts/harness/` that the table does not name.
@@ -205,7 +206,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
 - **P4 — the decided files are unchanged.** `git diff --quiet B <m> -- harness/expected harness/protected-set.txt harness/fixtures scripts/harness/__tests__/fixtures` exits 0. The pin file's deployment target and `minSdk` are covered by P2. The build's `minSdk` is covered by item 1's toml invariant (`[STACY R4]` A-1).
 - **P5 — the lane is green at the head.** The PR's `native-harness` run at `m` (`event` `pull_request`, `headSha` `m`) concludes `success` for every context of the section's platform, each job's log with the line `harness-verdict: <context> PASS`. The PR body pastes, from `R` and from that run, each context's verdict and summary lines, the `FAIL toolchain:` lines, and the `Runner Image` lines P3 reads. Run artifacts expire after seven days (`native-harness.yml`, `retention-days: 7`), so a link alone does not survive to a later read.
 - **P6 — Thurgood reviews it, in the review-entry form.**
-  - **The review-entry form** (`[THURGOOD R4]` A2), used by P6, C4 and item 4: the entry names the commit it read, and `git diff --quiet <that sha> <m> -- harness scripts/harness` exits 0, so a push after the review voids it. The entry ends with one line, `**Review**: no objection` or `**Review**: object — <reason>`.
+  - **The review-entry form** (`[THURGOOD R4]` A2; the whole form is **[Thurgood's addition — Peter rules]**, `[ADA R2]`), used by P6, C4 and item 4: the entry names the commit it read, and `git diff --quiet <that sha> <m> -- $(git diff --name-only B <m>)` exits 0. The paths are every path the PR changes, so a push after the review to any of them voids it (`[STACY R5]` S-2). **For an item-5 change the diff has no path filter**, `git diff --quiet <that sha> <m>`, so any later push voids the review, and C2 is read at the final `m` (`[ADA R2]` Fix 3). The entry ends with one line, `**Review**: no objection` or `**Review**: object — <reason>`.
   - **An objection holds the merge** **[Thurgood's addition — Peter rules]**: it is carried in the PR body as an `**Open for Peter**:` line, which the existing `merge-hold` check holds until Peter answers. That adds no gate and gives the reviewer no veto; Peter decides, as he does for every question in a PR body.
   - The PR body carries `**Consulted**: Thurgood — review: <where the entry is>`. The entry's presence, its commit, its last line and the marker are decidable. What the entry says is Thurgood's judgment.
 
@@ -236,7 +237,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
 
 **A standing-scope change meets all of C1–C6.** "A change" is one PR whose diff touches an item-5 path. It may also touch `src/cli/**` or other files in Ada's scope: a CLI change and its driver change land in one PR, or the required check goes red between them (`[ADA R3]`; `[THURGOOD R3]`, "not barred"). Item 3's two reading rules (log lines, job names) apply.
 
-- **C1 — the base and head runs.** The PR body cites a `native-harness` run `R` with `event` `workflow_dispatch` on ref `main` and `headSha` `B`, and the PR's own run at `m`, with both URLs. **`R` is not a forced failure**: its `harness-generate` job's log has no line beginning `harness-generate failed on purpose` (`native-harness.yml` L37, L60; `[STACY R4]` A-6 (a)). Otherwise C3 and C6 could be met vacuously.
+- **C1 — the base and head runs.** The PR body cites a `native-harness` run `R` with `event` `workflow_dispatch` on ref `main` and `headSha` `B`, and the PR's own run at `m`, with both URLs. **`R` is not a forced failure**: in `R`'s `harness-generate` job, the step `Forced failure (dispatch input force_generate_failure)` concluded `skipped` (`native-harness.yml` L37, L57–61; `[STACY R4]` A-6 (a)). Otherwise C3 and C6 could be met vacuously. The query, which Ada ran (`failure` on the forced run 42332232400; `skipped` on dispatch 42335480697 and pull request 42335435837): `gh run view <R> --json jobs --jq '.jobs[] | select(.name|startswith("harness-generate")) | .steps[] | select(.name|startswith("Forced failure")) | .conclusion'`. The draft's log-line test failed open: the forced run prints the line as `##[error]harness-generate failed on purpose: …`, so no line *begins* with the phrase (`[ADA R2]` Fix 1, High).
 - **C2 — the generated-file diff from CI.** From the `harness-consumer` artifact of the reference run (C3) and of the head run, the PR body pastes:
   - `diff` of `harness-tarball-files.txt`;
   - `diff` of `jq -r '.generated.ios[], .generated.android[]' harness-consumer.json | sort`;
@@ -245,7 +246,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
   - `diff` of the consumer root's top-level entries (`ls -A`).
   An empty diff is written `none`. Each removal is explained in the body.
 - **C3 — no shrink, against one reference.**
-  - **The reference run** is `R`. Where `R`'s `harness-generate` concluded `failure`, it is the newest `workflow_dispatch` run on `main` whose `headSha` is a first-parent ancestor of `B`, whose `harness-generate` concluded `success`, and which is not a forced failure (C1); the body names it. Where none exists, the change does not meet C3 and goes by an issue-row grant (`[ADA R1]` A2).
+  - **The reference run** is `R`. Where `R`'s `harness-generate` concluded `failure`, it is the newest `workflow_dispatch` run on `main` whose `headSha` is a first-parent ancestor of `B`, whose `harness-generate` concluded `success`, and whose forced-failure step concluded `skipped` (C1); the body names it. Where none exists, the change does not meet C3 and goes by an issue-row grant (`[ADA R1]` A2).
   - **The reference listing** is the reference run's `harness-consumer` artifact while it survives. After that, it is re-derived by running `npx tsx scripts/harness/consumer.ts --out <dir>` at the reference run's `headSha`, which any reader can reproduce (`[STACY R4]` A-6 (b)), and the body says which it used. If that run does not exit 0, the change goes by grant.
   - **The rule**: for `harness-tarball-files.txt`, the `generated` lists and the themes listing, every line in the reference listing is present at `m`, so `comm -23 <reference> <head>` prints nothing. **A change whose head lacks a tarball file, a generated file or a theme that the reference has goes by spec row, never by standing scope** (`[THURGOOD R3]`; `[ADA R1]` A1).
 - **C4 — the reviews**, each in the review-entry form (item 3, P6).
@@ -268,7 +269,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
 - **`harness/fixtures/**`** (today, `product-tokens/` only): a spec row (`[ADA]` cross-read).
 - **`.github/workflows/native-harness.yml`**, with **`scripts/harness/__tests__/native-harness-workflow.test.ts`**, "which tests the workflow and goes with the workflow's grant" (the charter-scope ballot's Excluded list): an issue-row grant per fix (§ 5).
 - **`harness/README.md`: F-5.** Under (b), it stays here, changed with the spec text it restates by a spec row or a grant. Under (a), it goes to Thurgood under item 4. **Either way** (`[THURGOOD R4]` A4), the file's own header ("**Owner of this file and of the comparator**: Thurgood", L3) and its "What is where" table (L9–) name owners, and after this ballot they would be a second surface naming owners. So the application PR re-points them to the charters: written by Thurgood under (a), or under a grant under (b). The README is not a governance path and owes no dated pointer.
-- **`scripts/harness/d2-check.ts`** and its test, once U8 adds them (Task 13; not on `main`): **F-4.** Its gap opens at U8's merge, not U12's, because Task 13 is its only grant (`[ADA R1]` A5). Under either answer: it joins Stacy's instrument-path list and deletions-zero read now (site 10); a task-row or issue-row grant over it never goes to the seat that holds `src/generators/**` in the same unit (`[STACY R4]` A-3; the charter-scope ballot's A-2 rule); and between U8's merge and activation an edit needs an issue-row grant.
+- **`scripts/harness/d2-check.ts`** and its test, once U8 adds them (Task 13; not on `main`): **F-4.** Its gap opens at U8's merge, not U12's, because Task 13 is its only grant (`[ADA R1]` A5). Under either answer: it joins Stacy's instrument-path list and deletions-zero read now (site 10); **from U8's merge**, a task-row or issue-row grant over it never goes to the seat that holds `src/generators/**` in the same unit (`[STACY R4]` A-3; the charter-scope ballot's A-2 rule; `[ADA R2]` Fix 2: before then, Task 13's merged row makes Ada PRIMARY over it, and this ballot does not amend a merged plan); and between U8's merge and activation an edit needs an issue-row grant.
 
 ### Item 7 — activation
 
@@ -276,6 +277,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
   `git log --reverse --format=%H -G'^- \[x\] 18\. ' origin/main -- .kiro/specs/129-consumer-generation-completeness/tasks.md | head -1`.
 - **Item 2 and the `ios:` part of item 3 are active from the later of U12's merge and the merge of the first iOS promotion**: the first commit on `main` whose diff adds an `EXPECTED_CONTEXTS` entry for an iOS context,
   `git log --reverse --format=%H -G'^  "harness-ios-(tokens|components)"' origin/main -- tools/agent-generator/verify-gate-registration.sh | head -1`.
+  Item 2 activates at whichever of the two commits, U12's (the first command) and the iOS promotion's (this one), descends from the other (`git merge-base --is-ancestor`). Before both exist, it is not active (`[KENYA R4]` K-2).
   "The later of" **[author's reading — Peter rules]**: before U12, Spec 129's rows grant the iOS files anyway, and the iOS promotion could come first.
 - **Both commands are tested** (`[STACY R4]`). Each prints nothing at `origin/main` today. The same patterns on known events find the right commits: `-G'^- \[x\] 12\. '` finds `c71fb2452` (#739), and `-G'^  "harness-android-(tokens|components)"'` finds `6572a601e` (#717). `git log -G` matches without the diff's `+`/`-`, so the `^` anchors hold (`[THURGOOD R4]`).
 - **Before activation**, an edit to an item's paths needs the task-row or issue-row grant it needs today. An edit that rests on this ballot's scope before its activation commit is an out-of-scope edit. Whether a PR's merge commit descends from the activation commit is `git merge-base --is-ancestor`.
@@ -287,7 +289,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
 - **Its deletions-zero read reaches** the tests of those items and `d2-check.test.ts`, the fixture directories `kotlin/`, `parse-kotlin/`, `swift/` and `parse-swift/`, and `harness/ios/selftest/**`, with the existing spec-amendment escape (`[STACY R1]`; `[DATA]` cross-read item 6).
 - **Which read applies is selected by path, never by the PR's claim** (`[STACY R4]` A-5). Unless a `tasks.md` row merged at `B`, or an issue-row grant activated before the merge, lists the path and the PR body cites it, the standing-scope read applies. This selects the read and never widens a grant, mirroring the charter-scope ballot's site 6 (a) limb selection.
 - **The standing-scope reads**: P1–P6 for a pin move, and P7 for an `ios:` move; C1–C6 for an item-5 change; the named falsification case for a defect fix; item 1's toml invariant for any PR touching `harness/android/**`; and the activation read of item 7.
-- **P7 on every Swift move.** Item 2 now applies P7 to every PR whose diff changes `ios.toolchain."swift.version"`, a move by grant or spec row included (`[THURGOOD R4]`; Kenya confirms). Stacy's site-10 words read P7 only under the standing-scope selection. **One clause is owed from Stacy** for site 10 to read it on the other PRs too; she writes it.
+- **P7 on every Swift move.** Item 2 applies P7 to every PR whose diff changes `ios.toolchain."swift.version"`, a move by grant or spec row included (`[THURGOOD R4]`; `[KENYA R4]` confirmed). Stacy's site-10 part 3 (`[STACY R5]`) reads it there, by whatever authority.
 - **The ARMING read sees each producer PR after it merges.** That answers Data's R1 point that standing scope removes the merged record of a fix's intent (`[THURGOOD R2]` item 6). It is a read, never a gate.
 
 ---
@@ -346,7 +348,7 @@ Line numbers are at `f28a1fefd` unless stated. Each site is re-read at applicati
 - **Before**: L281 is `- Advising Leonardo on iOS-specific constraints and opportunities`; no harness bullet.
 - **After**, a new last bullet:
   > `- **The native compile harness's iOS lane (ballot 2026-11-07-native-lane-ownership items 2 and 3; active from the later of Spec 129 U12's merge and the first iOS promotion's merge)**: you own `harness/ios/**`, `scripts/harness/probe-swift.ts` and `scripts/harness/parse-swift.ts`, with `probe-swift.test.ts`, `parse-swift.test.ts`, `fixtures/swift/**` and `fixtures/parse-swift/**`, because a promoted iOS context is a required check and a break from outside the repository (the runner image retiring or rebuilding the pinned Xcode) lands on it with no PR author at fault. Owning the lane never authorizes changing what it decides: the verdict rules, the toolchain, self-test and Xcode-pin rules (K-4, K-6, K-7), the infra and run rules, and the parser contract follow their spec text first, and a change that makes `harness/ios/selftest/**` catch less is a change to K-4; a fix where the code disagrees with that text is yours, with a falsification case red at the merge base that the PR body names. A change to an annotation step or title, including a first `harness-infra` on iOS, consults Thurgood. In `harness/pins.yaml` you hold the `ios:` section only, and only for a move that passes that ballot's P1–P7: the red it repairs, on a dispatch at the merge base, is a `toolchain` verdict or `toolchain missing`; only `image` and `toolchain` change, with the toolchain keys unchanged and `image.version` set to the head run's runner image version, each moved field to the value the red run observed or, for a missing Xcode, to K-7's pick from the runner-images readme at a cited commit and the head run's printed toolchain; `harness/expected/**`, `harness/protected-set.txt`, `harness/ios/selftest/**` and every fixture are unchanged; every iOS context is green at the PR head, with both runs' verdict lines pasted; Thurgood's review is cited on the `**Consulted**:` line, naming the commit it read and ending `**Review**: no objection` or `**Review**: object — <reason>`, an objection carried as an `**Open for Peter**:` line; and a new Swift version, on any PR, carries the reserved-word re-check or a record of it. Any other move goes by grant or spec row. Not yours: `harness/expected/**`, `harness/protected-set.txt`, `harness/fixtures/**`, `harness/README.md`, the rest of `harness/pins.yaml`, `compare.ts` (Thurgood's; you review its changes outside Kotlin-named declarations), `consumer.ts` (Ada's; you review its manifest and layout changes), `stability.ts` and `native-rules.ts` (Thurgood's; you review `native-rules.ts` changes outside Kotlin-named declarations), and `native-harness.yml` with `native-harness-workflow.test.ts` (an issue-row grant per fix). Before activation, your write over these paths is Spec 129's task-row grants or an issue-row grant.`
-- **Folded at `[DATA R2]`; Kenya confirms**: the `compare.ts` review phrase (`[THURGOOD R4]` A1), the review-entry form (A2), the toolchain-key and image clauses (A3; `[STACY R4]` A-4), P7 on any PR (`[THURGOOD R4]`), and the named falsification case (`[STACY R4]` L-2).
+- **Folded at `[DATA R2]`; confirmed at `[KENYA R4]`**: the `compare.ts` review phrase (`[THURGOOD R4]` A1), the review-entry form (A2), the toolchain-key and image clauses (A3; `[STACY R4]` A-4), P7 on any PR (`[THURGOOD R4]`), and the named falsification case (`[STACY R4]` L-2).
 
 ### Edit site 5 — `canonical/agents/ada.md`, frontmatter `writeScope`
 
@@ -365,8 +367,8 @@ Nothing is removed.
 ### Edit site 6 — `canonical/agents/ada.md` § "In Scope", a new bullet after the six-roots bullet (L320)
 
 - **Before**: no bullet.
-- **After**: Ada's text from `[ADA R1]` § "Site 6, after-text", with the folds marked in brackets below for Stacy's A-6 and Thurgood's A2, made at `[DATA R2]`. **Ada confirms the bracketed folds.**
-  > `- **The native harness's consumer driver (ballot 2026-11-07-native-lane-ownership item 5; active from Spec 129 U12's merge)**: you own `scripts/harness/consumer.ts` and `consumer.test.ts`, and `consumer.name` and `consumer.abbreviation` in `harness/pins.yaml`, because the driver runs your CLI's `pack`, `init` and `generate`, and a break there fails `harness-generate` and with it every harness context, the required ones included. A driver change may land in one PR with the `src/cli/**` change it follows. Each change cites a `native-harness` dispatch on `main` at its merge base [that is not a forced failure] and its own head run, and pastes the diff between them of `harness-tarball-files.txt`, the manifest's `generated` lists, its `themes`, its key paths and the consumer root's entries; a change whose head lacks a tarball file, a generated file or a theme that the reference run has goes by spec row, never by this scope. The reference run is the base dispatch, or, where its `harness-generate` failed, the newest dispatch on `main` [whose `harness-generate` succeeded, its listing from the surviving artifact or re-derived by running the driver at that commit]; with none, the change goes by grant. Thurgood reviews every change, and Data and Kenya each review one whose key-path or root-entry diff is not empty[, each review naming the commit it read and ending `**Review**: no objection` or `**Review**: object — <reason>`, an objection carried as an `**Open for Peter**:` line]. A repair of a red `harness-generate` adds a `consumer.test.ts` case that is red against the base's driver. `harness/expected/**`, `harness/protected-set.txt`, every fixture and the rest of `harness/pins.yaml` stay unchanged, `consumer.abbreviation` is never `DP`, and every context green at the reference run is green at the head. Owning the driver never authorizes changing what it decides: the Req 2.1–2.2 rules (it reads no repository `dist/`; it refuses `DP`), `consumer.productTokensFixture`, `consumer.productTokens` and `harness/fixtures/product-tokens/**` change only under a spec row. Before U12's merge, your write over these paths is Spec 129's task-row grants or an issue-row grant.`
+- **After**: Ada's text from `[ADA R1]` § "Site 6, after-text", with the folds marked in brackets below for Stacy's A-6 and Thurgood's A2, made at `[DATA R2]`. **Ada confirmed them at `[ADA R2]`**, replacing the reference-run sentence with her own wording and extending the review bracket for her Fix 3.
+  > `- **The native harness's consumer driver (ballot 2026-11-07-native-lane-ownership item 5; active from Spec 129 U12's merge)**: you own `scripts/harness/consumer.ts` and `consumer.test.ts`, and `consumer.name` and `consumer.abbreviation` in `harness/pins.yaml`, because the driver runs your CLI's `pack`, `init` and `generate`, and a break there fails `harness-generate` and with it every harness context, the required ones included. A driver change may land in one PR with the `src/cli/**` change it follows. Each change cites a `native-harness` dispatch on `main` at its merge base [that is not a forced failure] and its own head run, and pastes the diff between them of `harness-tarball-files.txt`, the manifest's `generated` lists, its `themes`, its key paths and the consumer root's entries; a change whose head lacks a tarball file, a generated file or a theme that the reference run has goes by spec row, never by this scope. The reference run is the base dispatch, or, where its `harness-generate` failed, the newest dispatch on `main` at a first-parent ancestor of the merge base whose `harness-generate` succeeded and whose forced-failure step was skipped; its listing is the surviving artifact, or is re-derived by running the driver at that run's commit; with no such run, or a re-derivation that does not exit 0, the change goes by grant. Thurgood reviews every change, and Data and Kenya each review one whose key-path or root-entry diff is not empty[, each review naming the commit it read and ending `**Review**: no objection` or `**Review**: object — <reason>`, an objection carried as an `**Open for Peter**:` line, a review of an item-5 change voided by any later push]. A repair of a red `harness-generate` adds a `consumer.test.ts` case that is red against the base's driver. `harness/expected/**`, `harness/protected-set.txt`, every fixture and the rest of `harness/pins.yaml` stay unchanged, `consumer.abbreviation` is never `DP`, and every context green at the reference run is green at the head. Owning the driver never authorizes changing what it decides: the Req 2.1–2.2 rules (it reads no repository `dist/`; it refuses `DP`), `consumer.productTokensFixture`, `consumer.productTokens` and `harness/fixtures/product-tokens/**` change only under a spec row. Before U12's merge, your write over these paths is Spec 129's task-row grants or an issue-row grant.`
 - At application the square brackets are removed and their text kept.
 
 ### Edit site 7 — `canonical/agents/thurgood.md`, frontmatter `writeScope`
@@ -381,6 +383,16 @@ Nothing is removed.
 ```
 
 If that line is not present at application (the charter-scope application PR has not merged), this site stops (§ 5).
+
+**Under F-5 (a) or F-4 (a)**, the same block continues after `compare.test.ts` (`[LINA R1]` LN-1), so that Thurgood's generated write-scope lists and Kiro `allowedPaths` carry every file his In Scope bullet grants:
+
+```yaml
+  - "harness/README.md"                                  # under F-5 (a) only
+  - "scripts/harness/d2-check.ts"                         # under F-4 (a) only
+  - "scripts/harness/__tests__/d2-check.test.ts"          # under F-4 (a) only
+```
+
+The trailing comments here mark the condition for the reader of this ballot and are not inserted. Site 12 gives each added member its row and first signature.
 
 ### Edit site 8 — `canonical/agents/thurgood.md` § "In Scope", the compile-harness bullet (Thurgood's text)
 
@@ -405,14 +417,14 @@ If that line is not present at application (the charter-scope application PR has
 
 ### Edit site 10 — `canonical/agents/stacy.md`, the ARMING row (L404) — Stacy's seat, her edit, her ruling
 
-**Stacy's words**, from `[STACY R4]` § "Site 10 — my words", byte for byte. They are inserted into the ARMING row as it stands after the charter-scope ballot's site 6. A-1's invariant is taken (item 1), so her bracketed clause applies, and the brackets are removed at application. **One clause is owed from her** for P7 on PRs outside the standing-scope selection (item 8).
+**Stacy's words**, byte for byte. Parts 1 and 2 are from `[STACY R4]` § "Site 10 — my words". Part 3 is her `[STACY R5]` rewrite, which replaces the R4 part 3 whole: A-1's brackets are removed because it was taken, the owed P7 clause is added for every PR that changes the Swift version, and the reviews are read through the review-entry form and item 4's split. Its bracketed F-4 (a) clause loses its brackets if Peter takes F-4 (a) and is struck under (b). They are inserted into the ARMING row as it stands after the charter-scope ballot's site 6.
 
 1. **In the instrument-path limb's path list**, after the compile-harness paths that site 6(b) adds:
    > `, the native harness producers of ballot 2026-11-07-native-lane-ownership items 1, 2, 4 and 5 (`harness/android/**`, `harness/ios/**`, `scripts/harness/{probe-kotlin,parse-kotlin,probe-swift,parse-swift,compare,consumer}.ts`), `harness/pins.yaml`, and `scripts/harness/d2-check.ts` once U8 adds it`
 2. **In its deletions-zero read**, after the site 6(b) entries:
    > `, in `scripts/harness/__tests__/{probe-kotlin,parse-kotlin,probe-swift,parse-swift,compare,consumer,d2-check}.test.ts`, under `scripts/harness/__tests__/fixtures/{kotlin,parse-kotlin,swift,parse-swift}/**`, and under `harness/ios/selftest/**`, whose spec amendment is the design K-4 amendment it applies`
 3. **After the limb's three reads**:
-   > `For a PR touching a path of ballot 2026-11-07-native-lane-ownership, read with `<m>` the PR's head (`refs/pull/<n>/head`) and `B` = `git merge-base origin/main <m>` — unlike P1c's convention, because the PR's own run is keyed on its head: whether its merge commit descends from the item's activation commit (that ballot's item 7 commands; `git merge-base --is-ancestor`), an edit resting on the scope before it being out of scope; [for a PR touching `harness/android/**`, that `gradle/libs.versions.toml`'s `compile-sdk`, `min-sdk`, `coil` and `material-icons-extended` equal `harness/pins.yaml`'s `android.compileSdk`, `minSdk` and `libraries` at `<m>`;] and, unless a `tasks.md` row merged at `B` or an issue-row grant activated before the merge lists the path and the PR body cites it (this selects the read and never widens a grant), for a change to `harness/pins.yaml` — the section chosen by which keys differ, never by the PR's claim — that ballot's P1–P6, and P7 for `ios:`; for a change to an item-5 path, C1–C6; and for a defect fix, its named falsification case run at `<m>` against the file at `B`, which must fail. P1–P5, C1–C3, C5 and C6 are decided from git and the runs; P6 and C4 by the review entry's presence, never its content; P7 (a) is pasted output, `not re-verified — toolchain unavailable` unless re-run at the same Swift. A listing whose run artifact is past retention is re-derived by running `scripts/harness/consumer.ts` at the commit, or the row reads `not re-verified — artifact expired`. A failure of P4, C3 or C6, or a deletion in a listed test, fixture or self-test with no named amendment, goes to Peter as an unadmitted weakening of a required check; every other failure is a finding on the authoring seat. Whether a change alters what its lane decides is not decided here: that is the row's known gap.`
+   > `For a PR touching a path of ballot 2026-11-07-native-lane-ownership, read with `<m>` the PR's head (`refs/pull/<n>/head`) and `B` = `git merge-base origin/main <m>` — unlike P1c's convention, because the PR's own run is keyed on its head: whether its merge commit descends from the item's activation commit (that ballot's item 7 commands; `git merge-base --is-ancestor`), an edit resting on the scope before it being out of scope; for a PR touching `harness/android/**`, that ballot's item 1 query printing `true` at `<m>`; for a PR whose diff changes `ios.toolchain."swift.version"` between `B` and `<m>`, by whatever authority, its P7 line present in form (a) or form (b), a form-(b) record resolving at `<m>` with owner Kenya, the new `swift.version` string and a `due:` Trigger; and, unless a `tasks.md` row merged at `B` or an issue-row grant activated before the merge lists the path and the PR body cites it (this selects the read and never widens a grant), for a change to `harness/pins.yaml` — the section chosen by which keys differ, never by the PR's claim — that ballot's P1–P6; for a change to an item-5 path, C1–C6; for a change to `compare.ts` outside its comments, the reviews item 4's split owes; [for a change to `d2-check.ts` outside its comments, Ada's consult;] and for a defect fix, its named falsification case run at `<m>` against the file at `B`, which must fail. P1–P5, C1–C3, C5 and C6 are decided from git and the runs; P6, C4 and item 4's reviews by the review-entry form — the entry present, the commit it names unchanged to `<m>` over the paths the form names, its last `**Review**:` line, and for an objection the PR body's `**Open for Peter**:` line — never by the entry's content; P7 (a) is pasted output, `not re-verified — toolchain unavailable` unless re-run at the same Swift. A listing whose run artifact is past retention is re-derived by running `scripts/harness/consumer.ts` at the commit, or the row reads `not re-verified — artifact expired`. A failure of P4, C3 or C6, of item 1's query, or a deletion in a listed test, fixture or self-test with no named amendment, goes to Peter as an unadmitted weakening of a required check; every other failure, a missing P7 line included, is a finding on the authoring seat. Whether a change alters what its lane decides is not decided here: that is the row's known gap.`
 
 ### Edit site 11 — ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold`, three ledger lines
 
@@ -424,9 +436,11 @@ A ballot is a ledger: these lines are appended, and nothing in it is rewritten.
 ### Edit site 12 — the regenerated surfaces, re-confirmed and re-signed (the charter-scope ballot's site 7 pattern)
 
 - `canonical/operative-sets/{data,kenya,ada,thurgood,stacy,agent-directory}.yaml`.
-- The consumer profile: dispositions, overlays, confirmations and signatures for those six units, each by its C1 seat. Each new `writeScope` entry needs a first signature, or `consumer-profile.real.test.ts`'s "every routed row is signed" fails. The author expects each to be `no-consumer-counterpart`, since a consumer project has no harness, and leaves that call to each signer.
-- **The `#in-scope` removal texts.** Data's, Kenya's, Ada's and Thurgood's `#in-scope` rows are `re-pointed` with stored removals (`canonical/profiles/consumer/<seat>.dispositions.yaml` L7–8). Each new bullet (sites 2, 4, 6) gets a removal whose text equals it byte for byte. For Thurgood, the removal that stores the compile-harness bullet (added by the charter-scope application) is replaced with site 8's after-text. Nothing mechanical checks those texts (`regrounding/freshness.ts` L86), so each signer reads them.
-- **`harness/pins.yaml` sits whole in three `writeScope` lists** (sites 1, 3, 5), so Kiro `allowedPaths` admit the whole file to each of Data, Kenya and Ada, and only P2 and C6 hold the section line. That is F-1's residual in another form (`[THURGOOD R4]`), and Lina's question to confirm (§ 7).
+- The consumer profile: dispositions, overlays, confirmations and signatures for those six units, each by its C1 seat. Two checks bite (`[LINA R1]` LN-2). Every new `writeScope` member needs a dispositions row, or `derive.ts`'s `missing-row` refuses it (L134). A row needs a signature when its disposition is `no-consumer-counterpart`, `superseded-by` or a routed `re-pointed` (L176), or `consumer-profile.real.test.ts`'s "every row in the signed population is signed by its C1 seat" fails (L181). A `retained` row needs none, but it would render the harness paths into a consumer project's `allowedPaths`, and a consumer has no harness. So `no-consumer-counterpart` is the only shape that is true to a consumer; the cite stays each signer's call. `writeScope[harness/pins.yaml]` will carry one hash in three files with three signatures, which is expected, not a collision.
+- **The `#in-scope` removal texts.** Data's, Kenya's, Ada's and Thurgood's `#in-scope` rows are `re-pointed` with stored removals (`canonical/profiles/consumer/<seat>.dispositions.yaml` L7–8). Each new bullet (sites 2, 4, 6) gets a removal whose text equals it byte for byte. For Thurgood, the removal that stores the compile-harness bullet (added by the charter-scope application) becomes the whole bullet as it reads after site 8, byte for byte: the charter-scope text up to the replaced closing sentence, then site 8's after-text (`[LINA R1]` LN-3). Nothing mechanical checks those texts (`dispositions.ts` L324–340 checks shape only; `regrounding/freshness.ts` L86), so each signer reads them.
+- **The overlay pins.** Each `#in-scope` edit (sites 2, 4, 6, 8, and Stacy's unit under site 10) moves that unit's canonical hash, so each seat's overlay pin, `## @unit #in-scope @ sha256:…`, is re-pinned in the same PR, or the `stale-overlay` refusal fires (`consumer-profile.real.test.ts` L141–145; `[LINA R1]` LN-3).
+- **`harness/pins.yaml` sits whole in three `writeScope` lists** (sites 1, 3, 5), so Kiro `allowedPaths` admit the whole file to each of Data, Kenya and Ada, and only P2 and C6 hold the section line. That is F-1's residual in another form (`[THURGOOD R4]`). Lina confirms the generator has no conflict with it: duplicate entry paths are refused only inside one unit's entry tree (`partition.ts` L467–476), and no check compares write scopes across seats (`[LINA R1]`). A glob cannot carry a section, so none is encoded in it.
+- **A new lane test is a charter edit** (`[LINA R1]` LN-5). `scripts/jest.config.js` sets `rootDir` to `scripts/`, so a test for `harness/<platform>/lane.ts` must sit in `scripts/harness/__tests__/`. A new suite there, for example a split of `probe-swift.test.ts`, is in no seat's by-name list, so it needs a grant or a `canonical/agents/**` edit with a lock slot and a signing cycle, although the `scripts/` rule already says whose it is. That is the cost of guard (4), every path by name, and the first such PR is not an out-of-scope edit by surprise.
 - Regeneration (`.claude/agents/*`, `.kiro/agents/*`, including each seat's Kiro `allowedPaths`), `canonical/generated.lock`, and `122-diff-guard` read green.
 - **Under F-5 (a)**, the README re-point (item 6) is in this PR, by Thurgood.
 - **Lock slot**: after the charter-scope application PR, in the one-lock-PR-at-a-time order, named in the application brief.
@@ -480,64 +494,79 @@ Ballots README § "Conventions", "Instrument census". No instrument's code, rule
 
 ## 7. Who is consulted
 
-| Seat | Why on the list | Review round (§ 11) |
+| Seat | Why on the list | Review rounds (§ 11) |
 |---|---|---|
-| **Stacy** (required) | Site 10 is her row; she reads P1–P7 and C1–C6 at ARMING; census reader | `[STACY R4]`: approve with amendments A-1 to A-6 and L-1 to L-5; site 10's words supplied. Owed: the P7 clause (item 8) |
-| **Kenya** | Wrote item 2 and sites 3, 4 and 9 (b) | Clause written 2026-11-07T23:39:02Z. Owed: confirmation of the folds in her text (item 2: L-2, P7's record, Trigger and scope, the `ThemeEmitter.ts` co-change, the image bind; site 4: the `compare.ts` review phrase and the review-entry form) |
-| **Thurgood** | Item 4 is his; he reviews under P6 and C4; the charter-scope ballot is his | `[THURGOOD R4]`: approve with amendments A1–A6; site 8's words supplied |
-| **Ada** | Item 5 and the `consumer:` section are hers | `[ADA R1]` (her first entry on the draft): approve with amendments A1–A6; site 6's words supplied. Owed: confirmation of site 6's bracketed folds |
-| **Lina** — **[author's addition — Peter rules]**: not in the three pre-draft rounds | Generator shared-core primary: site 12 renders the new paths into Kiro `allowedPaths`. The rule that a test under `scripts/` follows the file it exercises is her test-ownership area, and `probe-kotlin.test.ts` exercises two files | **Owed.** Asked: does listing these tests and fixtures in three charters conflict with `.kiro/issues/2026-10-17-per-owner-test-folders.md`, or with how the generator renders `allowedPaths` for one file (`harness/pins.yaml`) in three seats? |
+| **Stacy** (required) | Site 10 is her row; she reads P1–P7 and C1–C6 at ARMING; census reader | `[STACY R4]`: approve with amendments, folded at `[DATA R2]`. `[STACY R5]`: approve, with S-1 to S-3, folded at `[DATA R3]`; her owed P7 clause supplied (site 10 part 3) |
+| **Kenya** | Wrote item 2 and sites 3, 4 and 9 (b) | Clause written 2026-11-07T23:39:02Z. `[KENYA R4]`: the folds in her text confirmed, with K-1 and K-2, folded at `[DATA R3]` |
+| **Thurgood** | Item 4 is his; he reviews under P6 and C4; the charter-scope ballot is his | `[THURGOOD R4]`: approve with amendments A1–A6, folded at `[DATA R2]`; site 8's words supplied. No round-2 entry |
+| **Ada** | Item 5 and the `consumer:` section are hers | `[ADA R1]`: approve with amendments, folded at `[DATA R2]`. `[ADA R2]`: approve with three fixes (Fix 1 High), folded at `[DATA R3]`; site 6's brackets confirmed, with one sentence replaced |
+| **Lina** — **[author's addition — Peter rules]**: not in the three pre-draft rounds | Generator shared-core primary: site 12 renders the new paths into Kiro `allowedPaths`; the `scripts/` test rule | `[LINA R1]`: approve with amendments LN-1 (Medium) to LN-5, folded at `[DATA R3]`. No generator conflict with `harness/pins.yaml` in three scopes |
 
 **Not affected, and why**: Leonardo and Sparky. No web or product surface reads these paths.
 
-**For the PR body**: `**Consulted**: Data — author; Kenya — iOS clause author; Thurgood — compare.ts holder, P6 and C4 reviewer, approve with amendments (folded); Stacy — required reviewer, approve with amendments (folded); Ada — consumer.ts holder, approve with amendments (folded); Lina — allowedPaths rendering, owed`.
+**For the PR body**: `**Consulted**: Data — author; Kenya — iOS clause author, folds confirmed; Thurgood — compare.ts holder, P6 and C4 reviewer, approve with amendments (folded); Stacy — required reviewer, approve (folded); Ada — consumer.ts holder, approve with fixes (folded); Lina — allowedPaths rendering, approve with amendments (folded)`.
 
 ---
 
 ## 8. Forks for Peter
 
-Five forks. Each reviewer's read is given; "not read" means the seat's entry did not address it.
+Five forks, then the list of everything else this ballot asks Peter to rule (`[STACY R5]` S-1). Each reviewer's read is given. "R4" and "R1" reads are the first review round; "R5", "R2" and Lina's R1 are the second.
 
 - **F-1 — how activation is carried.**
   - **(a)** One application PR before U12. The frontmatter paths land then, and the In Scope bullets and Stacy's read carry the activation events (item 7).
   - **(b)** The frontmatter paths land at each activation: Android, `compare.ts` and `consumer.ts` in a PR at U12's merge, iOS in another at the first iOS promotion.
   - **Recommendation: (a).** Under (b), each activation is a charter edit with a lock slot and a signing cycle, and the iOS one lands at the moment a required iOS context is new.
-  - **Reads**: Stacy (a), and the pre-activation gap is decidable by item 7's tested commands; Thurgood (a); Ada (a), noting her window is mostly covered by Tasks 14 and 15; Kenya not read.
-  - **What survives against (a)**: frontmatter cannot carry an event, so Kiro's `allowedPaths` admit the writes from the application PR's merge, before activation, and `harness/pins.yaml` whole to three seats (site 12). Until activation only the bullets' text and Stacy's after-merge read hold the line. That is detection after the merge, not prevention (`[STACY R4]`). For iOS the interval could be months, but no iOS context is required then, so a wrongful edit blocks no one.
+  - **Reads**: (a) from every seat. Stacy (R4, R5), with the pre-activation gap decidable by item 7's tested commands; Thurgood (R4); Ada (R1, R2); Kenya (R4), since under (b) the iOS charter PR would land in the week of the first required iOS context; Lina (R1).
+  - **What survives against (a)**: frontmatter cannot carry an event. The generator drops YAML comments, so in every generated surface (both targets' write-scope lists and Kiro `allowedPaths`) the paths read as live from the application merge, and only the In Scope bullet carries the event (`[LINA R1]` LN-4). `harness/pins.yaml` is admitted whole to three seats (site 12). Until activation, only the bullets' text and Stacy's after-merge read hold the line: detection after the merge, not prevention (`[STACY R4]`). For iOS the interval could be months, but no iOS context is required then, so a wrongful edit blocks no one.
 - **F-2 — P3, each moved field takes the value the runner reported** **[author's addition]**.
   - **(a) Keep it**, as folded: toolchain fields to `R`'s observed values, the toolchain key set unchanged (`[THURGOOD R4]` A3), and the image version to the head run's runner (`[STACY R4]` A-4).
   - **(b) Drop it**, as Peter's approved wording has it: any `image` or `toolchain` field may move, with P4 and P5 still holding.
   - **Recommendation: (a).** P4 and P5 stop a move from hiding a failure, but not from changing what the lane measures. P3 makes "no intended change" a string comparison.
-  - **Reads**: Stacy (a), "the most mechanical condition in the set", with A-4; Thurgood (a), with the key-set clause, since without P3 his review would be the only check on a bump riding a repair; Ada (a), with the image-version bind she also named; Kenya not read beyond her iOS reading of P3.
-  - **What survives against (a)**: a forced move whose new value the red run cannot report waits for a grant. On Android that is a `harness-infra` red, whose fix is in `lane.ts` anyway. On iOS it is `toolchain missing`, which item 2 reads with (i) and (ii).
+  - **Reads**: (a) from every seat. Stacy, "every field a standing move touches is now a string comparison against a run"; Thurgood; Ada; Kenya, since on iOS it leaves no choice even for `toolchain missing`; Lina, as the condition that makes P2's deletion of `toolchain` safe.
+  - **What survives against (a)**: a forced move whose new value no run reports waits for a grant. On Android that is a `harness-infra` red, whose fix is in `lane.ts` anyway. On iOS it is `toolchain missing`, which item 2 reads with (i) and (ii).
 - **F-3 — P7, the reserved-word re-check (iOS)** **[Kenya's addition]**.
-  - **(a) Keep it**, as folded: it fires on every PR that changes `ios.toolchain."swift.version"`; its record form names the new `swift.version` and carries a `due:<the next release>` Trigger; a list correction changes `native-rules.ts` and `SWIFT_RESERVED` in `src/generators/native/ThemeEmitter.ts` together, never in the pin-move PR; and the one-sided risk is stated for the harness only (`[THURGOOD R4]`; `[ADA R1]` A4; Kenya confirms).
+  - **(a) Keep it**, as folded: it fires on every PR that changes `ios.toolchain."swift.version"`; its record form names the new `swift.version` and carries a `due:<the next release>` Trigger; a list correction changes `native-rules.ts` and `SWIFT_RESERVED` in `src/generators/native/ThemeEmitter.ts` together, never in the pin-move PR; and the harness and consumer sides of the risk are stated apart (`[THURGOOD R4]`; `[ADA R1]` A4; `[KENYA R4]` K-1).
   - **(b) Drop it**, leaving design § 4 L233's requirement with no trigger.
   - **Recommendation: (a).** It attaches a requirement nothing fires today to the PR that triggers it.
-  - **Reads**: Stacy keep; Thurgood keep, with his two amendments (folded); Ada keep, with A4 (folded); Data keep.
-  - **What survives against (a)**: its content is pasted output from no CI run, an attestation. Stacy can re-verify it only when her `swiftc` matches the pin, and otherwise records `not re-verified — toolchain unavailable`. A newly reserved word fails in a consumer's project, not in the harness, so the deferred form (b) leaves consumers exposed until the release walk reads it (`[ADA R1]` A4). Kenya's record (c), a lane self-test, is the route to a CI read.
-- **F-4 — `scripts/harness/d2-check.ts` after U8** (Task 13 adds it; its only grant ends at U8's merge).
-  - **(a) Thurgood holds it**, with `d2-check.test.ts`, with Ada consulted on every change outside its comments (reading it against design § 9 and Task 13's criterion text), and the charter-scope ballot's A-2 limit: the check's half of a co-change is never written by the seat holding `src/generators/**` in that unit. This is `[ADA R1]` A6 and `[THURGOOD R4]` A6 (it widens his scope).
-  - **(b) No standing holder.** It goes by spec row or per-fix grant (item 6), and a grant over it never goes to Ada, because it checks her own generator's output. This is `[STACY R4]` A-3.
-  - **What the two share**: it is never Ada's; it joins Stacy's ARMING read now; between U8's merge and activation an edit needs an issue-row grant; and if not ruled before U8's PR opens, a record, owner Thurgood, with its Trigger at U8's PR opening. They differ on standing scope against per-fix grants.
-  - **Reads**:
-    - **Ada (a)**, conditional on Thurgood's yes, which he gave. `d2-check.ts` is the one check that sees a narrowing inside unchanged files, so independence matters most here. What survives against (a), in her words: a naming change in `src/generators/**` turns it red in the same PR, so that PR needs a commit from Thurgood.
-    - **Thurgood (a)**, marked as widening his own scope. It is an oracle, and the reason `compare.ts` went to the reader applies with more force. He names the fork as two principles: "it runs in `harness-generate`" against "it judges the generator".
-    - **Stacy (b)**. § 2's case for a standing scope is a break from outside the repository on a required check. `d2-check.ts`'s inputs are all in the repository (the index, the generated files, Node), so a red lands on the PR that caused it, and a per-fix grant costs one ruling. If Peter wants a standing holder, she reads it as Thurgood with Ada consulted, by a record rather than a ledger line.
-    - **Data (author)**: withdraws the draft's lean toward Ada. On § 2's own test, (b) fits, because no outside break can reach it. (a) saves a grant record on each generator naming change after 129, which Spec 132's rows would mostly grant anyway. No pick.
-    - **Kenya**: not read.
+  - **Reads**: (a) from every seat, and Data's. Stacy (R5) reads it on every Swift move, by any authority, in her site-10 clause.
+  - **What survives against (a)**: its content is pasted output from no CI run, an attestation. Stacy can re-verify it only when her `swiftc` matches the pin, and otherwise records `not re-verified — toolchain unavailable`. A newly reserved word fails in a consumer's project, not in the harness, and form (b) leaves the detection deferred until the release walk, which reads it before the release ships a generator (`[ADA R1]` A4; `[KENYA R4]` K-1). Kenya's record (c), a lane self-test, is the route to a CI read.
+- **F-4 — `scripts/harness/d2-check.ts` after U8** (Task 13 adds it; its only grant ends at U8's merge). **No pick is made here.**
+  - **(a) Thurgood holds it**, with `d2-check.test.ts`, with Ada consulted on every change outside its comments (reading it against design § 9 and Task 13's criterion text), and the charter-scope ballot's A-2 limit: **from U8's merge**, the check's half of a co-change is never written by the seat holding `src/generators/**` in that unit (`[ADA R2]` Fix 2). This is `[ADA R1]` A6 and `[THURGOOD R4]` A6 (it widens his scope). Site 7 then lists both files in his frontmatter (`[LINA R1]` LN-1).
+  - **(b) No standing holder.** It goes by spec row or per-fix grant (item 6), and **from U8's merge** a grant over it never goes to Ada, because it checks her own generator's output. This is `[STACY R4]` A-3.
+  - **What the two share**: it is never Ada's after U8; it joins Stacy's ARMING read now; between U8's merge and activation an edit needs an issue-row grant; and if it is not ruled before U8's PR opens, a record, owner Thurgood, with its Trigger at U8's PR opening. Before U8's merge, Task 13's merged row grants it to Ada as PRIMARY, and this ballot does not change that row. They differ on standing scope against per-fix grants.
+  - **Reads, as entered:**
+    - **For (a):** **Thurgood** (R4), marked as widening his own scope: it is an oracle, and the reason `compare.ts` went to the reader applies with more force. **Stacy** (R5) moves from (b) to (a), as a fold-back: her (b) rested on no outside break, which still holds, and on Thurgood not having been asked, which no longer holds; under (b) a naming change still ends with a Thurgood commit, plus a grant record each time. **Ada** (R2), weakly, and she would accept (b): under (b) the grant goes to Thurgood every time anyway, so (b) is (a) plus a grant record per change; what (b) still buys is a merged record of intent before each change to an oracle over her generator.
+    - **For (b):** **Kenya** (R4), weakly: every input is in the repository, so a red lands on the PR that caused it, and that PR can carry its grant. **Lina** (R1), with low confidence and outside her domain: § 2's case for a standing scope is an outside break, which `d2-check.ts` does not have, and (b) keeps the independence too.
+    - **Data (author)**: withdraws the draft's lean toward Ada; no pick.
+  - **What survives against (a)**: § 9 residual 3. Every oracle the harness has sits in one seat, checked only by review entries whose content nobody verifies (`[STACY R5]`).
+  - **What survives against (b)**: each generator naming change after 129 needs a grant record, which Spec 132's rows would mostly carry (`[LINA R1]`).
 - **F-5 — `harness/README.md`** (`[THURGOOD R4]` A4).
-  - **(a) Thurgood holds it**, with `compare.ts` and under its limits. Any README hunk that changes what a rule says goes by spec row: a sentence restating `tasks.md` or design text, or any rule marked *(added here)*. A hunk that makes the README agree with its source text is his, and it cites the source sentence in the PR body. Data and Kenya review hunks in their sections (the pin-file fields, the parser interface, the fixture header). It widens his scope.
+  - **(a) Thurgood holds it**, with `compare.ts` and under its limits. Any README hunk that changes what a rule says goes by spec row: a sentence restating `tasks.md` or design text, or any rule marked *(added here)*. A hunk that makes the README agree with its source text is his, and it cites the source sentence in the PR body. Data and Kenya review hunks in their sections (the pin-file fields, the parser interface, the fixture header), and **Ada reviews hunks in the `consumer` pin-file rows (L16, L109) and § "The `gen:` path rule" (L58–)** (`[ADA R2]`), each in the review-entry form. It widens his scope. Site 7 then lists the file in his frontmatter (`[LINA R1]` LN-1).
   - **(b) Item 6 as drafted**: no standing holder; a spec row or a grant.
-  - **Either way**, the application PR re-points the README's header and table to the charters (item 6).
-  - **Reads**: Thurgood (a). The file's header and table already name him, and `compare.ts` L13 sends README defects "to the owner", who under (b) does not exist, so a `compare.ts` fix that shows the README wrong would land while its prose waits for a grant. Data (a), on the same facts: the draft's (b) was an author's reading that missed the header. Ada, Stacy and Kenya not read, so this is not settled.
-  - **What survives against (a)**: one more oracle surface in the seat that already holds the verdict code (§ 9 residual 3).
+  - **Either way**, the application PR re-points the README's header and table to the charters (item 6). The README stays out of Stacy's instrument-path list under either answer: nothing runs it, and its hunks are read at RELEASE as text (`[STACY R5]`).
+  - **Recommendation: (a).** Every seat reads (a). It stays a fork because it widens Thurgood's own scope.
+  - **Reads**: (a) from Thurgood, Data, Stacy (R5), Ada (R2, with her reviewer added), Kenya (R4, accepting the iOS hunks) and Lina (R1). Under (b), `compare.ts` L13 sends README defects "to the owner", who would not exist, so a `compare.ts` fix that shows the README wrong lands while its prose waits for a grant.
+  - **What survives against (a)**: the seat that writes the comparator also writes its only prose description, so a wrong rule can be wrong in both places, in one hand, with the section reviews as the only second reader (`[STACY R5]`). Whether a hunk "agrees with its source" or "changes a rule" is a judgment; only the citation's presence is decidable.
 
-**Not forks, listed for Peter** (each a `native-harness.yml` change, so each needs an issue-row grant, § 5):
-- **Artifact retention** (`[THURGOOD R4]`): `retention-days: 90` on the `harness-consumer` artifact only, so C2 and C3 stay re-measurable from CI past seven days. C3's re-derivation already covers the gap at a reader's cost.
+**Also ruled by this ballot** (`[STACY R5]` S-1). Each element below goes beyond the conditions Peter approved (§ 1). If Peter answers the five forks "as recommended", he also rules each of these, so each is named here with its mark.
+
+- **Marked `[author's addition]` or `[author's reading]`**: P3 (F-2); Lina added to the review round; `harness/README.md`'s route (F-5); "the later of" for iOS activation, now with K-2's ancestor test (item 7).
+- **Marked `[Kenya's addition]`**: the self-test limit (`harness/ios/selftest/**` catching less is a K-4 change); P4's extra path `harness/ios/selftest`; P3 for a `toolchain missing` red ((i) and (ii)); P7 (F-3).
+- **Marked `[Thurgood's addition]`**: the `compare.ts` review split by platform-named declarations (item 4), which narrows the record's "with Data and Kenya reviewing"; the whole review-entry form (P6), that is, the named commit, voiding on a push, the last `**Review**:` line, and an objection holding the merge as an `**Open for Peter**:` line; `d2-check.ts` under F-4 (a).
+- **Marked `[reviewer's addition, folded — Peter rules]`**, by item:
+  - item 1: the toml invariant and its query, and the rule that a grant adding a pinned library amends the query (`[STACY R4]` A-1, `[STACY R5]` S-3); named falsification cases in items 1, 2 and 4 (`[STACY R4]` L-2);
+  - item 3: section chosen by the keys that differ (`[STACY R4]` A-5); the log-line and job-name reading rules (`[THURGOOD R4]` A3, `[STACY R4]` L-3, `[ADA R1]` A3); P3's key-set clause (`[THURGOOD R4]` A3) and image-version bind (`[STACY R4]` A-4); a push voiding a review over the PR's changed paths (`[STACY R5]` S-2);
+  - item 4: the "outside its comments" definition and the verdict-line rule (`[THURGOOD R4]` A1);
+  - item 5: C1's forced-failure exclusion read from the step conclusion (`[STACY R4]` A-6, `[ADA R2]` Fix 1); C2's and C3's themes listing (`[ADA R1]` A1); C3's single reference run, its re-derived listing and its grant fallback (`[ADA R1]` A2, `[STACY R4]` A-6); any later push voiding an item-5 review (`[ADA R2]` Fix 3);
+  - item 6 and F-4: the `src/generators/**` bar from U8's merge (`[ADA R2]` Fix 2);
+  - P7's every-PR reach, its record's `swift.version` and `due:` Trigger, and the `SWIFT_RESERVED` co-change (`[THURGOOD R4]`, `[ADA R1]` A4).
+
+**Not forks, listed for Peter** (each a `native-harness.yml` change, so each needs an issue-row grant, § 5, except the last):
+- **Artifact retention** (`[THURGOOD R4]`): `retention-days: 90` on the `harness-consumer` artifact only, so C2 and C3 stay re-measurable from CI past seven days. C3's re-derivation already covers the gap, but on a reader's machine, not in CI (`[ADA R2]`).
 - **A scheduled dispatch on `main`** every six days or less (`[ADA R1]`, not vetted with Thurgood or Data): an outside break shows on `main` before a PR meets it, and P1 and C3 always have a recent reference. Costs: macOS minutes, a third event class `stability.ts` must classify, and job names for the schedule event.
 - **The conditions as a script** (`[THURGOOD R4]`, the P1c precedent): commit P1–P6 and C1–C6 as a script in `p1c-bound.sh`'s form and run it on PRs that touch `harness/pins.yaml` or `consumer.ts`. It turns "decidable" into "decided" before the merge. Its cost is a new instrument Thurgood maintains, plus a workflow step.
 - **Pin the JDK through `actions/setup-java`** (`[DATA R3]`): removes the image as an Android trigger, at the cost of a download host `REGISTRY_HOSTS` does not classify. Data files the record with the orchestrator's go.
+- **Split the pin file by section** (`[LINA R1]`, not vetted with Data, Kenya, Ada or Thurgood): `harness/pins/{android,ios,consumer}.yaml`, so the glob is the section boundary and both targets enforce it at the write. Cost: a spec-row change across `compare.ts`, `consumer.ts`, both lanes' pin readers, two tests, the README and the spec text that names the file; P2, P3 and the toml invariant are all still needed. Lina would not do it before U12; if wanted, it fits Spec 132's first family as a record. No workflow change.
 
 ---
 
@@ -559,6 +588,13 @@ Five forks. Each reviewer's read is given; "not read" means the seat's entry did
   - § 5 after #745's ratification (Thurgood A5);
   - P7's folds (Ada A4; Thurgood); the grant-end corrections (Ada A5);
   - the census line (L-1), named falsification cases (L-2), P2 as a query (L-4), the fallback record's owner (L-5).
+- At `[DATA R3]`, from review round 2:
+  - C1's forced-failure test read from the step's conclusion, which Ada verified fails open as drafted (`[ADA R2]` Fix 1, High);
+  - the `src/generators/**` bar from U8's merge (Fix 2); any later push voiding an item-5 review (Fix 3), and over the PR's changed paths for every other review (`[STACY R5]` S-2); the whole review-entry form marked as Thurgood's addition;
+  - § 8's "Also ruled" list (S-1); the toml query's amendment rule (S-3); site 10 part 3 in Stacy's rewrite;
+  - P7's harness and consumer sides stated apart, and the ancestor test for "the later of" (`[KENYA R4]` K-1, K-2);
+  - site 7's conditional entries (`[LINA R1]` LN-1, Medium); site 12's signature, removal and overlay-pin corrections (LN-2, LN-3); F-1's generated-surface residual (LN-4); the new-lane-test cost (LN-5);
+  - Ada's README reviewer under F-5 (a).
 
 **What survives, stated plainly:**
 
@@ -567,7 +603,7 @@ Five forks. Each reviewer's read is given; "not read" means the seat's entry did
    - C3 makes a shrink in the tarball listing, the generated-file listing or the themes listing a spec-row change. C6 holds the expected lists and fixtures fixed. A pruned compile then reads as `not-run` and fails (`[DATA R3]`).
    - `[KENYA R3]`'s verified case, a theme dropped from the manifest's `themes`, is now caught by C3's themes listing (`[ADA R1]` A1). **A narrowing inside a file is not**: a change to how `generate` is invoked (a flag, an environment variable, a config line the driver writes) can narrow content inside files whose names have not changed. Only a compile failure against the fixed lists and `d2-check.ts`, which covers component tokens only, would see it (`[ADA R1]` § 4).
    - Thurgood says his review cannot judge which generated files should exist (`[THURGOOD R3]`).
-   - Nothing dispatches `main` on a schedule, so a repair of an outside break will often find no reference artifact and must re-derive one or go by grant. In practice the standing scope pays mainly for co-change, not for outside breaks (`[ADA R1]`).
+   - Nothing dispatches `main` on a schedule, so a repair of an outside break will often find no reference artifact and must re-derive one or go by grant. A re-derived listing is reproducible from git, but not from CI, in exactly the outside-break case; the inputs are deterministic, so Ada reads it as acceptable (`[ADA R2]`). In practice the standing scope pays mainly for co-change, not for outside breaks (`[ADA R1]`).
    - So the invariant and the reviewers narrow the gap; they do not remove it the way separate ownership would. Per-fix grants for `consumer.ts` were the defensible alternative, and Peter approved (a).
 2. **A lane owner can change what a lane decides without touching a pin, a list or a fixture** (`[STACY R4]`). Examples: a `REGISTRY_HOSTS` entry for a host that Decision 6 (`tasks.md` L651) does not name, which § 2 offers as a repair; a narrowed self-test expectation (`harness/android/lane.ts` L634); a flag hard-coded in `harness/ios/lane.ts`. Against that class there is only the prose limit, a review owed only on the annotation interface, and Stacy's read after the merge, which can find the hunk but cannot judge it. A-1 showed the same shape in a file. The base rate is still zero.
 3. **Every oracle the harness has sits in one seat** (`[THURGOOD R4]`). Thurgood holds `compare.ts`, `stability.ts` and `native-rules.ts`, and under F-4 (a) and F-5 (a) also `d2-check.ts` and the README. The checks on him are Data's, Kenya's and Ada's review entries, whose presence is decidable and whose content nobody verifies. An error there is in every verdict at once. The platform split keeps both platform seats on every shared hunk and on the verdict-line format, and an objection now holds the merge. His owed load is three chains (P6, C4, D-1 consults); others owe entries on the files he holds. He reads that load as acceptable, and his seat remains a single point of delay, with Peter's demotion path as the valve.
@@ -575,6 +611,7 @@ Five forks. Each reviewer's read is given; "not read" means the seat's entry did
 5. **Product seats hold code-write scope over system infrastructure** (`[DATA]` R1; `[KENYA]` R1). These are the first code paths in Data's and Kenya's charters, which blurs the Agent Directory's tier line. Peter ruled the split, so this is a residual. On the other side: a Gradle or Xcode repair needs that seat's judgment.
 6. **The base rate is thin** (`[STACY R1]`). Every producer change so far landed under a 129 task row, and the changes we can predict after U12 are Spec 132 work, which 132's rows grant anyway. The standing scope pays only on a break outside any spec, on a required context.
 7. **A break that spans files needs several seats.** A break across `lane.ts` and `compare.ts` needs Data and Thurgood; across a lane and `native-harness.yml`, a grant as well. That cost is deliberate (`[STACY R1]`), and Peter's demotion and emergency paths remain.
+8. **Write scope renders at file grain only** (`[LINA R1]`). This ballot is the first to grant part of a file. The section, the activation event and the conditions are all prose in the In Scope bullets. The mechanical surfaces, `allowedPaths` and the write-scope note, say more than the law does, so a seat that reads only its generated scope reads a wider grant than it holds. P2, C6 and Stacy's read narrow that after the merge. Only the pin-file split (§ 8, not a fork) would close it before the write, at a cost not yet vetted.
 
 ---
 
@@ -1044,9 +1081,11 @@ Where each pre-draft point landed:
 
 ---
 
-## 11. Review round (this draft)
+## 11. Review rounds on this draft
 
-Ada, Thurgood and Stacy entered on the draft at `7d00d92d4`. Each entry is spliced byte for byte from `/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/5572d8be-d5f0-4ae6-a8b3-cb3c3b8aceed/scratchpad/lane-ballot/`, a temporary directory, so each file's sha256 is given with it. Stacy's tested P2 script is fenced. Lina's entry is owed.
+### Round 1
+
+Ada, Thurgood and Stacy entered on the draft at `7d00d92d4`. Each entry is spliced byte for byte from `/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/5572d8be-d5f0-4ae6-a8b3-cb3c3b8aceed/scratchpad/lane-ballot/`, a temporary directory, so each file's sha256 is given with it. Stacy's tested P2 script is fenced. Lina's entry came in round 2.
 
 **Source**: `ada.md`, sha256 `76b856373a29b612a5a3f8b609d2cc819c495948eb265d83ee04b6625d23cb52`
 
@@ -1336,3 +1375,285 @@ Every amendment is folded except the one disagreement, which is F-4. Where each 
 **Not folded, and why**: none. The forks left for Peter are F-1, F-2, F-3 (P7), F-4 (`d2-check.ts`) and F-5 (`harness/README.md`).
 
 **Still owed before ratification**: Lina's entry; Kenya's confirmation of the folds in item 2 and site 4; Ada's confirmation of site 6's brackets; Stacy's P7 clause for site 10.
+
+### Round 2
+
+Kenya, Ada, Stacy and Lina entered on the draft at `f0cfe57e2`. Each entry is spliced byte for byte from the same temporary directory, with its sha256. Lina's is her first entry.
+
+**Source**: `r2-kenya.md`, sha256 `4d2ffa921c23c74ee0969678e22738b9d04451d22d6571856aeef56c167c4389`
+
+#### [KENYA R4] — confirmation of the folds in item 2 and sites 3, 4 and 9 (b) (read at `f0cfe57e2`, 2026-11-08T00:03:28Z, `date -u`)
+
+**Verdict: confirmed, with one wording fix (K-1) and one decidability note (K-2).** I checked the folds against the code at `f0cfe57e2`, not only against the entries they cite.
+
+**Confirmed as folded.**
+- **L-2, the named falsification case.** Correct in item 2's limits and in site 4.
+- **The image bind (`[STACY R4]` A-4).** Correct. Item 2's (i) now anchors the readme to the runner that ran green, which is better than my draft, where the author's word fixed both sides. Her run shows that `ios.image.version` (`20261026.0455.2`) already trails the image the contexts pass on (`20261102.0473.1`). That is the reason the bind applies on a move only.
+- **P7 on any PR that changes `swift.version` (`[THURGOOD R4]`).** Correct. Design § 4 does not distinguish the routes.
+- **P7 (b), the record with `due:<the next release>` (`[ADA R1]` A4).** Correct.
+- **The `SWIFT_RESERVED` co-change.** Verified. `SWIFT_RESERVED` is at `src/generators/native/ThemeEmitter.ts` L68 and is used at L216 and L236. `native-rules.ts` L219 `familyCases(themes, …)` derives the cases from theme names. So Ada's consumer-side risk is real: a theme named with a newly reserved word is emitted without backticks.
+- **Site 4, the `compare.ts` phrase.** "outside Swift-named declarations" matches item 4's split (`[THURGOOD R4]` A1). The review-entry form and the objection line match P6.
+- **Sites 3 and 9 (b).** Unchanged from my text. Confirmed.
+
+**K-1 — P7's first "Why (b)" bullet now contradicts itself.** It opens "The risk is one-sided" and then folds in a second side. Replace the bullet with:
+> "The harness side is one-sided: a word reserved at the old Swift and not at the new one still compiles in backticks, so a stale list cannot turn the head red. The consumer side is not: a word newly reserved at the new Swift is emitted without backticks, so a consumer theme named that word fails in the consumer's project while the harness stays green. The pin move does not create that exposure, because consumers compile with their own Xcode. The move is only the event that tells us to look. Deferring to `due:<the next release>` delays the detection to that release's walk, and the walk reads it before the release ships a generator."
+
+F-3's "What survives" should then say "leaves the detection deferred until the release walk", not "leaves consumers exposed until".
+
+**K-2 — item 7's iOS command finds only one of the two commits in "the later of".**
+- Add after the iOS command: "Item 2 activates at whichever of the two commits, U12's (the first command) and the iOS promotion's (this one), descends from the other (`git merge-base --is-ancestor`). Before both exist, it is not active."
+- Without that sentence, a reader at an iOS promotion that came before U12 would activate item 2 early.
+
+**Forks.**
+- **F-1: (a).** For iOS, the interval before activation could be months, and in it the Kiro `allowedPaths` admit `harness/pins.yaml` whole. No iOS context is required in that interval, so an early write blocks no one and Stacy's read catches it after the merge. Under (b), the iOS charter PR would land in the same week as the first required iOS context, which is the wrong week.
+- **F-2: (a).** On iOS it leaves no choice even for `toolchain missing`. K-7 picks the Xcode, the head run prints the rest, and the runner image fixes the version. A deliberate Xcode or Swift bump cannot ride a repair.
+- **F-3: (a)**, with K-1. What survives is Stacy's point: until record (c)'s lane self-test exists, P7 (a) is an attestation she can re-verify only on a matching `swiftc`.
+- **F-4: (b), weakly.** Stacy's test is § 2's own: every input to `d2-check.ts` is in the repository, so a red lands on the PR that caused it. That PR can carry its grant. If Peter wants a standing holder, Thurgood with Ada consulted, never Ada.
+- **F-5: (a).** The README's header and table already name Thurgood, and its pin-file field names are "the lane owner's" (`harness/README.md` L128). Under (b), a README sentence that misstates an iOS field would wait for a grant before anyone could correct it. I accept reviewing the iOS hunks. What survives is Thurgood's: the seat that holds the verdict code gains one more oracle surface.
+
+**Source**: `r2-ada.md`, sha256 `cc55ae68bbf48f1306d22c38e296618607daf81342cb7c6230933868aa8476b9`
+
+#### [ADA R2] — confirmation of the fold (read at `f0cfe57e2`; `main` at `a418cc0aa`)
+
+**Verdict: approve with three fixes.** The fold carries my R1 entry correctly. Fix 1 is High: C1's forced-failure test, as written, passes on a forced failure. Fixes 2 and 3 are Medium. Each is stated below in a form that can be applied directly.
+
+**What the fold carries correctly**
+- **A1**: the themes listing is in C2's third bullet and in C3's rule.
+- **A2**: there is one reference run, for C3 and for C6's third bullet. It is merged with Stacy's A-6, and the merge improves it: the reference is a first-parent ancestor of `B`, and its listing is re-derived once the artifact expires.
+- **A3**: the job-name rule is in item 3.
+- **A4**: the P7 folds are in Kenya's text, which she confirms.
+- **A5**: the grant-end correction is in § 2 (U8, U9 and U10) and item 6.
+- **A6**: this is F-4 (a).
+- The merge-ref limit is under item 5, and the `harness-generate` infra record is in site 13. The scheduled-dispatch option is in § 8, marked unvetted.
+- Data's summary of my reads in § 8 is accurate.
+- **Against Peter's approval** (`evidence/2026-11-07-peter-rulings-native-lane-ownership.md`), all six `consumer.ts` conditions are present (C1–C6, with C4 carrying "Thurgood reviews every change, and Data and Kenya review manifest and layout changes"). Nothing in item 5 contradicts the approval. The one widening beyond his words, the objection that holds the merge, is marked. The rest of the review-entry form is not marked: the named commit, voiding on a push, and the last line. It narrows "Thurgood reviews" and does not contradict it. Under the conflict-of-interest rule (3), it should still carry **[Thurgood's addition — Peter rules]**.
+
+**Fix 1 (High): C1's forced-failure test fails open. I verified this.**
+- **The test as written.** C1 tests for "no line beginning `harness-generate failed on purpose`".
+- **What the log shows.** The forced-failure run 42332232400 (U1's fault run) has no such line. Its `--log` prints the line as `##[error]harness-generate failed on purpose: …` (log line 113). The two script-echo lines begin `##[group]Run echo` and `echo` (lines 108–109).
+- **The consequence.** Under item 3's reading rule, a forced run passes C1, and C3 and C6 can again be met without checking anything, which is what A-6 (a) was folded in to prevent.
+- **Decidable replacement.** In `R`, the `harness-generate` job's step `Forced failure (dispatch input force_generate_failure)` concluded `skipped`. Check it with `gh run view <R> --json jobs --jq '.jobs[] | select(.name|startswith("harness-generate")) | .steps[] | select(.name|startswith("Forced failure")) | .conclusion'`. I checked this query on both kinds of run:
+  - `failure` on 42332232400, the forced run;
+  - `skipped` on 42335480697 (a dispatch) and on 42335435837 (a pull request).
+- **Where it applies.** The same replacement goes into C3's "not a forced failure (C1)".
+- **An aside, no change asked.** The `<step>` field in that `--log` reads `UNKNOWN STEP`. Item 3's rule reads only the job name and the line's text, so this does not affect it.
+
+**Fix 2 (Medium): item 6's grant bar contradicts Task 13's merged row unless it has a start date.**
+- **The conflict.** Item 6 says, with no time bound: "Under either answer … a task-row or issue-row grant over [`d2-check.ts`] never goes to the seat that holds `src/generators/**` in the same unit". F-4 (a) says the same. Task 13's row is merged on `main`. It makes me PRIMARY in U8, with `scripts/harness/d2-check.ts`, `d2-check.test.ts` and `src/generators/**` all in its Primary Artifacts. U8 has not merged. If this ballot is ratified first, it bars a grant that a merged plan has already made. That would be a plan change, made without a tasks amendment.
+- **The precedent.** Thurgood's A6 states the native-rules A-2 limit as applying "after U12".
+- **Replacement**, in item 6 and F-4 (a): "**from U8's merge**, a task-row or issue-row grant over it never goes to the seat that holds `src/generators/**` in the same unit". U8 is where the file's gap opens (A5), so U8's merge is the first moment the bar can matter. My grant under Task 13 ends at that merge.
+
+**Fix 3 (Medium): for C4, a push should void a review whatever path it touches.**
+- **The rule as written.** A review is voided only by a push under `harness scripts/harness` (P6's form).
+- **Why that is too narrow for my changes.** An item-5 PR may also change `src/cli/**`, which item 5's preamble allows. A later `src/cli/**` push changes what the driver generates. It can therefore change C2's output, and with it C4's own trigger for Data and Kenya. Under the current rule, Thurgood's review of the earlier head would still stand.
+- **Replacement**, as a sentence added to C4: "For an item-5 change, the review-entry form's diff is `git diff --quiet <that sha> <m>`, with no path filter, and C2 is read at the final `m`."
+
+**Site 6's brackets: confirmed, with one sentence replaced.**
+- I confirm "[that is not a forced failure]", whose law becomes Fix 1. I confirm the review-entry bracket.
+- **The reference-run bracket is incomplete.** It leaves out C3's ancestor and forced-failure limits. It also applies re-derivation only to the fallback case, when C3 applies it to any reference whose artifact has expired.
+- Replace the sentence "The reference run is the base dispatch, or, … with none, the change goes by grant." with:
+  > `The reference run is the base dispatch, or, where its `harness-generate` failed, the newest dispatch on `main` at a first-parent ancestor of the merge base whose `harness-generate` succeeded and whose forced-failure step was skipped; its listing is the surviving artifact, or is re-derived by running the driver at that run's commit; with no such run, or a re-derivation that does not exit 0, the change goes by grant.`
+- If Fix 3 is taken, the review bracket also gains: `, a review of an item-5 change voided by any later push`.
+
+**The forks**
+- **F-1: (a).** My read is unchanged.
+- **F-2: (a).** The image-version bind Stacy added is the right complement.
+- **F-3: (a), as folded.**
+- **F-4: (a), weakly, and I would accept (b).**
+  - **What Stacy's point changes.** Every input to `d2-check.ts` is in the repository, so a red lands on the PR that caused it. That removes the outside-break case for a standing holder.
+  - **What is left for (a).** In practice, the PR that turns `d2-check.ts` red is one of my `src/generators/**` naming changes. Under (b), its grant cannot go to me, so it goes to Thurgood every time. (b) is then (a) plus a grant record per change.
+  - **What (b) still buys.** A merged record of intent before each change to an oracle over my own generator.
+  - The pick is Peter's. **Fix 2 applies under either answer.**
+- **F-5: (a), with one reviewer added.**
+  - Two parts of `harness/README.md` restate my driver and CLI, not the comparator or a lane:
+    - the pin-file rows for `consumer` (L16, L109);
+    - § "The `gen:` path rule" (L58–), which follows `platforms.<platform>.output` as the CLI resolves it.
+  - Under (a), add: "**Ada reviews hunks in the `consumer` pin-file rows and § "The `gen:` path rule"**, in the review-entry form". This matches Data's and Kenya's section reviews.
+  - What survives against (a) is still § 9 residual 3. I have nothing to add to it.
+
+**What survives**
+- § 9 residual 1 stands as now stated. A theme drop is caught. A narrowing inside an unchanged file is not, except where a compile fails against the fixed lists or `d2-check.ts` sees it.
+- One addition from the fold. Once the artifact expires, C3's reference listing is re-derived on a reader's machine, not in CI. That makes C3 reproducible from git, but not from CI, in exactly the case of an outside break. The inputs are deterministic (the packed tarball and the generator inside it), so I read this as acceptable. A reader who wants a CI read has two routes, both needing grants: Thurgood's 90-day retention option and the scheduled dispatch.
+
+**Source**: `r2-stacy.md`, sha256 `a81d03e44a0a0c15d317b8d4f48a3f5df6edc7c6932ed76005ed60e55f8efb36`
+
+#### [STACY R5] — confirmation of the fold at `f0cfe57e2`, the owed P7 clause, and the five forks
+
+I read the ballot at `f0cfe57e2` and Peter's record on the same branch, with `git show` only. Everything below is a read after acceptance, never a gate.
+
+**Verdict: approve, with three fixes (S-1 to S-3)**. Below them: my site-10 part 3, rewritten with the owed P7 clause, and my reads of the five forks.
+
+**The fold carries my entries. Each point below is verified.**
+- **`[STACY R4]` in § 11 is my file, byte for byte.** A line-by-line `diff` against my scratch file shows no difference.
+- **`p2.js`.** The sha256 § 11 gives, `dbae4572…d186d102`, is the hash of my file.
+- **Site 10's three parts are my words, byte for byte.**
+- **Item 1's toml query.** I extracted it from the ballot and ran it:
+  - it prints `true` at `f28a1fefd`, `de307e1d7~1`, `de307e1d7` and `origin/main`;
+  - it prints `false` when the same code reads `f28a1fefd`'s toml with `min-sdk = "24"` substituted in memory. I made no worktree and no edit.
+- **C2's themes listing** reads `themes: { name, mode }[]` (`consumer.ts` L113–118), so `"\(.name) \(.mode)"` reads fields that exist.
+- **P3's line form.** P3's `FAIL toolchain:` prefix is `formatFailure` (`compare.ts` L647–648: `` `FAIL ${f.cls}: ${f.detail}` ``).
+- **Where each amendment landed:**
+  - A-1: item 1, P4 and site 2.
+  - A-2: site 10.
+  - A-3: F-4 (b).
+  - A-4: P3, with item 2's (i) re-anchored.
+  - A-5: item 3 and item 8.
+  - A-6: C1, and C3's re-derivation.
+  - L-1 to L-5: § 6, items 1, 2 and 4, item 3's reading rules, P2's query, and § 5.
+
+  Each one says what I asked.
+
+**Against Peter's approval.** Every condition he approved is present:
+- for `pins.yaml` (b): P1, P2, P4, P5 and P6;
+- for `consumer.ts` (a): C1–C6 and item 8.
+
+Nothing I found loosens a condition he approved, with one exception, under S-1: the `compare.ts` review split narrows the review duty that the record's paraphrase states.
+
+---
+
+**S-1 (Medium). Not every mark that asks Peter to rule reaches him in § 8.**
+- § 8 lists five forks. The body carries rulings it does not list:
+  - Thurgood's "an objection holds the merge" (P6);
+  - the `compare.ts` platform split (item 4). That one narrows "with Data and Kenya reviewing", the reading Peter approved, to "outside the other platform's declarations";
+  - Kenya's self-test limit, and her P4 path;
+  - "the later of" (item 7);
+  - Lina's addition to the review round.
+- **The folded review amendments are not marked at all.** They include my own toml invariant, C1's forced-failure exclusion, C3's themes listing and its grant fallback, and P3's key-set clause.
+- If Peter answers the five forks "as recommended", those would ratify unread.
+- **Fix**: § 8 gains one list, "Also ruled by this ballot", naming every element beyond Peter's approved conditions. That covers each `Peter rules` mark and each folded reviewer amendment. The second group gets a mark like `[reviewer's addition, folded — Peter rules]`, as the conflict disclosure's point (3) already requires of the author's own additions.
+
+**S-2 (Medium). A push after a review can escape the review-entry form.**
+- The form voids a review only through `git diff --quiet <that sha> <m> -- harness scripts/harness`.
+- A C4 change may land with its `src/cli/**` change in one PR (item 5). A push to `src/cli/**` after Thurgood's review then leaves his entry valid against code he never read. The same holds for any item-4 or P6 PR that also touches files outside those two roots.
+- **Fix**: the paths are those the PR changes, `git diff --name-only B <m>`. This is Thurgood's text (his A2). My words below read "over the paths the form names", so they follow whatever is ratified.
+
+**S-3 (Low). The toml invariant names four keys, a fixed list.**
+- A library that a later grant adds to `android.libraries`, and to the toml, is not held unless that grant also amends the query.
+- The name mapping is not uniform (`coil-compose` ↔ `coil`), so the query cannot simply walk the section.
+- **Fix**: one sentence in item 1: a grant that adds or renames a pinned library amends the query in the same PR.
+
+---
+
+**Site 10, part 3 — my words, rewritten** (they replace part 3 whole). What changes from the R4 text:
+- A-1's brackets are removed, since it was taken.
+- The owed P7 clause is added, read on every PR that changes the Swift version, by any authority.
+- The reviews are read through the review-entry form, and item 4's split is read.
+- A bracketed clause for F-4 (a) is added. Its brackets come off if F-4 (a) is taken; the clause is struck under (b).
+
+Parts 1 and 2 are unchanged.
+
+> `For a PR touching a path of ballot 2026-11-07-native-lane-ownership, read with `<m>` the PR's head (`refs/pull/<n>/head`) and `B` = `git merge-base origin/main <m>` — unlike P1c's convention, because the PR's own run is keyed on its head: whether its merge commit descends from the item's activation commit (that ballot's item 7 commands; `git merge-base --is-ancestor`), an edit resting on the scope before it being out of scope; for a PR touching `harness/android/**`, that ballot's item 1 query printing `true` at `<m>`; for a PR whose diff changes `ios.toolchain."swift.version"` between `B` and `<m>`, by whatever authority, its P7 line present in form (a) or form (b), a form-(b) record resolving at `<m>` with owner Kenya, the new `swift.version` string and a `due:` Trigger; and, unless a `tasks.md` row merged at `B` or an issue-row grant activated before the merge lists the path and the PR body cites it (this selects the read and never widens a grant), for a change to `harness/pins.yaml` — the section chosen by which keys differ, never by the PR's claim — that ballot's P1–P6; for a change to an item-5 path, C1–C6; for a change to `compare.ts` outside its comments, the reviews item 4's split owes; [for a change to `d2-check.ts` outside its comments, Ada's consult;] and for a defect fix, its named falsification case run at `<m>` against the file at `B`, which must fail. P1–P5, C1–C3, C5 and C6 are decided from git and the runs; P6, C4 and item 4's reviews by the review-entry form — the entry present, the commit it names unchanged to `<m>` over the paths the form names, its last `**Review**:` line, and for an objection the PR body's `**Open for Peter**:` line — never by the entry's content; P7 (a) is pasted output, `not re-verified — toolchain unavailable` unless re-run at the same Swift. A listing whose run artifact is past retention is re-derived by running `scripts/harness/consumer.ts` at the commit, or the row reads `not re-verified — artifact expired`. A failure of P4, C3 or C6, of item 1's query, or a deletion in a listed test, fixture or self-test with no named amendment, goes to Peter as an unadmitted weakening of a required check; every other failure, a missing P7 line included, is a finding on the authoring seat. Whether a change alters what its lane decides is not decided here: that is the row's known gap.`
+
+**`harness/README.md`** stays out of my path list under either F-5 answer. Nothing runs it, so it is not an instrument. Its hunks are read at RELEASE as text, not at ARMING.
+
+---
+
+**The five forks**
+
+- **F-1: (a)**, unchanged from R4.
+  - **What survives**: this is detection after the merge, not prevention. Kiro's `allowedPaths` admit the writes, and the whole `pins.yaml` to three seats, before activation.
+- **F-2: (a)**, unchanged. With A-4 and Thurgood's key-set clause, every field a standing move touches is now a string comparison against a run.
+  - **What survives**: a forced move whose new value no run reports waits for a grant.
+- **F-3: (a).** Applying P7 to every Swift move, by any authority, is right. Design § 4 L233 does not distinguish authorities, and my clause above reads it on all of them.
+  - **What survives**: Ada's point. A word newly reserved at the new Swift fails in a consumer's project while the harness stays green, so form (b) leaves consumers exposed until the release walk. Kenya's record (c) is the only route to a CI read.
+- **F-4: I move from (b) to (a).** This is a fold-back, not a concession.
+  - My (b) rested on two grounds. First, there is no outside break, which still holds. Second, if there were a standing holder, it would be Thurgood "by a record rather than a ledger line", because he had not been asked.
+  - He has now been asked, and said yes in this round. That removes the second ground.
+  - The first ground does not separate the options. Under (b), the case that remains is a naming change in `src/generators/**` outside a spec row, which turns `d2-check.ts` red in the same PR. A-2 bars Ada from that grant, so (b) also ends with a commit from Thurgood, plus a grant record each time. (a) gives the same independence for one fewer record per event.
+  - Both options keep what I asked for: never Ada's; in my read now; A-2's limit; and an issue-row grant between U8 and activation.
+  - **What survives against (a)**: residual 3. Every oracle the harness has sits in one seat. Against him there are only review entries whose content nobody verifies.
+- **F-5: (a).**
+  - `compare.ts` L12–13 sends README defects "to the owner". Under (b) there is no owner, so a `compare.ts` fix that shows the README wrong lands with the code while its prose waits on a grant. That is a drift path built into the rule.
+  - The oracle-concentration objection applies to code that decides verdicts. The README decides none.
+  - Under (a), whether a hunk "makes the README agree with its source" or "changes a rule" is a judgment. The PR body's citation of the source sentence is the only decidable part, and it is presence only.
+  - **What survives**: the seat that writes the comparator also writes its only prose description. A wrong rule can then be wrong in both places, in one hand, with Data's and Kenya's section reviews as the only second reader.
+
+**The counter-argument that survives the whole ballot** is unchanged from R4, and § 9 residual 2 carries it: a lane owner can change what a lane decides without touching a pin, a list or a fixture. My read can find the hunk, but it cannot judge it.
+
+**Source**: `r2-lina.md`, sha256 `6a4adfa1623e641cca90ebd0bb5e244b1bfc98d1f4a6d17b555418e101062e81`
+
+#### [LINA R1] — generator shared core: rendering, signatures and the test rule (read at `f0cfe57e2`; `main` at `a418cc0aa`; 2026-11-08T00:05:42Z)
+
+*First entry; I was not in the pre-draft rounds. My seat here is the generator's shared core and adapters (`schema.ts`, `partition.ts`, `adapters/kiro.ts`, `adapters/cc.ts`, `regrounding/dispositions.ts`, `derive.ts`) and the `scripts/` test rule. I hold no path this ballot grants and gain none.*
+
+**Verdict: approve with amendments.** Nothing in the generator conflicts with the ballot's paths, `harness/pins.yaml` in three seats included. One amendment is Medium: site 7 omits the frontmatter entries that F-4 (a) and F-5 (a) would grant. The rest are Low corrections to site 12 and § 8.
+
+**Checked, with `git show` and reads of the working tree at `a418cc0aa`:**
+- **How a `writeScope` member renders.** The Kiro adapter copies the list verbatim into `toolsSettings.write.allowedPaths` (`adapters/kiro.ts` L294–296). It does no dedupe, adds no qualifier and keeps the order. The CC adapter renders the same globs into the behavioural note. A member is a path glob and nothing else. It cannot carry a section, a condition or an event.
+- **Frontmatter comments render nowhere.** Data's six-roots comment (`canonical/agents/data.md` L243–244) appears in neither `.claude/agents/data.md` nor `.kiro/agents/data.json`, whose `allowedPaths` is the three bare globs (L44–48). So the comments that sites 1, 3, 5 and 7 add ("active from Spec 129 U12's merge", "the `android:` section only") reach readers of `canonical/**` only.
+- **One file in three seats is not a conflict.** Duplicate entry paths are refused only inside one unit's entry tree (`partition.ts` L467–476). No schema rule, sweep (`sweeps/**`) or `canonical-vs-truth.ts` check compares write scopes across seats. A shared member is ordinary: `writeScope[.kiro/specs/**]` sits in four seats' dispositions with one `canonicalHash` (`sha256:76dd99…`), because the hash is per glob. `writeScope[harness/pins.yaml]` will have one hash in three files and three signatures, one per unit's C1 seat. That is expected, not a collision.
+- **No check requires a glob to match a file.** So `scripts/harness/d2-check.ts` can be listed before U8 adds it.
+- **Item 1's and item 2's tests and fixtures follow the files they exercise.** I read every suite's imports at `main`. `probe-kotlin.test.ts` exercises `probe-kotlin.ts` and `harness/android/lane.ts`, both Data's. `probe-swift.test.ts` exercises `probe-swift.ts` and `harness/ios/lane.ts`, both Kenya's, and its header already reads "Owner: Kenya". It also imports `compare.ts`, `native-rules.ts` and `scripts/pack-assert.ts`, but as oracles: its § 3.4 cases check that the probe keeps no copy of the rules module. The `parse-*` suites import `compare.ts` types only. Each fixture directory is read by one suite only: `kotlin/`, `parse-kotlin/`, `swift/`, `parse-swift/`, and `stability/` (Thurgood's already). The ballot's by-name listing and the `scripts/` rule give the same holder for every file.
+- **`.kiro/issues/2026-10-17-per-owner-test-folders.md` does not conflict.** Its move is `tools/agent-generator/__tests__/<seat>/**` and `scripts/__tests__/<seat>/**` (§ Scope 1). `scripts/harness/__tests__/` is a different tree, so the move does not touch it. The interim it ends is a test that is named by rule and by no glob, which Kiro's `allowedPaths` does not admit. This ballot names every harness test and fixture directory by path, so the interim never applies to them.
+
+**Amendments**
+
+- **LN-1 (Medium). Site 7 lacks the frontmatter entries for F-4 (a) and F-5 (a).** Item 4's paths add `harness/README.md` under F-5 (a), and `d2-check.ts` with `d2-check.test.ts` under F-4 (a). Site 8's bracketed bullet grants them. But site 7 inserts only `compare.ts` and `compare.test.ts`. If Peter takes either (a), Thurgood's generated write-scope section and Kiro `allowedPaths` would leave out files his In Scope bullet grants, so the charter would contradict itself. Kiro would also prompt him for each such write (`adapters/kiro.ts` L151). **Fix**: add to site 7, after `compare.test.ts`:
+  - under F-5 (a): `  - "harness/README.md"`;
+  - under F-4 (a): `  - "scripts/harness/d2-check.ts"` and `  - "scripts/harness/__tests__/d2-check.test.ts"`.
+
+  Site 12 then gives each added member a dispositions row and its first signature, by Stacy as Thurgood's C1 seat.
+- **LN-2 (Low). Site 12's signature citation.** The test is named "every row in the signed population is signed by its C1 seat" (`consumer-profile.real.test.ts` L181), not "every routed row is signed".
+  - Two checks bite, not one. First, every new member needs a row, or `derive.ts`'s `missing-row` refuses it (L134).
+  - Second, a row needs a signature only when its disposition is `no-consumer-counterpart`, `superseded-by` or a routed `re-pointed` (L176). A `retained` row needs none.
+  - But `retained` would render `harness/android/**` and the rest into a consumer project's `allowedPaths`, and a consumer has no harness. So the author's expectation, `no-consumer-counterpart`, is the only shape that is true to a consumer. The cite stays each signer's call.
+- **LN-3 (Low). Site 12's Thurgood removal, and the overlay pins.**
+  - "The removal that stores the compile-harness bullet is replaced with site 8's after-text" should read: the removal's text becomes the whole bullet as it reads after site 8, byte for byte. That is the charter-scope text up to the replaced closing sentence, then site 8's after-text.
+  - Nothing checks a removal's text against the unit. `dispositions.ts` L324–340 checks shape only, and `freshness.ts` does not compare it, as the ballot says. So a removal that holds only the new sentence would pass, and it would misrecord what the consumer render drops.
+  - Each `#in-scope` edit (sites 2, 4, 6, 8, and Stacy's unit under site 10) also moves that unit's canonical hash. So each seat's overlay pin, `## @unit #in-scope @ sha256:…`, is re-pinned in the same PR, or the `stale-overlay` refusal fires (`consumer-profile.real.test.ts` L141–145 is that refusal's test). Site 12 says "overlays", and this is what that word must cover.
+- **LN-4 (Low). § 8 F-1's residual, and one read in it.** Ada's F-1 read says "the frontmatter comment names the activation event, which narrows that interval's ambiguity". That is true for a reader of `canonical/agents/*.md` only. The generator drops YAML comments, so every generated surface carries no activation event: both targets' write-scope lists and Kiro `allowedPaths`. Each seat's In Scope bullet is the only rendered carrier. Her entry stays as written. § 8's "what survives" should add: "in every generated surface the paths read as live from the application merge; only the In Scope bullet carries the event".
+- **LN-5 (Low; cost named, not a change). A new lane test is a charter edit.** `scripts/jest.config.js` sets `rootDir` to `scripts/` (`probe-swift.test.ts`'s header says so), so a test for `harness/<platform>/lane.ts` cannot live under `harness/<platform>/**`. It has to sit in `scripts/harness/__tests__/`. A new suite there, for example a split of `probe-swift.test.ts`, is in no seat's by-name list. It needs a grant or a `canonical/agents/**` edit with a lock slot and a signing cycle, even though the `scripts/` rule already says whose it is. This is the price of conflict-of-interest guard (4), every path by name, and I would pay it. The ballot should say it, so that the first such PR is not read as an out-of-scope edit made by surprise.
+
+**The `harness/pins.yaml`-in-three-scopes question (§ 7, site 12)**
+- **Rendering: no conflict**, as checked above. Three units each carry the member, each renders it, and each signs it.
+- **What the rendering cannot do is the real point.** A member is a whole-file glob. Kiro admits the whole file to Data, Kenya and Ada without a prompt, and CC's note lists the whole file to each of them. Nothing in either target carries "the `android:` section only". The line is held by P2 and C6, which are decidable and read by Stacy after the merge, never before.
+- **Do not encode a section in the glob.** `harness/pins.yaml#android`, or anything like it, would match no file in `allowedPaths`, and it would change the `writeScope[<glob>]` row key. That trades a soft line for a broken one.
+- **Class option (not vetted with Data, Kenya, Ada or Thurgood): split the pin file by section**, into `harness/pins/android.yaml`, `harness/pins/ios.yaml` and `harness/pins/consumer.yaml`. Then the glob is the boundary, and both targets enforce it when the file is written.
+  - **Cost**:
+    - a spec-row change across `compare.ts` (`parsePins` and exception (a)'s "the pins changed", which would read the union);
+    - `consumer.ts`'s `readConsumerPins`;
+    - both lanes' pin readers;
+    - `parse-swift.test.ts` L363 and `probe-swift.test.ts` L73;
+    - the README;
+    - the spec text that names the file (`tasks.md`'s pin-file section; design § 4 L233);
+    - P2, which becomes per-file.
+  - **What survives against it**: the split only moves the section line into the glob. P2's image-and-toolchain-only rule, P3 and the toml invariant are all still needed, because a seat could still edit any key in its own file. The comparator's exception (a) would also read three files, not one. On a base rate of zero I would not do it before U12. If Peter wants it, it fits Spec 132's first family as a record, not this ballot.
+
+**The forks**
+- **F-1: (a).** Under (b) the generated surfaces would be true at every moment, but at two more lock-and-sign cycles, one of them landing at an iOS promotion. Under (a) the gap is LN-4's residual, and before U12 Spec 129's rows grant the same files anyway. Stacy's activation read catches an early edit.
+- **F-2: (a).** It is not in my seat. As a reader, P3 is the condition that makes P2's deletion of `toolchain` safe.
+- **F-3: (a).** Not my seat. It attaches design § 4 L233's re-check to the PR that triggers it.
+- **F-4: lean (b), with low confidence; this is not my domain.** § 2's case for a standing scope is a break from outside the repository. Stacy shows `d2-check.ts` has none. The independence that Ada and Thurgood want is kept under (b) as well, because a grant over it never goes to the `src/generators/**` holder. What survives against (b): each generator naming change after 129 needs a grant record. Spec 132's rows would mostly carry those grants. If Peter takes (a), LN-1 applies.
+- **F-5: (a).** The README's header and its `compare.ts` L13 route already name an owner. A prose file that restates code rules and has no writer drifts from the code it restates. What survives is § 9 residual 3, one more oracle surface in Thurgood's seat. If Peter takes (a), LN-1 applies.
+
+**The counter-argument that survives, from my seat.** The generator renders write scope at file grain only, and this ballot is the first to grant part of a file. Every limit that matters here is prose in the In Scope bullets, rendered once per seat: the section, the activation event and the conditions. The mechanical surfaces, `allowedPaths` and the write-scope note, say more than the law does, so a seat that reads only its generated scope reads a wider grant than it holds. P2, C6 and Stacy's read narrow that after the merge. Only the section-file split above would close it before the write, and it carries a cost I have not vetted.
+
+### Incorporation (round 2)
+
+#### [DATA R3] — author incorporation, 2026-11-08T00:09:10Z (`date -u`; conflict restated: the author is folding reviews of his own charter's scope)
+
+Every fix is folded. No reviewer disagreement is left except F-4, which stays a fork with each seat's read and no pick. Where each landed:
+
+**`[KENYA R4]`**: K-1, P7's "Why (b)" first bullet replaced with her wording, and F-3's residual reads "leaves the detection deferred"; K-2, item 7's ancestor sentence for "the later of". Her fork reads are in § 8.
+
+**`[ADA R2]`**
+- **Fix 1 (High)**, C1's forced-failure test: read from the `Forced failure` step's conclusion with her verified query; the same test in C3 and site 6.
+- **Fix 2**, the `src/generators/**` bar: "from U8's merge" in item 6 and F-4, since Task 13's merged row makes her PRIMARY until then.
+- **Fix 3**, a push voids an item-5 review: the review-entry form's diff has no path filter for item-5 changes; site 6's bracket extended.
+- The review-entry form is marked whole as Thurgood's addition. Site 6's reference-run sentence is her replacement. Her F-5 (a) reviewer is in F-5. Her C3 note on re-derivation is in § 9 residual 1.
+
+**`[STACY R5]`**
+- **S-1**, § 8's "Also ruled by this ballot" list, with every reviewer amendment marked `[reviewer's addition, folded — Peter rules]`.
+- **S-2**, a push voids a review over every path the PR changes (`git diff --name-only B <m>`), in the review-entry form.
+- **S-3**, item 1: a grant that adds or renames a pinned library amends the toml query.
+- **Site 10 part 3**: her rewrite, byte for byte, carrying the P7 clause she owed.
+
+**`[LINA R1]`**: LN-1 (Medium), site 7's conditional entries for F-5 (a) and F-4 (a); LN-2 and LN-3, site 12's signature checks, Thurgood's removal text and the overlay pins; LN-4, F-1's residual; LN-5, the new-lane-test cost in site 12; her surviving counter-argument as § 9 residual 8; her pin-file split in § 8, not a fork.
+
+**Queries re-run at `[DATA R3]`** (repository root, `npm ci` tree):
+- `node libs-pins.js <m>` (item 1's block, extracted from this file and identical to the scratch `libs-pins.js`): `true` at `f28a1fefd`, `origin/main` (`a418cc0aa`), the branch head `f0cfe57e2`, `de307e1d7~1` and `de307e1d7`. The negative case (`min-sdk = "24"`) printed `false` at `[DATA R2]`, and Stacy reproduced it in memory (`[STACY R5]`).
+- `node p2.js <B> <m> <section>` (item 3's block, extracted from this file and identical to her `p2.js`): `true` for `f28a1fefd` → `origin/main` in each of `android`, `ios` and `consumer`; `false` for `de307e1d7~1` → `de307e1d7` (U3's `libraries` edit) in each, as expected: that edit sits outside every section's deletable keys.
+
+**Not folded, and why**: none.
+
+**Forks left for Peter**: F-1, F-2, F-3 and F-5, (a) from every seat; F-4 split, with no pick. Beyond them, the "Also ruled" list in § 8.
