@@ -1112,9 +1112,12 @@ verification:
       check_state: none
       checks: []
       # Post-acceptance, never blocking. Reads refs/pull/N/head (survives the squash) and the harness store by agent-<id>.
-      # LOOKUP RULE (Stacy's): a candidate is the first git log line after a SUCCESSFUL git commit in the same tool call (one
-      # per pass in a loop), or the [<branch> <sha>] <subject> line printed by that git commit in the same tool call, showing
-      # a prefix of the full SHA and the exact subject. SUCCESS EVIDENCE IS A CLOSED SET: (a) that commit's [<branch> <sha>]
+      # LOOKUP RULE (Stacy's, as amended 2026-11-08): a candidate is the [<branch> <sha>] <subject> line printed by a git commit
+      # in the same tool call, or the first SHA printed in the result of a call that runs a git commit and then a git log (one
+      # per pass in a loop), in any line shape (7-40 lowercase hex bounded by whitespace or the line's ends), prefixing C's full
+      # SHA, with C's exact subject in the result (the rest of the SHA's line or the next non-empty line) or in the input (the
+      # call's first git commit's first -m value, or the first line of its -F - heredoc). A SHA anywhere else is never a
+      # candidate. SUCCESS EVIDENCE IS A CLOSED SET: (a) that commit's [<branch> <sha>]
       # line; (b) a git log joined by && or under set -e; anything else reads anomaly. From R, seat briefs commit as
       # git commit ... && git log -1 --format='%H %s'. One candidate in a
       # subagent transcript -> walk 5-7; candidates only in the main session -> FAIL; several -> anomaly; none -> record absent
@@ -1158,6 +1161,7 @@ history:
   - { date: 2026-10-22, change: "§ 2 clause 6 gains the hold form: a hold is a line in the PR body's acts list (<dispositions file>#<row> for a signature, <operative-set file>#<anchor> for a C16 confirmation, then — <seat> — hold: <reason>), never a sheet, signature or confirmation edit, and not a signing act; it resolves as the row's later in-bound act or as withdrawn (ballot 2026-10-22-hold-act-recorded-in-pr-body; closes hermetic follow-ups item 4); rule line, education, checks and check_state unchanged", by: thurgood }
   - { date: 2026-10-22, change: "clause 5 APPLIED @ #445 (EXECUTION of ballot .kiro/docs/ballots/2026-10-21-routes-floor-re-pointed-frontmatter-members.md §§ 3 and 8): triviality.ts routesEntry (re-pointed frontmatter/members rows ROUTE, reason re-pointed-entry; classifyCharter unchanged), called from freshness.ts routedPopulation, so the sweep's unsigned-routed list, --ci link 1 and the census mode follow with no change of their own. Own-base census at dae569756: 1090 rows; 389 routed; 20 unsigned-routed (ratified 9359c3805: 1089; 388; 19; the one difference stacy#frontmatter:commands[owed-set], added by #439). checks[] and census unchanged", by: thurgood }
   - { date: 2026-10-23, change: "link-4 candidate definition (first sha after a successful commit) RATIFIED (Peter, chat, 2026-10-23: \"Re: 1, ratified.\"), ballot .kiro/docs/ballots/2026-10-23-link4-candidate-first-sha-after-commit.md; application pending (after Spec 129's first unit merges; nothing applied)", by: thurgood }
+  - { date: 2026-11-08, change: "§ 4.3 amended: a candidate is the bracket line, or the first SHA printed after a proven commit in the same call (any line shape), prefixing C's SHA, with C's exact subject from the result or from that commit's own first -m / -F - line; store-shape canary (anomaly 4, store layout unrecognized), which sends no act into J and reaches Peter once per run (§ 5.4); a git log is required; success-evidence set and outcomes unchanged (ballot 2026-10-23-link4-candidate-first-sha-after-commit); checks and check_state unchanged", by: thurgood }
 ```
 
 ### charter-write-scope-render-fidelity
