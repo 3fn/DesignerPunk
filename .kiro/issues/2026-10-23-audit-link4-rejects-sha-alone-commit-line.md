@@ -42,6 +42,20 @@ Nothing in the transcripts is lost. If the parser is widened, these 20 acts anch
 
 Her evidentiary note: she hand-confirmed that the transcripts exist and show the commit created. A hand-read is not an anchor and never rolls into `anchored`. The audit is post-acceptance and never a gate.
 
+**Re-read under § 4.3 as amended 2026-11-08 (ballot 2026-10-23-link4-candidate-first-sha-after-commit) @ `e7d82c377`** (Stacy, 2026-11-08; § 5 step 9). Appended here because no RELEASE claims-pass record carries `record absent 20`. The 2026-10-23 line above stays.
+- **Command**: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr 445 --exclude-signer stacy`. It ran on `main` at `2d9944ba9`, whose `tools/agent-generator/` equals `e7d82c377`'s, with the default store set (17 stores) and no `--store`.
+- **Result**: `filter --exclude-signer stacy: 15 of 20 act(s) selected; 5 withheld`; `15 act(s) — anchored 15 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0`.
+- **The 15 acts read `anchored`**, one line each:
+  - Ada `1ddac1d2` ×2;
+  - Data `ea0bfe29` ×4;
+  - Kenya `314e6a01` ×4;
+  - Leonardo `fc6ae901` ×2;
+  - Lina `bd19189e` ×1;
+  - Sparky `81e4f9c7` ×2.
+  All are read through `f6f839ac…/subagents/`. The full output is in the batch-5 ARMING record (`.kiro/specs/129-consumer-generation-completeness/completion/arming-reads-2026-11-08-batch-5.md`).
+- **The 5 withheld acts are Stacy-signed**, `4c0f6977b`'s rows. They are the § 5.3 delegate's: the next seat in the rotation after 16.2.0's Lina is **Leonardo**, whose file is `delegate-audit-link4-reread-leonardo.md`. My hand-read does not count.
+- **Step 10**: this record closes at the re-read, and the re-read is both lines, mine and the delegate's. It does not close here. The owner's rule-5 outcome line, naming both re-read commits, and the archive move follow the delegate's file.
+
 ## 4. The two options Thurgood owns
 
 **A. Widen link 4.** `HEX_LINE_RE` additionally accepts a first `git log` line that is a bare hex run (`/^([0-9a-f]{7,40})$/`) whose **next non-empty line** is the subject, in `candidateLines`. The candidate keeps its existing test: the prefix must be a prefix of C's full SHA **and** the subject must equal C's exact subject.
