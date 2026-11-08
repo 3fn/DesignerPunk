@@ -80,3 +80,5 @@ Primary Artifacts: all shipped as declared
 ## Subtask docs
 
 `task-14-1-completion.md`, `task-14-2-completion.md`, `task-14-3-completion.md`, `task-14-5-completion.md`, `task-14-6-completion.md`. 14.4 is covered by rows 19 to 22 here (the chain: authoring `ec23a5a18` and `85e730f84`, Thurgood `645f9ed62`, Lina `d35ab492b`, Sparky `164c6d437`, Lina `4502b8ee4`, Thurgood `2750c5072`).
+
+**Correction (2026-11-08, Ada; CLOSEOUT claims pass CP-4)**: the "Custom themes reach native output" row above was marked ✅ while its last clause, the `wcag` case's doc comment naming the bridge source (design § 4, `[LEONARDO R2]`), was unmet at U12's head. It is met by the PR `chore/129-closeout-ada-fixes`: `ThemeEmitterInput` gains `wcagSource`, `generate` passes the resolver's origins, and `familyComment` names the built-in map when one applies. The row's old text stands.
