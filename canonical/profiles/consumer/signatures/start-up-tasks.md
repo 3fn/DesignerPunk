@@ -96,11 +96,13 @@ verdict: assent — surviving 3/6; not surviving: `starting-a-parent-ta-2`, `for
 ## `#item-your-open-records`
 
 signer: stacy
-date: 2026-10-21
+date: 2026-11-08
 row: `canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml` · body · `#item-your-open-records` (no-consumer-counterpart; first signature)
 canonicalHash: sha256:42a36743767fe2c303c410d9b9395f8e6ddade32f0934636ed079c11376b9d83
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/9; not surviving: `open-records-run`, `open-records-manual`, `open-records-due`, `open-records-fired`, `open-records-lapse`, `open-records-resolve`, `open-records-broken-pointer`, `open-records-fail-soft`, `open-records-revisit`
+
+**Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `bec8be6bd`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/9, as the verdict line reads.
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (`subtraction-1`). The unit is Start Up Tasks item 9, added by ballot `2026-10-20-manual-records-routed-readers` (RATIFIED, Peter, 2026-10-20) E1 (site 1, Thurgood `807b8aba1`), with Peter's two conditions (the fail-soft sentence and the revisit line). I confirmed the set at 9 items (`17702702b`).
 - **The cite applies**: the item's first operative sentence names `./scripts/issues-owned.sh <YourName>` by path, a repo-internal tooling invocation, and every other item (the three line states, the Lapse heading, the README rule 3 and 11 references, the broken-pointer report, the fail-soft sentence, the revisit line) is keyed to that command's output and to this repo's root `.kiro/issues/` records. The package ships neither. There is no residue to re-point: without the command, the fail-soft and revisit items have no referent.
