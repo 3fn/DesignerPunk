@@ -3,7 +3,7 @@
 **Date**: 2026-11-08
 **Owner**: Thurgood
 **Class**: P2 obligation (guard) · grant
-**Trigger**: `merge:U9` — the event that owes the close is the merge of U9's PR (Spec 129 Task 14, branch `task/129-14-consumer-source`). The close is this record's rule 5 outcome line, giving the fixing PR's number and the three granted-file diffs.
+**Trigger**: `path:.kiro/specs/129-consumer-generation-completeness/completion/task-14-completion.md` — the event that owes the close is U9's merge, which brings that doc to `main` (Spec 129 Task 14, branch `task/129-14-consumer-source`). The close is this record's rule 5 outcome line, giving the fixing PR's number and the three granted-file diffs.
 **Source**: Spec 129 Task 14, criterion "The limitation sentences this unit's archives make false" (row 19: the Integration Guide's marked sentence at L23, archived by U9); and Ada's U9 report of 2026-11-08, that `scripts/__tests__/install-doc.test.ts` pins the scope sentence. The task's Primary Artifacts do not list `install-doc.test.ts` or `README.md`, and neither is in Thurgood's standing `writeScope` as a README-bearing path. Thurgood holds `install-doc.test.ts` (Task 7 / U2, tasks assignment table); `README.md` is no seat's by standing scope. Route: an issue-row grant under `.kiro/issues/README.md` rule 8 (no `.github/**` path). Ada is consulted and joins the fixing PR.
 
 ---
