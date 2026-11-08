@@ -275,7 +275,7 @@ fun getRoundedCornerShape(borderRadius: BorderRadiusValue): RoundedCornerShape {
  * - Returns Color.Transparent for null/empty input
  * 
  * Note: Tokens regenerated Dec 18, 2025 to include color.canvas (Task 8.1) and all semantic tokens.
- * See dist/DesignTokens.android.kt for complete list of generated tokens.
+ * See the generated DesignTokens (platform token output) for the complete list of tokens.
  * 
  * @param tokenName Color token name (e.g., "color.action.primary")
  * @return Compose Color

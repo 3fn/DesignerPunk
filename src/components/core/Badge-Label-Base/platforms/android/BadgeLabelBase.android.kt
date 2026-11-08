@@ -84,7 +84,7 @@ enum class BadgeLabelBaseSize {
  * Semantic token references (from DesignTokens):
  * - cornerRadius, backgroundColor, textColor, iconColor
  * 
- * @see dist/ComponentTokens.android.kt - Generated component tokens
+ * @see BadgeLabelBaseTokens - the generated component tokens (platform token output)
  * @see Requirements: 4.1, 4.2, 4.4, 4.5, 4.6, 4.8 - Token integration
  */
 private object BadgeLabelBaseTokens {

@@ -22,16 +22,6 @@ ambient:
           section: System-First Value Selection
           mustContain:
             - If a system token (semantic or primitive) exists within perceptual tolerance of your intended value, use `ref:` instead.
-  groundTruthManifest:
-    verdict: none-trim-stale-snapshots
-    trims:
-      - artifact: dist/ComponentTokens.android.kt
-        fires: unconditional
-        cue:
-          negative: do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.android.kt — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory
-          tool: get_component_full
-          mcp: application
-          replaces: node_modules/@3fn/core/dist/ComponentTokens.android.kt
 routes:
   docs:
     - id: token-doc-map
@@ -201,7 +191,7 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - **A theme of one mode falls back to base in the other scheme**: a theme registered in mode `light` shows its own look when `darkTheme` is false and `BaseDark` when it is true; one registered in mode `dark` shows `BaseLight` when `darkTheme` is false. Nothing warns you. To give it its own look in both schemes, register it in mode `both`, or force the scheme with `darkTheme`. `Wcag` is exempt: it always has both instances
 - Product tokens that reference a theme-varying colour are `@Composable @ReadOnlyComposable get()` properties on `object Product{Category}`, read as `LocalDPTheme.current.<name>` and only inside composition scope; the others stay static
 - Static tokens (spacing, sizing, radius, typography, motion) remain on the `DesignTokens` object — no CompositionLocal needed
-- **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
+- **Ground truth for these token values is LIVE, not a file** — no token snapshot ships in the package (your own `npx designerpunk generate` writes your `DesignTokens` and theme surface in your configured output directory); query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
 
 ### Product Tokens (Spec 108/109)
 
@@ -250,7 +240,7 @@ When Leonardo provides a screen specification, follow this workflow:
 
 ### Step 2: Set Up the Screen
 - Create the Jetpack Compose composable structure
-- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
+- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (no token snapshot ships in the package; your own `generate` output is in your configured output directory, and the MCP is the ground truth)
 - Reference existing DesignerPunk Android component implementations as patterns
 
 ### Step 3: Implement
@@ -329,7 +319,7 @@ Communication follows the Product Handoff Protocol: Tier 1 (quick clarifications
 - Never hard-code values that have token equivalents
 - When no semantic token exists, check primitives, then raise to Leonardo for escalation to Ada
 
-**Ground truth for token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`); query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
+**Ground truth for token values is LIVE, not a file** — no token snapshot ships in the package: your own `npx designerpunk generate` writes your `DesignTokens` and `ComponentTokens` in your configured output directory. Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`), and for a component's tokens (`get_component_full`). Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
 
 ### Token Reference Pattern
 Query the routed Token Documentation Map when uncertain which token to use, or the application MCP for a token's resolved value. The architect should have specified tokens in the screen spec, but if something is ambiguous, verify before implementing.
@@ -364,7 +354,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 ## Android-Specific Guidance
 
 - Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec
-- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
+- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP; no token snapshot ships in the package, and your own `generate` output is in your configured output directory)
 - System bar handling via Compose insets
 - Haptic feedback via HapticFeedbackType where specified
 - TalkBack accessibility via Compose Semantics
