@@ -754,6 +754,7 @@ function generateConfig(name: string, abbreviation: string): string {
   return `import { defineConfig } from '@3fn/core/config';
 import { darkSemanticOverrides } from './src/tokens/themes/dark/SemanticOverrides.ts';
 import { wcagSemanticOverrides } from './src/tokens/themes/wcag/SemanticOverrides.ts';
+import { darkWcagSemanticOverrides } from './src/tokens/themes/dark-wcag/SemanticOverrides.ts';
 
 export default defineConfig({
   name: '${name}',
@@ -762,7 +763,7 @@ export default defineConfig({
   componentTokens: ['./src/components', './src/tokens/component'],
   themes: [
     { name: 'dark', mode: 'dark', overrides: darkSemanticOverrides },
-    { name: 'wcag', mode: 'light', overrides: wcagSemanticOverrides },
+    { name: 'wcag', mode: 'both', overrides: { light: wcagSemanticOverrides, dark: darkWcagSemanticOverrides } },
   ],
   output: './dist/tokens',
 });

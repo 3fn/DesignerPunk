@@ -7,19 +7,20 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { TokenFileGenerator } from './TokenFileGenerator';
+import { createHash } from 'crypto';
+import { TokenFileGenerator, type ThemeOverrideSet } from './TokenFileGenerator';
 import { SemanticTokenValidator } from '../validators/SemanticTokenValidator';
 import { PrimitiveTokenRegistry } from '../registries/PrimitiveTokenRegistry';
 import { SemanticTokenRegistry } from '../registries/SemanticTokenRegistry';
 import { SemanticOverrideResolver } from '../resolvers/SemanticOverrideResolver';
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import { ThemeRegistry } from '../themes/ThemeRegistry';
-// Theme overrides are static imports of DesignerPunk's built-in maps; config.themes is not
-// read here (Spec 129 item (i)). They are not taken from tokenSource either.
-import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
-import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
-import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
-import { composedColorMap } from '../tokens/color';
+import { resolveThemeMaps, isThemePair } from '../themes/resolveThemeMaps';
+import { findThemeRefusals, themeRefusalMessage } from '../themes/themeRefusals';
+import { getCoreVersion } from './coreVersion';
+import { registeredThemeDiffersNotice } from '../cli/shared/errorCatalog';
+import type { TokenSet } from './TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 import { getOklchMetadata } from './oklch/OklchTokenIndexMetadata';
 import {
   findUnemittedColorReferences,
@@ -27,6 +28,8 @@ import {
 } from '../validators/ColorReferenceEmissionValidator';
 import type { ModeResolvedTokens } from './ModeResolvedTokens';
 import type { ResolvedConfig } from '../config/ConfigLoader';
+import type { ConfigTheme } from '../config/defineConfig';
+import type { SemanticOverrideMap } from '../tokens/themes/types';
 import type { TokenInput } from '../cli/resolveTokens';
 import type { SemanticToken } from '../types/SemanticToken';
 
@@ -42,7 +45,7 @@ import type { SemanticToken } from '../types/SemanticToken';
  * paths used to RETURN an empty result, which callers read as success.)
  */
 export class TokenGenerationAbortedError extends Error {
-  constructor(public readonly stage: 'semantic-references' | 'unemitted-color-references' | 'override-maps' | 'context-override-maps',
+  constructor(public readonly stage: 'semantic-references' | 'unemitted-color-references' | 'override-maps' | 'context-override-maps' | 'theme-config',
               public readonly errors: string[]) {
     const first = errors[0] ?? '(no detail)';
     const more = errors.length > 1 ? ` (+${errors.length - 1} more, listed above)` : '';
@@ -52,10 +55,60 @@ export class TokenGenerationAbortedError extends Error {
         ? 'a semantic colour references a primitive the output does not define'
         : stage === 'override-maps'
           ? 'semantic override validation failed'
-          : 'context override validation failed';
+          : stage === 'theme-config'
+            ? 'a registered theme cannot be emitted'
+            : 'context override validation failed';
     super(`Token generation aborted: ${what}: ${first}${more}`);
     this.name = 'TokenGenerationAbortedError';
   }
+}
+
+/**
+ * The two maps a registered theme contributes: the light scheme's and the dark scheme's. A theme of one mode
+ * covers one scheme and leaves the other empty; the `{ light, dark }` form gives both (design § 4).
+ */
+function themeHalves(theme: ConfigTheme): { light: SemanticOverrideMap; dark: SemanticOverrideMap } {
+  const overrides = theme.overrides as unknown;
+  if (isThemePair(overrides)) return { light: overrides.light ?? {}, dark: overrides.dark ?? {} };
+  if (!overrides || typeof overrides !== 'object') {
+    throw new Error(`generate: theme '${theme.name}' is registered in designerpunk.config.ts, but its override map is missing.`);
+  }
+  const map = overrides as SemanticOverrideMap;
+  if (theme.mode === 'light') return { light: map, dark: {} };
+  if (theme.mode === 'dark') return { light: {}, dark: map };
+  return { light: map, dark: map };
+}
+
+/**
+ * Prints, once per change of a registered built-in map, how many of its values differ from DesignerPunk's
+ * (design § 10: "A registered map whose values differ from the package's prints, on its first run after U9,
+ * how many values now differ"). A marker in the output directory holds what was last reported, so the count
+ * is not repeated on every run.
+ */
+function printRegisteredThemeCounts(
+  differences: ReadonlyArray<{ role: string; theme: string; mode: string; differing: number | null; digest: string }>,
+  outputDir: string,
+  version: string,
+): () => void {
+  const markerFile = path.join(outputDir, '.theme-notice.json');
+  let seen: Record<string, string> = {};
+  try { seen = JSON.parse(fs.readFileSync(markerFile, 'utf-8')); } catch { /* none yet */ }
+  const next: Record<string, string> = { ...seen };
+  let changed = false;
+  for (const d of differences) {
+    if (!d.differing) continue;
+    const digest = createHash('sha256').update(`${d.digest}:${version}`).digest('hex').slice(0, 12);
+    if (seen[d.role] === digest) continue;
+    console.warn(`ℹ️  ${registeredThemeDiffersNotice(d.theme, d.mode, d.differing, version)}`);
+    next[d.role] = digest;
+    changed = true;
+  }
+  // Written once generation has validated, so an aborted run leaves no trace.
+  return () => {
+    if (!changed) return;
+    fs.mkdirSync(outputDir, { recursive: true });
+    fs.writeFileSync(markerFile, JSON.stringify(next, null, 2) + '\n');
+  };
 }
 
 /**
@@ -82,6 +135,9 @@ export function generateTokenFiles(
   } = {},
 ): ModeResolvedTokens {
   const effectiveOutputDir = config.outputDir;
+  // The one token set every generator below reads (Spec 129 U9, design § 10): the consumer's copy.
+  const tokenSet: TokenSet = tokens.tokenSet ?? packageTokenSet();
+  const { composedColorMap } = tokenSet.mod('color/index');
   console.log('🚀 Starting token file generation...\n');
 
   // Validate semantic token references before generation
@@ -103,7 +159,7 @@ export function generateTokenFiles(
   // primitives are emitted from the installed package's palette, so a colour the source adds
   // passes it and is never written out (.kiro/issues/2026-10-25-generate-passes-semantic-
   // references-to-unemitted-primitives.md). Checked again after theme resolution, below.
-  const emittedColorNames = TokenFileGenerator.emittedColorPrimitiveNames();
+  const emittedColorNames = TokenFileGenerator.emittedColorPrimitiveNames(tokenSet);
   const checkColorReferences = (contexts: Array<Array<Omit<SemanticToken, 'primitiveTokens'>>>): void => {
     const findings = findUnemittedColorReferences(contexts, primitiveTokens, emittedColorNames);
     if (findings.length === 0) return;
@@ -113,7 +169,7 @@ export function generateTokenFiles(
     console.error('');
     throw new TokenGenerationAbortedError('unemitted-color-references', messages);
   };
-  checkColorReferences([semanticTokens.map(t => resolveSemanticTokenValue(t, 'light', 'base'))]);
+  checkColorReferences([semanticTokens.map(t => resolveSemanticTokenValue(t, 'light', 'base', tokenSet))]);
 
   const validationResult = validator.validateSemanticReferences(semanticTokens, primitiveTokens);
   
@@ -143,7 +199,7 @@ export function generateTokenFiles(
   }
 
   // Initialize generator
-  const generator = new TokenFileGenerator();
+  const generator = new TokenFileGenerator(tokenSet);
 
   // Mode + theme resolution via ThemeRegistry (Spec 094)
   const themeRegistry = new ThemeRegistry();
@@ -163,6 +219,28 @@ export function generateTokenFiles(
   // BUT — for migration safety, we use the legacy resolveAllContexts path and
   // convert its output to ResolvedThemeSet format. This guarantees identical output.
 
+  // The override maps `generate` applies: registration decides where each built-in map comes from
+  // (design § 10). The config's themes build the registry; nothing here is a static import.
+  const configThemes: ConfigTheme[] = config.themes ?? [];
+  // The theme-instance rule's refusals (design § 4, item 5): a registered theme that cannot become an instance
+  // and a family case on both native platforms fails `generate` here, naming the config entry.
+  const refusals = findThemeRefusals(configThemes);
+  if (refusals.length > 0) {
+    const message = themeRefusalMessage(refusals);
+    console.error(`❌ ${message}\n`);
+    throw new TokenGenerationAbortedError('theme-config', refusals.map(r => r.message));
+  }
+  const themeMaps = resolveThemeMaps(configThemes, tokenSet, {
+    local: config.tokenSourceMode === 'local',
+    tokenSourceRoot: config.tokenSourceRoot,
+    coreVersion: getCoreVersion(),
+  });
+  themeMaps.warnings.forEach(w => console.warn(`⚠️  ${w}`));
+  const commitThemeNotice = printRegisteredThemeCounts(themeMaps.differences, config.outputDir, getCoreVersion());
+  const darkSemanticOverrides = themeMaps.dark;
+  const wcagSemanticOverrides = themeMaps.wcagLight;
+  const darkWcagSemanticOverrides = themeMaps.wcagDark;
+
   const overrideResolver = new SemanticOverrideResolver(semanticRegistry, darkSemanticOverrides);
   const overrideValidation = overrideResolver.validate();
   if (!overrideValidation.valid) {
@@ -172,7 +250,7 @@ export function generateTokenFiles(
     throw new TokenGenerationAbortedError('override-maps', overrideValidation.errors);
   }
 
-  // Register themes in the registry for downstream consumers (getThemeVaryingTokens, etc.)
+  // The registry holds the two built-in themes as resolved above, and every other theme the config registers.
   themeRegistry.register({
     name: 'dark',
     mode: 'dark',
@@ -183,6 +261,17 @@ export function generateTokenFiles(
     mode: 'both',
     overrides: { ...wcagSemanticOverrides, ...darkWcagSemanticOverrides },
   });
+  const customThemes = configThemes.filter(t => t.name !== 'dark' && t.name !== 'wcag');
+  const customMaps = customThemes.map(t => themeHalves(t));
+  try {
+    customThemes.forEach((t, i) => {
+      themeRegistry.register({ name: t.name, mode: t.mode, overrides: { ...customMaps[i].light, ...customMaps[i].dark } });
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`❌ Theme registration failed: ${message}\n`);
+    throw new TokenGenerationAbortedError('override-maps', [message]);
+  }
 
   // Use legacy resolution path to guarantee identical output during migration.
   // The registry is populated for getThemeVaryingTokens() and future consumers,
@@ -205,13 +294,32 @@ export function generateTokenFiles(
   const contextSets = overrideResolver.resolveAllContexts(semanticTokens, contextOverrides);
 
   // Level 1: Resolve primitive references to concrete rgba values per context
-  const resolvedLight = contextSets['light-base'].map(t => resolveSemanticTokenValue(t, 'light', 'base'));
-  const resolvedDark = contextSets['dark-base'].map(t => resolveSemanticTokenValue(t, 'dark', 'base'));
-  const resolvedLightWcag = contextSets['light-wcag'].map(t => resolveSemanticTokenValue(t, 'light', 'wcag'));
-  const resolvedDarkWcag = contextSets['dark-wcag'].map(t => resolveSemanticTokenValue(t, 'dark', 'wcag'));
+  const resolvedLight = contextSets['light-base'].map(t => resolveSemanticTokenValue(t, 'light', 'base', tokenSet));
+  const resolvedDark = contextSets['dark-base'].map(t => resolveSemanticTokenValue(t, 'dark', 'base', tokenSet));
+  const resolvedLightWcag = contextSets['light-wcag'].map(t => resolveSemanticTokenValue(t, 'light', 'wcag', tokenSet));
+  const resolvedDarkWcag = contextSets['dark-wcag'].map(t => resolveSemanticTokenValue(t, 'dark', 'wcag', tokenSet));
+
+  // Each other registered theme, resolved the same way. A theme of one mode covers one scheme; the other half is
+  // the base (design § 4, "The single-mode rule"), so its uncovered half reads baseLight or baseDark.
+  const themeOverrideSets: ThemeOverrideSet[] = customThemes.map((t, i) => {
+    const { light, dark } = customMaps[i];
+    const covered = t.overrides && isThemePair(t.overrides) ? 'both' : t.mode;
+    const sets = overrideResolver.resolveAllContexts(semanticTokens, {
+      'light-wcag': light,
+      'dark-wcag': { ...darkSemanticOverrides, ...dark },
+    });
+    return {
+      name: t.name,
+      mode: t.mode,
+      lightTokens: covered === 'dark' ? resolvedLight : sets['light-wcag'].map(x => resolveSemanticTokenValue(x, 'light', 'base', tokenSet)),
+      darkTokens: covered === 'light' ? resolvedDark : sets['dark-wcag'].map(x => resolveSemanticTokenValue(x, 'dark', 'base', tokenSet)),
+      overrideKeys: new Set([...Object.keys(light), ...Object.keys(dark)]),
+    };
+  });
 
   // Every context the platform files carry, after the theme overrides (which can re-point a token).
-  checkColorReferences([resolvedLight, resolvedDark, resolvedLightWcag, resolvedDarkWcag]);
+  checkColorReferences([resolvedLight, resolvedDark, resolvedLightWcag, resolvedDarkWcag,
+    ...themeOverrideSets.flatMap(t => [t.lightTokens, t.darkTokens])]);
 
   // Generate all platform files (passing resolved tokens for all 4 contexts)
   const wcagOverrideKeys = new Set([
@@ -267,6 +375,7 @@ export function generateTokenFiles(
     fs.mkdirSync(effectiveOutputDir, { recursive: true });
     console.log(`📁 Created output directory: ${effectiveOutputDir}\n`);
   }
+  commitThemeNotice();
 
   const results = generator.generateAll({
     outputDir: effectiveOutputDir,
@@ -278,6 +387,7 @@ export function generateTokenFiles(
     wcagSemanticTokens: resolvedLightWcag,
     darkWcagSemanticTokens: resolvedDarkWcag,
     wcagOverrideKeys,
+    themeOverrides: themeOverrideSets,
     themeVaryingTokens,
     productName: config.name,
     abbreviation: config.abbreviation
@@ -347,7 +457,7 @@ export function generateTokenFiles(
   // --- DTCG Format Generation ---
   try {
     const { DTCGFormatGenerator } = require('./DTCGFormatGenerator');
-    const dtcgGenerator = new DTCGFormatGenerator();
+    const dtcgGenerator = new DTCGFormatGenerator({}, tokenSet, darkSemanticOverrides);
     const dtcgOutputPath = path.join(effectiveOutputDir, 'DesignTokens.dtcg.json');
     dtcgGenerator.writeToFile(dtcgOutputPath);
     console.log(`   DTCG: DesignTokens.dtcg.json`);

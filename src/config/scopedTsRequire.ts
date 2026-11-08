@@ -60,3 +60,33 @@ export const scopedTsRequire: TsModuleLoader = (modulePath: string, fromFile: st
     unregister.unregister();
   }
 };
+
+/** One module's outcome in {@link scopedTsRequireMany}. */
+export type ScopedLoadResult = { ok: true; module: unknown } | { ok: false; error: string };
+
+/**
+ * Loads several modules in ONE scoped register, so a module they share is a single instance, and
+ * reports each module's failure on its own instead of throwing on the first. Same constraints as
+ * {@link scopedTsRequire}: it cannot run inside a jest process.
+ */
+export function scopedTsRequireMany(modulePaths: string[], fromFile: string): ScopedLoadResult[] {
+  const { register } = require('tsx/cjs/api') as {
+    register: (opts: { namespace: string }) => {
+      require: (id: string, fromFile: string) => unknown;
+      unregister: () => void;
+    };
+  };
+  const ns = `dp-ts-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const unregister = register({ namespace: ns });
+  try {
+    return modulePaths.map((p): ScopedLoadResult => {
+      try {
+        return { ok: true, module: unregister.require(p, fromFile) };
+      } catch (err) {
+        return { ok: false, error: err instanceof Error ? err.message : String(err) };
+      }
+    });
+  } finally {
+    unregister.unregister();
+  }
+}

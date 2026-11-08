@@ -18,61 +18,63 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { DTCGGeneratorConfig, DEFAULT_DTCG_GENERATOR_CONFIG } from './DTCGGeneratorConfig';
 import type { DTCGTokenFile, DTCGGroup, DTCGToken, DTCGType, DesignerPunkExtensions } from './types/DTCGTypes';
-import { getAllPrimitiveTokens } from '../tokens/index';
-import { getAllSemanticTokens } from '../tokens/semantic/index';
+
+
 import type { SemanticToken } from '../types/SemanticToken';
 import type { PrimitiveToken, ColorTokenValue } from '../types/PrimitiveToken';
 
 // Primitive token imports
-import { spacingTokens, SPACING_BASE_VALUE } from '../tokens/SpacingTokens';
-import { colorTokens } from '../tokens/ColorTokens';
-import { composedColorMap } from '../tokens/color';
+
+
+
 import { oklchToExportHex } from './oklch/OklchExportUtils';
-import { fontSizeTokens, FONT_SIZE_BASE_VALUE } from '../tokens/FontSizeTokens';
-import { fontWeightTokens, FONT_WEIGHT_BASE_VALUE } from '../tokens/FontWeightTokens';
-import { fontFamilyTokens } from '../tokens/FontFamilyTokens';
-import { lineHeightTokens, LINE_HEIGHT_BASE_VALUE } from '../tokens/LineHeightTokens';
-import { letterSpacingTokens, LETTER_SPACING_BASE_VALUE } from '../tokens/LetterSpacingTokens';
-import { radiusTokens, RADIUS_BASE_VALUE } from '../tokens/RadiusTokens';
-import { borderWidthTokens, BORDER_WIDTH_BASE_VALUE } from '../tokens/BorderWidthTokens';
-import { tapAreaTokens, TAP_AREA_BASE_VALUE } from '../tokens/TapAreaTokens';
-import { densityTokens, DENSITY_BASE_VALUE } from '../tokens/DensityTokens';
-import { breakpointTokens, BREAKPOINT_BASE_VALUE } from '../tokens/BreakpointTokens';
-import { opacityTokens, OPACITY_BASE_VALUE } from '../tokens/OpacityTokens';
-import { durationTokens, DURATION_BASE_VALUE } from '../tokens/DurationTokens';
-import { easingTokens } from '../tokens/EasingTokens';
-import { scaleTokens, SCALE_BASE_VALUE } from '../tokens/ScaleTokens';
-import { blendTokens, BLEND_BASE_VALUE } from '../tokens/BlendTokens';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Shadow primitive token imports
-import { blur as blurTokens, BLUR_BASE_VALUE } from '../tokens/BlurTokens';
-import { sizingTokens, SIZING_BASE_VALUE } from '../tokens/SizingTokens';
-import { shadowOffsetX, shadowOffsetY, SHADOW_OFFSET_BASE_VALUE } from '../tokens/ShadowOffsetTokens';
-import { shadowOpacityTokens, SHADOW_OPACITY_BASE_VALUE } from '../tokens/ShadowOpacityTokens';
+
+
+
+
 
 // Glow primitive token imports
-import { glowOpacity, GLOW_OPACITY_BASE_VALUE } from '../tokens/GlowOpacityTokens';
+
 
 // Semantic token imports
-import { colorTokens as semanticColorTokens } from '../tokens/semantic/ColorTokens';
-import { spacingTokens as semanticSpacingTokens } from '../tokens/semantic/SpacingTokens';
-import { SemanticBorderWidthTokens } from '../tokens/semantic/BorderWidthTokens';
-import { SemanticRadiusTokens } from '../tokens/semantic/RadiusTokens';
-import { opacityTokens as semanticOpacityTokens } from '../tokens/semantic/OpacityTokens';
-import { blendTokens as semanticBlendTokens } from '../tokens/semantic/BlendTokens';
-import { zIndexTokens } from '../tokens/semantic/ZIndexTokens';
-import { elevationTokens } from '../tokens/semantic/ElevationTokens';
-import { gridSpacingTokens } from '../tokens/semantic/GridSpacingTokens';
-import { iconTokens } from '../tokens/semantic/IconTokens';
-import { accessibilityTokens } from '../tokens/semantic/AccessibilityTokens';
-import { motionTokens as semanticMotionTokens } from '../tokens/semantic/MotionTokens';
-import { typographyTokens } from '../tokens/semantic/TypographyTokens';
-import { progressColorTokens } from '../tokens/semantic/ColorTokens';
-import { shadowTokens as semanticShadowTokens } from '../tokens/semantic/ShadowTokens';
-import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import type { ThemeOverrideSet } from './TokenFileGenerator';
 import { getCoreVersion } from './coreVersion';
+import type { TokenSet } from './TokenSet';
+import { packageTokenSet } from '../config/TokenSetLoader';
 
 /** Set of valid DTCG types for validation (Format Module 2025.10) */
 const VALID_DTCG_TYPES: ReadonlySet<string> = new Set([
@@ -99,8 +101,19 @@ const MIN_SEMANTIC_TOKEN_COUNT = 180;
  */
 export class DTCGFormatGenerator {
   private readonly config: DTCGGeneratorConfig;
+  /** The token set the export reads (Spec 129 U9): `generate` passes the consumer's own. */
+  private readonly tokens: TokenSet;
 
-  constructor(config: Partial<DTCGGeneratorConfig> = {}) {
+  /** The dark override map the semantic colours' dark mode reads; `generate` passes the one it applies. */
+  private readonly darkOverrides?: Record<string, { primitiveReferences: Record<string, string> }>;
+
+  constructor(
+    config: Partial<DTCGGeneratorConfig> = {},
+    tokens: TokenSet = packageTokenSet(),
+    darkOverrides?: Record<string, { primitiveReferences: Record<string, string> }>,
+  ) {
+    this.tokens = tokens;
+    this.darkOverrides = darkOverrides;
     this.config = { ...DEFAULT_DTCG_GENERATOR_CONFIG, ...config };
   }
 
@@ -190,6 +203,8 @@ export class DTCGFormatGenerator {
    * @throws Error if file write fails (permissions, disk full, etc.)
    */
   writeToFile(outputPath: string): void {
+    const { getAllPrimitiveTokens } = this.tokens.mod('index');
+    const { getAllSemanticTokens } = this.tokens.mod('semantic/index');
     const output = this.generate();
     const indent = this.config.prettyPrint ? 2 : undefined;
     const json = JSON.stringify(output, null, indent);
@@ -250,6 +265,8 @@ export class DTCGFormatGenerator {
    * @throws Error if primitive or semantic token counts fall below minimum thresholds
    */
   private validateTokenCounts(_output: DTCGTokenFile): void {
+    const { getAllPrimitiveTokens } = this.tokens.mod('index');
+    const { getAllSemanticTokens } = this.tokens.mod('semantic/index');
     const primitiveCount = getAllPrimitiveTokens().length;
     const semanticCount = getAllSemanticTokens().length;
 
@@ -308,6 +325,7 @@ export class DTCGFormatGenerator {
    * Maps spacing baseValue to `{value}px` dimension format.
    */
   private generateSpacingTokens(): DTCGGroup {
+    const { spacingTokens, SPACING_BASE_VALUE } = this.tokens.mod('SpacingTokens');
     return this.generateDimensionGroup(spacingTokens, 'spacing', SPACING_BASE_VALUE);
   }
 
@@ -316,6 +334,8 @@ export class DTCGFormatGenerator {
    * Resolves mode-aware RGBA values using light.base as default.
    */
   private generateColorTokens(): DTCGGroup {
+    const { colorTokens } = this.tokens.mod('ColorTokens');
+    const { composedColorMap } = this.tokens.mod('color/index');
     const group: DTCGGroup = { $type: 'color' };
     for (const [key, token] of Object.entries(colorTokens)) {
       const colorValue = this.resolveColorValue(token, key);
@@ -339,6 +359,7 @@ export class DTCGFormatGenerator {
    * Uses baseValue (unitless) converted to `{value}px`.
    */
   private generateFontSizeTokens(): DTCGGroup {
+    const { fontSizeTokens, FONT_SIZE_BASE_VALUE } = this.tokens.mod('FontSizeTokens');
     return this.generateDimensionGroup(fontSizeTokens, 'fontSize', FONT_SIZE_BASE_VALUE);
   }
 
@@ -347,6 +368,7 @@ export class DTCGFormatGenerator {
    * Font weights are numeric values (100–900).
    */
   private generateFontWeightTokens(): DTCGGroup {
+    const { fontWeightTokens, FONT_WEIGHT_BASE_VALUE } = this.tokens.mod('FontWeightTokens');
     const group: DTCGGroup = { $type: 'fontWeight' };
     for (const [key, token] of Object.entries(fontWeightTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'fontWeight', FONT_WEIGHT_BASE_VALUE);
@@ -360,6 +382,7 @@ export class DTCGFormatGenerator {
    * DTCG fontFamily expects an array of font names.
    */
   private generateFontFamilyTokens(): DTCGGroup {
+    const { fontFamilyTokens } = this.tokens.mod('FontFamilyTokens');
     const group: DTCGGroup = { $type: 'fontFamily' };
     for (const [key, token] of Object.entries(fontFamilyTokens)) {
       const fontStack = String(token.platforms.web.value);
@@ -375,6 +398,7 @@ export class DTCGFormatGenerator {
    * Line heights are unitless multipliers.
    */
   private generateLineHeightTokens(): DTCGGroup {
+    const { lineHeightTokens, LINE_HEIGHT_BASE_VALUE } = this.tokens.mod('LineHeightTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(lineHeightTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'lineHeight', LINE_HEIGHT_BASE_VALUE);
@@ -388,6 +412,7 @@ export class DTCGFormatGenerator {
    * Letter spacing uses em units.
    */
   private generateLetterSpacingTokens(): DTCGGroup {
+    const { letterSpacingTokens, LETTER_SPACING_BASE_VALUE } = this.tokens.mod('LetterSpacingTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(letterSpacingTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'letterSpacing', LETTER_SPACING_BASE_VALUE);
@@ -401,6 +426,7 @@ export class DTCGFormatGenerator {
    * Handles special cases: radiusMax (9999px), radiusHalf (50%).
    */
   private generateRadiusTokens(): DTCGGroup {
+    const { radiusTokens, RADIUS_BASE_VALUE } = this.tokens.mod('RadiusTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(radiusTokens)) {
       let value: string;
@@ -419,6 +445,7 @@ export class DTCGFormatGenerator {
    * Generate border width primitive tokens as DTCG dimension type.
    */
   private generateBorderWidthTokens(): DTCGGroup {
+    const { borderWidthTokens, BORDER_WIDTH_BASE_VALUE } = this.tokens.mod('BorderWidthTokens');
     return this.generateDimensionGroup(borderWidthTokens, 'borderWidth', BORDER_WIDTH_BASE_VALUE);
   }
 
@@ -426,6 +453,7 @@ export class DTCGFormatGenerator {
    * Generate tap area primitive tokens as DTCG dimension type.
    */
   private generateTapAreaTokens(): DTCGGroup {
+    const { tapAreaTokens, TAP_AREA_BASE_VALUE } = this.tokens.mod('TapAreaTokens');
     return this.generateDimensionGroup(tapAreaTokens, 'tapArea', TAP_AREA_BASE_VALUE);
   }
 
@@ -434,6 +462,7 @@ export class DTCGFormatGenerator {
    * Density values are unitless multipliers.
    */
   private generateDensityTokens(): DTCGGroup {
+    const { densityTokens, DENSITY_BASE_VALUE } = this.tokens.mod('DensityTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(densityTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'density', DENSITY_BASE_VALUE);
@@ -446,6 +475,7 @@ export class DTCGFormatGenerator {
    * Generate breakpoint primitive tokens as DTCG dimension type.
    */
   private generateBreakpointTokens(): DTCGGroup {
+    const { breakpointTokens, BREAKPOINT_BASE_VALUE } = this.tokens.mod('BreakpointTokens');
     return this.generateDimensionGroup(breakpointTokens, 'breakpoint', BREAKPOINT_BASE_VALUE);
   }
 
@@ -454,6 +484,7 @@ export class DTCGFormatGenerator {
    * Opacity values are unitless (0–1).
    */
   private generateOpacityTokens(): DTCGGroup {
+    const { opacityTokens, OPACITY_BASE_VALUE } = this.tokens.mod('OpacityTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(opacityTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'opacity', OPACITY_BASE_VALUE);
@@ -467,6 +498,7 @@ export class DTCGFormatGenerator {
    * DTCG duration format: `{value}ms`.
    */
   private generateDurationTokens(): DTCGGroup {
+    const { durationTokens, DURATION_BASE_VALUE } = this.tokens.mod('DurationTokens');
     const group: DTCGGroup = { $type: 'duration' };
     for (const [key, token] of Object.entries(durationTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'duration', DURATION_BASE_VALUE);
@@ -480,6 +512,7 @@ export class DTCGFormatGenerator {
    * Parses cubic-bezier CSS string into [p1, p2, p3, p4] array.
    */
   private generateEasingTokens(): DTCGGroup {
+    const { easingTokens } = this.tokens.mod('EasingTokens');
     const group: DTCGGroup = {};
     for (const [key, token] of Object.entries(easingTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'easing');
@@ -503,6 +536,7 @@ export class DTCGFormatGenerator {
    * Scale values are unitless multipliers.
    */
   private generateScaleTokens(): DTCGGroup {
+    const { scaleTokens, SCALE_BASE_VALUE } = this.tokens.mod('ScaleTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(scaleTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'scale', SCALE_BASE_VALUE);
@@ -515,6 +549,7 @@ export class DTCGFormatGenerator {
    * Generate blur primitive tokens as DTCG dimension type.
    */
   private generateBlurTokens(): DTCGGroup {
+    const { blur: blurTokens, BLUR_BASE_VALUE } = this.tokens.mod('BlurTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(blurTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'blur', BLUR_BASE_VALUE);
@@ -527,6 +562,7 @@ export class DTCGFormatGenerator {
    * Generate sizing primitive tokens as DTCG dimension type.
    */
   private generateSizingTokens(): DTCGGroup {
+    const { sizingTokens, SIZING_BASE_VALUE } = this.tokens.mod('SizingTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(sizingTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'sizing', SIZING_BASE_VALUE);
@@ -540,6 +576,7 @@ export class DTCGFormatGenerator {
    * Blend values are unitless (0–1) with blendType metadata.
    */
   private generateBlendTokens(): DTCGGroup {
+    const { blendTokens, BLEND_BASE_VALUE } = this.tokens.mod('BlendTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(blendTokens)) {
       const extensions = this.buildPrimitiveExtensions(token, 'blend', BLEND_BASE_VALUE);
@@ -557,6 +594,8 @@ export class DTCGFormatGenerator {
    * Uses `{color.primitiveRef}` syntax to preserve primitive→semantic hierarchy.
    */
   private generateSemanticColorTokens(): DTCGGroup {
+    const { colorTokens: semanticColorTokens } = this.tokens.mod('semantic/ColorTokens');
+    const darkSemanticOverrides = this.darkOverrides ?? this.tokens.mod('themes/dark/SemanticOverrides').darkSemanticOverrides;
     const group: DTCGGroup = { $type: 'color' };
     for (const [key, token] of Object.entries(semanticColorTokens)) {
       const refs = token.primitiveReferences;
@@ -581,9 +620,9 @@ export class DTCGFormatGenerator {
       if (override) {
         // Level 2: semantic override swaps primitive name in dark mode
         // Resolve both modes to concrete rgba values
-        const lightResolved = resolveSemanticTokenValue(token as any, 'light');
+        const lightResolved = resolveSemanticTokenValue(token as any, 'light', 'base', this.tokens);
         const darkToken = { ...token, primitiveReferences: override.primitiveReferences } as any;
-        const darkResolved = resolveSemanticTokenValue(darkToken, 'dark');
+        const darkResolved = resolveSemanticTokenValue(darkToken, 'dark', 'base', this.tokens);
         const lightVal = lightResolved.primitiveReferences?.value;
         const darkVal = darkResolved.primitiveReferences?.value;
         if (lightVal && darkVal && lightVal !== darkVal) {
@@ -617,6 +656,8 @@ export class DTCGFormatGenerator {
    * Preserves hierarchical structure: grouped/related/separated/sectioned + inset.
    */
   private generateSemanticSpacingTokens(): DTCGGroup {
+    const { spacingTokens: semanticSpacingTokens } = this.tokens.mod('semantic/SpacingTokens');
+    const { spacingTokens } = this.tokens.mod('SpacingTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [category, levels] of Object.entries(semanticSpacingTokens)) {
       const subGroup: DTCGGroup = { $type: 'dimension' };
@@ -641,6 +682,8 @@ export class DTCGFormatGenerator {
    * Generate semantic border width tokens with alias references to primitive border widths.
    */
   private generateSemanticBorderWidthTokens(): DTCGGroup {
+    const { SemanticBorderWidthTokens } = this.tokens.mod('semantic/BorderWidthTokens');
+    const { borderWidthTokens } = this.tokens.mod('BorderWidthTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(SemanticBorderWidthTokens)) {
       const aliasValue = this.config.resolveAliases
@@ -661,6 +704,8 @@ export class DTCGFormatGenerator {
    * Generate semantic radius tokens with alias references to primitive radius.
    */
   private generateSemanticRadiusTokens(): DTCGGroup {
+    const { SemanticRadiusTokens } = this.tokens.mod('semantic/RadiusTokens');
+    const { radiusTokens } = this.tokens.mod('RadiusTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(SemanticRadiusTokens)) {
       const aliasValue = this.config.resolveAliases
@@ -681,6 +726,8 @@ export class DTCGFormatGenerator {
    * Generate semantic opacity tokens with alias references to primitive opacity.
    */
   private generateSemanticOpacityTokens(): DTCGGroup {
+    const { opacityTokens: semanticOpacityTokens } = this.tokens.mod('semantic/OpacityTokens');
+    const { opacityTokens } = this.tokens.mod('OpacityTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(semanticOpacityTokens)) {
       const ref = token.primitiveReferences.value;
@@ -703,6 +750,8 @@ export class DTCGFormatGenerator {
    * Includes blendType extension for blend direction.
    */
   private generateSemanticBlendTokens(): DTCGGroup {
+    const { blendTokens: semanticBlendTokens } = this.tokens.mod('semantic/BlendTokens');
+    const { blendTokens } = this.tokens.mod('BlendTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(semanticBlendTokens)) {
       const ref = token.primitiveReferences.value;
@@ -737,6 +786,7 @@ export class DTCGFormatGenerator {
    * Z-index tokens are semantic-only (no primitive layer).
    */
   private generateZIndexTokens(): DTCGGroup {
+    const { zIndexTokens } = this.tokens.mod('semantic/ZIndexTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(zIndexTokens)) {
       const extensions: DesignerPunkExtensions = {
@@ -758,6 +808,7 @@ export class DTCGFormatGenerator {
    * Elevation tokens are Android-only semantic tokens.
    */
   private generateElevationTokens(): DTCGGroup {
+    const { elevationTokens } = this.tokens.mod('semantic/ElevationTokens');
     const group: DTCGGroup = { $type: 'number' };
     for (const [key, token] of Object.entries(elevationTokens)) {
       const extensions: DesignerPunkExtensions = {
@@ -778,6 +829,8 @@ export class DTCGFormatGenerator {
    * Generate grid spacing tokens with alias references to primitive spacing.
    */
   private generateGridSpacingTokens(): DTCGGroup {
+    const { gridSpacingTokens } = this.tokens.mod('semantic/GridSpacingTokens');
+    const { spacingTokens } = this.tokens.mod('SpacingTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(gridSpacingTokens)) {
       const ref = token.primitiveReferences.spacing;
@@ -800,6 +853,9 @@ export class DTCGFormatGenerator {
    * Icon sizes are calculated from fontSize × multiplier.
    */
   private generateIconTokens(): DTCGGroup {
+    const { iconTokens } = this.tokens.mod('semantic/IconTokens');
+    const { borderWidthTokens } = this.tokens.mod('BorderWidthTokens');
+    const { fontSizeTokens } = this.tokens.mod('FontSizeTokens');
     const group: DTCGGroup = { $type: 'dimension' };
     for (const [key, token] of Object.entries(iconTokens)) {
       const refs = token.primitiveReferences;
@@ -838,6 +894,9 @@ export class DTCGFormatGenerator {
    * Generate accessibility tokens with alias references to their primitive sources.
    */
   private generateAccessibilityTokens(): DTCGGroup {
+    const { accessibilityTokens } = this.tokens.mod('semantic/AccessibilityTokens');
+    const { borderWidthTokens } = this.tokens.mod('BorderWidthTokens');
+    const { spacingTokens } = this.tokens.mod('SpacingTokens');
     const group: DTCGGroup = {};
     for (const [key, token] of Object.entries(accessibilityTokens)) {
       const ref = token.primitiveReferences.value;
@@ -877,6 +936,7 @@ export class DTCGFormatGenerator {
    * Generate progress color tokens with alias references to primitive colors.
    */
   private generateProgressColorTokens(): DTCGGroup {
+    const { progressColorTokens } = this.tokens.mod('semantic/ColorTokens');
     const group: DTCGGroup = { $type: 'color' };
     for (const [key, token] of Object.entries(progressColorTokens)) {
       const ref = token.primitiveReferences.value;
@@ -899,6 +959,7 @@ export class DTCGFormatGenerator {
    * Used when resolveAliases is true.
    */
   private resolvePrimitiveColorAlias(primitiveName: string): string {
+    const { colorTokens } = this.tokens.mod('ColorTokens');
     const primitiveToken = (colorTokens as Record<string, PrimitiveToken>)[primitiveName];
     if (primitiveToken) {
       return this.resolveColorValue(primitiveToken, primitiveName);
@@ -945,6 +1006,11 @@ export class DTCGFormatGenerator {
    * @requirements 5.1-5.5
    */
   private generateShadowTokens(): DTCGGroup {
+    const { shadowTokens: semanticShadowTokens } = this.tokens.mod('semantic/ShadowTokens');
+    const { shadowOffsetX, shadowOffsetY } = this.tokens.mod('ShadowOffsetTokens');
+    const { blur: blurTokens } = this.tokens.mod('BlurTokens');
+    const { shadowOpacityTokens } = this.tokens.mod('ShadowOpacityTokens');
+    const { colorTokens } = this.tokens.mod('ColorTokens');
     const group: DTCGGroup = { $type: 'shadow' };
 
     for (const [key, token] of Object.entries(semanticShadowTokens)) {
@@ -1052,6 +1118,8 @@ export class DTCGFormatGenerator {
      * @requirements 5.6, 5.7
      */
     private generateGlowTokens(): DTCGGroup {
+    const { blur: blurTokens, BLUR_BASE_VALUE } = this.tokens.mod('BlurTokens');
+    const { glowOpacity, GLOW_OPACITY_BASE_VALUE } = this.tokens.mod('GlowOpacityTokens');
       const group: DTCGGroup = {
         $description: 'Glow effect primitives. Composed glows not yet implemented — glows share offset primitives with shadows (shadowOffsetX, shadowOffsetY).',
       };
@@ -1091,6 +1159,12 @@ export class DTCGFormatGenerator {
    * @requirements 6.1, 6.5
    */
   private generateTypographyTokens(): DTCGGroup {
+    const { typographyTokens } = this.tokens.mod('semantic/TypographyTokens');
+    const { fontFamilyTokens } = this.tokens.mod('FontFamilyTokens');
+    const { fontSizeTokens } = this.tokens.mod('FontSizeTokens');
+    const { fontWeightTokens } = this.tokens.mod('FontWeightTokens');
+    const { lineHeightTokens } = this.tokens.mod('LineHeightTokens');
+    const { letterSpacingTokens } = this.tokens.mod('LetterSpacingTokens');
     const group: DTCGGroup = { $type: 'typography' };
 
     for (const [key, token] of Object.entries(typographyTokens)) {
@@ -1146,6 +1220,10 @@ export class DTCGFormatGenerator {
    * @requirements 6.2, 6.3, 6.4, 6.5
    */
   private generateMotionTokens(): DTCGGroup {
+    const { motionTokens: semanticMotionTokens } = this.tokens.mod('semantic/MotionTokens');
+    const { durationTokens } = this.tokens.mod('DurationTokens');
+    const { easingTokens } = this.tokens.mod('EasingTokens');
+    const { scaleTokens } = this.tokens.mod('ScaleTokens');
     const group: DTCGGroup = { $type: 'transition' };
 
     for (const [key, token] of Object.entries(semanticMotionTokens)) {
@@ -1246,6 +1324,7 @@ export class DTCGFormatGenerator {
    * @throws Error if the resolved color value is not a valid color format
    */
   private resolveColorValue(token: PrimitiveToken, tokenName?: string): string {
+    const { composedColorMap } = this.tokens.mod('color/index');
     const lookupName = token.name || tokenName;
     if (lookupName) {
       const composed = composedColorMap.get(lookupName);

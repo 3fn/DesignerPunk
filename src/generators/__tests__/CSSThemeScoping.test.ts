@@ -24,24 +24,67 @@ describe('CSS Theme Scoping (Spec 094)', () => {
   }
 
   describe('generateThemeOverrideBlocks — web', () => {
-    test('dark-only theme produces color-scheme: dark and static values', () => {
-      const baseLight = [makeToken('color.action.primary', 'rgba(0, 240, 255, 1)')];
-      const baseDark = [makeToken('color.action.primary', 'rgba(0, 240, 255, 1)')];
-      const theme: ThemeOverrideSet = {
-        name: 'marketing',
-        mode: 'dark',
-        lightTokens: [makeToken('color.action.primary', 'rgba(0, 240, 255, 1)')],
-        darkTokens: [makeToken('color.action.primary', 'rgba(0, 200, 220, 1)')],
-        overrideKeys: new Set(['color.action.primary']),
-      };
+    // The single-mode rule (design § 4; Spec 129 U9): a theme of one mode covers one scheme and its other half is the
+    // base. Each fixture is built with ONLY its covered mode's tokens (the `ThemeOverrideSet` shape of
+    // `TokenFileGenerator.ts`): a fixture that gave the theme both maps would pass a "skip the token unless both
+    // halves exist" check, and so would not prove the uncovered half comes from the base.
+    describe('a theme of one mode: light-dark() with the uncovered half from the base, no color-scheme line', () => {
+      const baseLight = [
+        makeToken('color.action.primary', 'rgba(0, 240, 255, 1)'),
+        makeToken('color.text.default', 'rgba(38, 50, 58, 1)'),
+      ];
+      const baseDark = [
+        makeToken('color.action.primary', 'rgba(0, 120, 140, 1)'),
+        makeToken('color.text.default', 'rgba(230, 240, 245, 1)'),
+      ];
+      const block = (theme: ThemeOverrideSet): string[] =>
+        generator.generateThemeOverrideBlocks('web', baseLight, baseDark, [theme]);
 
-      const lines = generator.generateThemeOverrideBlocks('web', baseLight, baseDark, [theme]);
-      const output = lines.join('\n');
+      test('mode dark: light-dark(baseLight, its dark value); no color-scheme; no light-dark() when the values are equal', () => {
+        const lines = block({
+          name: 'marketing',
+          mode: 'dark',
+          lightTokens: [],
+          darkTokens: [
+            makeToken('color.action.primary', 'rgba(0, 200, 220, 1)'),
+            makeToken('color.text.default', 'rgba(38, 50, 58, 1)'), // equals the base LIGHT value
+          ],
+          overrideKeys: new Set(['color.action.primary', 'color.text.default']),
+        });
+        expect(lines).toContain(':root[data-theme="marketing"] {');
+        expect(lines).toContain('  --color-action-primary: light-dark(rgba(0, 240, 255, 1), rgba(0, 200, 220, 1));');
+        expect(lines).toContain('  --color-text-default: rgba(38, 50, 58, 1);');
+        expect(lines.join('\n')).not.toContain('color-scheme');
+      });
 
-      expect(output).toContain(':root[data-theme="marketing"]');
-      expect(output).toContain('color-scheme: dark;');
-      expect(output).toContain('rgba(0, 200, 220, 1)');
-      expect(output).not.toContain('light-dark(');
+      test('mode light: light-dark(its light value, baseDark); no color-scheme; no light-dark() when the values are equal', () => {
+        const lines = block({
+          name: 'brand',
+          mode: 'light',
+          lightTokens: [
+            makeToken('color.action.primary', 'rgba(200, 40, 120, 1)'),
+            makeToken('color.text.default', 'rgba(230, 240, 245, 1)'), // equals the base DARK value
+          ],
+          darkTokens: [],
+          overrideKeys: new Set(['color.action.primary', 'color.text.default']),
+        });
+        expect(lines).toContain(':root[data-theme="brand"] {');
+        expect(lines).toContain('  --color-action-primary: light-dark(rgba(200, 40, 120, 1), rgba(0, 120, 140, 1));');
+        expect(lines).toContain('  --color-text-default: rgba(230, 240, 245, 1);');
+        expect(lines.join('\n')).not.toContain('color-scheme');
+      });
+
+      test('mode both writes both of its own halves, still with no color-scheme line', () => {
+        const lines = block({
+          name: 'high-contrast',
+          mode: 'both',
+          lightTokens: [makeToken('color.action.primary', 'rgba(1, 2, 3, 1)')],
+          darkTokens: [makeToken('color.action.primary', 'rgba(4, 5, 6, 1)')],
+          overrideKeys: new Set(['color.action.primary']),
+        });
+        expect(lines).toContain('  --color-action-primary: light-dark(rgba(1, 2, 3, 1), rgba(4, 5, 6, 1));');
+        expect(lines.join('\n')).not.toContain('color-scheme');
+      });
     });
 
     test('both-mode theme produces light-dark() when values differ', () => {

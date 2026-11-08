@@ -11,9 +11,9 @@ Every row below belongs in design.md § "Error Handling — the loud-failure cat
 
 **Ada's draft** (the row as it stands): `Themes: <name> (<mode>) — registered; not yet emitted (see the install guide)`
 
-**Final**:
+**Final** *(amended 2026-11-08 by Ada, Spec 129 U9: a registered theme is now applied; wording Leonardo's, replacing Ada's draft. Prior text: `Themes: <name> (<mode>)[, <name> (<mode>)…] — registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens`)*:
 ```
-Themes: <name> (<mode>)[, <name> (<mode>)…] — registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens
+Themes: <name> (<mode>)[, <name> (<mode>)…] — registered and applied: a dark or wcag theme you register replaces DesignerPunk's built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme
 ```
 
 **Correction (2026-10-03; Ada, as token owner; applied by Lina in `generateThemesLine`, `src/cli/shared/errorCatalog.ts:440-444`, commit `21c73b60d`; this source updated by Leonardo to match the built string):** my first clause, "light and dark mode and the wcag theme use DesignerPunk's built-in values", was false for light mode. Light-mode values are the person's own tokens: the `light-base` context carries no override (`src/generators/generateTokenFiles.ts:150-154` names only `light-wcag`, `dark-base` and `dark-wcag`, resolved at `:165-171`). Only the dark and WCAG override maps are DesignerPunk's (`:19-21`). Verified by Leonardo against the source. I accept Ada's clause as wording too.

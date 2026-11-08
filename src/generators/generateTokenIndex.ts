@@ -36,6 +36,8 @@ import {
  * All data must be explicitly provided — no barrel import fallbacks.
  */
 export interface TokenIndexInput {
+  /** The token set `generate` read (Spec 129 U9); absent, the generators read DesignerPunk's own. */
+  tokenSet?: import('./TokenSet').TokenSet;
   primitiveTokens: PrimitiveToken[];
   semanticTokens: SemanticToken[];
   componentTokens: RegisteredComponentToken[];
@@ -323,15 +325,15 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
 
   console.log('📊 Generating token index...\n');
 
-  const webGen = new WebFormatGenerator();
-  const iosGen = new iOSFormatGenerator();
-  const androidGen = new AndroidFormatGenerator('kotlin');
+  const webGen = new WebFormatGenerator(input.tokenSet);
+  const iosGen = new iOSFormatGenerator(input.tokenSet);
+  const androidGen = new AndroidFormatGenerator('kotlin', input.tokenSet);
 
   const themeVarying = input.modeResolved.themeVaryingTokens;
   // The iOS and Android columns' `theme.` names come from the set the native generators
   // consume, not from the base-scoped flag (plan item 5 of the record named above).
   const nativeThemeVarying = input.modeResolved.nativeThemeVaryingTokens;
-  const emittedColors = TokenFileGenerator.emittedColorPrimitiveNames();
+  const emittedColors = TokenFileGenerator.emittedColorPrimitiveNames(input.tokenSet);
   const motionFormatters = {
     web: new WebMotionTokenFormatter(),
     ios: new iOSMotionTokenFormatter(),
