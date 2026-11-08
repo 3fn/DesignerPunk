@@ -51,7 +51,7 @@ units:
       - id: scope-2
         kind: member
         label: "Consuming DesignerPunk Android tokens — static tokens via De"
-        text: "Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `Local{Abbreviation}Theme.current`"
+        text: "Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `LocalDPTheme.current`"
       - id: scope-3
         kind: member
         label: "Implementing DesignerPunk component specifications in Kotlin"
@@ -118,25 +118,37 @@ units:
     items:
       - id: theming-1
         kind: obligation
-        label: "Your `npx designerpunk generate` produces no theme types for And"
-        text: "Your `npx designerpunk generate` produces no theme types for Android today: no `{Name}Theme` data class, no `{Name}Themes` object and no `Local{Abbreviation}Theme` CompositionLocal, and the theme-varying semantic colors are left out of `DesignTokens`. DesignerPunk plans to address this in its consumer-generation completeness work (Spec 129), with no date set. The next two bullets, on providing and selecting a theme, are the intended shape once it does."
+        label: "Every colour semantic is read through the theme with Loca"
+        text: "Every colour semantic is read through the theme with `LocalDPTheme.current.<name>`; the semantic colours are not on `DesignTokens`"
       - id: theming-2
         kind: obligation
-        label: "Product apps wrap content with CompositionLocalProvider(Loca"
-        text: "Product apps wrap content with `CompositionLocalProvider(Local{Abbreviation}Theme provides themeInstance)` for subtree theming"
+        label: "The fixed contract is DesignerPunk's, whatever your config"
+        text: "`data class DesignerPunkTheme` (one `Color` property per colour semantic) and `val LocalDPTheme = staticCompositionLocalOf { <Name>Themes.BaseLight }`"
       - id: theming-3
         kind: obligation
-        label: "Dark mode: select theme instance based on isSystemInDarkThem"
-        text: "Dark mode: select theme instance based on `isSystemInDarkTheme()`"
+        label: "Read outside any provider, LocalDPTheme.current is the base "
+        text: "Read outside any provider, `LocalDPTheme.current` is the base light theme and does not follow the system scheme"
       - id: theming-4
         kind: obligation
-        label: "{Abbreviation} uses uppercase (e.g., DP not Dp) to avoid col"
-        text: "`{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit"
+        label: "The family has no Dark entry"
+        text: "It has no `Dark` entry, because dark is the `darkTheme` argument"
       - id: theming-5
+        kind: obligation
+        label: "Wrap content with <Name>Theme(family = …, darkTheme = …)"
+        text: "Wrap content with `<Name>Theme(family = <Name>ThemeFamily.Base, darkTheme = isSystemInDarkTheme()) { content }`: it provides `LocalDPTheme` with the family's instance for that scheme. `darkTheme` forces a scheme; leave it at its default to follow the system"
+      - id: theming-6
+        kind: obligation
+        label: "A theme of one mode falls back to base in the other schem"
+        text: "To give it its own look in both schemes, register it in mode `both`, or force the scheme with `darkTheme`"
+      - id: theming-7
+        kind: obligation
+        label: "Product tokens that reference a theme-varying colour are @Co"
+        text: "Product tokens that reference a theme-varying colour are `@Composable @ReadOnlyComposable get()` properties on `object Product{Category}`, read as `LocalDPTheme.current.<name>` and only inside composition scope"
+      - id: theming-8
         kind: obligation
         label: "Static tokens (spacing, sizing, radius, typography, motion) "
         text: "Static tokens (spacing, sizing, radius, typography, motion) remain on the `DesignTokens` object — no CompositionLocal needed"
-      - id: theming-6
+      - id: theming-9
         kind: obligation
         label: "Ground truth for these token values is LIVE, not a file — ne"
         text: "**Ground truth for these token values is LIVE, not a file** — never read the built `dist/*.kt` snapshots (see the Ground truth section); query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens"
@@ -155,7 +167,7 @@ units:
       - id: product-tokens-3
         kind: obligation
         label: "Theme-varying tokens: @Composable @ReadOnlyComposable get() "
-        text: "Theme-varying tokens: `@Composable @ReadOnlyComposable get()` accessing `Local{Abbreviation}Theme.current.{prop}` — must be read inside composition scope"
+        text: "Theme-varying tokens: `@Composable @ReadOnlyComposable get()` accessing `LocalDPTheme.current.{prop}` — must be read inside composition scope"
       - id: product-tokens-4
         kind: obligation
         label: "Ref tokens reference DesignTokens. constants (full qualified"

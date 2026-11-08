@@ -51,7 +51,7 @@ units:
       - id: scope-2
         kind: member
         label: "Consuming DesignerPunk iOS tokens — static tokens via Design"
-        text: "Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\\.{abbreviation}Theme)`"
+        text: "Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\\.dpTheme)`"
       - id: scope-3
         kind: member
         label: "Implementing DesignerPunk component specifications in Swift "
@@ -118,21 +118,41 @@ units:
     items:
       - id: theming-1
         kind: obligation
-        label: "`npx designerpunk generate` writes your static tokens as Swift c"
-        text: "`npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet."
+        label: "Every colour semantic is read through the theme with @Envi"
+        text: "Every colour semantic is read through the theme with `@Environment(\\.dpTheme)`; the semantic colours are not on `DesignTokens`"
       - id: theming-2
         kind: obligation
-        label: "Product apps wrap content with .environment(\\.{abbreviation}"
-        text: "Product apps wrap content with `.environment(\\.{abbreviation}Theme, themeInstance)` for subtree theming"
+        label: "The fixed contract is DesignerPunk's, whatever your config"
+        text: "`public protocol DesignerPunkTheme: Sendable` (one property per colour semantic), the environment key `DPThemeKey`, and the key path `\\.dpTheme`"
       - id: theming-3
         kind: obligation
-        label: "Dark mode: select theme struct based on @Environment(\\.color"
-        text: "Dark mode: select theme struct based on `@Environment(\\.colorScheme)`"
+        label: "Without a provider above a view, \\.dpTheme is the base light"
+        text: "Without a provider above a view, `\\.dpTheme` is the base light theme and does not follow the system scheme"
       - id: theming-4
+        kind: obligation
+        label: "Your product's names come from your config name and abbrevi"
+        text: "so `.environment(\\.dpTheme, .dpBaseDark)` works for a fixed instance"
+      - id: theming-5
+        kind: obligation
+        label: "The family has no dark case and no raw value"
+        text: "It has no `dark` case, because dark is a mode the provider takes from the system scheme, and it has no raw value, so persisting a case needs a mapping of your own"
+      - id: theming-6
+        kind: obligation
+        label: "Wrap content with .<name>Theme(_ family:)"
+        text: "Wrap content with `.<name>Theme(_ family:)` (lower-camel `<Name>`; `.<name>Theme()` means `.base`): it reads `@Environment(\\.colorScheme)` and sets `\\.dpTheme` to the family's instance for that scheme"
+      - id: theming-7
+        kind: obligation
+        label: "A theme of one mode falls back to base in the other scheme"
+        text: "To give it its own look in both schemes, register it in mode `both`, or force the scheme with `.preferredColorScheme`"
+      - id: theming-8
+        kind: obligation
+        label: "Product tokens that reference a theme-varying colour are memb"
+        text: "Product tokens that reference a theme-varying colour are members of `public extension DesignerPunkTheme`, read as `theme.product{Category}{Name}` from `\\.dpTheme`"
+      - id: theming-9
         kind: obligation
         label: "Static tokens (spacing, sizing, radius, typography, motion) "
         text: "Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed"
-      - id: theming-5
+      - id: theming-10
         kind: obligation
         label: "Ground truth for these token values is LIVE, not a file — ne"
         text: "**Ground truth for these token values is LIVE, not a file** — never read the built `dist/*.ios.swift` snapshots (see the Ground truth section); query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens"
@@ -150,8 +170,8 @@ units:
         text: "Static tokens: `public enum Product{Category} { public static let name: CGFloat = value }`"
       - id: product-tokens-3
         kind: obligation
-        label: "Theme-varying tokens: protocol extension on {Name}Theme — ac"
-        text: "Theme-varying tokens: protocol extension on `{Name}Theme` — access via `theme.product{Category}{Name}`"
+        label: "Theme-varying tokens: protocol extension on DesignerPunkTheme "
+        text: "Theme-varying tokens: protocol extension on `DesignerPunkTheme` — access via `theme.product{Category}{Name}`"
       - id: product-tokens-4
         kind: obligation
         label: "Ref tokens reference DesignTokens. constants (full qualified"

@@ -18,7 +18,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ---
 
-## @unit #in-scope @ sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
+## @unit #in-scope @ sha256:43836080021834c69157a5c96f97c19f5b81f471bf18a8ad5ef0546f43baf308
 ## Domain Boundaries
 
 Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, and the native token files refer to code nothing in the package defines (see the Integration Guide's § Platforms). Don't start a new native product on this release; DesignerPunk plans to address it.
@@ -26,7 +26,7 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 ### In Scope
 
 - iOS screen implementation using SwiftUI
-- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.{abbreviation}Theme)` once your generated output includes it
+- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.dpTheme)`
 - Implementing DesignerPunk component specifications in Swift (referencing the iOS implementations that ship in the installed package, `node_modules/@3fn/core/src/components/core/*/platforms/ios/`)
 - Writing iOS-specific tests for product screens
 - iOS navigation, state management, and data binding
@@ -34,12 +34,15 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - iOS build configuration and project setup
 - Advising Leonardo on iOS-specific constraints and opportunities
 
-## @unit #ios-theming-spec-094 @ sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
+## @unit #ios-theming-spec-094 @ sha256:b60b64ed01d11f586fec005bc575c76a7015658eb2e92db16e597b3a49ad1b6a
 ### iOS Theming (Spec 094)
 
-- `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet.
-- Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
-- Dark mode: select theme struct based on `@Environment(\.colorScheme)`
+- `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and a theme surface beside them. Every colour semantic is read through the theme with `@Environment(\.dpTheme)`; the semantic colours are not on `DesignTokens`
+- **The fixed contract** is DesignerPunk's, whatever your config `name` or `abbreviation`: `public protocol DesignerPunkTheme: Sendable` (one property per colour semantic), the environment key `DPThemeKey`, and the key path `\.dpTheme`. Without a provider above a view, `\.dpTheme` is the base light theme and does not follow the system scheme
+- **Your product's names** come from your config `name` and `abbreviation`: the holder `<Name>Themes` (`baseLight`, `baseDark`, `wcagLight`, `wcagDark`, then one per instance a registered theme covers), each backed by a generated `Equatable` struct `<Name><Instance>Theme`, and an implicit member `.<abbreviation><Instance>` for each (`.dpBaseDark` under the default abbreviation), so `.environment(\.dpTheme, .dpBaseDark)` works for a fixed instance
+- **The family and its provider**: `<Name>ThemeFamily` is a `Sendable, Hashable, CaseIterable` enum with the cases `base`, `wcag`, then one per other registered theme in config order. It has no `dark` case, because dark is a mode the provider takes from the system scheme, and it has no raw value, so persisting a case needs a mapping of your own. Wrap content with `.<name>Theme(_ family:)` (lower-camel `<Name>`; `.<name>Theme()` means `.base`): it reads `@Environment(\.colorScheme)` and sets `\.dpTheme` to the family's instance for that scheme. Each case's doc comment names its instance in each scheme
+- **A theme of one mode falls back to base in the other scheme**: a theme registered in mode `light` shows its own look in the light scheme and `baseDark` in the dark scheme; one registered in mode `dark` shows `baseLight` in the light scheme. Nothing warns you. To give it its own look in both schemes, register it in mode `both`, or force the scheme with `.preferredColorScheme`. `wcag` is exempt: it always has both instances
+- Product tokens that reference a theme-varying colour are members of `public extension DesignerPunkTheme`, read as `theme.product{Category}{Name}` from `\.dpTheme`; the others stay static as `Product{Category}.{name}`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
 - **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
 
@@ -154,7 +157,7 @@ globs:
   - "node_modules/@3fn/core/src/components/core/*/platforms/ios/**"
 ## @entry writeScope[.kiro/specs/**] @ sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
 specs/**
-## @entry commands[platform-tokens] @ sha256:5af175a1382bb2c8a1ae48571e10071486b5f6404e739702094a12b86d8ffa79
+## @entry commands[platform-tokens] @ sha256:b9f3cb8659e8f7eea3b8ff7a76ef914b693064ae6281dc0be427045d8d1b7151
 name: platform-tokens
 cmd: npx designerpunk generate
 runContext: consumer-repo
