@@ -30,9 +30,16 @@ signer: data
 
 signer: data
 disposition: re-pointed
-canonicalHash: sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3
+canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
 renderedHash: sha256:72e9990409a35f3943744a2d62662e144fb323dd5dcf47bad0b8d2b4acd1411c
-date: 2026-10-13
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (native-lane ownership ballot, items 1 and 3, sites 1 and 2): ASSENT, `surviving` 8 of 17 (`scope-1` to `scope-8`; not credited: `scope-9` to `scope-17`).** A new act, read fresh against the rendering. Nothing is carried from the 2026-10-13 signature below, whose ruling stands for `scope-1` to `scope-8`.
+- **The ballot**: `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 (b) ruled 2026-11-08T00:33:06Z). Applied at `67de94640`; I confirmed the set at 17 at `3d74b9922`.
+- **What I read, in this session, through tool results**: the unit as `readConsumerSpans` returns it from the committed rendering, one piece in each of `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md` (`### In Scope`, eight bullets). The three are identical, and none contains `harness`.
+- **The removal**: the row gains a second removal, whose text equals the new charter bullet byte for byte (checked by script), citing `subtraction-1`. The compile harness, its lane files and its pin file are this repo's own tooling; `harness/` and `scripts/harness/` are not in the package's `files`, and a consumer's CI has no `harness-android-tokens`. The rendering shows the bullet subtracted. The first removal (`(referencing existing platforms/android/ implementations)`, `subtraction-5`) is unchanged.
+- **Credited**: `scope-1` to `scope-8` appear in each rendered copy as in the 2026-10-13 signature (`scope-2` with the added "once your generated output includes it", `scope-3` re-pointed to the shipped sources). **Not credited**: `scope-9` to `scope-17` do not render, and none has a consumer counterpart.
+- **Hashes.** `canonicalHash` moves from `9838f330...` to `49fe090d...`: `hashText` of the unit from `partition(body).units`, equal to my confirmation. `renderedHash` stays `72e99904...`: `renderedHashOf` over the committed rendering, recomputed, because the rendering did not change.
 
 **Ruling: ASSENT — 8/8 surviving.** scope-1 through scope-8 survive: the eight In Scope duties (Compose screen implementation, token consumption, Kotlin component implementation, Android tests, navigation/state/data binding, TalkBack accessibility, build configuration, advising Leonardo) are all present in the rendered unit, verbatim except for the re-grounded pointers. The one removal ("(referencing existing platforms/android/ implementations)", subtraction-5) is re-pointed to the shipped `node_modules/@3fn/core/src/components/core/*/platforms/android/` sources, which is true of the package. The added native-scope line (release-3 ruling 11) reads true by source read (Integration Guide, L182): the Android and iOS components ship as reference source, and the native token files refer to code nothing in the package defines. It does not contradict the rendered output. It is a release-level gate on starting a NEW native product; the eight items describe duties in an existing app, so both stand without conflict.
 
@@ -252,6 +259,54 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 - **Hashes.**
   - `canonicalHash` moves from `ecee4b84...` to `f1af38d4...`: `hashText` of the unit from `partition(body).units`, equal to the overlay pin and to my confirmation.
   - `renderedHash` moves from `fb059093...` to `105c5501...`: `renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/data.md', 'body', '#android-specific-guidance:preamble')`.
+
+## `#frontmatter:writeScope[harness/android/**]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `harness/android/**` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it.
+
+## `#frontmatter:writeScope[scripts/harness/probe-kotlin.ts]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `scripts/harness/probe-kotlin.ts` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it.
+
+## `#frontmatter:writeScope[scripts/harness/parse-kotlin.ts]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `scripts/harness/parse-kotlin.ts` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/probe-kotlin.test.ts]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `scripts/harness/__tests__/probe-kotlin.test.ts` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/parse-kotlin.test.ts]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `scripts/harness/__tests__/parse-kotlin.test.ts` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/kotlin/**]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `scripts/harness/__tests__/fixtures/kotlin/**` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/parse-kotlin/**]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `scripts/harness/__tests__/fixtures/parse-kotlin/**` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it.
+
+## `#frontmatter:writeScope[harness/pins.yaml]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-11-08; added by ballot `2026-11-07-native-lane-ownership` items 1 and 3, site 1). `subtraction-1` applies: `harness/pins.yaml` is a path of this repo's native compile harness, which `harness-android-tokens` (a required check here) runs. `init` creates no `harness/` in a consumer repo and a consumer has no such check, so a consumer's Data has nothing there to own or repair. The rendering carries no counterpart (no piece in any of the three copies). `canonicalHash` is `hashEntry` of the entry, recomputed; `renderedHash` is `renderedHashOf` over the empty span, as the other `no-consumer-counterpart` rows carry it. This entry sits whole in Data's, Kenya's and Ada's lists, so the same hash is signed in three files, which the ballot's site 12 expects.
 
 ## `#frontmatter:writeScope[.kiro/issues/**]`
 

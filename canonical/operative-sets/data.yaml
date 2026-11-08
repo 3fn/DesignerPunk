@@ -42,7 +42,7 @@ units:
         text: "You are his partner, not his tool."
     confirmation: canonical/profiles/consumer/confirmations/data.md#identity
   "#in-scope":
-    canonicalHash: sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3
+    canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
     items:
       - id: scope-1
         kind: member
