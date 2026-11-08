@@ -148,6 +148,50 @@ units:
         kind: obligation
         label: "Delegate audit: report, do not rule; FAIL to Peter"
         text: "**You report; you do not rule**: you do not run J, read a verdict's meaning, or make a finding about Stacy. A `FAIL` or `anomaly` is left in the file, and it goes to Peter as the brief names."
+      - id: scope-harness-1
+        kind: member
+        label: "Native harness: the consumer driver and its two pin keys"
+        text: "**The native harness's consumer driver (ballot 2026-11-07-native-lane-ownership item 5; active from Spec 129 U12's merge)**: you own `scripts/harness/consumer.ts` and `consumer.test.ts`, and `consumer.name` and `consumer.abbreviation` in `harness/pins.yaml`, because the driver runs your CLI's `pack`, `init` and `generate`, and a break there fails `harness-generate` and with it every harness context, the required ones included"
+      - id: scope-harness-2
+        kind: member
+        label: "A driver change may land with the src/cli change it follows"
+        text: "A driver change may land in one PR with the `src/cli/**` change it follows"
+      - id: scope-harness-3
+        kind: obligation
+        label: "Each change cites a base dispatch and its head run"
+        text: "Each change cites a `native-harness` dispatch on `main` at its merge base that is not a forced failure and its own head run, and pastes the diff between them of `harness-tarball-files.txt`, the manifest's `generated` lists, its `themes`, its key paths and the consumer root's entries"
+      - id: scope-harness-4
+        kind: obligation
+        label: "A change that loses what the reference run has goes by spec row"
+        text: "a change whose head lacks a tarball file, a generated file or a theme that the reference run has goes by spec row, never by this scope"
+      - id: scope-harness-5
+        kind: obligation
+        label: "The reference run"
+        text: "The reference run is the base dispatch, or, where its `harness-generate` failed, the newest dispatch on `main` at a first-parent ancestor of the merge base whose `harness-generate` succeeded and whose forced-failure step was skipped; its listing is the surviving artifact, or is re-derived by running the driver at that run's commit; with no such run, or a re-derivation that does not exit 0, the change goes by grant"
+      - id: scope-harness-6
+        kind: obligation
+        label: "Thurgood reviews every change; Data and Kenya review some"
+        text: "Thurgood reviews every change, and Data and Kenya each review one whose key-path or root-entry diff is not empty, each review naming the commit it read and ending `**Review**: no objection` or `**Review**: object — <reason>`, an objection carried as an `**Open for Peter**:` line, a review of an item-5 change voided by any later push"
+      - id: scope-harness-7
+        kind: obligation
+        label: "A repair of a red harness-generate adds a red case"
+        text: "A repair of a red `harness-generate` adds a `consumer.test.ts` case that is red against the base's driver"
+      - id: scope-harness-8
+        kind: obligation
+        label: "What stays unchanged in a driver change"
+        text: "`harness/expected/**`, `harness/protected-set.txt`, every fixture and the rest of `harness/pins.yaml` stay unchanged, `consumer.abbreviation` is never `DP`, and every context green at the reference run is green at the head"
+      - id: scope-harness-9
+        kind: obligation
+        label: "Owning the driver never changes what it decides"
+        text: "Owning the driver never authorizes changing what it decides: the Req 2.1–2.2 rules (it reads no repository `dist/`; it refuses `DP`), `consumer.productTokensFixture`, `consumer.productTokens` and `harness/fixtures/product-tokens/**` change only under a spec row"
+      - id: scope-harness-10
+        kind: obligation
+        label: "Before U12's merge: task-row or issue-row grants"
+        text: "Before U12's merge, your write over these paths is Spec 129's task-row grants or an issue-row grant"
+      - id: scope-harness-11
+        kind: obligation
+        label: "From U8's merge d2-check is not yours"
+        text: "From U8's merge, `scripts/harness/d2-check.ts` and `d2-check.test.ts` are not yours, and no grant over them goes to you in a unit where you hold `src/generators/**` (ballot 2026-11-07-native-lane-ownership § 8, F-4 as ruled)"
     confirmation: canonical/profiles/consumer/confirmations/ada.md#in-scope
   "#out-of-scope":
     canonicalHash: sha256:ff02d3db0cfbbc8f5f6e559f9b24e3bb5e7e8c25b31e6d257b495d9ad225edeb

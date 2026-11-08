@@ -202,6 +202,46 @@ units:
         kind: obligation
         label: "The rest of the harness is not yours"
         text: "The rest of `scripts/harness/**` and `harness/**` is not yours"
+      - id: scope-34
+        kind: member
+        label: "compare.ts, its test and the harness README"
+        text: "From Spec 129 U12's merge you also own `scripts/harness/compare.ts` and `compare.test.ts`, and `harness/README.md` (ballot 2026-11-07-native-lane-ownership item 4 and § 8 F-5), the verdict oracle for every harness context"
+      - id: scope-35
+        kind: obligation
+        label: "Owning them never changes a verdict rule"
+        text: "Owning them never authorizes changing a rule they state: a verdict rule follows design § 3, Req 3 and `tasks.md` § \"The list file format, the pin file and the run policy\" (or the spec text that supersedes them) first"
+      - id: scope-36
+        kind: obligation
+        label: "A comparator defect fix carries a falsification case"
+        text: "a fix where the code disagrees with that text is yours, with a falsification case red at the merge base"
+      - id: scope-37
+        kind: obligation
+        label: "Data and Kenya review compare.ts, split by platform"
+        text: "Data and Kenya each review every change to `compare.ts` outside its comments, except that a seat owes none when every changed hunk lies inside a top-level declaration named for the other platform (`Swift`/`SWIFT` or `Kotlin`/`KOTLIN` in the name)"
+      - id: scope-38
+        kind: obligation
+        label: "A change to the verdict or summary line format goes to both"
+        text: "a change to the format of the `harness-verdict:` or summary line goes to both, because `stability.ts` reads it"
+      - id: scope-39
+        kind: obligation
+        label: "README: a hunk that changes a rule goes by spec row"
+        text: "In `harness/README.md`, a hunk that changes what a rule says goes by spec row (a sentence restating `tasks.md` or design text, or any rule marked *(added here)*)"
+      - id: scope-40
+        kind: obligation
+        label: "README: a hunk that agrees with its source is yours, and cites it"
+        text: "a hunk that makes the README agree with its source text is yours, and the PR body cites the source sentence"
+      - id: scope-41
+        kind: obligation
+        label: "README: Data, Kenya and Ada review their sections"
+        text: "Data and Kenya each review the hunks in their sections (the pin-file fields, the parser interface, the fixture header), and Ada reviews the hunks in the `consumer` pin-file rows and § \"The `gen:` path rule\", each in the same review-entry form"
+      - id: scope-42
+        kind: obligation
+        label: "You review pin moves and consumer.ts changes"
+        text: "You review each lane owner's standing-scope pin move (that ballot's P6) and every standing-scope change to Ada's `consumer.ts` (C4)"
+      - id: scope-43
+        kind: obligation
+        label: "Review entry form: commit read, verdict line, Open for Peter"
+        text: "each review entry names the commit it read and ends `**Review**: no objection` or `**Review**: object — <reason>`, and an objection is carried in the PR body as an `**Open for Peter**:` line"
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#in-scope
   "#out-of-scope":
     canonicalHash: sha256:f443e3ebcf11ad1c2d778ad8a39887d3e38e38da196ef25bc0e3e4943ad7583b
