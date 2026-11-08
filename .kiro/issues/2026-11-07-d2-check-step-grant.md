@@ -46,6 +46,7 @@ This fixes how the step and the script meet (the ballot's `[ADA R1]` amendment 1
 - **The design rule** (Peter's F-4 ruling, 2026-11-08T00:33:06Z, "Re: 1, as recommended"; `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-f4-and-u8-go.md`):
   - `d2-check.ts` takes every expected name from the index (`token-index/components.yaml`, including the `platforms.<p>` fields) and works out none itself.
   - It imports nothing from `src/generators/**`, `src/build/**` or `node_modules/@3fn/core`, and it lists none of its own definition files.
+  - **A directory walk is allowed; a list is banned.** The script may read every file with the definition extension under the one shipped-definitions directory of the installed package, with no per-file name, no include or exclude list and no depth limit short of the directory's end, so that adding or moving a definition file never forces an edit to the check. Naming any file, or a subset by filter, is a list.
   - One exception: the completeness half's `component.key` derivation (Req 5.10) is restated as one line of rule in the script.
   - `d2-check.test.ts` carries a grep that fails on any of these: such an import, a path under those roots, or a hard-coded definition-file list. 
 - **The floors** (Stacy's, as amended by Kenya):
