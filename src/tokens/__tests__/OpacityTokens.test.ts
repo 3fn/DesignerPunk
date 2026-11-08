@@ -126,7 +126,7 @@ describe('Opacity Tokens', () => {
       expect(getOpacityToken('opacity000')?.mathematicalRelationship).toBe('base × 0 = 0.08 × 0 = 0.0');
       expect(getOpacityToken('opacity008')?.mathematicalRelationship).toBe('base × 1 = 0.08 × 1 = 0.08');
       expect(getOpacityToken('opacity048')?.mathematicalRelationship).toBe('base × 6 = 0.08 × 6 = 0.48');
-      expect(getOpacityToken('opacity100')?.mathematicalRelationship).toBe('Special case: full opacity = 1.0');
+      expect(getOpacityToken('opacity100')?.mathematicalRelationship).toBe('base × 12.5 = 0.08 × 12.5 = 1');
     });
 
     test('should have correct familyBaseValue for all tokens', () => {

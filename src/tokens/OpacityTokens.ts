@@ -205,7 +205,7 @@ export const opacityTokens: Record<string, PrimitiveToken> = {
     baseValue: 1.0,
     familyBaseValue: OPACITY_BASE_VALUE,
     description: 'Fully opaque - no transparency',
-    mathematicalRelationship: 'Special case: full opacity = 1.0',
+    mathematicalRelationship: 'base × 12.5 = 0.08 × 12.5 = 1',
     baselineGridAlignment: false,
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,

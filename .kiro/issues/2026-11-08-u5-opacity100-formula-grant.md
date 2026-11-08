@@ -51,3 +51,9 @@ Counter-argument and what survives: marking `opacity100` strategic flexibility w
 **What changes in the grant.** `blur000` joins the golden and `token-index/primitives.yaml`. `docs/tokens.css` leaves the list: a validators unit does not ship 36 lines of rebuild noise, and the file is a build output that every release PR rebuilds (16.0.0 #381, 16.1.0 #494, 16.2.0 #633). It lags the generator from U8 until the next release's rebuild, and U5's three comment changes ride that rebuild. U5's completion doc records the lag. No hand edit of it is made.
 
 **Acceptance, as amended.** Items 1 and 2 above read: `token-index/primitives.yaml` changes only its two `formula:` lines and equals what `generate` writes at H; the old golden against the new one is exactly the two lines above. `docs/tokens.css` is unchanged by U5.
+
+---
+
+## Outcome (2026-11-08, Ada, rule 5)
+
+The fixing PR is U5's (Task 10, branch `task/129-10-validators-config-types`). The granted files: `token-index/primitives.yaml` changed by exactly two `formula:` lines (`blur000`, `opacity100`), as `generate` writes them; `tests/fixtures/pre-u9-theme-css/DesignTokens.web.css` was re-captured by the Command in its new header, from `261cd1a3c` with `src/tokens/BlurTokens.ts` and `src/tokens/OpacityTokens.ts` taken from `4e2a22681`, and its diff against the old golden is exactly two lines (34 and 377, the comment text of `blur000` and `opacity100`; the old golden is reproduced byte for byte by the same Command without the `git checkout` step). Task 14's case (a) passes against it. `docs/tokens.css` was not changed. The grant expires at U5's merge.
