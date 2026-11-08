@@ -13,7 +13,7 @@ body:
   "#the-implement-vs-direct-distinction": {"disposition": "retained"}
   "#operational-mode-screen-implementation:preamble": {"disposition": "retained"}
   "#step-1-review-the-specification": {"disposition": "retained"}
-  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "the stale `dist/*.kt` snapshots — see the Ground truth section", "cites": "subtraction-1"}], "destination": "#step-2-set-up-the-screen", "signature": {"signer": "data", "canonicalHash": "sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe", "renderedHash": "sha256:588e8e32908234aaaf111a3ddd13df83ba8dac5b4aa3e8bef3812c514a6a6ff6", "assent": {"surviving": ["setup-1", "setup-2", "setup-3"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#step-2-set-up-the-screen"}}
+  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "the stale `dist/*.kt` snapshots — see the Ground truth section", "cites": "subtraction-1"}], "destination": "#step-2-set-up-the-screen", "signature": {"signer": "data", "canonicalHash": "sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe", "renderedHash": "sha256:927ec4f1b0674d5e17de8a5ad31a53ff8d4583309e969f59e2353aaa13d108aa", "assent": {"surviving": ["setup-1", "setup-2", "setup-3"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#step-2-set-up-the-screen"}}
   "#step-3-implement": {"disposition": "retained"}
   "#step-4-test": {"disposition": "retained"}
   "#step-5-report-back": {"disposition": "retained"}

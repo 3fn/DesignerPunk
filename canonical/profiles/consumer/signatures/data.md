@@ -240,6 +240,14 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT, `surviving: [setup-1, setup-2, setup-3]`.** A new act; it closes no divergent. Prior signature: assent 3/3 against `renderedHash` `sha256:588e8e32908234aaaf111a3ddd13df83ba8dac5b4aa3e8bef3812c514a6a6ff6`. Stale because the rendering changed under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): the overlay prose no longer names the package's `dist/` snapshots (Thurgood `3d479bd4b`, Lina's regeneration `7cfe548e7`).
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `31bd947dae512183b1b631b63ce8a92597d6b624`: the canonical unit `### Step 2: Set Up the Screen` and its three renderings, which are identical to each other.
+- **Hashes, from that print**: `canonicalHash` `sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe` (did not move). `renderedHash` `sha256:927ec4f1b0674d5e17de8a5ad31a53ff8d4583309e969f59e2353aaa13d108aa` (moved).
+- **Credited, each by what the rendering states**:
+  - `setup-1` and `setup-3`: verbatim.
+  - `setup-2`: entailed. The rendering keeps "Bring in DesignerPunk tokens by querying the application MCP for the resolved values" and adds "the MCP is the ground truth". The parenthetical guard against the stale `dist/*.kt` snapshots (`subtraction-1`) is replaced by "no token snapshot ships in the package", so the file the guard warned about is gone from what the consumer receives.
+- **Residual, not a refusal**: the step no longer carries a prohibition as such. With no shipped snapshot, the positive (MCP first) is the whole instruction.
+
 **Refuse: should-re-point.** `setup-2` loses its parenthetical guard "(never read the stale `dist/*.kt` snapshots — see the Ground truth section)" (subtraction-3). The rendering keeps "Bring in DesignerPunk tokens by querying the application MCP for the resolved values", so the positive half survives and the prohibition does not. `setup-1` and `setup-3` are verbatim (`setup-3` holds, because the Android implementations ship in the package).
 
 The guard has a consumer counterpart (header fact). This step is the moment the agent first brings tokens into a screen, which is when a flattened `DesignTokens.android.kt` in `node_modules/@3fn/core/dist/` is most likely to be read.
