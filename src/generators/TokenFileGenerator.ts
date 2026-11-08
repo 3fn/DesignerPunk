@@ -78,6 +78,8 @@ export interface GenerationOptions extends BaseGenerationOptions {
   wcagOverrideKeys?: Set<string>;
   /** Registered theme override sets for generalized theme block generation (Spec 094). */
   themeOverrides?: ThemeOverrideSet[];
+  /** Where the WCAG override maps came from, for the native `wcag` family comment (design § 4, `[LEONARDO R2]`). */
+  wcagSource?: { wcagLight: 'registered' | 'bridge' | 'package'; wcagDark: 'registered' | 'bridge' | 'package' };
   /** Token names that have moved to theme types — excluded from static iOS/Android output (Spec 094). */
   themeVaryingTokens?: Set<string>;
   /** The consumer's `name`, the root of the generated theme type names (default `DesignerPunk`). */
@@ -1559,6 +1561,7 @@ export class TokenFileGenerator {
       themes: (options.themeOverrides ?? []).map(t => ({
         name: t.name, mode: t.mode, lightTokens: t.lightTokens, darkTokens: t.darkTokens,
       })),
+      wcagSource: options.wcagSource,
     };
   }
 
