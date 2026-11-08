@@ -43,9 +43,29 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: ada
-canonicalHash: sha256:c6d1781d3a66ddc95386269c45446143f127c0c6b0846242469061bfdfaee2ba
-items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report
-date: 2026-10-23
+canonicalHash: sha256:fc9c7ea4a6df8f22e6c6cdf27f877e94eedfa02e9671aab64bcec3d2c5c88194
+items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report, scope-harness-1, scope-harness-2, scope-harness-3, scope-harness-4, scope-harness-5, scope-harness-6, scope-harness-7, scope-harness-8, scope-harness-9, scope-harness-10, scope-harness-11
+date: 2026-11-08
+
+**Ruling: CONFIRMED at 35 items** (re-confirmation, 2026-11-08). The unit's hash moved from `sha256:c6d1781d…` to `sha256:fc9c7ea4…` because `### In Scope` gained one bullet, "The native harness's consumer driver", after the six-roots bullet. The bullet is edit site 6 of ballot `2026-11-07-native-lane-ownership` (item 5), RATIFIED by Peter at 2026-11-08T00:24:24Z, with the one sentence F-4 as ruled adds (Peter, 2026-11-08T00:33:06Z; § 8, "F-4 as ruled" (iii)). I computed the hash myself: SHA-256 of the unit's bytes, from the `### In Scope` heading line to the line before `### Out of Scope`, in the applied `canonical/agents/ada.md`.
+- **What I read against the ballot.** I rebuilt the bullet from the ballot's site-6 quotation (square brackets removed, their text kept, as the site says) plus the F-4 sentence, and compared it with the applied line: identical, byte for byte. Its place is right, after the six-roots bullet and before the delegate-audit bullet. The frontmatter has the three `writeScope` lines of site 5, with the ratified comment, and nothing else in `ada.md` moved. The `#in-scope` removal Thurgood stored in my dispositions row equals the applied bullet byte for byte (site 12's rule).
+- **Eleven items added, `scope-harness-1` to `scope-harness-11`, each a verbatim substring of the unit and each occurring once.** They carry the bullet's sentences, one each:
+  - the scope itself (`consumer.ts`, its test, and `consumer.name` and `consumer.abbreviation`; member);
+  - the one-PR permission with the `src/cli/**` change (member);
+  - the dispatch citation and the five pasted diffs (C1, C2);
+  - a head that lacks what the reference run has goes by spec row (C3);
+  - how the reference run is chosen, and the grant fallback (C1, C3);
+  - the reviews: Thurgood on every change, Data and Kenya on a non-empty key-path or root-entry diff, review form, voided by a later push (C4);
+  - the repair case that is red against the base (C5);
+  - what stays unchanged, `abbreviation` never `DP`, green stays green (C6);
+  - owning the driver never changes what it decides (the Req 2.1–2.2 rules, the product-token keys and fixtures);
+  - before U12's merge, the write is a task-row or issue-row grant;
+  - from U8's merge `d2-check.ts` is not mine, and no grant over it goes to me in a unit where I hold `src/generators/**` (F-4 as ruled).
+  Nine are obligations, as a consumer implementation could break each on a PR that touches nothing else. Two are members.
+- **No other item changed**, and the 24 earlier ids are still verbatim substrings, each once. The rulings of 2026-10-23, 2026-10-19 and 2026-10-17 stand for them.
+- **Not operative, left out**: the bullet's parenthetical heading text, "(ballot 2026-11-07-native-lane-ownership item 5; active from Spec 129 U12's merge)", which names the source and the activation. Activation is item 7 of the ballot and its two git queries; the bullet states it as "active from Spec 129 U12's merge", and I kept that in the first item's text.
+
+The 2026-10-23 ruling, kept as the prior record (hash `sha256:c6d1781d…`):
 
 **Ruling: CONFIRMED at 24 items** (re-confirmation, 2026-10-23). The unit's hash moved from `sha256:3b0d6343…` to `sha256:c6d1781d…` because two bullets of `### In Scope` now say what the generator emits and what it does not (my text, errata (f) on the data-theme-scope record; Thurgood applied it byte for byte at `207119121`, and pinned the overlay and the two item texts at `3a8d18e07`). I checked the other 22 items and the two edited ones against the new unit: all 24 ids are verbatim substrings of it, each occurring once.
 - **What changed, and nothing else**:

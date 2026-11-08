@@ -33,6 +33,19 @@ signer: ada
 
 signer: ada
 
+**RE-SIGNED 2026-11-08 — ASSENT, surviving 13 of 35.** Signed against canonical `sha256:fc9c7ea4…` and rendered `sha256:4aa9f468…`, and judged against the 35-item set re-confirmed at `4e0f2a169`, with the overlay pinned to `sha256:fc9c7ea4…` by Thurgood and the committed consumer rendering as it stands.
+- **What changed**: in canonical, one new bullet of `### In Scope`, the native harness's consumer driver (ballot `2026-11-07-native-lane-ownership` item 5, RATIFIED by Peter at 2026-11-08T00:24:24Z, with the F-4 sentence ruled at 2026-11-08T00:33:06Z). The row stores it as its fifth removal, `subtraction-1`, byte for byte equal to the applied bullet; I read it against `ada.md` and it matches. The earlier four removals are untouched. I recomputed the rendered hash with `readConsumerSpans` and `renderedHashOf` over the committed rendering: `sha256:4aa9f468…`, equal to the 2026-10-23 value. The rendering did not move by a byte, because the overlay carries no harness line.
+- **I re-read the rendered unit (`_consumer-output/_canonical/agents/ada.md`, `### In Scope`) against the items.** It has no line naming the harness, the consumer driver, `harness/pins.yaml` or `d2-check.ts`.
+- **The thirteen prior items survive exactly as at the 2026-10-23 re-sign**: nine verbatim, `scope-docs` re-pointed, `scope-theme-registry` and `scope-pipeline-config` re-keyed, `scope-theme-output` entailed. None of their text moved.
+
+**Not surviving, and I agree they should not** (22: the same eleven as before, and the eleven new ones):
+- **The eleven new items**, `scope-harness-1` to `scope-harness-11`. The driver, its dispatch-citation rules (C1–C6) and `d2-check.ts` belong to this repository's native compile harness (`scripts/harness/**`, `harness/pins.yaml`, `native-harness.yml`). The package ships none of it, and `init` and `attach` emit none. A consumer implementation that follows the rendering does not own a driver and cites no `native-harness` dispatch, and nothing it does breaks any of the eleven. The function survives nowhere else in the rendering (subtraction 1).
+- The eight standing-grant items and the three delegate-audit obligations, as signed 2026-10-23 and for the same grounds: they are bound to this steward repo (subtractions 1 and 3), and their canonical and rendered text did not move.
+
+No refusal.
+
+**SUPERSEDED — the signature of 2026-10-23 (surviving 13 of 24; canonical `sha256:c6d1781d…`, rendered `sha256:4aa9f468…`), kept as the prior record:**
+
 **RE-SIGNED 2026-10-23 — ASSENT, surviving 13 of 24.** Signed against canonical `sha256:c6d1781d…` and rendered `sha256:4aa9f468…`, and judged against the 24-item set re-confirmed at `7b8936a6d`, with the overlay pinned at `3a8d18e07` and the consumer rendering regenerated at `7d63648b5`.
 - **What changed**: in canonical, two bullets of `### In Scope`, the cross-platform output line and the theme-aware output line (my text, errata (f); Thurgood applied it byte for byte at `207119121`). They now say what the generator emits and mark three outputs not yet emitted: element scoping, the Swift and Kotlin theme types, and DTCG theme metadata. The row's four removals are untouched, and each still applies as a substring of the new unit. I recomputed the rendered hash with `readConsumerSpans` and `renderedHashOf` over the committed rendering: `sha256:4aa9f468…`. It moved from `sha256:6209aa1c…` because the rendering moved.
 - **I re-read the rendered unit (`_consumer-output/_canonical/agents/ada.md`, `### In Scope`) against the items, one by one.** The thirteen survive:
@@ -370,6 +383,25 @@ signer: ada
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `.kiro/issues/**`: This repo's issue records, written under its own `.kiro/issues/README.md` rule 9 (§ 2.5). The convention is a stewardship instrument of this repo. The package ships neither the records nor the convention, and the consumer's tracking practice is theirs to set (subtraction 3, as cited).
+
+
+## `#frontmatter:writeScope[scripts/harness/consumer.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `scripts/harness/consumer.ts`: the driver of this repository's native compile harness, which runs the CLI's `pack`, `init` and `generate` for the `harness-generate` job (ballot `2026-11-07-native-lane-ownership` item 5, site 5). The package ships no harness, and a consumer has no `harness-generate` job to own the driver of. Adding it to a consumer's write scope would name a path that does not exist there. I checked that the function does not survive elsewhere in the consumer rendering: no line of it names the harness (subtraction 1, as cited).
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/consumer.test.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `scripts/harness/__tests__/consumer.test.ts`: the test of that driver (same site). It follows the file it exercises, and a consumer has neither. I checked that the function does not survive elsewhere in the consumer rendering: no line of it names the harness (subtraction 1, as cited).
+
+## `#frontmatter:writeScope[harness/pins.yaml]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `harness/pins.yaml`: the harness pin file, of which this seat holds `consumer.name` and `consumer.abbreviation` only (item 3; the section line is held by the P2 and C6 reads, not by the glob). A consumer has no harness and no pin file. The same path is in Data's and Kenya's lists, each with its own signature, and one hash in three files is expected (site 12), not a collision. I checked that the function does not survive elsewhere in the consumer rendering: no line of it names the harness (subtraction 1, as cited).
 
 ## `#the-process`
 
