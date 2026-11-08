@@ -115,7 +115,7 @@ Mode (light/dark) and theme (base/wcag/custom) are independent dimensions. The b
 
 The **ThemeRegistry** holds registered themes and computes the theme-varying token names. `generate` builds it from the config's themes (the `dark` and `wcag` maps as registration resolves them, and every other registered theme), and resolves the four contexts through `SemanticOverrideResolver.resolveAllContexts()`. `SemanticOverrideResolver.resolveForRegistry()`, which produces `ResolvedThemeSet[]` (one entry per theme context), exists but is not called by the build, and no test calls it.
 
-**Base vs product themes**: The paths in this section (`src/tokens/themes/dark/`, `wcag/`, `dark-wcag/`) are the base system's built-in theme files, shipped with `@3fn/core`. Product teams creating custom themes do NOT edit these files — they create their own `SemanticOverrides.ts` and register it in `designerpunk.config.ts`, which does not change the generated output yet (above). See Token-Governance § "Theme Registry (Spec 094)" for product theme governance.
+**Base vs product themes**: The paths in this section (`src/tokens/themes/dark/`, `wcag/`, `dark-wcag/`) are the base system's built-in theme files, shipped with `@3fn/core`. Product teams creating custom themes do NOT edit these files — they create their own `SemanticOverrides.ts` and register it in `designerpunk.config.ts`, and `generate` applies it (above). See Token-Governance § "Theme Registry (Spec 094)" for product theme governance. *(Amended 2026-11-08 by ballot 2026-11-08-token-governance-theme-registry-as-shipped, item 8; prior text at `3f739b07f`.)*
 
 **Theme-varying vs static tokens** — two distinct computations; do not conflate them:
 

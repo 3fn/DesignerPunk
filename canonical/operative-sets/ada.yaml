@@ -50,7 +50,7 @@ units:
         text: "When in doubt, consult Ada."
     confirmation: canonical/profiles/consumer/confirmations/ada.md#ownership
   "#in-scope":
-    canonicalHash: sha256:fc9c7ea4a6df8f22e6c6cdf27f877e94eedfa02e9671aab64bcec3d2c5c88194
+    canonicalHash: sha256:51ee2749f215480f889827b31c8c8a0d453b29e7a5d0ac9d9cd3d150c33f2466
     items:
       - id: scope-create
         kind: member
@@ -79,7 +79,7 @@ units:
       - id: scope-output
         kind: member
         label: "Cross-platform output"
-        text: "Cross-platform token output (CSS custom properties; Swift and Kotlin constants on `DesignTokens`; the Swift protocol/structs and Kotlin data class/instances designed for themes, not emitted yet)"
+        text: "Cross-platform token output (CSS custom properties; Swift and Kotlin constants on `DesignTokens` for every primitive and for each non-colour semantic the platform emits, iOS emitting no `elevation.*` semantic and Android no `zIndex.*`; the colour semantics as members of the generated Swift `DesignerPunkTheme` protocol and its structs, and of the Kotlin `DesignerPunkTheme` data class and its instances)"
       - id: scope-hierarchy
         kind: member
         label: "Hierarchy guidance"
@@ -99,7 +99,7 @@ units:
       - id: scope-theme-output
         kind: member
         label: "Theme-aware generator output"
-        text: "Platform generator theme-aware output — CSS `data-theme` blocks (today one, `:root[data-theme=\"wcag\"]`, which matches only `<html>`, so it applies page-wide), Swift `@Environment` and Kotlin `CompositionLocal` theme types, DTCG/Figma theme metadata. Output for themes registered in `designerpunk.config.ts`, the native theme types and the theme metadata are not emitted yet (Spec 129); whether a subtree can be themed is not decided yet"
+        text: "Platform generator theme-aware output — CSS `data-theme` blocks (`:root[data-theme=\"wcag\"]` and one for each other registered theme, each written when its maps override a colour token and each matching only `<html>`, so a theme applies page-wide), Swift `@Environment` and Kotlin `CompositionLocal` theme types with the `<name>Theme(_:)` and `<Name>Theme(family:)` providers and the `<Name>ThemeFamily` they take, DTCG/Figma theme metadata. The DTCG/Figma theme metadata is not emitted yet; whether a subtree can be themed is not decided yet"
       - id: scope-config-authoring
         kind: member
         label: "designerpunk.config.ts authoring"
