@@ -477,6 +477,7 @@ describe('scripts/issues-owned.sh --pr (fired-records)', () => {
     write(repo, '.kiro/issues/merge-other.md', record('**Owner**: Thurgood', '`merge:#12` — another PR'));
     write(repo, '.kiro/issues/standing.md', record('**Owner**: Stacy', '`path:src/standing/*.ts` — fired before this PR'));
     write(repo, '.kiro/issues/manual.md', record('**Owner**: Thurgood', '`manual` — never a PR fire'));
+    write(repo, '.kiro/issues/a-grant.md', record('**Owner**: Thurgood', '`path:src/pr/*.ts` — the fixing PR').replace('P3 improvement · defect', 'P2 obligation (guard) · grant'));
     commit(repo, 'records');
     write(repo, 'src/standing/a.ts', 'export {};\n');
     fireEarlier = commit(repo, 'an earlier merge touching the standing glob (#10)');
@@ -534,16 +535,24 @@ describe('scripts/issues-owned.sh --pr (fired-records)', () => {
     for (const f of ['untouched.md', 'merge-other.md', 'manual.md', 'README.md']) expect(lineFor(r, f)).toBeUndefined();
   });
 
+  it('a grant fires-here with the reason grant, and its annotation says it archives rather than lapses', () => {
+    expect(lineFor(pr(), 'a-grant.md')).toBe('fires-here\t.kiro/issues/a-grant.md\tThurgood\tpath:src/pr/*.ts\t(grant)');
+    const ann = pr({ GITHUB_ACTIONS: 'true' }).lines.find((l) => l.includes('a-grant.md') && l.startsWith('::'));
+    expect(ann).toBe(
+      "::warning title=fired-records::.kiro/issues/a-grant.md (Thurgood) fires at this merge (path:src/pr/*.ts); a grant archives at its fixing PR's merge (README rule 5), and one still open after it is a walk finding (grant)",
+    );
+  });
+
   it('ends with the count line', () => {
     expect(pr().lines[pr().lines.length - 1]).toMatch(
-      /^fired-records: 5 fire\(s\) here, 1 re-ruled here, 1 closed here, 1 already fired; PR #791, merge base [0-9a-f]{7,}, head [0-9a-f]{7,}$/,
+      /^fired-records: 6 fire\(s\) here, 1 re-ruled here, 1 closed here, 1 already fired; PR #791, merge base [0-9a-f]{7,}, head [0-9a-f]{7,}$/,
     );
   });
 
   it('under GITHUB_ACTIONS, a warning per untouched fire and a notice for an edited record', () => {
     const r = pr({ GITHUB_ACTIONS: 'true' });
     const ann = r.lines.filter((l) => l.startsWith('::'));
-    expect(ann.filter((l) => l.startsWith('::warning title=fired-records::'))).toHaveLength(4);
+    expect(ann.filter((l) => l.startsWith('::warning title=fired-records::'))).toHaveLength(5);
     expect(ann.filter((l) => l.startsWith('::notice title=fired-records::.kiro/issues/edited.md'))).toHaveLength(1);
     expect(ann.find((l) => l.includes('repair.md'))).toBe(
       `::warning title=fired-records::.kiro/issues/repair.md (Lina) fires at this merge (path:${SPEC}); under README rule 11 it lapses here unless this diff closes or re-rules it`,

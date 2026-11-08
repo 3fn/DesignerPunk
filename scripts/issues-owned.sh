@@ -51,6 +51,8 @@
 #   re-ruled-here    its **Trigger**: line changed in this diff (a record added here is not this)
 #   closed-here      it is at the root at the merge base and in archive/ at <head>
 #   already-fired@<sha>  a path: record that fired at an earlier first-parent commit of the base
+# A fires-here grant (`**Class**: … · grant`) carries the reason `grant`: grants do not lapse
+# (rule 11); one still open after its fixing PR's merge is a walk finding (rule 5).
 # Under GITHUB_ACTIONS=true each fires-here line is also a `::warning title=fired-records::`
 # annotation (a `::notice` when this diff edits the record, which may be its closing outcome line). The last line counts each state. Exits 0 always; an error prints the unavailable
 # line. A READ, NEVER A GATE (warn-only, .kiro/issues/2026-11-08-fired-records-warn-check-grant.md).
@@ -188,7 +190,7 @@ pr_mode() {
   git rev-parse -q --verify "$PR_BASE^{commit}" >/dev/null 2>&1 || unavailable "no commit $PR_BASE"
   B=$(git merge-base "$PR_BASE" "$H" 2>/dev/null) || unavailable "no merge base of $PR_BASE and $PR_HEAD"
   SEATS=$(git ls-tree --name-only "$H" -- canonical/agents/ 2>/dev/null | sed -n 's|^canonical/agents/\([a-z][a-z0-9-]*\)\.md$|\1|p')
-  local f files body tok state globs g reason own fc tc parts
+  local f files body tok state globs g reason own fc tc parts grant
   local nf=0 nr=0 nc=0 na=0 out="" level
   roots() { git ls-tree --name-only "$1" -- .kiro/issues/ 2>/dev/null | grep -E '^\.kiro/issues/[^/]+\.md$' | grep -v '^\.kiro/issues/README\.md$'; }
   # The records at <head>, and the base's root records that <head> has moved to archive/.
@@ -241,6 +243,10 @@ $f"
       fi
       if [ "$state" = fires-here ] && [ -n "$(git diff --name-only "$B" "$H" -- "$f" 2>/dev/null)" ]; then reason="this diff edits the record"; fi
     fi
+    # A grant does not lapse (README rule 11): it archives at its fixing PR's merge (rule 5).
+    grant=""
+    printf '%s\n' "$body" | head -15 | grep -m1 '^\*\*Class\*\*:' | grep -q '· grant' && grant=1
+    if [ -n "$grant" ] && [ "$state" = fires-here ]; then reason="grant${reason:+; $reason}"; fi
     own=$(pr_owners "$(printf '%s\n' "$body" | head -15 | grep -m1 -E '\*\*Owners?\*\*:')")
     case "$state" in
       fires-here) nf=$((nf + 1)) ;;
@@ -252,9 +258,14 @@ $f"
 "
     if [ "$state" = fires-here ] && [ "${GITHUB_ACTIONS:-}" = "true" ]; then
       # An edited record may carry its outcome line in this diff, which is not read: a notice, not a warning.
-      level=warning; [ "$reason" = "this diff edits the record" ] && level=notice
-      out="$out::$level title=fired-records::$f ($own) fires at this merge ($tok); under README rule 11 it lapses here unless this diff closes or re-rules it${reason:+ ($reason)}
+      level=warning; case "$reason" in *"this diff edits the record"*) level=notice ;; esac
+      if [ -n "$grant" ]; then
+        out="$out::$level title=fired-records::$f ($own) fires at this merge ($tok); a grant archives at its fixing PR's merge (README rule 5), and one still open after it is a walk finding${reason:+ ($reason)}
 "
+      else
+        out="$out::$level title=fired-records::$f ($own) fires at this merge ($tok); under README rule 11 it lapses here unless this diff closes or re-rules it${reason:+ ($reason)}
+"
+      fi
     fi
   done
   printf '%s' "$out"
