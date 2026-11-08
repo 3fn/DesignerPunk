@@ -1370,7 +1370,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 12 — Closeout
 
-- [ ] 17. Retire the native root files and announce it (U12)
+- [x] 17. Retire the native root files and announce it (U12)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet)
   **Traces**: Req 10.1 (as amended), 10.2, 10.4 · design § 0 (7 (a))
@@ -1395,7 +1395,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 17 Complete: Retire the native root files (129)"` commits on the U12 branch (no PR: U12's PR opens at Task 18); STOP. The release that carries U12 is read at Stacy's RELEASE pass.
 
-  - [ ] 17.1 `files[]`, `pack-assert`, the build script; the CHANGELOG entry; the charter sentence
+  - [x] 17.1 `files[]`, `pack-assert`, the build script; the CHANGELOG entry; the charter sentence
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 10.1, 10.2, 10.4_
 

@@ -37,7 +37,9 @@ import {
   publishPathFindings,
   PUBLISH_PATH_FLOOR,
   PUBLISH_PATH_LABEL,
+  RETIRED_NATIVE_ROOT_FILES,
   ROOT_TOKEN_FILES,
+  SHIPPED_ROOT_TOKEN_FILES,
   SELF_CLEANING_DIRS,
   sourceCandidates,
   SHIPPED_CLI_TEMPLATES,
@@ -350,7 +352,7 @@ describe('publishPathFindings — section 10 end to end over a synthetic package
     fs.writeFileSync(path.join(root, 'src', 'TokenEngine.ts'), 'export {};');
     fs.writeFileSync(path.join(root, 'designerpunk.config.ts'), "export default defineConfig({ themes: [], output: './dist' });");
     files = {};
-    for (const f of ROOT_TOKEN_FILES) files[f] = '/* tokens */';
+    for (const f of SHIPPED_ROOT_TOKEN_FILES) files[f] = '/* tokens */';
     files['dist/TokenEngine.js'] = 'module.exports = {};';
     files['dist/mcp/docs-mcp.js'] = ROOT_BUNDLE;
     files['dist/mcp/application-mcp.js'] = ROOT_BUNDLE;
@@ -364,6 +366,25 @@ describe('publishPathFindings — section 10 end to end over a synthetic package
 
   it('is green on a clean, root-shape package', () => {
     expect(failed(listing())).toEqual([]);
+  });
+
+  it('BITES when a retired native root file is packed (Spec 129 Req 10.1)', () => {
+    for (const f of RETIRED_NATIVE_ROOT_FILES) {
+      files[f] = '/* snapshot */';
+      expect(failed(listing())).toContain(`publish path: retired native root file absent: ${f}`);
+      delete files[f];
+    }
+  });
+
+  it('BITES when a shipped web CSS root file is missing', () => {
+    delete files['dist/ComponentTokens.web.css'];
+    expect(failed(listing())).toContain('publish path: root token file present: dist/ComponentTokens.web.css');
+  });
+
+  it('retires exactly the four native files and keeps the web CSS pair', () => {
+    expect(RETIRED_NATIVE_ROOT_FILES).toHaveLength(4);
+    expect(SHIPPED_ROOT_TOKEN_FILES).toEqual(expect.arrayContaining(['dist/ComponentTokens.web.css', 'dist/DesignTokens.web.css']));
+    expect(SHIPPED_ROOT_TOKEN_FILES.length + RETIRED_NATIVE_ROOT_FILES.length).toBe(ROOT_TOKEN_FILES.length);
   });
 
   it('BITES on a planted leftover dist/ file', () => {
