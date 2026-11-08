@@ -447,3 +447,115 @@ describe('scripts/issues-owned.sh — the owner names on an Owner line', () => {
     expect(owners('owner-not-a-seat')).toEqual([]);
   });
 });
+
+/**
+ * The PR mode, `fired-records` (warn-only; .kiro/issues/2026-11-08-fired-records-warn-check-grant.md):
+ * `--pr <N> --base <ref> --head <ref>` lists the root records the PR's merge fires. The falsification
+ * case is #791's shape: Spec 129's CLOSEOUT pass added `completion/claims-pass.md`, which fired the
+ * charter and Lina's component-repair record (both `path:` on that file); nobody re-ruled them, and
+ * the harness tag check then failed every open PR (`FIRED@693b39b54 and that is still open`) until
+ * #796. The PR-time list must name both. Every case below is red at the base, which has no PR mode
+ * (it reads `--pr` as an unknown seat).
+ */
+describe('scripts/issues-owned.sh --pr (fired-records)', () => {
+  let repo: string;
+  let fireEarlier: string;
+  const SPEC = '.kiro/specs/129-x/completion/claims-pass.md';
+
+  beforeAll(() => {
+    repo = fs.mkdtempSync(path.join(os.tmpdir(), 'fired-records-'));
+    git(repo, 'init', '-q', '-b', 'main');
+    for (const a of ['ada', 'kenya', 'lina', 'stacy', 'thurgood']) write(repo, `canonical/agents/${a}.md`, `# ${a}\n`);
+    write(repo, '.kiro/issues/README.md', '# README\n\n**Owner**: Thurgood\n**Trigger**: `path:**`\n');
+    write(repo, '.kiro/issues/charter.md', record('**Owners**: Ada, Lina', `\`path:${SPEC}\` — the CLOSEOUT pass`));
+    write(repo, '.kiro/issues/repair.md', record('**Owner**: Lina', `\`path:${SPEC}\` — the CLOSEOUT pass`));
+    write(repo, '.kiro/issues/rerule-me.md', record('**Owner**: Ada', `\`path:${SPEC}\` — re-ruled in the PR`));
+    write(repo, '.kiro/issues/archive-me.md', record('**Owner**: Ada', `\`path:${SPEC}\` — archived in the PR`));
+    write(repo, '.kiro/issues/edited.md', record('**Owner**: Ada', `\`path:${SPEC}\` — edited in the PR`));
+    write(repo, '.kiro/issues/list.md', record('**Owner**: Stacy', '`path:src/never/*.ts,src/pr/*.ts` — a list, second glob'));
+    write(repo, '.kiro/issues/untouched.md', record('**Owner**: Thurgood', '`path:src/never/*.ts` — not in the diff'));
+    write(repo, '.kiro/issues/merge-other.md', record('**Owner**: Thurgood', '`merge:#12` — another PR'));
+    write(repo, '.kiro/issues/standing.md', record('**Owner**: Stacy', '`path:src/standing/*.ts` — fired before this PR'));
+    write(repo, '.kiro/issues/manual.md', record('**Owner**: Thurgood', '`manual` — never a PR fire'));
+    commit(repo, 'records');
+    write(repo, 'src/standing/a.ts', 'export {};\n');
+    fireEarlier = commit(repo, 'an earlier merge touching the standing glob (#10)');
+
+    git(repo, 'checkout', '-q', '-b', 'pr');
+    write(repo, SPEC, '# Claims pass\n');
+    write(repo, 'src/pr/b.ts', 'export {};\n');
+    write(repo, 'src/standing/c.ts', 'export {};\n');
+    write(repo, '.kiro/issues/rerule-me.md', record('**Owner**: Ada', '`path:src/later/*.ts` — re-ruled, dated reason'));
+    git(repo, 'mv', '.kiro/issues/archive-me.md', '.kiro/issues/archive-me.tmp');
+    fs.mkdirSync(path.join(repo, '.kiro/issues/archive'), { recursive: true });
+    git(repo, 'mv', '.kiro/issues/archive-me.tmp', '.kiro/issues/archive/archive-me.md');
+    write(repo, '.kiro/issues/edited.md', record('**Owner**: Ada', `\`path:${SPEC}\` — edited in the PR`) + '\nOutcome (2026-11-08): done.\n');
+    write(repo, '.kiro/issues/added-own.md', record('**Owner**: Kenya', '`merge:#791` — the records PR that carries this file'));
+    commit(repo, 'the PR head');
+  });
+
+  afterAll(() => {
+    fs.rmSync(repo, { recursive: true, force: true });
+  });
+
+  const pr = (env: NodeJS.ProcessEnv = {}): Run => run(repo, ['--pr', '791', '--base', 'main', '--head', 'pr'], env);
+  const state = (r: Run, file: string): string | undefined => lineFor(r, file)?.split('\t')[0];
+
+  it("#791's shape: both records keyed on the pass's path are listed fires-here, with their owners", () => {
+    const r = pr();
+    expect(r.status).toBe(0);
+    expect(r.stderr).toBe('');
+    expect(lineFor(r, 'charter.md')).toBe(`fires-here\t.kiro/issues/charter.md\tAda, Lina\tpath:${SPEC}`);
+    expect(lineFor(r, 'repair.md')).toBe(`fires-here\t.kiro/issues/repair.md\tLina\tpath:${SPEC}`);
+  });
+
+  it('a record added in the diff that fires at its own merge is fires-here, not re-ruled (CP-12)', () => {
+    expect(lineFor(pr(), 'added-own.md')).toBe('fires-here\t.kiro/issues/added-own.md\tKenya\tmerge:#791\t(added in this diff)');
+  });
+
+  it('a changed Trigger line is re-ruled-here; an archive move is closed-here', () => {
+    const r = pr();
+    expect(state(r, 'rerule-me.md')).toBe('re-ruled-here');
+    expect(state(r, 'archive-me.md')).toBe('closed-here');
+  });
+
+  it('a record the diff edits is still fires-here, and the reason says so', () => {
+    expect(lineFor(pr(), 'edited.md')).toBe(`fires-here\t.kiro/issues/edited.md\tAda\tpath:${SPEC}\t(this diff edits the record)`);
+  });
+
+  it('a list fires on any glob; a record already fired on the base prints already-fired@<sha>', () => {
+    const r = pr();
+    expect(state(r, 'list.md')).toBe('fires-here');
+    expect(state(r, 'standing.md')).toBe(`already-fired@${fireEarlier}`);
+  });
+
+  it('prints nothing for an untouched glob, another PR number, a manual record or the README', () => {
+    const r = pr();
+    for (const f of ['untouched.md', 'merge-other.md', 'manual.md', 'README.md']) expect(lineFor(r, f)).toBeUndefined();
+  });
+
+  it('ends with the count line', () => {
+    expect(pr().lines[pr().lines.length - 1]).toMatch(
+      /^fired-records: 5 fire\(s\) here, 1 re-ruled here, 1 closed here, 1 already fired; PR #791, merge base [0-9a-f]{7,}, head [0-9a-f]{7,}$/,
+    );
+  });
+
+  it('under GITHUB_ACTIONS, a warning per untouched fire and a notice for an edited record', () => {
+    const r = pr({ GITHUB_ACTIONS: 'true' });
+    const ann = r.lines.filter((l) => l.startsWith('::'));
+    expect(ann.filter((l) => l.startsWith('::warning title=fired-records::'))).toHaveLength(4);
+    expect(ann.filter((l) => l.startsWith('::notice title=fired-records::.kiro/issues/edited.md'))).toHaveLength(1);
+    expect(ann.find((l) => l.includes('repair.md'))).toBe(
+      `::warning title=fired-records::.kiro/issues/repair.md (Lina) fires at this merge (path:${SPEC}); under README rule 11 it lapses here unless this diff closes or re-rules it`,
+    );
+  });
+
+  it('fail-soft: missing arguments print one unavailable line and exit 0', () => {
+    for (const args of [['--pr'], ['--pr', '791', '--base', 'main'], ['--pr', 'x', '--base', 'main', '--head', 'pr'], ['--pr', '791', '--base', 'nope', '--head', 'pr']]) {
+      const r = run(repo, args);
+      expect(r.status).toBe(0);
+      expect(r.lines).toHaveLength(1);
+      expect(r.lines[0]).toMatch(/^issues-owned: unavailable \(.+\) — continue$/);
+    }
+  });
+});
