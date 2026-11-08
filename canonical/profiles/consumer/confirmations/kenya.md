@@ -31,9 +31,17 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: kenya
-canonicalHash: sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8
-date: 2026-09-29
+canonicalHash: sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, scope-11, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, items 2 and 3 (edit site 4).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e`, 8 items).
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z) added one bullet to `### In Scope` in `canonical/agents/kenya.md`: the native compile harness's iOS lane. It was applied in Thurgood's commit `b46dff5d3` on `chore/apply-native-lane-ownership-r2`, with the record's items `scope-9` to `scope-17` and the re-pinned overlay unit. Nothing else in the unit changed.
+- **What I read, in this session, through tool results**: the whole `### In Scope` unit of `canonical/agents/kenya.md`; the whole `#in-scope` record in `canonical/operative-sets/kenya.yaml`; ballot item 2, item 3, item 6, item 7, edit sites 3, 4 and 12, and the F-5 line at L326 of the ballot, in edit site 2's closing note; the applied diff `origin/main...origin/chore/apply-native-lane-ownership-r2` for `kenya.md`, `kenya.yaml`, `kenya.dispositions.yaml` and `kenya.overlay.md`.
+- **Against the ballot**: by script, the applied bullet equals site 4's after-text word for word, except in one place. The ballot's site 4 reads "`harness/README.md`," in the "Not yours" list, and the applied text reads "`harness/README.md` (Thurgood's; you review its hunks in your sections),". That is the reading the ballot gives for F-5 (a) (Peter, 2026-11-08T00:24:24Z: "(a), Thurgood"), so I accept it. The frontmatter `writeScope` block equals site 3 (its date placeholder reads "RATIFIED Peter 2026-11-08").
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#in-scope`): `sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a`. It equals the overlay pin `## @unit #in-scope @`.
+- **Items re-read against the unit**: all 17 item texts are verbatim substrings of the unit as it now stands (checked by script). `scope-1` to `scope-8` are unchanged. The new bullet is operative: I can violate it by editing a path it lists as not mine, by changing what the lane decides under cover of owning it (`scope-10`), by shipping a fix with no named falsification case (`scope-11`), by changing an annotation step or title without consulting Thurgood (`scope-12`), by moving a pin outside the `ios:` section or outside P1 to P7 (`scope-13`, `scope-15`), by moving a Swift version with no reserved-word re-check (`scope-14`), or by writing before activation without a grant (`scope-17`). Every sentence of the bullet is carried: lane files, `scope-9`; limits, `scope-10` and `scope-11`; annotations, `scope-12`; pins, `scope-13` and `scope-14`; other moves, `scope-15`; not yours, `scope-16`; activation, `scope-17`.
+- **Ruling: CONFIRMED at 17 items, not corrected.** The 2026-09-29 ruling below stands for `scope-1` to `scope-8`.
 
 **Ruling: CONFIRMED at 8 items, as drafted.** Each bullet is a scope member. Work outside the set, or declining a listed duty, violates it.
 
