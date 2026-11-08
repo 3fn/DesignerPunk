@@ -16,5 +16,6 @@
 ## Open
 
 - The lock: `canonical/generated.lock` is Lina's refresh (`b04322499`); diff-guard reads `no-op-green`.
+- Two of Kenya's records (`c08bf6751`, `300855cdf`) claim a whole-unit read that was a script check; the audit reads FAIL 2 on them and they stand as script-checked under Peter's (A′). See `.kiro/issues/2026-11-08-kenya-u11-link7-erratum.md`.
 - Owed to U12, Task 17: the overlay's "Native onboarding is not supported on this release" paragraph and the frontmatter comments on the un-themed `dist/ios/DesignTokens.ios.swift`.
 - Two sentences that were false in the drafts were corrected before any confirmation or signature (Kenya's "the semantic colours are not on `DesignTokens`"; Data's equivalent for `DesignTokens.kt`).
