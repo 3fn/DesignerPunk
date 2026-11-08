@@ -161,8 +161,17 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712
-renderedHash: sha256:cc738734a32d6c1f65afed33448eab079152deb4d5047c5d6eac7956f5b47603
-date: 2026-09-29
+renderedHash: sha256:f6761ffc51610799f9237160215b426160477a9acfdf6d875ee1a8969fde1bb6
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 6 of 6 (`tokens-1` to `tokens-4`, `ground-truth-live`, `theme-set`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712`, renderedHash `sha256:cc738734a32d6c1f65afed33448eab079152deb4d5047c5d6eac7956f5b47603`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The ground-truth paragraph no longer points at the built `dist/*.ios.swift` snapshots. It says no token snapshot ships, that my own `generate` writes `DesignTokens` and `ComponentTokens` to my configured output directory for me to compile against and not to look values up in, and names `get_token_details` and `get_component_full`. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `tokens-1` to `tokens-4` and `theme-set` are verbatim. `ground-truth-live` survives: *"Ground truth for token values is LIVE, not a file"* is verbatim, *"query the application MCP for the resolved value, formula, and per-platform names"* is verbatim, and the never-read-a-snapshot warning is entailed by *"no token snapshot ships"* with *"not what you look values up in"* (5e). This unit is also the `superseded-by` destination of the two ground-truth trims and the verdict, and it still carries their function: the negative, the MCP directive and the per-theme set.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712`), as the print-mode output shows. `renderedHash` moves `sha256:cc738734a32d6c1f65afed33448eab079152deb4d5047c5d6eac7956f5b47603` to `sha256:f6761ffc51610799f9237160215b426160477a9acfdf6d875ee1a8969fde1bb6` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 6/6 surviving.** All 6 survive. `tokens-1` to `tokens-4` and `theme-set` are verbatim.
 - **`ground-truth-live`** is reduced to *"Ground truth for token values is LIVE — query the application MCP for the resolved value, formula, and per-platform names."* Sourcing values or names from a file violates it, so the item is entailed in-unit.
