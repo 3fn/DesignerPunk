@@ -510,7 +510,7 @@ describe('Semantic Color Tokens - Palette Update', () => {
       // Background: 1 token (primary.subtle)
       // Glow: 5 tokens (neonPurple, neonCyan, neonYellow, neonGreen, neonPink)
       // Avatar component: MIGRATED to src/components/core/Avatar-Base/avatar.tokens.ts (Spec 058)
-      // Badge component: MIGRATED to src/components/core/Badge-Count-Notification/tokens.ts (Spec 058)
+      // Badge component: MIGRATED to src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts (Spec 058)
       // Notification semantic tokens: 2 tokens added (Spec 046 Task 8.2)
       // Progress semantic tokens: 10 tokens added (Spec 048 Task 1.1)
       // Total: 61 tokens (51 base + 10 progress + 1 scrim)
@@ -557,7 +557,7 @@ describe('Semantic Color Tokens - Palette Update', () => {
       expect(glowTokens.length).toBe(5);
       // Avatar tokens MIGRATED to src/components/core/Avatar-Base/avatar.tokens.ts (Spec 058)
       expect(avatarTokens.length).toBe(0); // Migrated to component directory
-      // Badge tokens MIGRATED to src/components/core/Badge-Count-Notification/tokens.ts (Spec 058)
+      // Badge tokens MIGRATED to src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts (Spec 058)
       expect(badgeTokens.length).toBe(0); // Migrated to component directory
       // Progress tokens added in Spec 048 Task 1.1
       expect(progressTokens.length).toBe(10); // current (2), pending (3), completed (3), error (2)
@@ -1304,7 +1304,7 @@ describe('Semantic Color Tokens - Palette Update', () => {
    * Tests for Badge color tokens - MIGRATED to component directory in Spec 058.
    * 
    * Badge notification color tokens have been migrated from ColorTokens.ts to
-   * src/components/core/Badge-Count-Notification/tokens.ts per Rosetta System architecture.
+   * src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts per Rosetta System architecture.
    * 
    * These tests now verify:
    * 1. Tokens are NOT in ColorTokens.ts (migration complete)
@@ -1316,12 +1316,12 @@ describe('Semantic Color Tokens - Palette Update', () => {
   describe('Badge Color Tokens (Spec 044, Migrated Spec 058)', () => {
     describe('Migration Verification', () => {
       it('should NOT have color.badge.notification.background in ColorTokens', () => {
-        // Badge tokens migrated to src/components/core/Badge-Count-Notification/tokens.ts
+        // Badge tokens migrated to src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts
         expect(colorTokens['color.badge.notification.background']).toBeUndefined();
       });
 
       it('should NOT have color.badge.notification.text in ColorTokens', () => {
-        // Badge tokens migrated to src/components/core/Badge-Count-Notification/tokens.ts
+        // Badge tokens migrated to src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts
         expect(colorTokens['color.badge.notification.text']).toBeUndefined();
       });
 
@@ -1334,7 +1334,7 @@ describe('Semantic Color Tokens - Palette Update', () => {
     describe('Backward Compatibility Re-exports', () => {
       it('re-exports removed for portability (Spec 104)', () => {
         // Backward-compatibility re-exports from ColorTokens were removed in Spec 104
-        // Use canonical import: import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+        // Use canonical import: import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/badgeNotificationColorMap';
         const ColorTokens = require('../ColorTokens');
         expect(ColorTokens.BadgeNotificationColorTokens).toBeUndefined();
       });
@@ -1343,18 +1343,18 @@ describe('Semantic Color Tokens - Palette Update', () => {
     describe('Component Token Location', () => {
       it('should have BadgeNotificationColorTokens in component directory', () => {
         // Import from canonical location (3 levels up from __tests__ to src/)
-        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/tokens');
+        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/badgeNotificationColorMap');
         expect(BadgeNotificationColorTokens).toBeDefined();
       });
 
       it('should reference semantic token for notification.background', () => {
-        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/tokens');
+        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/badgeNotificationColorMap');
         // Updated to expect semantic token reference (Spec 046 Task 8.2)
         expect(BadgeNotificationColorTokens['notification.background']).toBe('color.feedback.notification.background');
       });
 
       it('should reference semantic token for notification.text', () => {
-        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/tokens');
+        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/badgeNotificationColorMap');
         // Updated to expect semantic token reference (Spec 046 Task 8.2)
         expect(BadgeNotificationColorTokens['notification.text']).toBe('color.feedback.notification.text');
       });
@@ -1376,7 +1376,7 @@ describe('Semantic Color Tokens - Palette Update', () => {
 
     describe('Requirements Coverage (Spec 058)', () => {
       it('should satisfy Requirement 2.1: Badge tokens defined in component directory', () => {
-        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/tokens');
+        const { BadgeNotificationColorTokens } = require('../../../components/core/Badge-Count-Notification/badgeNotificationColorMap');
         expect(BadgeNotificationColorTokens['notification.background']).toBeDefined();
         expect(BadgeNotificationColorTokens['notification.text']).toBeDefined();
       });
