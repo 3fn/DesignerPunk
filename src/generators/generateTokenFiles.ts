@@ -405,6 +405,7 @@ export function generateTokenFiles(
     darkWcagSemanticTokens: resolvedDarkWcag,
     wcagOverrideKeys,
     themeOverrides: themeOverrideSets,
+    wcagSource: { wcagLight: themeMaps.origins.wcagLight, wcagDark: themeMaps.origins.wcagDark },
     themeVaryingTokens,
     productName: config.name,
     abbreviation: config.abbreviation
