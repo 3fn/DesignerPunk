@@ -1455,7 +1455,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 18.2 The release-text grep over 129's range; the retired-file sentences; the Req 9.3 read; the readiness-pattern read
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 1.7, 9.3, 14.1, 15.1_
-  - [ ] 18.3 The "Native status" passage, iOS and Android
+  - [x] 18.3 The "Native status" passage, iOS and Android
     **Type**: Documentation · **Validation**: Tier 1 - Minimal · **Agent**: Kenya (Sonnet), Data (Sonnet)
     - _Requirements: 15.5_
   - [ ] 18.4 Confirm the Token-Governance ballot was ratified and applied in time
