@@ -445,8 +445,8 @@ export class MathematicalRelationshipParser {
    *   `<expression> = <value>` is exact (equal at the precision the string displays); `<expression> ≈ <value>` is within half
    *   the family's rounding step (see {@link RELATIONSHIP_STEP}); `→ <value>` is a deliberate
    *   rounding to the next grid value (within one step).
-   * - **Special-case form**: `special case … = <value>` / `percentage = <value>` is accepted when
-   *   the stated value equals the token's `baseValue`.
+   * - **Special-case form**: on a strategic-flexibility token only, `special case … = <value>` /
+   *   `percentage = <value>` is accepted when the stated value equals the token's `baseValue`.
    *
    * Expressions may use `base` (the family base value), `baseValue` (the token's own value),
    * numbers, `+ - × ÷ * / x`, parentheses, `^n` and superscript exponents, and the name of another
@@ -462,6 +462,7 @@ export class MathematicalRelationshipParser {
       baseValue: unknown;
       familyBaseValue: unknown;
       mathematicalRelationship: string;
+      isStrategicFlexibility?: boolean;
     },
     resolve?: (name: string) => number | undefined
   ): RelationshipValidationResult {
@@ -485,8 +486,11 @@ export class MathematicalRelationshipParser {
     // Superscripts and ^n.
     text = text.replace(/([\u00b2\u00b3\u00b9\u2070-\u2079]+)/g, m => '^' + [...m].map(c => SUPERSCRIPT[c]).join(''));
 
-    // Special-case form.
-    const special = /^(special case|percentage)\b[^=]*=\s*(-?[0-9.]+)\s*%?\s*(\([^)]*\))?\s*$/i.exec(rel);
+    // Special-case form: read only on a strategic-flexibility token (design § 12, A § D-9 item 3).
+    // Any other token states an equation.
+    const special = token.isStrategicFlexibility === true
+      ? /^(special case|percentage)\b[^=]*=\s*(-?[0-9.]+)\s*%?\s*(\([^)]*\))?\s*$/i.exec(rel)
+      : null;
     if (special) {
       const stated = parseFloat(special[2]);
       return Math.abs(stated - baseValue) < 1e-3

@@ -549,9 +549,12 @@ describe('MathematicalRelationshipParser', () => {
         expect(parser.validateToken(tok({ category: 'fontSize', baseValue: 20, familyBaseValue: 16, mathematicalRelationship: 'base × 1.125^2 ≈ 20' }), resolve).isValid).toBe(true);
         expect(parser.validateToken(tok({ category: 'fontSize', baseValue: 30, familyBaseValue: 16, mathematicalRelationship: 'base × (1.125²) ≈ 30' }), resolve).isValid).toBe(false);
       });
-      it('4. special-case literals state their value, and it must equal baseValue', () => {
-        expect(parser.validateToken(tok({ category: 'radius', baseValue: 9999, mathematicalRelationship: 'special case = 9999 (effectively infinite)' }), resolve).isValid).toBe(true);
-        expect(parser.validateToken(tok({ category: 'radius', baseValue: 100, mathematicalRelationship: 'special case = 9999 (effectively infinite)' }), resolve).isValid).toBe(false);
+      it('4. special-case literals: on a strategic-flexibility token only, and the stated value must equal baseValue', () => {
+        const sf = { category: 'radius', isStrategicFlexibility: true, mathematicalRelationship: 'special case = 9999 (effectively infinite)' };
+        expect(parser.validateToken(tok({ ...sf, baseValue: 9999 }), resolve).isValid).toBe(true);
+        expect(parser.validateToken(tok({ ...sf, baseValue: 100 }), resolve).isValid).toBe(false);
+        // the same string on a token that is not strategic flexibility is not an equation
+        expect(parser.validateToken(tok({ ...sf, isStrategicFlexibility: false, baseValue: 9999 }), resolve).isValid).toBe(false);
       });
       it('5. categorical descriptions are skipped by family (see above), and a named token resolves', () => {
         expect(parser.validateToken(tok({ category: 'lineHeight', baseValue: 1.4, familyBaseValue: 1.5, mathematicalRelationship: 'fontSize150 × baseValue = 28' }), resolve).isValid).toBe(true);
