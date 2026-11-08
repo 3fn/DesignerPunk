@@ -391,6 +391,74 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     }
   }, 240_000);
 
+  /**
+   * Spec 129 Task 15.3 (Req 12.2, 12.3, 12.4): `platforms:` in Spec 132's D4 layout, `ios/<dir>` and `android/<dir>` beside a
+   * root `package.json`. Each named platform's files are at its path and nothing else is there; every other platform, web
+   * included, is at `output`. An unknown key, and a folder outside the project, fail `generate`, naming the entry.
+   */
+  describe('Spec 129 Task 15.3 — platforms: in the D4 layout', () => {
+    let dir: string;
+    const config = (platforms: string): string => `import { defineConfig } from '@3fn/core/config';
+export default defineConfig({
+  name: 'D4Product',
+  abbreviation: 'DF',
+  tokenSource: './src/tokens',
+  componentTokens: ['./src/components', './src/tokens/component'],
+  output: './dist/tokens',
+  platforms: ${platforms},
+});
+`;
+    const generate = (): { status: number | null; all: string } => {
+      const r = spawnSync('npx', ['designerpunk', 'generate'], { cwd: dir, encoding: 'utf-8', timeout: 120_000 });
+      return { status: r.status, all: `${r.stdout}\n${r.stderr}` };
+    };
+    const names = (rel: string): string[] => listFiles(dir, rel).map((f) => f.slice(rel.length + 1)).sort();
+
+    beforeAll(() => {
+      dir = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-d4-'));
+      execSync('npm init -y', { cwd: dir, stdio: 'pipe' });
+      execSync(`npm install ${tarballPath} --no-save`, { cwd: dir, stdio: 'pipe', timeout: 60_000 });
+      execSync('npx designerpunk init --name D4Product --abbreviation DF', { cwd: dir, stdio: 'pipe', timeout: 90_000 });
+    }, 240_000);
+
+    afterAll(() => {
+      if (dir) fs.rmSync(dir, { recursive: true, force: true });
+    });
+
+    it('each named platform\'s files are at its path, alone there, and web and the rest are at output', () => {
+      fs.writeFileSync(path.join(dir, 'designerpunk.config.ts'), config("{ ios: { output: './ios/DesignerPunk' }, android: { output: './android/designerpunk' } }"));
+      fs.rmSync(path.join(dir, 'dist'), { recursive: true, force: true });
+      const r = generate();
+      expect(r.status).toBe(0);
+      expect(fs.existsSync(path.join(dir, 'package.json'))).toBe(true);
+      expect(names('ios/DesignerPunk')).toEqual(['ComponentTokens.ios.swift', 'DesignTokens.ios.swift']);
+      expect(names('android/designerpunk')).toEqual(['ComponentTokens.android.kt', 'DesignTokens.android.kt']);
+      const out = names('dist/tokens');
+      expect(out).toEqual(expect.arrayContaining(['DesignTokens.web.css', 'ComponentTokens.web.css', 'DesignTokens.dtcg.json']));
+      expect(out.filter((f) => /\.(swift|kt)$/.test(f))).toEqual([]);
+      // No generated native file shares a name with a packaged native source file (Req 12.4).
+      const generated = new Set([...names('ios/DesignerPunk'), ...names('android/designerpunk')]);
+      const packaged = listFiles(path.join(dir, 'node_modules', '@3fn', 'core', 'src')).filter((f) => /\.(swift|kt)$/.test(f)).map((f) => path.basename(f));
+      expect(packaged.length).toBeGreaterThan(0);
+      expect(packaged.filter((n) => generated.has(n))).toEqual([]);
+    }, 240_000);
+
+    it('an unknown platform key fails generate, naming it', () => {
+      fs.writeFileSync(path.join(dir, 'designerpunk.config.ts'), config("{ tvos: { output: './tv' } }"));
+      const r = generate();
+      expect(r.status).not.toBe(0);
+      expect(r.all).toContain('"tvos"');
+    }, 240_000);
+
+    it('a folder outside the project fails generate, naming it', () => {
+      fs.writeFileSync(path.join(dir, 'designerpunk.config.ts'), config("{ ios: { output: '../ios-elsewhere' } }"));
+      const r = generate();
+      expect(r.status).not.toBe(0);
+      expect(r.all).toContain('platforms.ios.output');
+      expect(r.all).toContain('../ios-elsewhere');
+    }, 240_000);
+  });
+
   // Spec 129 Task 10.1 (Req 13.1): re-enabled. The relationship check classifies by family
   // (MathematicalRelationshipParser.validateToken), so `validate` passes on unmodified token source
   // and a token that breaks its declared relationship is still reported (the parser's Jest cases).

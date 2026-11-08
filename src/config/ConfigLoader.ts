@@ -13,6 +13,8 @@ import * as fs from 'fs';
 import type { DesignerPunkConfig, ConfigTheme } from './defineConfig';
 import { scopedTsRequire } from './scopedTsRequire';
 import { resolvePackageRoot } from '../cli/shared/resolvePackageRoot';
+import { resolvePlatformOutputs } from '../cli/shared/platformOutputs';
+import type { PlatformKey } from './platforms';
 
 /** Fully resolved configuration with absolute paths. */
 export interface ResolvedConfig {
@@ -30,6 +32,8 @@ export interface ResolvedConfig {
   componentTokenDirs: string[];
   /** Resolved absolute path to output directory. */
   outputDir: string;
+  /** Where each platform the config names is written, absolute (Spec 129 Req 12). A platform not named here is written at `outputDir`. */
+  platforms?: Partial<Record<PlatformKey, { output: string }>>;
   /** Directory the config file was loaded from (or cwd for defaults). */
   configDir: string;
   /** Resolved absolute path to product tokens directory, or undefined if not configured. */
@@ -137,6 +141,7 @@ export async function loadConfig(
     tokenSourceMode,
     componentTokenDirs,
     outputDir,
+    ...(userConfig.platforms !== undefined ? { platforms: resolvePlatformOutputs(userConfig.platforms, configDir) } : {}),
     configDir,
     productTokens: userConfig.productTokens ? path.resolve(configDir, userConfig.productTokens) : undefined,
   };

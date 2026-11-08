@@ -233,6 +233,9 @@ export function assertPackListing(listing: PackListing): Finding[] {
   // --- 11. The packed Android resource folders hold only resources (Spec 129 Task 1.3; Req 10.3) ---
   for (const f of nativeResourceFindings(listing.paths)) findings.push(f);
 
+  // --- 12. No generated native file shares a name with a packaged native source file (Spec 129 Task 15.3; Req 12.4) ---
+  for (const f of generatedNativeNameFindings(listing.paths)) findings.push(f);
+
   return findings;
 }
 
@@ -802,6 +805,40 @@ export function nativeResourceFindings(paths: string[]): Finding[] {
     }
   }
   out.push({ ok: bad === 0, label: `${NATIVE_RESOURCES_LABEL} every packed file under platforms/android/res/ is res/<type>[-<qualifiers>]/<name>.<ext> with an allowed extension`, detail: `${inspected.length} checked, ${bad} not` });
+  return out;
+}
+
+// ─── Section 12: a generated native file name is not a packaged native source file name ─────────
+
+/** Every finding of section 12 starts with this. It is NOT `PUBLISH_PATH_LABEL`, so `PUBLISH_PATH_FLOOR` is unchanged. */
+export const GENERATED_NATIVE_NAMES_LABEL = 'generated native names:';
+
+/**
+ * The native file names `generate` writes into a platform folder `platforms:` names (iOS `.swift`, Android `.kt`). A
+ * platform folder is compiled with the package's native sources, and SwiftPM refuses a file name used twice (Kenya
+ * measured it), so no packaged native source may carry one of these names. The root `dist/*.ios.swift` and
+ * `dist/*.android.kt` files are the retired snapshot (U12) and are not sources, so only `src/` is read.
+ */
+export const GENERATED_NATIVE_FILE_NAMES: readonly string[] = Object.freeze([
+  'DesignTokens.ios.swift',
+  'ComponentTokens.ios.swift',
+  'ProductTokens.ios.swift',
+  'DesignTokens.android.kt',
+  'ComponentTokens.android.kt',
+  'ProductTokens.android.kt',
+]);
+
+/** Section 12's findings for a packed path list: one red per packaged native source whose base name is a generated name, and one non-vacuity finding (native sources were inspected). Exported for the unit tests. */
+export function generatedNativeNameFindings(paths: string[]): Finding[] {
+  const sources = paths.filter((p) => p.startsWith('src/') && /\.(swift|kt)$/.test(p));
+  const clashes = sources.filter((p) => GENERATED_NATIVE_FILE_NAMES.includes(p.slice(p.lastIndexOf('/') + 1)));
+  const out: Finding[] = [
+    { ok: sources.length > 0, label: `${GENERATED_NATIVE_NAMES_LABEL} packaged native sources found to inspect (the rule is not vacuous)`, detail: `${sources.length} packed` },
+  ];
+  for (const p of clashes) {
+    out.push({ ok: false, label: `${GENERATED_NATIVE_NAMES_LABEL} ${p} does not share a name with a generated file`, detail: `\`${p.slice(p.lastIndexOf('/') + 1)}\` is a name \`generate\` writes` });
+  }
+  out.push({ ok: clashes.length === 0, label: `${GENERATED_NATIVE_NAMES_LABEL} no packaged native source shares a name with a generated native file`, detail: `${sources.length} checked, ${clashes.length} clash` });
   return out;
 }
 

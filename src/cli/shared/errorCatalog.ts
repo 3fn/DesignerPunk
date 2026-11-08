@@ -739,3 +739,23 @@ export function registryAuthFailedMessage(code: string, registry: string | null,
 export function cannotTellGroupMessage(names: readonly string[], reason: string): string {
   return `cannot tell whether these ${names.length} copies under src/components/core/ were modified (${names.join(', ')}) — ${reason}. Review before removing.`;
 }
+
+
+// ---------------------------------------------------------------------------
+// `platforms:` in the config (Spec 129 Req 12.3). AUTHORED AT 15.3: the design catalog carries no row for them.
+// ---------------------------------------------------------------------------
+
+/** `platforms:` names a platform the generator does not know. */
+export function platformUnknownMessage(key: string, known: readonly string[]): string {
+  return `designerpunk.config.ts: \`platforms\` names "${key}", which is not a platform DesignerPunk generates. Use ${known.map((k) => `"${k}"`).join(', ')}.`;
+}
+
+/** A `platforms:` entry that is not `{ output: '<path>' }`. */
+export function platformOutputInvalidMessage(where: string, why: string): string {
+  return `designerpunk.config.ts: \`${where}\` is not valid: ${why}.`;
+}
+
+/** A `platforms:` folder that resolves outside the project. */
+export function platformOutputOutsideRootMessage(key: string, output: string): string {
+  return `designerpunk.config.ts: \`platforms.${key}.output\` is "${output}", which resolves outside your project (the folder the config is in). Name a folder inside it.`;
+}

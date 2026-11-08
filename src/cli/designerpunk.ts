@@ -350,7 +350,7 @@ export async function runGenerate(force = false, opts: { fromInit?: boolean } = 
       if (packageNames.names) {
         const missing = findMissingReferences(
           harvested.filter(t => t.primitiveReference).map(t => ({ token: t.name, primitive: t.primitiveReference! })),
-          readDeclaredNames(config.outputDir),
+          readDeclaredNames(config),
           packageNames.names,
         );
         const tierPath = `${(path.relative(process.cwd(), config.tokenSourceRoot) || '.').split(path.sep).join('/')}/`;
@@ -361,7 +361,7 @@ export async function runGenerate(force = false, opts: { fromInit?: boolean } = 
     if (packageSource) {
       const reserved = scanReservedKotlinPackages({
         root: generateRoot,
-        skipDirs: [config.outputDir, config.tokenSourceRoot],
+        skipDirs: [config.outputDir, ...Object.values(config.platforms ?? {}).map(p => p.output), config.tokenSourceRoot],
         componentSourceNames: packageComponentSourceNames(packageRoot),
       });
       for (const f of reserved) console.warn(`⚠️  ${reservedPackageMessage(f)}`);
