@@ -58,6 +58,8 @@
 
 *(Amended 2026-10-20 by ballot `2026-10-20-in-lane-guard-registry-additive-entries`: P1b, added entries in `.github/in-lane-guards.json`. The P1 row is unchanged; the clause lives in that ballot.)*
 
+*(Amended 2026-11-07 by ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold`: P1c, fixes to `.github/workflows/merge-hold.yml` inside that ballot's § 3 bound. The P1 row, P1b and Peter's ruled limits are unchanged; the clause lives in that ballot.)*
+
 ### Peter's ruled limits (verbatim, condition 2)
 
 > **New required contexts, changes to `EXPECTED_CONTEXTS`'s count, branch protection and repo settings stay Peter's.**

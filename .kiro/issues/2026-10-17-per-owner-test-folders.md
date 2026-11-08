@@ -25,3 +25,5 @@ The ballot assigns tests and fixtures by rule (§ 2.2: a test follows the file i
 ## Closing
 
 Closes when the fixing PR merges: record the outcome here (dated) and `git mv` this file to `archive/` in that PR (README rule 5).
+
+**Note (2026-11-07, Thurgood; offered by Lina as co-owner, ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` site 9)**: `scripts/harness/__tests__/` is outside this record's move on purpose. Its tests are assigned file by file: `stability.test.ts`, `native-rules.test.ts`, `native-rules-emitter.test.ts` and `fixtures/stability/**` to Thurgood by that ballot's item 1; the rest follow their task's PRIMARY or a grant.

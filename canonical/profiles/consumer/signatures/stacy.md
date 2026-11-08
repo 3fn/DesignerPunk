@@ -566,19 +566,34 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-10-29
+date: 2026-11-07
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce
+canonicalHash: sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
 
-**Re-signed 2026-10-29, second time** (prior signature: assent 5/13, 2026-10-29, against `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae`; the rendered hash did not move). Stale because the canonical RELEASE row changed: ballot `2026-10-29-dated-pointer-paths-and-edit-kind-check` (RATIFIED, Peter, 2026-10-29) § 3 site 2 removed the row's dated pointer (`fe6ab7470`). My re-confirmation at 13 items is act 1 (`a9f144798`).
-- **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `b2a21530b` before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L301–L316, `cc/.claude/agents/stacy.md` L175–L190, `kiro/.kiro/agents/stacy-prompt.md` L141–L156. All three carry the same table and paragraphs.
-- **Judged against**: those renderings and the operative set at 13 items. The consumer RELEASE row reads "Before a version publishes / at the release tag | … the release checklist runs the owed-set query and pastes its output". It is unchanged. The pointer that came out sat inside the row's range removal (`subtraction-3`), so the consumer never carried it, and the removal still keeps both end strings.
-- **Hashes**: canonicalHash `sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce`, recomputed independently with `partition` + `regrounding/hash.ts`; it equals the overlay pin and the chain's freshness value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces); it equals the prior value, as Lina found.
-- **Unchanged**: `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in all three renderings; the other eight occur in none (checked by script). Surviving count: 5 of 13.
+**Re-signed 2026-11-07** (prior signature: assent 5/13, 2026-10-29, second time, against `sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce`). Stale because the canonical ARMING row changed. Ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` (RATIFIED, Peter, 2026-11-07T22:30:08Z) site 6 added the P1c event and read, and the six compile-harness paths, to the row's instrument-path limb and its deletions-zero read. These are my words: Thurgood typed them at `a064ea06c`, and I adopted them unchanged. I rewrote the removal and re-pinned the overlay at `f5e6a10a2`, and re-confirmed the set at 13 items at `db81c96d8`. renderedHash recomputed from a fresh temp-tree rendering of this branch (`generateAll` → `writeOutputs(<scratchpad temp dir>)` → `readConsumerSpans` → `renderedHashOf` over `rowSpanSource`, three pieces). It is equal to the committed rendering's value and to the prior signature's, and the fresh `_consumer-output/` tree equals the committed one (`diff -rq`: no differences). The rendering did not move by a byte.
+- **Read before this act**: the consumer rendering of the unit, `cat -n canonical/_consumer-output/_canonical/agents/stacy.md` L301–L316, through a tool call before this commit; `canonical/_consumer-output/` is unchanged on this branch since `e0df47b3f`. The `cc/` (L175–L190) and `kiro/` (L141–L156) copies were compared with it by `diff` and are identical.
+- **Judged against**: the rendered unit at this revision and the operative set at 13 items.
+- **The ARMING removal still applies, under `subtraction-3`, and the P1c read and harness paths go with it.** The removal's text is rewritten to the new row, which occurs once in the unit and in none of the renderings. The P1c read runs a ballot query against DesignerPunk's `merge-hold.yml`. The harness paths are this repo's compile-harness instruments. A consumer has neither, and the consumer rendering carries no ARMING row to attach them to.
+- **Unchanged**: LENS, RELEASE, CLOSEOUT, ARMING, GATE, STRAGGLER, LIVENESS and BURST are not credited. `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in the rendering.
 - **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
 
+**Prior signature record (superseded, 2026-10-29, second time)**:
+
+> signer: stacy
+> date: 2026-10-29
+> row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
+> canonicalHash: sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce
+> renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
+> verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+>
+> **Re-signed 2026-10-29, second time** (prior signature: assent 5/13, 2026-10-29, against `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae`; the rendered hash did not move). Stale because the canonical RELEASE row changed: ballot `2026-10-29-dated-pointer-paths-and-edit-kind-check` (RATIFIED, Peter, 2026-10-29) § 3 site 2 removed the row's dated pointer (`fe6ab7470`). My re-confirmation at 13 items is act 1 (`a9f144798`).
+> - **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `b2a21530b` before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L301–L316, `cc/.claude/agents/stacy.md` L175–L190, `kiro/.kiro/agents/stacy-prompt.md` L141–L156. All three carry the same table and paragraphs.
+> - **Judged against**: those renderings and the operative set at 13 items. The consumer RELEASE row reads "Before a version publishes / at the release tag | … the release checklist runs the owed-set query and pastes its output". It is unchanged. The pointer that came out sat inside the row's range removal (`subtraction-3`), so the consumer never carried it, and the removal still keeps both end strings.
+> - **Hashes**: canonicalHash `sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce`, recomputed independently with `partition` + `regrounding/hash.ts`; it equals the overlay pin and the chain's freshness value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces); it equals the prior value, as Lina found.
+> - **Unchanged**: `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in all three renderings; the other eight occur in none (checked by script). Surviving count: 5 of 13.
+> - **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
 **Prior signature record (superseded, 2026-10-29, first time)**: assent 5/13, against `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae`, as below.
 
 **Re-signed 2026-10-29** (prior signature: assent 5/13, 2026-10-27, against `sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7`; the rendered hash did not move). Stale because the canonical RELEASE row changed: ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 12, composed with #536's site-2b sentence (`13bd1d57d`). My re-confirmation at 13 items is `5f325e895`.

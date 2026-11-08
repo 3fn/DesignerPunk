@@ -66,9 +66,24 @@ date: 2026-11-01
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce
+canonicalHash: sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-10-29
+date: 2026-11-07
+
+**Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, site 6.**
+- **What changed**: one row, ARMING (L404), four insertions: one in the event cell, three in the scope cell. Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`) § 4 site 6 gives the shape and says I write the words; my R1 amendments 5 and 6 and my R2 rewording of 5 commit me to them. Thurgood typed them at `a064ea06c`. I read each against those commitments and adopt them as mine, unchanged:
+  - **Event cell**: "a PR whose diff touches `.github/workflows/merge-hold.yml` merges (… § 3 item 2, P1c; keyed on the path, never on the PR's own claim)" (6(a); amendment 5's path key).
+  - **Scope cell, the P1c read**, after the grant limb: B1–B5 by the query and B6 a judgment; limb selection worded as at `[STACY R2]` ("selects which read applies and never widens a grant"); a failing B2 or B5, or a B6 weakening, goes to Peter as an unadmitted weakening of a required check (amendment 5); and "a passing query says the fix changed only what the bound lets it change, never that it is safe" (my R1 surviving counter-argument). `<base>` read as `<m>^` at ARMING is how every other read in the row reads a squash merge.
+  - **Scope cell, the instrument-path limb, two insertions**: the six item-1 paths join the path list, and the three harness tests and `fixtures/stability/**` join the deletions-zero read, with a `native-rules.test.ts` deletion naming the `design.md` § 4 amendment it applies (6(b); F-2 yes; amendment 6).
+- **Byte-identity, checked**: the charter's diff from `f28a1fefd` is the one line L404, and the old row is a subsequence of the new one: the diff is four insertions and nothing deleted.
+- **The set is unchanged: 13 items.** The row stays one `member` item, `trigger-arming`, re-quoted as the whole row, the same shape as at every earlier ARMING re-confirmation. All 13 are verbatim with one occurrence each, checked by script.
+- **The hash**: the canonicalHash moves from `sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce` to the value above. I recomputed it independently, as above, and it equals `operative-set-freshness`'s value. The item's re-quote, the overlay pin and the removal's rewrite are in my authoring commit `f5e6a10a2`, which moves no canonicalHash.
+- **Consumer rendering**: unchanged. The ARMING row is removed whole for consumers (`subtraction-3`), and the removal's text is rewritten to the new row.
+- **Read before this act**: the unit whole, `canonical/agents/stacy.md` L395–L414, with L404 read in full (`sed -n 404p | fold`), at `e0df47b3f`, through tool calls.
+
+**Ruling: CONFIRMED at 13 items.**
+
+**Re-confirmed 2026-10-29 (prior record, superseded)**: canonicalHash `sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce`, 13 items, as below.
 
 **Re-confirmed 2026-10-29, second time (Req 11.6.5d).**
 - **What changed**: one row, RELEASE (canonical L400). Ballot `.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md` (RATIFIED, Peter, 2026-10-29; Status read at `origin/main` `f535dc942`) § 3 site 2 removes the row's pointer, with the one space before it: `*(amended 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, site 12; prior text at `08b9c7a8e`)*`. The sentence now ends "…is RELEASE-FLOW step 6's Phase 1 bullet, not restated here." Charters carry no dated pointer (the ballot's site 1, "Where the pointer is owed"); the history lives in the ballot, the PR's `**Edit kind**:` line, git and these sheets. Thurgood applied it at `fe6ab7470` and re-quoted `trigger-release` there (authoring; it does not move this canonicalHash).

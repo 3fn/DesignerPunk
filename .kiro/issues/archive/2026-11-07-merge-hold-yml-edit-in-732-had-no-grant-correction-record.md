@@ -29,3 +29,7 @@ The file defines a required check. No grant covered the edit (the `merge-hold-ch
 Peter's Decision 1, (ii) (2026-11-07T20:43:17Z): `merge-hold.yml` joins the charter-scope ballot approved as a class option at 2026-11-07T20:21:05Z. That ballot covers `scripts/harness/stability.ts`, `scripts/harness/native-rules.ts` and their tests. It carries a mechanical bound on what counts as a fix (no step, `if:`, floor or assertion removed; `run:` lines unchanged; deleted comment lines quoted), amends `2026-09-27-ci-regime-standing-scope` § 2 as needed, is consulted with Stacy, and goes to Peter for ratification. Option (i), one grant per fix, was not picked.
 
 Until that ballot is ratified, a further edit to `merge-hold.yml` needs an issue-row grant (README rule 8) or Peter's dated direction outside the diff (rule 10).
+
+## Outcome
+
+**Outcome** (2026-11-07): closed on the ratification of ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` (Peter, 2026-11-07T22:30:08Z). `merge-hold.yml` fixes now sit inside P1c's bound B1–B5 (F-1 (a)), applied in the charter-scope application PR. The edit in #732 is not retroactively authorised; this record stays a dated correction. Archived in the application PR (README rule 5).
