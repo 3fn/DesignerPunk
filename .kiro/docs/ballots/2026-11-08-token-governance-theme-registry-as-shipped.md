@@ -489,3 +489,46 @@ In my reading, B-5 is met as a text fix, with the choice of behaviour put to Pet
 
 In my reading, B-5 is met. Whether Stacy withdraws the objection is hers to say.
 
+
+### [STACY R3] (census reader)
+
+#### [STACY R3] — re-read at `11e5f322f`, item 2 checked against #785 on `main`
+
+**Read at** `11e5f322f`, against `main` at `c91fb9b15` (#785), 2026-11-08. Nothing was committed. My R2 entry, as spliced, is byte-identical to the entry I handed back. My runs used a detached scratch worktree at `c91fb9b15` after `npm run build`, and scratch consumer directories that ran the built `generate`.
+
+**Verdict: B-5 is met, and I withdraw the objection.** I raise no new blocking point. Two notes follow below; neither blocks.
+
+**B-5: met by the fix, not only by the text**
+
+I read #785's code and tests. Item 2's new sentence says `generate` "fails, before writing anything, on a key that names a semantic token that is not a colour, in any map the config registers (`dark`, `wcag` or any other theme, in either form), naming the theme, the map and the key". Each part of that claim holds:
+
+- **Code.** `findNonColourOverrideKeys` (`src/generators/themeOverrideCategories.ts`) walks every config theme. It reads the plain map, or both halves of the `{ light, dark }` form, and reports every key whose semantic category is not `color`. A key that names no semantic token is left to the orphan check. `generateTokenFiles` calls it right after the theme-instance refusals and before `resolveThemeMaps`, and throws `TokenGenerationAbortedError('theme-config')`. The message names the entry (`themes[i] (name: …)`), the map (`overrides`, `overrides.light` or `overrides.dark`) and the key.
+- **Tests.**
+  - `src/generators/__tests__/themeOverrideCategories.test.ts`: 6 of 6 pass when I run it at `c91fb9b15`.
+  - The Consumer Guard case `C6` in `tests/consumer-integration.test.ts` pins the `dark` case end to end: non-zero exit, and the output names the key.
+- **My probes** at `c91fb9b15`, each overriding only `space.inset.100` → `space200`:
+
+  | Config | Exit | Files written | Named |
+  |---|---|---|---|
+  | `dark`, colour key only (control) | 0 | 13 | — |
+  | `dark`, plain map | 1 | 0 | `themes[0] (name: "dark") … from \`overrides\`` |
+  | `wcag`, `{ light, dark }` form, key in `light` | 1 | 0 | `… (name: "wcag") … from \`overrides.light\`` |
+  | custom `spacey`, `both` | 1 | 0 | `… (name: "spacey") … from \`overrides\`` |
+  | `dark`, orphan key `color.nope.zzz` | 1 | 0 | `Orphaned override key "color.nope.zzz"` (the resolver, as item 2's parenthetical says) |
+
+  "Files written" counts files newer than the config, outside `node_modules`. So "before writing anything" is true in each case I ran.
+- **Item 3**'s "holds colour tokens only" follows from this: a non-colour key now fails before the registry is built.
+- **§ 0** labels its `3f739b07f` reproduction as before the fix. **§ 4 step 0** checks that `c91fb9b15` is an ancestor of the application base and stops if the refusal has changed since. That is the stop item 2 needs, because its truth now rests on code.
+
+**The census: still VALID.** The appendix diff's added lines match § 1's whole-line after-texts. Item 5's and item 8's partial after-texts are inside their whole lines, and items 6–7 are not in this corpus. No census input changed between the two SHAs: `git diff --name-only 3f739b07f c91fb9b15 -- governance .kiro/steering package.json` prints nothing. I re-ran the census at `c91fb9b15` on the new diff. Current and proposed are both `c13c9780…52868bfd`, `diff` prints nothing, the selected-count line is unchanged, and the guard passes on the edited tree.
+
+**Two notes. Neither blocks, and the words are the owner's.**
+
+1. **The defect record has not closed at its own trigger.** `.kiro/issues/2026-11-08-non-colour-theme-override-accepted-not-applied.md` says it is "Closed by the PR that ships the fix". Its Outcome says "Closes at that PR's merge". At `c91fb9b15` it still reads `Status: ACTIVE` with `Outcome: Pending`. Closing it is Ada's act. Under README rule 11, a fired record that the firing commit did not close lapses. **The record's other half is also still true.** The `Themes:` line's web clause (`GENERATE_THEMES_SUFFIX`, unchanged by #785) says "any other theme is written as :root[data-theme="<name>"] on web". That is still false for a custom theme registered with an empty map: such a theme writes no block, and #785 does not refuse it. If the record is closed on #785 alone, that clause needs a home of its own (owner Ada, wording Leonardo). Otherwise the RELEASE phase-1 read of the S carrying U9 meets it as a false shipped sentence. The ballot's items 1 and 4 already state the rule correctly, so this is not a ballot point.
+2. **The counter Peter read now becomes behaviour.** A consumer whose registered map already holds a non-colour key will find `generate` failing on upgrade. § 7 names this, and the error names the key and the remedy. I only note it here as the item the release notes should carry. That carriage is not mine to draft.
+
+**F-1**: unchanged. I lean (a). The pick is Peter's.
+
+**Standards implications**: none new. The R1 item (census forms for a doc corpus, and for one instrument read by several items) stays owed in Spec 131's ledger.
+
+**Review**: no objection
