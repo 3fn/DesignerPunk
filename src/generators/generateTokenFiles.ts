@@ -73,7 +73,14 @@ export class TokenGenerationAbortedError extends Error {
  * @throws {TokenGenerationAbortedError} When the token source fails validation. Nothing is
  *   written (not even the output directory), so the caller must not write the index either.
  */
-export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): ModeResolvedTokens {
+export function generateTokenFiles(
+  tokens: TokenInput,
+  config: ResolvedConfig,
+  options: {
+    /** Component tokens kept out of the web ComponentTokens file (DesignerPunk's harvested ones). */
+    excludeComponentTokenFromWeb?: (token: import('../registries/ComponentTokenRegistry').RegisteredComponentToken) => boolean;
+  } = {},
+): ModeResolvedTokens {
   const effectiveOutputDir = config.outputDir;
   console.log('🚀 Starting token file generation...\n');
 
@@ -323,6 +330,7 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   const componentResults = generator.generateComponentTokens({
     outputDir: effectiveOutputDir,
     includeComments: true,
+    ...(options.excludeComponentTokenFromWeb ? { excludeFromWeb: options.excludeComponentTokenFromWeb } : {}),
   });
 
   for (const result of componentResults) {

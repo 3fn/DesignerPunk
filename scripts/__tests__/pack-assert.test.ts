@@ -24,6 +24,7 @@ import {
   extractTarball,
   findLeftovers,
   findMachinePaths,
+  HARVESTABLE_COMPONENT_TOKEN_FILES,
   machinePathNeedles,
   MIN_MCP_BUNDLES,
   nativeResourceFindings,
@@ -551,6 +552,40 @@ describe('nativeResourceFindings — a packed file under platforms/android/res/ 
     ]);
     // section 11 adds findings of its own label and does not count as a publish-path finding
     expect(native.every((f) => !f.label.startsWith(PUBLISH_PATH_LABEL))).toBe(true);
+  });
+});
+
+// ─── the six harvestable component-token files (Spec 129 Req 5.1) ───────────────────────────────
+
+describe('HARVESTABLE_COMPONENT_TOKEN_FILES — the package ships DesignerPunk\'s six definition files', () => {
+  const findingsFor = (paths: string[]) =>
+    assertPackListing({ root: PROJECT_ROOT, paths, read: () => undefined })
+      .filter((f) => f.label.startsWith('harvestable component token file present:'));
+
+  it('names six files, each of which exists in the source tree and registers tokens', () => {
+    expect(HARVESTABLE_COMPONENT_TOKEN_FILES).toHaveLength(6);
+    for (const f of HARVESTABLE_COMPONENT_TOKEN_FILES) {
+      const text = fs.readFileSync(path.join(PROJECT_ROOT, f), 'utf-8');
+      expect(text).toContain('defineComponentTokens({');
+    }
+  });
+
+  it('reports each file as missing when the listing has none of them', () => {
+    const found = findingsFor(['src/a.ts']);
+    expect(found).toHaveLength(6);
+    expect(found.every((f) => !f.ok)).toBe(true);
+  });
+
+  it('reports exactly the one missing file when the listing has five', () => {
+    const found = findingsFor(HARVESTABLE_COMPONENT_TOKEN_FILES.slice(1) as unknown as string[]);
+    expect(found.filter((f) => !f.ok).map((f) => f.label)).toEqual([
+      `harvestable component token file present: ${HARVESTABLE_COMPONENT_TOKEN_FILES[0]}`,
+    ]);
+  });
+
+  it('the package.json files[] lists each of the six', () => {
+    const pkg = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'package.json'), 'utf-8')) as { files: string[] };
+    for (const f of HARVESTABLE_COMPONENT_TOKEN_FILES) expect(pkg.files).toContain(f);
   });
 });
 

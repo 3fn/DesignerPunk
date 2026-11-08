@@ -62,6 +62,20 @@ interface PackResult {
   unpackedSize: number;
 }
 
+/**
+ * DesignerPunk's six harvestable `defineComponentTokens` files (Spec 129 Req 5.1, design § 9).
+ * `generate` harvests them as its third source, so each must ship. A seventh, the Badge-Count-
+ * Notification constants object, registers no tokens and does not.
+ */
+export const HARVESTABLE_COMPONENT_TOKEN_FILES = [
+  'src/components/core/Avatar-Base/avatar.tokens.ts',
+  'src/components/core/Badge-Label-Base/tokens.ts',
+  'src/components/core/Button-Icon/buttonIcon.tokens.ts',
+  'src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts',
+  'src/components/core/Input-Checkbox-Base/checkbox-sizing.tokens.ts',
+  'src/components/core/Input-Radio-Base/radio-sizing.tokens.ts',
+] as const;
+
 export interface Finding {
   ok: boolean;
   label: string;
@@ -131,6 +145,13 @@ export function assertPackListing(listing: PackListing): Finding[] {
   const componentMetaCount = allPaths.filter((p) => p.endsWith('/component-meta.yaml')).length;
   check(schemaCount > 0 && schemaCount === contractsCount && contractsCount === componentMetaCount,
     `component metadata floor: schema=${schemaCount} contracts=${contractsCount} component-meta=${componentMetaCount} (expect equal, > 0)`);
+
+  // --- 3a. DesignerPunk's six harvestable component-token definition files (Spec 129 Req 5.1) ---
+  // `generate` harvests these as its third source. Badge-Count-Notification/tokens.ts is a constants
+  // object outside the pipeline (it registers no tokens), so it is not one of the six.
+  for (const f of HARVESTABLE_COMPONENT_TOKEN_FILES) {
+    check(packedPaths.has(f), `harvestable component token file present: ${f}`);
+  }
 
   // --- 4. REMOVE paths absent ---
   check(!packedPaths.has('designerpunk.config.ts'), 'REMOVE absent: designerpunk.config.ts');

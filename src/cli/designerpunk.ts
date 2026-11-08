@@ -19,7 +19,7 @@ import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
 import { generateTokenIndex, type TokenIndexResult } from '../generators/generateTokenIndex';
 import { resolveTokens } from './resolveTokens';
-import { loadComponentTokens, componentTokenSourceFile } from './loadComponentTokens';
+import { loadComponentTokens, componentTokenSourceFile, isPackageComponentToken, type PackageComponentTokenSource } from './loadComponentTokens';
 import { runValidate } from './validate';
 import { runInit } from './init';
 import { runAttach } from './attach';
@@ -31,7 +31,7 @@ import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import { resolveComponentRoots } from './shared/mcpDataRoots';
-import { readPackageComponentTokenIndex, PACKAGE_COMPONENT_TOKEN_INDEX_REL } from './shared/packageComponentTokens';
+import { resolveComponentSources } from './shared/componentSources';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import {
   partialCaseMessage,
@@ -224,9 +224,42 @@ export async function runGenerate(force = false) {
   // family-mismatch guard on a pre-123 copied file) stops generate with a catalogued
   // message naming the file — never the CLI's "Unexpected error" stack trace
   // (.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md).
+  // The third source (Spec 129 U8, design § 9): in a consumer repo, DesignerPunk's own definition
+  // files from the installed package, for every package component the consumer has not replaced.
+  // Never in DesignerPunk's own repo, whose component directory is already the second source.
+  const packageRoot = resolvePackageRoot(__dirname);
+  const inConsumerRepo = path.resolve(packageRoot) !== path.resolve(generateRoot);
+  let packageSource: PackageComponentTokenSource | undefined;
+  if (inConsumerRepo) {
+    const universe = resolveComponentSources(resolveGenerateComponentRoots(dsRoot, packageRoot));
+    const packageRank = universe.roots.indexOf(path.resolve(packageRoot, 'src', 'components', 'core'));
+    let pkgName = '@3fn/core';
+    let pkgVersion = '';
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf-8')) as { name?: string; version?: string };
+      pkgName = j.name ?? pkgName;
+      pkgVersion = j.version ?? '';
+    } catch { /* the install is damaged; the degradation message below says what is missing */ }
+    if (packageRank < 0 || !fs.existsSync(universe.roots[packageRank])) {
+      console.warn(`⚠️  ${consumerDegradationMessage(
+        "DesignerPunk's component token definitions",
+        'src/components/core',
+        'DesignerPunk\'s own component tokens (for example avatar.size.md) are not in your token index or your native token output',
+      )}\n`);
+    } else {
+      packageSource = {
+        name: pkgName,
+        version: pkgVersion,
+        winners: universe.winners.filter(w => w.rank === packageRank),
+        losers: universe.shadowed.filter(s => s.source.rank === packageRank),
+      };
+    }
+  }
   let componentTokens: ReturnType<typeof loadComponentTokens>;
   try {
-    componentTokens = loadComponentTokens(config);
+    componentTokens = packageSource
+      ? loadComponentTokens(config, undefined, { packageSource })
+      : loadComponentTokens(config);
   } catch (err) {
     console.error(`❌ ${componentTokenLoadFailureMessage(err, generateRoot)}`);
     process.exit(1);
@@ -269,32 +302,19 @@ export async function runGenerate(force = false) {
   try {
     // Single shared mode resolution (Spec 117 Task 3): generateTokenFiles writes dist AND
     // returns the resolved truth; the index consumes the SAME object — no re-derivation.
-    const modeResolved = generateTokenFiles(tokens, config);
+    const modeResolved = generateTokenFiles(tokens, config, { excludeComponentTokenFromWeb: isPackageComponentToken });
 
     // The component root set the consumer map reads: the consumer's components, then
     // DesignerPunk's, through the Application MCP's own resolver (R1-7; see
     // `resolveGenerateComponentRoots` above). Resolved HERE, passed into the generator,
     // which stays a pure function of its inputs.
-    const packageRoot = resolvePackageRoot(__dirname);
     const componentSchemaDir = resolveGenerateComponentRoots(dsRoot, packageRoot);
 
-    // Shape (c) (`.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`):
-    // in a consumer repo, DesignerPunk's own component tokens come into the index from the
-    // installed package's shipped index, for every package component you have not replaced.
-    // Never in DesignerPunk's own repo, whose index IS that shipped index.
-    let packageComponentTokens: ReturnType<typeof readPackageComponentTokenIndex>['index'] = null;
-    if (path.resolve(packageRoot) !== path.resolve(generateRoot)) {
-      const shipped = readPackageComponentTokenIndex(packageRoot);
-      packageComponentTokens = shipped.index;
-      if (!shipped.index) {
-        console.warn(`⚠️  ${consumerDegradationMessage(
-          "DesignerPunk's token index",
-          PACKAGE_COMPONENT_TOKEN_INDEX_REL,
-          `${shipped.reason}; DesignerPunk's own component tokens (for example avatar.size.md) are not in your token index, so get_token_details does not find them`,
-        )}\n`);
-      }
-    }
+    // DesignerPunk's own component tokens come into the index from the same harvest that wrote
+    // the native output (the third source above), so the index and the output cannot differ:
+    // there is no second read of the package's shipped index (Spec 129 Req 5.2, 5.10).
     const registered = ComponentTokenRegistry.getAll();
+    const harvestedNames = new Set(registered.filter(isPackageComponentToken).map(t => t.name));
 
     // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
     const indexResult = generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
@@ -304,7 +324,9 @@ export async function runGenerate(force = false) {
       modeResolved,
       componentSchemaDir,
       componentTokenFiles: new Map(registered.map(t => [t.name, componentTokenSourceFile(t)])),
-      ...(packageComponentTokens ? { packageComponentTokens } : {}),
+      ...(packageSource && harvestedNames.size > 0
+        ? { harvestedPackageTokens: { names: harvestedNames, package: packageSource.name, version: packageSource.version } }
+        : {}),
       // DD24: the live tier this index's data came from — written into
       // token-index/meta.json so the theme readers can follow it later,
       // wherever this index ends up being served from.

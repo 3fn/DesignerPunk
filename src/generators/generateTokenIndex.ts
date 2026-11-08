@@ -78,6 +78,13 @@ export interface TokenIndexInput {
    * {@link mergePackageComponentTokens}. Never passed in DesignerPunk's own repo.
    */
   packageComponentTokens?: PackageComponentTokenIndex;
+  /**
+   * The component tokens `generate` harvested from the installed package's definition files
+   * (the third source, `src/cli/loadComponentTokens.ts`), and the package they came from.
+   * Their entries carry the package tag, which is how `sync` tells an index written before an
+   * upgrade. Absent in DesignerPunk's own repo.
+   */
+  harvestedPackageTokens?: { names: ReadonlySet<string>; package: string; version: string };
 }
 
 /**
@@ -475,6 +482,9 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
       // Keyed by the registry name (`<component lowercased>.<key>`), the only spelling
       // a schema can declare a component token under.
       consumers: consumerMap.get(ct.name) || [],
+      ...(input.harvestedPackageTokens?.names.has(ct.name)
+        ? { source: { package: input.harvestedPackageTokens.package, version: input.harvestedPackageTokens.version } as PackageEntrySource }
+        : {}),
     };
   }
 

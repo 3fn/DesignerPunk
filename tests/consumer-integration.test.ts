@@ -2338,6 +2338,105 @@ describe('Consumer Integration (Spec 106 R8)', () => {
   // not installed from the registry: the case tests the package, not today's latest jest/ts-jest
   // (a registry install can fail on an unrelated peer-range change). The devDependency list is the
   // one the Integration Guide § "Running Component Tests" and `init`'s optional line name.
+  /**
+   * Spec 129 Task 13 (U8; Req 5.1, 5.3): the component tier reaches the consumer's `generate`.
+   * Own scratch install, so a case may edit the consumer's source and regenerate without
+   * disturbing the shared install above.
+   */
+  describe('Spec 129 Task 13 — DesignerPunk\'s component tokens are harvested as a third source (Req 5.1)', () => {
+    let tier: string;
+    const run = (cmd: string): string => execSync(cmd, { cwd: tier, encoding: 'utf-8', timeout: 90_000, stdio: ['ignore', 'pipe', 'pipe'] });
+    const out = (name: string): string => fs.readFileSync(path.join(tier, 'dist', 'tokens', name), 'utf-8');
+
+    beforeAll(() => {
+      tier = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-component-tier-'));
+      execSync('npm init -y', { cwd: tier, stdio: 'pipe' });
+      execSync(`npm install ${tarballPath} --no-audit --no-fund`, { cwd: tier, stdio: 'pipe', timeout: 60_000 });
+      run('npx designerpunk init --name TierProbe --abbreviation TP --skip-agents');
+      run('npx designerpunk generate');
+    }, TIMEOUT);
+
+    afterAll(() => {
+      if (tier) fs.rmSync(tier, { recursive: true, force: true });
+    });
+
+    it('the package ships the six definition files, and the installed copy loads', () => {
+      const dir = path.join(tier, 'node_modules', '@3fn', 'core', 'src', 'components', 'core');
+      const shipped = [
+        'Avatar-Base/avatar.tokens.ts',
+        'Badge-Label-Base/tokens.ts',
+        'Button-Icon/buttonIcon.tokens.ts',
+        'Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts',
+        'Input-Checkbox-Base/checkbox-sizing.tokens.ts',
+        'Input-Radio-Base/radio-sizing.tokens.ts',
+      ];
+      for (const f of shipped) expect(fs.existsSync(path.join(dir, f))).toBe(true);
+    });
+
+    it('iOS and Android output carry DesignerPunk\'s groups as a third source, references by name', () => {
+      const ios = out('ComponentTokens.ios.swift');
+      const android = out('ComponentTokens.android.kt');
+      for (const group of ['Avatar', 'BadgeLabelBase', 'ButtonIcon', 'InputCheckbox', 'InputRadio', 'VerticalListItem', 'Progress']) {
+        expect(ios).toContain(`public enum ${group}Tokens {`);
+        expect(android).toContain(`object ${group}Tokens {`);
+      }
+      // By name, never a literal: the consumer's own primitive is what the component reads.
+      expect(ios).toMatch(/public static let sizeMd: CGFloat = DesignTokens\.size500\b/);
+      expect(android).toMatch(/val sizeMd = DesignTokens\.size_500\b/);
+    });
+
+    it('web does not harvest: the generated ComponentTokens.web.css holds the consumer\'s own tokens only', () => {
+      const web = out('ComponentTokens.web.css');
+      expect(web).toContain('--progress-');
+      expect(web).not.toContain('--avatar-');
+      expect(web).not.toContain('--button-icon-');
+    });
+
+    it('the token index carries DesignerPunk\'s harvested entries, tagged with the package version', () => {
+      const index = (loadYaml(fs.readFileSync(path.join(tier, 'token-index', 'components.yaml'), 'utf-8')) as { tokens: Record<string, { source?: { package: string; version: string }; definedBy?: string }> }).tokens;
+      expect(index['avatar.size.md'].source?.package).toBe('@3fn/core');
+      expect(index['avatar.size.md'].definedBy).toBe('Avatar-Base');
+      expect(index['progress.node.size.sm'].source).toBeUndefined();
+    });
+
+    it('a change to a referenced primitive\'s value reaches the component token: it reads the name, not a copy of the value', () => {
+      const file = path.join(tier, 'src', 'tokens', 'SizingTokens.ts');
+      const original = fs.readFileSync(file, 'utf-8');
+      const block = /(size500: \{[\s\S]*?baseValue: SIZING_BASE_VALUE \* )5(,[\s\S]*?generateSizingPlatformValues\(SIZING_BASE_VALUE \* )5(\))/;
+      expect(original).toMatch(block);
+      try {
+        fs.writeFileSync(file, original.replace(block, '$16$26$3'));
+        run('npx designerpunk generate');
+        // The primitive moved from 40 to 48 ...
+        expect(out('DesignTokens.ios.swift')).toMatch(/public static let size500: CGFloat = 48\b/);
+        // ... and the component token still reads it by name, so it follows.
+        expect(out('ComponentTokens.ios.swift')).toMatch(/public static let sizeMd: CGFloat = DesignTokens\.size500\b/);
+        expect(out('ComponentTokens.android.kt')).toMatch(/val sizeMd = DesignTokens\.size_500\b/);
+      } finally {
+        fs.writeFileSync(file, original);
+        run('npx designerpunk generate');
+      }
+    }, TIMEOUT);
+
+    it('a group the consumer declares replaces ours, and generate says so', () => {
+      const dir = path.join(tier, 'src', 'tokens', 'component');
+      const src = fs.readFileSync(path.join(tier, 'node_modules', '@3fn', 'core', 'src', 'components', 'core', 'Avatar-Base', 'avatar.tokens.ts'), 'utf-8');
+      const mine = path.join(dir, 'avatar.ts');
+      try {
+        // Their own file declaring group Avatar (rewritten to import from the package's public build entry).
+        fs.writeFileSync(mine, src.replace(/from '\.\.\/\.\.\/\.\.\/build\/tokens'/, "from '@3fn/core/build'").replace(/from '\.\.\/\.\.\/\.\.\/tokens\/SizingTokens'/, "from '../SizingTokens'"));
+        const printed = run('npx designerpunk generate');
+        expect(printed).toContain("component tokens: Avatar — yours replace DesignerPunk's");
+        expect(printed).not.toContain('(copied at init)'); // the import lines differ, so the bytes do
+        const ios = out('ComponentTokens.ios.swift');
+        expect(ios.match(/public enum AvatarTokens \{/g)).toHaveLength(1);
+      } finally {
+        fs.rmSync(mine, { force: true });
+        run('npx designerpunk generate');
+      }
+    }, TIMEOUT);
+  });
+
   describe('Release-3 item 2 — the Jest preset loads @3fn/core/* subpaths in a packed install', () => {
     let presetDir: string;
     const DEV_DEPS = ['jest', 'ts-jest', 'jest-environment-jsdom', '@types/jest', '@types/node', 'typescript'];

@@ -3,14 +3,15 @@
  * `.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`; Peter's ruling of
  * 2026-10-25).
  *
- * The package does not ship its component-token source files (`files` ships only the component
- * YAML), so a consumer's `generate` cannot harvest them. It ships its own token index instead,
- * whose `components.yaml` entries carry each token's references, platform names and the
- * component that defines it (`definedBy`). This module reads that index for `generate`, which
- * merges the entries of every package component the consumer has not replaced
- * ({@link mergePackageComponentTokens}, applied by `src/generators/generateTokenIndex.ts`), each tagged with the
- * package version it came from. And it tells `sync` when the consumer's index is behind the
- * installed package — the second source of truth this shape accepts, made detectable.
+ * Spec 129 U8 changed where `generate` gets these tokens: the package now ships its six
+ * component-token definition files and `generate` harvests them as a third source
+ * (`../loadComponentTokens`), per group, so the index entries come from the same harvest as the
+ * native output and carry the package version tag. What remains here is `sync`'s side: the
+ * package's shipped index (`components.yaml`, with each token's references, platform names and
+ * `definedBy`) is read to tell when the consumer's index is behind the installed package
+ * ({@link assessIndexedPackageComponentTokens}), and {@link mergePackageComponentTokens} is the
+ * one rule for which shipped entries a consumer's index should hold (applied to the shipped index
+ * by `sync`, and by `src/generators/generateTokenIndex.ts` where a caller passes that index).
  *
  * Not imported by `./mcpDataRoots` and not in the `build:mcp-shared` bundle: it needs `js-yaml`.
  */
@@ -60,6 +61,12 @@ export function mergePackageComponentTokens(
   pkg: PackageComponentTokenIndex,
   universe: { roots: string[]; winners: ComponentSource[] },
   ownTokenNames: ReadonlySet<string>,
+  /**
+   * Groups (the entry's `component`) any consumer source declares. `generate` emits a package
+   * group only when no consumer source declares it (Spec 129 design § 9), so the rest of that
+   * group is not expected either. Absent: the per-name rule alone.
+   */
+  ownGroups: ReadonlySet<string> = new Set(),
 ): Array<{ name: string; entry: Record<string, unknown>; definedBy: string }> {
   const packageRank = universe.roots.indexOf(path.resolve(pkg.componentsRoot));
   if (packageRank < 0) return [];
@@ -69,6 +76,7 @@ export function mergePackageComponentTokens(
     // An entry with no platform names is not one the package's build writes: skipped, not guessed at.
     if (!entry || typeof entry !== 'object' || !entry.platforms || typeof entry.platforms !== 'object') continue;
     if (ownTokenNames.has(name)) continue;
+    if (typeof entry.component === 'string' && ownGroups.has(entry.component)) continue;
     const definedBy = typeof entry.definedBy === 'string' ? entry.definedBy : undefined;
     if (!definedBy || !packageWinners.has(definedBy)) continue;
     out.push({ name, entry, definedBy });
@@ -172,7 +180,10 @@ export function assessIndexedPackageComponentTokens(opts: {
   });
   const indexedVersions = Array.from(new Set(staleTagged.map(name => String(tagOf(indexed[name])!.version)))).sort();
 
-  const expected = mergePackageComponentTokens(shipped.index, resolveComponentSources(opts.componentRoots), own);
+  const ownGroups = new Set(
+    Array.from(own).map(name => indexed[name]?.component).filter((g): g is string => typeof g === 'string'),
+  );
+  const expected = mergePackageComponentTokens(shipped.index, resolveComponentSources(opts.componentRoots), own, ownGroups);
   const missing = expected.filter(m => {
     const entry = indexed[m.name];
     return !entry || tagOf(entry)?.version !== installedVersion;

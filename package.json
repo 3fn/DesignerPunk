@@ -59,6 +59,12 @@
     "src/assets/fonts/**",
     "!src/assets/fonts/__tests__/**",
     "src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}",
+    "src/components/core/Avatar-Base/avatar.tokens.ts",
+    "src/components/core/Badge-Label-Base/tokens.ts",
+    "src/components/core/Button-Icon/buttonIcon.tokens.ts",
+    "src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts",
+    "src/components/core/Input-Checkbox-Base/checkbox-sizing.tokens.ts",
+    "src/components/core/Input-Radio-Base/radio-sizing.tokens.ts",
 
     "src/types/PrimitiveToken.ts",
     "src/types/SemanticToken.ts",
