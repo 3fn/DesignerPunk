@@ -6,7 +6,7 @@
 **Type**: Parent · **Validation**: Tier 3 - Comprehensive
 **Agent**: Ada (Sonnet), PRIMARY, with Sparky (14.4 line, 14.5, review of 14.6), Lina (regeneration, lock), Thurgood (profile-author acts; install-doc pins) · **Status**: Complete on the unit branch `task/129-14-consumer-source`; accepted at U9's merge, not before.
 **Delegated-tier**: plan held
-**CI-provenance**: owed. There is no PR yet; the required checks and the four harness contexts run on the PR, and their URLs go in the follow-up after H. Local at `61dd30168`: `npm test` 436 suites / 10257 tests pass; `test:agent-generator` 1798 pass; `application-mcp-server` 582 pass; `mcp-server` 727 pass (its `tests/property/parsing-properties.test.ts` does not compile here: `fc.stringOf` is missing from the installed fast-check, unrelated to this unit); `test:consumer` 86 pass, 1 skipped.
+**CI-provenance**: owed. There is no PR yet; the required checks and the four harness contexts run on the PR, and their URLs go in the follow-up after H. Local at `61dd30168`: `npm test` 436 suites / 10257 tests pass; `test:agent-generator` 1798 pass; `application-mcp-server` 582 pass; `mcp-server` 727 pass (its `tests/property/parsing-properties.test.ts` fails to compile locally, `fc.stringOf` missing from the installed fast-check; the branch touches no file under `mcp-server/`, no `package.json` and no lock, so it touches no file that test reads); `test:consumer` 86 pass, 1 skipped.
 **Instruments**: 27 listed — exists 17 · built-here 10 · missing 0 · unlisted 3 — .kiro/specs/129-consumer-generation-completeness/completion/task-14-instruments.md
 
 ---
