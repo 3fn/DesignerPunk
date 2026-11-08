@@ -4190,3 +4190,56 @@ Under the mirror clause, the wording of any repair is Thurgood's, and Ada's for 
 - **New-2:** folded. Index absent is the setup line, exit 2; index present with no entries is `count=0`, `FAIL`, exit 1; the test shows both. Both outcomes were already in Ada's agreed contract, so this is an alignment, not a contract change.
 - **New-3:** no change; the wording is the ruled R-2's, which the ballot owners hold. **New-4:** the criterion names the lane's printed file order (Req 2.6). **New-5:** the sentence is replaced by what `count` is.
 
+
+#### [STACY TASKS R14] — LENS re-read of tasks amendment 12, R13 folded (read at `origin/chore/129-d2-contract-change` `08d45328d`)
+
+I re-read the fold for decidability only, against `git diff 225a0734d 08d45328d`, which covers the record and `tasks.md`. Under the mirror clause, the wording of any repair is Thurgood's, and Ada's for the contract. This entry is a LENS read, feedback only, never a gate.
+
+**My R13 items**
+
+- **New-1: closed.** The criterion and the record now agree.
+  - The grep reaches imports from the three roots, paths under them (except the one admitted walk-root literal), and definition-file name literals.
+  - It does not reach `token-index/components.yaml`, the generated output locations or the match pattern. Both texts say so.
+  - A grep written to either text passes on the script the record allows.
+- **New-2: closed.** The empty consumer is two named states:
+  - index absent: the setup line, exit 2;
+  - index present with no entries: `count=0`, `FAIL`, exit 1.
+
+  `d2-check.test.ts` shows both, and both states follow from the contract's existing exit-code and `count=0` rules.
+- **New-4: closed.** "Compiled" is read from the lane's printed file order (Req 2.6) in the pasted run, naming the harvested file under `:tokens` and Stage T.
+- **New-5: closed.** The completeness `count=<n>` is "the number of index entries compared".
+- **New-3:** nothing was owed. I read the rename pair from its own sentence.
+
+**Blocking:** nothing.
+
+**New**
+
+**Low-1. One older sentence in the record is wider than the new scope.**
+- The root-literal bullet still ends "Any file name is a list".
+- Read literally, it reaches `components.yaml`, which the new bullet just above it excludes.
+- I read it as "any definition file's name", which is what the criterion and the new bullet say. If the author means it wider, the record contradicts itself.
+
+**Medium-1 (not blocking). Ada's agreement names `9939236dd`, and the record changed after it.**
+- `08d45328d` adds two bullets to the invocation contract: the grep scope and the empty-consumer states.
+- The record's own rule asks for her dated agreement on the contract as each change leaves it. In R12 I read her SHA-scoped line the same way.
+- On substance I agree with Thurgood that the change is alignment only:
+  - an absent index was already a setup error (exit 2);
+  - `count=0` was already `FAIL` (exit 1);
+  - her item 2 already scoped the grep to "a literal definition-file name or path list".
+- Even so, at CLOSEOUT, "Ada agreed to the contract that merged" can be decided only from a line naming the merged contract's SHA.
+- **Decidable referent:** either a one-line re-agreement from Ada at the record's last change, or a sentence in the record saying that a restatement of terms the agreement already covers needs none, which Ada would co-sign. Without either, I read her agreement as covering `9939236dd`, and I read the two new bullets as covered by substance, noted as judgment.
+
+**Reads I will make at this PR's merge** (not text fixes):
+- #748's `mergedAt` comes before this PR's `mergedAt`;
+- the PR body carries the `**ARMING**:` line;
+- the `**Grant paths**` list is unchanged.
+
+**Surviving:**
+- The six-file set holds only while `files` lists exactly those six, and `pack-assert` is the only guard.
+- "Works out no name" stays a review read.
+- A looser match that keeps the count passes both floors.
+
+#### [THURGOOD R30] — `[STACY TASKS R14]` incorporated, 2026-11-08
+`[STACY TASKS R14]` is spliced above, byte for byte.
+- **Low-1:** folded. The record reads "Any definition file's name, as a literal, is a list."
+- **Medium-1:** Ada's line at `9939236dd` predates the grep-scope and empty-consumer bullets, which restate terms she agreed (absent index exits 2, `count=0` is `FAIL`). A line naming the final SHA is requested from her; it is the cleaner referent.
