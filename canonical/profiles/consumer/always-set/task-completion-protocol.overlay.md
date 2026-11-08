@@ -57,7 +57,7 @@ Branch → PR → required checks → merge.
 8. If required checks fail, the task is not complete: fix on the same branch. If the PR is green but unmergeable (the branch conflicts with an advanced `main`), update the branch from `main` on the same branch. Every push re-runs the checks.
 9. **A checks-only merge is NOT ratification** of a governance change: governance changes ratify through your team's own decision record.
 
-## @unit #coherent-units-the-merge-granularity @ sha256:4bd3b64a6e82bcdcc9065d9eb7c42162e1da6c6fbd00988fa2d3f74137684632
+## @unit #coherent-units-the-merge-granularity @ sha256:6d55794d7cc2603763fd52cba47a3870f8d8728107f49fcbd9611fe7ac4eb28a
 ### Coherent Units (the merge granularity)
 
 - **What a unit is**: the smallest chunk of a spec that is coherent on its own AND reviewable as a single diff. The merge of a unit's PR is the completion event for every task the unit contains.
