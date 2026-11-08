@@ -36,7 +36,7 @@ A resolution needs someone who can trace `scopedTsRequire`'s actual behavior for
 
 Thurgood (Spec 123 U1 Task 9), 2026-09-27.
 
-**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 30, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (guard) · defect` (the test may not exercise the boundary it is cited for).
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 30, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#799`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (guard) · defect` (the test may not exercise the boundary it is cited for).
 
 ## Lapse (2026-11-08)
 
@@ -51,4 +51,4 @@ Fired at `7c143845f` (Spec 129 U5), whose diff touches `src/build/tokens/defineC
 
 ## Outcome
 
-**Closed at the fixing PR's merge (Ada, owner; rule 5).** The fixing PR is #<N> (`chore/129-cp3-package-tier-assertion`), which adds the package-tier harvest assertion (`avatar.size.md`) to the packed consumer test; it fails under the `Symbol()` brand bite and passes at head (94 of 94). Grant: `2026-11-08-packed-package-tier-harvest-assertion-grant.md`, archived with this record. Signed: Ada, 2026-11-08.
+**Closed at the fixing PR's merge (Ada, owner; rule 5).** The fixing PR is #799 (`chore/129-cp3-package-tier-assertion`), which adds the package-tier harvest assertion (`avatar.size.md`) to the packed consumer test; it fails under the `Symbol()` brand bite and passes at head (94 of 94). Grant: `2026-11-08-packed-package-tier-harvest-assertion-grant.md`, archived with this record. Signed: Ada, 2026-11-08.
