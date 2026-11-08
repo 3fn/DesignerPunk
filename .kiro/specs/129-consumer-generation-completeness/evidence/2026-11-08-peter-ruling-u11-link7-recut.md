@@ -33,3 +33,29 @@ The FAIL is true, not a matcher artifact. After Thurgood's correction (`89aa1604
   - No ref is rewritten, so § 4.6 of ballot `2026-10-01-signing-act-chain` holds unchanged.
 - **Item 1, yes.** Thurgood builds the print mode in `verify-signing-chain.ts`, in his standing scope with no ballot, with Stacy's two fixtures, before U12's signing acts. The record's owner re-rules its item-1 Trigger citing this record. Items 2–4 keep their Trigger.
 - **The brief practice**, the orchestrator's own and not ruled here: signing briefs copy the template's "print the whole unit" step verbatim, with no line ranges; they require a re-print after any change; and they require `--audit --branch` before reporting, stopping on any verdict that is not anchored.
+
+---
+
+## Addendum: #775 merged; (g) retired by Peter's (A′)
+
+**What happened.** #775 (U11's first cut, head `bf67fbb15`) merged as `d74057506` at 2026-11-08T13:33:30Z. That brought the two link-7-FAIL acts to `main`: `c08bf6751` and `300855cdf`, both of whose records carry false read-claims. Peter, at about 13:34Z: "775 merged. 777 has conflicts", then "My mistake, sorry: 775 merged. 777 has conflicts". A merge never answers a ruling, so (g) stood until Peter re-ruled.
+
+**The finding is the orchestrator's** (Stacy's read, accepted). After the 12:20:05Z ruling, #775 stayed open and green, with no "superseded" line and no hold marker. The class fix is the orchestrator's practice from now on: a PR that a ruling supersedes is closed, or turned to draft with a do-not-merge line, in the same turn as the ruling.
+
+**Put to Peter** (orchestrator's brief, 2026-11-08):
+- (A) Keep #775, with #606's treatment from R11 line 18: the two acts stand as script-checked, plus Kenya's erratum and a records PR.
+- (A′) (A), plus Kenya's erratum citing her whole-unit prints on `task/129-16-theming-text-r2` as a later read, never counted as an act (Stacy).
+- (B) Revert `d74057506` and land the second cut. Thurgood tested it: a plain revert fails `--ci` 39 times (link 3 once, link 2 thirty-eight times). A lawful revert costs about 22 seat acts, or an exception.
+
+**Consulted**: Thurgood (leans (A); #606 fits; (B) costs about 22 acts). Stacy (leans (A) once Peter re-rules; offered (A′); places the finding on the orchestrator). The surviving counter: a mistaken merge overrode a dated ruling, and two known-false read-claims stay on `main` for good, at script-checked strength.
+
+**2026-11-08T13:52:10Z**, Peter: **"let's go (A′)"**
+
+**What was ruled.** (A′) retires (g):
+- #775's 11 acts stand on `main`. Kenya's `c08bf6751` and `300855cdf` stand as script-checked, under the #606 precedent.
+- A post-merge records PR carries:
+  - Kenya's erratum, which quotes both false sentences, states what she actually read, and cites her later whole-unit prints on `task/129-16-theming-text-r2` (`7579a9124`, `9a91bec27`, and the transcript showing them) as a later read, not an act;
+  - Task 16's completion-doc head-H rows: the four harness contexts from run 42476736031 at `bf67fbb15`, and `--audit --pr 775` kept at FAIL 2, citing the erratum and this record, never ✅;
+  - this addendum.
+- The second-cut branch `task/129-16-theming-text-r2` is abandoned and never merged. Its acts stay on that ref.
+- Item 1 (the print mode) is unaffected and proceeds.
