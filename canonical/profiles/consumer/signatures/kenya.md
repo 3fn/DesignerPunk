@@ -50,8 +50,17 @@ date: 2026-11-08
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4
-renderedHash: sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac
+renderedHash: sha256:533765731bfccbfb5125c5a4c754979aa8eb7c970aed510520af0895d96b0f0c
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 10 of 10 (`theming-1` to `theming-10`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4`, renderedHash `sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The rendered unit's last bullet changed: the charter's pointer to the built `dist/*.ios.swift` snapshots is gone, and the rendering now says no token snapshot ships in the package and my own generated `DesignTokens` and theme surface are not the place to look values up. The other nine bullets render as before. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `theming-1` to `theming-9` survive verbatim in the rendered unit. `theming-10` survives on the rendered directive to query the application MCP for the resolved value, formula, per-platform (Swift) name and per-theme set, and on *"no token snapshot ships in the package, and your own generated `DesignTokens` and theme surface are not the place to look values up"*: reading a value from a file violates both (5e, in-unit entailment). The old pointer to the built snapshots was the row's one `removals` entry, and its removal stands.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4`), as the print-mode output shows. `renderedHash` moves `sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac` to `sha256:533765731bfccbfb5125c5a4c754979aa8eb7c970aed510520af0895d96b0f0c` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-11-08):**
 
 **Re-signed 2026-11-08 (Spec 129 Task 16, item (i) emits a theme surface): ASSENT, `surviving` 10 of 10 (`theming-1` to `theming-10`).** A new act, read fresh against the committed rendering; nothing is carried from the entries below, which judged a unit that said "no theme surface today". Their hashes were canonicalHash `sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9`, renderedHash `sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469`.
 - **What changed**: the whole unit. I drafted the text from the generated Swift and the emitters; Thurgood committed it in `448d4fe7d` and corrected `theming-1` in `89aa1604d` (my first draft said "the semantic colours are not on `DesignTokens`", which was false); I confirmed the set at 10 items in `c08bf6751`.
