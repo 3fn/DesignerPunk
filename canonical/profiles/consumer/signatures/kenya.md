@@ -255,8 +255,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:5cee5aac01c8ad35bd478ee58d89b4e2bbeaf1156b8f32db98ca2adc56dbd252
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:5cee5aac01c8ad35bd478ee58d89b4e2bbeaf1156b8f32db98ca2adc56dbd252`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** The fact (*this repo has no .xcodeproj / Package.swift*) is false in a consumer, which IS an iOS app. Its guard against fabricating an in-repo build command is carried consumer-side by the re-pointed `commands[ios-build-test]` and `commands[product-screen-commands]`.
 
@@ -265,8 +267,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** This route leads to our completion-documentation law (the two-document workflow), which is `.kiro/specs/**` workflow as law under subtraction-4. A consumer's product repo has its own process.
 
@@ -275,8 +279,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** This route leads to our development-workflow law (subtraction-4), which has no consumer obligation.
 
@@ -285,8 +291,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** This route leads to our file-organization rules for this repo's tree (subtraction-4).
 
@@ -295,8 +303,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:81797f185efbf2c90b57996a49a096936552de787d44eea9ebecfb9bdd947925
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:81797f185efbf2c90b57996a49a096936552de787d44eea9ebecfb9bdd947925`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** This route leads to the platform resource map, which maps this repo's cross-platform file paths. In a consumer, the component-source function is re-pointed through `knowledgeBases[ios-components]` to `node_modules/@3fn/core/src/…/ios/`.
 
@@ -355,8 +365,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:605e8c609735c53c8cd9f10670209aaeca7ac534fc0b257dccdb474723448881
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:605e8c609735c53c8cd9f10670209aaeca7ac534fc0b257dccdb474723448881`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** This is a repo-internal Jest suite over our Swift theme generator (subtraction-1), and the consumer has no counterpart.
 
@@ -365,8 +377,10 @@ date: 2026-09-29
 signer: kenya
 disposition: superseded-by
 canonicalHash: sha256:99336e5fd14ab59d5a329a219a4356a521e2192a6091c4f3509e00175767eca5
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:bf968f860773b0f645961e1b82211fe4a38927c7b80875332901e770be10cc91
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: superseded-by`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:99336e5fd14ab59d5a329a219a4356a521e2192a6091c4f3509e00175767eca5`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:bf968f860773b0f645961e1b82211fe4a38927c7b80875332901e770be10cc91`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and `superseded-by` still holds: the function survives at its destination, whose rendering I read in the committed consumer rendering (cc `kenya.md`, kiro `kenya-prompt.md`).
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `npm run build` is repo-internal (subtraction-1).
 
@@ -377,8 +391,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:9f9e4c40508ffed400f8e11515773dfb30670cfbc11d54657f6f937ef57e0b5f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:9f9e4c40508ffed400f8e11515773dfb30670cfbc11d54657f6f937ef57e0b5f`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `npm run audit:tokens` is repo-internal (subtraction-1).
 
@@ -387,8 +403,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:9e343b0a30ce8c0186fd29b7d4f347d9e951ef4014e0d24a6c3ee64be9b2b11e
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:9e343b0a30ce8c0186fd29b7d4f347d9e951ef4014e0d24a6c3ee64be9b2b11e`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** The test sources do not ship: `package.json` `files` has `!src/components/core/**/platforms/ios/*Tests.swift`. I checked this, and the no-consumer-counterpart premise holds.
 
@@ -397,8 +415,10 @@ date: 2026-09-29
 signer: kenya
 disposition: superseded-by
 canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:c49070d3309d4fa6576f182a49ea10dbd5161d31720033f6714ccd22cfed6c14
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: superseded-by`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c49070d3309d4fa6576f182a49ea10dbd5161d31720033f6714ccd22cfed6c14`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and `superseded-by` still holds: the function survives at its destination, whose rendering I read in the committed consumer rendering (cc `kenya.md`, kiro `kenya-prompt.md`).
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `docs/specs/**` is our summary-doc tier (subtraction-4). The consumer's spec area is covered by the re-pointed `writeScope[.kiro/specs/**]` → `specs/**`.
 
@@ -409,8 +429,10 @@ date: 2026-09-29
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-10-17
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT — `surviving: []` (first signature, 2026-10-17; row added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1).** `subtraction-3` applies: `.kiro/issues/**` is DesignerPunk's stewardship instrument — the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo (checked `src/cli/init.ts` at `306863b6b`: no such scaffolding), so a consumer's Kenya has nothing there to author or be walked against, and gets no scope.
 
@@ -419,8 +441,10 @@ date: 2026-10-17
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:e9958f4d4e4c795e1a150c554c52f176ee147c1cf7a7d68d5ae1c377d61689ea
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:e9958f4d4e4c795e1a150c554c52f176ee147c1cf7a7d68d5ae1c377d61689ea`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the iOS lane itself: `lane.ts`, the self-test sources and `harness/ios/README.md`. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
 
@@ -429,8 +453,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:27171a40a13589cb8023134c403902e063415bd53135eb3f4005a768657da468
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:27171a40a13589cb8023134c403902e063415bd53135eb3f4005a768657da468`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the Swift probe the lane runs. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
 
@@ -439,8 +465,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:3bf190f903b233070042d8d4c6f6b44eb65af7998cb9db97de682e5db89293ad
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:3bf190f903b233070042d8d4c6f6b44eb65af7998cb9db97de682e5db89293ad`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the Swift diagnostic parser behind the comparator's interface. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
 
@@ -449,8 +477,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:895b6ab2c58a97abd3c5d91a98520d4148334d6ae91d2e6f360ef3f6a8320a7d
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:895b6ab2c58a97abd3c5d91a98520d4148334d6ae91d2e6f360ef3f6a8320a7d`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the test of `probe-swift.ts` and `harness/ios/lane.ts`. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
 
@@ -459,8 +489,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:ca2b74d08cf98ac62370579aaab7613731f44875e7706027e0914aec5147ed7f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:ca2b74d08cf98ac62370579aaab7613731f44875e7706027e0914aec5147ed7f`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the test of `parse-swift.ts`. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
 
@@ -469,8 +501,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:943a29e54f927c0fd45387c6e907f8ec9c31cbb5d71fabf58dbb6bfe9e868fa2
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:943a29e54f927c0fd45387c6e907f8ec9c31cbb5d71fabf58dbb6bfe9e868fa2`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the fixtures `probe-swift.test.ts` reads. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
 
@@ -479,8 +513,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:d31f5d90265b2b6c57f3a84a34d77fdda397d32afe768f41a6b01d3b2ff77f0f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:d31f5d90265b2b6c57f3a84a34d77fdda397d32afe768f41a6b01d3b2ff77f0f`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the fixtures `parse-swift.test.ts` reads. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
 
@@ -489,8 +525,10 @@ date: 2026-11-08
 signer: kenya
 disposition: no-consumer-counterpart
 canonicalHash: sha256:928141613afeaab9f58b4a771ad4443d82d070551c07284076a0d2e31010da32
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: no-consumer-counterpart`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:928141613afeaab9f58b4a771ad4443d82d070551c07284076a0d2e31010da32`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and I still agree nothing should: `no-consumer-counterpart` holds.
 
 **Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the pin file, of which the charter bullet gives me the `ios:` section only. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should. `harness/pins.yaml` carries the same canonicalHash in three seats' files, which is expected: the entry path is the same string in Data's, Ada's and my charters.
 
@@ -499,8 +537,10 @@ date: 2026-11-08
 signer: kenya
 disposition: superseded-by
 canonicalHash: sha256:764ca8ea89091bad2a0bd73aa460e2a3d31379be3cf60413ac6edeb8b5561ab7
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:ced0ce6104249041a08bb9f0f07f19e23721269eb4ec9fcbeb2670d65e9f93e2
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: superseded-by`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:764ca8ea89091bad2a0bd73aa460e2a3d31379be3cf60413ac6edeb8b5561ab7`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:ced0ce6104249041a08bb9f0f07f19e23721269eb4ec9fcbeb2670d65e9f93e2`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and `superseded-by` still holds: the function survives at its destination, whose rendering I read in the committed consumer rendering (cc `kenya.md`, kiro `kenya-prompt.md`).
 
 **Final re-sign 2026-09-29: ASSENT to `superseded-by #how-to-use-designerpunk-tokens-on-ios`, `surviving: []`.**
 - **Why it went stale**: the `canonicalHash` moved because of my own charter fix (`65563985`). The trim's `cue.negative` now reads *"… it is this repo's un-themed base output (written by the in-repo generate …) and is due to stop shipping; … for themed values … a consumer reads its own generate outputDir"*, no longer "ORPHANED and stale".
@@ -513,8 +553,10 @@ date: 2026-09-29
 signer: kenya
 disposition: superseded-by
 canonicalHash: sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:ced0ce6104249041a08bb9f0f07f19e23721269eb4ec9fcbeb2670d65e9f93e2
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: superseded-by`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:ced0ce6104249041a08bb9f0f07f19e23721269eb4ec9fcbeb2670d65e9f93e2`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and `superseded-by` still holds: the function survives at its destination, whose rendering I read in the committed consumer rendering (cc `kenya.md`, kiro `kenya-prompt.md`).
 
 **Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving: []`, to `superseded-by` `#how-to-use-designerpunk-tokens-on-ios`.** A new act, read fresh against the destination's rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace`, renderedHash `sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b`.
 - **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood set this row to `superseded-by` in `3d479bd4b` and deleted its overlay entry; Lina regenerated at `7cfe548e7`. The disposition changes from `re-pointed`; my earlier assents were to that disposition, and this act does not rely on them.
@@ -546,8 +588,10 @@ date: 2026-11-08
 signer: kenya
 disposition: superseded-by
 canonicalHash: sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:ced0ce6104249041a08bb9f0f07f19e23721269eb4ec9fcbeb2670d65e9f93e2
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (signing-act shape-review ballot, F-4 (a), application PR 2): ASSENT, `surviving: []`.** A new act, read fresh from the print-mode output on a clean tree. The stale entry is a hash event only: the row renders nothing, so its `renderedHash` now pins `{disposition, destination}` (`disposition: superseded-by`) instead of the empty-piece hash. `canonicalHash` is unchanged (`sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c`). `renderedHash` moves `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` to `sha256:ced0ce6104249041a08bb9f0f07f19e23721269eb4ec9fcbeb2670d65e9f93e2`, computed with `renderedHashOfRow` and matching the print. The row still renders nothing, and `superseded-by` still holds: the function survives at its destination, whose rendering I read in the committed consumer rendering (cc `kenya.md`, kiro `kenya-prompt.md`).
 
 **Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving: []`, to `superseded-by` `#how-to-use-designerpunk-tokens-on-ios`.** A new act, read fresh against the destination's rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c`, renderedHash `sha256:21178d058909814b92e345d1c860a461e64be9ead617d304813e6587956e7e1d`.
 - **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood set this row to `superseded-by` in `3d479bd4b` and deleted its overlay entry; Lina regenerated at `7cfe548e7`. The disposition changes from `retained`; my earlier assents were to that disposition, and this act does not rely on them.
