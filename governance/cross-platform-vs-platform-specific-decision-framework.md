@@ -248,7 +248,7 @@ Button(
 
 // Platform-specific enhancement
 .clickable(
-    indication = ripple(),  // corrected 2026-11-07: was rememberRipple; .kiro/issues/archive/2026-11-07-android-ripple-workaround-detectors-blind.md; prior text at beccbf134; allowed only where the component's contract declares it
+    indication = ripple(),  // *(corrected 2026-11-07: was rememberRipple; .kiro/issues/archive/2026-11-07-android-ripple-workaround-detectors-blind.md; prior text at beccbf134)* allowed only where the component's contract declares it
     interactionSource = remember { MutableInteractionSource() }
 )
 ```

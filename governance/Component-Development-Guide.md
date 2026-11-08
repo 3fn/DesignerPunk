@@ -670,7 +670,7 @@ Platform implementations handle platform-specific requirements that are **not** 
 **Android Example**: Material ripple effect
 ```kotlin
 .clickable(
-    indication = ripple(),  // Android-specific interaction (corrected 2026-11-07: was rememberRipple; .kiro/issues/archive/2026-11-07-android-ripple-workaround-detectors-blind.md; prior text at beccbf134; allowed only where the component's contract declares it, see Component-Family-Button.md)
+    indication = ripple(),  // Android-specific interaction *(corrected 2026-11-07: was rememberRipple; .kiro/issues/archive/2026-11-07-android-ripple-workaround-detectors-blind.md; prior text at beccbf134)* Allowed only where the component's contract declares it, see Component-Family-Button.md
     interactionSource = remember { MutableInteractionSource() }
 )
 ```
