@@ -26,3 +26,10 @@ The reader then asks whether an earlier `pull_request` run concluded `failure` t
 - **The answer goes in the push-run read's log line**: `<date> run <id> @ <sha> — environment — first seen on PR run <id> | not seen on a PR first`.
 
 **Where it lands**: in the PR that applies site 1.4, as one more line under "What the reader does on a red". That is my record section, and Stacy co-owns it (rule 9). Site 1.4 is ratified as written, so if that PR's author reads this addition as more than site 1.4 names, this record goes to a ballot line instead.
+
+## Outcome (2026-11-08)
+
+Closed by the PR that applies ballot site 1.4, branch `chore/cracks-item1-push-trigger` (G-1's fixing PR), under rule 5. Thurgood.
+- **Carried, not ruled out.** The read is now the bullet **The F-2 read** in `.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md` § "The push-run read". Its text is Stacy's, written in her co-owner review of site 1.4 at `8d5b0694f`, and it holds the query, the same-way test, the offer to Peter and the log-line ending set out above.
+- **What lands with it**: a second co-owner bullet, for a tag red on an archived record, which files a new root record for the lane owner.
+- **The "ballot line instead" branch** of this record's last paragraph does not apply. Stacy reads the addition as within site 1.4: it adds a read and a question to Peter, and no rule.
