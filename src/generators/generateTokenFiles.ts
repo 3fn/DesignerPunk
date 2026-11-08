@@ -16,6 +16,7 @@ import { SemanticOverrideResolver } from '../resolvers/SemanticOverrideResolver'
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import { ThemeRegistry } from '../themes/ThemeRegistry';
 import { resolveThemeMaps, isThemePair } from '../themes/resolveThemeMaps';
+import { findThemeRefusals, themeRefusalMessage } from '../themes/themeRefusals';
 import { getCoreVersion } from './coreVersion';
 import { registeredThemeDiffersNotice } from '../cli/shared/errorCatalog';
 import type { TokenSet } from './TokenSet';
@@ -44,7 +45,7 @@ import type { SemanticToken } from '../types/SemanticToken';
  * paths used to RETURN an empty result, which callers read as success.)
  */
 export class TokenGenerationAbortedError extends Error {
-  constructor(public readonly stage: 'semantic-references' | 'unemitted-color-references' | 'override-maps' | 'context-override-maps',
+  constructor(public readonly stage: 'semantic-references' | 'unemitted-color-references' | 'override-maps' | 'context-override-maps' | 'theme-config',
               public readonly errors: string[]) {
     const first = errors[0] ?? '(no detail)';
     const more = errors.length > 1 ? ` (+${errors.length - 1} more, listed above)` : '';
@@ -54,7 +55,9 @@ export class TokenGenerationAbortedError extends Error {
         ? 'a semantic colour references a primitive the output does not define'
         : stage === 'override-maps'
           ? 'semantic override validation failed'
-          : 'context override validation failed';
+          : stage === 'theme-config'
+            ? 'a registered theme cannot be emitted'
+            : 'context override validation failed';
     super(`Token generation aborted: ${what}: ${first}${more}`);
     this.name = 'TokenGenerationAbortedError';
   }
@@ -219,6 +222,14 @@ export function generateTokenFiles(
   // The override maps `generate` applies: registration decides where each built-in map comes from
   // (design § 10). The config's themes build the registry; nothing here is a static import.
   const configThemes: ConfigTheme[] = config.themes ?? [];
+  // The theme-instance rule's refusals (design § 4, item 5): a registered theme that cannot become an instance
+  // and a family case on both native platforms fails `generate` here, naming the config entry.
+  const refusals = findThemeRefusals(configThemes);
+  if (refusals.length > 0) {
+    const message = themeRefusalMessage(refusals);
+    console.error(`❌ ${message}\n`);
+    throw new TokenGenerationAbortedError('theme-config', refusals.map(r => r.message));
+  }
   const themeMaps = resolveThemeMaps(configThemes, tokenSet, {
     local: config.tokenSourceMode === 'local',
     tokenSourceRoot: config.tokenSourceRoot,

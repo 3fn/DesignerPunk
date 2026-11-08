@@ -2606,6 +2606,16 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect(css).toContain('--pink-500: oklch(0.43 0.141 10);');
     }, TIMEOUT);
 
+    it('group 2, the dark and WCAG override maps: an edited registered map reaches the generated CSS', () => {
+      expect(out('DesignTokens.web.css')).toMatch(/--color-action-navigation: light-dark\(oklch\(0\.28 0\.045 209\), oklch\(0\.92 0\.035 209\)\);/);
+      const css = editAndGenerate('themes/wcag/SemanticOverrides.ts', [[/('color\.action\.navigation': \{ primitiveReferences: \{ value: ')teal500/, '$1teal400']], () => out('DesignTokens.web.css'));
+      const teal400 = /--teal-400: (oklch\([^)]+\));/.exec(css)![1];
+      expect(css).toContain(`--color-action-navigation: light-dark(${teal400}, oklch(0.92 0.035 209));`);
+      const dark = editAndGenerate('themes/dark/SemanticOverrides.ts', [[/('color\.structure\.canvas': \{ primitiveReferences: \{ value: ')gray400/, '$1gray300']], () => out('DesignTokens.web.css'));
+      const gray300 = /--gray-300: (oklch\([^)]+\));/.exec(dark)![1];
+      expect(dark).toMatch(new RegExp(`--color-structure-canvas: light-dark\\([^,]+, ${gray300.replace(/[()]/g, '\\$&')}\\);`));
+    }, TIMEOUT);
+
     it('group 3, the opacity values: an edited opacity reaches a colour built from it', () => {
       const before = out('DesignTokens.web.css');
       expect(before).toContain('--color-structure-border-subtle: light-dark(oklch(0.72 0.018 260 / 0.48), oklch(0.32 0.015 260 / 0.48));');
@@ -2639,7 +2649,8 @@ describe('Consumer Integration (Spec 106 R8)', () => {
 
     /**
      * Req 9.5 as amended: with the package's own copies of the groups removed from the installed
-     * package, `generate` succeeds with byte-identical output. Spacing and Sizing stay because the
+     * package (the override maps included: a fresh `init` registers all three, so none is read), `generate`
+     * succeeds with byte-identical output. Spacing and Sizing stay because the
      * package's own component token files (harvested as a third source, Task 13) import them; they
      * are not among the six groups. Runs last: it removes files and does not restore them.
      */
@@ -2660,7 +2671,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       run('npx designerpunk generate --force');
       const before = snapshot();
       const pkg = path.join(tier, 'node_modules', '@3fn', 'core');
-      const keep = new Set(['SpacingTokens', 'SizingTokens', 'themes', '__tests__', 'platforms', 'component']);
+      const keep = new Set(['SpacingTokens', 'SizingTokens', '__tests__', 'platforms', 'component']);
       let removed = 0;
       for (const base of [path.join(pkg, 'src', 'tokens'), path.join(pkg, 'dist', 'tokens')]) {
         for (const e of fs.readdirSync(base)) {
@@ -2676,6 +2687,251 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect([...after.keys()].sort()).toEqual([...before.keys()].sort());
       for (const [k, v] of before) expect(after.get(k)).toBe(v);
     }, TIMEOUT);
+  });
+
+  /**
+   * Spec 129 Task 14 (U9) — `generate` builds the theme registry from the config (Req 9.2, 9.3; design § 10,
+   * "The built-in theme bridge, keyed on registration").
+   *
+   * Cases (a) to (d) of the design's acceptance, then config C reaching native output and the web form of the
+   * single-mode rule. One install; each case writes its own config and restores the token source after.
+   */
+  describe('Spec 129 Task 14 — the registry from config: cases (a)-(d), config C (Req 9.3)', () => {
+    let tier: string;
+    let version: string;
+    let freshConfig: string;
+    const FIXTURE = path.join(PKG_ROOT, 'tests', 'fixtures', 'pre-u9-theme-css');
+    const themeFiles = ['dark', 'wcag', 'dark-wcag'];
+    const pristine = new Map<string, string>();
+    const themeFile = (dir: string): string => path.join(tier, 'src', 'tokens', 'themes', dir, 'SemanticOverrides.ts');
+    const css = (): string => fs.readFileSync(path.join(tier, 'dist', 'tokens', 'DesignTokens.web.css'), 'utf-8');
+    const out = (name: string): string => fs.readFileSync(path.join(tier, 'dist', 'tokens', name), 'utf-8');
+    /** `generate`'s stdout and stderr together (it prints warnings on stderr). */
+    const generate = (): { status: number | null; text: string } => {
+      const r = require('child_process').spawnSync('npx', ['designerpunk', 'generate'], { cwd: tier, encoding: 'utf-8', timeout: 90_000 });
+      return { status: r.status, text: `${r.stdout}\n${r.stderr}` };
+    };
+    const writeConfig = (themes: string, extra = "tokenSource: './src/tokens',"): void => {
+      fs.writeFileSync(path.join(tier, 'designerpunk.config.ts'), [
+        "import { defineConfig } from '@3fn/core/config';",
+        "import { darkSemanticOverrides } from './src/tokens/themes/dark/SemanticOverrides.ts';",
+        "import { wcagSemanticOverrides } from './src/tokens/themes/wcag/SemanticOverrides.ts';",
+        "import { darkWcagSemanticOverrides } from './src/tokens/themes/dark-wcag/SemanticOverrides.ts';",
+        '',
+        'export default defineConfig({',
+        "  name: 'Cases', abbreviation: 'CS',",
+        `  ${extra}`,
+        "  componentTokens: ['./src/components', './src/tokens/component'],",
+        `  themes: [${themes}],`,
+        "  output: './dist/tokens',",
+        '});',
+        '',
+      ].join('\n'));
+    };
+    const reset = (): void => {
+      for (const d of themeFiles) fs.writeFileSync(themeFile(d), pristine.get(d)!);
+      fs.writeFileSync(path.join(tier, 'designerpunk.config.ts'), freshConfig);
+      fs.rmSync(path.join(tier, 'dist', 'tokens', '.theme-notice.json'), { force: true });
+    };
+    const bridgeWarning = (theme: string, mode: string, line: string): string =>
+      `generate: theme '${theme}' (${mode}) is not registered in designerpunk.config.ts, so DesignerPunk's built-in overrides from @3fn/core ${version} were applied, ` +
+      `as before 129. To use your own, register it: ${line}. From the next major release, an unregistered built-in theme is not applied.`;
+    const PAIR_LINE = "{ name: 'wcag', mode: 'both', overrides: { light: wcagSemanticOverrides, dark: darkWcagSemanticOverrides } }";
+    const DARK_LINE = "{ name: 'dark', mode: 'dark', overrides: darkSemanticOverrides }";
+    const wcagBlockOf = (text: string): string => text.slice(text.indexOf(':root[data-theme="wcag"]'));
+
+    beforeAll(() => {
+      tier = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-registry-'));
+      execSync('npm init -y', { cwd: tier, stdio: 'pipe' });
+      execSync(`npm install ${tarballPath} --no-audit --no-fund`, { cwd: tier, stdio: 'pipe', timeout: 60_000 });
+      execSync('npx designerpunk init --name Cases --abbreviation CS --skip-agents', { cwd: tier, stdio: 'pipe', timeout: 60_000 });
+      freshConfig = fs.readFileSync(path.join(tier, 'designerpunk.config.ts'), 'utf-8');
+      for (const d of themeFiles) pristine.set(d, fs.readFileSync(themeFile(d), 'utf-8'));
+      version = JSON.parse(fs.readFileSync(path.join(tier, 'node_modules', '@3fn', 'core', 'package.json'), 'utf-8')).version;
+    }, TIMEOUT);
+
+    afterAll(() => {
+      if (tier) fs.rmSync(tier, { recursive: true, force: true });
+    });
+
+    it('init writes the WCAG entry with both maps (the { light, dark } form), and registers all three built-in maps', () => {
+      expect(freshConfig).toContain("{ name: 'dark', mode: 'dark', overrides: darkSemanticOverrides }");
+      expect(freshConfig).toContain(PAIR_LINE);
+    });
+
+    describe('case (a): a test01-shaped consumer, copies of all three maps that differ, only wcag light registered', () => {
+      it('dark and WCAG dark are byte-identical to the pre-U9 golden; wcag light is the fixture\'s; the count and the bridge warning print', () => {
+        execSync(`node ${JSON.stringify(path.join(FIXTURE, 'mutate-fixture.cjs'))} ${JSON.stringify(tier)}`, { stdio: 'pipe' });
+        try {
+          const golden = fs.readFileSync(path.join(FIXTURE, 'DesignTokens.web.css'), 'utf-8').replace(/^[\s\S]*?\/\* ---- end of header[^\n]*\n/, '');
+          // The golden's header names its source SHA and the exact command that captured it.
+          const header = fs.readFileSync(path.join(FIXTURE, 'DesignTokens.web.css'), 'utf-8').split('/* ---- end of header')[0];
+          expect(header).toMatch(/Source SHA : [0-9a-f]{40}/);
+          expect(header).toContain('capture.sh');
+
+          const run1 = generate();
+          expect(run1.status).toBe(0);
+          const got = css();
+          const gotLines = got.split('\n');
+          const goldenLines = golden.split('\n');
+          expect(gotLines).toHaveLength(goldenLines.length);
+          // Everything before the WCAG block is the golden's, byte for byte: the base :root carries the dark map.
+          const at = goldenLines.indexOf(':root[data-theme="wcag"] {');
+          expect(gotLines.slice(0, at)).toEqual(goldenLines.slice(0, at));
+          // Inside it, the registered wcag light copy moved the light half of exactly the two tokens it changed; every dark half is the golden's.
+          const changed = gotLines.map((l, i) => [l, goldenLines[i]] as const).filter(([a, b]) => a !== b);
+          expect(changed).toHaveLength(2);
+          const teal400 = /--teal-400: (oklch\([^)]+\));/.exec(got)![1];
+          const teal200 = /--teal-200: (oklch\([^)]+\));/.exec(got)![1];
+          const darkHalf = (l: string): string => l.slice(l.lastIndexOf(', ') + 2);
+          for (const [a, b] of changed) expect(darkHalf(a)).toBe(darkHalf(b));
+          expect(changed.map(([a]) => a)).toEqual([
+            expect.stringContaining(`--color-action-navigation: light-dark(${teal400}, `),
+            expect.stringContaining(`--color-background-primary-subtle: light-dark(${teal200}, `),
+          ]);
+          // the first run prints how many of the registered map's values differ from DesignerPunk's built-in
+          expect(run1.text).toContain("generate: theme 'wcag' (light) is registered, so your own overrides now apply. 2 of its values differ from DesignerPunk's built-in overrides");
+          // the bridge warning for dark and for WCAG dark, word for word, on each of two consecutive runs
+          const run2 = generate();
+          for (const run of [run1, run2]) {
+            expect(run.text).toContain(bridgeWarning('dark', 'dark', DARK_LINE));
+            expect(run.text).toContain(bridgeWarning('wcag', 'dark', PAIR_LINE));
+            expect(run.text).not.toContain("theme 'wcag' (light) is not registered");
+          }
+          // the count is the first run's only
+          expect(run2.text).not.toContain('values differ from DesignerPunk');
+          expect(css()).toBe(got);
+        } finally {
+          reset();
+          generate();
+        }
+      }, TIMEOUT);
+    });
+
+    it('case (b): a fresh init config, which registers all three maps, prints no bridge warning', () => {
+      reset();
+      const r = generate();
+      expect(r.status).toBe(0);
+      expect(r.text).not.toContain('is not registered in designerpunk.config.ts');
+      expect(r.text).not.toContain('values differ from DesignerPunk');
+    }, TIMEOUT);
+
+    it('case (c): wcag registered with empty overrides applies nothing and prints no warning', () => {
+      writeConfig([DARK_LINE, "{ name: 'wcag', mode: 'both', overrides: { light: {}, dark: {} } }"].join(', '));
+      try {
+        const r = generate();
+        expect(r.status).toBe(0);
+        expect(r.text).not.toContain('is not registered in designerpunk.config.ts');
+        const text = css();
+        const base = text.slice(0, text.indexOf(':root[data-theme="wcag"]') === -1 ? text.length : text.indexOf(':root[data-theme="wcag"]'));
+        const block = text.includes(':root[data-theme="wcag"]') ? wcagBlockOf(text) : '';
+        for (const l of block.split('\n').filter(x => /^  --/.test(x))) {
+          const name = l.slice(0, l.indexOf(':'));
+          expect(base.split('\n').find(b => b.startsWith(`${name}:`))).toBe(l);
+        }
+        // nothing in the WCAG block moved off the base: the primary action is the base's, not the built-in WCAG teal
+        expect(text).not.toContain('--color-action-primary: oklch(0.52 0.08 209);');
+      } finally {
+        reset();
+        generate();
+      }
+    }, TIMEOUT);
+
+    it('case (d): package mode (no tokenSource, no token tier) prints no warning and applies the package\'s built-ins', () => {
+      // A consumer with a token tier and no `tokenSource` is refused, so package mode is its own install.
+      const pkgTier = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-package-mode-'));
+      try {
+        execSync('npm init -y', { cwd: pkgTier, stdio: 'pipe' });
+        execSync(`npm install ${tarballPath} --no-audit --no-fund`, { cwd: pkgTier, stdio: 'pipe', timeout: 60_000 });
+        fs.writeFileSync(path.join(pkgTier, 'designerpunk.config.ts'), [
+          "import { defineConfig } from '@3fn/core/config';",
+          "export default defineConfig({ name: 'PkgMode', abbreviation: 'PM', output: './dist/tokens' });",
+          '',
+        ].join('\n'));
+        const r = require('child_process').spawnSync('npx', ['designerpunk', 'generate'], { cwd: pkgTier, encoding: 'utf-8', timeout: 90_000 });
+        const text = `${r.stdout}\n${r.stderr}`;
+        if (r.status !== 0) throw new Error(text);
+        expect(text).not.toContain('is not registered in designerpunk.config.ts');
+        expect(text).not.toContain('values differ from DesignerPunk');
+        const built = fs.readFileSync(path.join(pkgTier, 'dist', 'tokens', 'DesignTokens.web.css'), 'utf-8');
+        expect(built).toContain('--color-action-primary: oklch(0.52 0.08 209);'); // the built-in wcag block
+        expect(built).toMatch(/--color-text-default: light-dark\(oklch\(0\.52 0\.02 260\), oklch\(1 0 260\)\);/); // and the built-in dark map
+      } finally {
+        fs.rmSync(pkgTier, { recursive: true, force: true });
+      }
+    }, TIMEOUT);
+
+    it('a registered built-in map whose file is missing fails generate, naming the file', () => {
+      const file = themeFile('dark');
+      fs.rmSync(file);
+      try {
+        const r = generate();
+        expect(r.status).not.toBe(0);
+        expect(r.text).toContain(path.join('src', 'tokens', 'themes', 'dark', 'SemanticOverrides.ts'));
+      } finally {
+        reset();
+        generate();
+      }
+    }, TIMEOUT);
+
+    describe('config C: custom themes reach native output and the web, in the single-mode form', () => {
+      const ref = (v: string): string => `{ primitiveReferences: { value: '${v}' } }`;
+      it('emits the eight instances and the five family cases; brand and default are one-mode light-dark() blocks; no "not applied yet"', () => {
+        writeConfig([
+          DARK_LINE,
+          "{ name: 'wcag', mode: 'both', overrides: { light: wcagSemanticOverrides, dark: darkWcagSemanticOverrides } }",
+          `{ name: 'high-contrast', mode: 'both', overrides: { 'color.action.primary': ${ref('purple500')} } }`,
+          `{ name: 'brand', mode: 'light', overrides: { 'color.action.primary': ${ref('pink300')} } }`,
+          `{ name: 'default', mode: 'dark', overrides: { 'color.action.primary': ${ref('teal300')} } }`,
+        ].join(', '));
+        try {
+          const r = generate();
+          expect(r.status).toBe(0);
+          expect(r.text).not.toContain('registered, not applied yet');
+          const swift = out('DesignTokens.ios.swift');
+          const kotlin = out('DesignTokens.android.kt');
+          const holder = swift.slice(swift.indexOf('public enum CasesThemes {'));
+          expect([...holder.slice(0, holder.indexOf('\n}')).matchAll(/^    public static let (\w+):/gm)].map(m => m[1]))
+            .toEqual(['baseLight', 'baseDark', 'wcagLight', 'wcagDark', 'highContrastLight', 'highContrastDark', 'brandLight', 'defaultDark']);
+          expect([...swift.slice(swift.indexOf('public enum CasesThemeFamily')).split('\n}')[0].matchAll(/^    case (\S+)$/gm)].map(m => m[1]))
+            .toEqual(['base', 'wcag', 'highContrast', 'brand', '`default`']);
+          const kholder = kotlin.slice(kotlin.indexOf('object CasesThemes {'));
+          expect([...kholder.slice(0, kholder.indexOf('\n}')).matchAll(/^    val (\w+) = DesignerPunkTheme\($/gm)].map(m => m[1]))
+            .toEqual(['BaseLight', 'BaseDark', 'WcagLight', 'WcagDark', 'HighContrastLight', 'HighContrastDark', 'BrandLight', 'DefaultDark']);
+          expect([...kotlin.slice(kotlin.indexOf('enum class CasesThemeFamily')).split('\n}')[0].matchAll(/^    (\w+),?$/gm)].map(m => m[1]))
+            .toEqual(['Base', 'Wcag', 'HighContrast', 'Brand', 'Default']);
+
+          const text = css();
+          const block = (name: string): string => {
+            const i = text.indexOf(`:root[data-theme="${name}"] {`);
+            return text.slice(i, text.indexOf('}', i));
+          };
+          const primary = (b: string): string => b.split('\n').find(l => l.startsWith('  --color-action-primary:'))!;
+          const baseLine = text.split('\n').find(l => l.startsWith('  --color-action-primary:'))!;
+          /** The two halves of a custom property's value: `light-dark(L, D)`, or the plain value for both. */
+          const halves = (l: string): [string, string] => {
+            const m = /: light-dark\((oklch\([^)]*\)), (oklch\([^)]*\))\);$/.exec(l);
+            if (m) return [m[1], m[2]];
+            const plain = /: (oklch\([^)]*\));$/.exec(l)![1];
+            return [plain, plain];
+          };
+          const light = (l: string): string => halves(l)[0];
+          const dark = (l: string): string => halves(l)[1];
+          const pink300 = /--pink-300: (oklch\([^)]+\));/.exec(text)![1];
+          const teal300 = /--teal-300: (oklch\([^)]+\));/.exec(text)![1];
+          for (const name of ['brand', 'default', 'high-contrast']) expect(block(name)).not.toContain('color-scheme');
+          // brand covers light only: its own light value, the base's dark value
+          expect(light(primary(block('brand')))).toBe(pink300);
+          expect(primary(block('brand'))).toContain(`, ${dark(baseLine)})`);
+          // default covers dark only: the base's light value, its own dark value
+          expect(dark(primary(block('default')))).toBe(teal300);
+          expect(primary(block('default'))).toContain(`light-dark(${light(baseLine)}, `);
+        } finally {
+          reset();
+          generate();
+        }
+      }, TIMEOUT);
+    });
   });
 
   describe('Release-3 item 2 — the Jest preset loads @3fn/core/* subpaths in a packed install', () => {

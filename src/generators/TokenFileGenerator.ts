@@ -1073,9 +1073,14 @@ export class TokenFileGenerator {
   }
 
   /**
-   * Generate a single web CSS theme override block.
-   * Produces `:root[data-theme="name"] { ... }` with overridden tokens.
-   * Dark-only themes include `color-scheme: dark` and use static values (no light-dark()).
+   * Generate a single web CSS theme override block: `:root[data-theme="name"] { ... }` with the overridden tokens.
+   *
+   * The single-mode rule (design § 4, Spec 129 U9): a theme of one mode covers one colour scheme, and its other
+   * half is the base. A theme of mode `light` writes `light-dark(<its light value>, <baseDark value>)`; one of mode
+   * `dark` writes `light-dark(<baseLight value>, <its dark value>)`; a theme of both modes writes both of its own.
+   * A token whose two values are equal is written as a plain value. No block carries a `color-scheme` line: the
+   * block does not set the scheme, it follows the page's. Only the covered mode's tokens are read from the theme,
+   * so a theme built with one mode's tokens is complete.
    */
   private generateWebThemeBlock(
     baseLight: Array<Omit<SemanticToken, 'primitiveTokens'>>,
@@ -1089,21 +1094,23 @@ export class TokenFileGenerator {
     const ltMap = new Map(theme.lightTokens.map(t => [t.name, t]));
     const dtMap = new Map(theme.darkTokens.map(t => [t.name, t]));
 
+    const getVal = (t: Omit<SemanticToken, 'primitiveTokens'> | undefined): string | undefined =>
+      t === undefined
+        ? undefined
+        : t.primitiveReferences?.value ?? t.primitiveReferences?.default ?? Object.values(t.primitiveReferences || {})[0] ?? '';
+
     const overrides: Array<{ token: Omit<SemanticToken, 'primitiveTokens'>; lightVal: string; darkVal: string }> = [];
 
-    for (const [name] of lbMap) {
-      const lbToken = lbMap.get(name)!;
+    for (const [name, lbToken] of lbMap) {
       if (lbToken.category !== SemanticCategory.COLOR) continue;
       if (!theme.overrideKeys.has(name)) continue;
 
-      const ltToken = ltMap.get(name);
-      const dtToken = dtMap.get(name);
-      if (!ltToken || !dtToken) continue;
+      // The covered half comes from the theme; the other half is the base's.
+      const lightVal = theme.mode === 'dark' ? getVal(lbToken) : getVal(ltMap.get(name));
+      const darkVal = theme.mode === 'light' ? getVal(dbMap.get(name)) : getVal(dtMap.get(name));
+      if (lightVal === undefined || darkVal === undefined) continue;
 
-      const getVal = (t: Omit<SemanticToken, 'primitiveTokens'>) =>
-        t.primitiveReferences?.value ?? t.primitiveReferences?.default ?? Object.values(t.primitiveReferences || {})[0] ?? '';
-
-      overrides.push({ token: lbToken, lightVal: getVal(ltToken), darkVal: getVal(dtToken) });
+      overrides.push({ token: lbToken, lightVal, darkVal });
     }
 
     if (overrides.length === 0) return lines;
@@ -1112,27 +1119,13 @@ export class TokenFileGenerator {
     lines.push(`/* ${theme.name.charAt(0).toUpperCase() + theme.name.slice(1)} Theme: Semantic token overrides (Spec 094) */`);
     lines.push(`:root[data-theme="${theme.name}"] {`);
 
-    if (theme.mode === 'dark') {
-      lines.push('  color-scheme: dark;');
-    }
-
     for (const o of overrides) {
       const name = this.webGenerator.getTokenName(o.token.name, o.token.category);
       const cssName = name.startsWith('--') ? name : `--${name}`;
-
-      if (theme.mode === 'dark') {
-        // Dark-only: static value, no light-dark()
-        lines.push(`  ${cssName}: ${o.darkVal};`);
-      } else if (theme.mode === 'light') {
-        // Light-only: static value
-        lines.push(`  ${cssName}: ${o.lightVal};`);
-      } else {
-        // Both modes: light-dark() wrapping when values differ
-        const value = o.lightVal !== o.darkVal
-          ? `light-dark(${o.lightVal}, ${o.darkVal})`
-          : o.lightVal;
-        lines.push(`  ${cssName}: ${value};`);
-      }
+      const value = o.lightVal !== o.darkVal
+        ? `light-dark(${o.lightVal}, ${o.darkVal})`
+        : o.lightVal;
+      lines.push(`  ${cssName}: ${value};`);
     }
 
     lines.push('}');
