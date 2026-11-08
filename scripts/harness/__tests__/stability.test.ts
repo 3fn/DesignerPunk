@@ -660,10 +660,61 @@ describe('a push run on main counts toward neither condition, and its reds are l
     expect(analysis.contexts.filter((x) => x.context !== 'harness-android-tokens').every((x) => x.pushReds.length === 0)).toBe(true);
     const text = render(analysis, { repo: '3fn/DesignerPunk', workflow: 'native-harness.yml', generatedAt: '2026-11-08T00:00:00Z' });
     expect(text).toContain('- Runs recorded: 1 (0 pull-request, 0 dispatched, 1 push).');
-    expect(text).toContain(`- Push runs on main: 1; red: 42331622121 @ \`${sha.slice(0, 9)}\` (FAIL).`);
-    expect(text).toContain('- Push runs on main: 1; red: none.');
+    expect(text).toContain(`- Push runs on main: 1; red: 42331622121 @ \`${sha.slice(0, 9)}\` (FAIL); superseded (cancelled, not red): none.`);
+    expect(text).toContain('- Push runs on main: 1; red: none; superseded (cancelled, not red): none.');
     expect(text).toContain('| no (push) |');
     expect(text).toContain('nor does a push run on `main`');
+  });
+
+  /**
+   * The two burst shapes (cancel-in-progress is false, so a pending push run is the one cancelled). The first
+   * is red at the base, where line 546 reads any finished push run that did not succeed as red.
+   */
+  const cancelled = (withJobs: boolean): RawInput => {
+    const raw = asPush();
+    const run = raw.runs[0] as { conclusion: string | null; status?: string };
+    run.conclusion = 'cancelled';
+    run.status = 'completed';
+    const sha = raw.runs[0].head_sha;
+    if (withJobs) {
+      for (const j of raw.jobsByRun[42331622121] as unknown as { conclusion: string | null }[]) j.conclusion = 'cancelled';
+      for (const cr of raw.checkRunsBySha[sha] as unknown as { conclusion: string | null }[]) cr.conclusion = 'cancelled';
+      const byJob = raw.annotationsByJob as unknown as Record<number, { title: string; message: string }[]>;
+      for (const k of Object.keys(byJob)) byJob[Number(k)] = byJob[Number(k)].filter((a) => a.title !== 'harness-verdict');
+    } else {
+      (raw.jobsByRun as unknown as Record<number, unknown[]>)[42331622121] = [];
+      (raw.checkRunsBySha as unknown as Record<string, unknown[]>)[sha] = [];
+    }
+    return raw;
+  };
+
+  it('a push run whose jobs were cancelled is superseded, not red (red at the base)', () => {
+    const analysis = analyze(normalize(cancelled(true)));
+    for (const c of analysis.contexts) {
+      expect(c.pushReds).toEqual([]);
+      expect(c.pushSuperseded.map((r) => r.runId)).toEqual([42331622121]);
+    }
+    const text = render(analysis, { repo: 'r', workflow: 'w', generatedAt: 't' });
+    expect(text).toContain('- Push runs on main: 1; red: none; superseded (cancelled, not red): 42331622121 @ `b00621317`.');
+    expect(text).toContain('a push run the concurrency group cancelled is listed as superseded, never as red');
+  });
+
+  it('a push run cancelled before its jobs existed is superseded, not red', () => {
+    const analysis = analyze(normalize(cancelled(false)));
+    for (const c of analysis.contexts) {
+      expect(c.runs[0].last.state).toBe('ended-no-job');
+      expect(c.pushReds).toEqual([]);
+      expect(c.pushSuperseded.map((r) => r.runId)).toEqual([42331622121]);
+    }
+  });
+
+  it('a cancelled job that already read FAIL stays red, and a failed push run is never superseded', () => {
+    const raw = cancelled(true);
+    const job = (raw.jobsByRun[42331622121] as unknown as ApiJob[]).find((j) => j.name === 'harness-android-tokens (main)') as ApiJob;
+    (raw.annotationsByJob as unknown as Record<number, { title: string; message: string }[]>)[job.id].push({ title: 'harness-verdict', message: 'harness-verdict: harness-android-tokens FAIL (toolchain)' });
+    const c = analyze(normalize(raw)).contexts.find((x) => x.context === 'harness-android-tokens');
+    expect(c?.pushReds.map((r) => r.runId)).toEqual([42331622121]);
+    expect(c?.pushSuperseded).toEqual([]);
   });
 
   it('a dispatched run still reads as dispatched in the record', () => {
