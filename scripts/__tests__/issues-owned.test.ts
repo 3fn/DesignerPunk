@@ -449,7 +449,7 @@ describe('scripts/issues-owned.sh — the owner names on an Owner line', () => {
 });
 
 /**
- * The PR mode, `fired-records` (warn-only; .kiro/issues/2026-11-08-fired-records-warn-check-grant.md):
+ * The PR mode, `fired-records` (warn-only; .kiro/issues/2026-11-08-fired-records-warn-workflow-grant.md):
  * `--pr <N> --base <ref> --head <ref>` lists the root records the PR's merge fires. The falsification
  * case is #791's shape: Spec 129's CLOSEOUT pass added `completion/claims-pass.md`, which fired the
  * charter and Lina's component-repair record (both `path:` on that file); nobody re-ruled them, and

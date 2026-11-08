@@ -55,7 +55,7 @@
 # (rule 11); one still open after its fixing PR's merge is a walk finding (rule 5).
 # Under GITHUB_ACTIONS=true each fires-here line is also a `::warning title=fired-records::`
 # annotation (a `::notice` when this diff edits the record, which may be its closing outcome line). The last line counts each state. Exits 0 always; an error prints the unavailable
-# line. A READ, NEVER A GATE (warn-only, .kiro/issues/2026-11-08-fired-records-warn-check-grant.md).
+# line. A READ, NEVER A GATE (warn-only, .kiro/issues/2026-11-08-fired-records-warn-workflow-grant.md).
 
 REF=origin/main
 TIMEOUT="${ISSUES_OWNED_FETCH_TIMEOUT:-15}"
