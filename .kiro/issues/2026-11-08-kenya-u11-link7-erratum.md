@@ -3,7 +3,7 @@
 **Date**: 2026-11-08
 **Type**: erratum (record)
 **Owner**: **Kenya**. Under rule 9 the body is hers; any seat may append dated, signed lines.
-**Trigger**: `manual` — the event is the merge of the records PR that carries this file; its number does not exist yet, and I re-rule this line to `merge:#<N>` once it does.
+**Trigger**: `merge:#778` — the event is the merge of the records PR that carries this file.
 **Class**: P2 obligation (record) · erratum *(set 2026-11-08, Kenya, filer, rule 12. It corrects two sentences in committed sheets; no consumer-facing text is false, so `(record)`.)*
 **Source**: Peter's ruling (g), 2026-11-08T12:20:05Z, and its re-ruling (A′), 2026-11-08T13:52:10Z, "let's go (A′)", both in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u11-link7-recut.md` (addendum at `d6e23769f`).
 
