@@ -29,7 +29,7 @@
 
 Unmet or partially met criteria: the last criterion (harness contexts, at the PR). No other criterion is unmet.
 
-**The Guide and the lock (⚠️)**: Task 15 edits the Integration Guide (Thurgood: L6, L69–L82, L314 step 5 → 4; mine: a new entry `### Platform output folders`, L470–L473, the config reference). `npx tsx tools/agent-generator/diff-guard.ts` reads `full-run-green (input-closure-changed)` on `canonical/registry/tool-registry.json`. I restored the rewritten `canonical/generated.lock` each time; **the lock is not refreshed in this diff**: Lina refreshes it when U10 is next in the lock queue (U11 is ahead). INSTALL did not change for the L470 entry (`derive-install-doc.ts` reads another region).
+**The Guide and the lock (✅)**: Task 15 edits the Integration Guide (Thurgood: L6, L69–L82, L314 step 5 → 4; mine: a new entry `### Platform output folders`, L470–L473). Before the refresh, `npx tsx tools/agent-generator/diff-guard.ts` read `diff-guard: full-run-green (input-closure-changed)` on `canonical/registry/tool-registry.json`. Lina's refresh is `33bf1103d` on `task/129-15-lina-lock` (lock only), joined at `201becc3c`, `canonical/generated.lock` byte-identical to it. After it: `diff-guard: no-op-green`, lock unmodified; parity: 50 evaluated, 0 fail. INSTALL did not change for the L470 entry (`derive-install-doc.ts` reads another region).
 
 ## Additional verification
 
