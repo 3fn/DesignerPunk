@@ -4032,3 +4032,96 @@ I re-read the fold for decidability only, against `git diff 20a3474b5 30c11d5ad`
 - **Open for Ada (not Peter):** the token-count format. The criterion requires only a count on each verdict line, above 0 on `PASS`, and `FAIL` at 0. Ada fixes the format in her agreement line.
 - Task 20 untouched. [@STACY] LENS requested.
 
+#### [STACY TASKS R12] — LENS read of tasks amendment 12 (read at `origin/chore/129-d2-contract-change` `1dde238d8`)
+
+*(2026-11-08T00:39:51Z, `date -u`.)* I read Task 13's amended criteria and the D2 grant record against `git diff origin/main...origin/chore/129-d2-contract-change`. `main` is at `60d024e31`. I also read two texts on `origin/chore/native-lane-ownership-ballot` (#748, open):
+- the F-4 ruling record, at `b4631d7f2`;
+- the ballot's § 8 "F-4 as ruled" block, which is the law home the ruling names for R-1 to R-4.
+
+Separately, I listed the component-token definition files on `main`.
+
+Under the mirror clause, the wording of any repair is Thurgood's, and Ada's for the contract. This entry is a LENS read, feedback only, never a gate.
+
+**Question: can every amended Task 13 criterion be decided at U8's merge without asking the author?** Not yet. Two items block.
+
+These can be decided as written:
+- the zero-count case and the "`PASS` above 0" read, since the `count=<n>` format is fixed in Ada's line;
+- the append-only clause;
+- the floor-3 line at U8. The base has no `d2-check.ts`, so the line says so.
+
+**High-1. Task 13's case list does not carry R-2, the ruled list of cases.**
+- **The law.** The F-4 block says "Ada commits these cases at U8 under 13.3, each of which must FAIL":
+  - a token missing on iOS;
+  - an extra one on Android;
+  - one dropped from both the index and the definitions;
+  - an empty consumer;
+  - a Swift backtick-escaped reserved-word name;
+  - the rename pair: a rename in both the index and the output passes, and a rename in the output only fails.
+- **Missing from the criteria.** Task 13's list has no empty-consumer case and no rename pair.
+- **Its "both" is a different case.** Amendment 11's merged fold defines "drops one token from both" as the index and the *generated output*. R-2's is the index and the *definitions*. Both are real FAIL cases, and they fail by different routes. At CLOSEOUT I would have to ask which one is owed.
+- **One more U8 obligation is not carried.** The block's probe-coverage note says "To confirm at U8's head: the harvested file is compiled in `:tokens` and in Stage T". No Task 13 criterion carries it.
+- **Decidable referent:** Task 13's case list equals R-2's list, or cites it. The U8-head confirmation is either a criterion or a stated disposition.
+
+→ tasks.md Task 13, the `d2-check.test.ts` case list; ballot `2026-11-07-native-lane-ownership` § 8, "F-4 as ruled", R-2 and the probe-coverage note
+
+**High-2. The allowed walk has no defined root and no defined match, and the path ban covers the walk's own root.**
+- **No root.** The record allows a walk "under the one shipped-definitions directory of the installed package" over "every file with the definition extension". Neither is named in any merged text.
+- **No single extension.** On `main` today the seven `defineComponentTokens` files are:
+  - `avatar.tokens.ts`;
+  - `buttonIcon.tokens.ts`;
+  - `Button-VerticalList-Item.tokens.ts`;
+  - `checkbox-sizing.tokens.ts`;
+  - `radio-sizing.tokens.ts`;
+  - `Badge-Count-Notification/tokens.ts`;
+  - `Badge-Label-Base/tokens.ts`.
+
+  They sit in seven component directories, not in one directory.
+- **Ada's predicate misses a harvested file.** The predicate she stated, `*.tokens.*`, does not match `Badge-Label-Base/tokens.ts`. Badge-Label-Base is harvested: Task 13 removes its hand-written `BadgeLabelBaseTokens` enum. Which six files ship, and under what names, is 13.1's, so the walk's input does not exist yet.
+- **The ban covers the walk's root.** The record's grep "fails on … a path under those roots", and one of those roots is `node_modules/@3fn/core`. R-1 says "any such import or path literal". The walk's root is itself a path under the installed package, so a grep written to the text fails on the script the text allows.
+- **Decidable referent:**
+  - the walk root, named as 13.1 ships it;
+  - the match predicate, checked against all six shipped names;
+  - the exact form of the one root literal the grep admits, if any.
+
+→ the grant record § "The invocation contract", "The design rule"; tasks.md Task 13, the grep case
+
+**Medium-1. The criterion asks the grep to decide two things R-1 says only a review can.**
+- "The grep passes on the shipped script, with the `component.key` one-line rule as the only name derivation", and "a named file or filtered subset is a list". Neither can be decided by a grep.
+- R-1 says so itself: "Beyond the import and path ban, whether the code works out a name is read in review."
+- As written, a green grep would be read as evidence of both.
+- **Decidable referent:** split the criterion. The grep decides imports and path or name literals. Whether the code derives names, and whether a walk filters to a subset, are code reads, which I make at CLOSEOUT and name as judgment.
+
+**Medium-2. Ada's agreement line does not cover the text that merges.**
+- Her line is scoped "as this change leaves it at `2e75221f2`".
+- `1dde238d8` then changed the contract: it added the walk sentence to the design rule.
+- The record's own rule asks for her dated agreement "on the contract as this change leaves it".
+- The substance is hers (her item 2 asked for it), but the wording ("the definition extension", "the one … directory") is not, and High-2 says it is wrong as it stands.
+- **Decidable referent:** a fresh agreement line from Ada, at the record's last change before the merge.
+
+**Medium-3. The authority this amendment cites is not in its tree or on `main`.**
+- `evidence/2026-11-08-peter-rulings-f4-and-u8-go.md` is cited in tasks.md's Amendment 12 line and in the record's design rule. It is absent at `origin/main` and at `1dde238d8`, and present only on #748's branch.
+- R-1 to R-4, which the record defers to after U8, are also only on #748's branch.
+- **Decidable referent:** a stated merge order, #748 before this PR, or the record carried in this PR. Otherwise both citations fail to resolve at this PR's merge.
+
+**Low-1. The record's floor 2 does not match R-3.**
+- Floor 2 says a count "never shrinks against the previous run". "The previous run" has no referent.
+- R-3 and floor 3 say `B`'s and `m`'s scripts print *equal* counts on `m`'s consumer, unless a spec row admits the change.
+- So a grown count passes floor 2 and fails R-3.
+- At U8 nothing is read by it. After U8, R-3 is the law, so floor 2's wording is the one to align.
+
+**ARMING note** (my read, not a fix). This PR re-activates the grant: its body is to carry the `**ARMING**:` line, and the record says so. That makes it the record's "last activating merge" for Task 13. My activation read fires at its merge. The `**Grant paths**` list is unchanged, and no M1-excluded act is admitted.
+
+**Blocking:** High-1 and High-2. Both should be folded before 13.3 starts, which the ruling already gates on this PR's merge. A criterion changed after 13.3 is written is a moved goalpost.
+
+**Surviving, after the folds:**
+- A looser match that keeps the count passes both floors, as the block states.
+- "Works out no name" stays a review read.
+- A name that is wrong in both the index and the output still passes, because one generator produces both.
+
+#### [THURGOOD R28] — `[STACY TASKS R12]` incorporated, 2026-11-08
+`[STACY TASKS R12]` is spliced above, byte for byte.
+- **High-1:** folded. Task 13 carries R-2's cases and the U8-head probe confirmation.
+- **High-2:** folded. Root `node_modules/@3fn/core/dist/components/core/`, match basename `^([^.]+\.)?tokens\.js$`; the seven source files on `origin/main` all match in `.ts` form, so any six 13.1 ships do. One root literal admitted by the grep.
+- **Medium-1:** folded; the grep decides imports and literals, the rest is a code read. **Medium-2:** Ada's fresh line is owed. **Medium-3:** merge order #748 first, stated in the record. **Low-1:** floor 2 aligned to R-3.
+- **Open for Ada:** the walk root's `dist/components/core/` layout is inferred from `tsconfig.json`; 13.1 is hers to confirm it ships there. [@ADA] re-agree.
+
