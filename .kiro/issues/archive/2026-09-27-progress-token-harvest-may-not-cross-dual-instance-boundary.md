@@ -48,3 +48,7 @@ Fired at `7c143845f` (Spec 129 U5), whose diff touches `src/build/tokens/defineC
 - **`progress.*` never crosses it.** `progress.ts` is copied into the consumer's own tier and harvested by Source 1 in the same module instance as the brand write, which matches the single diagnostic print recorded above. The packed test asserts only `progress.node.size.sm`, so a regression of the brand (a plain `Symbol()`) stays green.
 - **Result**: no live defect, but the guard is weaker than the claim that cites it as the authoritative dual-instance proof.
 - **Remedy**: one new assertion in the packed consumer test that a package-tier component token is harvested, filed as grant `2026-11-08-packed-package-tier-harvest-assertion-grant.md`. The fixing PR follows that grant's merge.
+
+## Outcome
+
+**Closed at the fixing PR's merge (Ada, owner; rule 5).** The fixing PR is #799 (`chore/129-cp3-package-tier-assertion`), which adds the package-tier harvest assertion (`avatar.size.md`) to the packed consumer test; it fails under the `Symbol()` brand bite and passes at head (94 of 94). Grant: `2026-11-08-packed-package-tier-harvest-assertion-grant.md`, archived with this record. Signed: Ada, 2026-11-08.

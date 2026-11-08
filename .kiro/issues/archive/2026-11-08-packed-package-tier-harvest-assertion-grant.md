@@ -31,3 +31,9 @@ A later PR, opened after this grant merges (Ada). Its assertion lands only then.
 3. `npm run test:consumer` passes.
 
 Counter-argument and what survives: the existing `progress.*` assertion plus the unit test `brand-dual-instance.test.ts` may be judged enough. What survives is that the unit test is not the packed install the record cites as authoritative; the cost is one more assertion in the consumer lane.
+
+---
+
+## Outcome
+
+**Closed at the fixing PR's merge (Ada, owner; rule 5).** The fixing PR is #799 (`chore/129-cp3-package-tier-assertion`). Its `tests/consumer-integration.test.ts` diff is one added assertion (`expect(componentsRaw).toContain('avatar.size.md')`, 3 lines with a comment, no existing assertion changed). Bite: with `TOKEN_CONTRACT_BRAND` swapped for a plain `Symbol()`, `generate produces output files` fails on that assertion (7 consumer cases fail in all) and the existing `progress.*` assertion alone had stayed green; at head `npm run test:consumer` passes 94 of 94. The grant expires with the close.
