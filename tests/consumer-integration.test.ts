@@ -345,19 +345,18 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     expect(componentsRaw).toContain('progress.node.size.sm');
   }, TIMEOUT);
 
-  // SKIPPED: `validate` fails its "Mathematical relationships" check — a pre-existing
-  // MathematicalRelationshipParser defect that false-fails ~99 correct tokens (exponent
-  // notation, categorical/easing strings, float-rounding, special-case literals). It is a
-  // token-validator/token-governance issue (Ada's domain), unrelated to module resolution,
-  // and out of scope for Spec 118. Re-enable once the parser is fixed.
-  // Tracked: .kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md
-  it.skip('validate passes', () => {
+  // Spec 129 Task 10.1 (Req 13.1): re-enabled. The relationship check classifies by family
+  // (MathematicalRelationshipParser.validateToken), so `validate` passes on unmodified token source
+  // and a token that breaks its declared relationship is still reported (the parser's Jest cases).
+  // Record: .kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md
+  it('validate passes', () => {
     const output = execSync('npx designerpunk validate', {
       cwd: tempDir,
       encoding: 'utf-8',
       timeout: 30_000,
     });
-    expect(output).toContain('✅');
+    expect(output).toContain('✅ Mathematical relationships');
+    expect(output).toContain('All validation checks passed');
   }, TIMEOUT);
 
   /**

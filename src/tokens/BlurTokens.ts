@@ -41,7 +41,7 @@ export const blur: Record<string, PrimitiveToken> = {
     baseValue: 0,
     familyBaseValue: BLUR_BASE_VALUE,
     description: 'No blur',
-    mathematicalRelationship: '0',
+    mathematicalRelationship: 'base × 0 = 16 × 0 = 0',
     baselineGridAlignment: true,
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,

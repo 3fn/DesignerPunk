@@ -9,7 +9,9 @@
  * and validate mathematical correctness.
  */
 
-import { MathematicalRelationshipParser } from '../MathematicalRelationshipParser';
+import { MathematicalRelationshipParser, CATEGORICAL_FAMILIES } from '../MathematicalRelationshipParser';
+import { getAllPrimitiveTokens } from '../../tokens';
+import { blur } from '../../tokens/BlurTokens';
 
 describe('MathematicalRelationshipParser', () => {
   let parser: MathematicalRelationshipParser;
@@ -460,6 +462,92 @@ describe('MathematicalRelationshipParser', () => {
       
       expect(result.isValid).toBe(true);
       expect(result.mathematicallyCorrect).toBe(true);
+    });
+  });
+  /**
+   * Spec 129 Task 10.1 (Req 13.1, design § 12): `validateToken` classifies by family.
+   * A token set that is correct passes; a token that breaks its declared relationship is still reported.
+   */
+  describe('validateToken (family-classified, Spec 129 Task 10.1)', () => {
+    const tok = (over: Record<string, unknown>) => ({
+      name: 't', category: 'spacing', baseValue: 16, familyBaseValue: 8,
+      mathematicalRelationship: 'base × 2 = 8 × 2 = 16', ...over,
+    });
+    const all = getAllPrimitiveTokens();
+    const byName = new Map(all.map(t => [t.name, t.baseValue]));
+    const resolve = (n: string) => (typeof byName.get(n) === 'number' ? (byName.get(n) as number) : undefined);
+
+    it('passes every primitive in the token source (the set `validate` runs on)', () => {
+      const failures = all
+        .map(t => ({ n: t.name, r: parser.validateToken(t, resolve) }))
+        .filter(x => !x.r.isValid)
+        .map(x => `${x.n}: ${x.r.errors.join('; ')}`);
+      expect(failures).toEqual([]);
+    });
+
+    it('TRUE POSITIVE: blur000 with its pre-correction string "0" is reported (a formula family states no equation)', () => {
+      const pre = { ...blur.blur000, mathematicalRelationship: '0' };
+      const r = parser.validateToken(pre, resolve);
+      expect(r.isValid).toBe(false);
+      expect(r.errors.join(' ')).toMatch(/no equation/);
+      // and the old parser's reading of the same string was the false-positive-looking "16 × 1 = 16 ... is 0"
+      expect(parser.validate('0', 0, 16).isValid).toBe(false);
+    });
+
+    it('the corrected blur000 passes', () => {
+      expect(parser.validateToken(blur.blur000, resolve).isValid).toBe(true);
+    });
+
+    it('TRUE POSITIVE: a wrong value against its stated equation is reported', () => {
+      const r = parser.validateToken(tok({ baseValue: 18 }), resolve);
+      expect(r.isValid).toBe(false);
+      expect(r.errors.join(' ')).toMatch(/baseValue is 18|incorrect/);
+    });
+
+    it('TRUE POSITIVE: an equation whose sides disagree is reported', () => {
+      expect(parser.validateToken(tok({ mathematicalRelationship: 'base × 2 = 8 × 3 = 16' }), resolve).isValid).toBe(false);
+    });
+
+    it('TRUE POSITIVE: every formula-family token in the source fails when its value is perturbed', () => {
+      const survivors = all
+        .filter(t => !CATEGORICAL_FAMILIES.has(t.category))
+        .filter(t => typeof t.baseValue === 'number')
+        .filter(t => parser.validateToken({ ...t, baseValue: (t.baseValue as number) * 1.5 + 1 }, resolve).isValid)
+        .map(t => t.name);
+      expect(survivors).toEqual([]);
+    });
+
+    it('a categorical family is decided by family, not by the look of its string', () => {
+      expect(parser.validateToken(tok({ category: 'color', mathematicalRelationship: 'lightest' }), resolve).isValid).toBe(true);
+      expect(parser.validateToken(tok({ category: 'color', mathematicalRelationship: 'base × 9 = nonsense' }), resolve).isValid).toBe(true);
+      // the same description on a formula family fails
+      expect(parser.validateToken(tok({ category: 'spacing', mathematicalRelationship: 'lightest' }), resolve).isValid).toBe(false);
+    });
+
+    describe('the five false-negative categories of the 2026-06-24 record', () => {
+      it('1. incidental hyphens/slashes in a description (cubic-bezier) are not operators', () => {
+        expect(parser.validateToken(tok({ category: 'easing', mathematicalRelationship: 'cubic-bezier(0.4, 0.0, 0.2, 1)' }), resolve).isValid).toBe(true);
+      });
+      it('2. float tolerance: 0.3 × 1.33 ≈ 0.4 within half a step; 0.8 × 0.75 = 0.6 despite float error', () => {
+        expect(parser.validateToken(tok({ category: 'shadow', baseValue: 0.4, familyBaseValue: 0.3, mathematicalRelationship: 'base × 1.33 = 0.3 × 1.33 ≈ 0.4' }), resolve).isValid).toBe(true);
+        expect(parser.validateToken(tok({ category: 'glow', baseValue: 0.6, familyBaseValue: 0.8, mathematicalRelationship: 'base × 0.75 = 0.8 × 0.75 = 0.6' }), resolve).isValid).toBe(true);
+        // but not beyond half a step
+        expect(parser.validateToken(tok({ category: 'shadow', baseValue: 0.45, familyBaseValue: 0.3, mathematicalRelationship: 'base × 1.33 ≈ 0.45' }), resolve).isValid).toBe(false);
+      });
+      it('3. exponents, superscript and ^', () => {
+        expect(parser.validateToken(tok({ category: 'fontSize', baseValue: 20, familyBaseValue: 16, mathematicalRelationship: 'base × (1.125²) = 16 × 1.266 ≈ 20' }), resolve).isValid).toBe(true);
+        expect(parser.validateToken(tok({ category: 'fontSize', baseValue: 20, familyBaseValue: 16, mathematicalRelationship: 'base × 1.125^2 ≈ 20' }), resolve).isValid).toBe(true);
+        expect(parser.validateToken(tok({ category: 'fontSize', baseValue: 30, familyBaseValue: 16, mathematicalRelationship: 'base × (1.125²) ≈ 30' }), resolve).isValid).toBe(false);
+      });
+      it('4. special-case literals state their value, and it must equal baseValue', () => {
+        expect(parser.validateToken(tok({ category: 'radius', baseValue: 9999, mathematicalRelationship: 'special case = 9999 (effectively infinite)' }), resolve).isValid).toBe(true);
+        expect(parser.validateToken(tok({ category: 'radius', baseValue: 100, mathematicalRelationship: 'special case = 9999 (effectively infinite)' }), resolve).isValid).toBe(false);
+      });
+      it('5. categorical descriptions are skipped by family (see above), and a named token resolves', () => {
+        expect(parser.validateToken(tok({ category: 'lineHeight', baseValue: 1.4, familyBaseValue: 1.5, mathematicalRelationship: 'fontSize150 × baseValue = 28' }), resolve).isValid).toBe(true);
+        expect(parser.validateToken(tok({ category: 'lineHeight', baseValue: 1.2, familyBaseValue: 1.5, mathematicalRelationship: 'fontSize150 × baseValue = 28' }), resolve).isValid).toBe(false);
+        expect(parser.validateToken(tok({ category: 'lineHeight', mathematicalRelationship: 'nosuchToken × baseValue = 28' }), resolve).isValid).toBe(false);
+      });
     });
   });
 });
