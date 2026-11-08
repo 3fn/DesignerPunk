@@ -71,7 +71,7 @@
 
 ## 8. Campaign totals (the record in five lines)
 
-- **Register**: 3 entries at pilot close → **23 at campaign close** (21 + the 2 audit-gap rows in this PR); 11 rostered candidates classified; 2 methodology notes added; zero entries renamed or deleted (history-only evolution held).
+- **Register**: 11 entries at pilot close → **22 at campaign close** (20 + the 2 audit-gap rows in this PR) *(corrected 2026-11-08, Thurgood: was "3 entries at pilot close → **23 at campaign close** (21 + the 2 audit-gap rows in this PR)"; `### ` headings under `## Entries` in `governance/classification-map.md`: 11 at `4fe6ce9f9` (U1-c, pilot close), 10 at `6df1375ad` (U2), 20 at `4024fdbef^`, 22 at `4024fdbef` (campaign close); `.kiro/specs/125-B-classification-map/completion/claims-pass.md` CL-2)*; 11 rostered candidates classified; 2 methodology notes added; zero entries renamed or deleted (history-only evolution held).
 - **Prunes**: 2 (12 hunks total, waves 1–2), both probe-NO-GROSS-LOSS + trial-NO-DIFFERENCE-DETECTED pre-merge, both W2 MET post-window; 2 waves rows-only with zero imposters — **the corpus's imposter population was largely exhausted by the pilot + waves 1–2**, itself a finding: the education layer is healthier than the campaign's premise feared.
 - **W1**: MET — f=0/36 against B=2/20 baseline.
 - **Consults**: 8 owner consults across 4 waves; 13 BLOCKING corrections; NO wave verdict survived unmodified in its fact base after wave 1 — **the consult layer is the method's real engine**, and delegate-then-falsify outperformed steward-solo in every wave that had both.
