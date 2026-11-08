@@ -15,6 +15,10 @@
 
 "Component tokens: your iOS and Android token output now includes DesignerPunk's component tokens (`AvatarTokens`, `ButtonIconTokens` and the rest), read from your own primitives. Declare a group of the same name to replace ours. If you hand-wrote an enum with one of these names, remove it. `generate` fails if two of your own files declare one group."
 
+## Verified at head H
+
+PR #757, head `8ffda2c1a`: `native-harness` run https://github.com/3fn/DesignerPunk/actions/runs/42434397927 succeeded, and the D2 step read `completeness: PASS count=23`, `ios: PASS count=33`, `android: PASS count=33`. All four compile contexts passed.
+
 ## Open
 
-The PR-run harness annotations at head H, the floor-3 comparison (owed from U8's successors) and the owners' outcome lines are in `completion/task-13-completion.md`.
+Floor 3's base-versus-head comparison is owed from U8's successors (the base has no `d2-check.ts`). The owners' outcome lines for the two records that name `task-13-completion.md` join before the merge.
