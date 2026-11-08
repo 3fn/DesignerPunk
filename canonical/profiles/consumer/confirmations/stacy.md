@@ -66,9 +66,21 @@ date: 2026-11-01
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac
+canonicalHash: sha256:2b91cd28ee5e1bf3e277ef7a19bedc9f4131dde41be77b57597fd9c3262eb66f
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-11-07
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 10.**
+- **What changed**: one row, ARMING (L404), three insertions in the scope cell, in my words: ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 00:33:06Z; #748) site 10, parts 1 and 2 from `[STACY R4]`, part 3 from `[STACY R5]` with its bracketed F-4 (a) clause struck and my F-4 (b) clause in its place (§ 8, "F-4 as ruled", (ii)). I wrote them at `ea334a271`. That commit also ended the row with a dated pointer, which the ballot does not carry and `.kiro/docs/ballots/README.md` "Where the pointer is owed" forbids in `canonical/agents/**`; I held this act on it (`429ce772d`) and removed it as author at `18fe307ba`. Thurgood re-quoted the item and the removal at `0868ef8f7`.
+- **Text, verified by script against the ballot**: parts 1 and 2 each occur once in the row. Part 3, split at the struck bracket, occurs once on each side. Between them is my (b) clause, which reads the five things (ii) lists: the cited spec row or grant, the writer not the `src/generators/**` holder, R-1's case, R-2's deletions-zero and R-3's two runs. The old row is a subsequence of the new one: three insertions, nothing deleted. The file differs from `c07951b38` in L404 only. No pointer is left in the charter (pointer regex: 0 hits).
+- **The set is unchanged: 13 items.** `trigger-arming` stays one `member`, re-quoted as the whole row, as at every earlier ARMING re-confirmation. All 13 occur once each, in document order.
+- **The hash**: the canonicalHash moves from `sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac` to the value above. I computed it myself, as `hashText` over the unit's text from `partition(splitFrontmatter(...).body)`, from a scratchpad script outside the repository, and again as `sha256` over a raw slice from "### The trigger set" to "### The claims-pass record"; the two agree. It equals the overlay pin Thurgood re-pinned at `0868ef8f7`, and I checked that the re-pin changes only the `@unit` header line. No target hash was given to me.
+- **Consumer rendering**: unchanged. The ARMING row is removed whole for consumers (`subtraction-3`), and the removal equals the new row byte for byte.
+- **Self-confirmation, disclosed**: the words are mine, and so is this act (C1: owner Stacy, profile author Thurgood). The ballot's text check above is the outside referent.
+
+**Ruling: CONFIRMED at 13 items.**
+
+**Re-confirmed 2026-11-07 (prior record, superseded)**: canonicalHash `sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac`, 13 items, as below.
 
 **Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, site 6.**
 - **What changed**: one row, ARMING (L404), four insertions: one in the event cell, three in the scope cell. Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`) § 4 site 6 gives the shape and says I write the words; my R1 amendments 5 and 6 and my R2 rewording of 5 commit me to them. Thurgood typed them at `a064ea06c`. I read each against those commitments and adopt them as mine, unchanged:

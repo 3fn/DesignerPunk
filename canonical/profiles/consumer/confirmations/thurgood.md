@@ -22,9 +22,22 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: stacy
-canonicalHash: sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17, scope-18, scope-19, scope-20, scope-21, scope-22, scope-23, scope-24, scope-25, scope-26, scope-27, scope-28, scope-29, scope-30, scope-31, scope-32, scope-33
-date: 2026-11-07
+canonicalHash: sha256:8652bda6542f96b2d623e8d53e2bd997cd0e79621b700c29958c4401d49d2fd2
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17, scope-18, scope-19, scope-20, scope-21, scope-22, scope-23, scope-24, scope-25, scope-26, scope-27, scope-28, scope-29, scope-30, scope-31, scope-32, scope-33, scope-34, scope-35, scope-36, scope-37, scope-38, scope-39, scope-40, scope-41, scope-42, scope-43
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 8.**
+- **What changed**: one bullet, the compile-harness bullet (L379). Its closing sentence, "The rest of `scripts/harness/**` and `harness/**` is not yours.", is replaced by site 8's After text, which ends with the same sentence. ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 00:33:06Z; #748). Data applied it at `4be514236` and restored the two words I held on at `0c2c96aae`; Thurgood re-quoted at `67de94640` and `0868ef8f7` (authoring; none of these moves this canonicalHash).
+- **Text, verified by script against the ballot**: site 8's template (`[THURGOOD R4]`'s bullet), with `[, `harness/README.md`]` and `[ and its amendments]` taken under F-5 (a), the `d2-check` bracket and its limit placeholder struck under F-4 (b), matches the charter byte for byte before and after the README-limit placeholder. The bullet up to the replaced sentence equals the bullet at `c07951b38`. The one fill is the README-limit placeholder, taken from § 8 F-5 (a) in the second person: the rule hunk goes by spec row, the agreeing hunk is his and cites its source, and Data, Kenya and Ada review their sections. It drops F-5's line numbers and says what F-5 (a) ratified. I accept the fill. My earlier hold (`429ce772d`) is cleared: ", and" and "§ 8 F-5" are gone.
+- **The charter's other changes in this ballot, outside this unit**: the frontmatter block of site 7. Its three values equal the ballot's paths. Its two comment lines still differ from site 7's text ("item 4 and § 8 F-5 (RATIFIED Peter 2026-11-08)" and "with its test, and its prose form"). No hash covers a comment and the generator drops it, so it does not reach this act, but it is still a difference from the ballot and I report it.
+- **The set: 51 items, up from 41.** The 41 earlier items are unchanged, ids and text. Ten new ones cover the inserted text, and with `scope-33` they cover it whole (checked by script: removing the eleven texts leaves only separators). `scope-34` is the grant (`member`). `scope-35` to `scope-43` are its limits, reviews and review-entry form (`obligation`); each can be broken by a PR that leaves the grant untouched. Each of the 51 is a verbatim substring of the unit with one occurrence. One ordering note: the record lists `scope-33` (the closing sentence) before `scope-34`, while the text now puts it last. Nothing checks record order, and the set's content is the same either way.
+- **The removal**: the compile-harness removal equals the whole bullet as it now reads, byte for byte (site 12), and occurs once in the unit and in none of the three renderings.
+- **The hash**: the canonicalHash moves from `sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55` to the value above. I computed it myself, as `hashText` over the unit's text from `partition(splitFrontmatter(...).body)`, from a scratchpad script outside the repository. It equals the overlay pin Thurgood re-pinned at `0868ef8f7`, and I checked that the re-pin changes only the `@unit` header line. No target hash was given to me.
+- **Read before this act**: the bullet in full through tool calls on this branch, and the charter's diff from `c07951b38` (two hunks: the frontmatter block and this bullet).
+
+**Ruling: CONFIRMED at 51 items.**
+
+**Re-confirmed 2026-11-07 (prior record, superseded)**: canonicalHash `sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55`, 41 items, as below.
 
 **Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, sites 2 and 3.**
 - **What changed**: two bullets. Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`). Thurgood applied both at `a064ea06c` as profile author. I checked both by script: each after-text in § 4 equals the charter, byte for byte.

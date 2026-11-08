@@ -566,11 +566,20 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-11-07
+date: 2026-11-08
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac
+canonicalHash: sha256:2b91cd28ee5e1bf3e277ef7a19bedc9f4131dde41be77b57597fd9c3262eb66f
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-11-08** (prior signature: assent 5/13, 2026-11-07, against `sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac`). Stale because the canonical ARMING row changed under ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 00:33:06Z; #748) site 10: the native harness producers join the instrument-path limb and its deletions-zero read, and a new read follows the limb's three (activation, item 1's query, P7, P1–P6, C1–C6, the `compare.ts` reviews, the F-4 (b) `d2-check.ts` read). These are my words (`ea334a271`, pointer removed at `18fe307ba`); Thurgood re-quoted the removal and re-pinned the overlay at `0868ef8f7`. I re-confirmed the unit at 13 items in the same commit as this signature.
+- **Judged against**: the consumer rendering of the unit, printed in full first, and the operative set at 13 items.
+- **renderedHash**: renderedHash computed from a fresh temp-tree rendering of this branch at `0868ef8f7` (`generateAll` → `writeOutputs(<scratchpad temp dir>)` → `readConsumerSpans` → `renderedHashOf` over `rowSpanSource`, three identical pieces). It equals the committed rendering's value and the prior signature's: the rendering did not move by a byte. The render needed built MCP servers, so I copied the main checkout's ignored `dist/`, `mcp-server/dist/` and `application-mcp-server/dist/` into the worktree and removed them after. Nothing tracked was written.
+- **The ARMING removal still applies, under `subtraction-3`, and the new read goes with it.** The removal equals the new row byte for byte and occurs once in the unit and in none of the three pieces. The new read is about this repository's harness lanes, its pin file and its ballot's conditions. A consumer has none of them, and its rendering carries no ARMING row.
+- **Unchanged**: the same five survive, each verbatim in the rendering (checked by script); the other eight are not credited.
+- **C1 collapse**: my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-11-07)**: assent — surviving 5/13, against `sha256:5925488c9d543e7b94c6a37521a40797892c4ac2cecb67b2416b7df80525ddac`, as below.
 
 **Re-signed 2026-11-07** (prior signature: assent 5/13, 2026-10-29, second time, against `sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce`). Stale because the canonical ARMING row changed. Ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` (RATIFIED, Peter, 2026-11-07T22:30:08Z) site 6 added the P1c event and read, and the six compile-harness paths, to the row's instrument-path limb and its deletions-zero read. These are my words: Thurgood typed them at `a064ea06c`, and I adopted them unchanged. I rewrote the removal and re-pinned the overlay at `f5e6a10a2`, and re-confirmed the set at 13 items at `db81c96d8`. renderedHash recomputed from a fresh temp-tree rendering of this branch (`generateAll` → `writeOutputs(<scratchpad temp dir>)` → `readConsumerSpans` → `renderedHashOf` over `rowSpanSource`, three pieces). It is equal to the committed rendering's value and to the prior signature's, and the fresh `_consumer-output/` tree equals the committed one (`diff -rq`: no differences). The rendering did not move by a byte.
 - **Read before this act**: the consumer rendering of the unit, `cat -n canonical/_consumer-output/_canonical/agents/stacy.md` L301–L316, through a tool call before this commit; `canonical/_consumer-output/` is unchanged on this branch since `e0df47b3f`. The `cc/` (L175–L190) and `kiro/` (L141–L156) copies were compared with it by `diff` and are identical.
