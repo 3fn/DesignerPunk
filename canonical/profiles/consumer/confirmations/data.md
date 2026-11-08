@@ -31,9 +31,28 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: data
-canonicalHash: sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8
-date: 2026-09-29
+canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, scope-11, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08: the native-lane ownership ballot, items 1 and 3 (sites 1 and 2).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3`, 8 items) and stays as a ledger.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 (b) ruled 2026-11-08T00:33:06Z), applied on `chore/apply-native-lane-ownership-thurgood` at `67de94640`. Site 2 is a new last bullet in `canonical/agents/data.md` § "In Scope" (the native compile harness's Android lane). Site 1 adds the eight `writeScope` members, with the ratification date filled in.
+- **What I read, in this session, through tool results**: the whole unit `#in-scope` as `partition(splitFrontmatter(...).body)` returns it (the heading, the eight earlier bullets and the new bullet); the unit record in `canonical/operative-sets/data.yaml` (17 items); the ballot's items 1 and 3 and its sites 1, 2 and 12; and the applied diff against `f28a1fefd`.
+- **The text against the ballot**: the new bullet equals the ballot's site-2 block byte for byte (checked by script), with the one change F-5 (a) rules: `harness/README.md` reads "(Thurgood's; you review its hunks in your sections)". F-4 (b) leaves `d2-check.ts` bare, as applied. Site 1 equals the ballot's block, with `<date>` filled as `2026-11-08` (the ballot's Status line gives that date). Nothing else in the unit changed.
+- **The hash**: the canonicalHash moves from `sha256:9838f330...` to the value above. I computed it myself with `hashText` over that unit's text from `partition`. It equals the overlay pin and the sweep's value.
+- **Items re-read against the unit**: all 17 item texts are verbatim substrings of the unit, each occurring once (checked by script, 17 of 17). `scope-1` to `scope-8` are unchanged.
+- **Ruled, the nine new items** (`scope-9` to `scope-17`). They cover every sentence of the new bullet, and none overlaps another:
+  - `scope-9` (`member`): the lane's files are mine, and why.
+  - `scope-10` (`obligation`): owning the lane never authorizes changing what it decides.
+  - `scope-11` (`obligation`): a defect fix carries a falsification case, red at the merge base, that the PR body names.
+  - `scope-12` (`obligation`): the toml's four copies equal the pin file's values on every PR touching `harness/android/**`.
+  - `scope-13` (`obligation`): a change to `infra.json`, an annotation step or title consults Thurgood.
+  - `scope-14` (`obligation`): in `harness/pins.yaml` I hold the `android:` section only, for a move that passes P1 to P6. The P1 to P6 conditions are listed in the item, as the sentence states them.
+  - `scope-15` (`obligation`): any other move goes by grant or spec row.
+  - `scope-16` (`obligation`): the paths that are not mine, and whose they are.
+  - `scope-17` (`obligation`): before U12's merge, my write over these paths is Spec 129's task-row grants or an issue-row grant.
+  - Each is a boundary an implementation of the role could breach, which is the 5c test. `scope-9` is `member` because it states what is owned, as `scope-1` to `scope-8` do.
+- **Ruling: CONFIRMED at 17 items.** `scope-1` to `scope-8` are confirmed as before; the nine additions are mine.
 
 **Ruling: CONFIRMED at 8 items, as drafted.** Each bullet claims a responsibility an implementation can drop or exceed. `scope-2` also fixes the consumption path (static via `DesignTokens`, theme-varying via `Local{Abbreviation}Theme.current`).
 
