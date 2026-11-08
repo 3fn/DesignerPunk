@@ -19,10 +19,10 @@
 | 11 | C7 the gate count and the guard registry | `tools/agent-generator/verify-gate-registration.sh` @ `4a8486389`; `.github/in-lane-guards.json` @ `16d44a500` | exists | both test files this unit changes are registered already (L281, L305) | — |
 | 12 | C6 the pins | `harness/pins.yaml` | exists (@ `de307e1d7`) | `consumer.name: HarnessConsumer`, `abbreviation: HX` | — |
 | 13 | C9 the durations | the GitHub Actions jobs API; `scripts/harness/stability.ts` (`completed_at − started_at`) | exists (`stability.ts` @ `3422fc026`); the API read is built at H | the definition of a duration this unit's record uses | completion doc |
-| 14 | C10 all four contexts on the PR | the PR's four check runs at head H | MISSING → orchestrator: the PR opens at Task 20's completion; none exists now. Route: the follow-up commit cites them, as in U3a | — | none of 20.1, 20.2 |
+| 14 | C10 all four contexts on the PR | the PR's four check runs at head H | MISSING → orchestrator: the PR opens at Task 20's completion; none exists now. Route: the follow-up commit cites them, as in U3a → resolved 2026-11-07: exists (PR #747's `native-harness` run https://github.com/3fn/DesignerPunk/actions/runs/42427309603 @ `d3b3c2d647be9d918a8255bb3cfba11de89734bd`), fit: the four contexts' check runs on the unit's PR, each with a `harness-verdict` annotation and a `harness-summary` line (pasted in `task-20-completion.md`). | — | none of 20.1, 20.2 |
 | 15 | C11 records whose Trigger names `task-20-completion.md` | `grep -l "task-20-completion" .kiro/issues/*.md` | none — a command run and pasted in the completion doc (at `f28a1fefd` it names the grant record) | — | — |
 
-**Counts**: listed **14**, plus **1** none row (row 15, not counted) = 15 rows. exists **13** (rows 1–13) · built-here **0** as whole instruments (the verdict function, fixtures and falsification cases are 20.1's product, not a prior instrument) · missing **1** (row 14). N = E + B + M = 13 + 0 + 1 = 14.
+**Counts**: listed **14**, plus **1** none row (row 15, not counted) = 15 rows. exists **13** (rows 1–13) · built-here **0** as whole instruments (the verdict function, fixtures and falsification cases are 20.1's product, not a prior instrument) · missing **1** (row 14) when written; row 14 is resolved to exists at head H (appended in place), so at H: exists 14, missing 0. N = E + B + M = 13 + 0 + 1 = 14.
 
 **What the MISSING row stops**: nothing before Task 20's completion doc.
 
