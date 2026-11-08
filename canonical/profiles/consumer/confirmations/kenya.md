@@ -31,11 +31,28 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: kenya
-canonicalHash: sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8
-date: 2026-09-29
+canonicalHash: sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, scope-11, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17
+date: 2026-11-08
 
-**Ruling: CONFIRMED at 8 items, as drafted.** Each bullet is a scope member. Work outside the set, or declining a listed duty, violates it.
+**Ruling: CONFIRMED at 8 items, as drafted** (2026-09-29). Each bullet is a scope member. Work outside the set, or declining a listed duty, violates it.
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 4 (my own text).**
+- **What changed**: one bullet, the last of § "In Scope". Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-3 Keep, F-5 (a)). Data applied it at `4be514236` and fixed the F-5 (a) README wording at `bb623ae98`. I checked by script that the charter line equals site 4's after-text with the F-5 (a) hunk ("`harness/README.md` (Thurgood's; you review its hunks in your sections)") substituted, byte for byte. The frontmatter `writeScope` insertion equals site 3 (eight paths and the two-line comment).
+- **Nine new items, `scope-9` to `scope-17`**, drafted by Thurgood as profile author (`67de94640`), each a verbatim fragment of the bullet with exactly one occurrence in the charter (checked by script). Read between the fragments, they leave only joining words (". ", "; ", "; and ", the closing "."), so together they cover the bullet.
+  - `scope-9`: the grant (the label through "no PR author at fault"), a member.
+  - `scope-10`: owning the lane never authorizes changing what it decides; includes the K-4 self-test limit.
+  - `scope-11`: a defect fix carries a named falsification case, red at the merge base.
+  - `scope-12`: an annotation change, including a first `harness-infra` on iOS, consults Thurgood.
+  - `scope-13`: the `ios:` section only, under P1-P7 (one item: the P1-P7 conditions are a single conjunctive test of one move).
+  - `scope-14`: a new Swift version carries the reserved-word re-check or a record of it (P7, F-3).
+  - `scope-15`: any other pin move goes by grant or spec row.
+  - `scope-16`: the paths that are not mine, with the review duties on `README.md`, `compare.ts`, `consumer.ts` and `native-rules.ts`. I accept it as one item because the review duties are scoped inside the same list, and none ships to a consumer.
+  - `scope-17`: before activation, task-row or issue-row grants.
+- **The set**: 17 items, the 8 prior ids unchanged.
+- **The hash**: the canonicalHash moves from `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e` to the value above. I computed it myself as `hashText` over the `#in-scope` unit of `canonical/agents/kenya.md` (`partition(splitFrontmatter(...).body)`), and it equals the overlay pin and `operative-set-freshness`'s value.
+- **Consumer rendering**: the bullet is removed whole (subtraction-1, repo-internal tooling; a consumer repo has no `harness/` and `scripts/harness/` is not packaged). The removal text equals the bullet byte for byte, occurs once in the unit and in no rendering.
+- **Read before this act**: the ballot's sites 3, 4, 9 (b) and 12, the charter at L240-L253 and L292, and the consumer rendering of the unit.
 
 ## `#ios-theming-spec-094`
 
