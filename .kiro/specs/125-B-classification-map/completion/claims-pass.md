@@ -34,7 +34,7 @@
   - **CL-1 (Medium)**: the re-home's straggler sweep missed a ratified but unapplied ballot. The shape-review ballot's site 1b and site 7 will write "Spec 125-B U3" and "U3's tasks round" into law, and the bound ballot that F-1 (d) puts there is carried by neither the charter nor my record. Owner: Thurgood.
   - **CL-2 … CL-4 (Low)**: a false register count, now repeated in the Task 5 summary #806 wrote; the spec-level declaration's stated reason; and a stale `Status` header. Owner: Thurgood.
   - **SF-1 (Low, mine)**: my re-attestation record did not carry the F-1 (d) bound. Fixed in this commit.
-- **One duty is owed, not done: the delegate audit of my own four seat acts in #806 is `0 / 4`.** I made the two re-confirms and two re-signs this pass would otherwise audit. The delegate is the orchestrator's to commission.
+- **The delegate audit of my own four seat acts in #806 is done: `Delegate audit (Stacy-signed, Leonardo): 4 / 4 — .kiro/specs/125-B-classification-map/completion/delegate-audit-closeout-leonardo.md @ 4103f212a`.** I made the two re-confirms and two re-signs this pass would otherwise audit, so a delegate audited them (§ "The delegate audit of my own acts in #806").
 
 ---
 
@@ -87,11 +87,12 @@
 - My record `.kiro/issues/2026-10-15-123-125b-u3-re-attestation.md`, which the charter's § 6 holds by pointer, ordered its acts after the shape review's PR 2, and did not name the bound ballot F-1 (d) requires before any re-attestation act.
 - **Fixed here**: one dated bullet under "Open at the trigger" (rule 9, owner) cites site 1b and routes its home to CL-1. It carries the ratified rule and does not say where the ballot sits.
 
-### Owed, not a finding: the delegate audit of my own acts in #806
+### The delegate audit of my own acts in #806 (not a finding)
 
 - I made four signing acts in the closing unit: re-confirm `eed6a77`, re-confirm `809f730`, re-sign `103c865` and re-sign `3ba6fca`. My own walk, `verify-signing-chain --audit --pr 806 --exclude-signer stacy`, prints `0 of 4 act(s) selected; 4 withheld`.
-- The per-act audit of those four is a delegate's, in `delegate-audit-closeout-<seat>.md` in this directory. No delegate was commissioned. Thurgood's own `--audit --pr 806` in the PR body is the author's validation, not a delegate file, and I do not restate its verdicts.
-- **Routing**: the orchestrator, to brief a delegate who is not Stacy.
+- The per-act audit of those four is the delegate's file, in this directory: `Delegate audit (Stacy-signed, Leonardo): 4 / 4 — .kiro/specs/125-B-classification-map/completion/delegate-audit-closeout-leonardo.md @ 4103f212a`. Leonardo is the § 5.3 rotation's next seat after Lina (16.2.0). His file was merged into this branch byte-identical to `4103f212a`. I do not restate its verdicts.
+- **N = 4, counted from signature history**: the commits in `3c120ed4e..a96f7f995` (`refs/pull/806/head`) that touch `canonical/profiles/**` or `canonical/operative-sets/**` under `Agent: Stacy` are `eed6a7758`, `809f73094`, `103c86595` and `3ba6fcaa7`. k = N, so the duty is done.
+- *Added 2026-11-08, after the file landed. The first version of this record read `0 / 4`, because no delegate had been commissioned yet.*
 
 ---
 
@@ -155,8 +156,8 @@ The criteria are each parent's `**Success Criteria:**` bullets in `tasks.md`, pl
 | Instruments | Bound 1/1: `none — success criteria declared none` parses (guide L246) and matches `tasks.md`. Pass-found gaps 0 |
 | Instrument census | The re-home ballot's census was read at my R1 (C-1, C-2 folded). Not re-counted |
 | Re-grounding dispositions | Not a Spec 123 render population. Signature events in #806: 2 re-signs, both `signer: stacy`, assent 15/22 and 3/3, `renderedHash` unchanged; refusals 0. Spot-check fraction of itemized assents: 0/2 (my own; withheld). Full-survival assent signal: `not yet instrumented` |
-| Delegate audit (Stacy-signed, —) | `0 / 4` — no delegate file. N = 4 (2 confirmations + 2 signatures; `--exclude-signer stacy` withholds 4). Owed (above) |
-| Peter sample (Stacy-signed) | `0 / 4 (Stacy-signed)` |
+| Delegate audit (Stacy-signed, Leonardo) | `Delegate audit (Stacy-signed, Leonardo): 4 / 4 — .kiro/specs/125-B-classification-map/completion/delegate-audit-closeout-leonardo.md @ 4103f212a`. N = 4 from signature history (2 confirmations + 2 signatures; above) |
+| Peter sample (Stacy-signed) | Not owed at CLOSEOUT. Signing-act ballot § 5.3 owes J "at every RELEASE, by Peter". These four acts belong to the next RELEASE's population, and that record carries the line |
 | Governance-examples read | RELEASE phase 1 only. Not applicable |
 | Evidence presence (**M3**) | 15/15 legacy criterion rows carry evidence. Task 2's two rows give it in prose with § pointers |
 | Forced-negative line (**M4**) | 0/5. Not bound: four parents pre-date it, and Task 5 has no table |
@@ -179,7 +180,7 @@ The criteria are each parent's `**Success Criteria:**` bullets in `tasks.md`, pl
   - the campaign and window datasets row by row, beyond the segment arithmetic;
   - the wave probe and trial transcripts;
   - every register row the campaign added, beyond the count;
-  - the four seat acts in #806, which are mine and withheld from my own audit.
+  - the four seat acts in #806, which are mine. They are withheld from my own audit, and Leonardo's delegate file covers them.
 - **Local tooling** (main checkout at `90b3a11cb`, read-only):
   - `./scripts/owed-set.sh`: 34 rows, and 1 + 3 + 3 + 23 + 4 = 34, so the row-sum identity holds. `candidate	125-B-classification-map	unit class a; anchor 90b3a11cb`;
   - `npx tsx scripts/check-completion-criteria-parity.ts`, once as committed and once in a scratch copy with `per-parent`, reverted;
