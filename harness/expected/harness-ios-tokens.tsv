@@ -2,9 +2,3 @@
 # Committed from the first full run of Spec 129 U1: native-harness.yml run 42324880305 (workflow_dispatch) at cc2e71a51,
 # context harness-ios-tokens, observed keys from `compare.ts --emit-observed`. Admitted under Req 3.5 exception (b): the list is absent at the merge base.
 # Each entry is <key> TAB <count> TAB <tag>; a tag names the root record whose Trigger has not fired and whose fix removes the entry.
-probe:Probe.swift | cannot find 'AvatarTokens' in scope	8	2026-10-02-consumer-generation-completeness-spec.md
-probe:Probe.swift | cannot find 'BadgeLabelBaseTokens' in scope	1	2026-10-02-consumer-generation-completeness-spec.md
-probe:Probe.swift | cannot find 'ButtonIconTokens' in scope	6	2026-10-02-consumer-generation-completeness-spec.md
-probe:Probe.swift | cannot find 'InputCheckboxTokens' in scope	3	2026-10-02-consumer-generation-completeness-spec.md
-probe:Probe.swift | cannot find 'InputRadioTokens' in scope	3	2026-10-02-consumer-generation-completeness-spec.md
-probe:Probe.swift | cannot find 'VerticalListItemTokens' in scope	2	2026-10-02-consumer-generation-completeness-spec.md
