@@ -34,4 +34,4 @@ Data diagnosed the entry from native-harness run 42502210216: `ComponentTokens.a
 
 ## Outcome
 
-**Closed 2026-11-08 (Lina, owner; rule 5).** The fixing PR is #<N> (`chore/129-cp2-retag-grant`). Its diff to the granted file is one line: L11, the `ButtonIcon.android.kt` `Unresolved reference 'ButtonIconTokens'.` entry, removed (94 to 93 entries), alongside the component fix in `src/components/**` (`import com.designerpunk.tokens.ButtonIconTokens`). Whether the removal holds is decided by that PR's `harness-android-components` run. The grant expires with this close. Archived under rule 5.
+**Closed 2026-11-08 (Lina, owner; rule 5).** The fixing PR is #797 (`chore/129-cp2-retag-grant`). Its diff to the granted file is one line: L11, the `ButtonIcon.android.kt` `Unresolved reference 'ButtonIconTokens'.` entry, removed (94 to 93 entries), alongside the component fix in `src/components/**` (`import com.designerpunk.tokens.ButtonIconTokens`). Whether the removal holds is decided by that PR's `harness-android-components` run. The grant expires with this close. Archived under rule 5.
