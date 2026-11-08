@@ -23,7 +23,7 @@ A trigger offers the context to Peter for demotion. Demotion is Peter's act, und
 
 ## The push-run read
 
-*(added 2026-11-08 by ballot `.kiro/docs/ballots/2026-11-08-closeout-cracks.md` item 1, site 1.4, RATIFIED for items 1 and 3 (Peter, 2026-11-08T20:36:57Z). Written by Thurgood and reviewed by Stacy, the co-owners (rule 9). The steps are the ballot's text at `d68460752`, verbatim. The bullets after them are site 1.4's, with "my seat" written as "Thurgood's seat".)*
+*(added 2026-11-08 by ballot `.kiro/docs/ballots/2026-11-08-closeout-cracks.md` item 1, site 1.4, RATIFIED for items 1 and 3 (Peter, 2026-11-08T20:36:57Z). Written by Thurgood and reviewed by Stacy, the co-owners (rule 9). The steps are the ballot's text at `d68460752`, verbatim. The four bullets after them are site 1.4's, with "my seat" written as "Thurgood's seat". The last two bullets are the co-owners' (rule 9): the F-2 read, from `.kiro/issues/2026-11-08-push-run-red-first-seen-on-a-pr.md`, which this section's PR closes; and the closed-record tag line.)*
 
 From the merge of the ballot's site 1.1, `native-harness.yml` also runs on every push to `main`, with jobs named `<context> (main)`. **The reader is Thurgood.**
 
@@ -42,6 +42,8 @@ From the merge of the ballot's site 1.1, `native-harness.yml` also runs on every
 - **The query**: `gh run list --workflow native-harness.yml --event push --branch main -L 5 --json databaseId,headSha,conclusion,status,createdAt`.
 - **The log**: one dated line per red read, `<date> run <id> @ <sha> — <infra|environment|tag|tree> — <record filed or line appended, or re-run green>`, appended under the section.
 - **Honest reach**: between Thurgood's sessions nothing reads a red but Peter's own GitHub notification for the push his merge made (GitHub notifies the actor of a failed run they triggered; that this reaches Peter depends on his notification settings, unverified).
+- **The F-2 read** (ballot F-2 (a), the joint pick, `[STACY R3]` § 1 and `[THURGOOD R4]`): when step 2 classes a push-run red *environment*, the reader also runs `gh run list --workflow native-harness.yml --event pull_request -L 50 --json databaseId,headSha,conclusion,createdAt`. The reader then asks whether an earlier `pull_request` run concluded `failure` in the same context and the same environment class (a toolchain-field mismatch, or the same `harness-infra` host). That run must be at a head `h` where `git diff --quiet <h> <red head> -- harness scripts/harness .github/workflows/native-harness.yml` exits 0, and it must come before the first red push run. If yes, the reader offers Peter F-2 (b), a `schedule:` run on `main` every 6 days or less, with both runs' URLs. The offer is a question to Peter, never an act. The log line for an environment red ends `— first seen on PR run <id>` or `— not seen on a PR first`.
+- **A tag red on a closed record**: the dated line of step 3 is still appended to the record in `archive/`. Because no session start prints an archived record, the reader also files a new root record under step 3, Owner the lane owner whose list holds the entry, and in it names the archived record and the entry to move.
 
 ### Log
 
