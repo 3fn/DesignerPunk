@@ -2,4 +2,3 @@
 # Committed from the first full run of Spec 129 U1: native-harness.yml run 42324880305 (workflow_dispatch) at cc2e71a51,
 # context harness-ios-tokens, observed keys from `compare.ts --emit-observed`. Admitted under Req 3.5 exception (b): the list is absent at the merge base.
 # Each entry is <key> TAB <count> TAB <tag>; a tag names the root record whose Trigger has not fired and whose fix removes the entry.
-probe:Probe.swift | non-Sendable 'some View'-typed result can not be returned from main actor-isolated instance method 'harnessConsumerTheme' to nonisolated context	3	2026-11-08-probe-swift-providerreads-not-mainactor.md
