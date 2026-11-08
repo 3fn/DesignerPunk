@@ -87,7 +87,10 @@
         "mcp-server/tsconfig.json",
         "mcp-server/jest.config.js",
         ".kiro/hooks/ada-*.kiro.hook",
-        ".kiro/issues/**"
+        ".kiro/issues/**",
+        "scripts/harness/consumer.ts",
+        "scripts/harness/__tests__/consumer.test.ts",
+        "harness/pins.yaml"
       ]
     }
   },
