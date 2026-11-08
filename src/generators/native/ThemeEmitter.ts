@@ -44,6 +44,12 @@ export interface ThemeEmitterInput {
   wcagDark: ReadonlyArray<ResolvedColorToken>;
   /** Registered themes other than base, dark and wcag, in config order. Empty until U9. */
   themes: ReadonlyArray<EmitterTheme>;
+  /**
+   * Where each WCAG map came from (design § 4, `[LEONARDO R2]`). A role that is not `registered` is a built-in
+   * map from `@3fn/core` (the bridge in local mode, the package itself in package mode); the `wcag` case's doc
+   * comment names it. Absent means every WCAG map is the consumer's own.
+   */
+  wcagSource?: { wcagLight: 'registered' | 'bridge' | 'package'; wcagDark: 'registered' | 'bridge' | 'package' };
 }
 
 type Platform = 'ios' | 'android';
@@ -153,7 +159,14 @@ function familyComment(input: ThemeEmitterInput, family: string[], platform: Pla
   const note = t && t.mode !== 'both'
     ? ` (no ${t.mode === 'light' ? 'dark' : 'light'} overrides; falls back to base)`
     : '';
-  return `light: ${light} · dark: ${dark}${note}`;
+  const src = key === 'wcag' ? input.wcagSource : undefined;
+  const builtin = src
+    ? [src.wcagLight !== 'registered' ? 'wcag' : '', src.wcagDark !== 'registered' ? 'dark-wcag' : ''].filter(Boolean)
+    : [];
+  const bridge = builtin.length > 0
+    ? ` (built-in ${builtin.join(' and ')} map${builtin.length > 1 ? 's' : ''} from @3fn/core applied; not in your config)`
+    : '';
+  return `light: ${light} · dark: ${dark}${note}${bridge}`;
 }
 
 /** Swift theme block: protocol, structs, holder, implicit members, key, environment value, family, provider. */

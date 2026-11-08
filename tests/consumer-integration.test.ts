@@ -364,6 +364,9 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     const componentsRaw = fs.readFileSync(componentsYaml, 'utf-8');
     expect(componentsRaw.trim().length).toBeGreaterThan(0); // N>0: not the empty silent-zero
     expect(componentsRaw).toContain('progress.node.size.sm');
+    // A package-tier token (Avatar-Base's, one of the files harvested from the package's own tree) crosses the
+    // dual-instance boundary; `progress.*` never does. A broken brand harvests zero of these.
+    expect(componentsRaw).toContain('avatar.size.md');
   }, TIMEOUT);
 
   /**

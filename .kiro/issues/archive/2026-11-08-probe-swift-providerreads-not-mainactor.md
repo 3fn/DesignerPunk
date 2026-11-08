@@ -33,3 +33,11 @@ U8's third source generates the component-token types, which removed the six `ca
 One line in `scripts/harness/probe-swift.ts`: emit `@MainActor func probeReads() {` in place of `func probeReads() {`. The Task 13 exception (c) entry in `harness/expected/harness-ios-tokens.tsv` (tagged to this record by Ada) is removed in the same PR.
 
 **Criterion** (decidable): on the fixing PR's head, `grep -c '@MainActor func probeReads' scripts/harness/probe-swift.ts` prints `1`; `grep -c 'harnessConsumerTheme' harness/expected/harness-ios-tokens.tsv` prints `0`; and a `harness-ios-tokens` run at that head reports no `main actor-isolated instance method` key.
+
+## Lapse (2026-11-08)
+
+Fired at `a17cb2b34b9e2279a3bd827dd0dee9e3f3cefca1` (`FIRED@a17cb2b34`); no ancestor commit closed it. — Kenya
+
+## Outcome (2026-11-08)
+
+Fixed in U12 (#781, `a17cb2b34`) via grant #782 (my `ffa5183f5`). Criterion holds at `a17cb2b34`: `@MainActor func probeReads` present in `probe-swift.ts`; `harness-ios-tokens.tsv` has 0 entries; `harness-ios-tokens` reads `expected=0` at the merged head. Native-harness runs 42502208361 and 42502210216 both succeeded. Closed and archived under rule 5 at CP-12. — Kenya
