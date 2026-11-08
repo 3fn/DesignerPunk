@@ -647,6 +647,21 @@ export interface InitNextStepsContext {
   gitignoreBlockInPlace: boolean;
   /** The agent layer was emitted (false under `--skip-agents`). */
   agentLayerEmitted: boolean;
+  /** `init` ran `generate` and it succeeded (Spec 129 Req 11.1). False: the list leads with the re-run, as before. */
+  generated: boolean;
+  /** The configured output folder, relative to the project and `/`-separated; named in the closing message when `generated`. */
+  outputDir: string;
+}
+
+/**
+ * `generate` failed inside `init` (Spec 129 Req 11.4; design § 14). The message LEADS with the command to re-run,
+ * then carries `generate`'s own message. `init` has by then finished the config, the copied token source and the
+ * agent layer, so the line says the project is made and only the token output is missing.
+ */
+export function initGenerateFailedMessage(generateMessage: string): string {
+  const detail = generateMessage.trim();
+  return `Run \`npx designerpunk generate\` to write your token output: \`generate\` failed inside \`init\`. Your config, token source and agent layer are in place.` +
+    (detail ? `\n\n\`generate\` said:\n${detail.split('\n').map((l) => `  ${l}`).join('\n')}` : '');
 }
 
 /**
@@ -659,7 +674,7 @@ export function initNextStepsMessage(name: string, ctx: InitNextStepsContext): s
   // The numbered list begins at `generate` (install → init → generate → note → restart is the founder path).
   const steps: string[] = [];
   if (!ctx.packageInstalledHere) steps.push('npm install @3fn/core (it is not installed in this repo, and the config init wrote imports from it)');
-  steps.push('npx designerpunk generate');
+  if (!ctx.generated) steps.push('npx designerpunk generate');
   if (!ctx.agentLayerEmitted) steps.push('npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals)');
   if (ctx.starterSpecNames.length > 0) {
     steps.push(`specs/ holds your starter specs (${ctx.starterSpecNames.join(', ')}): run them with your agent when you are ready`);
@@ -670,15 +685,20 @@ export function initNextStepsMessage(name: string, ctx: InitNextStepsContext): s
   const optional = ctx.jestConfigScaffolded
     ? '\nOptional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node\n'
     : '';
+  const written = ctx.generated
+    ? `\nYour token output is in ${ctx.outputDir}. Run \`npx designerpunk generate\` after every token change.\n`
+    : '';
+  const customize = ctx.generated
+    ? ''
+    : '  • Run `npx designerpunk generate` after changes\n';
   return `Your product "${name}" is ready.
-
+${written}
 Next steps:
 ${steps.map((t, i) => `  ${i + 1}. ${t}`).join('\n')}
 ${optional}
 To customize your visual language:
   • Edit src/tokens/ to change base values and design intent
-  • Run \`npx designerpunk generate\` after changes
-
+${customize}
 Note: Token values have mathematical relationships (modular scale,
 baseline grid). \`generate\` does not check these relationships, and
 \`npx designerpunk validate\`'s check for them currently fails even on
@@ -718,4 +738,24 @@ export function registryAuthFailedMessage(code: string, registry: string | null,
  */
 export function cannotTellGroupMessage(names: readonly string[], reason: string): string {
   return `cannot tell whether these ${names.length} copies under src/components/core/ were modified (${names.join(', ')}) — ${reason}. Review before removing.`;
+}
+
+
+// ---------------------------------------------------------------------------
+// `platforms:` in the config (Spec 129 Req 12.3). AUTHORED AT 15.3: the design catalog carries no row for them.
+// ---------------------------------------------------------------------------
+
+/** `platforms:` names a platform the generator does not know. */
+export function platformUnknownMessage(key: string, known: readonly string[]): string {
+  return `designerpunk.config.ts: \`platforms\` names "${key}", which is not a platform DesignerPunk generates. Use ${known.map((k) => `"${k}"`).join(', ')}.`;
+}
+
+/** A `platforms:` entry that is not `{ output: '<path>' }`. */
+export function platformOutputInvalidMessage(where: string, why: string): string {
+  return `designerpunk.config.ts: \`${where}\` is not valid: ${why}.`;
+}
+
+/** A `platforms:` folder that resolves outside the project. */
+export function platformOutputOutsideRootMessage(key: string, output: string): string {
+  return `designerpunk.config.ts: \`platforms.${key}.output\` is "${output}", which resolves outside your project (the folder the config is in). Name a folder inside it.`;
 }

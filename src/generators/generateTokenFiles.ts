@@ -29,6 +29,7 @@ import {
 import type { ModeResolvedTokens } from './ModeResolvedTokens';
 import type { ResolvedConfig } from '../config/ConfigLoader';
 import type { ConfigTheme } from '../config/defineConfig';
+import { platformOutputDir } from '../config/platforms';
 import type { SemanticOverrideMap } from '../tokens/themes/types';
 import type { TokenInput } from '../cli/resolveTokens';
 import type { SemanticToken } from '../types/SemanticToken';
@@ -135,6 +136,14 @@ export function generateTokenFiles(
   } = {},
 ): ModeResolvedTokens {
   const effectiveOutputDir = config.outputDir;
+  // `platforms:` (Spec 129 Req 12): a platform the config names is written at its own folder, every other one at `output`.
+  // The generators below build their file paths under `effectiveOutputDir`; each result is moved to its platform's folder
+  // by its file name before it is written. DTCG and Figma are web-side files and follow `web`.
+  const dirFor = (platform: 'web' | 'ios' | 'android'): string => platformOutputDir(config, platform);
+  const placed = <T extends { platform: 'web' | 'ios' | 'android'; filePath: string }>(r: T): T => {
+    r.filePath = path.join(dirFor(r.platform), path.basename(r.filePath));
+    return r;
+  };
   // The one token set every generator below reads (Spec 129 U9, design § 10): the consumer's copy.
   const tokenSet: TokenSet = tokens.tokenSet ?? packageTokenSet();
   const { composedColorMap } = tokenSet.mod('color/index');
@@ -375,6 +384,7 @@ export function generateTokenFiles(
     fs.mkdirSync(effectiveOutputDir, { recursive: true });
     console.log(`📁 Created output directory: ${effectiveOutputDir}\n`);
   }
+  for (const platform of ['web', 'ios', 'android'] as const) fs.mkdirSync(dirFor(platform), { recursive: true });
   commitThemeNotice();
 
   const results = generator.generateAll({
@@ -396,7 +406,7 @@ export function generateTokenFiles(
   // Write files to disk
   console.log('📝 Writing token files...\n');
   
-  for (const result of results) {
+  for (const result of results.map(placed)) {
     const filePath = path.join(result.filePath);
     
     try {
@@ -443,7 +453,7 @@ export function generateTokenFiles(
     ...(options.excludeComponentTokenFromWeb ? { excludeFromWeb: options.excludeComponentTokenFromWeb } : {}),
   });
 
-  for (const result of componentResults) {
+  for (const result of componentResults.map(placed)) {
     if (result.valid) {
       fs.writeFileSync(result.filePath, result.content, 'utf-8');
     }
@@ -458,7 +468,7 @@ export function generateTokenFiles(
   try {
     const { DTCGFormatGenerator } = require('./DTCGFormatGenerator');
     const dtcgGenerator = new DTCGFormatGenerator({}, tokenSet, darkSemanticOverrides);
-    const dtcgOutputPath = path.join(effectiveOutputDir, 'DesignTokens.dtcg.json');
+    const dtcgOutputPath = path.join(dirFor('web'), 'DesignTokens.dtcg.json');
     dtcgGenerator.writeToFile(dtcgOutputPath);
     console.log(`   DTCG: DesignTokens.dtcg.json`);
   } catch (dtcgError) {
@@ -467,14 +477,14 @@ export function generateTokenFiles(
 
   // --- Figma Format Generation (depends on DTCG) ---
   try {
-    const dtcgPath = path.join(effectiveOutputDir, 'DesignTokens.dtcg.json');
+    const dtcgPath = path.join(dirFor('web'), 'DesignTokens.dtcg.json');
     if (fs.existsSync(dtcgPath)) {
       const { FigmaTransformer } = require('./transformers/FigmaTransformer');
       const dtcgContent = JSON.parse(fs.readFileSync(dtcgPath, 'utf-8'));
       const transformer = new FigmaTransformer();
       if (transformer.canTransform(dtcgContent)) {
         const result = transformer.transform(dtcgContent);
-        const figmaOutputPath = path.join(effectiveOutputDir, 'DesignTokens.figma.json');
+        const figmaOutputPath = path.join(dirFor('web'), 'DesignTokens.figma.json');
         fs.writeFileSync(figmaOutputPath, result.content, 'utf-8');
         console.log(`   Figma: DesignTokens.figma.json`);
       }

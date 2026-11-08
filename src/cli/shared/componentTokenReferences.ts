@@ -16,6 +16,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
+import { platformOutputDir } from '../../config/platforms';
+import type { PlatformKey, PlatformOutputs } from '../../config/platforms';
 
 export type ReferencePlatform = 'web' | 'ios' | 'android';
 export const REFERENCE_PLATFORMS: readonly ReferencePlatform[] = ['ios', 'android', 'web'];
@@ -49,17 +51,19 @@ function read(file: string): string | null {
 }
 
 /** What the consumer's generated `DesignTokens.*` files define, on each platform. */
-export function readDeclaredNames(outputDir: string): DeclaredNames {
+export function readDeclaredNames(config: string | { outputDir: string; platforms?: PlatformOutputs }): DeclaredNames {
+  // A bare folder reads every platform from it; a config reads each platform from the folder `platforms:` gives it (Spec 129 Req 12.2).
+  const dirOf = (p: PlatformKey): string => (typeof config === 'string' ? config : platformOutputDir(config, p));
   const names: DeclaredNames = { web: null, ios: null, android: null };
-  const web = read(path.join(outputDir, FILES.web));
+  const web = read(path.join(dirOf('web'), FILES.web));
   if (web !== null) {
     names.web = new Set([...web.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(--[A-Za-z_][A-Za-z0-9_-]*)\s*:/g)].map(m => m[1]));
   }
-  const swift = read(path.join(outputDir, FILES.ios));
+  const swift = read(path.join(dirOf('ios'), FILES.ios));
   if (swift !== null) {
     names.ios = new Set([...swift.matchAll(/\b(?:let|var)\s+([A-Za-z_][A-Za-z0-9_]*)\b/g)].map(m => m[1]));
   }
-  const kotlin = read(path.join(outputDir, FILES.android));
+  const kotlin = read(path.join(dirOf('android'), FILES.android));
   if (kotlin !== null) {
     names.android = new Set([...kotlin.matchAll(/\bval\s+([A-Za-z_][A-Za-z0-9_]*)\b/g)].map(m => m[1]));
   }

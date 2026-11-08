@@ -14,6 +14,7 @@ import { emitCSS } from '../build/product/emitters/WebEmitter';
 import { emitSwift } from '../build/product/emitters/SwiftEmitter';
 import { emitKotlin } from '../build/product/emitters/KotlinEmitter';
 import type { ResolvedConfig } from '../config/ConfigLoader';
+import { productTokenOutputPaths } from './shared/platformOutputs';
 
 export interface GenerateProductTokensOptions {
   /** Write here instead of `<outputDir>/product`, and print nothing: the freshness check renders into a temporary directory. */
@@ -65,9 +66,14 @@ export function generateProductTokens(config: ResolvedConfig, options: GenerateP
   const swift = emitSwift(result.categories, emitterConfig);
   const kotlin = emitKotlin(result.categories, emitterConfig);
 
-  fs.writeFileSync(path.join(outputDir, 'ProductTokens.web.css'), css);
-  fs.writeFileSync(path.join(outputDir, 'ProductTokens.ios.swift'), swift);
-  fs.writeFileSync(path.join(outputDir, 'ProductTokens.android.kt'), kotlin);
+  // A native file goes to its platform's folder when `platforms:` names one; the render for the freshness check is flat.
+  const at = options.renderTo !== undefined
+    ? { web: path.join(outputDir, 'ProductTokens.web.css'), ios: path.join(outputDir, 'ProductTokens.ios.swift'), android: path.join(outputDir, 'ProductTokens.android.kt') }
+    : productTokenOutputPaths(config);
+  for (const [file, content] of [[at.web, css], [at.ios, swift], [at.android, kotlin]] as const) {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, content);
+  }
 
   if (quiet) return;
 

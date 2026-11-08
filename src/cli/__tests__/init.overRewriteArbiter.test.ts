@@ -31,7 +31,7 @@ async function runInitIn(scratchDir: string): Promise<void> {
   const logSpy = jest.spyOn(console, 'log').mockImplementation();
   const errorSpy = jest.spyOn(console, 'error').mockImplementation();
   try {
-    await runInit(['--name', 'Test', '--abbreviation', 'T', '--skip-agents']);
+    await runInit(['--name', 'Test', '--abbreviation', 'T', '--skip-agents'], { generate: async () => undefined }); // `generate` is covered where it runs; here it would only fail under jest
   } finally {
     process.chdir(originalCwd);
     logSpy.mockRestore();

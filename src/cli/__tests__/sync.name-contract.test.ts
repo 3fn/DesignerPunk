@@ -201,7 +201,7 @@ describe('sync — the name contract (Req 5A)', () => {
     const exit = jest.spyOn(process, 'exit').mockImplementation((() => undefined) as never);
     process.chdir(scratch);
     try {
-      await runInit(['--name', 'Test', '--abbreviation', 'T']);
+      await runInit(['--name', 'Test', '--abbreviation', 'T'], { generate: async () => undefined });
     } finally {
       process.chdir(cwd);
       exit.mockRestore();

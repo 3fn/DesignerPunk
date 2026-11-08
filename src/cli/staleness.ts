@@ -16,20 +16,15 @@ import * as os from 'os';
 import * as path from 'path';
 import type { ResolvedConfig } from '../config/ConfigLoader';
 import { generateProductTokens } from './generateProductTokens';
+import { productTokenOutputPaths } from './shared/platformOutputs';
 import { sameOutput } from './freshness';
-
-const PRODUCT_OUTPUT_FILES = [
-  'ProductTokens.web.css',
-  'ProductTokens.ios.swift',
-  'ProductTokens.android.kt',
-];
 
 /**
  * Get all product token output file paths for the configured platforms.
  */
 export function getProductTokenOutputPaths(config: ResolvedConfig): string[] {
-  const outputDir = path.join(config.outputDir, 'product');
-  return PRODUCT_OUTPUT_FILES.map(f => path.join(outputDir, f));
+  const paths = productTokenOutputPaths(config);
+  return [paths.web, paths.ios, paths.android];
 }
 
 /**

@@ -29,7 +29,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import { spawn } from 'child_process';
-import { runInit, ManifestBuilder, listStarterSpecFiles, starterSpecNames, scaffoldStarterSpecs, STARTER_SPECS_SOURCE } from '../init';
+import { runInit, ManifestBuilder, type InitDeps, listStarterSpecFiles, starterSpecNames, scaffoldStarterSpecs, STARTER_SPECS_SOURCE } from '../init';
 import { runAttach } from '../attach';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
 import { cloneHatchMessage, personalNoteNamingMessage, restartLineSequencedMessage } from '../shared/errorCatalog';
@@ -51,6 +51,7 @@ import {
   personalNoteUnfilledMessage,
   namedDefaultNoticeMessage,
   initNextStepsMessage,
+  initGenerateFailedMessage,
   jestConfigCollisionMessage,
   initNeedsNameOffTerminalMessage,
   INSTALL_GUIDE_PATH,
@@ -103,6 +104,7 @@ function markGitBoundary(dir: string): void {
 async function runInitIn(
   scratchDir: string,
   args: string[] = ['--name', 'Test', '--abbreviation', 'T', '--skip-agents'],
+  deps: InitDeps = { generate: async () => undefined }, // the production `generate` cannot run in-process under jest (Spec 129 Task 15.1)
 ): Promise<{ output: string; exitCode: number | undefined }> {
   const originalCwd = process.cwd();
   process.chdir(scratchDir);
@@ -112,7 +114,7 @@ async function runInitIn(
   const exitSpy = jest.spyOn(process, 'exit').mockImplementation(((() => undefined) as unknown) as () => never);
 
   try {
-    await runInit(args);
+    await runInit(args, deps);
   } finally {
     process.chdir(originalCwd);
   }
@@ -913,7 +915,7 @@ describe('CLI init — the .gitignore managed block (Task 20.2; design.md C24)',
     const errorSpy = jest.spyOn(console, 'error').mockImplementation();
     const exitSpy = jest.spyOn(process, 'exit').mockImplementation(((() => undefined) as unknown) as () => never);
     try {
-      await runInit(args, { configLoader });
+      await runInit(args, { configLoader, generate: async () => undefined });
     } finally {
       process.chdir(originalCwd);
     }
@@ -1165,10 +1167,46 @@ describe('CLI init — the C27 completion: notice first, next steps, restart row
       starterSpecNames: ['ci-needs', 'regrounding'],
       gitignoreBlockInPlace: false, // the production config loader cannot run under jest: the block is reported, not written
       agentLayerEmitted: true,
+      generated: true, // the stub `generate` succeeded; the config cannot load under jest, so the output folder is init's own default
+      outputDir: 'dist/tokens',
     });
     const tail = `${expected}\n\n${cloneHatchMessage()}\n\n${personalNoteNamingMessage()}\n\n${restartLineSequencedMessage()}`;
     expect(output.trimEnd().endsWith(tail)).toBe(true);
     expect(steps(output).some((l) => l.includes('specs/ holds your starter specs (ci-needs, regrounding)'))).toBe(true);
+  });
+
+  test('`generate` runs after the birth is finished, and its exit is not init\'s (Spec 129 Req 11.1)', async () => {
+    let sawBirth: string[] = [];
+    const generate = async () => {
+      sawBirth = ['designerpunk.config.ts', 'designerpunk.manifest.json', PERSONAL_NOTE_REL].filter((f) => fs.existsSync(path.join(scratchDir, f)));
+    };
+    const { exitCode } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`], { generate });
+    expect(sawBirth).toEqual(['designerpunk.config.ts', 'designerpunk.manifest.json', PERSONAL_NOTE_REL]);
+    expect(exitCode).toBeUndefined();
+  });
+
+  test('`generate` failing inside init: the config, token source, agent layer and manifest stay, the message leads with the re-run command, and init exits non-zero (Spec 129 Req 11.4)', async () => {
+    const generate = async () => {
+      console.error('❌ System token generation failed: boom');
+      process.exit(1);
+    };
+    const { output, exitCode } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`], { generate });
+    expect(exitCode).toBe(1);
+    for (const kept of ['designerpunk.config.ts', 'designerpunk.manifest.json', 'src/tokens']) {
+      expect(fs.existsSync(path.join(scratchDir, kept))).toBe(true);
+    }
+    expect(fs.existsSync(path.join(scratchDir, PROFILE.defaultTarget === 'kiro' ? '.kiro' : '.claude'))).toBe(true);
+    const failed = initGenerateFailedMessage('❌ System token generation failed: boom');
+    expect(output).toContain(failed);
+    expect(output.indexOf('Run `npx designerpunk generate`')).toBeLessThan(output.indexOf('System token generation failed: boom'));
+    expect(output).not.toContain('Your token output is in');
+  });
+
+  test('a `generate` that throws is a failure too, not a crash', async () => {
+    const { output, exitCode } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`], { generate: async () => { throw new Error('config would not load'); } });
+    expect(exitCode).toBe(1);
+    expect(output).toContain('config would not load');
+    expect(fs.existsSync(path.join(scratchDir, 'designerpunk.manifest.json'))).toBe(true);
   });
 
   test('a SKIP makes its line disappear: an existing jest.config.js is kept, reported truthfully, and the optional install-jest line is omitted', async () => {

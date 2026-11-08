@@ -233,7 +233,7 @@ describe('errorCatalog — string conformance (15.0.0 rehearsal: generate load f
 // ---------------------------------------------------------------------------
 // Task 22.2 — the bare `init` default notice (design.md row "bare `init` default notice (A2)", Leonardo A2).
 // ---------------------------------------------------------------------------
-import { namedDefaultNoticeMessage, initNextStepsMessage, initNeedsNameOffTerminalMessage, INSTALL_GUIDE_PATH } from '../shared/errorCatalog';
+import { initGenerateFailedMessage, namedDefaultNoticeMessage, initNextStepsMessage, initNeedsNameOffTerminalMessage, INSTALL_GUIDE_PATH } from '../shared/errorCatalog';
 
 describe('errorCatalog — Task 22.2 additions', () => {
   const A2_ROW = "no --target given — set up for Claude Code (the default). Using Kiro? npx designerpunk attach --target=kiro";
@@ -250,7 +250,7 @@ describe('errorCatalog — Task 22.2 additions', () => {
   });
 
   test('init next steps: list positively, name the .gitignore block and the specs/ scaffold, in order', () => {
-    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: ['ci-needs', 'regrounding'], gitignoreBlockInPlace: true, agentLayerEmitted: true });
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: ['ci-needs', 'regrounding'], gitignoreBlockInPlace: true, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     expect(m).toContain('Your product "Acme" is ready.');
     const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
     expect(steps).toEqual([
@@ -261,18 +261,38 @@ describe('errorCatalog — Task 22.2 additions', () => {
     expect(steps.some((l) => l.includes('npm install'))).toBe(false);
   });
 
+  test('after a successful `generate` the message names the output folder and generate\'s role, in design § 14\'s words, and the list has no generate step (Spec 129 Req 11.3)', () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: true, agentLayerEmitted: true, generated: true, outputDir: 'dist/tokens' });
+    expect(m).toContain('Your token output is in dist/tokens. Run `npx designerpunk generate` after every token change.');
+    const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+    expect(steps.some((l) => l.includes('npx designerpunk generate'))).toBe(false);
+    expect(m.match(/Run `npx designerpunk generate`/g)).toHaveLength(1);
+  });
+
+  test('after a FAILED `generate` the message names no output folder and the list leads with the re-run', () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
+    expect(m).not.toContain('Your token output is in');
+    expect(m.split('\n').filter((l) => /^ {2}\d+\. /.test(l))[0]).toBe('  1. npx designerpunk generate');
+  });
+
+  test('the failed-generate message LEADS with the re-run command, then carries generate\'s own message (Spec 129 Req 11.4)', () => {
+    const m = initGenerateFailedMessage('System token generation failed: boom');
+    expect(m.startsWith('Run `npx designerpunk generate`')).toBe(true);
+    expect(m.indexOf('npx designerpunk generate')).toBeLessThan(m.indexOf('System token generation failed: boom'));
+  });
+
   test('the jest install is OPTIONAL and printed after the numbered list, not in it; only when jest.config.js was written', () => {
     const optional = 'Optional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node';
-    const withJest = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    const withJest = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     expect(withJest).toContain(optional);
     expect(withJest.indexOf(optional)).toBeGreaterThan(withJest.indexOf('  1. npx designerpunk generate'));
     expect(withJest.split('\n').filter((l) => /^ {2}\d+\. /.test(l)).some((l) => l.includes('jest'))).toBe(false);
-    const without = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    const without = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     expect(without).not.toContain('Optional');
   });
 
   test('the ONE case for an install step: @3fn/core is not installed in the repo (init run through npx with no install first) → `npm install @3fn/core`, never a bare `npm install`', () => {
-    const m = initNextStepsMessage('Acme', { packageInstalledHere: false, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: false, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
     expect(steps[0]).toBe('  1. npm install @3fn/core (it is not installed in this repo, and the config init wrote imports from it)');
     expect(steps[1]).toBe('  2. npx designerpunk generate');
@@ -280,7 +300,7 @@ describe('errorCatalog — Task 22.2 additions', () => {
   });
 
   test('the customize note says what is true: `generate` does not check the relationships, and `validate`\'s check currently fails on unmodified source', () => {
-    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     expect(m).not.toContain('The validator will warn');
     const flat = m.replace(/\s+/g, ' '); // the note wraps at 72 columns
     expect(flat).toContain('`generate` does not check these relationships, and');
@@ -288,12 +308,12 @@ describe('errorCatalog — Task 22.2 additions', () => {
   });
 
   test('the optional jest line names the five devDependencies the preset and the tsconfig.test.json `init` writes declare', () => {
-    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     expect(m).toContain('npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
   });
 
   test('init next steps omit every step a skip made untrue', () => {
-    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: false });
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: false, generated: false, outputDir: 'dist/tokens' });
     const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
     expect(steps).toEqual([
       '  1. npx designerpunk generate',
@@ -330,7 +350,7 @@ describe('errorCatalog — init off a terminal (R3-1)', () => {
   });
 
   test("init's closing output names the install guide", () => {
-    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     expect(m).toContain(`The install guide: ${INSTALL_GUIDE_PATH}`);
   });
 });
