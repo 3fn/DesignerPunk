@@ -2,13 +2,15 @@
 
 **Date**: 2026-11-08 (drafted from 2026-11-08T17:14:59Z, `date -u`)
 **Drafted by**: Thurgood (Civitas steward; owner of `completion-criteria-parity`, `scripts/owed-set.sh`, `scripts/issues-owned.sh`, `scripts/harness/stability.ts` and `compare.ts`; holder of the CI regime's standing test-lane scope)
-**Status**: **DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do.
-- **Ratifiable now: items 1 and 3**, with forks F-1, F-2 and F-6. This is under the three conditions of `[STACY R2]` § 3:
-  - (i) Ada's consult on item 3 (Q6) is answered or marked owed (answered: § 10, "Round 2 — Ada consulted");
-  - (ii) this line names the items ratified, and each application PR carries only their sites (§ 5 steps 1, 3a, 5 and 6);
-  - (iii) items 2 and 4 come back with their census in the first form.
-- **Held DRAFT: items 2 and 4**, with forks F-3, F-4 and F-5, until parity's census mode exists and their census lines are re-run at the base of that later ratification (B-6, standing).
-- A ruling on items 1 and 3 ratifies those items and their forks only. Review rounds 1 and 2 (Stacy, Data, Kenya) are in § 10, folded at `[THURGOOD R2]` and `[THURGOOD R3]`.
+**Status**: **Items 1 and 3 RATIFIED (Peter, 2026-11-08T20:36:57Z), with F-1 (a), F-2 (a) and F-6 (a). Items 2 and 4 remain DRAFT, with F-3, F-4 and F-5.**
+- **Peter's words, verbatim**:
+  - 2026-11-08T19:40:29Z: "Ask Thurgood and Stacy to workout any disagreements on F-1, F-2, and/or F-6 and go with their collective recommendations, please". The joint pick is in § 10, `[STACY R3]` and `[THURGOOD R4]`.
+  - 2026-11-08T20:36:57Z: "Ratified". This answered the orchestrator's question: "Do you ratify items 1 and 3, with F-1 (a), F-2 (a) and F-6 (a)? Items 2 and 4 stay in draft regardless."
+- **The record**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ratifies-cracks-ballot-items-1-3.md` (`f8fb986d9`), recorded with `date -u` at receipt.
+- **What is ratified**: items 1 and 3, their edit sites (1.1–1.4, 3.1–3.4) and § 5 steps 1, 3a, 5 and 6, as they stand at `d68460752`. The `**Amends**:` header is not ratified as a whole; it lists every item's files.
+- **What is held**: items 2 and 4, their sites, § 5 steps 2, 3b and 4, and forks F-3, F-4 and F-5. They are DRAFT until parity's census mode exists and their census lines are re-run in the first form at the base of a later ratification (`[STACY R2]` § 3 (iii); B-6).
+- **Item 3's warn-only half shipped before ratification**, as #803 (merged `4704b4949`, 2026-11-08T19:40:26Z) under grant #798. Item 3 (d)'s cycle starts at `4704b4949`. § 5 step 6's pre-merge head `0d62b341f` is superseded by that SHA.
+- **Record-first**: this commit is the record, made before any ratified site is applied. *(Prior text at `d68460752`: "**DRAFT** — not ratified. … Ratifiable now: items 1 and 3 … Held DRAFT: items 2 and 4 …")*
 **Owner**: Thurgood. Stacy owns the text of her own charter's edit site (§ 4, site 2.7) and of the register row she owns (site 4.5).
 **Required reviewer**: **Stacy** — mandate: attack the width, and the false-fire and false-emission arithmetic. She is the census reader, and she specifies the owed-set script's falsification cases (my charter, LIVENESS). Her ARMING read fires on item 1 (its workflow grant and `stability.ts`), item 3's workflow grant, and item 4's parity change. It does **not** fire on item 3's script or item 2 (d)'s owed-set change, because `scripts/issues-owned.sh` and `scripts/owed-set.sh` are not on her instrument-path list (`[STACY R1]` A-6).
 **Consulted seats**:
