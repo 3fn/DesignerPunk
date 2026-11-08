@@ -52,3 +52,5 @@ Primary Artifacts: all shipped as declared. `README.md` is not a Primary Artifac
 ## Subtask docs
 
 `task-15-1-completion.md`, `task-15-2-completion.md` (Thurgood), `task-15-3-completion.md`.
+
+*Addendum, Ada, 2026-11-08 (ARMING batch 6, F2).* The \`consumer.test.ts\` run for #777: \`npm test -- scripts/harness/__tests__/consumer.test.ts\`, 50 pass (the count in the row above). It ran in #777's gate job \`lane-functional-root\` (\`test:scripts\`, success at head \`640683faf\`, per Stacy's read); I did not re-run it locally for this note.
