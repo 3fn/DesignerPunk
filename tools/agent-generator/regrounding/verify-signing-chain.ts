@@ -2125,7 +2125,8 @@ function defaultBase(repo: string, head: string): string {
  *     or `#<member id>` in the shared file): the canonical unit, entry or member and its
  *     `canonicalHash` (`hashText`, or `hashEntry` over the entry's value / the member), then every
  *     rendered piece of the row's span source under `canonical/_consumer-output/` and
- *     `renderedHashOf` over them — what a SIGNER reads, and what link 7 reads for a signature.
+ *     `renderedHashOfRow` over them (for a row with no piece, the hash of its disposition and
+ *     destination, F-4 (a)) — what a SIGNER reads, and what link 7 reads for a signature.
  * For an entry or a member the printed canonical text is `canonicalStringify(value)`: the exact
  * bytes `hashEntry` hashes. Each text sits between a `<<<<< begin` and a `>>>>> end` line; the bytes
  * between them are the text, ending in one newline.
@@ -2171,7 +2172,7 @@ function printModules(dir: string = __dirname): {
   hashEntry: (v: unknown) => string;
   canonicalStringify: (v: unknown) => string;
   readConsumerSpans: (root: string) => ReadonlyMap<string, readonly { artifact: string; text: string }[]> | undefined;
-  renderedHashOf: (spans: ReadonlyMap<string, readonly { artifact: string; text: string }[]>, source: string) => string;
+  renderedHashOfRow: (spans: ReadonlyMap<string, readonly { artifact: string; text: string }[]>, source: string, row: { disposition?: unknown; destination?: unknown }) => string;
   rowSpanSource: (docSource: string, section: string, key: string) => string;
   sharedCatalog: string;
 } {
@@ -2192,7 +2193,7 @@ function printModules(dir: string = __dirname): {
     hashEntry: hash.hashEntry,
     canonicalStringify: cj.canonicalStringify,
     readConsumerSpans: derive.readConsumerSpans,
-    renderedHashOf: derive.renderedHashOf,
+    renderedHashOfRow: derive.renderedHashOfRow,
     rowSpanSource: derive.rowSpanSource,
     sharedCatalog: disp.SHARED_CATALOG,
   };
@@ -2272,7 +2273,7 @@ export function printUnit(repo: string, target: string, cwd: string = repo): Pri
     if (spans === undefined) throw new PrintError(`no consumer rendering under ${CONSUMER_OUTPUT_DIR}/ — run the consumer generation first`);
     const spanSource = m.rowSpanSource(source, section, key);
     const pieces = (spans.get(spanSource) ?? []).map((p) => ({ artifact: p.artifact, text: p.text }));
-    out.rendering = { spanSource, pieces, hash: m.renderedHashOf(spans, spanSource) };
+    out.rendering = { spanSource, pieces, hash: m.renderedHashOfRow(spans, spanSource, rows[key] as { disposition?: unknown; destination?: unknown }) };
     read.push(CONSUMER_OUTPUT_DIR);
   }
   out.at = gitTry(repo, ['rev-parse', 'HEAD'])?.trim() ?? '(no HEAD)';

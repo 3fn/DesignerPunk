@@ -35,7 +35,7 @@
  *
  * THE RENDERED HASH (Task 15.1): a signature's VALVE 1 pins BOTH the canonical and the RENDERED
  * hash. By default the sweep reads the rendered hash from the COMMITTED consumer rendering,
- * through its attribution sidecars (`readConsumerSpans` / `renderedHashOf`, derive.ts): the
+ * through its attribution sidecars (`readConsumerSpans` / `renderedHashOfRow`, derive.ts): the
  * lines every target's artifacts attribute to the row's source. The guard's tree compare, which
  * runs after this sweep, is what makes the committed rendering equal a fresh one. With NO
  * consumer rendering under `canonical/_consumer-output/` a signature is REFUSED as
@@ -113,7 +113,7 @@ import {
   keyUniverse,
   keyUniverseOf,
   readConsumerSpans,
-  renderedHashOf,
+  renderedHashOfRow,
   rowSpanSource,
   type KeyUniverse,
   type RenderedSpans,
@@ -659,7 +659,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
           ? opts.renderedHash(file, section, key)
           : (() => {
               const s = consumerSpans();
-              return s === undefined ? undefined : renderedHashOf(s, rowSpanSource(source as string, section, key));
+              return s === undefined ? undefined : renderedHashOfRow(s, rowSpanSource(source as string, section, key), row as { disposition?: unknown; destination?: unknown });
             })();
         if (rendered === undefined) {
           push('signature-unverifiable', file, unverifiableSignatureMessage(key, file), key);

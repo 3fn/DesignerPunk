@@ -546,9 +546,12 @@ function countBlockLines(text: string): number {
 //
 // SCOPE: `renderedHashOf` hashes the pieces of EVERY declared target's rendering together, each
 // with its artifact path, so a change to any target's rendering of the row (or a move of the
-// artifact) stales the signature. A row that renders nothing (`no-consumer-counterpart`) hashes
-// the empty piece list — defined, and stale the moment it starts rendering. Undefined is
-// reserved for "no consumer rendering exists at all", which the sweep refuses as
+// artifact) stales the signature. A signature pins {@link renderedHashOfRow}, which is that hash
+// for a row with rendered pieces. A row that renders nothing (`no-consumer-counterpart`,
+// `superseded-by`) has no pieces to hash, so its pin is the hash of its `disposition` and
+// `destination` instead (ballot 2026-11-08-signing-act-shape-review F-4 (a)): a re-disposition
+// or a destination change stales its signature, and so does the row starting to render.
+// Undefined is reserved for "no consumer rendering exists at all", which the sweep refuses as
 // `signature-unverifiable` rather than half-checking.
 
 /** The lines one attribution span assigns to its source, in one committed consumer artifact. */
@@ -614,4 +617,15 @@ export function rowSpanSource(docSource: string, section: 'body' | 'frontmatter'
 /** VALVE 1's rendered hash for one span source: every target's pieces, with their artifact paths. */
 export function renderedHashOf(spans: RenderedSpans, source: string): string {
   return hashEntry((spans.get(source) ?? []).map((p) => [p.artifact, p.text]));
+}
+
+/**
+ * VALVE 1's rendered hash for one dispositions row — what a signature's `renderedHash` pins
+ * (ballot 2026-11-08-signing-act-shape-review F-4 (a)). A row with rendered pieces hashes them
+ * exactly as {@link renderedHashOf}. A row with none hashes `{ disposition, destination }`, with
+ * `destination` omitted where the row has none, so its signature pins what was judged.
+ */
+export function renderedHashOfRow(spans: RenderedSpans, source: string, row: { disposition?: unknown; destination?: unknown }): string {
+  if ((spans.get(source) ?? []).length > 0) return renderedHashOf(spans, source);
+  return hashEntry(row.destination === undefined ? { disposition: row.disposition } : { disposition: row.disposition, destination: row.destination });
 }
