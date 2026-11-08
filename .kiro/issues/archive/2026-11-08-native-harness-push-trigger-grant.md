@@ -159,3 +159,15 @@ index 3265ab24a..4ad0c4f09 100644
 ## Known hazard
 
 The Trigger is a `path:` token on a shared workflow file. If another PR, under its own grant, touches `native-harness.yml` before the fixing PR, this record fires there. A grant does not lapse (rule 11), but one still open after a firing that was not its fixing PR is a walk finding, and `fired-records` will list it on that PR with the reason `grant`. Kept as `path:` to match the precedent of `2026-11-08-fired-records-warn-workflow-grant.md`. If it fires early, I re-rule it to `merge:#<N>` for the fixing PR.
+
+## Outcome (2026-11-08)
+
+Closed by its fixing PR, branch `chore/cracks-item1-push-trigger`, under rule 5. Thurgood.
+- **The `.github/**` diff** is exactly `.github/workflows/native-harness.yml`. `git diff --numstat origin/main...HEAD -- .github` prints `24	11	.github/workflows/native-harness.yml`.
+- **The diff is the one above, byte for byte**, as this record stood at the activating merge `e4ad34615` (#814). It was extracted from `git show e4ad34615:<this record>` and applied with `git apply` at `c4d926ae2`.
+- **The 11 deleted lines equal the `**Deleted lines**:` block** at `e4ad34615` (`cmp` of `git diff -U0` against the block), and their count equals `--numstat`'s.
+- **No act outside the list**:
+  - `verify-gate-registration.sh` prints `PASS: all 21 required contexts present, count-asserted (N=21)`;
+  - `audit:coverage-map` exits 0, with output identical with and without the change;
+  - `deriveJobContext` gives the five unsuffixed contexts.
+- **Sites 1.3 and 1.4 ride in the same PR**, as the ballot's § 5 step 5 says. Neither is a `.github/**` path.

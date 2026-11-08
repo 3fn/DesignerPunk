@@ -12,8 +12,10 @@
 # lane wrote. Each context fails, never skips, when harness-generate failed or its artifact is absent.
 # The last step of harness-generate runs the D2 check (scripts/harness/d2-check.ts); see .kiro/issues/2026-11-07-d2-check-step-grant.md.
 #
-# Triggers: `pull_request` with no `paths:` filter (every unit PR runs all four contexts, Req 2.10), and
-# `workflow_dispatch`. A dispatched run has no merge base, so its comparator runs `--no-base`.
+# Triggers: `pull_request` with no `paths:` filter (every unit PR runs all four contexts, Req 2.10),
+# `push` to `main` (each squash that ships is measured; ballot 2026-11-08-closeout-cracks item 1), and
+# `workflow_dispatch`. A dispatched or push run is not a pull request, so its comparator runs `--no-base`.
+# Push runs share one concurrency group, so a burst of merges is measured at least at its newest squash.
 #
 # The verdict annotation: after the comparator, a step with `if: always()` reads the comparator's output
 # file and writes `::notice title=harness-verdict::<verdict line>` for a PASS and a FAIL alike, and writes
@@ -23,15 +25,20 @@
 # No `if:` in this file reads github.event_name, github.event.*, head_ref, base_ref, ref or ref_name, and
 # only one reads inputs.*: the forced-failure step of harness-generate (dispatch input
 # force_generate_failure, Req 2.11's evidence run). So a context fails rather than skips on every trigger.
-# Job `name:` expressions are not `if:` and read github.event_name for the "(unit-branch)" dispatch suffix.
+# Job `name:` expressions are not `if:` and read github.event_name for the "(unit-branch)" dispatch suffix
+# and the "(main)" push suffix; the concurrency group reads it too. Neither is a step condition.
 #
-# Not a required context. It is in neither EXPECTED_CONTEXTS nor complete-task.sh's
-# REQUIRED_WORKFLOWS while it measures (tasks.md Task 5, criterion 11).
+# Required context: `harness-android-tokens`, in EXPECTED_CONTEXTS since its promotion (#717,
+# tools/agent-generator/verify-gate-registration.sh); the other three compile contexts are not required.
+# This workflow is in complete-task.sh's REQUIRED_WORKFLOWS. A push run's `(main)` names never match a
+# required context name.
 
 name: native-harness
 
 on:
   pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       force_generate_failure:
@@ -42,11 +49,17 @@ on:
 permissions:
   contents: read
 
+# Only push runs share a group; every other run has its own. GitHub keeps one running and one pending run
+# per group, so in a burst the pending squash is replaced by the newest one, never the running one.
+concurrency:
+  group: ${{ github.event_name == 'push' && 'native-harness-push-main' || format('native-harness-{0}', github.run_id) }}
+  cancel-in-progress: false
+
 jobs:
   harness-generate:
     # This name expression is a job name, not a step condition. On a dispatch it reads "(unit-branch)", the same
-    # convention lane-timing.yml uses, so a branch-head dispatch run never shadows a gate name.
-    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-generate (unit-branch)' || 'harness-generate' }}
+    # convention lane-timing.yml uses, and on a push to main "(main)", so neither run ever shadows a gate name.
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-generate (unit-branch)' || github.event_name == 'push' && 'harness-generate (main)' || 'harness-generate' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -126,7 +139,7 @@ jobs:
   # ---------------------------------------------------------------------------------------------
 
   harness-ios-tokens:
-    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-ios-tokens (unit-branch)' || 'harness-ios-tokens' }}
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-ios-tokens (unit-branch)' || github.event_name == 'push' && 'harness-ios-tokens (main)' || 'harness-ios-tokens' }}
     needs: harness-generate
     if: ${{ !cancelled() }}
     runs-on: macos-26
@@ -193,7 +206,7 @@ jobs:
           retention-days: 7
 
   harness-ios-components:
-    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-ios-components (unit-branch)' || 'harness-ios-components' }}
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-ios-components (unit-branch)' || github.event_name == 'push' && 'harness-ios-components (main)' || 'harness-ios-components' }}
     needs: harness-generate
     if: ${{ !cancelled() }}
     runs-on: macos-26
@@ -264,7 +277,7 @@ jobs:
           retention-days: 7
 
   harness-android-tokens:
-    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-tokens (unit-branch)' || 'harness-android-tokens' }}
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-tokens (unit-branch)' || github.event_name == 'push' && 'harness-android-tokens (main)' || 'harness-android-tokens' }}
     needs: harness-generate
     if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
@@ -403,7 +416,7 @@ jobs:
           retention-days: 7
 
   harness-android-components:
-    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-components (unit-branch)' || 'harness-android-components' }}
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-components (unit-branch)' || github.event_name == 'push' && 'harness-android-components (main)' || 'harness-android-components' }}
     needs: harness-generate
     if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
