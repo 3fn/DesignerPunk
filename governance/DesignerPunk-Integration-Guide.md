@@ -553,7 +553,7 @@ The pipeline shows where tokens are being read from. With the config `init` writ
 📦 MyProduct (MP)
    Tokens: src/tokens  (local)
    Output: dist/tokens
-   Themes: dark (dark), wcag (both) — registered and applied: dark and wcag replace DesignerPunk's built-in overrides; every other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android
+   Themes: dark (dark), wcag (both) — registered and applied: a dark or wcag theme you register replaces DesignerPunk's built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme
 ```
 The `Themes:` line lists what your config registers; every one is applied (see "Themes").
 
