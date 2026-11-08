@@ -403,3 +403,10 @@ comm -12 <(git grep -l '^\*\*Class\*\*: P3' $S -- ':(glob).kiro/issues/*.md' | s
 **Authority**: Peter, verbatim, recorded with `date -u` at receipt (orchestrator relay; **UNVERIFIED** beyond the relay): 2026-11-07T17:36:23Z, "Let's defer it, but I want to capture it. This feels governance related, but I could be wrong. Would it be something to address for spec 131?"; and 2026-11-07T17:41:21Z, "Let's update 131 or provide an inbound, but consult with relevant agents to sure-up the proposal."
 
 **Input**: `inbound-from-thurgood-2026-11-07-agent-identity.md`, "agents act through Peter's credential, so no check can verify that words are his". Its § 4 names the events that would make it urgent before this spec resumes. The incident behind it is ledger L-10 (`inbound-governance-cost-ledger.md`). Nothing here is a requirement or a ruling. The requirements round takes the inbound in, or rules it out with a reason.
+
+### 2026-11-08 (scope intake, one inbound, record only: it names an input and settles no design) — Thurgood
+
+**Authority**: Peter, verbatim, recorded with `date -u` at receipt (orchestrator relay; **UNVERIFIED** beyond the relay): 2026-11-08T04:01:15Z, "Yes, go ahead with the three inbounds".
+
+**Input**: `inbound-from-thurgood-2026-11-08-three-orchestration-gaps.md`: the head-H hold that nothing checks (#739/#741, #763/#765), Primary Artifacts that miss files a pinned test forces a unit to edit (U9, #761 and #763), and briefs that restate a governed procedure and drift from it (#758, #763). The incident behind it is ledger L-11 (`inbound-governance-cost-ledger.md`). Stacy's read on classes 1 and 3 is owed. Nothing here is a requirement or a ruling. The requirements round takes the inbound in, or rules it out with a reason.
+
