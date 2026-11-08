@@ -30,9 +30,17 @@ signer: data
 
 signer: data
 disposition: re-pointed
-canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
-renderedHash: sha256:72e9990409a35f3943744a2d62662e144fb323dd5dcf47bad0b8d2b4acd1411c
+canonicalHash: sha256:fa54f8cf858c8d1c441c911b7c59cbcff4064990a50cb11ae99e5ae9c6f4fd23
+renderedHash: sha256:28af0768f9f6a237affb171d37fc750f1b7ae37ef6c75c729854b37dca41555e
 date: 2026-11-08
+
+**Re-signed 2026-11-08: ASSENT — 8 of 17 surviving.** Prior signature: assent 8/17, 2026-11-08, against `canonicalHash` `sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e` and `renderedHash` `sha256:72e9990409a35f3943744a2d62662e144fb323dd5dcf47bad0b8d2b4acd1411c`. Stale because bullet 2 of the canonical unit changed: Task 16.2 (Thurgood, `448d4fe7d`) set it to "theme-varying colors via `LocalDPTheme.current`", and the rendering moved with it. Confirmed at 17 items first (`80e8d3fd9`).
+- **Read before this act**: the whole canonical unit in `canonical/agents/data.md` and its consumer rendering in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md` (the unit is 12 lines in each), through tool calls in this session at `e10072c9d`. The renderings differ from the canonical unit in two lines only: bullet 3 (re-pointed to the shipped Android sources) and the removed Android-lane bullet.
+- **Hashes, computed in this act**: `canonicalHash` `sha256:fa54f8cf858c8d1c441c911b7c59cbcff4064990a50cb11ae99e5ae9c6f4fd23` (`hashText` over the unit from `partition(body).units`; equals the overlay pin). `renderedHash` `sha256:28af0768f9f6a237affb171d37fc750f1b7ae37ef6c75c729854b37dca41555e` (`renderedHashOf` over `readConsumerSpans` and `rowSpanSource`, committed rendering). Both moved.
+- **Removals re-judged**: unchanged and authoring (`subtraction-5` for bullet 3, `subtraction-1` for the Android-lane bullet, each quoted once in the charter). No refusal follows.
+- **Credited**: `scope-1` (verbatim), `scope-2` (now verbatim in the rendering: `LocalDPTheme.current`), `scope-3` (re-pointed to the shipped sources, which holds because they ship), `scope-4` to `scope-8` (verbatim).
+- **`scope-9` to `scope-17` do not survive, and I agree**: the rendering states none of them. Reasons as in the prior record below.
+- **Prior record**:
 
 **Re-signed 2026-11-08: ASSENT — 8 of 17 surviving.** Prior signature: assent 8/8, 2026-10-13, against `sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3`. Stale because the canonical unit changed: ballot `2026-11-07-native-lane-ownership` (RATIFIED, Peter, 2026-11-08T00:24:24Z) site 2 added the Android-lane bullet. Thurgood applied it; I re-confirmed the set at 17 items (`d85aaa85d`).
 - **Read before this act**: the consumer rendering of the unit, `canonical/_consumer-output/_canonical/agents/data.md` `#in-scope`, and the `cc/` and `kiro/` copies, through tool calls in this session.
