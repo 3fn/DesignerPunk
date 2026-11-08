@@ -4,7 +4,7 @@
 **Drafted by**: Thurgood (Civitas steward; owner of `completion-criteria-parity`, `scripts/owed-set.sh`, `scripts/issues-owned.sh`, `scripts/harness/stability.ts` and `compare.ts`; holder of the CI regime's standing test-lane scope)
 **Status**: **DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do.
 - **Ratifiable now: items 1 and 3**, with forks F-1, F-2 and F-6. This is under the three conditions of `[STACY R2]` § 3:
-  - (i) Ada's consult on item 3 (Q6) is marked owed;
+  - (i) Ada's consult on item 3 (Q6) is answered or marked owed (answered: § 10, "Round 2 — Ada consulted");
   - (ii) this line names the items ratified, and each application PR carries only their sites (§ 5 steps 1, 3a, 5 and 6);
   - (iii) items 2 and 4 come back with their census in the first form.
 - **Held DRAFT: items 2 and 4**, with forks F-3, F-4 and F-5, until parity's census mode exists and their census lines are re-run at the base of that later ratification (B-6, standing).
@@ -13,9 +13,9 @@
 **Required reviewer**: **Stacy** — mandate: attack the width, and the false-fire and false-emission arithmetic. She is the census reader, and she specifies the owed-set script's falsification cases (my charter, LIVENESS). Her ARMING read fires on item 1 (its workflow grant and `stability.ts`), item 3's workflow grant, and item 4's parity change. It does **not** fire on item 3's script or item 2 (d)'s owed-set change, because `scripts/issues-owned.sh` and `scripts/owed-set.sh` are not on her instrument-path list (`[STACY R1]` A-6).
 **Consulted seats**:
 - **Data** and **Kenya** — item 1, consulted in round 1 (§ 6, Q1–Q4). Their answers were relayed by the orchestrator and are recorded in § 10 as a relayed summary, not as their words. Neither changes its lane rules. On F-1, Kenya leans (a) and Data leans (b). Both say no to F-2.
-- **Ada** — items 2 and 3, where they touch her (§ 6, Q5–Q6): **still owed.** Q5's first half is answered by the record: #795 ticked Task 15.
+- **Ada** — items 2 and 3, where they touch her (§ 6, Q5–Q6): consulted, relayed by the orchestrator. Her answer is in § 10 ("Round 2 — Ada consulted"). Q5's first half is answered by the record: #795 ticked Task 15.
 - The consults that preceded Peter's ruling (mine and Stacy's, summarised in the ruling record's § "The exchange") are the source of items 1 (a), 2, 3 and 4. They are not a consult on this text.
-**Consulted**: Data — item 1: no lane-rule change; routed reds carry run ID, image version and observed toolchain values; cache keys exclude `github.event_name`; F-1 (b), F-2 no; Kenya — item 1: no lane-rule change; a routed red opens a record; F-1 (a), F-2 no; Stacy — required reviewer: R1 object, R2 B-1–B-5 met, B-6 stands, items 1 and 3 may go first; Ada — owed (item 3's Q6, and the second half of item 2's Q5).
+**Consulted**: Data — item 1: no lane-rule change; routed reds carry run ID, image version and observed toolchain values; cache keys exclude `github.event_name`; F-1 (b), F-2 no; Kenya — item 1: no lane-rule change; a routed red opens a record; F-1 (a), F-2 no; Stacy — required reviewer: R1 object, R2 B-1–B-5 met, B-6 stands, items 1 and 3 may go first; Ada — item 3: `--pr 774` at `c8fd9640d` lists the dual-instance record `fires-here`, so CP-3 would have been caught at U5; no misfires seen (`release:` and `manual` records not run); F-3 (a), F-5 (a), F-6 (a).
 **Unit**: a standalone record-first ballot on `main`. It names edits to `governance/**`, `.kiro/hooks/RELEASE-FLOW.md` and two charters, so **Peter merges it** under the governance carve-out. Application follows ratification, in the PRs of § 5.
 **Class**: LAW. Items 2–4 add verdicts and emissions to instruments and change what law text says they do; item 1 assigns a standing read to a seat.
 **Amends**: ballot `2026-11-07-native-lane-ownership` § 2 L68 (ledger line); `governance/completion-documentation-guide.md` (§ "The forced-negative line", § "The instrument's honest reach"); `governance/classification-map.md` rows `completion-criteria-parity`, `issues-obligation-lapse`, `parent-instrument-existence`; `.kiro/hooks/RELEASE-FLOW.md` L87; `.kiro/issues/README.md` rule 6; `canonical/agents/thurgood.md` (LIVENESS, the owed-set paragraph); `canonical/agents/stacy.md` and `canonical/profiles/consumer/stacy.overlay.md` (the owed-set `open` class, Stacy's seat); `.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md` (a new section).
@@ -370,7 +370,7 @@ Every finding cited here is Stacy's, from `completion/claims-pass.md` (#791) and
 
 ## 6. Questions for the consulted seats
 
-*(Q1–Q4 answered at round 1 by Data and Kenya, relayed; § 10. Q5–Q6 still owed by Ada; Q5's first half is answered by #795.)*
+*(Q1–Q4 answered at round 1 by Data and Kenya, relayed; Q6 answered by Ada, relayed; § 10. Q5's first half is answered by #795.)*
 
 - **Q1 (Data, Kenya)** — Does a push run need anything the PR run does not: a different cache key, a toolchain step that reads the event, a lane behaviour on `--no-base`?
 - **Q2 (Kenya)** — The macOS concurrency: with at most one push run running and one pending, how much does a merge burst move condition 5's queue time? Is the group enough, or should push runs skip iOS while an iOS PR run is queued?
@@ -391,7 +391,7 @@ Each fork names the option I recommend and its surviving counter. The pick is Pe
 - **F-2 — Add a schedule?** (item 1) *Leans: Stacy (a); Data and Kenya say no, for now.*
   - **(a) Recommended: no.** *Counter*: an outside break with no merge stays unseen until the next PR or push.
   - **(b)** A `schedule:` run on `main` every 6 days or less (Ada's class option in the lane-ownership ballot § 8, "not vetted with Thurgood or Data"; this is my vetting, and Data and Kenya vetted it at round 1). *Counter*: a third event class for `stability.ts`, macOS time on idle days, and a red no merge caused, which the reader must triage cold.
-- **F-3 — Subtask docs: red or emission?** (item 2 (b)) *Lean: Stacy (a).*
+- **F-3 — Subtask docs: red or emission?** (item 2 (b)) *Leans: Stacy (a); Ada (a).*
   - **(a) Recommended: emission.** The parent's own doc reds; subtask docs alone emit. *Counter*: a unit that merges with a parent's subtask docs and no parent doc (the 046 shape) is only an emission.
   - **(b) Red, as the brief reads.** *Counter*: every checkpoint dispatch on a unit branch goes red from the first subtask doc until the parent completes. Those runs are feedback, not the gate, but a permanently red feedback run teaches agents to ignore red.
   - **(c)** Red on the parent's doc only, with no subtask-doc read. *Counter*: it loses the 046 shape entirely.
@@ -399,12 +399,12 @@ Each fork names the option I recommend and its surviving counter. The pick is Pe
   - **(a) Emission-only for (b), decided with item 3 at the walk; keep the ARMING half on rule 8's predicate (4 (c) as rewritten).** *Counter*: a second script and a G-2 amendment for a guard with no observed miss.
   - **(b) Red for docs the PR adds, from application.** *Counter*: it changes Stacy's `parent-instrument-existence` row's "Never a gate", which is her ruling. A first red on the grammar would also fall on unit PRs already in flight.
   - **(c) Recommended: emission-only for (b), and the ARMING half dropped.** The ARMING half caught nothing in 129, and Stacy's grant-limb read already reads the line from the body at the activating merge. *Counter*: between the activating merge and her read, a missing line goes unflagged. Emissions are also easy to ignore, and the 129 rates (6/20 and 10/23) came from authors who could already read the grammar.
-- **F-5 — Item 2 (e), the reverse key (ticked subtask with no doc → emission).** [Author's addition.] *Lean: Stacy (a), only diff-scoped, as (e) now is.*
+- **F-5 — Item 2 (e), the reverse key (ticked subtask with no doc → emission).** [Author's addition.] *Leans: Stacy (a), only diff-scoped, as (e) now is; Ada (a).*
   - **(a) Recommended: include, diff-scoped.** It is the same tick-against-doc read, cheap, and it turns Stacy's S-4 hand count (CP-7) into a line on the PR that ticks. *Counter*: it counts docs, not their content; a ritual subtask doc passes it.
   - **(b) Leave it out.** *Counter*: it was not in Peter's question, and S-4's harder half (a tick that contradicts its parent row) stays a judgment either way.
 
 - **F-6 — An added `path:` record: does it fire at the merge that adds it?** (item 3, `[STACY R1]` B-2) Rule 11's words do not decide it. A commit is its own ancestor, and the adding diff does add a Trigger line.
-  - **(a) Recommended: no.** *Lean: Stacy (a), at R2.* README rule 11 gains the sentence in site 3.3, which is what `issues-owned.sh`, `compare.ts` and (since `c8fd9640d`) the PR mode already do. *Counter*: a record filed on a path its own PR touches (#727's `merge-hold-promotion-reads`) does not fire until the next touch. An owner who meant "this PR is the event" must use `merge:#<N>`, and nothing tells them except site 3.3's sentence (`[STACY R2]` § 4).
+  - **(a) Recommended: no.** *Leans: Stacy (a), at R2; Ada (a).* README rule 11 gains the sentence in site 3.3, which is what `issues-owned.sh`, `compare.ts` and (since `c8fd9640d`) the PR mode already do. *Counter*: a record filed on a path its own PR touches (#727's `merge-hold-promotion-reads`) does not fire until the next touch. An owner who meant "this PR is the event" must use `merge:#<N>`, and nothing tells them except site 3.3's sentence (`[STACY R2]` § 4).
   - **(b) Yes.** Then the seat mode, `compare.ts`'s `firedState` and the PR mode all change, and so does the harness tag rule's reading of a record added beside its tagged entry. *Counter*: that is three instruments' code and a harness rule (design § 3's), changed to follow a reading no record has relied on.
 
 **Not a fork: the reader.** The brief proposes me; I agree (§ 3 item 1). Data and Kenya did not ask for their platforms (Q3); Kenya's condition, a record per routed red, is folded into step 3.
@@ -759,6 +759,18 @@ Neither item 1 nor item 3 depends on parity's census:
 - The fixing PR is #803 (`chore/fired-records-warn-check`). Its head `0d62b341f` adds the rule 5 outcome line that `6480f51df` missed.
   - **My error**: the outcome section was appended after `git mv` had staged the rename, so `6480f51df` carried the archive move without the line.
   - `0d62b341f` adds those 9 lines and touches nothing else.
+
+### Round 2 — Ada consulted on item 3 (relayed)
+
+*Relayed by the orchestrator on 2026-11-08: a summary of Ada's consult in the relay's words, not her own entry. If she writes an entry, it is spliced here byte for byte.*
+
+- **What item 3 would have caught**: she ran `--pr 774` at `c8fd9640d`. The dual-instance record prints `fires-here` on `path:src/build/tokens/defineComponentTokens.ts`, so item 3 would have caught CP-3 at U5. The same diff also lists four more of her records, three of them firing on the Task 10 completion doc, two with "this diff edits the record" noise.
+- **Misfires**: none seen. She did not run `release:` or `manual` records.
+- **F-3 (a)**: a parent with only subtask docs is the normal state mid-unit, and a red there trains people to ignore red.
+- **F-5 (a)**: it is mechanical, and diff-scoping avoids the 16 standing ticks.
+- **F-6 (a)**: it matches the existing checks, and "this PR is the event" can use `merge:#N`.
+
+*`[THURGOOD]` note, 2026-11-08*: my 106-merge replay at `c8fd9640d` (appendix C) lists #774's five records. Four of them carry "this diff edits the record", and so annotate as notices: the three keyed on `task-10-completion.md` and the opacity grant. The dual-instance record is the one warning. The relayed counts above are kept as relayed, and condition (i) of `[STACY R2]` § 3 is met.
 
 ---
 
