@@ -1058,7 +1058,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 8 — The component tier reaches `generate`
 
-- [ ] 13. Ship and harvest DesignerPunk's component tokens; precedence; the name contract (U8)
+- [x] 13. Ship and harvest DesignerPunk's component tokens; precedence; the name contract (U8)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — enums, row 18 R1, the cascade sentence · Thurgood (Sonnet) — the `harness-generate` step under the issue-row grant, the workflow test and the grant record (amendment 11)
   **Traces**: Req 1.3, 2.10, 5.1–5.5, 5.7, 5.8, 5.10, 5.11; rows 18 (R1, R5) · design §§ 9, 11 · ballot `2026-11-07-github-grants-are-issue-row-grants` § 5, F-2 (a) (amendment 11)
@@ -1145,24 +1145,24 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 13 Complete: The component tier reaches generate (129)"` opens U8's PR (Peter-merged: `governance/**` and `.github/**`; `**Edit kind**:` EXECUTION, Req 15 and design § 9; Stacy's ARMING read at its merge, amendment 11); report the URL; STOP.
 
-  - [ ] 13.1 Ship the six files; harvest as the third source; per-group precedence and reports
+  - [x] 13.1 Ship the six files; harvest as the third source; per-group precedence and reports
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - `src/cli/shared/packageComponentTokens.ts` (the per-group merge) and `src/cli/shared/componentSources.ts` (the union rule)
     - _Requirements: 5.1, 5.2, 5.3_
-  - [ ] 13.2 The name contract over the component tier; the reserved-package warning; R5 freshness (content, `src/cli/staleness.ts`)
+  - [x] 13.2 The name contract over the component tier; the reserved-package warning; R5 freshness (content, `src/cli/staleness.ts`)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 5.4, 5.8_
-  - [ ] 13.3 The D2 check and its completeness half, to the grant record's invocation contract, with `d2-check.test.ts`
+  - [x] 13.3 The D2 check and its completeness half, to the grant record's invocation contract, with `d2-check.test.ts`
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - The step that runs it is 13.6's *(amended 2026-11-07, tasks amendment 11; prior title: "The D2 check and its completeness half; its step in `harness-generate`")*
     - _Requirements: 1.3, 5.10_
-  - [ ] 13.4 The hand-written enums; row 18 R1 (`src/cli/sync/**`, Ada consulted); the missing-key report
+  - [x] 13.4 The hand-written enums; row 18 R1 (`src/cli/sync/**`, Ada consulted); the missing-key report
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 5.1, 5.7, 5.11_
-  - [ ] 13.5 The Integration Guide cascade sentence; confirm the Spec 123 pointer line (Lina lands it in her own PR before U8)
+  - [x] 13.5 The Integration Guide cascade sentence; confirm the Spec 123 pointer line (Lina lands it in her own PR before U8)
     **Type**: Documentation · **Validation**: Tier 1 - Minimal · **Agent**: Lina (Sonnet)
     - _Requirements: 5.5_
-  - [ ] 13.6 The `harness-generate` step and the workflow test; the grant record's outcome line *(added 2026-11-07, tasks amendment 11)*
+  - [x] 13.6 The `harness-generate` step and the workflow test; the grant record's outcome line *(added 2026-11-07, tasks amendment 11)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - After 13.3's script runs by the record's command line; no deleted line in the workflow; the grant is `.kiro/issues/2026-11-07-d2-check-step-grant.md`
     - _Requirements: 1.3, 2.11_
