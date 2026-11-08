@@ -31,7 +31,7 @@
 5. [ ] Complete the parent on its unit branch: open the PR if this parent is its own merge unit; otherwise commit its docs on the branch. Completion docs declare where their test results were measured (locally, or which CI run).
 6. [ ] **STOP** — report the PR URL or the on-branch completion. **The task is accepted when your human lead merges the unit's PR.** Never merge your own PR.
 
-## @unit #completion-state-in-the-pr-flow:preamble @ sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+## @unit #completion-state-in-the-pr-flow:preamble @ sha256:78a8d803667602a7b4c4cce72a35013543ba131132ec0990b84624ca5591ef17
 ## Completion State in the PR Flow
 
 Branch → PR → required checks → merge.
@@ -84,7 +84,7 @@ Branch → PR → required checks → merge.
 - **Unit-grain naming (multi-parent units)**: branch `task/<spec>-<unit-slug>`; PR title `<Unit description> (<spec>)`; the PR body adds a `Unit:` field.
 - **A question to your human lead holds the merge.** A PR body that puts a question to your human lead carries it on a line beginning `**Open for <name>**:`, with your human lead's name. The PR is not merged until their answer is on the record — their words, dated, in a committed file or written by them on the PR — **dated before the merge** (their comment's timestamp, or the commit adding their words, is earlier than the PR's merge time), and the body cites it. A merge never answers a question; no author writes "merge = yes", "adopted at merge unless amended" or an equivalent. **A pointer counts as asking**: a body line pointing at a question asked elsewhere holds the merge exactly as the written-out question would. An unmarked question to your human lead holds it too; the missing marker is a finding on the author. "Not now — merge" is an answer, and the question is filed as a committed record with an owner and a named trigger.
 
-## @unit #the-merge-rule @ sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
+## @unit #the-merge-rule @ sha256:f06850b940f8b08bf324eb6b2f6fc8fbb9ec7c7c5f667a47a2b09751c754d45d
 ### The Merge Rule
 
 - **Agents open PRs; your human lead merges on green.** Agents NEVER merge their own PRs.
