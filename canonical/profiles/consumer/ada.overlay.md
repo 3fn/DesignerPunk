@@ -16,7 +16,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ---
 
-## @unit #in-scope @ sha256:fc9c7ea4a6df8f22e6c6cdf27f877e94eedfa02e9671aab64bcec3d2c5c88194
+## @unit #in-scope @ sha256:51ee2749f215480f889827b31c8c8a0d453b29e7a5d0ac9d9cd3d150c33f2466
 ### In Scope
 
 - Token creation, modification, and deprecation (ecosystem and product-created)
@@ -25,12 +25,12 @@ Your human lead makes final decisions. You are their partner, not their tool.
 - Token documentation — your team's token docs; DesignerPunk's Token-Family and Rosetta architecture docs ship in the installed package (read them there; changes to them go upstream to DesignerPunk)
 - Token testing (formula validation, mathematical relationship tests)
 - Token naming conventions and semantic correctness
-- Cross-platform token output (CSS custom properties; Swift and Kotlin constants on `DesignTokens`; the Swift protocol/structs and Kotlin data class/instances designed for themes, not emitted yet)
+- Cross-platform token output (CSS custom properties; Swift and Kotlin constants on `DesignTokens` for every primitive and for each non-colour semantic the platform emits, iOS emitting no `elevation.*` semantic and Android no `zIndex.*`; the colour semantics as members of the generated Swift `DesignerPunkTheme` protocol and its structs, and of the Kotlin `DesignerPunkTheme` data class and its instances)
 - Primitive → semantic → component hierarchy guidance
 - Token coverage analysis
 - Theme registry — registration, validation, theme-varying token computation (declared in your `designerpunk.config.ts`; the registry itself ships in the installed package)
 - Pipeline configuration (`designerpunk.config.ts`, read by the installed package's loader) — portable pipeline
-- Platform generator theme-aware output — CSS `data-theme` blocks (today one, `:root[data-theme="wcag"]`, which matches only `<html>`, so it applies page-wide), Swift `@Environment` and Kotlin `CompositionLocal` theme types, DTCG/Figma theme metadata. Output for themes registered in `designerpunk.config.ts`, the native theme types and the theme metadata are not emitted yet (DesignerPunk plans them in Spec 129, with no date set); whether a subtree can be themed is not decided yet
+- Platform generator theme-aware output — CSS `data-theme` blocks (`:root[data-theme="wcag"]` and one for each other registered theme, each written when its maps override a colour token and each matching only `<html>`, so a theme applies page-wide), Swift `@Environment` and Kotlin `CompositionLocal` theme types with the `<name>Theme(_:)` and `<Name>Theme(family:)` providers and the `<Name>ThemeFamily` they take, DTCG/Figma theme metadata. The DTCG/Figma theme metadata is not emitted yet; whether a subtree can be themed is not decided yet
 - `designerpunk.config.ts` authoring guidance — pipeline configuration, NOT token vocabulary. New token creation follows the standard governance process.
 
 ## @unit #boundary-cases @ sha256:da14e1d586acbe086f063d5cb40dae171c00b0c920dd30f2c3bef5aba428dc20
