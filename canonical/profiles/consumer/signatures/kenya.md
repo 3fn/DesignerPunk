@@ -49,9 +49,19 @@ date: 2026-11-08
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
-renderedHash: sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469
-date: 2026-10-25
+canonicalHash: sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4
+renderedHash: sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, item (i) emits a theme surface): ASSENT, `surviving` 10 of 10 (`theming-1` to `theming-10`).** A new act, read fresh against the committed rendering; nothing is carried from the entries below, which judged a unit that said "no theme surface today". Their hashes were canonicalHash `sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9`, renderedHash `sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469`.
+- **What changed**: the whole unit. I drafted the text from the generated Swift and the emitters; Thurgood committed it in `448d4fe7d` and corrected `theming-1` in `89aa1604d` (my first draft said "the semantic colours are not on `DesignTokens`", which was false); I confirmed the set at 10 items in `c08bf6751`.
+- **What I read, in this session, through tool results**: the unit as the second regeneration's committed rendering holds it (`canonical/_consumer-output/_canonical/agents/kenya.md`, L183 to L192, at `e10072c9d`); this row and its one `removals` entry; the overlay unit; the charter's `### iOS Theming (Spec 094)` unit; the generated Swift for each claim (`DesignerPunkTheme: Sendable`, `DPThemeKey`, `\.dpTheme`, the base light default, the family's conformances and cases, the provider, the product-token extension).
+- **Credited**: `theming-1` to `theming-9` survive verbatim in the rendered unit. `theming-10` survives on the rendered directive *"query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set"* and on the re-pointed warning *"never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values"* (5e, in-unit entailment, as at my earlier signatures); reading a value from a Swift file violates both.
+- **The removal**: the row's one `removals` entry (`cites: subtraction-1`, the built `dist/*.ios.swift` snapshots with its "see the Ground truth section" pointer) is the old pointer in `theming-10`, and its re-point is the one I accepted before. The old "no theme surface today" removal is gone with the sentence.
+- **Facts the unit rests on, checked**: the generated struct has no theme-varying colour on `DesignTokens` (the protocol's 62 members share no name with a `static let` in the struct's body), the key's default is the base light instance, the family has no raw value and no `dark` case, and the product-token emitter writes `public extension DesignerPunkTheme`. This replaces my 2026-10-12 erratum's finding that nothing in a consumer's `generate` emitted a theme surface, which was true then and is not now.
+- **Hashes.** `canonicalHash` moves `5c2f0d32...` to `3066f308...` (`hashText` of the unit, equal to the overlay pin and to my confirmation). `renderedHash` moves `48e5f42f...` to `7d0cbb7c...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/kenya.md', 'body', '#ios-theming-spec-094')`).
+
+**Earlier acts on this row, kept as history (last: 2026-10-25):**
 
 **Ruling: ASSENT — 5/5 surviving.** All 5 survive. `theming-1` to `theming-4` are verbatim. In a consumer, `theming-1` is *more* true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`.
 - **`theming-5`** survives on the rendered directive *"query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set"*. Sourcing a value or name from a Swift file violates that directive, so the item's violation is still a violation of this unit's rendering (5e, in-unit entailment).
