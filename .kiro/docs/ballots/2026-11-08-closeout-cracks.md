@@ -2,7 +2,9 @@
 
 **Date**: 2026-11-08 (drafted from 2026-11-08T17:14:59Z, `date -u`)
 **Drafted by**: Thurgood (Civitas steward; owner of `completion-criteria-parity`, `scripts/owed-set.sh`, `scripts/issues-owned.sh`, `scripts/harness/stability.ts` and `compare.ts`; holder of the CI regime's standing test-lane scope)
-**Status**: **Items 1 and 3 RATIFIED (Peter, 2026-11-08T20:36:57Z), with F-1 (a), F-2 (a) and F-6 (a). Items 2 and 4 remain DRAFT, with F-3, F-4 and F-5.**
+**Status**: **RATIFIED (Peter, 2026-11-08T20:36:57Z) for items 1 and 3 only, with F-1 (a), F-2 (a) and F-6 (a). Items 2 and 4 remain DRAFT, with F-3, F-4 and F-5.**
+- **For `law-ratified`**: the check reads this line's first word (`STATUS_RE`, `merge-hold.ts` L238) and cannot see items. A PR that cites this ballot as LAW for a site of item 2 or 4 passes the check and is still unratified. Such a PR waits for the later ratification record (§ 5 steps 2, 3b, 4).
+- **Supersedes**: the first wording of this line at `dc45d0b16` began "Items 1 and 3 RATIFIED", which `STATUS_RE` does not read as RATIFIED.
 - **Peter's words, verbatim**:
   - 2026-11-08T19:40:29Z: "Ask Thurgood and Stacy to workout any disagreements on F-1, F-2, and/or F-6 and go with their collective recommendations, please". The joint pick is in § 10, `[STACY R3]` and `[THURGOOD R4]`.
   - 2026-11-08T20:36:57Z: "Ratified". This answered the orchestrator's question: "Do you ratify items 1 and 3, with F-1 (a), F-2 (a) and F-6 (a)? Items 2 and 4 stay in draft regardless."
