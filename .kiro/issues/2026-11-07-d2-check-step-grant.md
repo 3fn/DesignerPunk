@@ -43,6 +43,17 @@ This fixes how the step and the script meet (the ballot's `[ADA R1]` amendment 1
   - The script catches an uncaught error at its top level and turns it into the setup line with exit 2. So the script never exits silently and never exits 1 with no lines.
 
   The step reads any other non-zero exit as a failure too.
+- **The design rule** (Peter's F-4 ruling, 2026-11-08T00:33:06Z, "Re: 1, as recommended"; `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-f4-and-u8-go.md`):
+  - `d2-check.ts` takes every expected name from the index (`token-index/components.yaml`, including the `platforms.<p>` fields) and works out none itself.
+  - It imports nothing from `src/generators/**`, `src/build/**` or `node_modules/@3fn/core`, and it lists none of its own definition files.
+  - One exception: the completeness half's `component.key` derivation (Req 5.10) is restated as one line of rule in the script.
+  - `d2-check.test.ts` carries a grep that fails on any of these: such an import, a path under those roots, or a hard-coded definition-file list. 
+- **The floors** (Stacy's, as amended by Kenya):
+  1. The falsification cases in `d2-check.test.ts` are append-only: a case is never removed or weakened. They include a Swift case in which a backtick-escaped name must still be matched against the index name.
+  2. Each verdict line prints a token count (the number of expected names it compared). The count is never 0, and never shrinks against the previous run on the same consumer without a spec row naming the shrink. A line that prints 0 is `FAIL`.
+  3. Floor 2 compares the base's script and the head's script on the same consumer: both run over the one scratch consumer root, and any difference in a verdict or a count is shown in the PR and needs a spec row.
+- **The probe-coverage note** (Kenya; Data checked the Android premise). The lane probes already check D2's inclusion half with the compiler: a name in the index that the generated output lacks fails to compile. So D2's set equality adds the extra-name half and the completeness half. What neither sees is a name that is wrong in both the index and the output, because the same generators produce both; the probes catch part of that, not all.
+- **After U8's merge** this record expires. The rule for later edits to `d2-check.ts` (no standing holder; a spec row or a per-fix grant; never to the seat holding `src/generators/**` in that unit) goes into the F-4 text of the native-lane ownership ballot and is carried by its application PR.
 - **The step's side** (Thurgood):
   - It writes `::notice title=d2-check::<line>` for each `PASS` line, and `::error title=d2-check::<line>` for each `FAIL` line and for the setup line.
   - When the script printed none of these lines, it writes `::error title=d2-check::no d2-check line`.
@@ -87,3 +98,5 @@ Per `.kiro/issues/README.md` rule 8:
 ## Agreement
 
 **Ada agrees**: 2026-11-08T00:08:11Z — I agree, as the owner of 13.3, to the invocation contract in this record as it stands at `20a3474b5`: the command line, working directory, argument, three-line stdout, the setup line, exit codes 0, 1 and 2 with their precedence, and stderr for all other output. `scripts/harness/d2-check.ts` and its test will be written to it (`[ADA TASKS R6]` items 1 and 2 are folded in as I worded them).
+
+**Contract change 2026-11-08** (Thurgood): the design rule, the floors and the probe-coverage note were added to the invocation contract under Peter's F-4 ruling (2026-11-08T00:33:06Z, "Re: 1, as recommended"). The PR carries `**ARMING**: at this merge and at the fixing PR's merge`. It merges before 13.3 is written. Ada's dated agreement line is owed below, on the contract as this change leaves it.
