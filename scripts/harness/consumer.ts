@@ -302,6 +302,8 @@ export interface ResolvedConfigLike {
   configDir?: string;
   /** Present once Task 15 adds per-platform output: `platforms.<platform>.output`, resolved to an absolute path. */
   platforms?: Partial<Record<Platform, { output?: string }>>;
+  /** Where the consumer's token source lives (absolute), when the config names one. */
+  tokenSourceRoot?: string;
   /** The registered themes; `name`, `mode` and whether `overrides` is the `{ light, dark }` form are read. `loadConfig` always resolves an array (`[]` when none). */
   themes?: { name: string; mode: string; overrides?: unknown }[];
 }
@@ -323,6 +325,36 @@ function isPairOverrides(overrides: unknown): boolean {
   if (!overrides || typeof overrides !== 'object') return false;
   const keys = Object.keys(overrides).sort();
   return keys.length === 2 && keys[0] === 'dark' && keys[1] === 'light';
+}
+
+/** The package's token-platform native sources, relative to the installed package: `src/tokens/platforms/<platform>/<file>`. */
+const TOKEN_PLATFORM_DIRS = { ios: '.swift', android: '.kt' } as const;
+
+/**
+ * The harness compiles one copy of each native file name (Req 2.4, tasks.md Task 14). Before U9, `generate` read the
+ * package's copy of the token-platform sources, and the lanes compiled the package's. From U9 the consumer's copy
+ * (`<tokenSource>/platforms/{ios,android}/`, which `init` made) is the input, so the consumer's file is written over the
+ * installed package's file of the same path: the `pkg` tier then compiles the consumer's copy, keyed under the package's
+ * path, and no lane, key or list changes. A consumer file with no packaged counterpart is not added (nothing compiles it
+ * today). Returns the replaced paths, relative to the package root, sorted. A consumer with no token source of its own
+ * (package mode) replaces nothing.
+ */
+export function overlayConsumerNativeCopies(packageRoot: string, tokenSourceRoot: string | undefined): string[] {
+  const replaced: string[] = [];
+  if (!tokenSourceRoot) return replaced;
+  for (const [platform, ext] of Object.entries(TOKEN_PLATFORM_DIRS)) {
+    const from = path.join(tokenSourceRoot, 'platforms', platform);
+    if (!fs.existsSync(from) || !fs.statSync(from).isDirectory()) continue;
+    for (const name of fs.readdirSync(from).sort()) {
+      if (!name.endsWith(ext)) continue;
+      const rel = `src/tokens/platforms/${platform}/${name}`;
+      const target = path.join(packageRoot, rel);
+      if (!fs.existsSync(target)) continue;
+      if (!fs.readFileSync(target).equals(fs.readFileSync(path.join(from, name)))) fs.copyFileSync(path.join(from, name), target);
+      replaced.push(rel);
+    }
+  }
+  return replaced.sort();
 }
 
 /** Each platform's output folder, relative to the consumer root: `platforms.<platform>.output`, else `output`. */
@@ -447,6 +479,10 @@ export function runDriver(options: DriverOptions): ConsumerManifest {
     if (typeof resolved.outputDir !== 'string') throw new HarnessStepError('package', 'the consumer\'s resolved config has no outputDir');
     const platformOutputs = platformOutputFolders(resolved, out);
     const themes = manifestThemes(resolved);
+    // One copy of each native file name (Spec 129 Task 14.3): the consumer's copy of `src/tokens/platforms/{ios,android}/`
+    // replaces the package's, by name, in the installed package the lanes compile as the `pkg` tier.
+    const replaced = overlayConsumerNativeCopies(packageRoot, resolved.tokenSourceRoot);
+    log(`[package] one copy per native file name: ${replaced.length} packaged token-platform file(s) replaced by the consumer's copy${replaced.length > 0 ? ` (${replaced.join(', ')})` : ''}`);
     const generated = {
       ios: listFiles(path.join(out, platformOutputs.ios), '.swift'),
       android: listFiles(path.join(out, platformOutputs.android), '.kt'),

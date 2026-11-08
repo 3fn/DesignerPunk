@@ -13,6 +13,9 @@
  * - dist/ComponentTokens.web.css (component tokens from registry)
  * - dist/ComponentTokens.ios.swift
  * - dist/ComponentTokens.android.kt
+ *
+ * `--out <dir>` writes the same files, and `token-index/`, under <dir> instead of `dist/` and `./token-index`
+ * (Spec 129 Task 14.3: the root-token freshness test generates into a temporary directory and compares).
  */
 
 import { TokenFileGenerator } from '../src/generators/TokenFileGenerator';
@@ -31,7 +34,9 @@ async function main() {
   console.log('🚀 Generating platform-specific token files...\n');
 
   const generator = new TokenFileGenerator();
-  const outputDir = path.join(process.cwd(), 'dist');
+  const outFlag = process.argv.indexOf('--out');
+  const outRoot = outFlag !== -1 && process.argv[outFlag + 1] ? path.resolve(process.argv[outFlag + 1]) : undefined;
+  const outputDir = outRoot ?? path.join(process.cwd(), 'dist');
 
   // Ensure output directory exists
   if (!fs.existsSync(outputDir)) {
@@ -56,6 +61,7 @@ async function main() {
     // loadConfig self-register) WILL reintroduce the Inc-1 ambient-loader teardown regression.
     // See findings/increment-1-ambient-loader-regression.md.
     const config = await loadConfig(process.cwd(), (p) => import(p));
+    if (outRoot) config.outputDir = outRoot;
     // ⚠️ DO NOT REMOVE the injected `ambientTsRequire` loader passed to
     // loadComponentTokens / resolveTokens below. ⚠️
     // Spec 118 Task 9.5: resolveTokens + loadComponentTokens now carry their OWN scoped
@@ -153,7 +159,7 @@ async function main() {
     // .kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md).
     const { componentTokenSourceFile } = await import('../src/cli/loadComponentTokens');
     const registered = ComponentTokenRegistry.getAll();
-    const indexResult = generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
+    const indexResult = generateTokenIndex(outRoot ? path.join(outRoot, 'token-index') : path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokenInput.primitiveTokens,
       semanticTokens: tokenInput.semanticTokens,
       tokenSet: tokenInput.tokenSet,
