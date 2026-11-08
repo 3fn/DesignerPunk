@@ -70,6 +70,8 @@ signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). The verdict (`none-trim-stale-snapshots`) is this repo's ambient-trim instrument over its own build outputs (`subtraction-3`). For a consumer, the installed package's `dist` CSS is the released artifact for the version they run, not a stale snapshot, so there is no counterpart to re-point. The consumer-relevant function (query MCP for token values) survives in the body's re-pointed ground-truth items.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/web/DesignTokens.web.css]`
 
 signer: sparky
@@ -78,11 +80,15 @@ signer: sparky
 
 *Prior ruling (phase two)*: assented `no-consumer-counterpart` (`subtraction-3`).
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:3c6be72791305aa60ac65723a78cb9efba566dfc68071b0e4d515f132d1272a7` and `canonicalHash` is unchanged (`sha256:3c1fafc6420be35eb2011c28d7381ae947083c770afcdf72da457a07e7c2f0b5`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.web.css]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). Same reasoning as the DesignTokens trim. For a consumer, `@3fn/core/component-tokens.css` is the released artifact, so there is no stale-snapshot hazard to trim. No counterpart (`subtraction-3`).
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:6c60ed8e8efec1c46c5860fc1eff76f8428eeed032a1f077d768cb161456df70`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/browser/demo-styles.css]`
 
@@ -90,11 +96,15 @@ signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). This is this repo's demo-page chrome, trimmed from this repo's ambient set. A consumer has no demo pages and no ambient that would include it. No counterpart (`subtraction-3`).
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:66235ec1c3ec679eb77a922ef4f1740827cc408328851e6499218cac4706c561`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:routes.docs[completion-doc-guidance]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). This routes to the completion-documentation guide, which is this repo's task-completion workflow as law (`subtraction-4`). The consumer's completion practice is their own. No counterpart.
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#frontmatter:routes.docs[dev-workflow-detail]`
 
@@ -102,17 +112,23 @@ signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `process-development-workflow` is this repo's development workflow as law (`subtraction-4`). No counterpart.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:routes.docs[file-organization]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `process-file-organization` is this repo's file-organization rules (the `.kiro/specs` layout) as law (`subtraction-4`). The consumer organizes their own repo. No counterpart.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:routes.cues[7]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). The `platform-resource-map` cue returns this repo's cross-platform file paths for component source. Those paths don't exist in a consumer install (web sources are not shipped). No counterpart. *Citation note*: `subtraction-5` (a non-resolving route) fits more closely than `subtraction-1`. This is recorded, not refused.
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:81797f185efbf2c90b57996a49a096936552de787d44eea9ebecfb9bdd947925`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#frontmatter:routes.cues[8]`
 
@@ -128,11 +144,15 @@ signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `npm run build` is this repo's full build (`runContext: this-repo`; `subtraction-1`). The consumer's build lives in their app; the re-pointed `commands[product-screen-commands]` names that. No counterpart.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:8651a3419c9f976db50b06dd9c5a07f9795a6e1e5e402a56b3cee42d79883527`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:commands[build-browser]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `npm run build:browser` and the bundle ceiling in `scripts/build-browser-bundles.js` are this repo's tooling (`subtraction-1`). No counterpart.
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:362f9d3385ad21377258eb0175d60c89b51f48a0f79c841d28d72df5d5181019`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#frontmatter:commands[web-tests]`
 
@@ -142,6 +162,8 @@ signer: sparky
 
 *Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:bf968f860773b0f645961e1b82211fe4a38927c7b80875332901e770be10cc91` and `canonicalHash` is unchanged (`sha256:f045cceaf30dc54b1354cf134e6b25ecda736460d4c73d2b9179940dce154b52`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:commands[functional-suite]`
 
 signer: sparky
@@ -150,11 +172,15 @@ signer: sparky
 
 *Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:bf968f860773b0f645961e1b82211fe4a38927c7b80875332901e770be10cc91` and `canonicalHash` is unchanged (`sha256:31a5cfa8ff9045cdf313da4aada3e53775ea24ee44d9982a9c3a3e4400c6a642`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:commands[lint]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `npm run lint` is this repo's eslint over its web component sources (`subtraction-1`). No counterpart.
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:0b1d04fb69d021a0a007bb4db61852dd407319796ff80d43fabba242c5e5b2ed`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#frontmatter:commands[serve]`
 
@@ -162,11 +188,15 @@ signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `npm run serve` serves this repo's demo output on port 8001 (`subtraction-1`). No counterpart.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:02fd3561a1d3a39fdc01da71ab860bcfe46dd0cd80d017c6612837fc0892ef8a`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:commands[test-consumer]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `npm run test:consumer` verifies this repo's publish path, so it is a producer-side check (`subtraction-1`). No counterpart.
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:7d1979d82d95ca39efb61089a5411755e7de09f8f0411236ac822d975fa5bb7a`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#frontmatter:commands[web-dev-server]`
 
@@ -174,17 +204,23 @@ signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). This is a named gap about this repo (`build:watch` is tsc-only). A consumer's dev server is their own app's, reached through the product-screen-commands gap (`subtraction-1`). No counterpart.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:cc3bab487df7a11e99e0e556c7067da9ae996b919ac6114f2ef52d6cdcf27a63`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:commands[web-test-lane]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). This is a named gap about this repo's Jest lanes (`subtraction-1`). No counterpart.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:d448c8dc13a39ccefe6c6f72bdba932e06963a8c678f17bae29056ba60079553`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:knowledgeBases[web-components]`
 
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). The globs `src/components/core/*/platforms/web/**` do not resolve in a consumer install: `@3fn/core`'s `files` list ships iOS/Android platform sources and component metadata, but no web platform sources (`subtraction-5`, applicability verified against `package.json`). No counterpart.
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:6529bcd1636053e710069195c75dccc4e77f906235d4bdf89efae8e8a9613c0b`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#frontmatter:writeScope[docs/specs/**]`
 
@@ -194,11 +230,15 @@ signer: sparky
 
 *Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c49070d3309d4fa6576f182a49ea10dbd5161d31720033f6714ccd22cfed6c14` and `canonicalHash` is unchanged (`sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
+
 ## `#frontmatter:writeScope[.kiro/issues/**]`
 
 signer: sparky
 
 **ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-10-17; added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1). `subtraction-3` applies: `.kiro/issues/**` is this repo's stewardship instrument, meaning the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo, so a consumer's Sparky has nothing there to author, append to, or be walked against, and gets no scope. I own no issue record today (I appear only as a blind query author in the discovery-study charter), so the row removes no function I exercise.
+
+**RE-SIGN 2026-11-08 — ASSENT unchanged (signing-act shape review, F-4 (a)), `surviving: []`.** A new act, read fresh. The row renders nothing, so under the pin its `renderedHash` is the hash of `{disposition, destination}`; it moves to `sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43` and `canonicalHash` is unchanged (`sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f`). The disposition and destination are as I assented before, and the function still holds. A `superseded-by` destination still renders in the committed rendering (`#mcp-practice-notes` L355, `#what-you-dont-own` L391, `specs/**` in the frontmatter at L135); a `no-consumer-counterpart` row still has none to find.
 
 ## `#mcp-practice-notes`
 
