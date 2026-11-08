@@ -97,9 +97,16 @@ date: 2026-11-08
 ## `#product-tokens-spec-108109`
 
 confirmer: data
-canonicalHash: sha256:10bcc691b24d63a64c4f80707d9f60c6407f435903083ae3e8212945afa9f631
+canonicalHash: sha256:eaceed7f3ccd009e887b205c070a7c612136bc8203a767ad3d784375433d4295
 items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5, product-tokens-6
-date: 2026-10-27
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d, C16): Spec 129 U11, Task 16.2's text.** A new act, read fresh. The record below is superseded (canonicalHash `sha256:10bcc691b24d63a64c4f80707d9f60c6407f435903083ae3e8212945afa9f631`, 6 items). The unit is retained, so there is no re-sign.
+- **What changed**: one line. `product-tokens-3` and its unit line now read "accessing `LocalDPTheme.current.{prop}`" where they read "`Local{Abbreviation}Theme.current.{prop}`". Thurgood committed my drafted text at `448d4fe7d`; Lina regenerated twice, last at `e10072c9d`.
+- **What I read, in this session, through tool results**: the whole unit in `canonical/agents/data.md` (`### Product Tokens (Spec 108/109)`, 10 lines) and as rendered in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md`: all three equal the canonical unit line for line.
+- **The hash**: I computed it myself, with `hashText` over `partition(splitFrontmatter(src).body).units` for `#product-tokens-spec-108109` at `e10072c9d`: `sha256:eaceed7f3ccd009e887b205c070a7c612136bc8203a767ad3d784375433d4295`. The unit is retained and carries no overlay pin; the value equals the sweep's "canonical unit is now".
+- **Items re-read against the unit**: each of the 6 item texts is a verbatim substring of the unit and occurs once (checked by script). `product-tokens-3` is operative: I can break it by reading the colour outside composition scope or from another name.
+- **Ruling: CONFIRMED at 6 items, not corrected.** The rulings below stand.
 
 **Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8a).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e`, 6 items). The unit is retained, so there is no re-sign (ballot § 7).
 - **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8a, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/data.md` L301 (L297 before site 8b's insert at `8e6818685`) replaces *"Author new tokens … when you discover values Leonardo didn't anticipate"* with: a product token is authored when the screen spec names it; a value the spec did not anticipate is a need the spec missed, surfaced to Leonardo and never filled silently or with a hard-coded value; Product-Token-Governance § "Authoring Workflow" (routed) says when it may be written and what the code holds until the outcome; a safe-area, system-bar or IME inset is the platform's runtime value (`WindowInsets`), never a token, and only spacing added to it can be a need. It is my R1 text. In the same commit the profile author re-quoted `product-tokens-6`. I checked by script that L301 equals § 14's site 8a block for `data.md` on `main` at `bad7222ef` byte for byte.
