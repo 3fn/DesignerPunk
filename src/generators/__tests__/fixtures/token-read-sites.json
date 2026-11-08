@@ -64,10 +64,11 @@
       "file": "src/integration/ValidationCoordinator.ts",
       "modules": [
         "RadiusTokens",
+        "SizingTokens",
         "SpacingTokens"
       ],
-      "part": "Spacing and radius primitives",
-      "generateReach": "generate: no - not imported by the generate path"
+      "part": "Spacing, sizing and radius primitives (the base values of the component-token grid rule)",
+      "generateReach": "generate: yes - `generate` imports componentTokenConformanceErrors (Spec 129 Task 10.2) for the consumer off-grid warning; the base values are read from the package, not the consumer's barrel"
     },
     {
       "file": "src/providers/WebUnitConverter.ts",
