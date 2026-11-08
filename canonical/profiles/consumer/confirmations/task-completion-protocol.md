@@ -156,11 +156,20 @@ date: 2026-11-07
 ## `#the-merge-rule`
 
 confirmer: stacy
-canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
+canonicalHash: sha256:f06850b940f8b08bf324eb6b2f6fc8fbb9ec7c7c5f667a47a2b09751c754d45d
 items: the-merge-rule-1, the-merge-rule-2, the-merge-rule-3
-date: 2026-09-29
+date: 2026-11-08
 
-**Ruling: CONFIRMED at 3, as drafted.**
+**Re-confirmed 2026-11-08 (Req 11.6.5d).** The whole unit, read at `4386fbe6a`.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-08-125b-u3-rehome.md` (RATIFIED, Peter, 2026-11-08, F-1 (b); #804), item 2. The carve-out bullet's last clause now reads "until the gated-surfaces scope of register row `record-first-ratification` is `armed`" instead of "until 125-B's CODEOWNERS layer". A dated pointer follows it. The path list is unchanged, and nothing else in the unit moved.
+  - The doc edit (`1482a0dc1`) and the re-quoted item text (`79573e890`) are Thurgood's authoring, not this act.
+- **Text, verified**: the doc's L129 equals the ballot's § 9 item 2 text byte for byte. `-3` is that line without its `- ` marker and its dated pointer (302 characters) and occurs once. All three item texts are verbatim substrings, each occurring once.
+- **Item grain**: `-3` stays one `obligation`. The re-worded clause states how long the carve-out is the ratification proxy; it is a condition of the same carve-out, and splitting would change no credit. Its label is unchanged and still true.
+- **The hash**: the canonicalHash moves from `sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e` to the value above. I computed it myself with `hashText` over `partition(splitFrontmatter(...).body).units`, and again as `sha256` over a raw slice of the file from the unit's heading to `### Emergency Procedure`; both agree. Only then did I compare it with `operative-set-freshness` and with the overlay pin (`79573e890`), which read the same value.
+
+**Ruling: CONFIRMED at 3 items.**
+
+**Confirmed 2026-09-29: CONFIRMED at 3, as drafted.**
 
 ## `#emergency-procedure`
 
