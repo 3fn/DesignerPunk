@@ -194,7 +194,7 @@ Every finding cited here is Stacy's, from `completion/claims-pass.md` (#791) and
 
 **Its clearest case landed while this was drafted: #791 and #796.** #791, the CLOSEOUT pass (`693b39b54`), added `completion/claims-pass.md`. That path was the Trigger of five root records, the 129 charter and Lina's component-repair record among them. Nobody re-ruled them in #791, and both have harness entries tagged to them. So the harness tag check (`compare.ts`; Req 1.4: a tag is an open root record whose Trigger can fire) failed **every open PR**, `FAIL tag: … FIRED@693b39b54 and that is still open`, until Lina's re-rule merged as #796 (`929972713`). The PR mode built below, run on #791's own diff, lists all five, both of those two included. A lapse that rule 11 counts quietly became a red on every PR, which the next lapse of a tagged record will do again.
 
-**The warn-only half is built outside this ballot.** Peter, relayed 2026-11-08: "Let's pursue that class fix if we aren't already." Listing fired records changes no rule, so its warn-only form needs no ballot. The script is in my standing scope; the CI step is a new non-required workflow, which is an issue-row grant (README rule 8; not one of M1's excluded acts). Both are on `chore/fired-records-warn-check` at `478194ede`:
+**The warn-only half is built outside this ballot.** Peter, relayed 2026-11-08: "Let's pursue that class fix if we aren't already." Listing fired records changes no rule, so its warn-only form needs no ballot. The script is in my standing scope; the CI step is a new non-required workflow, which is an issue-row grant (README rule 8; not one of M1's excluded acts). Both are on `chore/fired-records-warn-check` at `6b76a744b`:
 - `scripts/issues-owned.sh --pr` (site 3.1 below), with its cases; the #791 falsification case is red at base, which reads `--pr` as an unknown seat;
 - the grant record `.kiro/issues/2026-11-08-fired-records-warn-check-grant.md`, which carries `pr-records.yml`'s exact text (site 3.2 below).
 
@@ -217,13 +217,13 @@ Every finding cited here is Stacy's, from `completion/claims-pass.md` (#791) and
 - (e) **The later decision.** At that walk I offer Peter three options with the counts: **fail** (the check fails a PR with a `fires-here` line; it becomes a required context, which is an `EXPECTED_CONTEXTS` change and his branch-protection act), **keep warn-only**, or **retire**. Nothing in this ballot decides it.
 
 **Edit sites.**
-- *Site 3.1 — `scripts/issues-owned.sh`*, a PR mode: `--pr <N> --base <ref> --head <ref>` (**built**, `478194ede`, standing scope). It uses the seat mode's token reading and `:(glob)` matching, reads records at the head (so a record the PR adds is seen), reads a record re-ruled in the diff by its base token, and exits 0 always. Cases in `scripts/__tests__/issues-owned.test.ts` ("--pr (fired-records)", 9 cases, 41/41 with the seat mode's): #791's shape; an added record firing at its own merge; re-ruled; archived; edited; a list; already-fired; the quiet cases; the annotations; fail-soft.
+- *Site 3.1 — `scripts/issues-owned.sh`*, a PR mode: `--pr <N> --base <ref> --head <ref>` (**built**, `6b76a744b`, standing scope). It uses the seat mode's token reading and `:(glob)` matching, reads records at the head (so a record the PR adds is seen), reads a record re-ruled in the diff by its base token, and exits 0 always. Cases in `scripts/__tests__/issues-owned.test.ts` ("--pr (fired-records)", 10 cases, 42/42 with the seat mode's): #791's shape; an added record firing at its own merge; re-ruled; archived; edited; a list; already-fired; the quiet cases; the annotations; fail-soft.
 - *Site 3.2 — `.github/workflows/pr-records.yml`, new, through the grant record above, called G-2 here* (Owner Thurgood; `**Grant paths**: .github/workflows/pr-records.yml`; ARMING line on the activating PR). On `pull_request`, one job `fired-records` with `fetch-depth: 0` and `permissions: contents: read`. No `if:`, no `continue-on-error` (the script exits 0 by design). Not added to `EXPECTED_CONTEXTS` or `complete-task.sh`'s `REQUIRED_WORKFLOWS`. Item 4 (c)'s ARMING step is **not** in G-2. If F-4 keeps it, it needs a dated amendment to G-2 before its fixing PR, which adds a second step and `pull-requests: read`.
 - *Site 3.3 — `.kiro/issues/README.md` rule 6*, one sentence after "The headline prints …": "Between walks, the `fired-records` check lists on each PR the records its merge fires, by rule 1's `path:` and `merge:#<N>` tokens with `<N>` the PR's own number; it warns and never fails until Peter rules otherwise (ballot 2026-11-08-closeout-cracks item 3). The walk after its first cycle records its listed, mismatch and disputed counts." (README edits cite their ballot inline; no pointer is owed.)
 - *Site 3.4 — `governance/classification-map.md` row `issues-obligation-lapse`*: `checks` becomes `["fired-records (warn-only; .github/workflows/pr-records.yml -> bash scripts/issues-owned.sh --pr; non-required; ballot 2026-11-08-closeout-cracks item 3)"]`, `check_state` stays `proposed`, one `history` line.
 
 **Cost.**
-- **Authoring**: done for the script and the grant record (one session, `478194ede`); one workflow PR remains, after G-2's activating merge.
+- **Authoring**: done for the script and the grant record (one session, `6b76a744b`); one workflow PR remains, after G-2's activating merge.
 - **On every PR**: one Ubuntu job of under a minute (a full-history checkout, then a diff and a loop over about 80 root records), and a warning on the PRs that fire something.
 - **On the walk**: the three counts, read from the annotations (which outlive the logs) and from `issues-owned.sh` after each merge. A query, not a recollection.
 
@@ -238,7 +238,7 @@ Every finding cited here is Stacy's, from `completion/claims-pass.md` (#791) and
 - It would **not** have closed any of them: it warns the PR author and names the owner, who may not be the author. Whether a warning changes behaviour is what the cycle measures.
 
 **Census.**
-- `**Census**: exempt — (1) the instrument does not exist at bf4cd7677 (issues-obligation-lapse carries checks: []); ran: scripts/issues-owned.sh --pr @ 478194ede over the 129 window's first-parent merges (§ Census appendix C); count: heuristic, 28 fires-here lines on 15 of 104 merges, 21 of them warnings (appendix C)`
+- `**Census**: exempt — (1) the instrument does not exist at bf4cd7677 (issues-obligation-lapse carries checks: []); ran: scripts/issues-owned.sh --pr @ 6b76a744b over the 129 window's first-parent merges (§ Census appendix C); count: heuristic, 28 fires-here lines on 15 of 104 merges, 21 of them warnings (appendix C)`
 - `**Census**: not in scope — check-section-citations, 122-diff-guard — site 3.4 is an ordinary governance/ input; no citation is added`
 
 **Surviving counter.** **A warning on the PR goes to the wrong seat.** The record's owner is often not the PR's author: the claims pass #791 fires five records owned by Ada, Lina, Kenya and Data, and Stacy writes the pass. Under rule 11, every one of them lapses at that merge unless the pass PR closes it, and rule 9 forbids Stacy to close another seat's record. So for one class of record — a `path:` trigger on a file another seat writes — the warning reports a lapse nobody could have prevented in that PR. That is a fault of rule 11 against cross-seat path triggers, not of the check, and it is outside this ballot (§ 9). But it means the `fail` option in (e) cannot be ruled on the counts alone: a failing check would block the claims pass for records it may not touch. Fold-back took in the `already-fired` state (so standing records do not re-warn on every touch) and the added-record case. What survives: the warning's audience and the record's owner are different people, and the check cannot fix that.
@@ -292,7 +292,7 @@ Every finding cited here is Stacy's, from `completion/claims-pass.md` (#791) and
 | `scripts/harness/stability.ts`, `stability.test.ts` | 1.2 | standing scope | Thurgood |
 | `scripts/check-completion-criteria-parity.ts`, `scripts/completion-claims/{verdict,completion-doc,header-lines,arming-line}.ts`, fixtures, tests | 2.1, 4.1–4.3 | standing scope | Thurgood |
 | `scripts/owed-set.sh`, `owed-set.test.ts` | 2.2 | standing scope; Stacy's cases | Thurgood |
-| `scripts/issues-owned.sh`, `issues-owned.test.ts` | 3.1 | standing scope (**built**, `478194ede`) | Thurgood |
+| `scripts/issues-owned.sh`, `issues-owned.test.ts` | 3.1 | standing scope (**built**, `6b76a744b`) | Thurgood |
 | `governance/completion-documentation-guide.md` | 2.3, 2.4, 4.4 | LAW (this ballot) | Thurgood |
 | `governance/classification-map.md` | 2.5, 3.4, 4.5 | LAW (this ballot) | Thurgood; 4.5 on Stacy's word |
 | `.kiro/hooks/RELEASE-FLOW.md` L87 | 2.6 | LAW (this ballot) | Thurgood |
@@ -301,7 +301,7 @@ Every finding cited here is Stacy's, from `completion/claims-pass.md` (#791) and
 | `canonical/agents/stacy.md` L445, `canonical/profiles/consumer/stacy.overlay.md` L112 | 2.7 | LAW (this ballot) | Stacy |
 | ballot `2026-11-07-native-lane-ownership` after L68 | 1.3 | ledger line | Thurgood |
 | `.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md` | 1.4 | record section (rule 9) | Thurgood; Stacy co-owner |
-| G-1's grant record (new); G-2's (written, `478194ede`) | § 5 steps 1, 6 | rule 10 filing | Thurgood |
+| G-1's grant record (new); G-2's (written, `6b76a744b`) | § 5 steps 1, 6 | rule 10 filing | Thurgood |
 
 ---
 
@@ -312,7 +312,7 @@ Every finding cited here is Stacy's, from `completion/claims-pass.md` (#791) and
 3. **Law sites 2.3–2.6, 3.3, 4.4, and register sites 2.5, 3.4, 4.5** (one PR, mine, Stacy's word on 4.5). `**Edit kind**:` LAW lines citing this ballot; dated pointers on `governance/**` and RELEASE-FLOW; `validate-steering-metadata.js`; docs MCP `rebuild_index`.
 4. **Charter sites 2.7 and 2.8** (one PR; Stacy writes 2.7 in her seat). `npm run build:generator`, lock refresh, re-confirm and re-sign each affected surface (`verify-signing-chain --audit --pr <n>`).
 5. **Item 1, code first**: the `stability.ts` PR (site 1.2), then the activating PR for G-1 with its ARMING line, then the workflow PR (site 1.1). Sites 1.3 and 1.4 ride with the workflow PR. **ARMING** fires at G-1's activating merge and at the workflow PR's merge (Stacy's row).
-6. **Item 3** is already under way outside the ballot: the PR mode and G-2's record are on `chore/fired-records-warn-check` (`478194ede`). Its PR activates G-2; `pr-records.yml` follows as the fixing PR. The cycle of item 3 (d) starts at that merge, whose date goes in G-2's outcome line. Sites 3.3 and 3.4 land with step 3, after ratification. Item 4 (c)'s `arming-line.ts` (site 4.3) follows only if F-4 keeps it, under a dated amendment to G-2.
+6. **Item 3** is already under way outside the ballot: the PR mode and G-2's record are on `chore/fired-records-warn-check` (`6b76a744b`). Its PR activates G-2; `pr-records.yml` follows as the fixing PR. The cycle of item 3 (d) starts at that merge, whose date goes in G-2's outcome line. Sites 3.3 and 3.4 land with step 3, after ratification. Item 4 (c)'s `arming-line.ts` (site 4.3) follows only if F-4 keeps it, under a dated amendment to G-2.
 7. **Peter's act (b)**, if he takes it: his words and the time of the toggle are recorded by the session that receives them, in an evidence record cited from this ballot's Status line. No agent changes the setting.
 8. **Straggler sweep** over each item's edit class (`git grep -n -F` for `pull_request` and `workflow_dispatch` in `harness/README.md` and the charters; for `unticked` across `canonical/`, `governance/`, RELEASE-FLOW; for `Unmet or partially met` in `governance/`), listed in the last PR's body.
 
