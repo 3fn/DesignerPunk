@@ -78,4 +78,4 @@ Record: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-pe
 
 ## Outcome
 
-**Pending (Ada, owner; rule 5).** The fixing PR is #<N> (`fix/theme-map-noncolour-refuse`). It makes `generate` refuse a non-colour key in any theme override map (`dark`, `wcag`, custom; plain and `{ light, dark }` forms), naming the config entry, the map and the key, with nothing written (`findNonColourOverrideKeys`, `src/generators/themeOverrideCategories.ts`; wording Leonardo's). Jest cases per map kind and a Consumer Guard case pin it. Closes at that PR's merge, before the S of the release carrying U6 and U9.
+**Pending (Ada, owner; rule 5).** The fixing PR is #785 (`fix/theme-map-noncolour-refuse`). It makes `generate` refuse a non-colour key in any theme override map (`dark`, `wcag`, custom; plain and `{ light, dark }` forms), naming the config entry, the map and the key, with nothing written (`findNonColourOverrideKeys`, `src/generators/themeOverrideCategories.ts`; wording Leonardo's). Jest cases per map kind and a Consumer Guard case pin it. Closes at that PR's merge, before the S of the release carrying U6 and U9.
