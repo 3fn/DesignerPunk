@@ -72,10 +72,10 @@ A second shape, same area: an unknown key in a registered `wcag` map is rejected
 
 Record: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-theme-map-noncolour-refuse.md`. `generate` refuses a non-colour key in any theme override map (`dark`, `wcag`, any registered theme's maps), by token category, naming the key, the map and the theme, leading with what to do. Option (b) is not taken; the ballot's F-2 resolves as fix first.
 
-**Class**: the check covers every map kind in one function (`findNonColourOverrideKeys`, `src/themes/themeRefusals.ts`), run in `generateTokenFiles` beside the theme-instance refusals, so a future map kind inherits it. Wording: `nonColourOverrideKeyMessage` (`errorCatalog.ts`), Leonardo's to settle.
+**Class**: the check covers every map kind in one function (`findNonColourOverrideKeys`, `src/generators/themeOverrideCategories.ts`), run in `generateTokenFiles` beside the theme-instance refusals, so a future map kind inherits it. Wording: `nonColourOverrideKeyMessage` (`errorCatalog.ts`), Leonardo's to settle.
 
 **Fixing PR**: branch `fix/theme-map-noncolour-refuse` @ `a336123fc`. Consumer Guard case follows the grant `2026-11-08-theme-map-noncolour-guard-grant.md` (`chore/theme-map-noncolour-grant` @ `2dd3f26c4`). Close with the PR number (rule 5).
 
 ## Outcome
 
-**Pending (Ada, owner; rule 5).** The fixing PR is #<N> (`fix/theme-map-noncolour-refuse`). It makes `generate` refuse a non-colour key in any theme override map (`dark`, `wcag`, custom; plain and `{ light, dark }` forms), naming the config entry, the map and the key, with nothing written (`findNonColourOverrideKeys`, `src/themes/themeRefusals.ts`; wording Leonardo's). Jest cases per map kind and a Consumer Guard case pin it. Closes at that PR's merge, before the S of the release carrying U6 and U9.
+**Pending (Ada, owner; rule 5).** The fixing PR is #<N> (`fix/theme-map-noncolour-refuse`). It makes `generate` refuse a non-colour key in any theme override map (`dark`, `wcag`, custom; plain and `{ light, dark }` forms), naming the config entry, the map and the key, with nothing written (`findNonColourOverrideKeys`, `src/generators/themeOverrideCategories.ts`; wording Leonardo's). Jest cases per map kind and a Consumer Guard case pin it. Closes at that PR's merge, before the S of the release carrying U6 and U9.
