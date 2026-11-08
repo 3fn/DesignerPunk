@@ -374,6 +374,7 @@ OPTIONS:
                          <unit-slug>) — that can't be derived from MESSAGE, so
                          on main you must either already be on the unit branch
                          or pass --branch explicitly.
+  --trailer "K: V"       Extra commit trailer (repeatable), e.g. "Co-Authored-By: ..."; "Agent: <--agent>" is always added.
   --agent NAME           Authoring agent for the PR body (default: $DP_AGENT or "Peter").
   --spec-dir NAME        Full spec directory name for the PR body's Spec: field
                          (default: derived from the (<spec>) suffix in MESSAGE).
@@ -451,6 +452,7 @@ RUN_PARITY=true
 NO_CI_FLAG=false
 DRY_RUN_CI_MODE=false
 TASK_OPT=""
+TRAILER_ARGS=()   # --trailer "Key: Value" (repeatable), appended to the commit's final paragraph
 ADD_ARGS=()   # guard argv fragments: --add PATH --reason TEXT (validated by the guard)
 
 while [[ $# -gt 0 ]]; do
@@ -468,6 +470,7 @@ while [[ $# -gt 0 ]]; do
     --skip-parity)       RUN_PARITY=false; shift ;;
     --no-ci)             NO_CI_FLAG=true; shift ;;
     --task)              TASK_OPT="${2:-}"; shift 2 ;;
+    --trailer)           TRAILER_ARGS+=("${2:-}"); shift 2 ;;
     --add)               ADD_ARGS+=(--add "${2:-}"); shift 2 ;;
     --reason)            ADD_ARGS+=(--reason "${2:-}"); shift 2 ;;
     --dry-run-ci)        DRY_RUN_CI_MODE=true; shift ;;
@@ -714,11 +717,10 @@ if ! git diff --quiet || ! git diff --cached --quiet || [[ -n "$(git ls-files --
   say "Staging all changes..."
   git add -A
   say "Committing: $MESSAGE"
-  if [[ -n "$ADDED_TRAILERS" ]]; then
-    git commit -m "$MESSAGE" -m "$ADDED_TRAILERS"
-  else
-    git commit -m "$MESSAGE"
-  fi
+  TRAILERS="Agent: $AGENT"
+  for t in ${TRAILER_ARGS[@]+"${TRAILER_ARGS[@]}"}; do TRAILERS+=$'\n'"$t"; done
+  [[ -n "$ADDED_TRAILERS" ]] && TRAILERS+=$'\n'"$ADDED_TRAILERS"
+  git commit -m "$MESSAGE" -m "$TRAILERS"
 else
   if [[ -z "$(git log --oneline "origin/$PROTECTED_BRANCH..HEAD" 2>/dev/null)" ]]; then
     die "Nothing to do: working tree is clean and '$TASK_BRANCH' has no commits ahead of origin/$PROTECTED_BRANCH."
