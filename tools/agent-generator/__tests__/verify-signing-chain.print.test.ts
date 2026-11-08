@@ -7,7 +7,8 @@
  *   PF1 — "the mode's output contains the unit's evidence line, so a print before the commit anchors
  *         link 7";
  *   PF2 — "the hash equals the freshness sweep's for a stale unit".
- * Each is run on the confirmer's target (an operative-set record unit, `a`) and on the signer's
+ * PF2c (a `#frontmatter:<path>` row) and PF2d (a shared member) were added at Stacy's review of
+ * `ee2504581`. Each is run on the confirmer's target (an operative-set record unit, `a`) and on the signer's
  * (a dispositions row, whose link-7 line is the rendering's, `b`): the mode prints a row's rendering
  * and `renderedHash` too, and `b` shows why — the canonical unit alone does not carry the rendered
  * line link 7 reads for a signature.
@@ -200,5 +201,61 @@ describe("PF2 (Stacy): the hash equals the freshness sweep's for a stale unit", 
     expect(row(runFreshnessSweep(repo))).toBe(true);
     editRow(repo, DISP('kenya'), '#identity', (r) => ({ ...r, signature: { ...(r.signature as Record<string, unknown>), canonicalHash: ch, renderedHash: rh } }));
     expect(row(runFreshnessSweep(repo))).toBe(false);
+  });
+  /**
+   * PF2c and PF2d (Stacy's review of `ee2504581`): the same claim for a `#frontmatter:<path>` row and a
+   * shared-catalog member, whose canonical side is `hashEntry(value)`, not `hashText(unit)`. The fixture
+   * tree has neither, so each case adds one, rendered (a span in the sidecar) and signed with stale pins,
+   * and commits it (the sweep reads tracked files).
+   */
+  const STALE = { canonicalHash: `sha256:${'3'.repeat(64)}`, renderedHash: `sha256:${'4'.repeat(64)}` };
+  const RENDERING = 'canonical/_consumer-output/_canonical/agents/kenya.md';
+  /** Append one rendered line for `spanSource` to the fixture rendering and its sidecar. */
+  const renderLine = (repo: string, spanSource: string, line: string): void => {
+    const lines = read(repo, RENDERING).replace(/\n*$/, '').split('\n');
+    write(repo, RENDERING, `${[...lines, '', line].join('\n')}\n`);
+    const sc = JSON.parse(read(repo, `${RENDERING}.attribution.json`)) as { spans: { lines: [number, number]; source: string }[] };
+    sc.spans.push({ lines: [lines.length + 2, lines.length + 2], source: spanSource });
+    write(repo, `${RENDERING}.attribution.json`, JSON.stringify(sc, null, 2));
+  };
+  const signatureRow = (evidence: string): string =>
+    JSON.stringify({ disposition: 're-pointed', destination: 'x', signature: { signer: 'kenya', ...STALE, assent: { surviving: [] }, evidence } });
+  const pinPrinted = (repo: string, file: string, key: string, target: string): void => {
+    const p = printed(repo, target);
+    expect(p.code).toBe(0);
+    const ch = hashLine(p.out, 'canonicalHash') as string;
+    const rh = hashLine(p.out, 'renderedHash') as string;
+    expect([ch, rh].every(Boolean)).toBe(true);
+    editRow(repo, file, key, (r) => ({ ...r, signature: { ...(r.signature as Record<string, unknown>), canonicalHash: ch, renderedHash: rh } }));
+  };
+  const staleRow = (repo: string, file: string, key: string): boolean =>
+    (runFreshnessSweep(repo).stale ?? []).some((x) => x.file === file && x.key === key && x.kind === 'signature');
+
+  test('PF2c — a stale `#frontmatter:<path>` row: pinning the printed canonicalHash and renderedHash clears the stale-signature finding', () => {
+    const repo = makeRepo();
+    renderLine(repo, `${SOURCE}#frontmatter:agent`, '- the agent entry, as the consumer reads it (fixture)');
+    write(repo, DISP('kenya'), `${read(repo, DISP('kenya')).replace(/\n*$/, '')}\nfrontmatter:\n  "agent": ${signatureRow('canonical/profiles/consumer/signatures/kenya.md#frontmatter:agent')}\n`);
+    commit(repo, 'fixture: a signed frontmatter row', []);
+    expect(staleRow(repo, DISP('kenya'), 'agent')).toBe(true);
+    const p = printed(repo, `${DISP('kenya')}#frontmatter:agent`);
+    expect(between(p.out, 'canonical entry')).toBe('"kenya"'); // canonicalStringify of the entry's value
+    expect(p.out).toContain('- the agent entry, as the consumer reads it (fixture)');
+    pinPrinted(repo, DISP('kenya'), 'agent', `${DISP('kenya')}#frontmatter:agent`);
+    expect(staleRow(repo, DISP('kenya'), 'agent')).toBe(false);
+  });
+
+  test('PF2d — a stale shared-catalog member: pinning the printed canonicalHash and renderedHash clears the stale-signature finding', () => {
+    const repo = makeRepo();
+    const CATALOG = 'canonical/shared/shared-catalog.yaml';
+    const SHARED = DISP('_shared');
+    write(repo, CATALOG, 'members:\n  - id: fixture-member\n    owner: kenya\n    text: "A shared member the consumer profile renders (fixture)."\n');
+    renderLine(repo, `${CATALOG}#fixture-member`, '- A shared member the consumer profile renders (fixture).');
+    write(repo, SHARED, `source: ${CATALOG}\nmembers:\n  "fixture-member": ${signatureRow('canonical/profiles/consumer/signatures/kenya.md#fixture-member')}\n`);
+    commit(repo, 'fixture: a signed shared member', []);
+    expect(staleRow(repo, SHARED, 'fixture-member')).toBe(true);
+    const p = printed(repo, `${SHARED}#fixture-member`);
+    expect(p.out).toMatch(/^canonical member: canonical\/shared\/shared-catalog\.yaml member fixture-member/m);
+    pinPrinted(repo, SHARED, 'fixture-member', `${SHARED}#fixture-member`);
+    expect(staleRow(repo, SHARED, 'fixture-member')).toBe(false);
   });
 });
