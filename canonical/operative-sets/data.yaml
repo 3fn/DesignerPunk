@@ -105,7 +105,7 @@ units:
         label: "Any other pin move goes by grant or spec row"
         text: "Any other move goes by grant or spec row"
       - id: scope-16
-        kind: member
+        kind: obligation
         label: "The harness paths that are not yours"
         text: "Not yours: `harness/expected/**`, `harness/protected-set.txt`, `harness/fixtures/**`, `harness/README.md` (Thurgood's; you review its hunks in your sections), the rest of `harness/pins.yaml`, `compare.ts` (Thurgood's; you review its changes outside Swift-named declarations), `consumer.ts` (Ada's; you review its manifest and layout changes), `stability.ts` and `native-rules.ts` (Thurgood's; you review `native-rules.ts` changes outside Swift-named declarations), `d2-check.ts`, and `native-harness.yml` with `native-harness-workflow.test.ts` (an issue-row grant per fix)"
       - id: scope-17
