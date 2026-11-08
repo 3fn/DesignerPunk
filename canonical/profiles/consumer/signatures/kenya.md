@@ -264,9 +264,15 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:5af175a1382bb2c8a1ae48571e10071486b5f6404e739702094a12b86d8ffa79
+canonicalHash: sha256:b9f3cb8659e8f7eea3b8ff7a76ef914b693064ae6281dc0be427045d8d1b7151
 renderedHash: sha256:eaed5dad0116f1571c1ed2fd4da6a10c81e5afa85214f1cabe2321fb5e84d34f
-date: 2026-11-01
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, second cut; the canonical `cue` now ends *The Swift output carries the theme surface described in § iOS Theming (Spec 094)*): ASSENT to the re-point, `surviving: []`.** A new act, made fresh on `task/129-16-theming-text-r2` under Peter's ruling (g) of 2026-11-08T12:20:05Z. It supersedes my act on `refs/pull/775/head` (`67004532f`) and the signature immediately below (canonicalHash `sha256:5af175a1382bb2c8a1ae48571e10071486b5f6404e739702094a12b86d8ffa79`, renderedHash unchanged).
+- **What I read, in this session, through tool results**: the whole canonical entry, printed by `sed -n '175,195p' canonical/agents/kenya.md` (the `commands:` key, the entry at its L178 to L183, and the entries after it) and as the entry value printed by a script written for this act (`entryTree(frontmatter).units`, path `commands[platform-tokens]`); and the whole consumer rendering of the row, printed by a script written for this act that prints every rendered piece of `rowSpanSource('canonical/agents/kenya.md', 'frontmatter', 'commands[platform-tokens]')` with its artifact path: two pieces (`cc` `kenya.md` and `kiro` `kenya-prompt.md`), identical to one another.
+- **The rendering reads** *regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)*. It is the overlay entry, and the overlay pin equals the canonical hash below.
+- **Judgment.** The function is the same as the one I assented to on 2026-09-29 and 2026-10-12: the in-repo `npm run generate:platform-tokens` becomes the consumer's `npx designerpunk generate`. The canonical `cue` gained a clause pointing at `§ iOS Theming (Spec 094)`; the rendering carries no such clause, and the re-pointed entry says what a consumer runs. The row has no operative-set items, so `surviving: []` is itemized.
+- **Hashes.** `canonicalHash` is `hashEntry` of the entry value from `entryTree(frontmatter).units`, `sha256:b9f3cb86...`, equal to the overlay pin. `renderedHash` is `renderedHashOf(readConsumerSpans(<worktree>), rowSpanSource(...))`, `sha256:eaed5dad...`, the same value as the signature below, because the rendering text did not change.
 
 **Final re-sign 2026-09-29, after Thurgood's suffix fix `7e5af8be` and regen `8ea88c2f`: ASSENT to the re-point, `surviving: []`. My refusal is RESOLVED.**
 - **The rendering now reads** *"regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*.
