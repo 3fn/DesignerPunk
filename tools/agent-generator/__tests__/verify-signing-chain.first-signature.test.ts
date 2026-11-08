@@ -13,7 +13,9 @@
  * the head's (always empty after signing) nor the range base's.
  */
 
-import { runFreshnessSweep, formatFreshness } from '../regrounding/freshness';
+import { listsAt, runFreshnessSweep, formatFreshness } from '../regrounding/freshness';
+import { load as loadYaml } from 'js-yaml';
+import { hashText } from '../regrounding/hash';
 import { runCi, type CiResult } from '../regrounding/verify-signing-chain';
 import { cleanupTmp, commit, editRow, editSheet, g, hash, head, read, RG, tmp, write } from './fixtures/signing-chain/helpers';
 import {
@@ -78,8 +80,26 @@ function sign(repo: string, k: string, o: SignOpts = {}): void {
     write(repo, sheet, existing + block);
   }
 }
-const ci = (repo: string, base: string, sweep: ((root: string) => { pass: boolean; lines: string[] }) | null = STUB_SWEEP): CiResult =>
-  runCi({ repo, base, head: 'HEAD', rg: RG, sweep });
+/**
+ * T-CI has no consumer rendering (T-UR pins {@link RENDERED}), so link 1's lists at a first parent
+ * (freshness.ts listsAt — the sweep over that tree; shape-review ballot item 4) read the rendered
+ * hash from the same option the T-UR sweep uses.
+ */
+const RG_UR = { ...RG, listsAt: (read: (rel: string) => string | undefined, files: readonly string[]) => listsAt(read, files, { renderedHash: RENDERED }) };
+const ci = (repo: string, base: string, sweep: ((root: string) => { pass: boolean; lines: string[] }) | null = STUB_SWEEP, rg = RG_UR): CiResult =>
+  runCi({ repo, base, head: 'HEAD', rg, sweep });
+/**
+ * A rendering oracle that moves when a row's `removals` move, as the real renderer re-renders a
+ * re-disposed row; rows without removals keep {@link RENDERED}. Read at the tree link 1 reads.
+ */
+const renderedByRemovals =
+  (read: (rel: string) => string | undefined) =>
+  (file: string, section: string, key: string): string => {
+    const doc = loadYaml(read(file) ?? '') as Record<string, Record<string, { removals?: unknown }>> | undefined;
+    const removals = doc?.[section]?.[key]?.removals;
+    return removals === undefined ? RENDERED(file, section, key) : hashText(`rendered:${section}:${key}:${JSON.stringify(removals)}`);
+  };
+const RG_RERENDER = { ...RG, listsAt: (read: (rel: string) => string | undefined, files: readonly string[]) => listsAt(read, files, { renderedHash: renderedByRemovals(read) }) };
 const links = (r: CiResult): number[] => [...new Set(r.findings.map((f) => f.link))].sort();
 const realSweep = (root: string): { pass: boolean; lines: string[] } => {
   const report = runFreshnessSweep(root, { tracked: allFiles(root), renderedHash: RENDERED });
@@ -208,7 +228,9 @@ describe('verify-signing-chain --ci — link 1 for a first signature (T-CI)', ()
     });
     editSheet(repo, SHEET, '#alpha', { renderedHash: hash('alpha-r2'), append: '**Re-sign: ASSENT.**' });
     commit(repo, 'Re-sign #alpha (kenya)', ['Agent: kenya']);
-    const r = ci(repo, base);
+    // The re-disposition re-renders #alpha, so the re-sign's row is stale at its first parent
+    // (link 1 by list membership, shape-review ballot item 4); T-UR's constant oracle cannot show that.
+    const r = ci(repo, base, STUB_SWEEP, RG_RERENDER);
     expect(r.findings).toEqual([]);
     expect(r.rowsChecked).toBe(2);
   });
@@ -341,18 +363,28 @@ describe('verify-signing-chain --ci — link 1 for a first signature (T-CI)', ()
   });
 
   // ------------------------------------------------------------------ pinned current behavior (forks 3, 4)
-  test('FU24 (fork 3, pinned): A signs the dispositions row; B adds its sheet section alone → both pass, as today', () => {
+  // FU24 was "both pass, as today", pinned until fork 3 was ruled. Ruled by ballot
+  // 2026-11-08-signing-act-shape-review § 2a (Peter, 2026-11-08T17:45:34Z): a first act carries its
+  // pinned object and its sheet section in one commit; a section committed alone is a re-act on a
+  // fresh row and fails link 1 (fixture X1; the 7eb517fca shape).
+  test('FU24 (fork 3, ruled — X1): A signs the dispositions row; B adds its sheet section alone → the sheet commit fails link 1', () => {
     const [repo, base] = repoWith();
     sign(repo, '#alpha', { sheet: false });
     commit(repo, 'First signature #alpha, row only (kenya)', ['Agent: kenya']);
     sign(repo, '#alpha', { row: false });
-    commit(repo, 'Sheet section for #alpha (kenya)', ['Agent: kenya']);
+    const sheetSha = commit(repo, 'Sheet section for #alpha (kenya)', ['Agent: kenya']);
     const r = ci(repo, base);
-    expect(r.findings).toEqual([]);
+    expect(links(r)).toEqual([1]);
+    expect(r.findings).toHaveLength(1);
+    expect(r.findings[0].sha).toBe(sheetSha);
+    expect(r.findings[0].message).toMatch(/^re-sign on a row on none of its kind's lists at the commit's first parent/);
     expect(r.rowsChecked).toBe(2);
   });
 
-  test('FU25 (fork 4 — NOT absorbed, for Peter): deleting a fresh signature with no re-disposition passes link 1 today; pinned until ruled', () => {
+  // FU25 was "passes link 1 today; pinned until ruled" (fork 4). Ruled by ballot
+  // 2026-11-08-signing-act-shape-review items 3–4: a withdrawal on a fresh row is on none of its
+  // kind's lists and fails link 1 (fixture W1).
+  test('FU25 (fork 4, ruled — W1): deleting a fresh signature with no re-disposition fails link 1', () => {
     const [repo, base] = repoWith();
     editRow(repo, DISP, '#theta', (row) => {
       const { signature: _s, ...rest } = row;
@@ -360,7 +392,8 @@ describe('verify-signing-chain --ci — link 1 for a first signature (T-CI)', ()
     });
     commit(repo, 'Delete #theta signature', ['Agent: kenya']);
     const r = ci(repo, base);
-    expect(links(r)).not.toContain(1);
+    expect(links(r)).toContain(1);
+    expect(r.findings.find((f) => f.link === 1)?.message).toMatch(/^withdraw on a row on none of its kind's lists .* \(on: none; in bound: stale, orphaned, signed-unrouted\)/);
   });
 
   test('FU26b (fixture form): one commit, two first signatures — one listed, one retained → only the retained row fails link 1', () => {

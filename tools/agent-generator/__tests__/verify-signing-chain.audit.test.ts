@@ -280,17 +280,87 @@ describe('verify-signing-chain --audit — reporting (§ 4.4; not among the 25)'
     expect(lines[2]).toMatch(/anchored 0/);
   });
 
-  test('ruling 9: a row that renders nothing reads `record absent` 7, never `anchored`', () => {
-    const sidecar = 'canonical/_consumer-output/_canonical/agents/kenya.md.attribution.json';
-    const s = seatRepo((repo) => {
-      const m = JSON.parse(read(repo, sidecar)) as { spans: { source: string }[] };
-      m.spans = m.spans.filter((x) => !x.source.endsWith('#identity'));
-      write(repo, sidecar, `${JSON.stringify(m, null, 2)}\n`);
-    });
+  // "Ruling 9" (a row that renders nothing reads `record absent` 7) is superseded by ballot
+  // 2026-11-08-signing-act-shape-review F-2 (b) (Peter, 2026-11-08T17:45:34Z): such a row anchors on
+  // its print record and is never `record absent` 7 for that reason alone (R2). An act committed
+  // before its rendering reads `record absent` 7 with the ordering message (F-3 (a), R1).
+  const SIDECAR = 'canonical/_consumer-output/_canonical/agents/kenya.md.attribution.json';
+  const dropIdentitySpan = (repo: string): void => {
+    const m = JSON.parse(read(repo, SIDECAR)) as { spans: { source: string }[] };
+    m.spans = m.spans.filter((x) => !x.source.endsWith('#identity'));
+    write(repo, SIDECAR, `${JSON.stringify(m, null, 2)}\n`);
+  };
+  const pinOf = (s: Seat): string => {
+    const line = g(s.repo, ['show', `${s.sha}:canonical/profiles/consumer/kenya.dispositions.yaml`]).split('\n').find((l) => l.startsWith('  "#identity": ')) as string;
+    return (JSON.parse(line.slice('  "#identity": '.length)) as { signature: { canonicalHash: string } }).signature.canonicalHash;
+  };
+  /** The print mode's output for a row that renders nothing, as one tool result (verify-signing-chain --print). */
+  const printOutput = (target: string, canonicalHash: string): string =>
+    [
+      `verify-signing-chain --print — consistency, not identity — ${target}`,
+      'read at 0000000000000000000000000000000000000000 (working tree); clean',
+      'canonical unit: canonical/agents/kenya.md #identity',
+      '<<<<< begin canonical unit',
+      '# Kenya — iOS Platform Engineer (fixture)',
+      '>>>>> end canonical unit',
+      `canonicalHash: ${canonicalHash}`,
+      'rendering: 0 piece(s) for span source canonical/agents/kenya.md#identity',
+      '(the row renders nothing — no rendered piece)',
+      `renderedHash: ${hash('irrelevant')}`,
+    ].join('\n');
+  /** The standard store with one extra tool result (the print) before the commit call. */
+  const withPrint = (s: Seat, output: string): StoreSpec => {
+    const spec = standard(s, { readRendering: false });
+    const k1 = spec.subagents.k1;
+    const v = { SESSION, BRANCH: 'seat-kenya', AGENT_ID: 'k1' };
+    k1.lines.splice(
+      k1.lines.length - 2,
+      0,
+      record('subagentToolUse', { ...v, TOOL_ID: 'toolu_print', TOOL_NAME: 'Bash', INPUT: { command: "npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --print '…'", description: 'Print the unit' } }),
+      record('subagentToolResult', { ...v, TOOL_ID: 'toolu_print', OUTPUT: output })
+    );
+    return spec;
+  };
+  const TARGET = 'canonical/profiles/consumer/kenya.dispositions.yaml#identity';
+
+  test('R2: a row that renders nothing, with no print record in the transcript → reads `FAIL` 7, never `record absent` 7 for that reason alone', () => {
+    const s = seatRepo(dropIdentitySpan);
+    const v = only(audit(s, buildStore(standard(s))));
+    expect(v.verdict).toBe('FAIL');
+    expect(v.link).toBe(7);
+    expect(v.detail).toMatch(/renders nothing and no tool result carries its print record/);
+  });
+
+  test("R2: a row that renders nothing, with its print record (its own target, the 'renders nothing' line, canonicalHash = the pin) → `anchored`", () => {
+    const s = seatRepo(dropIdentitySpan);
+    const v = only(audit(s, buildStore(withPrint(s, printOutput(TARGET, pinOf(s))))));
+    expect(v.verdict).toBe('anchored');
+    expect(v.detail).toMatch(/print record of a row that renders nothing/);
+  });
+
+  test('R2 control: a print whose canonicalHash differs from the pin → `FAIL` 7', () => {
+    const s = seatRepo(dropIdentitySpan);
+    const v = only(audit(s, buildStore(withPrint(s, printOutput(TARGET, hash('another unit'))))));
+    expect(v.verdict).toBe('FAIL');
+    expect(v.link).toBe(7);
+  });
+
+  test("R2 control: a print of another row's target → `FAIL` 7", () => {
+    const s = seatRepo(dropIdentitySpan);
+    const v = only(audit(s, buildStore(withPrint(s, printOutput('canonical/profiles/consumer/kenya.dispositions.yaml#in-scope', pinOf(s))))));
+    expect(v.verdict).toBe('FAIL');
+    expect(v.link).toBe(7);
+  });
+
+  test('R1: the rendering committed after the act (the 999c4c6f shape) → `record absent` 7 with the ordering message (F-3 (a): never `anchored`)', () => {
+    const s = seatRepo(dropIdentitySpan);
+    const restored = g(s.repo, ['show', `${s.base}:${SIDECAR}`]);
+    write(s.repo, SIDECAR, restored);
+    const regen = commit(s.repo, 'Regenerate the consumer output (authoring)', ['Agent: lina']);
     const v = only(audit(s, buildStore(standard(s))));
     expect(v.verdict).toBe('record absent');
     expect(v.link).toBe(7);
-    expect(v.detail).toMatch(/renders nothing/);
+    expect(v.detail).toBe(`the row's rendering is committed after the act (${regen.slice(0, 8)}); the act was not judged against a committed rendering (clause 3)`);
   });
 
   test('a Kiro-declared commit with no harness record reads `unanchored`', () => {

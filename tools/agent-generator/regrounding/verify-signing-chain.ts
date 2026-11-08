@@ -239,6 +239,28 @@ export interface Regrounding {
   unsignedRouted?: (read: (rel: string) => string | undefined, files: readonly string[]) => UnsignedRoutedList;
   /** The census mode's lines (`freshness.ts` `routedCensus`), when it exists. */
   census?: (read: (rel: string) => string | undefined, files: readonly string[]) => string[];
+  /**
+   * The four lists of a tree read through `read` (`files` = its paths under the profile, records
+   * and consumer-output dirs) — `freshness.ts` `listsAt`, the sweep itself over that tree, when it
+   * exists (shape-review ballot § 2a; § 4.1 link 1 as amended).
+   */
+  listsAt?: (read: (rel: string) => string | undefined, files: readonly string[]) => TreeListsView;
+}
+
+/** A list row, as link 1 reads it. */
+export interface ListRowView {
+  file: string;
+  section: Section | 'unit';
+  key: string;
+}
+/** The four lists at a tree, as link 1 reads them (`freshness.ts` `TreeLists`). */
+export interface TreeListsView {
+  stale: ListRowView[];
+  unsignedRouted: ListRowView[];
+  orphaned: ListRowView[];
+  signedUnrouted: ListRowView[];
+  unverifiable: ListRowView[];
+  errors: { file: string; message: string }[];
 }
 
 /** The unsigned-routed list as link 1 reads it: row ids, and what made it undecidable (per file). */
@@ -287,6 +309,8 @@ export function loadRegrounding(dir: string = __dirname): Regrounding | undefine
     const pop = (fresh as { routedPopulation?: (read: (rel: string) => string | undefined, files: readonly string[]) => { rows: (UnsignedRoutedList['rows'][number] & { signed: boolean })[]; errors: UnsignedRoutedList['errors'] } }).routedPopulation;
     const census = (fresh as { routedCensus?: (read: (rel: string) => string | undefined, files: readonly string[]) => string[] }).routedCensus;
     if (census) rg.census = census;
+    const lists = (fresh as { listsAt?: (read: (rel: string) => string | undefined, files: readonly string[]) => TreeListsView }).listsAt;
+    if (lists) rg.listsAt = (read, files) => lists(read, files);
     if (pop) {
       rg.unsignedRouted = (read, files) => {
         const p = pop(read, files);
@@ -407,8 +431,23 @@ export interface SigningAct {
   sectionMoved: boolean;
   /** A FIRST signature: the dispositions `signature` is absent at the first parent and present here (§ 2 clause 3). */
   first?: boolean;
+  /** A first confirmation: the record unit's `canonicalHash` absent at the first parent and present here. */
+  firstConfirm?: boolean;
+  /** A withdrawal: the pinned object (the `signature`, or the unit's `canonicalHash`) present at the first parent and absent here (§ 2a). */
+  withdrawal?: boolean;
+  /** The signature at this commit carries `refuse`. */
+  refuse?: boolean;
   via: string[];
 }
+
+/**
+ * An act's kind (shape-review ballot § 2a), read from the row's PINNED object, never from the
+ * sheet: first → `sign`/`refuse`/`confirm`; removed → `withdraw`; changed (or only its sheet
+ * section) → `re-sign`/`refuse`/`re-confirm`.
+ */
+export type ActKind = 'sign' | 'refuse' | 're-sign' | 'confirm' | 're-confirm' | 'withdraw';
+export const kindOf = (a: SigningAct): ActKind =>
+  a.withdrawal ? 'withdraw' : a.kind === 'confirmation' ? (a.firstConfirm ? 'confirm' : 're-confirm') : a.refuse ? 'refuse' : a.first ? 'sign' : 're-sign';
 
 export const actMoved = (a: SigningAct): boolean => (a.pinnedTouched ? a.pinnedMoved : a.sectionMoved);
 
@@ -712,6 +751,8 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
           const m1 = isMap(s1) ? s1 : undefined;
           a.pinnedMoved = !m0 || !m1 || m0.canonicalHash !== m1.canonicalHash || m0.renderedHash !== m1.renderedHash;
           if (!m0 && m1) a.first = true;
+          if (m0 && !m1) a.withdrawal = true;
+          if (m1 && m1.refuse !== undefined) a.refuse = true;
           const signer = (m1 ?? m0)?.signer;
           if (typeof signer === 'string') a.signerFields.push(signer);
         }
@@ -785,10 +826,21 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
         a.via.push('record');
         a.pinnedTouched = true;
         a.pinnedMoved = true;
+        if (h0 === undefined) a.firstConfirm = true;
+        if (h1 === undefined) a.withdrawal = true;
       }
     } else {
       an.outside.push(`${f}: not a signing path`);
     }
+  }
+  // A sheet-only act on a signature: its kind follows the row's signature at this commit (§ 2a).
+  for (const a of an.acts.values()) {
+    if (a.kind !== 'signature' || a.pinnedTouched) continue;
+    const doc = parseYamlMap(newText(a.file)).doc;
+    const sec = isMap(doc[a.section]) ? (doc[a.section] as Record<string, unknown>) : {};
+    const row = isMap(sec[a.key]) ? (sec[a.key] as Record<string, unknown>) : undefined;
+    const sig = row && isMap(row.signature) ? (row.signature as Record<string, unknown>) : undefined;
+    if (sig && sig.refuse !== undefined) a.refuse = true;
   }
   return an;
 }
@@ -812,7 +864,22 @@ export interface WalkResult {
   excluded: number;
   touchesProfiles: boolean;
   analyses: CommitAnalysis[];
+  /** One entry per act, in walk order: its kind, the lists the row was on at the first parent, and link 1's verdict (the `--census-link1` input). */
+  acts1: Link1Record[];
 }
+
+/** One act's link-1 record (shape-review ballot § 2a; `--census-link1`). */
+export interface Link1Record {
+  sha: string;
+  rowId: string;
+  kind: ActKind;
+  /** The lists the row was on at the commit's first parent, `+`-joined in a fixed order, or `none` (`undecidable` when they could not be computed). */
+  lists: string;
+  verdict: 'PASS' | 'FAIL 1';
+}
+
+/** The fixed order of list tokens (the (iv) line's `(<list>)`). */
+export const LIST_TOKENS = ['stale', 'unsigned-routed', 'orphaned', 'signed-unrouted'] as const;
 
 /** The charter paths a seat may not edit in a range where it signs (F12′). */
 export const ownCharterPaths = (seat: string): string[] => [`canonical/agents/${seat}.md`, `.claude/agents/${seat}.md`];
@@ -855,6 +922,20 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
     return listedAt.get(key);
   };
 
+  /** The four lists of a first parent's tree (§ 2a; § 4.1 link 1 as amended), computed once per parent. */
+  const listsCache = new Map<string, TreeListsView | undefined>();
+  const listsAtParent = (parent: string | undefined): TreeListsView | undefined => {
+    if (!rg?.listsAt) return undefined;
+    const key = parent ?? EMPTY_TREE;
+    if (!listsCache.has(key)) {
+      const files = parent ? [...lsTree(repo, parent, PROFILES_DIR), ...lsTree(repo, parent, RECORDS_DIR), ...lsTree(repo, parent, CONSUMER_OUTPUT_DIR)] : [];
+      listsCache.set(key, rg.listsAt((rel) => (parent ? blobText(repo, parent, rel) : undefined), files));
+    }
+    return listsCache.get(key);
+  };
+  const idsOf = (rows: ListRowView[]): Set<string> => new Set(rows.map((r) => rowIdOf(r.file, r.section, r.key)));
+  const acts1: Link1Record[] = [];
+
   for (const an of analyses) {
     if (an.merge) {
       for (const f of an.mergeDiffs) {
@@ -888,22 +969,55 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
           push(2, `the commit (Agent: ${trailer}) edits ${a.rowId}, an object of seat ${a.seat}`, a.rowId);
         }
       }
+      const parent = an.parents[0];
+      const at = parent ? parent.slice(0, 8) : '(none — root commit)';
+      const kind = kindOf(a);
+      const before1 = findings.length;
+      let lists = 'none';
       if (a.first) {
-        const parent = an.parents[0];
-        const at = parent ? parent.slice(0, 8) : '(none — root commit)';
         const listed = unsignedAt(parent);
         // An error naming this row's file, or a shared input (not a dispositions file), leaves the row undecidable.
         const why = listed ? [...listed.undecidable].find(([f]) => f === a.file || !isDispositionsPath(f))?.[1] : undefined;
         if (!listed) {
+          lists = 'undecidable';
           push(1, `first signature: the unsigned-routed list cannot be computed on this tree (regrounding/freshness.ts routedPopulation is absent) — a missing link is never green`, a.rowId);
         } else if (why !== undefined) {
+          lists = 'undecidable';
           push(1, `first signature: the unsigned-routed list at the commit's first parent ${at} is undecidable — ${why}; a missing link is never green`, a.rowId);
         } else if (!listed.ids.has(a.rowId)) {
           push(1, `first signature on a row on neither the stale list nor the unsigned-routed list at the commit's first parent ${at} (ballot § 2 clause 3)`, a.rowId);
+        } else {
+          lists = 'unsigned-routed';
         }
       } else if (!actMoved(a)) {
+        // F5 first: a re-act that moves no pinned hash fails whatever list the row is on.
         push(1, a.pinnedTouched ? 're-sign leaves canonicalHash and renderedHash unchanged — the row is not on the stale list (F5)' : 'sheet section changed with no hash moved and no pinned hash moved in this commit — not on the stale list', a.rowId);
+      } else {
+        // § 4.1 link 1 as amended (shape-review ballot item 4): the row is on its act kind's list in
+        // the first parent's tree, computed by the sweep itself over that tree (freshness.ts listsAt).
+        const L = listsAtParent(parent);
+        const allowed: readonly (typeof LIST_TOKENS)[number][] = kind === 'withdraw' ? ['stale', 'orphaned', 'signed-unrouted'] : ['stale'];
+        if (!L) {
+          lists = 'undecidable';
+          push(1, `${kind}: the act-kind lists cannot be computed on this tree (regrounding/freshness.ts listsAt is absent) — a missing link is never green`, a.rowId);
+        } else {
+          const on = (tok: (typeof LIST_TOKENS)[number]): boolean =>
+            idsOf(tok === 'stale' ? L.stale : tok === 'unsigned-routed' ? L.unsignedRouted : tok === 'orphaned' ? L.orphaned : L.signedUnrouted).has(a.rowId);
+          const hit = LIST_TOKENS.filter(on);
+          lists = hit.length ? hit.join('+') : 'none';
+          if (!allowed.some(on)) {
+            const unverifiable = idsOf(L.unverifiable).has(a.rowId);
+            const why = kind === 'withdraw' ? L.errors.find((e) => e.file === a.file || !isDispositionsPath(e.file))?.message : undefined;
+            if (unverifiable || why !== undefined) {
+              lists = 'undecidable';
+              push(1, `${kind}: the lists at the commit's first parent ${at} are undecidable for this row — ${unverifiable ? 'its renderedHash cannot be read (signature-unverifiable)' : why}; a missing link is never green`, a.rowId);
+            } else {
+              push(1, `${kind} on a row on none of its kind's lists at the commit's first parent ${at} (on: ${lists}; in bound: ${allowed.join(', ')}) — ballot § 2 clause 3, § 2a`, a.rowId);
+            }
+          }
+        }
       }
+      acts1.push({ sha: an.sha, rowId: a.rowId, kind, lists, verdict: findings.slice(before1).some((f) => f.link === 1) ? 'FAIL 1' : 'PASS' });
     }
     for (const o of an.outside) push(2, `signing commit edits outside the signer's objects: ${o}`);
     for (const p of an.preambles) {
@@ -932,6 +1046,7 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
     excluded: infos.length - inScope.length,
     touchesProfiles: analyses.some((a) => a.touchesProfiles),
     analyses,
+    acts1,
   };
 }
 
@@ -1565,6 +1680,51 @@ export interface AuditOptions {
   since?: string;
 }
 
+/** The `--print` fragment of a dispositions row ({@link parsePrintTarget}'s inverse). */
+export const printFragment = (section: Section | 'unit', key: string): string =>
+  section === 'frontmatter' ? `frontmatter:${key}` : section === 'members' ? key : key.replace(/^#/, '');
+
+/** The print mode's line for a row that renders nothing ({@link printUnit}). */
+export const PRINT_RENDERS_NOTHING = '(the row renders nothing — no rendered piece)';
+
+/**
+ * F-2 (b) (shape-review ballot, § 4.2 as amended): one tool result carries the print mode's output
+ * for the row — its header naming `<record>#<fragment>`, the "renders nothing" line, and
+ * `canonicalHash: <pin>` equal to the signature's pinned canonicalHash.
+ */
+export function printRecordMatches(results: readonly string[], record: string, fragment: string, canonicalHash: string): boolean {
+  const header = `verify-signing-chain --print — ${LABEL} — ${record}#${fragment}`;
+  return results.some((r) => {
+    const lines = r.split('\n').map((l) => l.trim());
+    return lines.includes(header) && lines.includes(PRINT_RENDERS_NOTHING) && lines.includes(`canonicalHash: ${canonicalHash}`);
+  });
+}
+
+/** The pinned canonicalHash of a row's signature at `commit`, else at `parent` (a withdrawal). */
+function pinnedCanonical(repo: string, commit: string, parent: string | undefined, a: SigningAct): string | undefined {
+  for (const c of [commit, parent]) {
+    if (!c) continue;
+    const doc = parseYamlMap(blobText(repo, c, a.file)).doc;
+    const sec = isMap(doc[a.section]) ? (doc[a.section] as Record<string, unknown>) : {};
+    const row = isMap(sec[a.key]) ? (sec[a.key] as Record<string, unknown>) : undefined;
+    const sig = row && isMap(row.signature) ? (row.signature as Record<string, unknown>) : undefined;
+    if (sig && typeof sig.canonicalHash === 'string') return sig.canonicalHash;
+  }
+  return undefined;
+}
+
+/**
+ * The first first-parent commit after `sha`, up to `head`, whose rendering gives the span a
+ * rendered line — `undefined` when the head's rendering gives it none (the common case: a row
+ * that renders nothing, checked once at the head).
+ */
+function laterRendering(repo: string, sha: string, head: string, span: string, rendering: (c: string) => Map<string, string[]> | undefined): string | undefined {
+  const renders = (c: string): boolean => evidenceLine((rendering(c)?.get(span) ?? []).join('\n')) !== undefined;
+  if (!renders(head)) return undefined;
+  const after = (gitTry(repo, ['rev-list', '--first-parent', '--reverse', `${sha}..${head}`]) ?? '').split('\n').filter(Boolean);
+  return after.find(renders);
+}
+
 /** `--audit`: one verdict per act, links 4–7. Never throws on a verdict; throws on unreadable history. */
 export function runAudit(opts: AuditOptions): ActVerdict[] {
   const { repo, rg } = opts;
@@ -1688,8 +1848,22 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
             if (absent) done('record absent', 7, absent);
             else {
               const line = evidenceLine(text ?? '');
-              // Ruling 9: a row that renders nothing has no line a seat could have read — never `anchored`.
-              if (line === undefined) done('record absent', 7, 'the row renders nothing — there is no rendered line to find');
+              if (line === undefined && a.kind === 'signature') {
+                // Shape-review ballot item 5 (F-3 (a)): a rendering committed only after the act —
+                // the act was not judged against a committed rendering; never `anchored`.
+                const span = rg.rowSpanSource(a.source ?? '', a.section, a.key);
+                const later = laterRendering(repo, an.sha, h, span, rendering);
+                if (later) done('record absent', 7, `the row's rendering is committed after the act (${later.slice(0, 8)}); the act was not judged against a committed rendering (clause 3)`);
+                else {
+                  // F-2 (b): a row that renders nothing anchors on its print record — the print mode's
+                  // header naming the row's own target, its "renders nothing" line, and a canonicalHash
+                  // equal to the signature's pin. renderedHash is not matched: it identifies no row.
+                  const pin = pinnedCanonical(repo, an.sha, an.parents[0], a);
+                  const fragment = printFragment(a.section, a.key);
+                  if (pin !== undefined && printRecordMatches(t.results, a.file, fragment, pin)) done('anchored', undefined, `transcript ${v.transcript} (print record of a row that renders nothing)`);
+                  else done('FAIL', 7, `the row renders nothing and no tool result carries its print record (the header for ${a.file}#${fragment}, the "renders nothing" line, canonicalHash ${pin ? pin.slice(0, 15) : '(no pinned signature)'}…)`);
+                }
+              } else if (line === undefined) done('record absent', 7, 'the row renders nothing — there is no rendered line to find');
               else if (!t.results.some((r) => r.includes(line))) done('FAIL', 7, `no tool result contains the row's rendered line "${line.slice(0, 80)}"`);
               else done('anchored', undefined, `transcript ${v.transcript}`);
             }
@@ -2128,11 +2302,42 @@ export function censusRouted(repo: string, argv: string[], rg: Regrounding | und
   return 0;
 }
 
+/**
+ * `--census-link1 --range <base>..<head> [--since <sha>|none]` — the link-1 census mode
+ * (shape-review ballot site 4c; register `signing-act-consistency`, field `census`). One sorted line
+ * per act, `<sha>\t<rowId>\t<kind>\t<lists at first parent, or none>\t<link-1 verdict>`, then the
+ * count. It calls {@link walkRange}'s own per-act decision and adds no logic; exit 0, or 2.
+ */
+export function censusLink1(repo: string, argv: string[], rg: Regrounding | undefined): number {
+  const range = arg(argv, '--range');
+  const m = range ? /^(.+?)\.\.(.+)$/.exec(range) : null;
+  if (!m) {
+    console.error('verify-signing-chain --census-link1: pass --range <base>..<head>');
+    return 2;
+  }
+  const sinceArg = arg(argv, '--since');
+  try {
+    for (const l of link1CensusLines(repo, m[1], m[2], rg, sinceArg === undefined || sinceArg === 'none' ? undefined : sinceArg)) console.log(l);
+    return 0;
+  } catch (e) {
+    console.error(`verify-signing-chain --census-link1: ${(e as Error).message}`);
+    return 2;
+  }
+}
+
+/** The census lines over `base..head` (sorted act lines, then the count line). */
+export function link1CensusLines(repo: string, base: string, head: string, rg: Regrounding | undefined, since?: string): string[] {
+  const w = walkRange(repo, base, head, rg, since);
+  const lines = w.acts1.map((r) => `${r.sha}\t${r.rowId}\t${r.kind}\t${r.lists}\t${r.verdict}`).sort();
+  return [...lines, `${lines.length} act(s); ${w.acts1.filter((r) => r.verdict === 'FAIL 1').length} FAIL 1`];
+}
+
 /** `home` is where the default store set is looked up (`~`; a test passes a fixture home). */
 export function main(argv: string[], cwd: string = process.cwd(), home: string = os.homedir()): number {
   const repo = gitTry(cwd, ['rev-parse', '--show-toplevel'])?.trim() ?? cwd;
   const rgLoaded = loadRegrounding();
   if (argv.includes('--census-routed')) return censusRouted(repo, argv, rgLoaded);
+  if (argv.includes('--census-link1')) return censusLink1(repo, argv, rgLoaded);
   if (argv.includes('--print')) return printMode(repo, argv, cwd);
   if (argv.includes('--ci')) {
     try {
@@ -2214,7 +2419,7 @@ export function main(argv: string[], cwd: string = process.cwd(), home: string =
     }
     return 0;
   }
-  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --print <record file>#<anchor>\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>]… [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
+  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --census-link1 --range <base>..<head> [--since <sha>|none]\n       verify-signing-chain --print <record file>#<anchor>\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>]… [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
   return 2;
 }
 

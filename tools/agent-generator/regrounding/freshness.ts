@@ -82,6 +82,16 @@
  * `verify-signing-chain --ci` computes the same list at a first signature's first-parent tree
  * (link 1).
  *
+ * Two more information lists follow (ballot 2026-11-08-signing-act-shape-review § 2a, item 3),
+ * always printed, never findings:
+ *   orphaned: N row(s)          dispositions rows and record units whose key names nothing
+ *                               current (the `[orphaned-key]` refusal) — in bound for a withdrawal;
+ *   signed-unrouted: N row(s)   signed dispositions rows on a current key that do not route —
+ *                               in bound for a withdrawal.
+ * {@link listsAt} computes all four lists over any tree read through a file reader, by running
+ * THIS sweep over that tree (one code path): `verify-signing-chain --ci` link 1 reads them at each
+ * act's first parent (§ 4.1 as amended by that ballot).
+ *
  * WHAT THIS DOES NOT ESTABLISH: authorship (one git identity — C16's seat-authentication limit);
  * completeness of an item's text (a prefix truncation passes — the confirmer's); that a removal
  * citation applies (clause (iii)); anything about the rendered consumer output.
@@ -91,6 +101,7 @@
 
 import { execFileSync } from 'child_process';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
 import {
@@ -141,6 +152,19 @@ export interface FreshnessReport {
   unsignedRouted?: RoutedRow[];
   /** Why the unsigned-routed list could not be decided, where it could not. */
   routedErrors?: RoutedError[];
+  /** The orphaned list (shape-review ballot § 2a): rows and record units whose key names nothing current. */
+  orphaned?: ListRow[];
+  /** The signed-unrouted list (shape-review ballot § 2a): signed rows on a current key that do not route. */
+  signedUnrouted?: ListRow[];
+  /** Signed rows whose freshness could not be decided (`signature-unverifiable`): on no list, undecidable. */
+  unverifiable?: ListRow[];
+}
+
+/** A row of the orphaned, signed-unrouted or unverifiable list. */
+export interface ListRow {
+  file: string;
+  section: RowSection | 'unit';
+  key: string;
 }
 
 export type RowSection = 'body' | 'frontmatter' | 'members';
@@ -416,13 +440,18 @@ export function routedPopulation(
   return { rows: listOrder(rows), errors, all };
 }
 
-/** The unsigned-routed list over a working tree — the rows the sweep emits. */
-export function unsignedRoutedAt(repoRoot: string, files: readonly string[]): { rows: RoutedRow[]; errors: RoutedError[] } {
+/** The signed population over a working tree (routedPopulation through a disk reader). */
+function routedPopulationAt(repoRoot: string, files: readonly string[]): ReturnType<typeof routedPopulation> {
   const read = (rel: string): string | undefined => {
     const abs = path.join(repoRoot, rel);
     return fs.existsSync(abs) && fs.statSync(abs).isFile() ? fs.readFileSync(abs, 'utf8') : undefined;
   };
-  const pop = routedPopulation(read, files);
+  return routedPopulation(read, files);
+}
+
+/** The unsigned-routed list over a working tree — the rows the sweep emits. */
+export function unsignedRoutedAt(repoRoot: string, files: readonly string[]): { rows: RoutedRow[]; errors: RoutedError[] } {
+  const pop = routedPopulationAt(repoRoot, files);
   return { rows: pop.rows.filter((r) => !r.signed), errors: pop.errors };
 }
 
@@ -436,6 +465,8 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
   const tracked = opts.tracked ?? gitTracked(repoRoot);
   /** The stale list (signing ballot § 2 clause 3): the stale findings, as rows. */
   const stale: StaleRow[] = [];
+  /** Signed rows whose rendered hash cannot be read (the fail-closed refusal): undecidable. */
+  const unverifiable: ListRow[] = [];
   /** Profile files something below reaches (the unreferenced-file check at the end). */
   const referenced = new Set<string>();
   let spans: RenderedSpans | undefined | null = null; // null = not read yet
@@ -623,6 +654,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
             })();
         if (rendered === undefined) {
           push('signature-unverifiable', file, unverifiableSignatureMessage(key, file), key);
+          unverifiable.push({ file, section: section as RowSection, key });
           continue;
         }
         const f = checkSignatureFreshness(sig as { canonicalHash: string; renderedHash: string }, key, { canonicalHash: hash(current.get(key)), renderedHash: rendered });
@@ -671,8 +703,92 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
   }
 
   // --- the unsigned-routed list (signing ballot § 2 clause 3) — information, never a finding --
-  const routed = unsignedRoutedAt(repoRoot, [...listFiles(repoRoot, RECORDS_DIR), ...profileFiles]);
-  return { findings, counts, stale: listOrder(stale), unsignedRouted: routed.rows, routedErrors: routed.errors };
+  const pop = routedPopulationAt(repoRoot, [...listFiles(repoRoot, RECORDS_DIR), ...profileFiles]);
+  // --- the orphaned and signed-unrouted lists (shape-review ballot § 2a) — information ------
+  // Orphaned: the sweep's own `[orphaned-key]` refusals on dispositions files and records (keys
+  // `<section> <key>` / `record <anchor>`, derive.ts checkDispositionKeys / checkRecordKeys).
+  const orphaned: ListRow[] = [];
+  for (const f of findings) {
+    if (f.check !== 'orphaned-key' || f.key === undefined) continue;
+    const isDisp = f.file.endsWith('.dispositions.yaml');
+    const isRec = f.file.startsWith(`${RECORDS_DIR}/`) && f.file.endsWith('.yaml');
+    if (!isDisp && !isRec) continue;
+    const sp = f.key.indexOf(' ');
+    const sec = f.key.slice(0, sp);
+    orphaned.push({ file: f.file, section: sec === 'record' ? 'unit' : (sec as RowSection), key: f.key.slice(sp + 1) });
+  }
+  const orphanIds = new Set(orphaned.map(listRowId));
+  const errorFiles = new Set(pop.errors.map((e) => e.file));
+  const signedUnrouted: ListRow[] = pop.all
+    .filter((r) => r.signed && !r.routed && !errorFiles.has(r.file) && !orphanIds.has(listRowId(r)))
+    .map((r) => ({ file: r.file, section: r.section, key: r.key }));
+  return {
+    findings,
+    counts,
+    stale: listOrder(stale),
+    unsignedRouted: pop.rows.filter((r) => !r.signed),
+    routedErrors: pop.errors,
+    orphaned: listOrder(orphaned),
+    signedUnrouted: listOrder(signedUnrouted),
+    unverifiable: listOrder(unverifiable),
+  };
+}
+
+/** The four lists of a tree (shape-review ballot § 2a; § 4.1 link 1), and what left them undecidable. */
+export interface TreeLists {
+  stale: StaleRow[];
+  unsignedRouted: RoutedRow[];
+  orphaned: ListRow[];
+  signedUnrouted: ListRow[];
+  /** Signed rows whose freshness is undecidable (no rendered hash): never on a list, never green. */
+  unverifiable: ListRow[];
+  /** What left the unsigned-routed / signed-unrouted lists undecidable, per file. */
+  errors: RoutedError[];
+}
+
+/**
+ * The four lists over a tree read through `read`, computed by running {@link runFreshnessSweep}
+ * itself over a scratch copy of that tree (one code path, never a second copy of the sweep).
+ * `files` are the tree's paths under the profile, records and consumer-output dirs; the canonical
+ * sources the dispositions files and records name, and the shared catalog, are copied too.
+ * Every copied file counts as committed (the tree is a commit's tree). `renderedHash` is the
+ * sweep's option, for fixture trees with no consumer rendering.
+ */
+export function listsAt(
+  read: (rel: string) => string | undefined,
+  files: readonly string[],
+  opts: Pick<FreshnessOptions, 'renderedHash'> = {}
+): TreeLists {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'freshness-lists-'));
+  try {
+    const written = new Set<string>();
+    const put = (rel: string): void => {
+      if (written.has(rel)) return;
+      const text = read(rel);
+      if (text === undefined) return;
+      fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
+      fs.writeFileSync(path.join(root, rel), text);
+      written.add(rel);
+    };
+    for (const f of files) put(f);
+    put(SHARED_CATALOG);
+    for (const f of [...written]) {
+      if (!f.endsWith('.yaml') || !(f.startsWith(`${PROFILE_DIR}/`) || f.startsWith(`${RECORDS_DIR}/`))) continue;
+      const m = /^source:\s*(\S+)\s*$/m.exec(fs.readFileSync(path.join(root, f), 'utf8'));
+      if (m) put(m[1].replace(/^["']|["']$/g, ''));
+    }
+    const report = runFreshnessSweep(root, { tracked: written, renderedHash: opts.renderedHash });
+    return {
+      stale: report.stale ?? [],
+      unsignedRouted: report.unsignedRouted ?? [],
+      orphaned: report.orphaned ?? [],
+      signedUnrouted: report.signedUnrouted ?? [],
+      unverifiable: report.unverifiable ?? [],
+      errors: report.routedErrors ?? [],
+    };
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 }
 
 /** The report lines the diff-guard CLI prints. */
@@ -690,6 +806,13 @@ export function formatFreshness(report: FreshnessReport): string[] {
   if (errors.length === 0) lines.push(`${UNSIGNED_ROUTED_HEAD}: ${unsigned.length} row(s)`);
   else for (const e of errors) lines.push(`${UNSIGNED_ROUTED_HEAD}: UNDECIDABLE — ${e.message}`);
   lines.push(...unsigned.map((r) => `  ${listRowId(r)} — ${routedLabel(r)}`));
+  // The withdrawal lists (shape-review ballot § 2a) — always printed, information only.
+  const orphaned = report.orphaned ?? [];
+  lines.push(`orphaned: ${orphaned.length} row(s)`, ...orphaned.map((r) => `  ${listRowId(r)}`));
+  const su = report.signedUnrouted ?? [];
+  if (errors.length === 0) lines.push(`signed-unrouted: ${su.length} row(s)`);
+  else lines.push(`signed-unrouted: UNDECIDABLE — see the unsigned-routed line(s) above`);
+  lines.push(...su.map((r) => `  ${listRowId(r)}`));
   return lines;
 }
 
