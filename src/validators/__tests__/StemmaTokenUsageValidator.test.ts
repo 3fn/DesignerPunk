@@ -203,6 +203,14 @@ describe('StemmaTokenUsageValidator', () => {
       const result = validateTokenUsage(code, 'Button.android.kt');
       expect(result.warnings.some(w => w.code === 'RIPPLE_WORKAROUND')).toBe(true);
     });
+
+    it('warns on ripple(...) outside the contract allow-list, not inside it', () => {
+      const code = `indication = ripple(bounded = true)`;
+      const outside = validateTokenUsage(code, 'src/components/core/Button-CTA/platforms/android/ButtonCTA.android.kt');
+      expect(outside.warnings.some(w => w.code === 'RIPPLE_WORKAROUND')).toBe(true);
+      const inside = validateTokenUsage(code, 'src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt');
+      expect(inside.warnings.some(w => w.code === 'RIPPLE_WORKAROUND')).toBe(false);
+    });
   });
 
   describe('Token Reference Counting', () => {

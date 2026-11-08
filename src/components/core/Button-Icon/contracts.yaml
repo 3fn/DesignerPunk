@@ -74,6 +74,8 @@ contracts:
       - Secondary: color.background.primary.subtle bg + 2px border
       - Tertiary: icon color darkens
       Platform-specific: iOS scale animation, Android ripple effect.
+      Android press feedback: ripple
+      (the declaration the Android ripple allow-list reads; spec 129 ripple ruling, 2026-11-07).
     wcag: null
     platforms: [web, ios, android]
     validation:
