@@ -74,7 +74,7 @@ function g2Block(name: string): string {
 // ---------------------------------------------------------------------------
 
 /** design.md C23, the step-unit table (`path-steps`). */
-const C23_PATH_STEPS = { founder: 5, joining: 5, 'joining-cross-harness': 6, 'reference-no-init': 3 };
+const C23_PATH_STEPS = { founder: 4, joining: 5, 'joining-cross-harness': 6, 'reference-no-init': 3 };
 
 /**
  * tasks.md § "Expected release count", the asserted string (Leonardo's merge of
@@ -102,13 +102,12 @@ const LABEL_NATIVE_ONBOARDING = 'Native onboarding is not supported'; // #268's 
 /** The unlabelled sentence the README carried at `79a3b3bc` (L57). */
 const UNLABELLED_NATIVE_CLAIM = 'True native implementations (Web Components, SwiftUI, Jetpack Compose)';
 
-/** C23: the founder path's five steps, in order (one matcher per step). */
+/** C23 / design § 14: the founder path's four steps, in order (one matcher per step). */
 const FOUNDER_ORDER: RegExp[] = [
-  /npm install @3fn\/core/,
-  /npx designerpunk init --target=<cc\|kiro> --name <name> --abbreviation <abbr>/, // #312 finding 2: off a TTY, init needs both
-  /npx designerpunk generate/,
-  /personal note/,
-  /^Restart your agent session/,
+  /^Install the package \(`npm install @3fn\/core`\)\.$/,
+  /^Run `npx designerpunk init`: it sets up your design system and writes your first token output\.$/,
+  /^Write your personal note\.$/,
+  /^Restart your agent session so it connects to DesignerPunk\.$/,
 ];
 
 /** C4: the approval instruction, harness-agnostic. A path not observed cold in U5 still ends with exactly this. */
@@ -116,6 +115,7 @@ const RESTART_STEP = "Restart your agent session (approve DesignerPunk's MCP ser
 /** C8 / C32 (Task 26.5): the observed truth, for the paths whose cells U5 observed cold (founder §3, joining §7), and the README's founder list (the §3 path; release-4 V-DOC). */
 const OBSERVED_RESTART_STEP =
   "Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.";
+const FOUNDER_RESTART_STEP = 'Restart your agent session so it connects to DesignerPunk.';
 const HARNESS_NAMES = ['Claude Code', 'Kiro', 'cc', 'kiro'];
 
 /**
@@ -474,12 +474,14 @@ describe('the approval instruction is harness-agnostic (C4)', () => {
     expect(readme.length).toBe(1);
     // Not observed cold in U5: the reference posture (§2, the `--reference` list).
     const unobserved = region.filter((l) => l.some((s) => s.includes('--reference')));
-    // The README's list is the §3 founder path, so it carries §3's observed truth (release-4 V-DOC).
-    const observed = [...region.filter((l) => !l.some((s) => s.includes('--reference'))), ...readme];
+    // Design § 14: the founder path (§3 and the README's list) ends with Leonardo's four-step text; the observed truth stays in § 3's "Step 4" paragraph.
+    const founder = [region.find((l) => l.some((s) => /^Install the package/.test(s)))!, ...readme];
+    const observed = region.filter((l) => !l.some((s) => s.includes('--reference')) && !founder.includes(l));
     expect(unobserved.length).toBe(1);
-    expect(observed.length).toBe(4); // §3 founder, §7 joining (same harness and cross-harness), the README
+    expect(observed.length).toBe(2); // §7 joining (same harness and cross-harness)
     for (const l of unobserved) expect(l[l.length - 1]).toBe(RESTART_STEP);
     for (const l of observed) expect(l[l.length - 1]).toBe(OBSERVED_RESTART_STEP);
+    for (const l of founder) expect(l[l.length - 1]).toBe(FOUNDER_RESTART_STEP);
   });
 
   it('the observed truth names each target it was observed on', () => {
