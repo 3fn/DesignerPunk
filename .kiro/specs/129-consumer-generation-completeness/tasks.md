@@ -188,7 +188,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | 15 | Ada (Sonnet) | Thurgood (Sonnet) — the INSTALL derivation and `install-doc.test.ts` | Leonardo, Kenya, Data |
 | 16 | Kenya (Sonnet) | Data (Sonnet) — his charter and overlay text; Lina (Sonnet) — the regeneration and the lock; Thurgood (Sonnet) — the profile author's acts | Stacy (confirmer) |
 | 17 | Ada (Sonnet) | — | Thurgood (release text) |
-| 18 | Thurgood (Sonnet) | Kenya (Sonnet), Data (Sonnet) — the "Native status" passage | Stacy, Ada, Leonardo |
+| 18 | Thurgood (Sonnet) | Kenya (Sonnet), Data (Sonnet) — the "Native status" passage, and their re-signs for 18.5; Lina (Sonnet) — 18.5's regeneration, the three comment rewordings and the lock *(added 2026-11-08, tasks amendment 13)* | Stacy, Ada, Leonardo, Lina |
 | 19 | Thurgood (Sonnet) | Data (Sonnet) — the Android lane's resolve step, marker and infra classifier | Stacy (the verdict classes), Kenya (the iOS compliance criterion) |
 | 20 | Data (Sonnet) | Thurgood (Sonnet) — the workflow step under the issue-row grant, the workflow test and the grant record | Ada (the name contract), Stacy (ARMING) |
 
@@ -1430,6 +1430,17 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `docs/consumer/INSTALL.md` (derived)
   - `.kiro/specs/129-consumer-generation-completeness/evidence/harness-stability.md`
   - `.github/in-lane-guards.json` (Thurgood's standing P1b scope)
+  - `canonical/profiles/consumer/kenya.overlay.md` *(added 2026-11-08, tasks amendment 13)*
+  - `canonical/profiles/consumer/data.overlay.md` *(added 2026-11-08, tasks amendment 13)*
+  - `canonical/profiles/consumer/kenya.dispositions.yaml` *(added 2026-11-08, tasks amendment 13)*
+  - `canonical/profiles/consumer/data.dispositions.yaml` *(added 2026-11-08, tasks amendment 13)*
+  - `canonical/_consumer-output/**` (regenerated, never hand-edited) *(added 2026-11-08, tasks amendment 13)*
+  - `src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt` (a comment line; Lina's charter scope, listed for clarity) *(added 2026-11-08, tasks amendment 13)*
+  - `src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift` (a comment line; Lina's charter scope, listed for clarity) *(added 2026-11-08, tasks amendment 13)*
+  - `src/components/core/Container-Base/platforms/android/TokenMapping.kt` (a comment line; Lina's charter scope, listed for clarity) *(added 2026-11-08, tasks amendment 13)*
+  - `canonical/generated.lock` *(added 2026-11-08, tasks amendment 13)*
+
+  *(Added 2026-11-08, tasks amendment 13, under Peter's "Fix both in U12, but … fully diagnose before executing" (14:47:50Z; `evidence/2026-11-08-peter-ruling-u12-retired-names.md`); no prior text: the list gains rows. The signature sheets `canonical/profiles/consumer/signatures/{kenya,data}.md` are not listed: a C1 signature is the seat's own act and needs no grant, as in Task 16, whose list names none. The confirmation sheets `confirmations/{kenya,data}.md` are not listed for the same reason and because no `canonicalHash` moves, so `canonical/operative-sets/*.yaml` is not listed. No charter, manifest, baseline or `demotion-delta` file is listed: the trims route changes dispositions and deletes overlay entries, and a charter trim stays because sweep 8 requires it. Prior `tasks.md` text at `d74057506`.)*
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-18-completion.md`
@@ -1450,6 +1461,16 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 18.4 Confirm the Token-Governance ballot was ratified and applied in time
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Thurgood (Sonnet)
     - _Requirements: 15.6_
+  - [ ] 18.5 The retired `dist/` names in the shipped consumer layer and three component comments *(added 2026-11-08, tasks amendment 13)*
+    **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet), Kenya (Sonnet), Data (Sonnet), Lina (Sonnet)
+    - Task 17 stopped shipping `dist/{Design,Component}Tokens.{ios.swift,android.kt}`; the consumer agent layer still says, in Kenya's six and Data's five places, to avoid or read those snapshots. The mentions come from the consumer overlays, not the charters, so no `canonicalHash` moves.
+    - Order, read from git history (each step a commit after the one before): (1) Thurgood, as profile author, commits the overlay and disposition text from Kenya's and Data's drafts verbatim, with credit, changing each `trims[dist/ComponentTokens.*]` disposition from `re-pointed` to `superseded-by` (the how-to-use unit) and deleting its overlay entry; (2) Lina regenerates `canonical/_consumer-output/**`; (3) Kenya and Data re-sign, each act fresh, using `verify-signing-chain.ts --print`; (4) Lina rewords the three comments; (5) Lina refreshes the lock last.
+    - **Acts, per seat.** No charter changes, so no `canonicalHash` moves in the unit rows and no confirmation is owed for them: a C1 signature moves each key's `renderedHash`, and a confirmation (C16) is made only for a key where `--print` shows its `canonicalHash` moved. **Kenya** re-signs seven keys: `#ios-theming-spec-094`, `#step-2-set-up-the-screen`, `#how-to-use-designerpunk-tokens-on-ios`, `#ios-specific-guidance`, `#mcp-practice-notes`, the `trims[dist/ComponentTokens.ios.swift]` row, and `ambient.groundTruthManifest.verdict`. **Data** re-signs the same seven on Android (`#android-theming-spec-094`, `#step-2-set-up-the-screen`, `#how-to-use-designerpunk-tokens-on-android`, `#android-specific-guidance:preamble`, the `trims[dist/ComponentTokens.android.kt]` row, and the verdict row; his `#mcp-practice-notes` already removes the sentence, so six keys), and his confirmation sheet gets an entry only where `--print` shows a moved `canonicalHash`. Neither seat's `canonical/operative-sets/*.yaml` changes: no item id changes.
+    - **The renderer knock-on.** After the trim row is `superseded-by` and its overlay entry is deleted, the `## Ground truth` heading renders while any member under it survives, and the verdict row (`ambient.groundTruthManifest.verdict`, today `retained`) is a member: the heading and its lead sentence ("Do NOT read these generated build outputs ... query the live tool instead:") would remain with no bullet under them. The fix is one more disposition: the verdict row becomes `superseded-by` the same how-to-use unit, in the same two dispositions files. No manifest, charter, baseline or `demotion-delta` file changes. If the regenerated output still shows the heading or sentence with no bullets, the unit stops and reports before the re-signs.
+    - **Excluded.** `dist/product/ProductTokens.*` (Kenya's consumer L79, Data's L80, charter `canonical/agents/data.md` L309) is the consumer's own output path, not a file Task 17 retired. The charters and `canonical/operative-sets/**` stay untouched.
+    - **Decider.** At U12's head, a grep of the shipped text — the consumer agent layer under `canonical/_consumer-output/**` and `dist/consumer-canonical`, the shipped component sources, the Guide and INSTALL — for the four retired names (`dist/` or `node_modules/@3fn/core/dist/` followed by `DesignTokens.ios.swift`, `DesignTokens.android.kt`, `ComponentTokens.ios.swift` or `ComponentTokens.android.kt`) finds zero hits, and the regenerated consumer files carry no `## Ground truth` heading without a bullet under it. The re-signs are read by Stacy's passes; this subtask asserts nothing about them.
+    - _Requirements: 10.1, 10.2_
+    - **Consulted**: Kenya — drafted six mentions and the trim row, re-sign only; Data — five mentions across four units plus the trim row, signatures and confirmations; Lina — the three comment rewordings and the regeneration.
 
 ---
 
