@@ -1370,7 +1370,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 12 — Closeout
 
-- [ ] 17. Retire the native root files and announce it (U12)
+- [x] 17. Retire the native root files and announce it (U12)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet)
   **Traces**: Req 10.1 (as amended), 10.2, 10.4 · design § 0 (7 (a))
@@ -1395,11 +1395,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 17 Complete: Retire the native root files (129)"` commits on the U12 branch (no PR: U12's PR opens at Task 18); STOP. The release that carries U12 is read at Stacy's RELEASE pass.
 
-  - [ ] 17.1 `files[]`, `pack-assert`, the build script; the CHANGELOG entry; the charter sentence
+  - [x] 17.1 `files[]`, `pack-assert`, the build script; the CHANGELOG entry; the charter sentence
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 10.1, 10.2, 10.4_
 
-- [ ] 18. Acceptance at the final head, and the shipped wording (U12)
+- [x] 18. Acceptance at the final head, and the shipped wording (U12)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet) · Kenya (Sonnet), Data (Sonnet) — the "Native status" passage
   **Traces**: Req 1.1–1.7, 2.10, 9.3, 14.1, 14.3, 15.1, 15.5, 15.6
@@ -1448,20 +1448,20 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Unit 12: Closeout (129)"` opens U12's PR (Peter-merged: `governance/**`); report the URL; STOP. U12's merge fires CLOSEOUT and the signing-act shape review.
 
-  - [ ] 18.1 Read the final head: D1, D2, D3, web; sum every unit's run records
+  - [x] 18.1 Read the final head: D1, D2, D3, web; sum every unit's run records
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Entries still tagged at the final head to the component-repair record or to the blend record (`2026-06-24-blend-system-architecture-and-oklch-alignment.md`, Trigger Spec 133's requirements) are expected, not findings: both records' Triggers can fire after 129 (tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`))
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 2.10_
-  - [ ] 18.2 The release-text grep over 129's range; the retired-file sentences; the Req 9.3 read; the readiness-pattern read
+  - [x] 18.2 The release-text grep over 129's range; the retired-file sentences; the Req 9.3 read; the readiness-pattern read
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 1.7, 9.3, 14.1, 15.1_
-  - [ ] 18.3 The "Native status" passage, iOS and Android
+  - [x] 18.3 The "Native status" passage, iOS and Android
     **Type**: Documentation · **Validation**: Tier 1 - Minimal · **Agent**: Kenya (Sonnet), Data (Sonnet)
     - _Requirements: 15.5_
-  - [ ] 18.4 Confirm the Token-Governance ballot was ratified and applied in time
+  - [x] 18.4 Confirm the Token-Governance ballot was ratified and applied in time
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Thurgood (Sonnet)
     - _Requirements: 15.6_
-  - [ ] 18.5 The retired `dist/` names in the shipped consumer layer and three component comments *(added 2026-11-08, tasks amendment 13)*
+  - [x] 18.5 The retired `dist/` names in the shipped consumer layer and three component comments *(added 2026-11-08, tasks amendment 13)*
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet), Kenya (Sonnet), Data (Sonnet), Lina (Sonnet)
     - Task 17 stopped shipping `dist/{Design,Component}Tokens.{ios.swift,android.kt}`; the consumer agent layer still says, in Kenya's six and Data's five places, to avoid or read those snapshots. The mentions come from the consumer overlays, not the charters, so no `canonicalHash` moves.
     - Order, read from git history (each step a commit after the one before): (1) Thurgood, as profile author, commits the overlay and disposition text from Kenya's and Data's drafts verbatim, with credit, changing each `trims[dist/ComponentTokens.*]` disposition from `re-pointed` to `superseded-by` (the how-to-use unit) and deleting its overlay entry; (2) Lina regenerates `canonical/_consumer-output/**`; (3) Kenya and Data re-sign, each act fresh, using `verify-signing-chain.ts --print`; (4) Lina rewords the three comments; (5) Lina refreshes the lock last.

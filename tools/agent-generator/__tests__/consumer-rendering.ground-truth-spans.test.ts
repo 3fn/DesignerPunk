@@ -204,7 +204,7 @@ describe('VALVE-1 — the trims leg renders one span per signed row (consumer pr
         if (p.artifact.includes('/kiro/')) expect({ agent, endsInBlank: p.text.endsWith('\n\n') }).toEqual({ agent, endsInBlank: false });
       }
     }
-    expect(kiroSeen).toBe(3); // kenya, data, lina: the three consumer Kiro prompts that carry the section
+    expect(kiroSeen).toBe(1); // lina only: since 18.5 (tasks amendment 13, #783) Kenya's and Data's groundTruthManifest rows are superseded-by and render nothing
   });
 
   it("editing one trim's rendered text moves that trim's hash and no other row's", async () => {

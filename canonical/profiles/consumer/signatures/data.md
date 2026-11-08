@@ -109,6 +109,13 @@ signer: data
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT to `superseded-by` (destination `#how-to-use-designerpunk-tokens-on-android`, `cites: subtraction-5`), `surviving: []`.** A new act; it changes my 2026-10-02 assent to `re-pointed`. Authoring moved the disposition under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): Task 17 stops shipping `dist/ComponentTokens.android.kt`, so there is no package file left to trim, and Thurgood's profile commit `3d479bd4b` set the row `superseded-by` and deleted its overlay entry. The earlier `no-consumer-counterpart` and `re-pointed` assents rested on that file shipping at the package root; that premise is gone.
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `0bd7a7abf5fe2cace6c3ce1621184911db71c26d`: the canonical entry (the trim: artifact `dist/ComponentTokens.android.kt`, cue tool `get_component_full`, `fires: unconditional`) and its rendering, which is empty (0 pieces). As the row is `superseded-by`, I also read the destination unit and its three identical renderings in the same tree.
+- **Hashes, from that print**: `canonicalHash` `sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839` (did not move). `renderedHash` `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` (moved: from `e644f5b5...`, the hash over the old trim line, to the empty-piece hash).
+- **Why `superseded-by` holds**: the trim's function is to route me from the component-token file to `get_component_full`. The destination rendering keeps that route: "... and for a component's tokens (`get_component_full`)", and says where my own `ComponentTokens` are written. The negative ("do NOT read the built ... snapshot") has no referent once the file stops shipping.
+- **Surviving**: `[]`; a frontmatter row owes no operative-set items.
+- **Residual, not a refusal**: the rendering no longer names the file at all, so an installed older package's `dist/ComponentTokens.android.kt` would go unwarned. Ada found no older-package guard is lost, since installing the new package replaces the old files in `node_modules`.
+
 **Assent — `no-consumer-counterpart`, with a caveat.**
 - The file does ship (`node_modules/@3fn/core/dist/ComponentTokens.android.kt`).
 - But the trim's reason, a *stale* snapshot, does not reproduce in a consumer. The published file is built at release from the same source as the shipped MCP index.
@@ -194,6 +201,14 @@ signer: data
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT, `surviving: [theming-1, theming-2, theming-3, theming-4, theming-5, theming-6, theming-7, theming-8, theming-9]`.** A new act; it closes no divergent. Prior signature: assent 9/9 against `canonicalHash` `sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62` and `renderedHash` `sha256:f52904eca7ce3a157d16868b2fa6a7d56fa3af8557164a0f9ba608ceacb88198`. Stale because the rendering changed: Peter's ruling of 2026-11-08T14:47:50Z ("Fix both in U12 ...", `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`) retires the shipped text that names the package's `dist/` token snapshots. Thurgood reworded the overlay prose (`3d479bd4b`) and Lina regenerated (`7cfe548e7`).
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit `### Android Theming (Spec 094)` and its three renderings (`_canonical/agents/data.md`, `cc/.claude/agents/data.md`, `kiro/.kiro/agents/data-prompt.md`), which equal each other and equal the canonical unit except the last bullet.
+- **Hashes, from that print**: `canonicalHash` `sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62` (did not move). `renderedHash` `sha256:9429206aff1ccc976a151ecab00aaf0680448a2f044900fd43f4dea8af92975d` (moved).
+- **Credited, each by what the rendering states**:
+  - `theming-1` to `theming-8`: verbatim in the rendering; bullets 1 to 7 equal the canonical unit byte for byte.
+  - `theming-9`: entailed. The rendering keeps "**Ground truth for these token values is LIVE, not a file**" and the query of the application MCP for the resolved value, formula, per-platform (Kotlin) name and the per-theme set, verbatim. The prohibition on "the built `dist/*.kt` snapshots" (`subtraction-1`) is replaced by "no token snapshot ships in the package"; the hazard the prohibition guarded, the flattened package snapshot, no longer exists, and the positive route survives.
+- **Residual, not a refusal**: the rendering no longer says in so many words not to read a file for theme-varying values; "LIVE, not a file" plus the MCP route carries it. If a later release ships a snapshot again, this unit needs a new prohibition.
+
 **Re-signed 2026-11-08: ASSENT, `surviving: [theming-1, theming-2, theming-3, theming-4, theming-5, theming-6, theming-7, theming-8, theming-9]`.** A new act; it closes no divergent. Prior signature: assent 6/6, 2026-10-25, against `canonicalHash` `sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9` and `renderedHash` `sha256:8aaddd65335c1c42090d916a16a835b8a5086bacfca1b4d296a88ce82c4050d1`. Stale because the unit changed: Task 16.2 (Thurgood, `448d4fe7d`, with the correction of bullet 1 at `89aa1604d`) replaced the "no theme types today" text with the theme surface `generate` writes. Confirmed at 9 items first (`8fed6dec8`).
 - **Read before this act**: the whole canonical unit in `canonical/agents/data.md` (`### Android Theming (Spec 094)`, 12 lines) and its rendering in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md`, through tool calls in this session at `e10072c9d`. The three renderings equal the canonical unit except the last bullet, which carries the one removal (`subtraction-1`), re-keyed to the installed package snapshots.
 - **Hashes, computed in this act**: `canonicalHash` `sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62` (equals the overlay pin). `renderedHash` `sha256:f52904eca7ce3a157d16868b2fa6a7d56fa3af8557164a0f9ba608ceacb88198`. Both moved.
@@ -232,6 +247,14 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT, `surviving: [setup-1, setup-2, setup-3]`.** A new act; it closes no divergent. Prior signature: assent 3/3 against `renderedHash` `sha256:588e8e32908234aaaf111a3ddd13df83ba8dac5b4aa3e8bef3812c514a6a6ff6`. Stale because the rendering changed under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): the overlay prose no longer names the package's `dist/` snapshots (Thurgood `3d479bd4b`, Lina's regeneration `7cfe548e7`).
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `31bd947dae512183b1b631b63ce8a92597d6b624`: the canonical unit `### Step 2: Set Up the Screen` and its three renderings, which are identical to each other.
+- **Hashes, from that print**: `canonicalHash` `sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe` (did not move). `renderedHash` `sha256:927ec4f1b0674d5e17de8a5ad31a53ff8d4583309e969f59e2353aaa13d108aa` (moved).
+- **Credited, each by what the rendering states**:
+  - `setup-1` and `setup-3`: verbatim.
+  - `setup-2`: entailed. The rendering keeps "Bring in DesignerPunk tokens by querying the application MCP for the resolved values" and adds "the MCP is the ground truth". The parenthetical guard against the stale `dist/*.kt` snapshots (`subtraction-1`) is replaced by "no token snapshot ships in the package", so the file the guard warned about is gone from what the consumer receives.
+- **Residual, not a refusal**: the step no longer carries a prohibition as such. With no shipped snapshot, the positive (MCP first) is the whole instruction.
+
 **Refuse: should-re-point.** `setup-2` loses its parenthetical guard "(never read the stale `dist/*.kt` snapshots — see the Ground truth section)" (subtraction-3). The rendering keeps "Bring in DesignerPunk tokens by querying the application MCP for the resolved values", so the positive half survives and the prohibition does not. `setup-1` and `setup-3` are verbatim (`setup-3` holds, because the Android implementations ship in the package).
 
 The guard has a consumer counterpart (header fact). This step is the moment the agent first brings tokens into a screen, which is when a flattened `DesignTokens.android.kt` in `node_modules/@3fn/core/dist/` is most likely to be read.
@@ -244,6 +267,15 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT, `surviving: [tokens-1, tokens-2, tokens-3, tokens-4, ground-truth-live, per-theme-set]`.** A new act; it closes no divergent. Prior signature: assent 6/6 against `renderedHash` `sha256:6979718fcf9114f8a29108b35f92ab6a54a417093b1fddfe7704680ddc3c6c8a`. Stale because the rendering changed under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): the overlay's ground-truth paragraph no longer names the package's `dist/` snapshots (Thurgood `3d479bd4b`, Lina's regeneration `7cfe548e7`).
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `b5022bcb0459e613900344803fd8ac0b34e3a341`: the canonical unit (`## Token Consumption` and `### How to Use DesignerPunk Tokens on Android`) and its three renderings, which are identical to each other.
+- **Hashes, from that print**: `canonicalHash` `sha256:14fa4d5367f385a948746af6f26587002fc2b27522af0fb2588b09a1c901e22e` (did not move). `renderedHash` `sha256:8acb67f9574457436d2e07795605ce52eed0340fc64a363048a89aca89a74b10` (moved).
+- **Credited, each by what the rendering states**:
+  - `tokens-1` to `tokens-4`: verbatim (the four bullets are unchanged).
+  - `per-theme-set`: verbatim ("Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value").
+  - `ground-truth-live`: entailed. The rendering keeps "**Ground truth for token values is LIVE, not a file**" and the query of the application MCP for the resolved value, formula and per-platform names, naming the tools (`get_token_details`, `get_component_full`). The prohibition on "the built `dist/*.kt` snapshots (see the Ground truth section)" (`subtraction-1`) is replaced by "no token snapshot ships in the package", which states why there is nothing to read; it adds where the consumer's own `DesignTokens` and `ComponentTokens` are written.
+- **Residual, not a refusal**: the prohibition as such is gone, so the item's negative half rests on the positive ("LIVE, not a file") and on the fact that no snapshot ships. The new sentence says the consumer's own generated files exist; it does not say to prefer the MCP over them for a theme-varying token, though `per-theme-set` and "LIVE, not a file" together carry that.
+
 **Refuse: should-re-point.** `ground-truth-live` loses "not a file — never read the built `dist/*.kt` snapshots (see the Ground truth section);" (subtraction-3). The rendering keeps "Ground truth … is LIVE — query the application MCP …", so **`ground-truth-live` is not entailed**. `tokens-1` to `tokens-4` and `per-theme-set` are verbatim.
 
 The prohibition has a consumer counterpart (header fact). It is the named negative of this unit's own `per-theme-set` item: the shipped snapshot is exactly "a single flattened value".
@@ -255,6 +287,14 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 ## `#android-specific-guidance:preamble`
 
 signer: data
+
+**Re-signed 2026-11-08 (Task 18.5): ASSENT, `surviving: [native-1, native-2, native-3, native-4, native-5, native-6, native-7]`.** A new act; it closes no divergent. Prior signature: assent 7/7 against `renderedHash` `sha256:105c5501a7a06f288d1faf3cd1b2bf36ceacb8695ac6d6f8d18d47651e011ffc`. Stale because the rendering changed under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): the second bullet no longer names the package's `dist/` snapshots (Thurgood `3d479bd4b`, Lina's regeneration `7cfe548e7`).
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `9171f6523d21b0fcf0e2b49038cd2b960bcf4b5d`: the canonical unit (`## Android-Specific Guidance`, preamble, seven bullets) and its three renderings, which are identical to each other.
+- **Hashes, from that print**: `canonicalHash` `sha256:f1af38d495d490318f2bfa6a56fe110a1b71a3ab201e3291dc2be1ef285383fc` (did not move). `renderedHash` `sha256:2d22b78267f49ce14c29637f5853476fc74c914f416a8d406b117652116bde0e` (moved).
+- **Credited, each by what the rendering states**:
+  - `native-1` and `native-3` to `native-7`: verbatim (six bullets unchanged).
+  - `native-2`: entailed. The rendering keeps "DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP". The ", never the stale `dist/*.kt` snapshots" half (`subtraction-1`) is replaced by "no token snapshot ships in the package, and your own `generate` output is in your configured output directory". That clause also corrects what the earlier assent warned of: the sentence no longer points a consumer at a flattened `DesignTokens` that ships in `node_modules`, because none ships.
+- **Residual, not a refusal**: the prohibition is now implicit. A reader who follows the clause reads their own generated `DesignTokens`, which is the intended source for static tokens; theme-varying colours are taught by the Android Theming unit, which I signed in the first act of this run.
 
 **Refuse: should-re-point.** `native-2` loses ", never the stale `dist/*.kt` snapshots" (subtraction-3). The rendering keeps "DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP)". Without the negative, this sentence now points a consumer agent at a `DesignTokens` Kotlin object, and `node_modules/@3fn/core/dist/` ships one whose theme-varying colors are flattened. **`native-2` is not entailed.** The other six items are verbatim.
 
@@ -303,6 +343,13 @@ The entry should re-point its `artifact` / `negative` / `replaces` to the packag
 ## `#frontmatter:ambient.groundTruthManifest.verdict`
 
 signer: data
+
+**Re-signed 2026-11-08 (Task 18.5): ASSENT to `superseded-by` (destination `#how-to-use-designerpunk-tokens-on-android`, `cites: subtraction-5`), `surviving: []`.** A new act; it changes my 2026-10-12 assent to `retained`. Authoring moved the disposition under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): Thurgood's profile commit `3d479bd4b` set it `superseded-by`, so no empty `## Ground truth` heading renders once the last trim leaves.
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `210a837fe1a6ca2e4e2dbd4912d1267021493d3e`: the canonical entry `"none-trim-stale-snapshots"` and its rendering, which is empty (0 pieces). Because the row is `superseded-by`, I also read the destination unit and its three identical renderings in the same tree (`--print` of `#how-to-use-designerpunk-tokens-on-android`, same sha).
+- **Hashes, from that print**: `canonicalHash` `sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c` (did not move). `renderedHash` `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` (moved: from `04e9b45a...`, the hash over the one rendered line, back to the empty-piece hash).
+- **Why `superseded-by` holds**: the verdict declares that my ground truth is the live MCP and that shipped snapshots are not it. The destination states that function: "**Ground truth for token values is LIVE, not a file** — no token snapshot ships in the package ... Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`), and for a component's tokens (`get_component_full`)". The declaration survives there, in prose a consumer reads; the manifest line it replaced had nothing left to trim.
+- **Surviving**: `[]`; a frontmatter row owes no operative-set items.
+- **Residual, not a refusal**: the destination's `ground-truth-live` is carried by the Task 18.5 assent on that unit (this run), not by this row.
 
 **Refuse: should-re-point** (disposed `no-consumer-counterpart`, subtraction-3). The verdict `none-trim-stale-snapshots` is the manifest's declaration that my ground truth is live and the Kotlin snapshots are trimmed. Because the DesignTokens trim has a consumer counterpart (refused above), the verdict has one too: a consumer seat still needs "ground truth: none — trim the (package's) flattened snapshot".
 

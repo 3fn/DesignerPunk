@@ -307,7 +307,7 @@ export function generateProbe(index: TokenIndex, config: ProbeConfig, options: P
     );
   }
   out.push(
-    'func probeReads() {',
+    '@MainActor func probeReads() {',
     ...section('index names', 'primitives', primitives),
     ...section('index names', 'semantics', semantics),
     ...section('index names', 'components', components),

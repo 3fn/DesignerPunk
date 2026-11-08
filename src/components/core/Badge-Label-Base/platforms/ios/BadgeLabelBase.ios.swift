@@ -298,7 +298,7 @@ public struct BadgeLabelBase: View {
      * - Full text is accessible via accessibilityLabel on parent
      * 
      * @see Requirements: 1.1, 1.5, 1.6, 4.1, 4.8 - Label rendering and truncation
-     * @see dist/ComponentTokens.ios.swift - BadgeLabelBaseTokens.maxWidth
+     * @see BadgeLabelBaseTokens.maxWidth - the generated component tokens
      */
     @ViewBuilder
     private var labelContent: some View {

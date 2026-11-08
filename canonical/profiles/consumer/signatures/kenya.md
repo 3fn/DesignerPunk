@@ -50,8 +50,17 @@ date: 2026-11-08
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4
-renderedHash: sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac
+renderedHash: sha256:533765731bfccbfb5125c5a4c754979aa8eb7c970aed510520af0895d96b0f0c
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 10 of 10 (`theming-1` to `theming-10`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4`, renderedHash `sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The rendered unit's last bullet changed: the charter's pointer to the built `dist/*.ios.swift` snapshots is gone, and the rendering now says no token snapshot ships in the package and my own generated `DesignTokens` and theme surface are not the place to look values up. The other nine bullets render as before. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `theming-1` to `theming-9` survive verbatim in the rendered unit. `theming-10` survives on the rendered directive to query the application MCP for the resolved value, formula, per-platform (Swift) name and per-theme set, and on *"no token snapshot ships in the package, and your own generated `DesignTokens` and theme surface are not the place to look values up"*: reading a value from a file violates both (5e, in-unit entailment). The old pointer to the built snapshots was the row's one `removals` entry, and its removal stands.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4`), as the print-mode output shows. `renderedHash` moves `sha256:7d0cbb7ce82777349a220ccf75f6d50fb3020c250bc70c769b09f935ca77abac` to `sha256:533765731bfccbfb5125c5a4c754979aa8eb7c970aed510520af0895d96b0f0c` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-11-08):**
 
 **Re-signed 2026-11-08 (Spec 129 Task 16, item (i) emits a theme surface): ASSENT, `surviving` 10 of 10 (`theming-1` to `theming-10`).** A new act, read fresh against the committed rendering; nothing is carried from the entries below, which judged a unit that said "no theme surface today". Their hashes were canonicalHash `sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9`, renderedHash `sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469`.
 - **What changed**: the whole unit. I drafted the text from the generated Swift and the emitters; Thurgood committed it in `448d4fe7d` and corrected `theming-1` in `89aa1604d` (my first draft said "the semantic colours are not on `DesignTokens`", which was false); I confirmed the set at 10 items in `c08bf6751`.
@@ -117,8 +126,17 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f
-renderedHash: sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8
-date: 2026-09-29
+renderedHash: sha256:476df3328475883b0acaa1f3aeb2cf9df660f211ba1c16a89993e098055fa51a
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 3 of 3 (`setup-1` to `setup-3`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f`, renderedHash `sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The parenthetical on `setup-2` no longer points at the built `dist/*.ios.swift` snapshots; it reads *"(no token snapshot ships in the package, and the files your own `generate` writes are not the source for values)"*. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `setup-1` and `setup-3` are verbatim. `setup-2` survives: *"Bring in DesignerPunk tokens by querying the application MCP for the resolved values"* is verbatim, and its warning is now stated without naming a retired file, so reading values from a snapshot or a generated file still violates the unit.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f`), as the print-mode output shows. `renderedHash` moves `sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8` to `sha256:476df3328475883b0acaa1f3aeb2cf9df660f211ba1c16a89993e098055fa51a` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 3/3 surviving.** All 3 survive.
 - **`setup-2`** keeps *"Bring in DesignerPunk tokens by querying the application MCP for the resolved values"*. Reading values from a snapshot instead violates it.
@@ -143,8 +161,17 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712
-renderedHash: sha256:cc738734a32d6c1f65afed33448eab079152deb4d5047c5d6eac7956f5b47603
-date: 2026-09-29
+renderedHash: sha256:f6761ffc51610799f9237160215b426160477a9acfdf6d875ee1a8969fde1bb6
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 6 of 6 (`tokens-1` to `tokens-4`, `ground-truth-live`, `theme-set`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712`, renderedHash `sha256:cc738734a32d6c1f65afed33448eab079152deb4d5047c5d6eac7956f5b47603`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The ground-truth paragraph no longer points at the built `dist/*.ios.swift` snapshots. It says no token snapshot ships, that my own `generate` writes `DesignTokens` and `ComponentTokens` to my configured output directory for me to compile against and not to look values up in, and names `get_token_details` and `get_component_full`. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `tokens-1` to `tokens-4` and `theme-set` are verbatim. `ground-truth-live` survives: *"Ground truth for token values is LIVE, not a file"* is verbatim, *"query the application MCP for the resolved value, formula, and per-platform names"* is verbatim, and the never-read-a-snapshot warning is entailed by *"no token snapshot ships"* with *"not what you look values up in"* (5e). This unit is also the `superseded-by` destination of the two ground-truth trims and the verdict, and it still carries their function: the negative, the MCP directive and the per-theme set.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712`), as the print-mode output shows. `renderedHash` moves `sha256:cc738734a32d6c1f65afed33448eab079152deb4d5047c5d6eac7956f5b47603` to `sha256:f6761ffc51610799f9237160215b426160477a9acfdf6d875ee1a8969fde1bb6` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 6/6 surviving.** All 6 survive. `tokens-1` to `tokens-4` and `theme-set` are verbatim.
 - **`ground-truth-live`** is reduced to *"Ground truth for token values is LIVE — query the application MCP for the resolved value, formula, and per-platform names."* Sourcing values or names from a file violates it, so the item is entailed in-unit.
@@ -167,8 +194,17 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
-renderedHash: sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145
-date: 2026-09-29
+renderedHash: sha256:ae753b420debee69b6f6a9e650cc6e8f6413d3fbc732a007b1b9397306abc787
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 7 of 7 (`native-1` to `native-7`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65`, renderedHash `sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: `native-2`'s parenthetical changed from *"never the stale `dist/*.ios.swift` snapshots"* to *"not read from the generated files"*. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `native-1` and `native-3` to `native-7` are verbatim. `native-2` survives: *"DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP"* is verbatim, and *"not read from the generated files"* carries the prohibition without naming a retired file.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65`), as the print-mode output shows. `renderedHash` moves `sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145` to `sha256:ae753b420debee69b6f6a9e650cc6e8f6413d3fbc732a007b1b9397306abc787` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 7/7 surviving.** All 7 survive.
 - **`native-2`** keeps *"(values queried live via the application MCP)"*. Taking values from a Swift snapshot violates it.
@@ -181,8 +217,17 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82
-renderedHash: sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d
-date: 2026-09-29
+renderedHash: sha256:bc78f6d0866acbeb6c9ead93f4ae75b42a1ddf56306e2f7ae38a17a099d4c82f
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 3 of 3 (`ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82`, renderedHash `sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: The ground-truth paragraph lost the clauses naming the built `dist/*.ios.swift` outputs and `dist/ios/DesignTokens.ios.swift`; it reads *"no token snapshot ships in the package, and the files your own `generate` writes are not read for values"*. The fallback bullet is unchanged from my last act. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `ground-truth-live-mcp` survives: *"Ground truth is live, never a snapshot"* is verbatim, *"Reach for the application MCP's token verbs for resolved values, not the flat Swift files"* is verbatim, and the per-theme-set reminder is verbatim; the removed clauses were the old file pointers and the "trimmed from your ambient set" and "due to stop shipping" forecasts. `rebuild-product` is verbatim. `mcp-fallback` survives as at my last act: the rendering names the installed package's iOS component sources, and the row's `*Tests.swift` removal (`subtraction-5`) stands.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82`), as the print-mode output shows. `renderedHash` moves `sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d` to `sha256:bc78f6d0866acbeb6c9ead93f4ae75b42a1ddf56306e2f7ae38a17a099d4c82f` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 3/3 surviving.** All 3 survive.
 - **`ground-truth-live-mcp`** keeps *"reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set"*, which still includes a prohibition.
@@ -466,10 +511,19 @@ date: 2026-09-29
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]`
 
 signer: kenya
-disposition: re-pointed
+disposition: superseded-by
 canonicalHash: sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace
-renderedHash: sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b
-date: 2026-10-02
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving: []`, to `superseded-by` `#how-to-use-designerpunk-tokens-on-ios`.** A new act, read fresh against the destination's rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace`, renderedHash `sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood set this row to `superseded-by` in `3d479bd4b` and deleted its overlay entry; Lina regenerated at `7cfe548e7`. The disposition changes from `re-pointed`; my earlier assents were to that disposition, and this act does not rely on them.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`. For this row that is the canonical entry (`canonicalHash` unchanged) and the statement that it renders nothing (the empty-piece `renderedHash`, the same as the DesignTokens trim row's). For the destination, `#how-to-use-designerpunk-tokens-on-ios`, I read its canonical unit and all three renderings in the same session's print.
+- **Why `superseded-by` holds.** The retired file is no longer shipped in the package, so a cue naming it has no consumer counterpart to trim. The destination's rendering carries the function the `dist/ComponentTokens.ios.swift` trim served: *"no token snapshot ships in the package ... Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`; `get_component_full` for component tokens)"*. I agree nothing should render for this row.
+- **Surviving**: `[]`. No operative-set items are owed on this frontmatter row; the assent is to the supersession.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace`). `renderedHash` moves `sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b` to `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`, the empty-piece hash the print shows.
+
+**Earlier acts on this row, kept as history (last: 2026-10-02):**
 
 **REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
 - **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.
@@ -490,10 +544,19 @@ date: 2026-10-02
 ## `#frontmatter:ambient.groundTruthManifest.verdict`
 
 signer: kenya
-disposition: retained
+disposition: superseded-by
 canonicalHash: sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c
-renderedHash: sha256:21178d058909814b92e345d1c860a461e64be9ead617d304813e6587956e7e1d
-date: 2026-10-12
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving: []`, to `superseded-by` `#how-to-use-designerpunk-tokens-on-ios`.** A new act, read fresh against the destination's rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c`, renderedHash `sha256:21178d058909814b92e345d1c860a461e64be9ead617d304813e6587956e7e1d`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood set this row to `superseded-by` in `3d479bd4b` and deleted its overlay entry; Lina regenerated at `7cfe548e7`. The disposition changes from `retained`; my earlier assents were to that disposition, and this act does not rely on them.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`. For this row that is the canonical entry (`canonicalHash` unchanged) and the statement that it renders nothing (the empty-piece `renderedHash`, the same as the DesignTokens trim row's). For the destination, `#how-to-use-designerpunk-tokens-on-ios`, I read its canonical unit and all three renderings in the same session's print.
+- **Why `superseded-by` holds.** The retired file is no longer shipped in the package, so a cue naming it has no consumer counterpart to trim. The destination's rendering carries the function the verdict `none-trim-stale-snapshots` served: *"no token snapshot ships in the package ... Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`; `get_component_full` for component tokens)"*. I agree nothing should render for this row.
+- **Surviving**: `[]`. No operative-set items are owed on this frontmatter row; the assent is to the supersession.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c`). `renderedHash` moves `sha256:21178d058909814b92e345d1c860a461e64be9ead617d304813e6587956e7e1d` to `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`, the empty-piece hash the print shows.
+
+**Earlier acts on this row, kept as history (last: 2026-10-12):**
 
 **REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
 - **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.

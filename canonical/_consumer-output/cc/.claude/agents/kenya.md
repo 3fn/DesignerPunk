@@ -72,7 +72,7 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - **A theme of one mode falls back to base in the other scheme**: a theme registered in mode `light` shows its own look in the light scheme and `baseDark` in the dark scheme; one registered in mode `dark` shows `baseLight` in the light scheme. Nothing warns you. To give it its own look in both schemes, register it in mode `both`, or force the scheme with `.preferredColorScheme`. `wcag` is exempt: it always has both instances
 - Product tokens that reference a theme-varying colour are members of `public extension DesignerPunkTheme`, read as `theme.product{Category}{Name}` from `\.dpTheme`; the others stay static as `Product{Category}.{name}`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
-- **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
+- **Ground truth for these token values is LIVE, not a file** — no token snapshot ships in the package, and your own generated `DesignTokens` and theme surface are not the place to look values up; query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
 
 ### Product Tokens (Spec 108/109)
 
@@ -121,7 +121,7 @@ When Leonardo provides a screen specification, follow this workflow:
 
 ### Step 2: Set Up the Screen
 - Create the SwiftUI view structure
-- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`)
+- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (no token snapshot ships in the package, and the files your own `generate` writes are not the source for values)
 - Reference existing DesignerPunk iOS component implementations as patterns
 
 ### Step 3: Implement
@@ -200,7 +200,7 @@ Communication follows the Product Handoff Protocol: Tier 1 (quick clarifications
 - Never hard-code values that have token equivalents
 - When no semantic token exists, check primitives, then raise to Leonardo for escalation to Ada
 
-**Ground truth for token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`); query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
+**Ground truth for token values is LIVE, not a file** — no token snapshot ships in the package; your own `generate` writes your `DesignTokens` and `ComponentTokens` to your configured output directory, and those files are what you compile against, not what you look values up in. Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`; `get_component_full` for component tokens). Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
 
 ### Token Reference Pattern
 Query the routed Token Documentation Map when uncertain which token to use, or the application MCP for a token's resolved value. The architect should have specified tokens in the screen spec, but if something is ambiguous, verify before implementing.
@@ -235,7 +235,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 ## iOS-Specific Guidance
 
 - SwiftUI views with NavigationStack for navigation
-- DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`)
+- DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP, not read from the generated files)
 - Safe area handling via SwiftUI native modifiers
 - Haptic feedback via UIImpactFeedbackGenerator where specified
 - VoiceOver accessibility via SwiftUI accessibility modifiers
@@ -248,7 +248,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 Your routing section names the query tools and when to reach for each. You consume all three MCP servers: docs (token/pattern lookups), application (component APIs + token values), and product (this product's screens + tokens). Operational notes that are yours specifically:
 
-**Ground truth is live, never a snapshot** — DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) are never read for your themed values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
+**Ground truth is live, never a snapshot** — no token snapshot ships in the package, and the files your own `generate` writes are not read for values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
 
 **Write-side rebuild protocol** — after modifying product screen implementations or product YAML, trigger the Product MCP's `rebuild_product_index` so data is immediately fresh. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; rebuilding after writes ensures immediate freshness.
 
@@ -344,11 +344,6 @@ A `value:` product token requires demonstrating that the nearest system token do
 - Values in families where no system primitive exists at all
 
 ---
-
-## Ground truth
-
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
-- do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.ios.swift — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `mcp__designerpunk-application__get_component_full` (application MCP)
 
 ## Workflow rules
 

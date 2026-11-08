@@ -14,6 +14,10 @@
  * - dist/ComponentTokens.ios.swift
  * - dist/ComponentTokens.android.kt
  *
+ * The four native files (`DesignTokens.{ios.swift,android.kt}`, `ComponentTokens.{ios.swift,android.kt}`) are still written
+ * here, as the in-repo freshness and integrity reads need them, but the package no longer ships them: `package.json` `files[]`
+ * excludes them and `pack-assert` asserts each absent (Spec 129 Req 10.1).
+ *
  * `--out <dir>` writes the same files, and `token-index/`, under <dir> instead of `dist/` and `./token-index`
  * (Spec 129 Task 14.3: the root-token freshness test generates into a temporary directory and compares).
  */

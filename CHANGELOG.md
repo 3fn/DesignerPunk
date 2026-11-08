@@ -4,6 +4,18 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
+## [Unreleased]
+
+### Removed
+
+- **The package no longer ships the four native root token files** `dist/DesignTokens.ios.swift`, `dist/DesignTokens.android.kt`, `dist/ComponentTokens.ios.swift` and `dist/ComponentTokens.android.kt`. 15.0.0 announced no deprecation; this is the announcement. These were a snapshot of DesignerPunk's own tokens, which a native project could mistake for its own. Your own `npx designerpunk generate` now emits what the snapshot carried, including DesignerPunk's component tokens, into your output (the per-platform paths `generate` prints); read those files, not the package's. `dist/ComponentTokens.web.css`, `dist/DesignTokens.web.css` and the web CSS exports (`@3fn/core/tokens.css`, `@3fn/core/component-tokens.css`) still ship, because the shipped web components read them.
+
+### Changes that may break a consumer
+
+- **Item (iii), above:** a project that read one of the four removed files from `node_modules/@3fn/core/dist/` must read its own generated output instead.
+- **I-1: Android sizing tokens are emitted as `Dp`.** A Kotlin read that appended `.dp` to a sizing constant must drop it.
+- **I-2: Android `fontSize` tokens are emitted as `TextUnit`.** A Kotlin read that treated a font size as a number must be updated to the `TextUnit` type.
+
 ## [16.2.0] — Release 6 (token-index platform names, sync's MCP-config repair, assembly coverage, web prop forms, served-doc corrections)
 
 This release is for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is still not supported: the iOS (SwiftUI) and Android (Jetpack Compose) components and the generated native token files are reference source, not compile-verified (see "Known limitations").

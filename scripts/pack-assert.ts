@@ -476,12 +476,13 @@ function assertDeferredRows(packedPaths: Set<string>, root: string): void {
   }
 
   // The `dist/` ROOT files stay KEPT. Enumerated from the built tree (the files the `dist/**/*.{js,d.ts,json,css,swift,kt}` glob
-  // selects at the root), never from a copied list: each must still pack after the three negations.
+  // selects at the root), never from a copied list: each must still pack after the negations (the four retired native files are filtered out of the enumeration).
   const rootGlob = /\.(js|d\.ts|json|css|swift|kt)$/;
   const rootFiles = fs
     .readdirSync(path.join(root, 'dist'), { withFileTypes: true })
     .filter((e) => e.isFile() && rootGlob.test(e.name))
     .map((e) => `dist/${e.name}`)
+    .filter((f) => !RETIRED_NATIVE_ROOT_FILES.includes(f)) // the build still writes the four; the package no longer ships them (Req 10.1)
     .sort();
   const rootMissing = rootFiles.filter((f) => !packedPaths.has(f));
   check(rootFiles.length > 0 && rootMissing.length === 0, `dist/ root files KEPT: all ${rootFiles.length} the glob selects still pack`, rootMissing.length ? `missing: ${rootMissing.join(', ')}` : rootFiles.map((f) => f.slice(5)).join(' '));
@@ -509,7 +510,11 @@ export function templatesSetDiff(packed: string[]): { unexpected: string[]; miss
 
 // ─── Section 10: the hermetic publish path ──────────────────────────────────────────────────────
 
-/** The eight root token files every release ships (the 2026-10-02 deferral's guard 2). */
+/**
+ * The eight root token files the in-repo build writes to `dist/` (the 2026-10-02 deferral's guard 2; the root-token
+ * freshness test and the integrity inventory read all eight). Four of them stopped shipping (Spec 129 Req 10.1,
+ * `RETIRED_NATIVE_ROOT_FILES`), so the package carries `SHIPPED_ROOT_TOKEN_FILES`.
+ */
 export const ROOT_TOKEN_FILES = [
   'dist/ComponentTokens.android.kt',
   'dist/ComponentTokens.ios.swift',
@@ -520,6 +525,17 @@ export const ROOT_TOKEN_FILES = [
   'dist/DesignTokens.ios.swift',
   'dist/DesignTokens.web.css',
 ];
+
+/** The four native root files the package no longer ships (Spec 129 Req 10.1, Peter's 7 (a)); the build still writes them. */
+export const RETIRED_NATIVE_ROOT_FILES = [
+  'dist/ComponentTokens.android.kt',
+  'dist/ComponentTokens.ios.swift',
+  'dist/DesignTokens.android.kt',
+  'dist/DesignTokens.ios.swift',
+];
+
+/** The root token files every release ships: `ROOT_TOKEN_FILES` less the retired native four (the web CSS pair, DTCG, Figma). */
+export const SHIPPED_ROOT_TOKEN_FILES = ROOT_TOKEN_FILES.filter((f) => !RETIRED_NATIVE_ROOT_FILES.includes(f));
 
 /**
  * How a packed `dist/` file is known NOT to be a leftover. A clean build produces exactly:
@@ -682,8 +698,9 @@ export function publishPathFindings(listing: PackListing): Finding[] {
   const paths = listing.paths;
   const packed = new Set(paths);
 
-  // 10a. The eight root token files.
-  for (const f of ROOT_TOKEN_FILES) add(packed.has(f), `${PUBLISH_PATH_LABEL} root token file present: ${f}`);
+  // 10a. The shipped root token files are present and the retired native four are absent (Spec 129 Req 10.1).
+  for (const f of SHIPPED_ROOT_TOKEN_FILES) add(packed.has(f), `${PUBLISH_PATH_LABEL} root token file present: ${f}`);
+  for (const f of RETIRED_NATIVE_ROOT_FILES) add(!packed.has(f), `${PUBLISH_PATH_LABEL} retired native root file absent: ${f}`);
 
   // 10b. `themes: []` in the source config of the packed commit.
   const configPath = path.join(listing.root, 'designerpunk.config.ts');
