@@ -194,8 +194,17 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
-renderedHash: sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145
-date: 2026-09-29
+renderedHash: sha256:ae753b420debee69b6f6a9e650cc6e8f6413d3fbc732a007b1b9397306abc787
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 7 of 7 (`native-1` to `native-7`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65`, renderedHash `sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.
+- **What changed**: `native-2`'s parenthetical changed from *"never the stale `dist/*.ios.swift` snapshots"* to *"not read from the generated files"*. The charter unit is unchanged.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`: the canonical unit and the three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns.
+- **Credited**: `native-1` and `native-3` to `native-7` are verbatim. `native-2` survives: *"DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP"* is verbatim, and *"not read from the generated files"* carries the prohibition without naming a retired file.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65`), as the print-mode output shows. `renderedHash` moves `sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145` to `sha256:ae753b420debee69b6f6a9e650cc6e8f6413d3fbc732a007b1b9397306abc787` (the print's value, `renderedHashOf` over the committed rendering).
+
+**Earlier acts on this row, kept as history (last: 2026-09-29):**
 
 **Ruling: ASSENT — 7/7 surviving.** All 7 survive.
 - **`native-2`** keeps *"(values queried live via the application MCP)"*. Taking values from a Swift snapshot violates it.
