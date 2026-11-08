@@ -44,7 +44,7 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - **A theme of one mode falls back to base in the other scheme**: a theme registered in mode `light` shows its own look when `darkTheme` is false and `BaseDark` when it is true; one registered in mode `dark` shows `BaseLight` when `darkTheme` is false. Nothing warns you. To give it its own look in both schemes, register it in mode `both`, or force the scheme with `darkTheme`. `Wcag` is exempt: it always has both instances
 - Product tokens that reference a theme-varying colour are `@Composable @ReadOnlyComposable get()` properties on `object Product{Category}`, read as `LocalDPTheme.current.<name>` and only inside composition scope; the others stay static
 - Static tokens (spacing, sizing, radius, typography, motion) remain on the `DesignTokens` object — no CompositionLocal needed
-- **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
+- **Ground truth for these token values is LIVE, not a file** — no token snapshot ships in the package (your own `npx designerpunk generate` writes your `DesignTokens` and theme surface in your configured output directory); query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
 
 ## @unit #out-of-scope @ sha256:900fcd94184dbc4519095d1257911adb9e595af4cd10b65a01b1373e1b5b7b54
 ### Out of Scope
@@ -67,7 +67,7 @@ This is the exception, not the rule. Most issues benefit from Leonardo's context
 ## @unit #step-2-set-up-the-screen @ sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe
 ### Step 2: Set Up the Screen
 - Create the Jetpack Compose composable structure
-- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
+- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (no token snapshot ships in the package; your own `generate` output is in your configured output directory, and the MCP is the ground truth)
 - Reference existing DesignerPunk Android component implementations as patterns
 
 ## @unit #operational-mode-platform-expertise:preamble @ sha256:719aaec0b53328142eba30ead5e0158af67542d821fdc8242047227a0992b8f6
@@ -92,7 +92,7 @@ When Leonardo or your human lead asks about Android capabilities or constraints:
 - Never hard-code values that have token equivalents
 - When no semantic token exists, check primitives, then raise to Leonardo for escalation to Ada
 
-**Ground truth for token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`); query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
+**Ground truth for token values is LIVE, not a file** — no token snapshot ships in the package: your own `npx designerpunk generate` writes your `DesignTokens` and `ComponentTokens` in your configured output directory. Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`), and for a component's tokens (`get_component_full`). Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
 
 ## @unit #platform-currency-expectations @ sha256:325c789e1205fbac6f672a1a90b6823cbbf970638578aaa328b39800dc8c3db6
 ## Platform Currency Expectations
@@ -111,7 +111,7 @@ Your knowledge of Android, Jetpack Compose, and Kotlin is deep but has a trainin
 ## Android-Specific Guidance
 
 - Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec
-- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
+- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP; no token snapshot ships in the package, and your own `generate` output is in your configured output directory)
 - System bar handling via Compose insets
 - Haptic feedback via HapticFeedbackType where specified
 - TalkBack accessibility via Compose Semantics
@@ -166,11 +166,3 @@ when: you need the platform-technology reference for products built with Designe
 tool: get_section
 mcp: docs
 replaces: technology-stack
-## @entry ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt] @ sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839
-artifact: dist/ComponentTokens.android.kt
-fires: unconditional
-cue:
-  negative: do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.android.kt — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory
-  tool: get_component_full
-  mcp: application
-  replaces: node_modules/@3fn/core/dist/ComponentTokens.android.kt
