@@ -86,7 +86,7 @@ assent: surviving 1 of 1 — disagree
 
 signer: leonardo
 canonicalHash: sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 assent: surviving [] — no-consumer-counterpart confirmed (subtraction-4)
 
 - The route targets `process-development-workflow`, which is DesignerPunk's own task-completion sequence, git/commit standards, hook system and Kiro hook chains. That is this repo's workflow law (15.4 class policy, subtraction-4).
@@ -94,21 +94,25 @@ assent: surviving [] — no-consumer-counterpart confirmed (subtraction-4)
 - The cite is shown to apply: the route's `when` names "the development workflow … beyond the always-loaded law".
 - Nothing renders, so `surviving: []`.
 
+**Re-signed 2026-11-08 (signing-act shape review, application PR 2, F-4 (a)).** Only `renderedHash` moved: the row renders nothing, and under Thurgood's pin (`545ae18f6`) a row that renders nothing now hashes `{disposition, destination}`. `canonicalHash` is unchanged. I re-read the row's print: the canonical entry is the same, there is still no rendered piece, and my earlier judgment stands. `surviving: []` is the itemized form for an entry with no operative items.
+
 ## `#frontmatter:routes.docs[file-organization]`
 
 signer: leonardo
 canonicalHash: sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 assent: surviving [] — no-consumer-counterpart confirmed (subtraction-4)
 
 - `process-file-organization` is DesignerPunk's steering-metadata and directory standard (required metadata fields, organization values, this repo's directory structure). It is workflow law for our corpus, not a standard a consumer's product specs follow.
 - My spec-format routes (`process-spec-planning`) stay retained, which is correct: those are the transferable part.
 
+**Re-signed 2026-11-08 (signing-act shape review, application PR 2, F-4 (a)).** Only `renderedHash` moved: the row renders nothing, and under Thurgood's pin (`545ae18f6`) a row that renders nothing now hashes `{disposition, destination}`. `canonicalHash` is unchanged. I re-read the row's print: the canonical entry is the same, there is still no rendered piece, and my earlier judgment stands. `surviving: []` is the itemized form for an entry with no operative items.
+
 ## `#frontmatter:writeScope[docs/specs/**]`
 
 signer: leonardo
 canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c49070d3309d4fa6576f182a49ea10dbd5161d31720033f6714ccd22cfed6c14
 assent: surviving [] — to the CHANGED disposition, `superseded-by` → `frontmatter:writeScope[.kiro/specs/**]` (cites subtraction-4)
 
 **Re-signed 2026-09-29 (re-sign run, unit head `dba93df5`). This replaces my phase-two no-consumer-counterpart assent.**
@@ -116,6 +120,8 @@ assent: surviving [] — to the CHANGED disposition, `superseded-by` → `frontm
 - **Superseded-by is the more accurate disposition, and my phase-two reasoning was wrong on one point.** This write root exists so the seat can write parent-task summary docs. In the consumer, that function has not disappeared. It has moved: the consumer's rendered Task Completion Protocol now puts the summary doc at `specs/[spec]/task-N-summary.md` (`_consumer-output/_canonical/always-set/task-completion-protocol.md`, lines 33, 41 and 106; the same text is in the CC and Kiro identity renderings). That path sits inside the destination row's rendered `specs/**` (`cc/.claude/agents/leonardo.md:474`, `kiro/.kiro/agents/leonardo.json:41`). I said in phase two that a second summary-doc root had "no consumer meaning". The accurate statement is that its meaning is carried by the other write root.
 - **Subtraction-4 applies**: the `docs/specs/**` location itself is this repo's two-document workflow law. Only its function survives.
 - It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
+**Re-signed 2026-11-08 (signing-act shape review, application PR 2, F-4 (a)).** Only `renderedHash` moved: the row renders nothing, and under Thurgood's pin (`545ae18f6`) a row that renders nothing now hashes `{disposition, destination}`. `canonicalHash` is unchanged. I re-read the row's print: the canonical entry is the same, there is still no rendered piece, and my earlier judgment stands. `surviving: []` is the itemized form for an entry with no operative items.
 
 ## `#frontmatter:routes.cues[21]`
 
@@ -155,13 +161,15 @@ date: 2026-10-16
 
 signer: leonardo
 canonicalHash: sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 assent: surviving [] (`no-consumer-counterpart`, cites subtraction-3)
 
 **First signature, 2026-10-17 (ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1, RATIFIED Peter, #393; applied as draft `bf30a6017`).** I read the entry by its rendering: the dropped entry renders nothing, so no consumer seat gets `.kiro/issues/**` as a write root.
 - **Subtraction-3 applies.** `.kiro/issues/**` is DesignerPunk's own stewardship-instrument surface: the README rules, Thurgood's monthly walk, and rule 9's claims-pass finding on an out-of-rule edit. `init` creates no `.kiro/issues/` in a consumer repo, so there is no tree for the scope to point at and no walk or claims pass to give it meaning.
 - **The scope grant only.** A consumer may still keep its own issue records wherever it likes. That is a separate question from this row, and a consumer's Leonardo would ask its human lead first, as the write-scope outro already says.
 - It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
+**Re-signed 2026-11-08 (signing-act shape review, application PR 2, F-4 (a)).** Only `renderedHash` moved: the row renders nothing, and under Thurgood's pin (`545ae18f6`) a row that renders nothing now hashes `{disposition, destination}`. `canonicalHash` is unchanged. I re-read the row's print: the canonical entry is the same, there is still no rendered piece, and my earlier judgment stands. `surviving: []` is the itemized form for an entry with no operative items.
 
 ## `#step-3-specify-the-screen:preamble`
 
