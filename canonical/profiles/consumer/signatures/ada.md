@@ -33,6 +33,15 @@ signer: ada
 
 signer: ada
 
+**RE-SIGNED 2026-11-08 — ASSENT, surviving 13 of 35.** Signed against canonical `sha256:fc9c7ea4…` and rendered `sha256:4aa9f468…`, and judged against the 35-item set re-confirmed at `1847d953e`, with the overlay pinned to `sha256:fc9c7ea4…` and the consumer rendering regenerated at `0fc2379f0`.
+- **What changed**: in canonical, `### In Scope` gained the native-lane ownership ballot's item-5 bullet (the consumer driver and its two `pins.yaml` keys, with C1–C6 as prose) and its F-4 sentence. The ballot (`2026-11-07-native-lane-ownership`) is RATIFIED by Peter. The row gained a fourth removal, byte for byte that bullet, and the other three removals are untouched.
+- **The rendered hash did not move**, and that is the point: I recomputed it with `readConsumerSpans` and `renderedHashOf` over the committed rendering and got `sha256:4aa9f468…` again. The bullet is removed, so the rendered unit is the one I signed on 2026-10-23, and `grep` finds neither "harness" nor "consumer driver" in it. The canonical hash moved from `sha256:c6d1781d…` to `sha256:fc9c7ea4…`.
+- **The thirteen survive as before**: `scope-create`, `scope-math`, `scope-compliance`, `scope-docs`, `scope-testing`, `scope-naming`, `scope-output`, `scope-hierarchy`, `scope-coverage`, `scope-theme-registry`, `scope-pipeline-config`, `scope-theme-output`, `scope-config-authoring`. The rendering is unchanged, so each is entailed by it exactly as in the ruling below.
+- **The 11 new items do not survive, and none is credited**: `scope-harness-1` to `-11`. The harness is this repo's own and is not shipped in the package, so a consumer has no driver, no `native-harness` workflow and no `pins.yaml` section to own. The 11 are the removal's function, and no other unit carries it. The removal cites subtraction 1 and applies: the bullet does not appear in the rendering.
+- **The removal text** is byte for byte the bullet in `canonical/agents/ada.md`; I checked it as a whole line against the charter.
+
+The 2026-10-23 signature, kept as the prior record:
+
 **RE-SIGNED 2026-10-23 — ASSENT, surviving 13 of 24.** Signed against canonical `sha256:c6d1781d…` and rendered `sha256:4aa9f468…`, and judged against the 24-item set re-confirmed at `7b8936a6d`, with the overlay pinned at `3a8d18e07` and the consumer rendering regenerated at `7d63648b5`.
 - **What changed**: in canonical, two bullets of `### In Scope`, the cross-platform output line and the theme-aware output line (my text, errata (f); Thurgood applied it byte for byte at `207119121`). They now say what the generator emits and mark three outputs not yet emitted: element scoping, the Swift and Kotlin theme types, and DTCG theme metadata. The row's four removals are untouched, and each still applies as a substring of the new unit. I recomputed the rendered hash with `readConsumerSpans` and `renderedHashOf` over the committed rendering: `sha256:4aa9f468…`. It moved from `sha256:6209aa1c…` because the rendering moved.
 - **I re-read the rendered unit (`_consumer-output/_canonical/agents/ada.md`, `### In Scope`) against the items, one by one.** The thirteen survive:
@@ -370,6 +379,24 @@ signer: ada
 signer: ada
 
 **ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `.kiro/issues/**`: This repo's issue records, written under its own `.kiro/issues/README.md` rule 9 (§ 2.5). The convention is a stewardship instrument of this repo. The package ships neither the records nor the convention, and the consumer's tracking practice is theirs to set (subtraction 3, as cited).
+
+## `#frontmatter:writeScope[scripts/harness/consumer.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `scripts/harness/consumer.ts`: The harness consumer driver, which runs my CLI's `pack`, `init` and `generate`. The native-lane ownership ballot (`2026-11-07-native-lane-ownership`, item 5; RATIFIED by Peter) gives it to my seat from Spec 129 U12's merge. It is this repo's native harness, which the package does not ship, and a consumer has no harness. Rendered into a consumer project's `allowedPaths`, it would name a path that does not exist there, so `retained` would be untrue and `no-consumer-counterpart` is the only true shape (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/consumer.test.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `scripts/harness/__tests__/consumer.test.ts`: The driver's test file. The native-lane ownership ballot (`2026-11-07-native-lane-ownership`, item 5; RATIFIED by Peter) gives it to my seat from Spec 129 U12's merge. It is this repo's native harness, which the package does not ship, and a consumer has no harness. Rendered into a consumer project's `allowedPaths`, it would name a path that does not exist there, so `retained` would be untrue and `no-consumer-counterpart` is the only true shape (subtraction 1).
+
+## `#frontmatter:writeScope[harness/pins.yaml]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-11-08). I agree with the disposition and the cite. `harness/pins.yaml`: The harness pins file, mine for `consumer.name` and `consumer.abbreviation` only; the other sections stay Data's, Kenya's and Thurgood's, and only P2 and C6 hold that line, since a glob cannot carry a section. The same file sits in Data's and Kenya's scope too, with its own signature each, which is expected. The native-lane ownership ballot (`2026-11-07-native-lane-ownership`, item 5; RATIFIED by Peter) gives it to my seat from Spec 129 U12's merge. It is this repo's native harness, which the package does not ship, and a consumer has no harness. Rendered into a consumer project's `allowedPaths`, it would name a path that does not exist there, so `retained` would be untrue and `no-consumer-counterpart` is the only true shape (subtraction 1).
 
 ## `#the-process`
 
