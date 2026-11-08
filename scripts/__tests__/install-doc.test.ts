@@ -83,6 +83,13 @@ const C23_PATH_STEPS = { founder: 5, joining: 5, 'joining-cross-harness': 6, 're
  * release-3 CHANGELOG entry.
  */
 const SCOPE_SENTENCE =
+  'This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don\'t start a native product on this release. On web, a theme you register in `designerpunk.config.ts` is written as a `:root[data-theme="<name>"]` block, which matches the `<html>` element only, so it themes the whole page; light and dark mode work.';
+
+/**
+ * The release-3 sentence as the CHANGELOG entry froze it (history; not rewritten). Used only by the
+ * release-3 CHANGELOG assertion, since SCOPE_SENTENCE follows the install doc and the README.
+ */
+const RELEASE_3_SCOPE_SENTENCE =
   'This release is ready for building web products, with the agent layer for Claude Code and Kiro. ' +
   'Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as ' +
   "reference source, not a build input, so don't start a native product on this release. On web, a custom theme " +
@@ -406,7 +413,7 @@ describe('scope sentence (C14 — install doc and README; the CHANGELOG from 22.
 
   // Task 22.4 (Peter's O-2 ruling, 2026-10-03): the CHANGELOG is the third surface.
   it('is the first paragraph of the release-3 CHANGELOG entry, identical to the install doc\'s (C14, third surface)', () => {
-    expect(paragraphs(RELEASE_3_ENTRY.split('\n').slice(1).join('\n'))[0]).toBe(SCOPE_SENTENCE);
+    expect(paragraphs(RELEASE_3_ENTRY.split('\n').slice(1).join('\n'))[0]).toBe(RELEASE_3_SCOPE_SENTENCE);
   });
 });
 
