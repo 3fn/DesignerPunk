@@ -4,6 +4,9 @@
 **Spec**: 125-B — Classification Map & Deferred Enforcement Layers
 **Status**: Tasks Phase
 **Dependencies**: requirements.md (17, merged PR #72) + design.md (C1–C9, DD1–DD8, merged PR #73 — DD7/DD8 RATIFIED by that merge)
+**Criteria mode**: spec-level
+
+> *Declared 2026-11-08 (Thurgood), in the U3 re-home amendment.* This `tasks.md` predates Spec 127 and was legacy. The amendment that ticks Task 5 and re-homes Task 6 is material, so the parity check asks for a declaration (Spec 127 Req 6.3). `spec-level` matches how this spec was run: its parents have no per-parent criteria in the Spec 127 form. The spec discharges once, at its CLOSEOUT claims pass.
 
 ---
 
