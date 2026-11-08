@@ -26,7 +26,7 @@ import { runAttach } from './attach';
 import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
-import { componentTokenConformanceErrors } from '../integration/ValidationCoordinator';
+import { gridConformanceErrors } from '../build/tokens/defineComponentTokens';
 import { isProductTokenStale } from './staleness';
 import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
@@ -262,7 +262,7 @@ export async function runGenerate(force = false) {
   // repository's lane, so they are not re-checked on a consumer's run.
   for (const token of componentTokens ?? []) {
     if (isPackageComponentToken(token)) continue;
-    for (const detail of componentTokenConformanceErrors(token)) {
+    for (const detail of gridConformanceErrors(token)) {
       console.warn(`⚠️  ${componentTokenOffGridMessage(token.name, detail)}\n`);
     }
   }

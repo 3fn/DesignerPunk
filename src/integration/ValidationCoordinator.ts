@@ -16,9 +16,7 @@ import { ComponentTokenRegistry, RegisteredComponentToken } from '../registries/
 import { MathematicalRelationshipParser } from '../validators/MathematicalRelationshipParser';
 import type { PrimitiveToken, SemanticToken, ValidationResult } from '../types';
 import { TokenCategory, SemanticCategory } from '../types';
-import { SPACING_BASE_VALUE } from '../tokens/SpacingTokens';
-import { SIZING_BASE_VALUE } from '../tokens/SizingTokens';
-import type { ComponentTokenWithGridReason } from '../build/tokens/defineComponentTokens';
+import { checkGridConformance, type ComponentTokenWithGridReason } from '../build/tokens/defineComponentTokens';
 import { RADIUS_BASE_VALUE } from '../tokens/RadiusTokens';
 
 /**
@@ -159,21 +157,9 @@ export function validateFamilyConformance(
     case 'spacing':
     case 'sizing': {
       const isSizing = family === 'sizing';
-      const baseValue = isSizing ? SIZING_BASE_VALUE : SPACING_BASE_VALUE;
-      const baseName = isSizing ? 'SIZING_BASE_VALUE' : 'SPACING_BASE_VALUE';
-      const multiplier = value / baseValue;
-      const onGrid = multiplier >= 0 && Math.abs(multiplier * 4 - Math.round(multiplier * 4)) < 1e-9;
-
-      if (!onGrid) {
-        if (typeof offGridReason === 'string' && offGridReason.trim() !== '') {
-          return { valid: true, message: '' };
-        }
-        return {
-          valid: false,
-          message: `${isSizing ? 'Sizing' : 'Spacing'} value ${value} is not derivable from ${baseName} (${baseValue}). ` +
-                   `Use ${baseName} * multiplier (e.g., ${baseValue} * 1.25 = ${baseValue * 1.25}), ` +
-                   `or state how the value is derived in an offGridReason.`
-        };
+      const grid = checkGridConformance(family, value, offGridReason);
+      if (grid && !grid.ok) {
+        return { valid: false, message: grid.message };
       }
 
       // Check if this value matches an existing primitive (suggest reference instead)
