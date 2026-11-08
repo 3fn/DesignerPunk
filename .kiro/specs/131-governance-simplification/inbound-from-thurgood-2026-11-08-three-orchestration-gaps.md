@@ -1,10 +1,10 @@
 # Inbound from Thurgood: three gaps in how a unit is run, found in Spec 129 U7 to U9
 
 **Date**: 2026-11-08
-**Author**: Thurgood (Spec 131's formalizer, and maintainer of the checks named below), at Peter's direction. **Verifier of the facts**: Stacy, for classes 1 and 3 (owed; see Consulted).
+**Author**: Thurgood (Spec 131's formalizer, and maintainer of the checks named below), at Peter's direction. **Verifier of the facts**: Stacy, for classes 1 and 3 (her read is in Consulted).
 **Peter's words**, recorded with `date -u` at receipt (orchestrator relay; **UNVERIFIED** beyond the relay): 2026-11-08T04:01:15Z, "Yes, go ahead with the three inbounds". The three classes below, and their evidence, were supplied by the orchestrator; I re-counted what I could from git and `gh` and label the rest.
 **Status of 131**: design outline merged, paused at the edge of requirements. Its park re-asks at `path:.kiro/specs/132-*/completion/first-family-measured-cost.md`. This inbound may wait a long time.
-**Consulted**: Stacy (classes 1 and 3: claims passes, ARMING) — **OWED**: I have no way to reach her from this seat, so the one-line read is not here. The orchestrator is asked to obtain it and splice it before this merges. Ada and Lina: none needed for the record; class 1's ballot, if written, touches `merge-hold.yml` (mine, P1c) and the PR-conventions law (Peter's). Class 2 touches planning (mine). Class 3's drift touched the signing seats' briefs (Lina and Stacy read the signing-chain checks; neither is asked to defend them here).
+**Consulted**: Stacy — classes 1 and 3 hold up apart from the anomaly count; class 1's option (b) uses `merge-hold` with no new grammar; class 3's option (b) would prove the brief named the doc, not that it was followed, so I wouldn't read that marker.
 **Record**: none filed under README rule 10. See § 5.
 
 This is **a consideration, not direction** (Peter's standing rule for inbounds, 2026-11-04T13:23:25Z, as `inbound-governance-cost-ledger.md` § 1 quotes it). It rules nothing.
@@ -18,7 +18,8 @@ This is **a consideration, not direction** (Peter's standing rule for inbounds, 
 **Instances (VERIFIED, `gh pr view`).**
 - #739 (U7, "Task 12 Complete") was opened 2026-11-07T21:15:20Z and merged 21:23:47Z. Its follow-up #741 was opened 21:26:59Z, 3 min 12 s after the merge, and merged 21:36:16Z.
 - #763 (U9, "Task 14 Complete") was opened 2026-11-08T03:28:19Z and merged 03:57:47Z. Its follow-up #765 was opened 03:59:48Z, 2 min 1 s after the merge, and was **not merged at this writing**.
-- Peter merged both before the follow-up had landed (orchestrator, **UNVERIFIED** beyond the relay: "twice"). Content cost: not counted here; each repair was a separate PR. That is **2 repair PRs in 2 units**, a rate of one sample.
+- **Counter-instance (relayed)**: #757 (U8) carried a head-H hold, and it held: the follow-up joined before the merge, including `de41687ff`. So the practice has worked when followed; 2 of 3 units, not 2 of 2, lost it.
+- Peter merged both before the follow-up had landed (orchestrator, **UNVERIFIED** beyond the relay: "twice"). Content cost: not counted here; each repair was a separate PR. That is **2 repair PRs in 3 units** with a head-H hold, a rate of one sample.
 
 **Same shape as L-10.** A held condition, restated in a PR body, that no instrument reads (`inbound-governance-cost-ledger.md` L-10). `merge-hold` answers that class for `**Open for Peter**:` lines. It does not read a head-H line.
 
@@ -45,7 +46,7 @@ This is **a consideration, not direction** (Peter's standing rule for inbounds, 
 ## 3. Class 3: briefs that restate a governed procedure drift from it
 
 **What happens.** The orchestrator wrote signing-seat briefs from memory instead of from `governance/signing-seat-brief.md`. Two results (orchestrator, **UNVERIFIED** beyond the relay except where marked):
-- The briefs dropped `-q` from the commit command. VERIFIED (file): the governed form is `git commit -q -F - <<'EOF' && git log -1 --format='%H %s'` (signing-seat-brief § "The commit line"). Every act on #758 and #763 then read a false `anomaly 4`.
+- The briefs dropped `-q` from the commit command. VERIFIED (file): the governed form is `git commit -q -F - <<'EOF' && git log -1 --format='%H %s'` (signing-seat-brief § "The commit line"). On #758 every link-4 act read a false `anomaly 4` except one (Data's `82907ca2`, which read `anchored`), about 15 acts; its writeScope rows read `record absent 7`, which is by design. On #763 its one act read `anomaly 4` (orchestrator's own `--audit` runs, relayed).
 - The briefs had signers author their own charter text, which failed F12′ (rule S2 of the same doc: "your own charter" is authoring, not signing) and forced the re-cut of the native-lane application (#758's branch r2).
 
 **Whether something already covers it: yes, in part.** The governed document says why it exists in the same terms: on PR #445 "the rule was in the ballot (§ 4.3); the seat briefs dropped it", and "signing briefs quote this document by path and commit (`governance/signing-seat-brief.md@<sha>`)" (VERIFIED, file, its "What this document is", pointing to the practice recorded in `.kiro/issues/2026-10-23-audit-link4-rejects-sha-alone-commit-line.md` § 6). So the answer, to link rather than retype, is already the recorded practice. What is missing is any read of whether it was followed. Nothing checks that a brief quoted the document: `--audit` link 4 reads the result (the commit print), not the brief. F12′ is a gate and caught the second result, after the work was done.
