@@ -94,6 +94,10 @@ Record each item's outcome here, dated, as it resolves. Archive the file when ev
 
 *(2026-10-24, Lina)* **R1 and R5: still open, homed in Spec 129** (design outline inbound list and question 6). The file stays at root until Spec 129's requirements land (the Trigger line); every other item now has an outcome.
 
+*(2026-11-07, Lina, owner; rule 5)* **R1 and R5: fixed by Spec 129 Task 13 (U8), head `8ffda2c1a`.** Checked at that SHA; every item now has an outcome, so the file is archived in this PR.
+- **R1** (Req 5.7): Task 13.4 (`completion/task-13-4-completion.md`). `src/cli/sync/Migration.ts` `isSingleFamilyTokenFile` scans `src/tokens/component/*.ts` and the `tokens.ts` / `*.tokens.ts` files under `src/components/core/<Name>/`; `singleFamilyTokenFilesMessage` names each failing file and offers the re-copy or split fix. Pinned by 3 new cases in `src/cli/__tests__/sync.migration.test.ts`; the suite passes (57 across it and `replacedGroups.test.ts` per the doc; 83/83 across the four suites run now). Detection is a text approximation of the #127 guard; the migration never executes copied `.ts`.
+- **R5** (Req 5.8): Task 13.2 (`completion/task-13-2-completion.md`). `src/cli/freshness.ts` regenerates into a temp directory and compares bytes outside ISO timestamps; `src/cli/staleness.ts` no longer reads file times; `sync`'s name-contract section (`src/cli/sync/ComponentTier.ts`) says when output is not what `generate` would write now, or that it could not check. Pinned by `src/cli/__tests__/componentTier.test.ts` and `staleness.test.ts` (both pass at `8ffda2c1a`) and a `Consumer Guard` freshness case (not re-run here).
+
 ## Grant (added 2026-10-14, Lina's list; activated by Peter's merge of the follow-up records PR; expires at the fixing PR's merge)
 
 **Grant paths** (R2, R4, R6 only; R1 and R5 are Spec 129's):
