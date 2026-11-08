@@ -15,4 +15,4 @@
 
 ## Open
 
-The lock (`canonical/generated.lock`) is not refreshed in this diff; the 122 diff-guard reads `input-closure-changed` from the Guide edits, and Lina refreshes it when U10 is next in the queue. The four harness contexts run from the PR and are pasted into the completion doc at head H.
+The lock (`canonical/generated.lock`) is refreshed (Lina, `33bf1103d`); the 122 diff-guard reads `no-op-green`. The four harness contexts and `harness-generate` are green at head H = `3af516e0d` (run 42480226283); PR #777 is green (30 checks; parity 50 evaluated, 0 fail); the lines are in the completion doc.
