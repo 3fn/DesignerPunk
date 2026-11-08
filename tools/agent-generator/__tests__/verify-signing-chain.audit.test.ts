@@ -19,6 +19,7 @@ import {
   candidateLines,
   filterLine,
   formatAudit,
+  indexCandidates,
   inputSubjectOf,
   logFormProven,
   main,
@@ -592,6 +593,140 @@ describe('verify-signing-chain --audit — the store-shape canary (ballot 2026-1
     const lines = formatAudit(acts, 'branch seat-kenya');
     expect(lines.filter((l) => l.startsWith('**Open for Peter**:'))).toHaveLength(1);
     expect(lines.some((l) => /widening/.test(l))).toBe(false);
+  });
+});
+
+// ============================================================================
+// The link-4 dedupe (Peter, 2026-11-08T03:55:36Z, "Let's go (A) with the class option"; record
+// .kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-link4-dedupe.md).
+// Fixtures P9b–P9d, K1–K6, N3b, N5b: Stacy's specification (scratchpad link4 fixture spec,
+// 2026-11-08), built by Thurgood. Two candidate lines in ONE tool call are one candidate for C
+// when both prefixes are prefixes of C's full SHA and the subjects are equal; never across calls,
+// transcripts or commits. Exercised file: tools/agent-generator/regrounding/verify-signing-chain.ts.
+// ============================================================================
+
+describe('verify-signing-chain --audit — link 4 counts one commit once (dedupe fixtures; P9b–d, K1–K6, N3b, N5b)', () => {
+  const T = 'Agent: kenya';
+  const br = (sha: string, subject: string): string => `[seat-kenya ${sha}] ${subject}\n 2 files changed, 9 insertions(+)`;
+  const P9B_CMD = `git commit -F - <<'EOF' && git log -1 --format='%H %s'\n${SUBJECT}\n\n${T}\nEOF`;
+  const p9bOut = (s: Seat): string => `${br(C(s, 9), SUBJECT)}\n${C(s)} ${SUBJECT}`;
+  const verdict = (s: Seat, calls: Call[]): ActVerdict => only(audit(s, oneSeatStore(s, calls)));
+
+  test('P9b: one call, no `-q`, the bracket line and the log line → ONE candidate, `anchored` (today: `anomaly` 4, "2 candidates")', () => {
+    const s = seatRepo();
+    const store = oneSeatStore(s, [{ id: 'toolu_c1', command: P9B_CMD, output: p9bOut(s) }]);
+    expect(indexCandidates(store)).toHaveLength(1);
+    expect(only(audit(s, store)).verdict).toBe('anchored');
+  });
+
+  test('P9c: `git commit -m S -m T && git log -1 --format=%h` (no `-q`; the subject from the input) → `anchored`', () => {
+    const s = seatRepo();
+    const v = verdict(s, [{ id: 'toolu_c1', command: `git commit -m "${SUBJECT}" -m "${T}" && git log -1 --format=%h`, output: `${br(C(s, 9), SUBJECT)}\n${C(s, 9)}` }]);
+    expect(v.verdict).toBe('anchored');
+  });
+
+  test('P9d: P9b\'s call present in two stores under one `tool_use` id → one candidate, not two and not four', () => {
+    const s = seatRepo();
+    const calls = [{ id: 'toolu_c1', command: P9B_CMD, output: p9bOut(s) }];
+    const stores = [oneSeatStore(s, calls), oneSeatStore(s, calls)];
+    expect(indexCandidates(stores)).toHaveLength(1);
+    expect(only(runAudit({ repo: s.repo, base: s.base, head: 'seat-kenya', store: stores, rg: RG })).verdict).toBe('anchored');
+  });
+
+  test('K4: `commit S1 && commit S && git log -1` (no `-q`; makes D, then C) → C anchored from C9 and C40 merged; D\'s candidate is its own', () => {
+    const s = seatRepo();
+    const out = `${br('d'.repeat(9), 'S1')}\n${br(C(s, 9), SUBJECT)}\n${C(s)} ${SUBJECT}`;
+    const store = oneSeatStore(s, [{ id: 'toolu_c1', command: `git commit -m "S1" && git commit -m "${SUBJECT}" && git log -1 --format='%H %s'`, output: out }]);
+    expect(indexCandidates(store).map((c) => c.prefix).sort()).toEqual([C(s), 'd'.repeat(9)].sort());
+    expect(only(audit(s, store)).verdict).toBe('anchored');
+  });
+
+  test('K5: both commits carry subject S — C anchored; D keeps its own D9 candidate (a dedupe keyed on the subject alone would drop it)', () => {
+    const s = seatRepo();
+    const out = `${br('d'.repeat(9), SUBJECT)}\n${br(C(s, 9), SUBJECT)}\n${C(s)} ${SUBJECT}`;
+    const store = oneSeatStore(s, [{ id: 'toolu_c1', command: `git commit -m "${SUBJECT}" && git commit --allow-empty -m "${SUBJECT}" && git log -1 --format='%H %s'`, output: out }]);
+    expect(indexCandidates(store).map((c) => c.prefix).sort()).toEqual([C(s), 'd'.repeat(9)].sort());
+    expect(only(audit(s, store)).verdict).toBe('anchored');
+  });
+
+  test('K3b: #415\'s form without `-q` (heredoc, a newline, `git log -1 --format="%h %s" ;`) → `anchored`: the bracket line is success evidence (a) and the unproven log line names the same commit', () => {
+    const s = seatRepo();
+    const v = verdict(s, [{ id: 'toolu_c1', command: `git commit -F - <<'EOF'\n${SUBJECT}\n\n${T}\nEOF\ngit log -1 --format='%h %s' ;`, output: `${br(C(s, 9), SUBJECT)}\n${C(s, 9)} ${SUBJECT}` }]);
+    expect(v.verdict).toBe('anchored');
+  });
+
+  test('K1: two commit-creating calls in one transcript, each printing P9b\'s two lines → `anomaly` 4, 2 candidates', () => {
+    const s = seatRepo();
+    const v = verdict(s, [
+      { id: 'toolu_c1', command: P9B_CMD, output: p9bOut(s) },
+      { id: 'toolu_c2', command: P9B_CMD, output: p9bOut(s) },
+    ]);
+    expect(v.verdict).toBe('anomaly');
+    expect(v.link).toBe(4);
+    expect(v.detail).toMatch(/^2 candidates/);
+  });
+
+  test('K1b: call 1 prints only the bracket line, call 2 only the log line → `anomaly` 4: the dedupe is per call, never across calls', () => {
+    const s = seatRepo();
+    const v = verdict(s, [
+      { id: 'toolu_c1', command: `git commit -m "${SUBJECT}" -m "${T}"`, output: br(C(s, 9), SUBJECT) },
+      { id: 'toolu_c2', command: "git commit -m 'x' && git log -1 --format='%H %s'", output: `${C(s)} ${SUBJECT}` },
+    ]);
+    expect(v.verdict).toBe('anomaly');
+    expect(v.detail).toMatch(/^2 candidates/);
+  });
+
+  test('K2: K1 with the two calls in two subagent transcripts → `anomaly` 4', () => {
+    const s = seatRepo();
+    const call = (id: string): Call => ({ id, command: P9B_CMD, output: p9bOut(s) });
+    const store = buildStore({
+      session: SESSION,
+      main: mainSpawn(),
+      subagents: { k1: { meta: metaFor('kenya', SPAWN), lines: seatCalls(s, [call('toolu_c1')], 'k1') }, k2: { meta: metaFor('kenya', SPAWN), lines: seatCalls(s, [call('toolu_c2')], 'k2') } },
+    });
+    const v = only(audit(s, store));
+    expect(v.verdict).toBe('anomaly');
+    expect(v.link).toBe(4);
+  });
+
+  test('K3: #415\'s form verbatim (`-q`, heredoc, newline, `git log … ; git log … trailers`) → `anomaly` 4, one unproven candidate (H2b); the dedupe does not apply', () => {
+    const s = seatRepo();
+    const v = verdict(s, [
+      {
+        id: 'toolu_c1',
+        command: `git commit -q -F - <<'EOF'\n${SUBJECT}\n\n${T}\nEOF\ngit log -1 --format='%h %s' ; git log -1 --format='%(trailers:key=Agent,valueonly)'`,
+        output: `cat: illegal option -- A\nusage: cat [-belnstuv] [file ...]\n${C(s, 9)} ${SUBJECT}\nStacy`,
+      },
+    ]);
+    expect(v.verdict).toBe('anomaly');
+    expect(v.link).toBe(4);
+    expect(v.detail).toMatch(/cannot show the commit succeeded/);
+  });
+
+  test('K6: a main-session call and a subagent call both name C, each with P9b\'s shape → `anomaly` 4 (several); one call\'s two lines count once, two calls twice', () => {
+    const s = seatRepo();
+    const call = { id: 'toolu_m', command: P9B_CMD, output: p9bOut(s) };
+    const store = buildStore({ session: SESSION, main: [...mainSpawn(), ...mainCalls([call])], subagents: { k1: { meta: metaFor('kenya', SPAWN), lines: seatCalls(s, [{ ...call, id: 'toolu_c1' }]) } } });
+    expect(indexCandidates(store)).toHaveLength(2);
+    const v = only(audit(s, store));
+    expect(v.verdict).toBe('anomaly');
+    expect(v.detail).toMatch(/^2 candidates/);
+  });
+
+  test('N3b: N3 without `-q` — `[x D9] S1`, then `log -2` prints D, then C → one candidate (D\'s), none for C', () => {
+    const s = seatRepo();
+    const out = `${br('d'.repeat(9), 'S1')}\n${OTHER} S1\n${C(s)} ${SUBJECT}`;
+    const store = oneSeatStore(s, [{ id: 'toolu_c1', command: `git commit -m 'S1' && git log -2 --format='%H %s'`, output: out }]);
+    expect(indexCandidates(store).map((c) => c.prefix)).toEqual([OTHER]);
+    expect(only(audit(s, store)).verdict).toBe('record absent');
+  });
+
+  test('N5b: N5 without `-q` — the main session prints C after its own commit → no candidate for C, and no spurious H3 `FAIL`', () => {
+    const s = seatRepo();
+    const out = `${br('d'.repeat(9), 'S1')}\n${OTHER} S1\n${C(s)} ${SUBJECT}`;
+    const main = [...mainSpawn(), ...mainCalls([{ id: 'toolu_main_d', command: `git commit -m 'S1' && git log -2 --format='%H %s'`, output: out }])];
+    const v = only(audit(s, buildStore({ session: SESSION, main, subagents: {} })));
+    expect(v.verdict).toBe('record absent');
   });
 });
 

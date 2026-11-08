@@ -1403,16 +1403,25 @@ function indexStore(store: string, shape?: StoreShape): Candidate[] {
         if (shape) shape.paired += 1;
         const per = candidateLines(commands.get(b.tool_use_id) as string, resultText(b.content));
         // One candidate per tool call and commit: the [branch sha] line and the log line of one
-        // call are the same candidate.
-        const byKey = new Map<string, Candidate>();
+        // call are the same candidate. They print the SHA at different lengths (9 and 40
+        // characters), so the lines are the same commit when one prefix is a PREFIX of the other
+        // (both are then prefixes of one full SHA) and they show a subject in common — never when
+        // the prefixes name different commits. Lines of different tool calls are never merged
+        // (signing-act ballot § 4.3, "one per pass"; the ruling `2026-11-08-peter-ruling-link4-dedupe`).
+        const merged: Candidate[] = [];
         for (const c of per) {
           const subjects = [c.subject, c.inputSubject].filter((s): s is string => !!s);
           if (subjects.length === 0) continue;
-          const k = `${c.prefix}\0${subjects.join('\0')}`;
-          const prev = byKey.get(k);
-          byKey.set(k, { file: t.file, store, isMain: t.isMain, toolUseId: b.tool_use_id, prefix: c.prefix, subjects, proven: (prev?.proven ?? false) || c.proven });
+          const same = merged.find((m) => (m.prefix.startsWith(c.prefix) || c.prefix.startsWith(m.prefix)) && m.subjects.some((s) => subjects.includes(s)));
+          if (same) {
+            if (c.prefix.length > same.prefix.length) same.prefix = c.prefix;
+            for (const s of subjects) if (!same.subjects.includes(s)) same.subjects.push(s);
+            same.proven = same.proven || c.proven;
+          } else {
+            merged.push({ file: t.file, store, isMain: t.isMain, toolUseId: b.tool_use_id, prefix: c.prefix, subjects, proven: c.proven });
+          }
         }
-        out.push(...byKey.values());
+        out.push(...merged);
       }
     }
   }
