@@ -345,19 +345,18 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     expect(componentsRaw).toContain('progress.node.size.sm');
   }, TIMEOUT);
 
-  // SKIPPED: `validate` fails its "Mathematical relationships" check — a pre-existing
-  // MathematicalRelationshipParser defect that false-fails ~99 correct tokens (exponent
-  // notation, categorical/easing strings, float-rounding, special-case literals). It is a
-  // token-validator/token-governance issue (Ada's domain), unrelated to module resolution,
-  // and out of scope for Spec 118. Re-enable once the parser is fixed.
-  // Tracked: .kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md
-  it.skip('validate passes', () => {
+  // Spec 129 Task 10.1 (Req 13.1): re-enabled. The relationship check classifies by family
+  // (MathematicalRelationshipParser.validateToken), so `validate` passes on unmodified token source
+  // and a token that breaks its declared relationship is still reported (the parser's Jest cases).
+  // Record: .kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md
+  it('validate passes', () => {
     const output = execSync('npx designerpunk validate', {
       cwd: tempDir,
       encoding: 'utf-8',
       timeout: 30_000,
     });
-    expect(output).toContain('✅');
+    expect(output).toContain('✅ Mathematical relationships');
+    expect(output).toContain('All validation checks passed');
   }, TIMEOUT);
 
   /**
@@ -3030,4 +3029,67 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       });
     }, TIMEOUT);
   });
+
+  /**
+   * Spec 129 Task 10 (Req 13.2, 13.3), two `Consumer Guard` cases on a packed install:
+   *  - a consumer component token with an off-grid custom value and no `offGridReason` makes `generate`
+   *    warn, naming the token, and not fail; a value with a reason is silent (design § 12);
+   *  - a consumer `.ts` file importing `SemanticOverrideMap` and `SemanticOverride` from
+   *    `@3fn/core/config` type-checks under `tsc --noEmit` (row 22; the packed `dist/config/index.d.ts`).
+   */
+  describe('Spec 129 Task 10 — component-token custom values and the override types (Req 13.2, 13.3)', () => {
+    let dir: string;
+    const sh = (cmd: string): string => execSync(cmd, { cwd: dir, encoding: 'utf-8', timeout: 90_000, stdio: ['ignore', 'pipe', 'pipe'] });
+
+    beforeAll(() => {
+      dir = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-task10-'));
+      execSync('npm init -y', { cwd: dir, stdio: 'pipe' });
+      execSync(`npm install ${tarballPath} --no-audit --no-fund`, { cwd: dir, stdio: 'pipe', timeout: 60_000 });
+      sh('npx designerpunk init --name Task10 --abbreviation T10 --skip-agents');
+    }, TIMEOUT);
+
+    afterAll(() => {
+      if (dir) fs.rmSync(dir, { recursive: true, force: true });
+    });
+
+    it('an off-grid custom value with no offGridReason: generate warns, naming the token, and does not fail', () => {
+      fs.writeFileSync(
+        path.join(dir, 'src', 'tokens', 'component', 'probe10.ts'),
+        `import { defineComponentTokens } from '@3fn/core/build';\n` +
+          `export const Probe10Tokens = defineComponentTokens({\n` +
+          `  component: 'Probe10',\n  family: 'spacing',\n  tokens: {\n` +
+          `    'gap.odd': { value: 11, reasoning: 'a value off the grid, with no reason' },\n` +
+          `    'gap.reasoned': { value: 13, reasoning: 'a value off the grid, with a reason', offGridReason: 'derived from a 48 target: (48 - 24) / 2 + 1 = 13' },\n` +
+          `    'gap.onGrid': { value: 120, reasoning: 'a value on the grid, high' },\n` +
+          `  },\n});\n`,
+      );
+      const r = require('child_process').spawnSync('npx', ['designerpunk', 'generate'], { cwd: dir, encoding: 'utf-8', timeout: 90_000 });
+      const text = `${r.stdout}\n${r.stderr}`;
+      expect(r.status).toBe(0);
+      expect(text).toContain('✅ System tokens generated');
+      expect(text).toMatch(/Component token probe10\.gap\.odd has a custom value that does not conform/);
+      expect(text).not.toContain('probe10.gap.reasoned has a custom value');
+      expect(text).not.toContain('probe10.gap.onGrid has a custom value');
+      // generated as defined
+      expect(fs.readFileSync(path.join(dir, 'token-index', 'components.yaml'), 'utf-8')).toContain('probe10.gap.odd');
+    }, TIMEOUT);
+
+    it('a consumer .ts file importing SemanticOverrideMap and SemanticOverride from @3fn/core/config type-checks', () => {
+      fs.writeFileSync(
+        path.join(dir, 'overrides-check.ts'),
+        `import type { SemanticOverrideMap, SemanticOverride, ThemeOverridePair } from '@3fn/core/config';\n` +
+          `const one: SemanticOverride = { primitiveReferences: { value: 'gray100' } };\n` +
+          `export const mine: SemanticOverrideMap = { 'color.structure.canvas': one };\n` +
+          `export const pair: ThemeOverridePair = { light: mine, dark: mine };\n`,
+      );
+      fs.writeFileSync(
+        path.join(dir, 'tsconfig.overrides-check.json'),
+        JSON.stringify({ compilerOptions: { strict: true, noEmit: true, module: 'node16', moduleResolution: 'node16', target: 'es2020', skipLibCheck: true, types: [] }, files: ['overrides-check.ts'] }),
+      );
+      const tsc = path.join(PKG_ROOT, 'node_modules', 'typescript', 'bin', 'tsc');
+      const r = require('child_process').spawnSync(process.execPath, [tsc, '-p', 'tsconfig.overrides-check.json'], { cwd: dir, encoding: 'utf-8', timeout: 90_000 });
+      expect({ status: r.status, out: `${r.stdout}${r.stderr}` }).toEqual({ status: 0, out: '' });
+    }, TIMEOUT);
+  });
+
 });

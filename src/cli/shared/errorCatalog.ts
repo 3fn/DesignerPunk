@@ -340,6 +340,20 @@ export function componentTokenFileLoadFailedMessage(file: string, reason: string
   return `generate stopped — ${file} could not be loaded: ${firstLine} Fix the file and run generate again. Nothing was written.`;
 }
 
+/**
+ * `generate` warns when a component token the consumer defined has a custom value that is not
+ * on its family's grid and states no `offGridReason`. A warning, never a failure: failing would
+ * break supported web consumers (Spec 129 Req 13.2); the output is generated as before.
+ * `detail` is the validator's own sentence, which names the token and the grid it missed.
+ */
+export function componentTokenOffGridMessage(token: string, detail: string): string {
+  return (
+    `Component token ${token} has a custom value that does not conform to its family. ${detail} ` +
+    `To fix it, set the value to a point on the grid, reference a primitive token, or add an ` +
+    `offGridReason that says how the value is derived. generate carried on and wrote the token as defined.`
+  );
+}
+
 /** One schema token declaration `generate` could not count, as its warning names it. */
 export interface UnresolvedSchemaTokenLine {
   /** Whose schema: the consumer's own, or DesignerPunk's (the installed package's). */

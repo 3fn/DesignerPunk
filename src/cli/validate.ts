@@ -102,10 +102,17 @@ function validateSemanticReferences(primitives: PrimitiveToken[], semantics: Sem
 function validateMathematicalRelationships(primitives: PrimitiveToken[]): CheckResult {
   const errors: string[] = [];
   const parser = new MathematicalRelationshipParser();
+  // Another primitive's value, for a relationship that names one (lineHeight names its fontSize).
+  const byName = new Map(primitives.map(t => [t.name, t.baseValue]));
+  const resolve = (name: string): number | undefined => {
+    const v = byName.get(name);
+    return typeof v === 'number' ? v : undefined;
+  };
 
   for (const token of primitives) {
-    if (!token.mathematicalRelationship) continue;
-    const result = parser.validate(token.mathematicalRelationship, token.baseValue, token.familyBaseValue);
+    // Spec 129 Task 10.1 (Req 13.1): classified by family, so a categorical family's description is
+    // not evaluated and a formula family's missing or wrong equation is a failure.
+    const result = parser.validateToken(token, resolve);
     if (!result.isValid) {
       errors.push(`${token.name}: ${result.errors.join('; ')}`);
     }

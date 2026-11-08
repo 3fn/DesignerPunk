@@ -63,10 +63,9 @@
     {
       "file": "src/integration/ValidationCoordinator.ts",
       "modules": [
-        "RadiusTokens",
-        "SpacingTokens"
+        "RadiusTokens"
       ],
-      "part": "Spacing and radius primitives",
+      "part": "Radius primitives (the family-conformance rule's base value)",
       "generateReach": "generate: no - not imported by the generate path"
     },
     {

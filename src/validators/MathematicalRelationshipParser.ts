@@ -431,4 +431,257 @@ export class MathematicalRelationshipParser {
     const multiplier = baseValue / familyBaseValue;
     return `base × ${multiplier} = ${familyBaseValue} × ${multiplier} = ${baseValue}`;
   }
+  // ==========================================================================
+  // Family-classified token validation (Spec 129 Task 10.1, design § 12)
+  // ==========================================================================
+
+  /**
+   * Validate one primitive token's `mathematicalRelationship` by its family.
+   *
+   * - **Categorical families** (`color`, `fontFamily`, `easing`, `breakpoint`) state a description.
+   *   It is not evaluated. The decision is by family, never by what the string looks like.
+   * - **Formula families** (every other family) must state an equation that evaluates and agrees
+   *   with the token's `baseValue`. A formula-family token with no equation is a failure.
+   *   `<expression> = <value>` is exact (equal at the precision the string displays); `<expression> ≈ <value>` is within half
+   *   the family's rounding step (see {@link RELATIONSHIP_STEP}); `→ <value>` is a deliberate
+   *   rounding to the next grid value (within one step).
+   * - **Special-case form**: on a strategic-flexibility token only, `special case … = <value>` /
+   *   `percentage = <value>` is accepted when the stated value equals the token's `baseValue`.
+   *
+   * Expressions may use `base` (the family base value), `baseValue` (the token's own value),
+   * numbers, `+ - × ÷ * / x`, parentheses, `^n` and superscript exponents, and the name of another
+   * primitive token (resolved through `resolve`). A trailing parenthetical prose note is ignored.
+   *
+   * The residual (design § D-9): `≈` accepts a rounding error up to half a step, so a wrong value
+   * inside that margin passes.
+   */
+  validateToken(
+    token: {
+      name: string;
+      category: string;
+      baseValue: unknown;
+      familyBaseValue: unknown;
+      mathematicalRelationship: string;
+      isStrategicFlexibility?: boolean;
+    },
+    resolve?: (name: string) => number | undefined
+  ): RelationshipValidationResult {
+    const fail = (...errors: string[]): RelationshipValidationResult =>
+      ({ isValid: false, errors, mathematicallyCorrect: false });
+    const ok = (): RelationshipValidationResult =>
+      ({ isValid: true, errors: [], mathematicallyCorrect: true });
+
+    if (CATEGORICAL_FAMILIES.has(token.category)) return ok();
+
+    const rel = (token.mathematicalRelationship ?? '').trim();
+    if (!rel) return fail(`${token.category} is a formula family and states no equation`);
+    const baseValue = token.baseValue;
+    const familyBase = token.familyBaseValue;
+    if (typeof baseValue !== 'number' || typeof familyBase !== 'number') {
+      return fail(`${token.category} is a formula family but its values are not numbers`);
+    }
+
+    // Strip a trailing prose note: " (…)" whose content has a letter other than the identifiers we know.
+    let text = rel.replace(/\s+\([^()]*[A-Za-z][^()]*\)\s*$/, '');
+    // Superscripts and ^n.
+    text = text.replace(/([\u00b2\u00b3\u00b9\u2070-\u2079]+)/g, m => '^' + [...m].map(c => SUPERSCRIPT[c]).join(''));
+
+    // Special-case form: read only on a strategic-flexibility token (design § 12, A § D-9 item 3).
+    // Any other token states an equation.
+    const special = token.isStrategicFlexibility === true
+      ? /^(special case|percentage)\b[^=]*=\s*(-?[0-9.]+)\s*%?\s*(\([^)]*\))?\s*$/i.exec(rel)
+      : null;
+    if (special) {
+      const stated = parseFloat(special[2]);
+      return Math.abs(stated - baseValue) < 1e-3
+        ? ok()
+        : fail(`special case states ${stated}, but token baseValue is ${baseValue}`);
+    }
+
+    // Split into segments on = ≈ →.
+    const segments: string[] = [];
+    const joiners: Array<'=' | '≈' | '→'> = [];
+    let current = '';
+    for (const ch of text) {
+      if (ch === '=' || ch === '≈' || ch === '→') {
+        segments.push(current.trim());
+        joiners.push(ch);
+        current = '';
+      } else current += ch;
+    }
+    segments.push(current.trim());
+
+    const step = RELATIONSHIP_STEP[token.category] ?? 1;
+    const values: number[] = [];
+    let referencesOwnValue = false;
+    let hasOperation = joiners.length > 0;
+    for (const seg of segments) {
+      if (!seg) return fail(`${token.category} relationship '${rel}' has an empty side of an equation`);
+      try {
+        const ev = new ExpressionEvaluator(seg, familyBase, baseValue, resolve);
+        const value = ev.evaluate();
+        if (ev.sawOperator) hasOperation = true;
+        if (ev.usedOwnValue) referencesOwnValue = true;
+        values.push(value);
+      } catch (e) {
+        return fail(`${(e as Error).message}`);
+      }
+    }
+    if (!hasOperation) {
+      return fail(`${token.category} is a formula family and '${rel}' states no equation`);
+    }
+
+    const errors: string[] = [];
+    // `=` is exact at the precision the string itself displays: where the right-hand side shows a
+    // factor rounded (`16 × 2.027` for 16 × 1.125⁶), the left side's groups and powers are rounded to the
+    // same number of decimals before the comparison, and the two must then be equal (to float noise).
+    // An error that survives that rounding is reported, however small.
+    const decimalsOf = (text: string): number =>
+      Math.max(0, ...(text.match(/[0-9]*\.[0-9]+/g) ?? []).map(n => n.split('.')[1].length));
+    const FLOAT = 1e-9;
+    const tolerance = (j: '=' | '≈' | '→') => (j === '=' ? FLOAT : j === '≈' ? step / 2 : step);
+    for (let i = 0; i < joiners.length; i++) {
+      let left = values[i];
+      if (joiners[i] === '=') {
+        const d = decimalsOf(segments[i + 1]);
+        try {
+          left = new ExpressionEvaluator(segments[i], familyBase, baseValue, resolve, d).evaluate();
+        } catch { /* already evaluated once above */ }
+      }
+      const tol = tolerance(joiners[i]);
+      if (Math.abs(left - values[i + 1]) > tol + FLOAT) {
+        errors.push(
+          `Mathematical relationship incorrect: '${segments[i]}' = ${round(left)} ${joiners[i]} '${segments[i + 1]}' = ${round(values[i + 1])}` +
+          (joiners[i] === '=' ? '' : ` (beyond ${tol})`)
+        );
+      }
+    }
+    if (!referencesOwnValue) {
+      const last = values[values.length - 1];
+      const tol = joiners.length === 0 ? 1e-9 : tolerance(joiners[joiners.length - 1]);
+      if (Math.abs(last - baseValue) > tol + 1e-9) {
+        errors.push(`Mathematical relationship incorrect: ${segments[segments.length - 1]} = ${round(last)}, but token baseValue is ${baseValue}`);
+      }
+    }
+    return errors.length === 0 ? ok() : { isValid: false, errors, mathematicallyCorrect: false, calculatedResult: values[0] };
+  }
+}
+
+/** Families whose relationship string is a description the parser does not evaluate. */
+export const CATEGORICAL_FAMILIES: ReadonlySet<string> = new Set(['color', 'fontFamily', 'easing', 'breakpoint']);
+
+/**
+ * The rounding step of each formula family's stated results, for `≈` (half a step) and `→` (one step).
+ * A family not listed uses 1 (whole pixels).
+ */
+export const RELATIONSHIP_STEP: Readonly<Record<string, number>> = {
+  shadow: 0.01, glow: 0.01, opacity: 0.01, blend: 0.01, scale: 0.01, density: 0.01,
+};
+
+const SUPERSCRIPT: Record<string, string> = {
+  '\u2070': '0', '\u00b9': '1', '\u00b2': '2', '\u00b3': '3', '\u2074': '4',
+  '\u2075': '5', '\u2076': '6', '\u2077': '7', '\u2078': '8', '\u2079': '9',
+};
+
+function round(n: number): number {
+  return Math.round(n * 1e6) / 1e6;
+}
+
+/** Recursive-descent evaluator for one side of a relationship equation. */
+class ExpressionEvaluator {
+  private pos = 0;
+  sawOperator = false;
+  usedOwnValue = false;
+
+  constructor(
+    private readonly src: string,
+    private readonly familyBase: number,
+    private readonly ownValue: number,
+    private readonly resolve?: (name: string) => number | undefined,
+    /** When set, a parenthesised group and a power are rounded to this many decimals as they are read. */
+    private readonly roundGroupsTo?: number
+  ) {}
+
+  private group(v: number): number {
+    return this.roundGroupsTo === undefined ? v : Math.round(v * 10 ** this.roundGroupsTo) / 10 ** this.roundGroupsTo;
+  }
+
+  evaluate(): number {
+    const v = this.expr();
+    this.skip();
+    if (this.pos < this.src.length) {
+      throw new Error(`Invalid operand: ${this.src.slice(this.pos)}`);
+    }
+    return v;
+  }
+
+  private skip(): void {
+    while (this.pos < this.src.length && this.src[this.pos] === ' ') this.pos++;
+  }
+
+  private peek(): string {
+    this.skip();
+    return this.src[this.pos] ?? '';
+  }
+
+  private expr(): number {
+    let v = this.term();
+    for (;;) {
+      const c = this.peek();
+      if (c === '+' || c === '-') { this.pos++; this.sawOperator = true; const r = this.term(); v = c === '+' ? v + r : v - r; }
+      else return v;
+    }
+  }
+
+  private term(): number {
+    let v = this.unary();
+    for (;;) {
+      const c = this.peek();
+      const isX = c === 'x' && !/[A-Za-z0-9]/.test(this.src[this.pos + 1] ?? '');
+      if (c === '×' || c === '*' || isX) { this.pos++; this.sawOperator = true; v = v * this.unary(); }
+      else if (c === '÷' || c === '/') { this.pos++; this.sawOperator = true; v = v / this.unary(); }
+      else return v;
+    }
+  }
+
+  private unary(): number {
+    if (this.peek() === '-') { this.pos++; return -this.unary(); }
+    return this.power();
+  }
+
+  private power(): number {
+    const b = this.atom();
+    if (this.src[this.pos] === '^') {
+      this.pos++;
+      const m = /^[0-9]+/.exec(this.src.slice(this.pos));
+      if (!m) throw new Error(`Invalid exponent in: ${this.src}`);
+      this.pos += m[0].length;
+      this.sawOperator = true;
+      return this.group(Math.pow(b, parseInt(m[0], 10)));
+    }
+    return b;
+  }
+
+  private atom(): number {
+    const c = this.peek();
+    if (c === '(') {
+      this.pos++;
+      const v = this.expr();
+      if (this.peek() !== ')') throw new Error(`Unbalanced parenthesis in: ${this.src}`);
+      this.pos++;
+      return this.group(v);
+    }
+    const num = /^[0-9]*\.?[0-9]+/.exec(this.src.slice(this.pos));
+    if (num) { this.pos += num[0].length; return parseFloat(num[0]); }
+    const id = /^[A-Za-z][A-Za-z0-9.]*/.exec(this.src.slice(this.pos));
+    if (id) {
+      this.pos += id[0].length;
+      if (id[0] === 'base') return this.familyBase;
+      if (id[0] === 'baseValue') { this.usedOwnValue = true; return this.ownValue; }
+      const v = this.resolve?.(id[0]);
+      if (v === undefined) throw new Error(`Invalid operand: ${id[0]}`);
+      return v;
+    }
+    throw new Error(`Invalid operand: ${this.src.slice(this.pos) || this.src}`);
+  }
 }

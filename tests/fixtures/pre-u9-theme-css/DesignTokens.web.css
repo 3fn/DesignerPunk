@@ -1,12 +1,23 @@
 /* GOLDEN: the web CSS `generate` wrote before Spec 129 U9 for Task 14's case (a) fixture.
  *
- * Source SHA : 261cd1a3c2dc39a31dd7179a23b82d346356c500 (the U9 branch's base on `main`, #758)
- * Captured   : 2026-11-08, in a worktree at that SHA, after `npm run build` there
- * Command    : (cd <worktree at 261cd1a3c> && npm pack --pack-destination <dir>) &&
+ * Source SHA : 261cd1a3c2dc39a31dd7179a23b82d346356c500 (the U9 branch's base on `main`, #758), with the two
+ *              token-source files `src/tokens/BlurTokens.ts` and `src/tokens/OpacityTokens.ts` taken from
+ *              4e2a22681a0ce834b690312576116469d042ab4f (the U5 branch, Spec 129 Task 10), which change only
+ *              two `mathematicalRelationship` strings: blur000 '0' -> 'base × 0 = 16 × 0 = 0', and
+ *              opacity100 'Special case: full opacity = 1.0' -> 'base × 12.5 = 0.08 × 12.5 = 1'
+ *              (grant `.kiro/issues/2026-11-08-u5-opacity100-formula-grant.md`, as amended)
+ * Captured   : 2026-11-08 (first capture, at 261cd1a3c alone); re-captured 2026-11-08 for U5 as the Command says,
+ *              after `npm run build` there
+ * Command    : git worktree add --detach <worktree> 261cd1a3c &&
+ *              (cd <worktree> && git checkout 4e2a22681 -- src/tokens/BlurTokens.ts src/tokens/OpacityTokens.ts &&
+ *              npm run build && npm pack --pack-destination <dir>) &&
  *              sh tests/fixtures/pre-u9-theme-css/capture.sh <dir>/3fn-core-16.2.0.tgz <out.css>
  *              then <out.css> with this header prepended (the capture.sh and mutate-fixture.cjs
  *              beside this file shape the fixture: init, three differing map copies, `wcag` light registered)
- * Reproduce  : run the Command at 261cd1a3c; `diff <out.css> <(sed '1,/^\/\* ---- end of header/d' this file)` is empty.
+ * Reproduce  : run the Command; `diff <out.css> <(sed '1,/^\/\* ---- end of header/d' this file)` is empty.
+ * Against the first capture (the same Command without the `git checkout 4e2a22681` step, which reproduces it byte for byte):
+ *              two lines differ, the comment text of blur000 ('0' -> 'base × 0 = 16 × 0 = 0') and of opacity100
+ *              ('Special case: full opacity = 1.0' -> 'base × 12.5 = 0.08 × 12.5 = 1'). Every other byte is unchanged.
  *
  * Before U9, `generate` ignored `config.themes` and read DesignerPunk's own three override maps,
  * so this is the package's `dark`, `wcag` and `dark-wcag` output whatever the copies hold.
@@ -45,7 +56,7 @@
   --blend-500: 0.2;
 
   /* BLUR TOKENS */
-  /* 0 */
+  /* base × 0 = 16 × 0 = 0 */
   --blur-000: 0px;
   /* base × 0.25 = 16 × 0.25 = 4 */
   --blur-025: 4px;
@@ -388,7 +399,7 @@
   --opacity-088: 0.88;
   /* base × 12 = 0.08 × 12 = 0.96 */
   --opacity-096: 0.96;
-  /* Special case: full opacity = 1.0 */
+  /* base × 12.5 = 0.08 × 12.5 = 1 */
   --opacity-100: 1;
 
   /* RADIUS TOKENS */
