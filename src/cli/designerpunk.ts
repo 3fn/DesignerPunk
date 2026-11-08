@@ -26,12 +26,16 @@ import { runAttach } from './attach';
 import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
-import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
+import { isProductTokenStale } from './staleness';
 import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import { resolveComponentRoots } from './shared/mcpDataRoots';
-import { resolveComponentSources } from './shared/componentSources';
+import { resolvePackageComponentSource } from './packageComponentSource';
+import {
+  readDeclaredNames, readPackagePrimitiveNames, findMissingReferences, missingReferenceMessage,
+} from './shared/componentTokenReferences';
+import { scanReservedKotlinPackages, packageComponentSourceNames, reservedPackageMessage } from './shared/reservedKotlinPackages';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import {
   partialCaseMessage,
@@ -228,32 +232,18 @@ export async function runGenerate(force = false) {
   // files from the installed package, for every package component the consumer has not replaced.
   // Never in DesignerPunk's own repo, whose component directory is already the second source.
   const packageRoot = resolvePackageRoot(__dirname);
-  const inConsumerRepo = path.resolve(packageRoot) !== path.resolve(generateRoot);
+  const packageSourceResult = resolvePackageComponentSource(
+    resolveGenerateComponentRoots(dsRoot, packageRoot), packageRoot, generateRoot,
+  );
   let packageSource: PackageComponentTokenSource | undefined;
-  if (inConsumerRepo) {
-    const universe = resolveComponentSources(resolveGenerateComponentRoots(dsRoot, packageRoot));
-    const packageRank = universe.roots.indexOf(path.resolve(packageRoot, 'src', 'components', 'core'));
-    let pkgName = '@3fn/core';
-    let pkgVersion = '';
-    try {
-      const j = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf-8')) as { name?: string; version?: string };
-      pkgName = j.name ?? pkgName;
-      pkgVersion = j.version ?? '';
-    } catch { /* the install is damaged; the degradation message below says what is missing */ }
-    if (packageRank < 0 || !fs.existsSync(universe.roots[packageRank])) {
-      console.warn(`⚠️  ${consumerDegradationMessage(
-        "DesignerPunk's component token definitions",
-        'src/components/core',
-        'DesignerPunk\'s own component tokens (for example avatar.size.md) are not in your token index or your native token output',
-      )}\n`);
-    } else {
-      packageSource = {
-        name: pkgName,
-        version: pkgVersion,
-        winners: universe.winners.filter(w => w.rank === packageRank),
-        losers: universe.shadowed.filter(s => s.source.rank === packageRank),
-      };
-    }
+  if (packageSourceResult.state === 'ready') {
+    packageSource = packageSourceResult.source;
+  } else if (packageSourceResult.state === 'damaged') {
+    console.warn(`⚠️  ${consumerDegradationMessage(
+      "DesignerPunk's component token definitions",
+      'src/components/core',
+      "DesignerPunk's own component tokens (for example avatar.size.md) are not in your token index or your native token output",
+    )}\n`);
   }
   let componentTokens: ReturnType<typeof loadComponentTokens>;
   try {
@@ -337,6 +327,31 @@ export async function runGenerate(force = false) {
       const report = schemaTokenReport(indexResult, packageRoot, generateRoot);
       if (report.warning) console.warn(`⚠️  ${report.warning}\n`);
     }
+    // The name contract over the component tier (Req 5.4): REPORT a primitive DesignerPunk's component
+    // tokens read that your generated output no longer defines, on any platform. A report, never a failure.
+    const harvested = registered.filter(isPackageComponentToken);
+    if (harvested.length > 0) {
+      const packageNames = readPackagePrimitiveNames(packageRoot);
+      if (packageNames.names) {
+        const missing = findMissingReferences(
+          harvested.filter(t => t.primitiveReference).map(t => ({ token: t.name, primitive: t.primitiveReference! })),
+          readDeclaredNames(config.outputDir),
+          packageNames.names,
+        );
+        const tierPath = `${(path.relative(process.cwd(), config.tokenSourceRoot) || '.').split(path.sep).join('/')}/`;
+        for (const m of missing) console.warn(`⚠️  ${missingReferenceMessage(m, tierPath)}\n`);
+      }
+    }
+    // The reserved Kotlin packages (O-11): a warning naming each file, never a failure.
+    if (packageSource) {
+      const reserved = scanReservedKotlinPackages({
+        root: generateRoot,
+        skipDirs: [config.outputDir, config.tokenSourceRoot],
+        componentSourceNames: packageComponentSourceNames(packageRoot),
+      });
+      for (const f of reserved) console.warn(`⚠️  ${reservedPackageMessage(f)}`);
+      if (reserved.length > 0) console.warn('');
+    }
     console.log('✅ System tokens generated');
   } catch (err) {
     systemFailed = true;
@@ -348,9 +363,7 @@ export async function runGenerate(force = false) {
   if (config.productTokens) {
     try {
       if (!isProductTokenStale(config, force)) {
-        const outputPaths = getProductTokenOutputPaths(config);
-        const oldest = Math.min(...outputPaths.map(p => fs.statSync(p).mtimeMs));
-        console.log(`⏭ Product tokens up-to-date (source unchanged since ${new Date(oldest).toLocaleString()})`);
+        console.log('⏭ Product tokens up-to-date (the output equals a fresh generation)');
       } else {
         if (force) console.log('🔄 Product tokens regenerated (--force)');
         generateProductTokens(config);
@@ -393,9 +406,7 @@ export async function runProductOnly(force = false) {
   }
 
   if (!isProductTokenStale(config, force)) {
-    const outputPaths = getProductTokenOutputPaths(config);
-    const oldest = Math.min(...outputPaths.map(p => fs.statSync(p).mtimeMs));
-    console.log(`⏭ Product tokens up-to-date (source unchanged since ${new Date(oldest).toLocaleString()})`);
+    console.log('⏭ Product tokens up-to-date (the output equals a fresh generation)');
     return;
   }
 

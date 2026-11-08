@@ -35,4 +35,4 @@ Named before code:
 
 ## Found later
 
-(none yet)
+- **unlisted** (2026-11-08, 13.2): `src/cli/sync/ComponentTier.ts`, `src/cli/freshness.ts`, `src/cli/packageComponentSource.ts` (new, under `src/cli/**`) and `src/cli/generateProductTokens.ts` (a `renderTo` option). State: built here. Needed because the freshness check has to render the product tokens somewhere other than the output directory.

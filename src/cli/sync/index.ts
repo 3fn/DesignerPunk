@@ -88,6 +88,8 @@ import {
 import { confirmGitignoreBlock } from './Prompter';
 import { findDesignSystemRoot } from '../shared/bornRepo';
 import { resolveComponentRoots } from '../shared/mcpDataRoots';
+import { componentTierSection, type ComponentTierOutcome } from './ComponentTier';
+import type { TsModuleLoader } from '../../config/scopedTsRequire';
 import { assessIndexedPackageComponentTokens, type IndexedPackageTokensAssessment } from '../shared/packageComponentTokens';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from '../shared/personalNote';
 import type { CreationRow, PersonalNoteStatus } from '../shared/personalNote';
@@ -181,6 +183,8 @@ export interface SyncOptions {
   repairMcpConfig?: boolean;
   /** Test seam — the config-module loader for the name contract's output directory (Task 6). */
   configLoader?: ConfigModuleLoader;
+  /** Test seam — the runtime-TS loader for the freshness check's regeneration (Spec 129 Req 5.8). */
+  tsLoader?: TsModuleLoader;
   /**
    * `--migrate-legacy` (C7 Migration item 4; Task 16.5): remove the release-1 legacy copies, then — in the
    * same run — attach the agent layer. Offered and honored ONLY when attach is available.
@@ -232,6 +236,8 @@ export interface SyncOutcome {
   relocation?: RelocationResult;
   /** Ordered events (fetches, repair offers) — the ordering instrument (C7 step 6). */
   trace: string[];
+  /** The component tier beside the name contract (Spec 129 Req 5.4, 5.8) — report only. */
+  componentTier?: ComponentTierOutcome;
   /** The name-contract check (Req 5A) — report only, never a write. */
   nameContract?: NameContractResult | { status: 'cannot-check'; lines: string[] };
   /** The type contract (DD11; fork-1 ruling B) — report only; the hash is re-recorded only when the manifest is written. */
@@ -603,7 +609,11 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
   //     tier is never written (5.8). Reads the package's compiled contract and her
   //     generated web CSS; no output → `cannot check`, never clean.
   outcome.nameContract = await nameContractSection(projectRoot, pkg.root, options.configLoader);
-  sections.push({ title: '🔤 Name contract (your tokens vs. the names our components reference):', lines: outcome.nameContract.lines });
+  outcome.componentTier = await componentTierSection(projectRoot, pkg.root, { configLoader: options.configLoader, tsLoader: options.tsLoader });
+  sections.push({
+    title: '🔤 Name contract (your tokens vs. the names our components reference):',
+    lines: [...outcome.nameContract.lines, ...outcome.componentTier.lines],
+  });
 
   // 6c. The type contract (DD11; Peter's fork-1 ruling (B), 2026-09-27). Only for a
   //     repo with a manifest. When the recorded hash differs, the PREVIOUS members come
@@ -870,6 +880,11 @@ function pendingOffers(
     );
   }
   if (outcome.tokenIndex?.state === 'stale') out.push('running npx designerpunk generate (your token-index/ is behind the installed package)');
+  if (outcome.componentTier?.stale) out.push('running npx designerpunk generate (your generated output is behind its inputs)');
+  if (outcome.componentTier && outcome.componentTier.missing > 0) {
+    const n = outcome.componentTier.missing;
+    out.push(`${n} token${n === 1 ? '' : 's'} DesignerPunk's component tokens read that your output does not define`);
+  }
   return out;
 }
 

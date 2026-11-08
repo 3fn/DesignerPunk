@@ -1,15 +1,22 @@
 /**
  * Product Token Staleness Detection
  *
- * Compares modification times of product token YAML source files against
- * generated output files to determine if regeneration is needed.
+ * Decides whether product token output needs regenerating by CONTENT, not by file times
+ * (Spec 129 U8, design § 11, Req 5.8): the check renders the product tokens into a temporary
+ * directory and compares each file, byte for byte, with the output on disk. File times moved
+ * with `git checkout`, a copy or a restore, and said "fresh" for output written before an
+ * upgrade (`.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`, R5).
+ * A package upgrade shows because the generated header names the package version.
  *
  * @see Spec 114 design.md § "isProductTokenStale"
  */
 
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import type { ResolvedConfig } from '../config/ConfigLoader';
+import { generateProductTokens } from './generateProductTokens';
+import { sameOutput } from './freshness';
 
 const PRODUCT_OUTPUT_FILES = [
   'ProductTokens.web.css',
@@ -26,12 +33,14 @@ export function getProductTokenOutputPaths(config: ResolvedConfig): string[] {
 }
 
 /**
- * Check whether product token output is stale relative to YAML source.
+ * Check whether product token output is stale against the inputs `generate` would read now.
  *
  * Returns true if:
  * - --force flag is present
- * - Any output file is missing
- * - Any source YAML file is newer than the oldest output file
+ * - there is no product token source
+ * - any output file is missing
+ * - a fresh render differs from any output file (outside a header timestamp)
+ * - the fresh render cannot be made (the real run will then say why)
  */
 export function isProductTokenStale(config: ResolvedConfig, force = false): boolean {
   if (force) return true;
@@ -41,41 +50,22 @@ export function isProductTokenStale(config: ResolvedConfig, force = false): bool
   }
 
   const outputPaths = getProductTokenOutputPaths(config);
-
-  // If any output file is missing, always regenerate
-  let oldestOutputMtime = Infinity;
   for (const outputPath of outputPaths) {
     if (!fs.existsSync(outputPath)) return true;
-    const mtime = fs.statSync(outputPath).mtimeMs;
-    if (mtime < oldestOutputMtime) oldestOutputMtime = mtime;
   }
 
-  // Find all YAML source files
-  const sourceFiles = findYamlFiles(config.productTokens);
-  if (sourceFiles.length === 0) return true;
-
-  // If any source is newer than the oldest output, it's stale
-  for (const sourceFile of sourceFiles) {
-    const mtime = fs.statSync(sourceFile).mtimeMs;
-    if (mtime > oldestOutputMtime) return true;
-  }
-
-  return false;
-}
-
-/** Recursively find all .yaml files in a directory. */
-function findYamlFiles(dir: string): string[] {
-  const results: string[] = [];
-  if (!fs.existsSync(dir)) return results;
-
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...findYamlFiles(fullPath));
-    } else if (entry.name.endsWith('.yaml') || entry.name.endsWith('.yml')) {
-      results.push(fullPath);
+  const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'dp-product-fresh-'));
+  try {
+    generateProductTokens(config, { renderTo: scratch });
+    for (const outputPath of outputPaths) {
+      const rendered = path.join(scratch, path.basename(outputPath));
+      if (!fs.existsSync(rendered)) return true; // nothing rendered (no categories): not fresh
+      if (!sameOutput(fs.readFileSync(rendered, 'utf-8'), fs.readFileSync(outputPath, 'utf-8'))) return true;
     }
+    return false;
+  } catch {
+    return true;
+  } finally {
+    fs.rmSync(scratch, { recursive: true, force: true });
   }
-  return results;
 }

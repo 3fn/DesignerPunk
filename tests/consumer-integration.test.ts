@@ -2347,6 +2347,11 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     let tier: string;
     const run = (cmd: string): string => execSync(cmd, { cwd: tier, encoding: 'utf-8', timeout: 90_000, stdio: ['ignore', 'pipe', 'pipe'] });
     const out = (name: string): string => fs.readFileSync(path.join(tier, 'dist', 'tokens', name), 'utf-8');
+    /** stdout and stderr together: `generate` prints its warnings on stderr. */
+    const runBoth = (args: string[]): { status: number | null; text: string } => {
+      const r = require('child_process').spawnSync('npx', args, { cwd: tier, encoding: 'utf-8', timeout: 90_000 });
+      return { status: r.status, text: `${r.stdout}\n${r.stderr}` };
+    };
 
     beforeAll(() => {
       tier = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-component-tier-'));
@@ -2417,6 +2422,94 @@ describe('Consumer Integration (Spec 106 R8)', () => {
         run('npx designerpunk generate');
       }
     }, TIMEOUT);
+
+    /**
+     * Req 5.4 / 5.8 (13.2): the name contract over the component tier, and the content freshness check.
+     * Each case edits the consumer's source and restores it, regenerating after.
+     */
+    describe('the name contract over the component tier, and freshness (13.2)', () => {
+      const sizing = (): string => path.join(tier, 'src', 'tokens', 'SizingTokens.ts');
+      const dropSize500 = (text: string): string => text.replace(/  size500: \{[\s\S]*?platforms: generateSizingPlatformValues\(SIZING_BASE_VALUE \* 5\)\n  \},\n/, '');
+      const sync = (): string => runBoth(['designerpunk', 'sync', '--dry-run']).text;
+
+      it('deleting a referenced primitive: generate reports it for every platform, and still succeeds', () => {
+        const original = fs.readFileSync(sizing(), 'utf-8');
+        expect(dropSize500(original)).not.toBe(original);
+        try {
+          fs.writeFileSync(sizing(), dropSize500(original));
+          const r = runBoth(['designerpunk', 'generate']);
+          const printed = r.text;
+          expect(printed).toMatch(/component tokens: DesignerPunk's .*avatar\.size\.md.* reads? 'size500', which your generated ios, android, web output does not define/);
+          expect(out('DesignTokens.ios.swift')).not.toMatch(/let size500\b/);
+          expect(out('DesignTokens.android.kt')).not.toMatch(/val size_500\b/);
+          expect(out('DesignTokens.web.css')).not.toContain('--size-500:');
+          // A report, not a failure.
+          expect(printed).toContain('✅ System tokens generated');
+          expect(r.status).toBe(0);
+          // sync reports the same reference from the installed package's tokens.
+          expect(sync()).toMatch(/component tokens: DesignerPunk's .*avatar\.size\.md.* reads? 'size500', which your generated ios, android, web output does not define/);
+        } finally {
+          fs.writeFileSync(sizing(), original);
+          run('npx designerpunk generate');
+        }
+        expect(sync()).not.toContain("'size500', which your generated");
+      }, TIMEOUT);
+
+      it('an upgrade that introduces a reference: sync names the tokens the installed version adds', () => {
+        const original = fs.readFileSync(sizing(), 'utf-8');
+        const indexFile = path.join(tier, 'token-index', 'components.yaml');
+        const indexOriginal = fs.readFileSync(indexFile, 'utf-8');
+        try {
+          fs.writeFileSync(sizing(), dropSize500(original));
+          run('npx designerpunk generate');
+          // The index as an older version wrote it: no avatar.size.md yet (the reference is new in the installed version).
+          const idx = loadYaml(fs.readFileSync(indexFile, 'utf-8')) as { tokens: Record<string, unknown> };
+          for (const k of Object.keys(idx.tokens)) if (k.startsWith('avatar.')) delete idx.tokens[k];
+          fs.writeFileSync(indexFile, require('js-yaml').dump(idx));
+          const printed = sync();
+          expect(printed).toMatch(/'size500', which your generated ios, android, web output does not define \(new in @3fn\/core \S+: avatar\.size\./);
+          expect(printed).not.toMatch(/new in @3fn\/core \S+: [^)]*buttonicon/);
+        } finally {
+          fs.writeFileSync(sizing(), original);
+          run('npx designerpunk generate');
+          fs.writeFileSync(indexFile, indexOriginal);
+        }
+      }, TIMEOUT);
+
+      it('freshness by content: an input that changes after the last generate is said so by the name-contract run, and generate clears it', () => {
+        expect(sync()).not.toContain('is not what `npx designerpunk generate` would write now');
+        const original = fs.readFileSync(sizing(), 'utf-8');
+        const block = /(size500: \{[\s\S]*?baseValue: SIZING_BASE_VALUE \* )5(,[\s\S]*?generateSizingPlatformValues\(SIZING_BASE_VALUE \* )5(\))/;
+        try {
+          fs.writeFileSync(sizing(), original.replace(block, '$16$26$3'));
+          // File times are NOT what decides: put the edited source's mtime far in the past.
+          const past = new Date(Date.now() - 86_400_000);
+          fs.utimesSync(sizing(), past, past);
+          expect(sync()).toMatch(/your generated token output in dist\/tokens is not what `npx designerpunk generate` would write now: .*DesignTokens\.ios\.swift/);
+          run('npx designerpunk generate');
+          expect(sync()).not.toContain('is not what `npx designerpunk generate` would write now');
+        } finally {
+          fs.writeFileSync(sizing(), original);
+          run('npx designerpunk generate');
+        }
+      }, TIMEOUT);
+
+      it('a .kt file of the consumer\'s in a reserved package: generate warns naming the file, and still succeeds', () => {
+        const dir = path.join(tier, 'android-app', 'src');
+        fs.mkdirSync(dir, { recursive: true });
+        const kt = path.join(dir, 'Mine.kt');
+        const inTokenSource = path.join(tier, 'src', 'tokens', 'platforms', 'android', 'MotionTokens.kt');
+        expect(fs.existsSync(inTokenSource)).toBe(true); // init copies it, in com.designerpunk.tokens: the token source root is skipped
+        try {
+          fs.writeFileSync(kt, 'package com.designerpunk.components.avatar\n\nobject Mine\n');
+          const printed = runBoth(['designerpunk', 'generate']).text;
+          expect(printed).toContain('android-app/src/Mine.kt is in the Kotlin package com.designerpunk.components.avatar, which is reserved to DesignerPunk');
+          expect(printed).not.toContain('MotionTokens.kt is in the Kotlin package');
+        } finally {
+          fs.rmSync(path.join(tier, 'android-app'), { recursive: true, force: true });
+        }
+      }, TIMEOUT);
+    });
 
     it('a group the consumer declares replaces ours, and generate says so', () => {
       const dir = path.join(tier, 'src', 'tokens', 'component');
