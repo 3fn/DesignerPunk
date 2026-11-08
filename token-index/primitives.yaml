@@ -2976,7 +2976,7 @@ tokens:
   blur000:
     family: blur
     value: 0
-    formula: '0'
+    formula: base × 0 = 16 × 0 = 0
     platforms:
       web: '--blur-000'
       ios: blur000

@@ -17,6 +17,8 @@ import { MathematicalRelationshipParser } from '../validators/MathematicalRelati
 import type { PrimitiveToken, SemanticToken, ValidationResult } from '../types';
 import { TokenCategory, SemanticCategory } from '../types';
 import { SPACING_BASE_VALUE } from '../tokens/SpacingTokens';
+import { SIZING_BASE_VALUE } from '../tokens/SizingTokens';
+import type { ComponentTokenWithGridReason } from '../build/tokens/defineComponentTokens';
 import { RADIUS_BASE_VALUE } from '../tokens/RadiusTokens';
 
 /**
@@ -132,6 +134,7 @@ export interface FamilyConformanceResult {
  * @param family - The token family name (e.g., 'spacing', 'radius', 'fontSize', 'color')
  * @param value - The numeric value to validate
  * @param primitiveRegistry - The primitive token registry for checking existing primitives
+ * @param offGridReason - The derivation of a value that is off the family's grid (spacing, sizing)
  * @returns Validation result with valid flag, message, and optional warning
  * 
  * @see src/tokens/SpacingTokens.ts - SPACING_BASE_VALUE
@@ -141,44 +144,51 @@ export interface FamilyConformanceResult {
 export function validateFamilyConformance(
   family: string,
   value: number,
-  primitiveRegistry: PrimitiveTokenRegistry
+  primitiveRegistry: PrimitiveTokenRegistry,
+  offGridReason?: string
 ): FamilyConformanceResult {
   switch (family) {
     // ============================================
     // FORMULA-BASED FAMILIES: BASE_VALUE × multiplier
     // ============================================
     
-    case 'spacing': {
-      const multiplier = value / SPACING_BASE_VALUE;
-      
-      // Valid multipliers match those used in SpacingTokens.ts primitive definitions
-      // Check if multiplier produces a value derivable from the base
-      // Multipliers: 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8 (0.25 increments up to 8)
-      const isValidMultiplier = multiplier >= 0 && 
-                                 multiplier <= 8.0 && 
-                                 (multiplier * 4) % 1 === 0; // 0.25 increments
-      
-      if (!isValidMultiplier) {
-        return { 
-          valid: false, 
-          message: `Spacing value ${value} is not derivable from SPACING_BASE_VALUE (${SPACING_BASE_VALUE}). ` +
-                   `Use SPACING_BASE_VALUE * multiplier (e.g., ${SPACING_BASE_VALUE} * 1.25 = ${SPACING_BASE_VALUE * 1.25}).`
+    // Spec 129 Task 10.2 (Req 13.2, design § 12 D-8): a custom value conforms when it is on its
+    // family's grid, BASE × k × step, k a whole number, with no upper cap. Spacing and sizing share
+    // base 8 and step 0.25 (a 2 px grid). An off-grid value conforms only with a non-empty
+    // `offGridReason` (the derivation); the check enforces that the reason exists, not that it is good.
+    case 'spacing':
+    case 'sizing': {
+      const isSizing = family === 'sizing';
+      const baseValue = isSizing ? SIZING_BASE_VALUE : SPACING_BASE_VALUE;
+      const baseName = isSizing ? 'SIZING_BASE_VALUE' : 'SPACING_BASE_VALUE';
+      const multiplier = value / baseValue;
+      const onGrid = multiplier >= 0 && Math.abs(multiplier * 4 - Math.round(multiplier * 4)) < 1e-9;
+
+      if (!onGrid) {
+        if (typeof offGridReason === 'string' && offGridReason.trim() !== '') {
+          return { valid: true, message: '' };
+        }
+        return {
+          valid: false,
+          message: `${isSizing ? 'Sizing' : 'Spacing'} value ${value} is not derivable from ${baseName} (${baseValue}). ` +
+                   `Use ${baseName} * multiplier (e.g., ${baseValue} * 1.25 = ${baseValue * 1.25}), ` +
+                   `or state how the value is derived in an offGridReason.`
         };
       }
-      
+
       // Check if this value matches an existing primitive (suggest reference instead)
-      const existingPrimitive = primitiveRegistry.query({ category: TokenCategory.SPACING })
+      const existingPrimitive = primitiveRegistry.query({ category: isSizing ? TokenCategory.SIZING : TokenCategory.SPACING })
         .find((t: PrimitiveToken) => t.baseValue === value);
-      
+
       if (existingPrimitive) {
-        return { 
-          valid: true, 
+        return {
+          valid: true,
           message: '',
           warning: `Value ${value} matches existing primitive '${existingPrimitive.name}'. ` +
                    `Consider using a reference instead of a custom value.`
         };
       }
-      
+
       return { valid: true, message: '' };
     }
 
@@ -729,7 +739,10 @@ export class ValidationCoordinator {
       }
     } else {
       // Rule 3: Validate family conformance for custom values (Requirement 3.2, 3.3)
-      const familyResult = validateFamilyConformance(token.family, token.value, this.primitiveRegistry);
+      const familyResult = validateFamilyConformance(
+        token.family, token.value, this.primitiveRegistry,
+        (token as ComponentTokenWithGridReason).offGridReason,
+      );
       
       if (!familyResult.valid) {
         errors.push(
@@ -777,4 +790,24 @@ export class ValidationCoordinator {
       warnings: allWarnings,
     };
   }
+}
+
+/**
+ * The errors a component token's custom value raises under its family's rule, as the strings
+ * `ValidationCoordinator.validateComponentToken` would give: empty for a token that conforms,
+ * that references a primitive, or whose family has no rule. What `generate` warns with for a
+ * consumer's token and the repository's lane fails on for DesignerPunk's own (Spec 129 Task 10.2).
+ */
+export function componentTokenConformanceErrors(
+  token: RegisteredComponentToken,
+  primitiveRegistry: PrimitiveTokenRegistry = new PrimitiveTokenRegistry()
+): string[] {
+  if (token.primitiveReference) return [];
+  const result = validateFamilyConformance(
+    token.family, token.value, primitiveRegistry,
+    (token as ComponentTokenWithGridReason).offGridReason,
+  );
+  return result.valid
+    ? []
+    : [`Token "${token.name}" value ${token.value} does not conform to ${token.family} family pattern. ${result.message}`];
 }

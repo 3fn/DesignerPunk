@@ -101,9 +101,23 @@ export interface TokenWithReference<T extends PrimitiveTokenReference> {
 export interface TokenWithValue {
   /** Value conforming to family's value definition pattern */
   value: number;
+  /**
+   * For a value off the family's grid (spacing and sizing: `BASE × k × step`), how the value is
+   * derived. Required to be non-empty for an off-grid value to conform; a value on the grid needs none.
+   * The check enforces that the reason exists, not that it is good: a reviewer reads it when the
+   * token is created (Spec 129 design § 12).
+   */
+  offGridReason?: string;
   /** Required explanation of why this token exists */
   reasoning: string;
 }
+
+/**
+ * A registered component token as `defineComponentTokens` records it: the registry's shape plus the
+ * `offGridReason` of a value-path token that states one. The field rides on the harvested object;
+ * the registry's own type is unchanged.
+ */
+export type ComponentTokenWithGridReason = RegisteredComponentToken & { offGridReason?: string };
 
 /**
  * Union type for token definitions
@@ -272,13 +286,15 @@ export function defineComponentTokens<T extends Record<string, TokenDefinition>>
     } else {
       // Token with family-conformant value
       values[key] = definition.value;
-      registeredTokens.push({
+      const registered: ComponentTokenWithGridReason = {
         name: tokenName,
         component,
         family,
         value: definition.value,
         reasoning: definition.reasoning,
-      });
+        ...(definition.offGridReason !== undefined ? { offGridReason: definition.offGridReason } : {}),
+      };
+      registeredTokens.push(registered);
     }
   }
 
