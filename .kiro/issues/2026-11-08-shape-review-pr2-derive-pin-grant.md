@@ -19,13 +19,13 @@ The pin is one rendered-hash rule in `derive.ts`, in Lina's standing scope (`can
 - `renderedHashOf` stays as it is.
 - A row-aware wrapper is added. A row with rendered pieces hashes them exactly as today. A row with none hashes `hashEntry({ disposition, destination })`, with `destination` omitted where the row has none.
 - The SCOPE comment at `derive.ts` L547–553 is rewritten, because "hashes the empty piece list" becomes false.
-- In `consumer-rendering.test.ts`, the L254 assertion of the empty-list hash asserts the new value. Two assertions are added: a re-disposition moves the hash, and a destination change moves it. `consumer-rendering.ground-truth-spans.test.ts` L216 stays unchanged.
+- In `consumer-rendering.test.ts`, the L254 assertion of the empty-list hash asserts the new value. Two assertions are added: a re-disposition moves the hash, and a destination change moves it. *(Added at Lina's review of the hunk, 2026-11-08, her non-blocker: a third assertion, that a row with rendered pieces hashes exactly as `renderedHashOf` does today.)* `consumer-rendering.ground-truth-spans.test.ts` L216 stays unchanged.
 
 The callers, `regrounding/freshness.ts` (the sweep) and `regrounding/verify-signing-chain.ts` (the print mode), are already in my standing scope and are not listed below.
 
 ---
 
-**Grant paths**: `tools/agent-generator/derive.ts` (the row-aware rendered-hash wrapper and its SCOPE comment; `renderedHashOf` unchanged); `tools/agent-generator/__tests__/consumer-rendering.test.ts` (the L254 empty-row assertion updated to the new value, and two added assertions: a re-disposition and a destination change each move it)
+**Grant paths**: `tools/agent-generator/derive.ts` (the row-aware rendered-hash wrapper and its SCOPE comment; `renderedHashOf` unchanged); `tools/agent-generator/__tests__/consumer-rendering.test.ts` (the L254 empty-row assertion updated to the new value, and three added assertions: a re-disposition and a destination change each move it, and a row with rendered pieces hashes exactly as `renderedHashOf`)
 
 Not `.github/**`, so no `**ARMING**:` line is owed (rule 8). No governance-law path.
 
@@ -38,5 +38,5 @@ Branch `chore/apply-signing-act-shape-review-pr2` (Thurgood), the application's 
 ## Acceptance
 
 1. The `derive.ts` diff is the wrapper plus the rewritten SCOPE comment, and `renderedHashOf` is byte-unchanged.
-2. The `consumer-rendering.test.ts` diff is the L254 assertion plus the two added assertions.
+2. The `consumer-rendering.test.ts` diff is the L254 assertion, the three added assertions, and `hashEntry` added to the file's existing `../regrounding/hash` import.
 3. Lina's review of the hunk is cited in the fixing PR's body.
