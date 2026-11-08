@@ -15,9 +15,8 @@ import { jestConfigModuleLoader } from '../../__tests__/helpers/configModuleLoad
 import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import { generateTokenFiles } from '../../generators/generateTokenFiles';
 import { resolveTokens } from '../resolveTokens';
-import { resolvePlatformOutputs } from '../shared/platformOutputs';
+import { resolvePlatformOutputs, productTokenOutputPaths } from '../shared/platformOutputs';
 import { checkGeneratedOutputFresh } from '../freshness';
-import { productTokenOutputPaths } from '../generateProductTokens';
 
 describe('PLATFORM_KEYS', () => {
   it('is web, ios and android, and the validation reads it', () => {

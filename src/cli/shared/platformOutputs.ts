@@ -8,7 +8,7 @@
 
 import * as path from 'path';
 import { PLATFORM_KEYS } from '../../config/platforms';
-import type { PlatformKey } from '../../config/platforms';
+import type { PlatformKey, PlatformOutputs } from '../../config/platforms';
 import { platformUnknownMessage, platformOutputInvalidMessage, platformOutputOutsideRootMessage } from './errorCatalog';
 
 /** The folder of each platform the config names, absolute. Throws, naming the entry, on an unknown key or a folder outside the project. */
@@ -36,4 +36,17 @@ export function resolvePlatformOutputs(
     resolved[key as PlatformKey] = { output: abs };
   }
   return resolved;
+}
+
+/**
+ * Where each product token file is written. The web file stays under `<output>/product`; a native file goes to its
+ * platform's folder when `platforms:` names one (Spec 129 Req 12.2), else under `<output>/product` too.
+ */
+export function productTokenOutputPaths(config: { outputDir: string; platforms?: PlatformOutputs }): { web: string; ios: string; android: string } {
+  const productDir = path.join(config.outputDir, 'product');
+  return {
+    web: path.join(productDir, 'ProductTokens.web.css'),
+    ios: path.join(config.platforms?.ios?.output ?? productDir, 'ProductTokens.ios.swift'),
+    android: path.join(config.platforms?.android?.output ?? productDir, 'ProductTokens.android.kt'),
+  };
 }

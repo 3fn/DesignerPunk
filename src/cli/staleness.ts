@@ -15,7 +15,8 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import type { ResolvedConfig } from '../config/ConfigLoader';
-import { generateProductTokens, productTokenOutputPaths } from './generateProductTokens';
+import { generateProductTokens } from './generateProductTokens';
+import { productTokenOutputPaths } from './shared/platformOutputs';
 import { sameOutput } from './freshness';
 
 /**

@@ -14,19 +14,7 @@ import { emitCSS } from '../build/product/emitters/WebEmitter';
 import { emitSwift } from '../build/product/emitters/SwiftEmitter';
 import { emitKotlin } from '../build/product/emitters/KotlinEmitter';
 import type { ResolvedConfig } from '../config/ConfigLoader';
-
-/**
- * Where each product token file is written. The web file stays under `<output>/product`; a native file goes to its
- * platform's folder when `platforms:` names one (Spec 129 Req 12.2), else under `<output>/product` too.
- */
-export function productTokenOutputPaths(config: ResolvedConfig): { web: string; ios: string; android: string } {
-  const productDir = path.join(config.outputDir, 'product');
-  return {
-    web: path.join(productDir, 'ProductTokens.web.css'),
-    ios: path.join(config.platforms?.ios?.output ?? productDir, 'ProductTokens.ios.swift'),
-    android: path.join(config.platforms?.android?.output ?? productDir, 'ProductTokens.android.kt'),
-  };
-}
+import { productTokenOutputPaths } from './shared/platformOutputs';
 
 export interface GenerateProductTokensOptions {
   /** Write here instead of `<outputDir>/product`, and print nothing: the freshness check renders into a temporary directory. */
