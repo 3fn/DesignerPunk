@@ -31,9 +31,18 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: kenya
-canonicalHash: sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
+canonicalHash: sha256:43836080021834c69157a5c96f97c19f5b81f471bf18a8ad5ef0546f43baf308
 items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, scope-11, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17
 date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): Spec 129 Task 16, edit (a), `scope-2`'s key path.** A new act, read fresh. It supersedes the re-confirmation immediately below (canonicalHash `sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a`, 17 items, same date, the native-lane ballot).
+- **What changed**: one line of `### In Scope` in `canonical/agents/kenya.md`. `scope-2` read `theme-varying colors via `@Environment(\.{abbreviation}Theme)``, a key path no generated output defines; it now reads `@Environment(\.dpTheme)`, the key path the output defines (`DPThemeKey`, `EnvironmentValues.dpTheme`, read in a generate at `2d9944ba9`). I drafted the text, and Thurgood committed it verbatim in `448d4fe7d` (F12′: I never commit my own charter). The overlay line lost the clause "once your generated output includes it", which is now true without saying so, and the overlay pin was bumped to the new hash in the same commit. Nothing else in the unit changed: `git diff origin/main HEAD -- canonical/agents/kenya.md` shows one hunk in this unit.
+- **What I read, in this session, through tool results**: the whole `### In Scope` unit of `canonical/agents/kenya.md`; the whole `#in-scope` record in `canonical/operative-sets/kenya.yaml`; the unit as the regenerated consumer rendering holds it (`canonical/_consumer-output/_canonical/agents/kenya.md`, the `### In Scope` list); the overlay unit; and `git diff origin/main HEAD` for `canonical/agents/kenya.md`.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#in-scope`): `sha256:43836080021834c69157a5c96f97c19f5b81f471bf18a8ad5ef0546f43baf308`. It equals the overlay pin `## @unit #in-scope @`.
+- **Items re-read against the unit**: all 17 item texts are verbatim substrings of the unit as it now stands (checked by script). `scope-2`'s record text was re-quoted by the profile author to the new line, and I checked the quote against the charter and against the rendering: it matches both. `scope-1` and `scope-3` to `scope-17` are unchanged and still operative for the reasons in the record below. `scope-2` is operative: an implementation that reads theme colours from an environment key other than `\.dpTheme` violates it.
+- **Ruling: CONFIRMED at 17 items, not corrected.**
+
+**Superseded record (native-lane ballot re-confirmation, same unit, `sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a`):**
 
 **Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, items 2 and 3 (edit site 4).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e`, 8 items).
 - **What changed**: ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z) added one bullet to `### In Scope` in `canonical/agents/kenya.md`: the native compile harness's iOS lane. It was applied in Thurgood's commit `b46dff5d3` on `chore/apply-native-lane-ownership-r2`, with the record's items `scope-9` to `scope-17` and the re-pinned overlay unit. Nothing else in the unit changed.
