@@ -31,13 +31,14 @@ This is not a 123 accident. **Any spec whose plan seats owners by domain, rather
 > 2. **Who.** The grant covers the parent's PRIMARY agent **and every secondary agent named on the same row**. **A secondary's access rides the same row, under the same extent and duration.** Consulted agents named without a tier receive no grant.
 > 3. **Duration.** The grant holds **on that unit's branch only**, and **expires when the unit merges**. It does not carry to `main`, to other branches, or to later units.
 > 4. **Activation.** The grant is activated by **Peter's merge of the `tasks.md` that contains the row**. An unmerged row grants nothing.
-> 5. **What it does not change.** The grant **adds to, never replaces**, the agent's charter write scope. **Charter write scopes are otherwise unchanged.** The grant **confers no ratification authority**: governance-law paths remain subject to record-first ballots and the Peter-merge carve-out.
+> 5. **What it does not change.** The grant **adds to, never replaces**, the agent's charter write scope. **Charter write scopes are otherwise unchanged.** The grant **confers no ratification authority**: governance-law paths remain subject to record-first ballots and the Peter-merge carve-out. **It never covers a `.github/**` path.** Only an issue-row grant (ballot `2026-09-27-ci-regime-standing-scope` § 3; `.kiro/issues/README.md` rule 8) or a charter standing scope covers one. A Primary Artifacts line that names a `.github/**` path names what it rests on and the one seat that may write it: an issue-row grant by the record's path and its owner, or a standing scope by the seat that holds it and the scope's label or its ballot and clause, as that seat's charter names it. The row grants nothing over it. A `.github/**` need found after the row merges is filed as an issue-row record in its own PR, which merges before the edit.
+> *(Amended 2026-11-07 by ballot `2026-11-07-github-grants-are-issue-row-grants`, item 1. Prior text, superseded: the clause above without its last five sentences, at `314dbaa75`.)*
 > 6. **Audit.** Edits outside a parent's listed artifacts remain out of scope. **Claims passes audit edit paths against the list; a path outside it is a finding on the executing agent.**
 > 7. **Trace.** A Primary Artifact must trace to the parent's requirements or design components. A listed path with no such trace is a tasks-round finding, so the list cannot be used to widen scope beyond the work.
 
 **The same four substantive points, in short**:
 - **(i)** A merged row grants the seated agent, and the named secondaries, write scope over exactly that parent's listed Primary Artifacts, on that unit's branch, expiring at the unit's merge (clauses 1–4).
-- **(ii)** It is additive only: it conveys no ratification authority, leaves the governance carve-out intact, and leaves charter scopes otherwise unchanged (clause 5).
+- **(ii)** It is additive only: it conveys no ratification authority, leaves the governance carve-out intact, leaves charter scopes otherwise unchanged, and never covers a `.github/**` path (clause 5).
 - **(iii)** An out-of-list edit is a claims-pass finding (clause 6).
 - **(iv)** Every listed Primary Artifact must trace to requirements or design, or its listing is a tasks-round finding (clause 7).
 

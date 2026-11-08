@@ -85,11 +85,21 @@ date: 2026-09-29
 ## `#coherent-units-the-merge-granularity`
 
 confirmer: stacy
-canonicalHash: sha256:4bd3b64a6e82bcdcc9065d9eb7c42162e1da6c6fbd00988fa2d3f74137684632
+canonicalHash: sha256:6d55794d7cc2603763fd52cba47a3870f8d8728107f49fcbd9611fe7ac4eb28a
 items: coherent-units-the-m-1, coherent-units-the-m-2, coherent-units-the-m-3, coherent-units-the-m-4, coherent-units-the-m-5, coherent-units-the-m-6, coherent-units-the-m-7
-date: 2026-09-29
+date: 2026-11-07
 
-**Ruling: CONFIRMED at 7, as drafted.**
+**Re-confirmed 2026-11-07 (Req 11.6.5d).** The whole unit, read at `d60ecface`.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-07-github-grants-are-issue-row-grants.md` (RATIFIED, Peter, 2026-11-07T23:28:57Z; #745), item 3 under F-1 (a). One sentence and one dated pointer are added to the Write scope bullet (`-6`). Nothing else in the unit moved (`git diff d60ecface^ d60ecface` on the doc: one line).
+  - The doc edit and the re-quoted item text are Thurgood's authoring (`d60ecface`), not this act.
+- **Text, verified**: item 3's After text, with `<date>` read as `2026-11-07`, occurs in the unit byte for byte. `-6` equals the doc's bullet without its `- ` marker (742 characters) and occurs once. All seven item texts are verbatim substrings, each occurring once.
+- **Item grain**: `-6` stays one `obligation`. The new sentence narrows the same grant (which paths a row covers), so a rendering that keeps the grant keeps the narrowing; splitting would change no credit. Its label is unchanged and still true.
+- **The hash**: the canonicalHash moves from `sha256:4bd3b64a6e82bcdcc9065d9eb7c42162e1da6c6fbd00988fa2d3f74137684632` to the value above. I computed it myself, as `sha256` over the unit's bytes from `partition(splitFrontmatter(...).body)`, and again over a raw slice of the file from the unit's heading to `### Branch Cleanup`; both agree. Only then did I compare it with `operative-set-freshness`, which reports the same value.
+- **Not compared**: the overlay pin. It still reads `sha256:4bd3b64a…` (`stale-overlay`), because its re-ground is the profile author's act and is not on this branch.
+
+**Ruling: CONFIRMED at 7 items.**
+
+**Confirmed 2026-09-29: CONFIRMED at 7, as drafted.**
 
 ## `#branch-cleanup`
 
