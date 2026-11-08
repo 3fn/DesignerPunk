@@ -24,3 +24,5 @@
 
   Stacy's F1 cites this record.
 - **Go for U12** (Tasks 17 and 18).
+
+*Path correction, 2026-11-08, from the orchestrator: the grant record is at the issues root, `.kiro/issues/2026-11-08-u5-opacity100-formula-grant.md`. It was never archived, and Ada's correction line went there. Its rule-5 close and archive are owed to the steward's walk.*
