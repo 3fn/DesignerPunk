@@ -271,9 +271,17 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:5af175a1382bb2c8a1ae48571e10071486b5f6404e739702094a12b86d8ffa79
+canonicalHash: sha256:b9f3cb8659e8f7eea3b8ff7a76ef914b693064ae6281dc0be427045d8d1b7151
 renderedHash: sha256:eaed5dad0116f1571c1ed2fd4da6a10c81e5afa85214f1cabe2321fb5e84d34f
-date: 2026-11-01
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, edit (c)): ASSENT to the re-point, `surviving: []`.** A new act, read fresh; the earlier entries below stand as history.
+- **What changed**: the canonical cue lost its second sentence, "Note that the Swift output has no Spec-094 theme surface … in this repo or in a consumer's `generate` output", which was false once item (i) shipped, and now says "The Swift output carries the theme surface described in § iOS Theming (Spec 094)". I drafted it, Thurgood committed it in `448d4fe7d`.
+- **What I read, in this session, through tool results**: the consumer rendering of the cue, unchanged: cc `.claude/agents/kenya.md` and kiro `kenya-prompt.md`, *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*; the canonical member in the charter's frontmatter; the overlay `@entry` pin; this row's `removals`.
+- **Why it holds.** The rendering makes no claim about the theme surface, and what it says is true: `npx designerpunk generate` writes the platform token files and the product tokens. It does not name the theme Swift, which is now emitted; the omission is not false, and the surface is described in `#ios-theming-spec-094`, which I signed in the act before this one. The re-point (`npm run generate:platform-tokens` to `npx designerpunk generate`, subtraction-1) is unchanged.
+- **Hashes.** `canonicalHash` moves `5af175a1...` to `b9f3cb86...` (`hashEntry` over `entryTree(frontmatter)` of `canonical/agents/kenya.md`, recomputed by me; equal to the overlay `@entry` pin). `renderedHash` stays `eaed5dad...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/kenya.md', 'frontmatter', 'commands[platform-tokens]')`).
+
+**Earlier acts on this row, kept as history (last: 2026-11-01):**
 
 **Final re-sign 2026-09-29, after Thurgood's suffix fix `7e5af8be` and regen `8ea88c2f`: ASSENT to the re-point, `surviving: []`. My refusal is RESOLVED.**
 - **The rendering now reads** *"regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*.
