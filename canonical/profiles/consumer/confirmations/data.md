@@ -31,9 +31,16 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: data
-canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
+canonicalHash: sha256:fa54f8cf858c8d1c441c911b7c59cbcff4064990a50cb11ae99e5ae9c6f4fd23
 items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, scope-11, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17
 date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d, C16): Spec 129 U11, Task 16.2's text.** A new act, read fresh. Item `scope-2` moves with the canonical text; the other 16 items are unchanged. The record below is superseded (canonicalHash `sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e`, 17 items).
+- **What changed**: one bullet. `canonical/agents/data.md` `#in-scope` bullet 2 now reads "theme-varying colors via `LocalDPTheme.current`" where it read "`Local{Abbreviation}Theme.current`". Thurgood committed my drafted text verbatim at `448d4fe7d` (Task 16.2, profile-author act under F12′); the overlay pin and the `scope-2` text moved with it, and Lina regenerated at `e10072c9d`. No other line of the unit changed.
+- **What I read, in this session, through tool results**: the whole unit in `canonical/agents/data.md` (`### In Scope`, 13 lines, with the Android-lane bullet); the same unit as rendered in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md` (12 lines each); the diff of `448d4fe7d` for `canonical/agents/data.md`, `canonical/operative-sets/data.yaml` and `data.overlay.md`; the `#in-scope` row in `data.dispositions.yaml` with its two removals. Compared line by line: the three renderings differ from the canonical unit in two lines only, bullet 3 (re-pointed to the shipped sources, `subtraction-5`) and the Android-lane bullet (removed, `subtraction-1`).
+- **The hash**: I computed it myself, with `hashText` over `partition(splitFrontmatter(src).body).units` for `#in-scope` in `canonical/agents/data.md` at `e10072c9d`: `sha256:fa54f8cf858c8d1c441c911b7c59cbcff4064990a50cb11ae99e5ae9c6f4fd23`. It equals the overlay pin `## @unit #in-scope @ sha256:fa54f8cf…` and the sweep's "canonical unit is now" value.
+- **Items re-read against the unit**: each of the 17 item texts is a verbatim substring of the unit and occurs once (checked by script). `scope-2` reads "Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `LocalDPTheme.current`", the unit's bullet 2 byte for byte. It stays operative: I can break it by reading a theme-varying colour from anywhere but `LocalDPTheme.current`. `scope-9` to `scope-17` are unchanged and cover the Android-lane bullet as before.
+- **Ruling: CONFIRMED at 17 items, not corrected.** The 2026-11-08 and 2026-09-29 rulings below stand.
 
 **Re-confirmed 2026-11-08 (Req 11.6.5d, C16): the native-lane ownership ballot, site 2.**
 - **What changed**: one new last bullet in `#in-scope`, "**The native compile harness's Android lane …**". Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled at 2026-11-08T00:33:06Z), items 1 and 3. Thurgood applied it as author at `b46dff5d3`, with F-5 (a) in the "Not yours" list (`harness/README.md` is "Thurgood's; you review its hunks in your sections") and F-4 (b) leaving `d2-check.ts` bare. I read the ballot's site-2 after-text and the applied bullet, and they agree once those two ruled choices are applied.
@@ -61,9 +68,27 @@ date: 2026-11-08
 ## `#android-theming-spec-094`
 
 confirmer: data
-canonicalHash: sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9
-items: theming-1, theming-2, theming-3, theming-4, theming-5, theming-6
-date: 2026-09-29
+canonicalHash: sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62
+items: theming-1, theming-2, theming-3, theming-4, theming-5, theming-6, theming-7, theming-8, theming-9
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d, C16): Spec 129 U11, Task 16.2's text.** A new act, read fresh. The unit now teaches the theme surface `generate` writes, so the set moves from 6 to 9 items. The note's `items:` line read 6 against the record's 9 after Thurgood's re-quote at `448d4fe7d`; it is rewritten here to the record's 9. The record below is superseded (canonicalHash `sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9`, 6 items).
+- **A false claim caught and corrected before this act**: my first draft of bullet 1 said "the semantic colours are not on `DesignTokens`". `DesignTokens` carries static colour members (`accessibility_focus_color`, `color_icon_optical_balance`). Bullet 1 now says the theme-varying colour semantics are not on `DesignTokens`, which still carries the static colour members; `theming-1` is re-quoted to match. I did not confirm the earlier text.
+- **What changed**: bullets 1 to 4 of the old unit ("generate produces no theme types today", the `CompositionLocalProvider(Local{Abbreviation}Theme …)` bullet, dark mode, the `{Abbreviation}` uppercase rule) are replaced by six bullets: the `LocalDPTheme.current.<name>` read; the fixed contract (`data class DesignerPunkTheme`, `val LocalDPTheme`) and the base-light default outside a provider; the `<Name>Themes` holder; the `<Name>ThemeFamily` enum and the `<Name>Theme(family, darkTheme)` provider; the one-mode fallback to base; and product tokens read as `LocalDPTheme.current.<name>` inside composition scope. The static-tokens bullet and the ground-truth bullet are unchanged. Thurgood committed my drafted text verbatim at `448d4fe7d`; Lina regenerated at `e10072c9d`.
+- **What I read, in this session, through tool results**: the whole unit in `canonical/agents/data.md` (`### Android Theming (Spec 094)`, 12 lines) and as rendered in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md`; the diff of `448d4fe7d` for `canonical/agents/data.md`, `canonical/operative-sets/data.yaml` and `data.overlay.md`. Compared line by line: the three renderings equal the canonical unit except the last bullet, where the removal `subtraction-1` is re-keyed to the installed package's snapshots (unchanged from the prior act).
+- **The hash**: I computed it myself, with `hashText` over `partition(splitFrontmatter(src).body).units` for `#android-theming-spec-094` in `canonical/agents/data.md` at `e10072c9d`: `sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62`. It equals the overlay pin `## @unit #android-theming-spec-094 @ sha256:aa54dd17…` and the sweep's "canonical unit is now" value.
+- **Items re-read against the unit**: each of the 9 item texts is a verbatim substring of the unit and occurs once (checked by script), in the unit's order. Each is operative, since an implementation can break each one:
+  - `theming-1`: read a theme-varying colour semantic from anywhere but `LocalDPTheme.current`, or expect one on `DesignTokens`;
+  - `theming-2`: write against a name other than `DesignerPunkTheme` or `LocalDPTheme`;
+  - `theming-3`: expect `LocalDPTheme.current` to follow the system scheme with no provider;
+  - `theming-4`: write a `Dark` family entry;
+  - `theming-5`: wrap content with the wrong provider call, or never pass `darkTheme`;
+  - `theming-6`: register a one-mode theme and expect its own look in both schemes;
+  - `theming-7`: read a theme-varying product token outside composition scope;
+  - `theming-8`: reach for a CompositionLocal for a static token;
+  - `theming-9`: read the package snapshots for themed values.
+  **Residual, stated rather than absorbed**: the `<Name>Themes` holder bullet, the `<Name>ThemeFamily` entries sentence, the "Each entry's KDoc" sentence, the default-name provider sentence and the `Wcag` exemption are not items. Under the 5c reading (a stated name or shape the implementation builds against is operative) a reviewer could count some of them, and I drafted this set without them. Today the renderings state all of them verbatim, so no floor finding is missed; if a later rendering drops one, no item would catch it. I confirm the set as drafted and leave adding items to a later act.
+- **Ruling: CONFIRMED at 9 items, not corrected.** The 2026-09-29 rulings below stand.
 
 **Ruling: 6 → 4 items.** Removed `theming-1` ("Generated Kotlin output includes: …"), an inventory statement of what the generator emits; nothing in it directs the implementation. Removed `theming-4` (`{Abbreviation}` uppercase), a description of the generator's naming choice and its rationale; code that writes `Dp` is a compile error, not a breached norm. Kept `theming-2`, `theming-3` (directives), `theming-5` ("no CompositionLocal needed" directs where static tokens are read) and `theming-6` (ground truth live).
 
@@ -72,9 +97,16 @@ date: 2026-09-29
 ## `#product-tokens-spec-108109`
 
 confirmer: data
-canonicalHash: sha256:10bcc691b24d63a64c4f80707d9f60c6407f435903083ae3e8212945afa9f631
+canonicalHash: sha256:eaceed7f3ccd009e887b205c070a7c612136bc8203a767ad3d784375433d4295
 items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5, product-tokens-6
-date: 2026-10-27
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d, C16): Spec 129 U11, Task 16.2's text.** A new act, read fresh. The record below is superseded (canonicalHash `sha256:10bcc691b24d63a64c4f80707d9f60c6407f435903083ae3e8212945afa9f631`, 6 items). The unit is retained, so there is no re-sign.
+- **What changed**: one line. `product-tokens-3` and its unit line now read "accessing `LocalDPTheme.current.{prop}`" where they read "`Local{Abbreviation}Theme.current.{prop}`". Thurgood committed my drafted text at `448d4fe7d`; Lina regenerated twice, last at `e10072c9d`.
+- **What I read, in this session, through tool results**: the whole unit in `canonical/agents/data.md` (`### Product Tokens (Spec 108/109)`, 10 lines) and as rendered in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md`: all three equal the canonical unit line for line.
+- **The hash**: I computed it myself, with `hashText` over `partition(splitFrontmatter(src).body).units` for `#product-tokens-spec-108109` at `e10072c9d`: `sha256:eaceed7f3ccd009e887b205c070a7c612136bc8203a767ad3d784375433d4295`. The unit is retained and carries no overlay pin; the value equals the sweep's "canonical unit is now".
+- **Items re-read against the unit**: each of the 6 item texts is a verbatim substring of the unit and occurs once (checked by script). `product-tokens-3` is operative: I can break it by reading the colour outside composition scope or from another name.
+- **Ruling: CONFIRMED at 6 items, not corrected.** The rulings below stand.
 
 **Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8a).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e`, 6 items). The unit is retained, so there is no re-sign (ballot § 7).
 - **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8a, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/data.md` L301 (L297 before site 8b's insert at `8e6818685`) replaces *"Author new tokens … when you discover values Leonardo didn't anticipate"* with: a product token is authored when the screen spec names it; a value the spec did not anticipate is a need the spec missed, surfaced to Leonardo and never filled silently or with a hard-coded value; Product-Token-Governance § "Authoring Workflow" (routed) says when it may be written and what the code holds until the outcome; a safe-area, system-bar or IME inset is the platform's runtime value (`WindowInsets`), never a token, and only spacing added to it can be a need. It is my R1 text. In the same commit the profile author re-quoted `product-tokens-6`. I checked by script that L301 equals § 14's site 8a block for `data.md` on `main` at `bad7222ef` byte for byte.
