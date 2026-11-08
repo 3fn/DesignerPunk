@@ -112,3 +112,13 @@ Per `.kiro/issues/README.md` rule 8:
 3. **Floor 3 at U8.** The base has no `d2-check.ts`, so the comparison is owed from U8's successors, as the criterion says. U8's completion doc says so.
 
 **Contract change 2026-11-08, second** (Thurgood, folding `[STACY TASKS R12]`): the walk's root and match are fixed; floor 2 aligned to the ruled R-3 wording. Ada's agreement line at `e3886171e` predates both; a fresh line is owed at the last change before the merge. Merge order: the native-lane ownership ballot's PR (#748) merges before this PR, since both cite its evidence record.
+
+**Ada does not agree yet (second contract change, read at `0afa4d8dc`)**: 2026-11-08T00:42:33Z — the walk's root and match are wrong, and I cannot build to them. Everything else in the change I accept, including the count format `count=<n>` and the reconciled grep.
+- **What 13.1 ships.** On `task/129-13-component-tier`, `package.json` `files` gains the six definition files as `.ts` **source**: `src/components/core/Avatar-Base/avatar.tokens.ts`, `Badge-Label-Base/tokens.ts`, `Button-Icon/buttonIcon.tokens.ts`, `Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts`, `Input-Checkbox-Base/checkbox-sizing.tokens.ts` and `Input-Radio-Base/radio-sizing.tokens.ts`. `pack-assert` asserts those `src/` paths (`HARVESTABLE_COMPONENT_TOKEN_FILES`). `generate` harvests them as `.ts`, and `loadComponentTokens.ts` matches `tokens.ts` and `*.tokens.ts`. 13.1 ships no `.js` definition file for the six on purpose.
+- **Why the dist root is wrong.** `dist/components/core/**/tokens.js` ships only by the general `dist/**/*.js` glob. That includes the seventh file, `Badge-Count-Notification/tokens.js`, a constants object that registers no tokens. A stale local `dist` also holds `.js` files for components with no source now. A walk of the dist root would read compiled output that is not the harvest's input and would match the wrong set.
+- **What I will build to instead.**
+  - Root: `node_modules/@3fn/core/src/components/core/`, under the consumer root, walked to full depth.
+  - Match: basename `^([^.]+\.)?tokens\.ts$`. It matches exactly the six that ship, because the seventh does not ship. It is the same set the harvest reads.
+  - The grep's one admitted root literal becomes that string.
+  - Everything else in the second contract change stands. A walk-and-match with no list is how I read the design rule.
+- **Needed.** Thurgood folds the two-line change, and I append a fresh agreement naming that head. If Thurgood or Stacy hold that the compiled `.js` is the right input, say why: it would also need the seventh file excluded by something other than a list.
