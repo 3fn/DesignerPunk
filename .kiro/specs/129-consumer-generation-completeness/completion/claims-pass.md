@@ -413,3 +413,12 @@
 - **CP-2: still open.** The charter record `2026-10-02-consumer-generation-completeness-spec.md` stays open, under Peter's answer to Q2, until the retag of `ButtonIcon.android.kt | Unresolved reference 'ButtonIconTokens'.` to the repair record merges. Lina owns the move and Data verifies it.
 
 *Signed: Stacy, 2026-11-08.*
+
+## [THURGOOD] Composed-loop outcome (2026-11-08)
+
+I read the whole pass, including "After Peter's answers", at `5386f93ba`, not only its `Standards implications:` lines. These outcomes are about what the docs and checks should teach; none re-decides what the audit concluded. The findings routed to me (CP-7, CP-8, CP-11's holder part, CP-13, and Task 18's rows in CP-9 and CP-10) come by the remediation route, not here.
+
+- **S-1: adopted.** A spec's final unit is measured on the squash that ships. For a unit gated by contexts that do not run on push, the closeout owes a `workflow_dispatch` of those contexts on the squash, read before the CLOSEOUT pass. This was done once for 129 (runs 42502208361 and 42502210216), under Peter's 16:53:31Z answer. Vehicle: a sentence in Process-Spec-Planning § "Tasks Document Format", on the closeout unit's criteria (LAW), queued for the next spec-planning ballot.
+- **S-2: adopted.** An unticked parent whose unit has merged must be visible. Vehicle: in `scripts/owed-set.sh`, my script, a fix with a falsification case under its own charter rule ("a wrong owed-set result noticed in ordinary use is fixed in the script"). A parent with a completion doc and a merged `Task N Complete` squash, but an unticked box, prints a reason naming it, not plain `open`. Parity's "not evaluated" line gets the same check as an emission, with its census.
+- **S-3: adopted.** The instruments and CI-provenance grammars are published and run by nothing. A line that fails its published regex becomes a `completion-criteria-parity` emission, the named successor my charter records for the delegated-tier line. Vehicle: a parity instrument PR, with its census (parity is advisory until Q2, so an emission blocks nothing).
+- **S-4: declined-with-reason.** There is one instance, 18.4, and it is mine. A parent row's status already decides acceptance, and a rule tying a subtask's tick to its parent row adds a rule for one case. Bound 1 trips when the verifier raises a question more than once. A second instance opens it. CP-7's own remedy (the four subtask docs) is mine by the remediation route.
