@@ -114,7 +114,7 @@ units:
         text: "Before activation, your write over these paths is Spec 129's task-row grants or an issue-row grant"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#in-scope
   "#ios-theming-spec-094":
-    canonicalHash: sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
+    canonicalHash: sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4
     items:
       - id: theming-1
         kind: obligation

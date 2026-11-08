@@ -57,9 +57,18 @@ date: 2026-11-08
 ## `#ios-theming-spec-094`
 
 confirmer: kenya
-canonicalHash: sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
-items: theming-1, theming-2, theming-3, theming-4, theming-5
-date: 2026-09-29
+canonicalHash: sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4
+items: theming-1, theming-2, theming-3, theming-4, theming-5, theming-6, theming-7, theming-8, theming-9, theming-10
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): Spec 129 Task 16, the theming text, second cut.** A new act, made fresh on `task/129-16-theming-text-r2`; it supersedes the earlier act on `refs/pull/775/head` (`c08bf6751`) under Peter's ruling (g) of 2026-11-08T12:20:05Z. It also supersedes the record immediately below (canonicalHash `sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9`, 5 items).
+- **What changed**: the `### iOS Theming (Spec 094)` unit of `canonical/agents/kenya.md` now describes the theme surface `npx designerpunk generate` writes (`DesignerPunkTheme`, `DPThemeKey`, `\.dpTheme`, the `<Name>Themes` holder, the `<Name>ThemeFamily` provider, the one-mode fallback), after Thurgood's corrections (`448d4fe7d`, `89aa1604d`). The profile author re-drafted the record at 10 items.
+- **What I read, in this session, through tool results**: the whole unit, printed by `sed -n '294,304p' canonical/agents/kenya.md` (the heading through the blank line before `### Product Tokens (Spec 108/109)`); the whole `#ios-theming-spec-094` record, printed by `sed -n '116,156p'` and `sed -n '152,162p'` of `canonical/operative-sets/kenya.yaml`; and the section I am replacing, printed by `sed -n '57,67p'` of this file.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#ios-theming-spec-094`): `sha256:3066f30864a65fb05c6e982f458af3f5edabdf5c4d02859a32162e87edf0ade4`. It equals the overlay pin `## @unit #ios-theming-spec-094 @`.
+- **Items re-read against the unit**: all 10 item texts are verbatim substrings of the unit as printed (checked by a script written for this act). Each is violable by an implementation: `theming-1` (colour semantics read through `\.dpTheme`), `theming-2` (the fixed contract names), `theming-3` (no provider means base light), `theming-4` (the `.environment(\.dpTheme, ...)` form), `theming-5` (the family has no `dark` case and no raw value), `theming-6` (the `.<name>Theme(_ family:)` provider), `theming-7` (the one-mode fallback and its two remedies), `theming-8` (product tokens that reference a theme-varying colour are read from `\.dpTheme`), `theming-9` (static tokens need no environment access), `theming-10` (ground truth is live). Not items: the holder's member list, the `Equatable` struct naming and the per-case doc-comment remark, which describe generated output without directing the implementation.
+- **Ruling: CONFIRMED at 10 items, not corrected.**
+
+**Superseded record (the 2026-09-29 reinstatement, same unit, `sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9`):**
 
 **Ruling: CORRECTED, 5 → 4 items.** Removed `theming-1` (*"Generated Swift output includes: …"*). It inventories what the generator emits and directs nothing, and an implementation can't violate a description of generator output. The operative consumption rules are `theming-2` to `theming-4`. `theming-4` stays: reading static tokens through the environment violates *"no environment access needed"*.
 
