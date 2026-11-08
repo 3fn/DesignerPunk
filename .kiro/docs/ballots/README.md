@@ -23,7 +23,7 @@
 
 **Why (the 2026-07-05 lesson):** during this directory's first ballot, an applying agent refused a relayed ratification claim it could not verify — a refusal that added friction to a true ratification while providing no protection against a false one (the relaying session held the same write access and applied the edits itself). The gap was structural: authority existed only as a claim in a message. This protocol makes it a verifiable artifact instead — the same principle as the rest of the system's mechanical turn: *claims are suggestions; records are contracts.*
 
-**End state (Spec 125 Phase 0+):** once the PR-gated workflow exists, ratification of governance-law changes becomes **Peter's PR approval** (branch protection + code-owner review on `governance/`) — platform-verified authority, superseding step 1's manual record for the cases the gate covers. The committed-record protocol remains for artifacts outside the gate's reach.
+**End state:** ratification of governance-law changes becomes **Peter's PR approval** (branch protection + code-owner review on the governance-law paths) — platform-verified authority, superseding step 1's manual record for the cases the gate covers — only when the gated-surfaces scope of register row `record-first-ratification` (`governance/classification-map.md`) is `armed`. The PR-gated workflow alone did not deliver it: code-owner review needs a PR-authoring identity distinct from Peter's, chartered in `.kiro/issues/2026-11-08-125b-u3-governance-layer.md`. The committed-record protocol remains for artifacts outside the gate's reach. *(Ballot 2026-11-08-125b-u3-rehome item 4.)*
 
 ## Conventions
 
