@@ -311,7 +311,7 @@ Then, once you have restarted your agent session:
 
 **What the agent does**:
 - Installs `@3fn/core`, reads section "2. CONSUME — the reference corpus, no init" in the install guide the package ships, and runs its `attach` command with `--reference` and your agent tool as the target. That writes the MCP configuration and its approvals, and no agents. Your agent tool may ask you to approve each command.
-- Hands the restart to you. The session that ran the commands cannot see the servers they configured; the reason is step 5 of "3. BECOME — birth".
+- Hands the restart to you. The session that ran the commands cannot see the servers they configured; the reason is step 4 of "3. BECOME — birth".
 - After the restart, asks the Application MCP for `get_component_catalog()`, then `find_components({ context: "forms" })`.
 
 **How you know it worked**: the catalog comes back as a list of components with their names, families and readiness, and the forms query names form components such as `Input-Text-Base` and `Button-CTA`. More checks are in "Verify — Explore the Component Catalog".
