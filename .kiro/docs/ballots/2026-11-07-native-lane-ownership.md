@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-07 (drafted 2026-11-07T23:28:53Z; review round 1 folded 2026-11-07T23:55:17Z; review round 2 folded 2026-11-08T00:09:10Z, `date -u`)
 **Drafted by**: Data (Android platform engineer; author of `harness/android/**`, `probe-kotlin.ts` and `parse-kotlin.ts` under Spec 129 Task 4), holding the pen at Peter's direction (§ 1). **Kenya writes the iOS clause** (§ 3 item 2, § 4 sites 3, 4 and 9 (b)), written in her seat at 2026-11-07T23:39:02Z.
-**Status**: **RATIFIED (Peter, 2026-11-08T00:24:24Z)**, F-4 excepted. Peter's words, verbatim, with the line breaks shown as ` / `: "Re: F-1, (a) / Re: F-2, Keep / Re: F-3, Keep / Re: F-4, Do they collectively have a better idea? / Re: F-5, (a), Thurgood / Ratified". The orchestrator recorded them with `date -u` at receipt in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-lane-ballot-ratified.md` (`a0e42481a`), which reads "Ratified" as including § 8's "Also ruled by this ballot" list, and stated that reading back to Peter. **F-4 is not ruled**: Peter asked the seats for a better idea, and until he answers, the ballot's own F-4 fallback holds (§ 8 F-4, "What the two share"): `d2-check.ts` is never Ada's after U8's merge; Task 13's merged row grants it to her as PRIMARY until then; and if F-4 is still open when U8's PR opens, a record, owner Thurgood, takes it with its Trigger at U8's PR opening.
+**Status**: **RATIFIED (Peter, 2026-11-08T00:24:24Z)**, and F-4 ruled at 2026-11-08T00:33:06Z. Peter's words, verbatim, with the line breaks shown as ` / `: "Re: F-1, (a) / Re: F-2, Keep / Re: F-3, Keep / Re: F-4, Do they collectively have a better idea? / Re: F-5, (a), Thurgood / Ratified". The orchestrator recorded them with `date -u` at receipt in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-lane-ballot-ratified.md` (`a0e42481a`), which reads "Ratified" as including § 8's "Also ruled by this ballot" list, and stated that reading back to Peter. **F-4 ruled (Peter, 2026-11-08T00:33:06Z)**: "Re: 1, as recommended", recorded with `date -u` at receipt in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-f4-and-u8-go.md` (`b4631d7f2`). That is (b), no standing holder, with the design rule, the floors and the probe-coverage note (§ 8, "F-4 as ruled"). *(From 2026-11-08T00:24:24Z until that ruling, F-4 was open: Peter had asked the seats for a better idea, and the ballot's F-4 fallback held. `d2-check.ts` is never Ada's after U8's merge; Task 13's merged row grants it to her as PRIMARY until then.)*
 **Record-first**: this commit is the record, made before any edit site is applied. No edit site is applied yet; the edit sites land in the application PR (§ 4, site 12), after the charter-scope application PR (§ 5). *(Prior text at `86ba062f9`: "**DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do. Two review rounds are spliced in § 11: round 1 (Ada, Thurgood, Stacy), folded at `[DATA R2]`, and round 2 (Kenya, Ada, Stacy, Lina), folded at `[DATA R3]`. Every reviewer approves with the folds. Nothing is owed from a seat. What is left is Peter's: the five forks and the \"Also ruled\" list in § 8.")*
 **Owner**: Data (items 1 and 3's `android:` half), Kenya (item 2 and 3's `ios:` half), Thurgood (item 4), Ada (item 5 and 3's `consumer:` part). Each seat owns the text of its own charter's edit site.
 **Required reviewer**: **Stacy** — mandate: attack the width. She keeps the ARMING read that items 3–5 feed (site 10 is her row, in her words), and she is the census reader.
@@ -10,7 +10,7 @@
 **Unit**: a standalone record-first ballot on `main`. It names edits to four charters and to `.kiro/steering/Agent-Directory.md`, so **Peter merges it** under the governance carve-out. Application follows ratification, in its own PR (§ 4 site 12).
 **Class**: LAW. Every item changes a seat's write scope.
 **Amends**: `canonical/agents/data.md`, `kenya.md`, `ada.md` and `thurgood.md` (frontmatter `writeScope` and § "In Scope"); `.kiro/steering/Agent-Directory.md`, four **Owns** lines; ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` (item 1's Excluded list, the meaning of "outside its comments" in item 1's consult rule, and § 7's closing paragraph, by ledger line); in her seat and at her ruling, Stacy's ARMING row; and, under F-5 (a), the owner header and "What is where" table of `harness/README.md`.
-**Deadline**: ratified and applied before Spec 129's U12 merges, in the order § 5 gives. Under F-4, `d2-check.ts` needs its answer before U8's PR opens.
+**Deadline**: ratified and applied before Spec 129's U12 merges, in the order § 5 gives. F-4 is ruled; Thurgood's contract PR on the D2 grant record merges before 13.3 is written (§ 8, F-4 as ruled). *(Prior text at `53f5e7420`: "Under F-4, `d2-check.ts` needs its answer before U8's PR opens.")*
 **Base**: `main` at `f28a1fefd`. Every before-text below is quoted from that tree, except Thurgood's (site 8) and the Agent-Directory Thurgood line (site 9 (d)), which are quoted from the after-text of the ratified charter-scope ballot's sites 3 and 4, not yet applied. `main` is now at `a418cc0aa` (#745), whose diff from `f28a1fefd` is three ballot and evidence files, none quoted here.
 
 > ## Conflict of interest — stated first
@@ -531,7 +531,7 @@ Five forks, then the list of everything else this ballot asks Peter to rule (`[S
   - **Recommendation: (a).** It attaches a requirement nothing fires today to the PR that triggers it.
   - **Reads**: (a) from every seat, and Data's. Stacy (R5) reads it on every Swift move, by any authority, in her site-10 clause.
   - **What survives against (a)**: its content is pasted output from no CI run, an attestation. Stacy can re-verify it only when her `swiftc` matches the pin, and otherwise records `not re-verified — toolchain unavailable`. A newly reserved word fails in a consumer's project, not in the harness, and form (b) leaves the detection deferred until the release walk, which reads it before the release ships a generator (`[ADA R1]` A4; `[KENYA R4]` K-1). Kenya's record (c), a lane self-test, is the route to a CI read.
-- **F-4 — `scripts/harness/d2-check.ts` after U8** (Task 13 adds it; its only grant ends at U8's merge). **No pick is made here.** **Open: Peter asked the seats for a better idea, 2026-11-08T00:24:24Z** ("Do they collectively have a better idea?"). Until he answers, the fallback under "What the two share" holds.
+- **F-4 — `scripts/harness/d2-check.ts` after U8** (Task 13 adds it; its only grant ends at U8's merge). **Ruled (Peter, 2026-11-08T00:33:06Z): "Re: 1, as recommended", so (b), with conditions; see "F-4 as ruled" below.** *(Before that, no pick was made here. F-4 was open from 2026-11-08T00:24:24Z, when Peter asked "Do they collectively have a better idea?", until this ruling. The options and reads below are as they stood when he asked.)*
   - **(a) Thurgood holds it**, with `d2-check.test.ts`, with Ada consulted on every change outside its comments (reading it against design § 9 and Task 13's criterion text), and the charter-scope ballot's A-2 limit: **from U8's merge**, the check's half of a co-change is never written by the seat holding `src/generators/**` in that unit (`[ADA R2]` Fix 2). This is `[ADA R1]` A6 and `[THURGOOD R4]` A6 (it widens his scope). Site 7 then lists both files in his frontmatter (`[LINA R1]` LN-1).
   - **(b) No standing holder.** It goes by spec row or per-fix grant (item 6), and **from U8's merge** a grant over it never goes to Ada, because it checks her own generator's output. This is `[STACY R4]` A-3.
   - **What the two share**: it is never Ada's after U8; it joins Stacy's ARMING read now; between U8's merge and activation an edit needs an issue-row grant; and if it is not ruled before U8's PR opens, a record, owner Thurgood, with its Trigger at U8's PR opening. Before U8's merge, Task 13's merged row grants it to Ada as PRIMARY, and this ballot does not change that row. They differ on standing scope against per-fix grants.
@@ -541,6 +541,54 @@ Five forks, then the list of everything else this ballot asks Peter to rule (`[S
     - **Data (author)**: withdraws the draft's lean toward Ada; no pick.
   - **What survives against (a)**: § 9 residual 3. Every oracle the harness has sits in one seat, checked only by review entries whose content nobody verifies (`[STACY R5]`).
   - **What survives against (b)**: each generator naming change after 129 needs a grant record, which Spec 132's rows would mostly carry (`[LINA R1]`).
+- **F-4 as ruled — `scripts/harness/d2-check.ts` and `d2-check.test.ts` from U8's merge** (Peter, 2026-11-08T00:33:06Z; record `b4631d7f2`).
+  - **The round.** It ran from 2026-11-08T00:24:24Z: an idea round, then a cross-read, by Thurgood, Stacy, Ada, Kenya, Lina and Data, spliced in § 11 "Round 3 (F-4)". All six arrived at (b). Ada and Lina said they would accept (a). Thurgood declined standing scope.
+  - **The holder.** None. The file and its test change only by a spec row or a per-fix issue-row grant. From U8's merge, such a grant never goes to the seat holding `src/generators/**` in that unit, so never to Ada for her own generator's output. It may go to any other seat, Data or Kenya included. Item 6's bar names no recipient (`[STACY R7]`, correcting her R6).
+  - **The rules for every edit after U8's merge.** The D2 grant record (`.kiro/issues/2026-11-07-d2-check-step-grant.md`) expires at U8's merge. Its contract binds Task 13 only, so these rules live here. Thurgood's contract PR on that record puts the same design rule and the `count=<n>` format into Task 13's contract before 13.3 is written, with Ada's dated agreement line.
+    - **R-1, the design rule.** The script works out no name itself (Thurgood; Lina; Ada):
+      - It takes every expected platform name from the consumer's `token-index/components.yaml` `platforms.<p>` fields, as written.
+      - One exception: the completeness half forms `<component, lower-cased>.<key>`, restated as a one-line rule in the script. It does not call `src/build/tokens/defineComponentTokens.ts` (L224), so that the check shares no code with it (Ada).
+      - It imports nothing from `src/generators/**`, `src/build/**` or the installed package `node_modules/@3fn/core/**` (Ada).
+      - It lists no definition file of its own. It finds the shipped files in the installed package, and `pack-assert` guards which ones ship (Lina).
+      - **The enforcement**: a case in `d2-check.test.ts` that fails on any such import or path literal in the script. Beyond the import and path ban, whether the code works out a name is read in review.
+    - **R-2, the falsification cases are append-only** (Stacy; Kenya; Thurgood). Ada commits these cases at U8 under 13.3, each of which must FAIL:
+      - a token missing on iOS;
+      - an extra one on Android;
+      - one dropped from both the index and the definitions;
+      - an empty consumer;
+      - a Swift backtick-escaped reserved-word name the extractor mishandles;
+      - and the rename pair, in which a rename in both the index and the output passes and a rename in the output only fails.
+
+      From U8's merge, cases are only added. `git diff --numstat B <m> -- scripts/harness/__tests__/d2-check.test.ts` shows deletions `0` unless a spec row admits the change. The grep case of R-1 is one of these cases, so it cannot be removed without Peter.
+    - **R-3, the count floor** (Stacy, as Kenya amended):
+      - Each verdict line prints `count=<n>`, in the format the contract PR fixes, and `n` is never `0`.
+      - On a PR that changes `d2-check.ts` outside its comments (item 4's definition), `B`'s script and `m`'s script both run on `m`'s consumer root, as `scripts/harness/consumer.ts --out <dir>` builds it at `m`. They print equal counts on every line, unless a spec row admits the change.
+      - Running both on one consumer keeps an honest definition or generator change in the same PR from reading as a weakening (`[KENYA]` cross-read; Thurgood's narrowing is subsumed).
+    - **R-4, the record of intent.** The fixing PR cites its spec row or grant record, and pastes R-1's test result and R-3's two runs.
+  - **The probe-coverage note** (Kenya; Data checked Android). The lane probes already check D2's inclusion half with the compiler: `probe-kotlin.ts` and `probe-swift.ts` compile a read of every `components.yaml` name (Android L20, L191–213). **To confirm at U8's head**: the harvested file is compiled in `:tokens` and in Stage T. Kenya's optional ARMING count check on the probes' `index names` count is not adopted here.
+  - **Where the application PR carries these rules** (the author's call, as the orchestrator asked):
+    - **(i) The law home is this block**, ratified with F-4. No charter holds the file, so no In Scope bullet states R-1 to R-4. Every spec row and grant record over `d2-check.ts` after U8 cites "ballot 2026-11-07-native-lane-ownership § 8, F-4 as ruled".
+    - **(ii) Stacy's ARMING row (site 10)** reads them. Part 3's bracketed F-4 (a) clause, `[for a change to `d2-check.ts` outside its comments, Ada's consult;]`, is struck. In its place, for a PR touching `d2-check.ts` or its test after U8's merge, her row reads:
+      - the cited spec row or grant;
+      - that the writer is not the `src/generators/**` holder of that unit;
+      - R-1's case present and passing;
+      - R-2's deletions-zero (part 2 already reaches `d2-check.test.ts`);
+      - R-3's two runs.
+
+      **The words are Stacy's**, owed before the application PR, as site 10's were.
+    - **(iii) Ada's In Scope bullet (site 6)** gains one sentence, for Ada to confirm: "From U8's merge, `scripts/harness/d2-check.ts` and `d2-check.test.ts` are not yours, and no grant over them goes to you in a unit where you hold `src/generators/**` (ballot 2026-11-07-native-lane-ownership § 8, F-4 as ruled)."
+    - **(iv) The script's own header**, which Ada writes at U8 under Task 13, names this block as the rules for later edits. That is within her U8 grant, and it puts the pointer where the next writer reads first.
+  - **Consequences for the edit sites.**
+    - Site 7's F-4 (a) lines are not inserted.
+    - Site 8's `d2-check` brackets and their limit placeholder are struck.
+    - Item 4's "under F-4 (a)" paths do not apply.
+    - Data's site 2 keeps `d2-check.ts` in "Not yours".
+    - Item 8 keeps `d2-check.ts` and its test in Stacy's read.
+  - **What survives.**
+    - A name the generator writes wrong in both the index and the output still passes, because one generator produces both. The probes and D3 catch part of that: only names a shipped component reads.
+    - A looser match that keeps the count passes both floors.
+    - "Works out no name" is settled by reading the code. Only the import and path ban is decidable.
+  - **Not adopted:** Stacy's class option, the same floors on `compare.ts` and `stability.ts`, is not tested with Thurgood. The orchestrator suggested recording it rather than adopting it now.
 - **F-5 — `harness/README.md`** (`[THURGOOD R4]` A4). **Ruled (Peter, 2026-11-08T00:24:24Z): "(a), Thurgood".**
   - **(a) Thurgood holds it**, with `compare.ts` and under its limits. Any README hunk that changes what a rule says goes by spec row: a sentence restating `tasks.md` or design text, or any rule marked *(added here)*. A hunk that makes the README agree with its source text is his, and it cites the source sentence in the PR body. Data and Kenya review hunks in their sections (the pin-file fields, the parser interface, the fixture header), and **Ada reviews hunks in the `consumer` pin-file rows (L16, L109) and § "The `gen:` path rule" (L58–)** (`[ADA R2]`), each in the review-entry form. It widens his scope. Site 7 then lists the file in his frontmatter (`[LINA R1]` LN-1).
   - **(b) Item 6 as drafted**: no standing holder; a spec row or a grant.
@@ -549,7 +597,7 @@ Five forks, then the list of everything else this ballot asks Peter to rule (`[S
   - **Reads**: (a) from Thurgood, Data, Stacy (R5), Ada (R2, with her reviewer added), Kenya (R4, accepting the iOS hunks) and Lina (R1). Under (b), `compare.ts` L13 sends README defects "to the owner", who would not exist, so a `compare.ts` fix that shows the README wrong lands while its prose waits for a grant.
   - **What survives against (a)**: the seat that writes the comparator also writes its only prose description, so a wrong rule can be wrong in both places, in one hand, with the section reviews as the only second reader (`[STACY R5]`). Whether a hunk "agrees with its source" or "changes a rule" is a judgment; only the citation's presence is decidable.
 
-**Also ruled by this ballot** (`[STACY R5]` S-1). **Ratified with the ballot (Peter, 2026-11-08T00:24:24Z, "Ratified")**, as the orchestrator's record reads it; the elements tied to F-4 (a) stay open with F-4. Each element below goes beyond the conditions Peter approved (§ 1). If Peter answers the five forks "as recommended", he also rules each of these, so each is named here with its mark.
+**Also ruled by this ballot** (`[STACY R5]` S-1). **Ratified with the ballot (Peter, 2026-11-08T00:24:24Z, "Ratified")**, as the orchestrator's record reads it. The elements tied to F-4 (a) lapsed when F-4 was ruled (b) at 2026-11-08T00:33:06Z. Each element below goes beyond the conditions Peter approved (§ 1). If Peter answers the five forks "as recommended", he also rules each of these, so each is named here with its mark.
 
 - **Marked `[author's addition]` or `[author's reading]`**: P3 (F-2); Lina added to the review round; `harness/README.md`'s route (F-5); "the later of" for iOS activation, now with K-2's ancestor test (item 7).
 - **Marked `[Kenya's addition]`**: the self-test limit (`harness/ios/selftest/**` catching less is a K-4 change); P4's extra path `harness/ios/selftest`; P3 for a `toolchain missing` red ((i) and (ii)); P7 (F-3).
@@ -1658,3 +1706,356 @@ Every fix is folded. No reviewer disagreement is left except F-4, which stays a 
 **Not folded, and why**: none.
 
 **Forks left for Peter**: F-1, F-2, F-3 and F-5, (a) from every seat; F-4 split, with no pick. Beyond them, the "Also ruled" list in § 8.
+
+### Round 3 (F-4)
+
+Peter sent F-4 back at 2026-11-08T00:24:24Z ("Do they collectively have a better idea?"). The orchestrator ran an idea round and a cross-read, read-only, in `/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/5572d8be-d5f0-4ae6-a8b3-cb3c3b8aceed/scratchpad/f4/`, a temporary directory. Each file is spliced byte for byte with its sha256; the orchestrator's two briefs are fenced. Peter ruled at 2026-11-08T00:33:06Z (§ 8, F-4 as ruled).
+
+**Source**: `brief.md`, sha256 `02e8e1a7a6c027539ccea99d9c8977efa0b2d74528b52b7eda0bbf042e33b8dd` (the orchestrator's brief, fenced)
+
+````markdown
+# F-4: is there a better option for `scripts/harness/d2-check.ts` after U8? (read-only)
+
+**Peter's question**, 2026-11-08T00:24:24Z: "Re: F-4, Do they collectively have a better idea?"
+
+He ratified the rest of the native-lane ownership ballot. The ballot is `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` on `origin/chore/native-lane-ownership-ballot`. Its § 8 F-4 has the two options and every seat's read. **Read it in full**, with `git fetch -q origin && git show refs/remotes/origin/chore/native-lane-ownership-ballot:<path>`. Do not edit the repo or commit.
+
+## The two options he was given
+
+- **(a) Thurgood holds it.** Ada is consulted on every change outside its comments. From U8's merge, the check's half of a co-change is never written by the seat holding `src/generators/**` in that unit.
+  - For it: Thurgood, Stacy (who moved from (b)), and Ada, weakly.
+  - Survives against it: every oracle the harness has sits in one seat, checked only by review entries whose content nobody verifies.
+- **(b) No standing holder.** It goes by spec row or per-fix grant, and never to Ada from U8's merge.
+  - For it: Kenya and Lina, both weakly.
+  - Survives against it: every generator naming change after 129 needs a grant record.
+- **Under both:** it is never Ada's after U8, because it checks her own generator's output.
+
+## What `d2-check.ts` is
+
+Task 13 (U8) adds it. Its 13.3 criteria are in `tasks.md`, and its step contract is in amendment 11's grant record (`.kiro/issues/2026-11-07-d2-check-step-grant.md`, PR #749). In short, it checks generated output against the generator's naming contract. Read Task 13 to be exact.
+
+## Your job
+
+Propose a better idea if one exists, a third option or a reshaping of (a) or (b), or say plainly that there isn't one. Some directions you might weigh:
+- making the check's rules data that another seat owns;
+- folding it into an instrument that already has an owner;
+- pairing it with a test that a different seat writes;
+- removing the oracle-concentration concern another way.
+
+These are examples only, not leads to follow.
+
+For each idea, give:
+- what it changes;
+- its cost;
+- whether it keeps the independence (never the generator's author);
+- its surviving counter-argument.
+
+If you think (a) or (b) is already best, say which one and why. That is a valid answer.
+
+Write `<seat>.md` in this directory (`/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/5572d8be-d5f0-4ae6-a8b3-cb3c3b8aceed/scratchpad/f4/`), under 350 words. Reply in under 60 words with your best idea in one line.
+````
+
+**Source**: `thurgood.md`, sha256 `0d4c9dd885f292d679add88f3607652191fbb6f03d94574e53ee2e0387a4a130`
+
+# [THURGOOD] F-4, a better idea
+
+**Idea: make the naming co-change go away, then take (b).** I move off my R4 (a).
+
+**Facts.**
+- Verified: `token-index/components.yaml` on `main` carries each token's emitted name per platform (`platforms.ios: ProgressTokens.nodeSizeSm`).
+- Verified: `probe-kotlin.ts` reads those names "as written".
+- Verified: `d2-check.ts` is on no ref yet; its design is open.
+- Inferred, not checked: if a token is renamed in both the index and the output, the component compile (D3) fails, because the components still use the old name.
+
+**What it changes.** Add one clause to the invocation contract in `.kiro/issues/2026-11-07-d2-check-step-grant.md`, before U8's PR opens:
+
+"`d2-check.ts` takes every platform name from the index's `platforms.<p>` field. It never works a name out from a key, and it imports nothing from `src/generators/**`."
+
+Add one falsification case to `d2-check.test.ts`:
+- a rename in both the index and the output still passes;
+- a rename in the output only fails.
+
+After that, a generator naming change moves both sides of D2 together and needs no `d2-check.ts` edit. Only a change to how declarations are emitted, to the file layout or to the index schema touches the file. Those are rare, so (b)'s survivor mostly goes, and (a)'s concentration is never added.
+
+**Cost.**
+- One contract PR: Ada's dated agreement line, plus `**ARMING**:` for Stacy.
+- Ada writes the check to the clause in 13.3.
+- A grant record for each rare change after that.
+
+**Independence.** Stronger: the post-U8 writer is never Ada, and the check never holds the generator's naming logic, even in Ada's U8 version.
+
+**Surviving counter-argument.**
+- Following the clause is settled by reading the code; the test covers one case, and a later edit could bring a naming helper back.
+- A rename in both places is caught only if my D3 inference holds. Check it against `harness-*-components` first.
+- If Ada's planned 13.3 approach needs names worked out from keys, the clause changes her design, and she should say so.
+- Peter may still want a standing holder for the rare changes; (a) stays defensible, and the clause improves it too.
+
+**Source**: `stacy.md`, sha256 `fc3f1cd2d2667816e63f05726feeec22b6c55ffb84331abd9e1209860f6d98e6`
+
+#### [STACY R6] — F-4 (`a0e42481a`)
+
+**Residual 3 does not separate (a) from (b).** Under (b), A-2 sends every grant to Thurgood (`[ADA R2]`), so the same seat writes the oracle either way. Choosing (b) only adds a grant record.
+
+**(a′): (a), plus two floors my after-merge read decides from git and CI, not from review content.**
+
+1. **Frozen falsification cases.** At U8, under her 13.3 row, Ada commits named cases in `d2-check.test.ts` that must each FAIL: a token missing on iOS, an extra one on Android, one dropped from both the index and the definitions, and an empty consumer. From U8's merge, cases are only added. Item 8's deletions-zero read already covers the file, so a deleted case goes to Peter.
+2. **Counts never shrink.** Each verdict line prints `count=<n>`, with `n` never 0. On a PR that changes `d2-check.ts` outside its comments, the head run's `d2-check` notices show the same counts as the base dispatch, unless a spec row admits the change. This is C3's shrink rule, applied to the oracle.
+
+- **Changes**: one clause in Thurgood's d2-check limit, and one in my site-10 bracket. The invocation contract has to fix the count's format; today it leaves the rest of each line to Ada. That takes a contract PR with her agreement line before U8's PR opens.
+- **Cost**: that PR and a count comparison in my read; no new instrument or review.
+- **Independence**: kept. The file is never Ada's after U8, and her cases are only added to after her bar begins.
+- **Survives**: a change that loosens the match but keeps the count (say, name normalization) passes both floors. It is still one seat. This narrows residual 3; it does not remove it.
+
+**Unverified, for Data and Kenya to confirm**: a missing token that a shipped component references should already fail that platform's components compile, which a lane seat owns.
+
+**Class option**: the same floors on `compare.ts` and `stability.ts`. Not vetted with Thurgood.
+
+**Pick: (a′).** If the contract PR misses U8, take (a), and file the floors as a record owned by Thurgood.
+
+**Source**: `ada.md`, sha256 `d190d182c4c30d2a2adc118dfc4e2ebf38d491635e722b5323bd479ebe9c5323`
+
+#### [ADA] — F-4 (read-only; ballot at `a0e42481a`, `main` at `610413017`)
+
+**The idea: (b′). (b), with a design rule I hold as 13.3's author: `d2-check.ts` works out no names itself.** Every platform name it checks comes from `token-index/components.yaml` as written. Every expected key comes from the shipped definition files.
+
+**Why this matters (verified).** The index gets its `ios:` and `android:` names from the same `iOSFormatGenerator` and `AndroidFormatGenerator` that write the output (`src/generators/generateTokenIndex.ts` L19–20, L320–321). So a naming change in the generator moves the index and the output together, and the check needs no edit. (b)'s survivor, "every naming change needs a grant record", is wrong as worded. My R2 case for (a) rested on that same premise, so I move to (b′).
+
+**What it changes.** One sentence in 13.3's completion doc, which Stacy reads at U8: the script calls no naming function and imports nothing from `src/generators/**` or `src/build/**`. No tasks amendment is needed; folding it into amendment 11 is Thurgood's call.
+
+**Cost.** None beyond writing the check this way.
+
+**Independence.** Kept. It is never Ada's after U8, under A-2 as ruled.
+
+**What makes the check change, then.** Two things only:
+- a change to how the generated Swift or Kotlin is laid out (the extractor reads that layout);
+- a change to the `defineComponentTokens` API (the completeness half reads it).
+
+Most change consumers' public types, so already need a spec row.
+
+**Surviving counter-arguments:**
+1. The script is not written yet, so this rests on my word until U8. A diff can confirm the import ban. Whether the script works out a name is a judgment.
+2. A refactor that changes the layout but keeps the public API, made outside a spec row, still needs a grant record, and Thurgood writes the check's side. Rare, but it is (b)'s remaining cost.
+3. The concentration Stacy names is untouched under (a). If Peter wants a standing holder, the same rule makes (a) cheaper too: Thurgood rarely has a co-change to write.
+
+**My pick:** (b′). The rule helps under (a) as well, so it should apply whichever way Peter rules.
+
+**Source**: `kenya.md`, sha256 `03d09ef357b5260748b85868406cb5e31c4dec4acd8bbc849b0314d326a15ef9`
+
+#### [KENYA] — F-4, a better idea? (read-only; ballot at `a0e42481a`, `main` at `610413017`, grant record at PR #749 head)
+
+**Best idea: (a), reshaped so that it names the second oracle D2 already has.** I move from my weak (b) to (a).
+
+**The premise, read in code.** `scripts/harness/probe-swift.ts` (mine) already writes `_ = <name>` for every iOS name in `components.yaml` (`indexIosNames`, the `[index names] components` section), and Stage P compiles those reads against the generated module from outside it. So D2's inclusion half (every index token is emitted, and is `public`) already has a compiler oracle in a platform seat. I assume `probe-kotlin.ts` does the same: **unverified**, that is Data's to confirm. A second premise is also **unverified**: that U8's harvested component file lands in the module Stage T compiles.
+
+**What it changes.** One sentence in F-4 (a): D2's inclusion half is witnessed by D1's probe (Kenya, Data). The single-seat residual then shrinks to two parts: the exclusion half ("no other does") and the completeness half. As an option, Stacy's ARMING read at U8 could add a decidable check: the probe's `index names` count includes `components.yaml`'s iOS and Android name counts.
+
+**Cost.** One ballot sentence, plus a premise check at U8's head. It adds no instrument, grant or seat.
+
+**Independence.** It is kept. Neither oracle is the generator's author: the compiler and Thurgood's code.
+
+**Why (a) over (b), after folding back.** Stacy's point holds against my R4 read: under (b), the fix still ends as Thurgood's commit, plus a grant record each time. Once the residual against (a) is narrowed, (b)'s per-change record buys little.
+
+**What survives.**
+- The probe and D2 both read the index that the same `generate` run writes. A naming defect shared by the index writer and the emitter is invisible to both. Only the completeness half reads a source outside `generate` (the shipped definitions), and that half is still Thurgood's alone, checked by review.
+- A compiler cannot see extras, so the exclusion half stays single-seat.
+
+**Fork for Peter, not picked:** add the ARMING count check, or keep the sentence only.
+
+**Source**: `lina.md`, sha256 `af9d5296fdbcb1a554d67e38cfc3afbbe9a78f822d2b097ca0993a0384439c3f`
+
+#### [LINA] — F-4, a reshaping of (b) (read-only; ballot at `a0e42481a`, `main` at `610413017`; 2026-11-08T00:27:13Z)
+
+Confidence: moderate on facts, low on the pick (outside my domain).
+
+**Facts this rests on (verified).** Req 1.3 calls D2 a consistency check: `generate` writes both sides. The index already carries each token's emitted names (`platforms.ios: ProgressTokens.connectorThickness`, written by `src/generators/generateTokenIndex.ts`). The completeness half's source of truth is the six definition files under `src/components/**`, which are not Ada's. Any change to D2's meaning already needs Peter's dated words (Req 1.9).
+
+**Idea: (b) plus two conditions on how `d2-check.ts` is built.**
+1. **It never works out a name.** It reads the expected iOS and Android names from the index's `platforms:` fields, and pulls the declared names out of the output. A naming change moves index and output together; the script is untouched.
+2. **It imports nothing from `src/generators/**` or `src/build/**`.** `d2-check.test.ts` checks this with a grep, so the check never shares the generator's code.
+
+- **What changes**: with these two conditions, the script changes only when the output's file layout changes. That is spec-row work (132). So (b)'s residual, a grant for every naming change, mostly goes away, and Thurgood takes on no new oracle.
+- **Cost**: this narrows "Which files it reads, and how, is Ada's" in `.kiro/issues/2026-11-07-d2-check-step-grant.md`. That needs a PR naming the record, with `**ARMING**`, and Ada's dated agreement, before U8's PR opens. Ada should also confirm that condition 1 fits 13.3.
+- **Independence**: kept. The generator's author never holds it after U8, and the code cannot share her logic.
+
+**What survives against it**:
+- If the generator writes the same wrong name into both the index and the output, D2 passes. D3 catches that only for names a shipped component reads. A component token that no component reads gets no name check from anything. True under (a) and (b) too; this idea names it, not fixes it.
+- Thurgood may judge that a script with no standing holder is still a gap.
+
+If Peter does not take the conditions, my read stays (b), weakly.
+
+**Source**: `data.md`, sha256 `70f88f66518db5f56b79f67f715b68edc5e56dfdcb15856d23881d1eab240e85`
+
+#### [DATA F4] — `d2-check.ts` after U8 (read at `origin/main` and the merged step-grant record)
+
+**A fact the round has not used (verified).** `d2-check.ts` has three halves: completeness (shipped definitions → merged index), iOS and Android (index ↔ generated output, set equality). The platform "present" direction already exists in my lane. `probe-kotlin.ts` reads every `components.yaml` name as a top-level type (L20, L191–213) and compiles each one; `probe-swift.ts` does the same (L122). A compile is a stronger test than a string match. What no instrument checks today is the other two halves: **extras** (an output name the index lacks) and **completeness**.
+
+**Idea (c): split the check by half, onto holders that already exist.**
+- **What changes.** The presence and extras halves become probe checks: a new `checks` count, "declared vs indexed", which the comparator already fails on, under Data's and Kenya's lane scopes. `d2-check.ts` keeps only the completeness half, under (a) or (b).
+- **Independence.** Kept. Data and Kenya never hold `src/generators/**`.
+- **Concentration.** Lower. Two of the three oracles leave Thurgood's seat, and the naming judgment goes to the platform seats.
+- **Cost:**
+  - A late tasks amendment to Task 13's two D2 criteria, and a D-1 consult.
+  - **The iOS half stops gating.** Today a D2 iOS `FAIL` fails `harness-generate`, and so the required Android context; in the iOS lane it gates only after the iOS promotion.
+- **Surviving counter-argument.** An Ada naming change then needs commits from two platform seats, not one. The completeness half still needs (a) or (b): (c) narrows the fork, not removes it.
+
+**My answer: (a) now, with (c) on a trigger.**
+- Thurgood holds `d2-check.ts` whole from U8's merge. That keeps iOS gating and changes no merged plan.
+- A record, owner Data with Kenya co-owning, has its Trigger at **the first iOS promotion's merge**. It proposes moving the presence and extras halves into the probes, by a 132 spec row. By then the iOS lane gates on its own.
+- **What survives:** until that trigger, every harness oracle sits in Thurgood's seat. If the record is declined when it fires, the concentration stays.
+
+**Source**: `crossread.md`, sha256 `74b6f8c4d384c034f9e5469ba11970f5e40e5293fa37770d09c951028bfd7349` (the orchestrator's brief, fenced)
+
+````markdown
+# F-4 cross-read: converge on one answer for Peter (read-only)
+
+All six ideas sit in this directory: `thurgood.md`, `stacy.md`, `ada.md`, `kenya.md`, `lina.md`, `data.md`. **Read all six.** Peter's question was "Do they collectively have a better idea?"
+
+## What each seat proposed (orchestrator's summary; correct it if it's wrong)
+
+- **A design rule: the check works out no names itself.** Thurgood, Lina and Ada each proposed this independently. `d2-check.ts` takes every expected name from the index (`components.yaml`, the `platforms.<p>` fields) and imports nothing from `src/generators/**` or `src/build/**`. A grep in its test enforces that. Then a generator naming change never edits the check, so:
+  - Thurgood (moved off (a)) and Ada (moved off (a)) take **(b)**, no standing holder;
+  - Lina keeps (b).
+  - **What survives:** a name that is wrong in both the index and the output still passes, because the index comes from the same generators (Lina, Ada).
+- **Floors: the check can only get stronger.** This is Stacy's (a′). The falsification cases Ada writes at U8 can only be added to, never removed or weakened. Each verdict line prints a token count that may never be 0 or shrink without a spec row. She keeps (a). Her notes:
+  - (b) doesn't remove the concentration either, since A-2 sends every grant to Thurgood anyway;
+  - the floors could become a class option, applying to `compare.ts` and `stability.ts` too.
+- **(a), plus coverage by the probes.** Kenya: the iOS probe, and probably the Android probe, already check D2's inclusion half with the compiler, so only the exclusion and completeness halves sit with Thurgood. She moved from (b) to (a).
+- **(a) now, with a later split.** Data: give it to Thurgood now. At the first iOS promotion, a record (Data owner, Kenya co-owner) proposes moving the iOS and Android halves into the lane probes, leaving Thurgood only the completeness half.
+
+## A possible synthesis to test (the orchestrator's; unvetted)
+
+The design rule and the floors don't depend on who owns the check, so they could go with either (a) or (b):
+1. **The design rule:** names come from the index, nothing is imported from the generators, and a grep test enforces it.
+2. **The floors:** falsification cases are append-only, and the count is never 0 and never shrinks without a spec row.
+3. **The probe-coverage note** (Kenya), and possibly Data's later-split record.
+
+With 1 and 2 in place, the ownership question shrinks to: does anyone need standing write access to a check whose inputs come from the index and whose strength can only grow?
+
+## Your job
+
+1. Does the synthesis hold from your seat, or does something in it fail?
+2. With 1 and 2 in place, what is your pick: (a) Thurgood, or (b) no standing holder? Give the reason in one line.
+3. What survives against the synthesis?
+4. **Timing:** Stacy says the contract change (the count, and the design rule) needs a PR with Ada's agreement line before U8's PR opens. Is that right, and who writes it?
+
+Write `crossread-<seat>.md` in this directory, under 250 words. Reply in under 50 words with your pick.
+````
+
+**Source**: `crossread-thurgood.md`, sha256 `cb6121423bc2690b0b92a30e334d64c9e25d94bdbeb5c2da4516a43e5ffb9aac`
+
+# [THURGOOD] F-4 cross-read
+
+**1. Does the synthesis hold?** Yes, with two fixes.
+- **The floors protect the rule.** Under append-only, the grep test in `d2-check.test.ts` cannot be deleted without Peter. So take 1 and 2 together.
+- **Narrow the count floor.** Compare counts only on a PR that changes neither the definition files nor `src/generators/**`. Otherwise an honest definition change reads as weakening.
+
+**2. My pick: (b).** A-2 sends every grant to me either way. With the rule, edits are rare: a layout change or a `defineComponentTokens` API change. (b) then adds only a cheap record of intent before an oracle changes. I am declining scope; weigh that. Stacy's (a′) is close.
+
+**3. What survives.**
+- One generator writes the index and the output; a name wrong in both passes D2 and the probes. D3 catches it only if a component reads that name (Lina).
+- A loosened match that keeps the count passes both floors (Stacy).
+- The grep checks imports. Whether the code works out names is still a judgment.
+
+**4. Timing.** Yes, a PR before U8 opens. But the grant record expires at U8's merge (rule 8), so its contract cannot bind later edits.
+- **Before U8 (I write it):** a PR on the record I own, `.kiro/issues/2026-11-07-d2-check-step-grant.md`. It adds the `count=<n>` format and the design rule, with `**ARMING**:` in its body. Ada appends her dated agreement line.
+- **After U8:** the rule and the floors go in the ballot's F-4 ruling text, carried by Data's application PR.
+
+**Source**: `crossread-stacy.md`, sha256 `f2f4c2ad568b4cbfbd2dc6d0b3c536a61000b77b388dc4fc2f61581e52b2834b`
+
+#### [STACY R7] — F-4 cross-read
+
+**Correcting my R6.** "A-2 sends every grant to Thurgood" is false as worded. Item 6 bars only the seat holding `src/generators/**` and names no recipient. Under (b), a layout-change grant can go to Data or Kenya, which removes the concentration rather than narrowing it.
+
+**1. The synthesis holds.** The grep test lives in `d2-check.test.ts`, so the deletions-zero read guards it, and deleting it goes to Peter. The count floor fires only on PRs that change `d2-check.ts` outside its comments.
+
+**2. Pick: (b).** With names taken from the index, co-changes are rare. A per-change grant then costs little and buys what my after-merge read cannot: a merged record of intent before an oracle changes.
+
+**3. What survives.**
+- A name the generator writes wrong in both the index and the output passes. Only the completeness half reads a source outside `generate`.
+- A token that no component reads gets no name check (Lina).
+- "Works out no name" is settled by reading the code; only the import ban is decidable.
+
+**4. Timing: right, with one correction.** Ada's 13.3 sentence would be a claim. It binds no writer after U8. Thurgood, as the record's owner, writes the rule, the count format and the shrink rule into the contract record, with Ada's dated agreement line and `**ARMING**`. Task 13 reads that record at its last activating merge, so it must merge before 13.3 is written, not merely before U8's PR opens.
+
+**Source**: `crossread-ada.md`, sha256 `93399d46468568c2a90711c18fb97c85816c0fb7f1c618613eb15bd9f7030a97`
+
+#### [ADA] — F-4 cross-read (`main` at `beccbf134`; #749 merged)
+
+**1. It holds, with one fix to rule 1.**
+- The platform halves take names from `platforms.<p>`. That fits 13.3.
+- The completeness half has to work one name out. It forms `<component, lower-cased>.<key>` (`src/build/tokens/defineComponentTokens.ts` L224). I would restate that one-line rule in the script rather than run the shipped function, so the check shares no code. Changing that rule renames every component token: spec-row work anyway.
+- **The import ban must also cover the installed package**, `node_modules/@3fn/core/**`. Otherwise the grep passes while the check still runs my code.
+- The floors hold. I will commit Stacy's cases at U8.
+
+**2. Pick: (b), weakly; I accept (a).** The changes are rare and the check can only get stronger. A standing scope then buys almost nothing, and a grant record states the intent before each edit.
+
+**3. What survives:**
+- a name wrong in both the index and the output, caught only where a component reads it (Lina, Kenya);
+- a looser match that keeps the count (Stacy);
+- a change to the output's layout outside a spec row, which still needs a grant.
+
+**4. Timing: right.** For U8 alone I could print the count and follow the rule under "the rest is Ada's". But that would not bind the writer after U8. It needs a record PR under the seam rule before U8's PR opens. **Thurgood writes it, since he owns the record. I add my dated agreement line.**
+
+**Source**: `crossread-kenya.md`, sha256 `9612da9814a289157b1a97ad7900c419dd5e6c4b8d5ecb4600ee48b1b3f81c6a`
+
+#### [KENYA] — F-4 cross-read
+
+**1. It holds, with two fixes.**
+- **Floor 2 false-fails as worded.** A PR can change `d2-check.ts` and a component token together, and the count then moves legitimately. Fix: run `B`'s script and the head's script on the head's consumer, and require equal counts.
+- **The grep ban misses extraction.** The iOS extractor must strip the backticks around reserved-word members (`SWIFT_RESERVED`). A loose normalization would pass both floors. Add a backticked falsification case.
+- **Probes.** Data verified `probe-kotlin.ts`. One premise is still open: the harvested file is in Stage T's module.
+- **A correction to Lina.** The probes compile every index name, read or not. What goes unchecked is a name wrong in both the index and the output.
+
+**2. Pick: (b).** Every input is in the repo and rule 1 makes changes rare. Each red lands on the PR that caused it, which carries its grant. I moved to (a) only because I assumed changes were frequent.
+
+**3. What survives.**
+- A name wrong in both the index and the output passes.
+- Only review judges whether the extractor normalizes correctly.
+- (a) with 1 and 2 stays defensible; Data's split record (I would co-own) is the route to platform-seat checks.
+
+**4. Timing: Stacy is right.** The record merges a contract change "before either side changes", and rule 1 narrows "how" in "Which files it reads, and how, is Ada's". A sentence in a completion doc would not bind after U8. Thurgood, the record's owner, writes the PR, and Ada appends her agreement line. Floor 2 goes in Stacy's site-10 text.
+
+**Source**: `crossread-lina.md`, sha256 `8fa946cd7dc2bd86e3d62263708b182a1528ad7df59da8567ac9aec15f6fb1f0`
+
+#### [LINA] — F-4 cross-read (all six read)
+
+**1. Holds, with one addition.** Rule 1 should also say the check **lists no definition files itself**. It finds the shipped files in the installed package, and `pack-assert` guards which ones ship. Otherwise a change on the component side (my Badge-Count-Notification rename, due 16.3.0) means editing the check too. Stacy's count floor holds: it compares head with base only on PRs that change `d2-check.ts`, so a normal token addition or removal never trips it.
+
+**2. Pick: (b), weakly; I accept (a).** Standing scope pays off on outside breaks, and every input here is in the repository. The seats split 3–3, so this is Peter's fork.
+
+**3. What survives:**
+- A naming defect shared by the index writer and the emitter passes D2 and the probes. D3 catches it only for names a component reads.
+- A looser match that keeps the count passes both floors.
+- "Works out no names" is a judgment; only the import ban can be checked.
+
+**4. Timing: right for the count.** The grant record leaves the rest of each output line to Ada, so a `count=<n>` field is a contract change. That needs:
+- a PR that names the record and carries `**ARMING**`;
+- Ada's dated agreement line;
+- the merge before 13.3 writes to the contract, and no later than when U8's PR opens.
+
+Thurgood owns the record, so he writes the PR. Rule 1 can ride in it.
+
+**Source**: `crossread-data.md`, sha256 `c028436d6e19fbf6db33f4c7f3c9f83372b0d235b2620d8b8f54ed719fcae3f7`
+
+#### [DATA F4 R2] — cross-read
+
+**Kenya's premise, Android: verified.** `probe-kotlin.ts` reads each `components.yaml` name as written (L20, L191–213); its `@index` count includes them. Unverified, to check at U8's head: that the harvested file lands in `:tokens`, and Stacy's premise that a missing referenced token fails `harness-android-components` (not yet required).
+
+**1. The synthesis holds.**
+- Item 1 needs Thurgood's falsification pair: a rename in both the index and the output passes; a rename in the output only fails.
+- Item 3: Kenya's sentence, plus her ARMING count check covers my later-split record. **I withdraw it.**
+
+**2. My pick: (b).** With the rule, the check changes only when the file layout or the index schema changes, and that is spec-row work. Every input is in the repository, so a red lands on the PR that caused it, and that PR carries the grant.
+
+**3. What survives:**
+- A name the generator gets wrong in both the index and the output passes D2 and the probe. Only D3 catches it, and only for names a shipped component reads (Lina).
+- A looser match that keeps the counts passes both floors (Stacy).
+- Beyond the import grep, the rule is read in review.
+
+**4. Timing: Stacy is right.** Both changes narrow the record's "which files it reads, and how" and "the rest of each line", so they need its `**ARMING**` PR with Ada's dated agreement line. **The writer is Thurgood**, the record's owner. Merge it before U8's branch is cut, so 13.3 is written to it.
+
+#### [DATA R4] — author's record of the F-4 ruling, 2026-11-08T00:35:09Z (`date -u`)
+
+- F-4 is recorded as ruled in § 8, "F-4 as ruled". It carries the six seats' conditions as Peter's record (`b4631d7f2`) lists them: R-1 to R-4 and the probe-coverage note. Kenya's same-consumer form of the count floor subsumes Thurgood's narrowing.
+- **Where the post-U8 rules live**: this ballot's § 8 block is their law home, cited by every later spec row or grant. The application PR carries the reads into Stacy's ARMING row (site 10, in her words, owed before application) and an exclusion sentence into Ada's In Scope bullet (site 6, Ada confirms). Ada's U8 script header points to the block.
+- No edit site is applied.
