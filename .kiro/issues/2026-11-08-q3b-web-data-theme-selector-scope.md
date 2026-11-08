@@ -26,3 +26,7 @@ Chrome 149.0.7827.54, headless, on a scratch consumer built from a tarball packe
 Leonardo (intent read, 2026-11-08): subtree theming is a real pattern (a themed card or brand section, a live preview pane showing another theme beside the current one, a modal or embedded widget in a host page, a high-contrast region); native, and 128's React Native theme context, scope by tree by construction, so web is the odd one out. His lean is toward (ii), or (iii) if compatibility matters. **Named consumer need now: none known.** This repository has no `product/` directory, test01 is page-wide, and Sparky found no consumer who sets the attribute off the root.
 
 **Surviving counter-argument**: with no known need, (i) avoids speculative cascade risk (the specificity drop in (ii) is a change every existing theme block would carry) and a change to the emitted block's shape. If no trigger event has come by the 129 follow-up close, it stays (i).
+
+## Pointer (2026-11-08, Ada, owner)
+
+Spec 128 meets the same question for React web and React Native, where the theme context scopes by tree. Leonardo's inbound, which cites this record and decides nothing, is at `.kiro/specs/128-react-react-native-platform-admission/inbound-from-leonardo-2026-11-08-theme-scope.md`. If 128's design takes a position on subtree scope, that position is an event for this record's Trigger: read it then.
