@@ -22,9 +22,15 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
-renderedHash: sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c
+canonicalHash: sha256:43836080021834c69157a5c96f97c19f5b81f471bf18a8ad5ef0546f43baf308
+renderedHash: sha256:95acdf37fac931240c7d10d515fd0bcd90f137ce3c1b34a4ed3cd6cd013cd81a
 date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 16, second cut; `scope-2`'s key path is now `\.dpTheme`): ASSENT, `surviving` 8 of 17 (`scope-1` to `scope-8`).** A new act, made fresh on `task/129-16-theming-text-r2` under Peter's ruling (g) of 2026-11-08T12:20:05Z. It supersedes my act on `refs/pull/775/head` (`300855cdf`) and the signature immediately below (canonicalHash `sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a`, renderedHash `sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c`).
+- **What I read, in this session, through tool results**: the whole canonical `### In Scope` unit, printed by `sed -n '282,293p' canonical/agents/kenya.md`; and the whole consumer rendering of the row, printed by a script written for this act that prints every rendered piece of `rowSpanSource('canonical/agents/kenya.md', 'body', '#in-scope')` with its artifact path: three pieces (`_canonical`, `cc`, `kiro` `kenya-prompt.md`), identical to one another.
+- **Credited**: `scope-1` to `scope-8`. The rendered `### In Scope` list carries the eight duties. `scope-2` is verbatim and now names `@Environment(\.dpTheme)` in the rendering as in the charter. `scope-3`'s parenthetical is re-grounded (the rendering says *referencing the iOS implementations that ship in the installed package*); the duty, implementing component specifications in Swift, is stated.
+- **Not credited, and I agree**: `scope-9` to `scope-17` (the harness iOS lane) render nothing, under the row's `removals` entry citing `subtraction-1` (repo-internal tooling). My judgment from the 2026-11-08 entry below stands.
+- **Hashes.** `canonicalHash` is `hashText` of the unit from `partition(body).units`, `sha256:43836080...`, equal to the overlay pin and to my confirmation. `renderedHash` is `renderedHashOf(readConsumerSpans(<worktree>), rowSpanSource(...))`, `sha256:95acdf37...`.
 
 **Re-signed 2026-11-08 (native-lane ownership ballot, items 2 and 3, edit site 4): ASSENT, `surviving` 8 of 17 (`scope-1` to `scope-8`).** A new act, read fresh against the committed rendering; nothing is carried from the 2026-10-13 signature below (canonicalHash `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e`, renderedHash `sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c`).
 - **The ballot**: `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z). Site 4 was applied in Thurgood's commit `b46dff5d3` on `chore/apply-native-lane-ownership-r2`, with the row's second `removals` entry and the re-pinned overlay unit. The rendering was regenerated in the next commit, `0fc2379f0`, and I re-confirmed the set at 17 items in my commit immediately before this one.
