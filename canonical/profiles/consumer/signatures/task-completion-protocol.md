@@ -140,11 +140,17 @@ verdict: assent — surviving 6/10; not surviving: `branch-and-pr-conven-6`, `br
 ## `#the-merge-rule`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-08
 row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#the-merge-rule` (re-pointed)
-canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
+canonicalHash: sha256:f06850b940f8b08bf324eb6b2f6fc8fbb9ec7c7c5f667a47a2b09751c754d45d
 renderedHash: sha256:0bbd3bb417578928e95d3545171190c3de40019bbc5868c6d5a69affeff4d3be
 verdict: assent — surviving 3/3
+
+**Re-signed 2026-11-08** (prior signature: assent 3/3, 2026-09-29, against `sha256:d9fdd24e…`). It was stale because the canonical unit changed under ballot `2026-11-08-125b-u3-rehome` (RATIFIED, Peter, 2026-11-08, F-1 (b); #804), item 2: the carve-out's last clause now reads "until the gated-surfaces scope of register row `record-first-ratification` is `armed`" instead of "until 125-B's CODEOWNERS layer", and a dated pointer follows. Thurgood applied it at `1482a0dc1` and re-quoted `-3` and re-pinned the overlay at `79573e890`; I re-confirmed at 3 items (`809f73094`). I checked that the re-pin changes only the `@unit` header line, to the hash I had computed. The overlay text is unchanged.
+- **Judged against**: the consumer rendering of the unit, printed in full first (`verify-signing-chain --print`, three identical pieces), and the operative set at 3 items.
+- **renderedHash**: computed as for `#completion-state-in-the-pr-flow:preamble` on the same tree. It equals the prior signature's value, because the overlay text did not move.
+- **The removal stays right**: "Peter merges on green during bake-in (Spec 125-A Task 5's gate); the governance-layer pointer (register row `record-first-ratification`) and its amendment pointer" (`subtraction-2`, re-worded at `79573e890`). The rendering's carve-out is unconditional: it drops the "until … `armed`" clause and the dated pointer. A consumer has no such register row, so its governance PRs stay human-merged with no end condition.
+- **Credits**: unchanged, 3/3. `-3` survives: "PRs touching your team's governance docs or agent charters stay human-merged — a standing carve-out that survives any delegation of merge-on-green".
 
 **Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 2). `-3` now survives: "a standing carve-out that survives any delegation of merge-on-green". 3/3.
 
