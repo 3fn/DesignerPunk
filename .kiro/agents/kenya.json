@@ -39,7 +39,15 @@
       "allowedPaths": [
         ".kiro/specs/**",
         "docs/specs/**",
-        ".kiro/issues/**"
+        ".kiro/issues/**",
+        "harness/ios/**",
+        "scripts/harness/probe-swift.ts",
+        "scripts/harness/parse-swift.ts",
+        "scripts/harness/__tests__/probe-swift.test.ts",
+        "scripts/harness/__tests__/parse-swift.test.ts",
+        "scripts/harness/__tests__/fixtures/swift/**",
+        "scripts/harness/__tests__/fixtures/parse-swift/**",
+        "harness/pins.yaml"
       ]
     }
   },

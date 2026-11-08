@@ -132,10 +132,26 @@
     {
       "lines": [
         48,
+        48
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:writeScope[harness/android/**]"
+    },
+    {
+      "lines": [
+        49,
+        49
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:writeScope[scripts/harness/probe-kotlin.ts]"
+    },
+    {
+      "lines": [
+        50,
         50
       ],
       "op": "render",
-      "source": "C1:frontmatter+ambient-manifest"
+      "source": "canonical/agents/data.md#frontmatter:writeScope[scripts/harness/parse-kotlin.ts]"
     },
     {
       "lines": [
@@ -143,12 +159,60 @@
         51
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:kiro.welcomeMessage"
+      "source": "canonical/agents/data.md#frontmatter:writeScope[scripts/harness/__tests__/probe-kotlin.test.ts]"
     },
     {
       "lines": [
         52,
         52
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:writeScope[scripts/harness/__tests__/parse-kotlin.test.ts]"
+    },
+    {
+      "lines": [
+        53,
+        53
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:writeScope[scripts/harness/__tests__/fixtures/kotlin/**]"
+    },
+    {
+      "lines": [
+        54,
+        54
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:writeScope[scripts/harness/__tests__/fixtures/parse-kotlin/**]"
+    },
+    {
+      "lines": [
+        55,
+        55
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:writeScope[harness/pins.yaml]"
+    },
+    {
+      "lines": [
+        56,
+        58
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        59,
+        59
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        60,
+        60
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

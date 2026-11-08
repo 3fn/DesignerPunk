@@ -28,186 +28,178 @@
     {
       "lines": [
         28,
-        45
+        46
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#in-scope"
     },
     {
       "lines": [
-        46,
-        52
+        47,
+        53
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#out-of-scope"
     },
     {
       "lines": [
-        53,
-        56
+        54,
+        57
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#boundary-cases"
     },
     {
       "lines": [
-        57,
-        69
+        58,
+        70
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#domain-boundary-response-examples"
     },
     {
       "lines": [
-        70,
-        73
+        71,
+        74
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#collaboration-model-domain-respect:preamble"
     },
     {
       "lines": [
-        74,
-        78
+        75,
+        79
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#trust-by-default"
     },
     {
       "lines": [
-        79,
-        83
+        80,
+        84
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#obligation-to-flag"
     },
     {
       "lines": [
-        84,
-        88
+        85,
+        89
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#graceful-correction"
     },
     {
       "lines": [
-        89,
-        93
+        90,
+        94
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#fallibility"
     },
     {
       "lines": [
-        94,
-        97
+        95,
+        98
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#documentation-governance-ballot-measure-model:preamble"
     },
     {
       "lines": [
-        98,
-        104
+        99,
+        105
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#the-process"
     },
     {
       "lines": [
-        105,
-        115
+        106,
+        116
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#what-this-means-in-practice"
     },
     {
       "lines": [
-        116,
-        125
+        117,
+        126
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#mcp-practice-notes"
     },
     {
       "lines": [
-        126,
-        129
+        127,
+        130
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#collaboration-standards:preamble"
     },
     {
       "lines": [
-        130,
-        138
+        131,
+        139
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#counter-arguments-are-mandatory"
     },
     {
       "lines": [
-        139,
-        141
+        140,
+        142
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#candid-over-comfortable"
     },
     {
       "lines": [
-        142,
-        144
+        143,
+        145
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#bias-self-monitoring"
     },
     {
       "lines": [
-        145,
-        149
+        146,
+        150
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#when-you-and-peter-disagree"
     },
     {
       "lines": [
-        150,
-        156
+        151,
+        157
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#what-you-own"
     },
     {
       "lines": [
-        157,
-        161
+        158,
+        162
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#what-you-dont-own"
     },
     {
       "lines": [
-        162,
-        165
+        163,
+        166
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        166,
-        167
-      ],
-      "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes"
-    },
-    {
-      "lines": [
-        168,
+        167,
         168
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-doc-map]"
+      "source": "canonical/agents/ada.md#frontmatter:routes"
     },
     {
       "lines": [
@@ -215,7 +207,7 @@
         169
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-pipeline-architecture]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-doc-map]"
     },
     {
       "lines": [
@@ -223,7 +215,7 @@
         170
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[module-resolution-contract]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-pipeline-architecture]"
     },
     {
       "lines": [
@@ -231,7 +223,7 @@
         171
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[theme-registry-law]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[module-resolution-contract]"
     },
     {
       "lines": [
@@ -239,7 +231,7 @@
         172
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[completion-doc-guidance]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[theme-registry-law]"
     },
     {
       "lines": [
@@ -247,7 +239,7 @@
         173
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[spec-tasks-format]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[completion-doc-guidance]"
     },
     {
       "lines": [
@@ -255,7 +247,7 @@
         174
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[rosetta-arch-beyond]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[spec-tasks-format]"
     },
     {
       "lines": [
@@ -263,7 +255,7 @@
         175
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-lookup-patterns]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[rosetta-arch-beyond]"
     },
     {
       "lines": [
@@ -271,7 +263,7 @@
         176
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[naming-and-philosophy]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-lookup-patterns]"
     },
     {
       "lines": [
@@ -279,7 +271,7 @@
         177
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-context-resolution]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[naming-and-philosophy]"
     },
     {
       "lines": [
@@ -287,7 +279,7 @@
         178
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[semantic-structure]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[token-context-resolution]"
     },
     {
       "lines": [
@@ -295,7 +287,7 @@
         179
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-accessibility]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[semantic-structure]"
     },
     {
       "lines": [
@@ -303,7 +295,7 @@
         180
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-blend]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-accessibility]"
     },
     {
       "lines": [
@@ -311,7 +303,7 @@
         181
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-border]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-blend]"
     },
     {
       "lines": [
@@ -319,7 +311,7 @@
         182
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-color]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-border]"
     },
     {
       "lines": [
@@ -327,7 +319,7 @@
         183
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-glow]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-color]"
     },
     {
       "lines": [
@@ -335,7 +327,7 @@
         184
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-layering]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-glow]"
     },
     {
       "lines": [
@@ -343,7 +335,7 @@
         185
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-motion]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-layering]"
     },
     {
       "lines": [
@@ -351,7 +343,7 @@
         186
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-opacity]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-motion]"
     },
     {
       "lines": [
@@ -359,7 +351,7 @@
         187
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-radius]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-opacity]"
     },
     {
       "lines": [
@@ -367,7 +359,7 @@
         188
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-responsive]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-radius]"
     },
     {
       "lines": [
@@ -375,7 +367,7 @@
         189
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-shadow]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-responsive]"
     },
     {
       "lines": [
@@ -383,7 +375,7 @@
         190
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-spacing]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-shadow]"
     },
     {
       "lines": [
@@ -391,7 +383,7 @@
         191
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-typography]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-spacing]"
     },
     {
       "lines": [
@@ -399,7 +391,7 @@
         192
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[dev-workflow-detail]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[family-typography]"
     },
     {
       "lines": [
@@ -407,7 +399,7 @@
         193
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.docs[file-organization]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[dev-workflow-detail]"
     },
     {
       "lines": [
@@ -415,7 +407,7 @@
         194
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.agents[lina]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.docs[file-organization]"
     },
     {
       "lines": [
@@ -423,7 +415,7 @@
         195
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.agents[thurgood]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.agents[lina]"
     },
     {
       "lines": [
@@ -431,7 +423,7 @@
         196
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.cues[0]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.agents[thurgood]"
     },
     {
       "lines": [
@@ -439,7 +431,7 @@
         197
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.cues[1]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.cues[0]"
     },
     {
       "lines": [
@@ -447,7 +439,7 @@
         198
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.cues[2]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.cues[1]"
     },
     {
       "lines": [
@@ -455,7 +447,7 @@
         199
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.cues[3]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.cues[2]"
     },
     {
       "lines": [
@@ -463,7 +455,7 @@
         200
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.cues[4]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.cues[3]"
     },
     {
       "lines": [
@@ -471,7 +463,7 @@
         201
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.cues[5]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.cues[4]"
     },
     {
       "lines": [
@@ -479,7 +471,7 @@
         202
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes.cues[6]"
+      "source": "canonical/agents/ada.md#frontmatter:routes.cues[5]"
     },
     {
       "lines": [
@@ -487,23 +479,23 @@
         203
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:routes"
+      "source": "canonical/agents/ada.md#frontmatter:routes.cues[6]"
     },
     {
       "lines": [
         204,
-        205
+        204
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:commands"
+      "source": "canonical/agents/ada.md#frontmatter:routes"
     },
     {
       "lines": [
-        206,
+        205,
         206
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:commands[functional-suite]"
+      "source": "canonical/agents/ada.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -511,7 +503,7 @@
         207
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:commands[token-tests]"
+      "source": "canonical/agents/ada.md#frontmatter:commands[functional-suite]"
     },
     {
       "lines": [
@@ -519,7 +511,7 @@
         208
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:commands[validator-tests]"
+      "source": "canonical/agents/ada.md#frontmatter:commands[token-tests]"
     },
     {
       "lines": [
@@ -527,7 +519,7 @@
         209
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:commands[full-suite-with-performance]"
+      "source": "canonical/agents/ada.md#frontmatter:commands[validator-tests]"
     },
     {
       "lines": [
@@ -535,7 +527,7 @@
         210
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/ada.md#frontmatter:commands[full-suite-with-performance]"
     },
     {
       "lines": [
@@ -543,7 +535,7 @@
         211
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
@@ -551,28 +543,36 @@
         212
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
     },
     {
       "lines": [
         213,
-        214
+        213
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        214,
+        215
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        215,
-        215
+        216,
+        216
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:commands"
     },
     {
       "lines": [
-        216,
-        219
+        217,
+        220
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:writeScope"

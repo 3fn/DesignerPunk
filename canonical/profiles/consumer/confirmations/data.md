@@ -31,11 +31,32 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: data
-canonicalHash: sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8
-date: 2026-09-29
+canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, scope-11, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17
+date: 2026-11-08
 
-**Ruling: CONFIRMED at 8 items, as drafted.** Each bullet claims a responsibility an implementation can drop or exceed. `scope-2` also fixes the consumption path (static via `DesignTokens`, theme-varying via `Local{Abbreviation}Theme.current`).
+**Re-confirmed 2026-11-08 (Req 11.6.5d, C16): the native-lane ownership ballot, site 2.**
+- **What changed**: one new last bullet in `#in-scope`, "**The native compile harness's Android lane …**". Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled at 2026-11-08T00:33:06Z), items 1 and 3. Thurgood applied it as author at `b46dff5d3`, with F-5 (a) in the "Not yours" list (`harness/README.md` is "Thurgood's; you review its hunks in your sections") and F-4 (b) leaving `d2-check.ts` bare. I read the ballot's site-2 after-text and the applied bullet, and they agree once those two ruled choices are applied.
+- **Read before this act**: the ballot's items 1 and 3 and sites 1, 2 and 12, and the applied diff `git diff origin/main...origin/chore/apply-native-lane-ownership-r2` for `canonical/agents/data.md`, the operative set, the dispositions and the overlay, through tool calls in this session. I did not use the old branch or any reported hash.
+- **The hash**: the canonicalHash moves from `sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3` to the value above. I computed it myself over `partition(splitFrontmatter(canonical/agents/data.md).body)` for `#in-scope` at `0fc2379f0`. It equals the overlay pin `## @unit #in-scope @ sha256:49fe090d…` and the sweep's "canonical unit is now" value.
+- **Nine new items, `scope-9` to `scope-17`**, split from the new bullet. I checked by script that each is a verbatim substring occurring once, that they run in the bullet's order, and that between them only the joining punctuation (`- `, `. `, `; `) is left out, so together they cover the whole bullet.
+  - **`scope-9`, member**: the grant. The label through "with no PR author at fault".
+  - **Eight obligations**. Each can be broken on a PR that leaves the grant itself untouched, so each is its own item:
+    - `scope-10`: owning the lane never changes what it decides;
+    - `scope-11`: a defect fix carries a falsification case red at the merge base, which the PR body names;
+    - `scope-12`: the toml's four pins equal the pin file on every PR touching `harness/android/**`;
+    - `scope-13`: a change to `infra.json`'s fields or values, an annotation step or title consults Thurgood;
+    - `scope-14`: in `harness/pins.yaml` only the `android:` section, and only for a move that passes P1–P6 (one item, because a move missing any one condition breaks the same sentence);
+    - `scope-15`: any other pin move goes by grant or spec row;
+    - `scope-16`: the harness paths that are not mine;
+    - `scope-17`: before U12's merge my write is by task-row or issue-row grant.
+  - **Two splits I weighed**: `scope-10` and `scope-11` share a sentence in the ballot, but a fix can respect the spec text and still ship with no falsification case, and the reverse. `scope-14` I kept whole: splitting P1–P6 would make each half unreadable alone, and the ballot treats them as one test.
+- **The set**: 17 items, the 8 prior items with ids and texts unchanged plus `scope-9` to `scope-17`.
+- **Consumer rendering**: the bullet is removed for consumers (a new removal citing `subtraction-1`, repo-internal tooling). The removal's text equals the charter bullet byte for byte (checked by script, one occurrence in the charter). A consumer has no compile harness. Signing is a separate act.
+
+**Ruling: CONFIRMED at 17 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3`, 8 items. **CONFIRMED at 8 items, as drafted.** Each bullet claims a responsibility an implementation can drop or exceed. `scope-2` also fixes the consumption path (static via `DesignTokens`, theme-varying via `Local{Abbreviation}Theme.current`).
 
 ## `#android-theming-spec-094`
 

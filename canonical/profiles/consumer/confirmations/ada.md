@@ -43,9 +43,28 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: ada
-canonicalHash: sha256:c6d1781d3a66ddc95386269c45446143f127c0c6b0846242469061bfdfaee2ba
-items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report
-date: 2026-10-23
+canonicalHash: sha256:fc9c7ea4a6df8f22e6c6cdf27f877e94eedfa02e9671aab64bcec3d2c5c88194
+items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report, scope-harness-1, scope-harness-2, scope-harness-3, scope-harness-4, scope-harness-5, scope-harness-6, scope-harness-7, scope-harness-8, scope-harness-9, scope-harness-10, scope-harness-11
+date: 2026-11-08
+
+**Ruling: CONFIRMED at 35 items** (re-confirmation, 2026-11-08). The unit's hash moved from `sha256:c6d1781d…` to `sha256:fc9c7ea4…` because the native-lane ownership ballot (`.kiro/docs/ballots/2026-11-07-native-lane-ownership.md`, RATIFIED by Peter 2026-11-08T00:24:24Z, F-4 ruled 00:33:06Z) added one bullet to `### In Scope` (item 5, site 6). I read the ballot's item 5 and site 6, the F-4 sentence at § 8 (iii), and the applied diff of `canonical/agents/ada.md` on `chore/apply-native-lane-ownership-r2`. The applied bullet equals site 6's after-text with the brackets removed and their text kept, plus the F-4 sentence, which I confirmed. I computed the new hash myself; it equals the overlay's pin. All 35 ids are verbatim substrings of the new unit, each occurring once.
+- **The 24 prior items stand**, unchanged and in their old places. The earlier rulings below stand for them.
+- **Eleven new items, `scope-harness-1` to `-11`, split from the one bullet** because each is breakable on a PR that leaves the rest untouched:
+  - **One member.** `scope-harness-1` is the grant itself: `consumer.ts`, `consumer.test.ts`, and `consumer.name` and `consumer.abbreviation` in `pins.yaml`, with its reason. `scope-harness-2` is the co-change permission (a driver change may land with the `src/cli/**` change it follows), also a member: it widens what one PR may carry.
+  - **Nine obligations:**
+    - `-3`: cite a base dispatch that is not a forced failure and the head run, and paste the five diffs.
+    - `-4`: a change that loses a tarball file, a generated file or a theme goes by spec row.
+    - `-5`: the reference-run rule, with its re-derivation and its grant fallback.
+    - `-6`: the reviews by Thurgood, Data and Kenya, the review-entry form, and the void on a later push.
+    - `-7`: a repair adds a case that is red against the base.
+    - `-8`: the unchanged files, the abbreviation never `DP`, and green stays green.
+    - `-9`: owning the driver never changes what it decides.
+    - `-10`: before U12's merge, the write is a grant.
+    - `-11`: from U8's merge `d2-check.ts` is not mine and no grant over it goes to me in a unit where I hold `src/generators/**`.
+- **`-10` and `-11` are obligations, not members.** They restrict where my write comes from rather than widening it, and a consumer Ada that ignored them would violate the boundary.
+- **Consumer rendering**: see the consumer disposition. The harness is this repo's own and is not in the package, so I read the bullet as removed for consumers, and the three `writeScope` members as `no-consumer-counterpart`.
+
+The 2026-10-23 ruling, kept as the prior record (hash `sha256:c6d1781d…`):
 
 **Ruling: CONFIRMED at 24 items** (re-confirmation, 2026-10-23). The unit's hash moved from `sha256:3b0d6343…` to `sha256:c6d1781d…` because two bullets of `### In Scope` now say what the generator emits and what it does not (my text, errata (f) on the data-theme-scope record; Thurgood applied it byte for byte at `207119121`, and pinned the overlay and the two item texts at `3a8d18e07`). I checked the other 22 items and the two edited ones against the new unit: all 24 ids are verbatim substrings of it, each occurring once.
 - **What changed, and nothing else**:

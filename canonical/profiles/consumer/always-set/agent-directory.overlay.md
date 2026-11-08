@@ -17,7 +17,16 @@
 
 ---
 
-## @unit #thurgood-test-governance-spec-standards-civitas-steward @ sha256:f4c12c98bf64fbc344b80c8d27f5e10a82bf16d67001a9beae4d5d994b47d8e6
+## @unit #ada-rosetta-token-specialist @ sha256:3efb4e1d59b836719e3acc4747940fc53db7556ecaef4bb1d11c4785e110fd49
+### Ada — Rosetta Token Specialist
+
+Token development, maintenance, documentation, compliance, mathematical foundations, export pipeline architecture (DTCG/Figma), and design token standards alignment.
+
+**Owns**: Primitive and semantic token creation, formula validation, cross-platform generation pipeline, Rosetta architecture, token governance enforcement.
+
+**When to involve**: Token creation or modification, mathematical foundation questions, token compliance issues, generation pipeline work, DTCG/Figma export, token family documentation.
+
+## @unit #thurgood-test-governance-spec-standards-civitas-steward @ sha256:09451915f38ff6403ba828894314356e618ac2d6e3d925aca35c518bea0247e6
 ### Thurgood — Test Governance, Spec Standards & Civitas Steward
 
 Test suite health, coverage analysis, test infrastructure standards, audit methodology, spec creation guidelines, accessibility test coverage auditing, and **Civitas governance infrastructure stewardship**.
@@ -31,6 +40,24 @@ Test suite health, coverage analysis, test infrastructure standards, audit metho
 **Key boundary**: Thurgood audits but does not write domain-specific tests. He flags gaps for Ada (token tests) or Lina (component tests).
 
 ---
+
+## @unit #kenya-ios-platform-engineer @ sha256:53af8b4593793e90539a90abe7ffaeda01d3a6c9c33507252bc29e0fccdc89d4
+### Kenya — iOS Platform Engineer
+
+SwiftUI implementation, DesignerPunk token and component consumption, iOS accessibility, and native screen development.
+
+**Owns**: iOS product screen implementation using DesignerPunk SwiftUI components and Swift token constants.
+
+**When to involve**: iOS screen implementation, SwiftUI consumption patterns, iOS accessibility, iOS-specific platform questions.
+
+## @unit #data-android-platform-engineer @ sha256:ed0f3918ff55d8e359f6d019874093984b1628c88ca014a37b4ab2333d06295d
+### Data — Android Platform Engineer
+
+Jetpack Compose implementation, DesignerPunk token and component consumption, Android accessibility, and native screen development.
+
+**Owns**: Android product screen implementation using DesignerPunk Compose components and Kotlin token constants.
+
+**When to involve**: Android screen implementation, Jetpack Compose consumption patterns, Android accessibility, Android-specific platform questions.
 
 ## @unit #stacy-product-governance-quality-assurance-execution-claims-verification @ sha256:99500e6e909a023dbcffd8b50438bcbbb45583cadd6f599357d31273628030b2
 ### Stacy — Product Governance, Quality Assurance & Execution-Claims Verification

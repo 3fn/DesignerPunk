@@ -1,6 +1,6 @@
 # The compile harness: file formats and the parser interface
 
-**Spec**: 129 (Consumer-Generation Completeness), Task 2 · **Owner of this file and of the comparator**: Thurgood
+**Spec**: 129 (Consumer-Generation Completeness), Task 2 · **Owners**: named by the charters, not here. The table below says which charter holds each path (`canonical/agents/<seat>.md`; ballot `2026-11-07-native-lane-ownership`, active from Spec 129 U12's merge, the iOS parts from the later of that and the first iOS promotion's merge)
 **Source of the formats**: `.kiro/specs/129-consumer-generation-completeness/tasks.md` § "The list file format, the pin file and the run policy", which this file states exactly. Where it adds a rule, the rule is marked *(added here)* and exists so that a file can be judged well formed without asking anyone.
 **Source of the key and the verdict rules**: `design.md` § 1 (K-2), § 2 ("Capture and key") and § 3; `requirements.md` Req 2.6 and 3.1–3.11.
 
@@ -8,15 +8,15 @@ The harness compiles a stranger's generated tokens, and DesignerPunk's packaged 
 
 ## What is where
 
-| Path | What | Owner |
+| Path | What | Held by (charter) |
 |---|---|---|
-| `harness/README.md` | this file | Thurgood (Task 2) |
-| `harness/protected-set.txt` | the records whose entries cannot be retagged away silently | Thurgood (Task 2) |
-| `harness/expected/<context>.tsv` | the four expected-failure lists | Thurgood (Task 5.2, the baselines); after U1, every PR that changes what a context reports |
-| `harness/pins.yaml` | the pins: `consumer`, `ios`, `android` sections | Ada (`consumer`, Task 1), Kenya (`ios`, Task 3), Data (`android`, Task 4) |
-| `harness/ios/**`, `harness/android/**` | the lanes | Kenya (Task 3), Data (Task 4) |
-| `scripts/harness/compare.ts` | the comparator, and the parser interface | Thurgood (Task 2) |
-| `scripts/harness/parse-swift.ts`, `parse-kotlin.ts` | the diagnostic parsers | Kenya (2.2), Data (2.3) |
+| `harness/README.md` | this file | Thurgood (`thurgood.md`) |
+| `harness/protected-set.txt` | the records whose entries cannot be retagged away silently | no standing holder: a spec row or an issue-row grant |
+| `harness/expected/<context>.tsv` | the four expected-failure lists | no standing holder: a spec row or an issue-row grant |
+| `harness/pins.yaml` | the pins: `consumer`, `ios`, `android` sections | by section, under the pin-move limits of the charters: `consumer.name` and `consumer.abbreviation`, Ada (`ada.md`); `ios:`, Kenya (`kenya.md`); `android:`, Data (`data.md`); the rest, no standing holder |
+| `harness/ios/**`, `harness/android/**` | the lanes | Kenya (`kenya.md`), Data (`data.md`) |
+| `scripts/harness/compare.ts` | the comparator, and the parser interface | Thurgood (`thurgood.md`) |
+| `scripts/harness/parse-swift.ts`, `parse-kotlin.ts` | the diagnostic parsers | Kenya (`kenya.md`), Data (`data.md`) |
 
 The four contexts are `harness-ios-tokens`, `harness-ios-components`, `harness-android-tokens` and `harness-android-components`. `harness-generate` runs `generate` once and hands its output to them.
 
