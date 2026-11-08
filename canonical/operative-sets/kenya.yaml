@@ -158,7 +158,7 @@ units:
         text: "**Ground truth for these token values is LIVE, not a file** — never read the built `dist/*.ios.swift` snapshots (see the Ground truth section); query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#ios-theming-spec-094
   "#product-tokens-spec-108109":
-    canonicalHash: sha256:04694ae4a06f766e8decce0175806fbe667061fe59eb032b403c167b158f2c00
+    canonicalHash: sha256:f32941ec3da5fe44c5abf38c6c3bc1548da12ab7f9be0c9af3e3af4e97b41de7
     items:
       - id: product-tokens-1
         kind: obligation

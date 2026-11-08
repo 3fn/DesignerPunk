@@ -68,9 +68,18 @@ date: 2026-09-29
 ## `#product-tokens-spec-108109`
 
 confirmer: kenya
-canonicalHash: sha256:04694ae4a06f766e8decce0175806fbe667061fe59eb032b403c167b158f2c00
+canonicalHash: sha256:f32941ec3da5fe44c5abf38c6c3bc1548da12ab7f9be0c9af3e3af4e97b41de7
 items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5, product-tokens-6
-date: 2026-10-27
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): Spec 129 Task 16, edit (b), the type theme-varying product tokens extend.** A new act, read fresh. It supersedes the 2026-10-27 re-confirmation below (canonicalHash `sha256:04694ae4a06f766e8decce0175806fbe667061fe59eb032b403c167b158f2c00`, 6 items). The unit is retained, so there is no re-sign: the dispositions row stays a bare `retained`, and the rendering equals the canonical unit.
+- **What changed**: one line. `product-tokens-3` read `protocol extension on `{Name}Theme``, a type that no output defines; it now reads `protocol extension on `DesignerPunkTheme``, which is what the product-token emitter writes (`src/build/product/emitters/SwiftEmitter.ts` L57–58: `public extension DesignerPunkTheme`). I drafted the text, and Thurgood committed it verbatim in `448d4fe7d` (F12′: I never commit my own charter). He re-quoted `product-tokens-3`'s label and text in the same commit.
+- **What I read, in this session, through tool results**: the whole `### Product Tokens (Spec 108/109)` unit of `canonical/agents/kenya.md` (L305–312); the whole `#product-tokens-spec-108109` record in `canonical/operative-sets/kenya.yaml`; the row (`retained`) in `kenya.dispositions.yaml`; the unit as each of the three consumer renderings holds it (`_canonical` L198, `cc` L81, `kiro` L52 for the changed line); `git diff origin/main HEAD` for `canonical/agents/kenya.md`, whose only hunk in this unit is the changed line; and `SwiftEmitter.ts` L18–62.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#product-tokens-spec-108109`): `sha256:f32941ec3da5fe44c5abf38c6c3bc1548da12ab7f9be0c9af3e3af4e97b41de7`. The unit carries no overlay pin.
+- **Items re-read against the unit**: all 6 item texts are verbatim substrings of the unit as it now stands, and of the rendering (checked by script). Each of the unit's 6 lines is one item. `product-tokens-3` is operative: I can violate it by reading a theme-varying product token from a type other than the theme, or by extending a type of my own naming. The other five are unchanged.
+- **Ruling: CONFIRMED at 6 items, not corrected.** The 2026-10-27 and 2026-09-29 rulings below stand.
+
+**Superseded record (`sha256:04694ae4a06f766e8decce0175806fbe667061fe59eb032b403c167b158f2c00`, 2026-10-27), kept as history:**
 
 **Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8a).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:7529881a62c6b578199af8ac739710989cd227b36857fa501034c29695b00f4e`, 6 items). The unit is retained, so there is no re-sign (ballot § 7).
 - **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8a, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/kenya.md` L298 (L294 before site 8b's insert at `8e6818685`) replaces *"Author new tokens … when you discover values Leonardo didn't anticipate"* with: a product token is authored when the screen spec names it; a value the spec did not anticipate is surfaced to Leonardo and never filled silently or with a hard-coded value; Product-Token-Governance § "Authoring Workflow" (routed) says when it may be written. It is my R1 text. In the same commit the profile author re-quoted `product-tokens-6`. I checked by script that L298 equals § 14's site 8a block for `kenya.md` on `main` at `bad7222ef` byte for byte (`cmp`, no difference).
