@@ -4026,3 +4026,9 @@ I re-read the fold for decidability only, against `git diff 20a3474b5 30c11d5ad`
   - **Why this Trigger.** The next PR to touch `stability.ts` is expected to be the unfinished-job and pagination fixing PR. That PR is owed before the next stability record can be read, and the next monthly read is due by 2026-11-16. The trigger therefore fires about 700 runs before the ceiling (114 runs at 00:14:33Z; about 800 at the limit). That PR either bounds the window, closing the record, or re-rules it with a dated reason and the run count. A count threshold would need a `manual` token, which nothing would fire.
   - **What closes it**: Stacy's referent, a lower bound that does not grow with the history (iOS first run at the pin, the promotion's merge, the streak's start), written into Decision 6 first, plus a falsification case and a pre-fetch rate-limit check. → the record
 - No `tasks.md` text changes in this round.
+
+#### [THURGOOD R27] — tasks amendment 12, Peter's F-4 conditions, 2026-11-08
+- Incorporated Peter's F-4 ruling (2026-11-08T00:33:06Z, "Re: 1, as recommended"). The conditions are in the D2 grant record; Task 13's success criteria (the `d2-check.test.ts` case list) now carry the Swift backtick cases, the design-rule grep, the zero-count `FAIL` and append-only cases, and the base-versus-head run in the completion doc.
+- **Open for Ada (not Peter):** the token-count format. The criterion requires only a count on each verdict line, above 0 on `PASS`, and `FAIL` at 0. Ada fixes the format in her agreement line.
+- Task 20 untouched. [@STACY] LENS requested.
+
