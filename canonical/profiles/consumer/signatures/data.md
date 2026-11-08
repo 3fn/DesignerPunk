@@ -194,6 +194,16 @@ signer: data
 
 signer: data
 
+**Re-signed 2026-11-08: ASSENT, `surviving: [theming-1, theming-2, theming-3, theming-4, theming-5, theming-6, theming-7, theming-8, theming-9]`.** A new act; it closes no divergent. Prior signature: assent 6/6, 2026-10-25, against `canonicalHash` `sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9` and `renderedHash` `sha256:8aaddd65335c1c42090d916a16a835b8a5086bacfca1b4d296a88ce82c4050d1`. Stale because the unit changed: Task 16.2 (Thurgood, `448d4fe7d`, with the correction of bullet 1 at `89aa1604d`) replaced the "no theme types today" text with the theme surface `generate` writes. Confirmed at 9 items first (`8fed6dec8`).
+- **Read before this act**: the whole canonical unit in `canonical/agents/data.md` (`### Android Theming (Spec 094)`, 12 lines) and its rendering in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md`, through tool calls in this session at `e10072c9d`. The three renderings equal the canonical unit except the last bullet, which carries the one removal (`subtraction-1`), re-keyed to the installed package snapshots.
+- **Hashes, computed in this act**: `canonicalHash` `sha256:aa54dd17d5aa579774e1fe17b0813b5d3ddf3b88568287af9daed8a1d188db62` (equals the overlay pin). `renderedHash` `sha256:f52904eca7ce3a157d16868b2fa6a7d56fa3af8557164a0f9ba608ceacb88198`. Both moved.
+- **Credited, each by what the rendering states**:
+  - `theming-1` to `theming-8`: verbatim in the rendering (L1, the fixed-contract sentence, the base-light sentence, the "no `Dark` entry" sentence, the provider sentence, the `both` / `darkTheme` sentence, the product-tokens bullet, the static-tokens bullet).
+  - `theming-9`: entailed under re-keying. The rendering keeps "**Ground truth for these token values is LIVE, not a file**", names the installed package's un-themed base snapshots as the thing not to read, and points to the application MCP for the per-theme set. The removal (`subtraction-1`) is the repo-internal `dist/*.kt` wording, as before.
+- **Fact check**: a reader following bullet 1 can no longer take the static colours as theme-varying: it names `accessibility_focus_color` and `color_icon_optical_balance` as still on `DesignTokens`.
+- **Residual**: the holder, enum-entries, KDoc, default-name and `Wcag` sentences are verbatim in the rendering but are not items (see the confirmation note); if a later rendering drops one, no item catches it. Not a refusal.
+- **Prior record**:
+
 **Refuse: should-re-point.** The disposition removes the whole negative ("not a file — never read the built `dist/*.kt` snapshots (see the Ground truth section)") as our repo's stale-snapshot guidance (subtraction-3). The rendering keeps only "Ground truth … is LIVE — query the application MCP … and the per-theme set". So **`theming-6` is not entailed**: its prohibition is gone. The other five items are verbatim.
 
 **The removal has a consumer counterpart** (see the header fact): the package ships flattened `DesignTokens.android.kt` snapshots into `node_modules/@3fn/core/dist/`. This unit is where the theme-varying (`Local{Abbreviation}Theme`) access is taught, so losing the guard against the flattened file here is the exact K-D2 hazard.
