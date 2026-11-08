@@ -511,10 +511,19 @@ date: 2026-09-29
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]`
 
 signer: kenya
-disposition: re-pointed
+disposition: superseded-by
 canonicalHash: sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace
-renderedHash: sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b
-date: 2026-10-02
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving: []`, to `superseded-by` `#how-to-use-designerpunk-tokens-on-ios`.** A new act, read fresh against the destination's rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace`, renderedHash `sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b`.
+- **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood set this row to `superseded-by` in `3d479bd4b` and deleted its overlay entry; Lina regenerated at `7cfe548e7`. The disposition changes from `re-pointed`; my earlier assents were to that disposition, and this act does not rely on them.
+- **What I read, in this session, through tool results**: the whole unit and its rendering, from the print-mode output at `31212107719b1385be1b6c3a0f8ca1d234a71bcf`. For this row that is the canonical entry (`canonicalHash` unchanged) and the statement that it renders nothing (the empty-piece `renderedHash`, the same as the DesignTokens trim row's). For the destination, `#how-to-use-designerpunk-tokens-on-ios`, I read its canonical unit and all three renderings in the same session's print.
+- **Why `superseded-by` holds.** The retired file is no longer shipped in the package, so a cue naming it has no consumer counterpart to trim. The destination's rendering carries the function the `dist/ComponentTokens.ios.swift` trim served: *"no token snapshot ships in the package ... Query the application MCP for the resolved value, formula, and per-platform names (`get_token_details`; `get_component_full` for component tokens)"*. I agree nothing should render for this row.
+- **Surviving**: `[]`. No operative-set items are owed on this frontmatter row; the assent is to the supersession.
+- **Hashes.** `canonicalHash` is unchanged (`sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace`). `renderedHash` moves `sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b` to `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`, the empty-piece hash the print shows.
+
+**Earlier acts on this row, kept as history (last: 2026-10-02):**
 
 **REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
 - **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.
