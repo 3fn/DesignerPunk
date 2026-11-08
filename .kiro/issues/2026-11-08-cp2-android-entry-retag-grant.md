@@ -3,7 +3,7 @@
 **Date**: 2026-11-08
 **Owner**: Lina
 **Class**: P2 obligation (guard) · grant
-**Trigger**: `path:.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` is closed or re-ruled (it is archived or carries a `## Outcome`). The retag must merge before that, by Peter's ruling of 2026-11-08T16:53:31Z (the charter record stays open until this retag merges). The close is this record's rule 5 outcome line, giving the fixing PR's number and the one-cell diff.
+**Trigger**: `path:.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` is closed or re-ruled; the entry must be dealt with before then (Peter, 2026-11-08T16:53:31Z). The close is this record's rule 5 outcome line with the fixing PR number.
 **Source**: Spec 129 CLOSEOUT claims pass, finding CP-2 (`completion/claims-pass.md`, PR #791); Requirement 1.5 ("The component-tier entries 129 does not close SHALL be tagged to one record that Lina files"); Peter's rulings of 2026-11-08T16:53:31Z and 2026-11-08T17:02:40Z ("Re: 2, Yes, please"), recorded in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-cracks-ballot-and-routing.md` on `origin/chore/ruling-cracks-ballot-and-routing`.
 **Consulted**: Thurgood (the harness lists); Data (the Android lane).
 
@@ -16,22 +16,16 @@
 
 `harness/expected/**` has no standing owner (Lina's, Data's and Thurgood's charters each say it is not theirs), so the retag needs this grant.
 
-## Whose matter the entry is
+## Revision (2026-11-08, Lina): fix, not retag
 
-**The repair record's, with the cause still open.** The name is not a component-side misspelling: `ButtonIcon.android.kt` L89-L99 uses `ButtonIconTokens.insetSmall/Medium/Large`, and the token index (`token-index/components.yaml`, `buttonicon.inset.*`) names the same `ButtonIconTokens.*` for Android. So the component agrees with the name contract. The routing table of `2026-11-07-native-component-repair-from-first-harness-run.md` tagged this entry and its iOS and Android siblings to the charter's item (ii) ("clearing at U8; per Ada"). The siblings cleared; this one did not. What survives is a residual that is no longer "the component tier has not reached generate", and Req 1.5 then has it tagged to the repair record. I have not diagnosed why it survives. That is a read of the harness's Android composition (does the generated output include `ButtonIconTokens` for this compile?), and I make it under the repair record, with Data verifying. If the diagnosis lands on the generator or the name contract, I hand it to Ada and re-tag then, by a further grant.
+Data diagnosed the entry from native-harness run 42502210216: `ComponentTokens.android.kt` emits `object ButtonIconTokens` in `com.designerpunk.tokens` (L10, L41), but `ButtonIcon.android.kt` (package `com.designerpunk.components.core`) imports only `DesignTokens`, `DesignerPunkTheme` and `LocalDPTheme` from it, so L98-L100 cannot resolve. Generation is fine; this is the repair record's class (b). Avatar cleared at #757 by the same import. D2 does not check imports.
 
-## Grant paths
+**Fix** (my charter scope, `src/components/**`): add `import com.designerpunk.tokens.ButtonIconTokens` to `ButtonIcon.android.kt`.
 
-`harness/expected/harness-android-components.tsv`, only L11's tag column: `2026-10-02-consumer-generation-completeness-spec.md` becomes `2026-11-07-native-component-repair-from-first-harness-run.md`. No other cell or line changes. The entry count stays 94.
+**Grant paths**: `harness/expected/harness-android-components.tsv`, only the removal of L11 (the `ButtonIcon.android.kt` `Unresolved reference 'ButtonIconTokens'.` entry). The entry count goes 94 to 93; no entry is added or changed.
 
-## The fixing PR
+**Badge-Label-Base is not included.** Its `private object BadgeLabelBaseTokens` shadows the generated object, but dropping it is not equally small: the local object also carries `cornerRadius` and other locals, and the generated `maxWidth` is already `120.dp`, while L287 applies `.dp` again. That is a multi-line repair with a unit change; its entry stays tagged to the repair record.
 
-The PR also adds the charter record's closing outcome line, written by its owners Ada and me. The PR body carries `**Consulted**:` for Thurgood and Data.
+**Acceptance**: `harness-android-components` is green at the fixing PR's head with 93 entries and no new entries. I could not run the harness locally; the removal stands only if that run is green, else the entry returns.
 
-## Acceptance
-
-1. The diff of the granted file is one line, one cell.
-2. `harness/expected/harness-android-components.tsv` still has 94 entries.
-3. The harness's expected-list format check passes.
-
-Counter-argument and what survives: the entry may be the generator's, not the component's (the index and the component agree, so the fault may be in what `generate` emits). Retagging now satisfies Req 1.5's SHALL and keeps the tag on an open record, but it names the wrong owner if Ada's diagnosis wins. What survives: the tag records where the entry is tracked, not what caused it, and the repair record must carry a dated diagnosis line before Spec 132 receives it.
+**Consulted**: Data (diagnosis, Android lane); Thurgood (harness lists). The fixing PR also adds the charter record's closing outcome line (Ada and Lina).

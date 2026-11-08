@@ -8,7 +8,6 @@ pkg:src/blend/ThemeAwareBlendUtilities.android.kt | Unresolved reference 'desatu
 pkg:src/blend/ThemeAwareBlendUtilities.android.kt | Unresolved reference 'lighterBlend' on receiver of type 'Color'.	3	2026-06-24-blend-system-architecture-and-oklch-alignment.md
 pkg:src/blend/ThemeAwareBlendUtilities.android.kt | Unresolved reference 'saturate' on receiver of type 'Color'.	2	2026-06-24-blend-system-architecture-and-oklch-alignment.md
 pkg:src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt | Type checking has run into a recursive problem. Easiest workaround: specify the types of your declarations explicitly.	2	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt | Unresolved reference 'ButtonIconTokens'.	3	2026-10-02-consumer-generation-completeness-spec.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt | Argument type mismatch: actual type is 'Modifier', but 'Color' was expected.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt | Cannot infer type for type parameter 'T'. Specify it explicitly.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt | Function invocation 'background(...)' expected.	1	2026-11-07-native-component-repair-from-first-harness-run.md
