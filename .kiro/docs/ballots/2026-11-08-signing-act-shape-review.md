@@ -3,7 +3,7 @@
 **Date**: 2026-11-08 (drafted; `date -u` at drafting start 2026-11-08T16:48:16Z; R2 2026-11-08)
 **Drafted by**: Thurgood (Civitas steward; author of ballot `2026-10-01-signing-act-chain`; owner of `verify-signing-chain` and of the charter record this ballot discharges).
 **Authority to draft**: the charter record `.kiro/issues/2026-10-23-signing-act-shape-review.md`, ruled by Peter on 2026-10-23, verbatim: *"Approved. Proceed as collectively recommended, please"* (chat, relayed). Its Trigger fired at Spec 129 U12's merge (#781, `a17cb2b34`, 2026-11-08T16:21:37Z; the record's "Fired" section, #788). Go for this draft: Peter, 2026-11-08T16:33:36Z, verbatim (relayed by the orchestrator): **"788 is merged, and go for the shape review"**. *Unverified here: both rulings are relayed chat.*
-**Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.
+**Status**: **RATIFIED (Peter, 2026-11-08T17:45:34Z)** — F-1 (d), F-2 (b), F-3 (a), F-4 (a). Peter, relayed by the orchestrator, received 2026-11-08T17:45:34Z (`date -u` at receipt), verbatim: *"Ratified, F-1 (d), F-2 (b), F-3 (a), F-4 (a)"*. Record: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ratifies-signing-act-shape-review.md`, committed at `f27323f34` and joined here by merge (`ef677965a`). What he read: the ballot at `b32d43870` (R4), with Stacy's R1–R3 spliced (R3: no objection). The record's "What was ruled" adds: "The re-signs that F-4 (a) requires are timed with 125-B U3's round, as the seats leaned" — the leans Peter was shown read "(a), timed with U3's round"; his words do not state timing. **Record-first**: this commit is the record, made before any edit site is applied (§ 5 step 1). The forks are resolved in place, and § 11 carries the resolved after-texts. *(Superseded status, kept verbatim: "**DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.")*
 **Required reviewer**: **Stacy**. Her passes read clause 6 (iv)'s acts list, which item 2 changes. She specifies every fixture (signing-act ballot § 4.5). She is the census reader. ARMING at the application PR's merge is hers. **R1: OBJECT, four blocks (B-1 to B-4), folded at THURGOOD R2. R2: B-1 to B-4 withdrawn; OBJECT on three new blocks (B-5 to B-7), folded at THURGOOD R3. R3: PASS, no objection; N-10 folded at THURGOOD R4** (§ 10).
 **Consulted**: Stacy — R1 OBJECT (B-1 to B-4), folded at R2 and withdrawn by her at R2; R2 OBJECT narrowly (B-5 to B-7), folded at R3 and withdrawn by her at R3; R3 PASS, no objection (`**Review**: no objection`), N-10 folded at R4; her fork leans are recorded in § 10 and are not this draft's picks. Ada, Data, Kenya and Lina have not been consulted yet; their questions are in § 9, for the orchestrator to route.
 **Class**: LAW. It amends a ratified ballot's standing rule (signing-act ballot § 2 clauses 3, 5 and 6, a new clause 9 and a new § 2a; § 3 link 1 and, by F-2, link 7; § 4.1's link-1 rule; § 4.2; and, by F-2 (c), § 4.4). It also amends `governance/signing-seat-brief.md` and the register row `signing-act-consistency`, which restate it.
@@ -117,11 +117,11 @@ Each item gives its edit sites with before and after text. "The signing-act ball
 **Site 1a — the signing-act ballot, § 2, after clause 8.** Before: none (new clause). After:
 
 > 9. **The shapes.** § 2a is the closed table of row states and the acts on them. An edit to a signing object that is none of § 2a's act kinds is not a signing act. It is authoring, or a finding.
->    *(added <date> by ballot 2026-11-08-signing-act-shape-review item 1.)*
+>    *(added 2026-11-08 by ballot 2026-11-08-signing-act-shape-review item 1.)*
 
-**Site 1b — the signing-act ballot, a new § 2a between § 2's register line and "Why function-derived".** Before: none. After (verbatim, with § 2a's own heading; the `{F-1}` and `{F-4}` paragraphs are § 6's):
+**Site 1b — the signing-act ballot, a new § 2a between § 2's register line and "Why function-derived".** Before: none. After (verbatim, with § 2a's own heading; the "Grants and re-attestation" and "Re-disposition" paragraphs are § 6's ruled F-1 (d) and F-4 (a), resolved at the Status commit):
 
-> ### 2a. Row states and acts *(added <date> by ballot 2026-11-08-signing-act-shape-review items 1–3 and 5)*
+> ### 2a. Row states and acts *(added 2026-11-08 by ballot 2026-11-08-signing-act-shape-review items 1–3 and 5)*
 >
 > **States.** Each one is decided over a committed tree by the freshness sweep's own function (`freshness.ts` `listsAt`). That is the C16 sweep's lists and the census mode's population.
 > - **unsigned-routed**: routed (C18, clause 5), no signature. On the sweep's `unsigned-routed` list.
@@ -148,13 +148,13 @@ Each item gives its edit sites with before and after text. "The signing-act ball
 >
 > **Authoring acts on the same rows.** These are never signing acts: row add, row delete, re-key (a delete plus an add), re-dispose (any change of `disposition` or `destination`, among `retained`, `re-pointed`, `superseded-by` and `no-consumer-counterpart`), overlay text and pins, operative-set items, and the regeneration of `canonical/_consumer-output/**`. Each runs under charter scope or a grant, in a commit that touches no signing object (link 2).
 >
-> **The table.** "IN *list*": in bound when the row is on *list* at the act's first parent; link 1 decides. "GRANT": clause 5 {F-1}. "AUTH": authoring; link 2 confines it. "X": no lawful single commit does it; the cell names the lawful order. "—": no such act. Verdicts are link verdicts of `walkRange` at the act's commit. `--ci` over a range also needs the sweep green at the range's head, which a lone withdrawal does not leave (a record unit with no `canonicalHash` is stale; a routed row with no signature turns S-T3 red). The fixture ids are the table's (§ 4.5 list; Stacy's).
+> **The table.** "IN *list*": in bound when the row is on *list* at the act's first parent; link 1 decides. "GRANT": clause 5; link 1 fails it, granted or not (F-1 (d)). "AUTH": authoring; link 2 confines it. "X": no lawful single commit does it; the cell names the lawful order. "—": no such act. Verdicts are link verdicts of `walkRange` at the act's commit. `--ci` over a range also needs the sweep green at the range's head, which a lone withdrawal does not leave (a record unit with no `canonicalHash` is stale; a routed row with no signature turns S-T3 red). The fixture ids are the table's (§ 4.5 list; Stacy's).
 >
 > | State | `sign` · `refuse` (first) | `re-sign` · `refuse` (signed row) | `withdraw` | `hold` | row delete · re-key | re-dispose |
 > |---|---|---|---|---|---|---|
 > | unsigned-routed | IN unsigned-routed · FU1–FU32 | — | — | line | AUTH | AUTH (may leave the population) |
 > | unsigned-unrouted | GRANT · FU (the #337/#378 shape) | — | — | not in bound | AUTH | AUTH (may route it) |
-> | fresh | — | GRANT · F5 (the U11 (h) redo; `c989dacf`) | GRANT · **W1**, **W1b** (the two-commit redo) | not in bound | X: the author's commit deletes the signer's object (link 2/3, **A1**). Order: re-dispose or change the unit first, so the row is stale, orphaned or signed-unrouted; then withdraw; then delete or re-key | AUTH. The row goes stale only if a pinned hash moves (**S3**). For a row that renders nothing, a move between `no-consumer-counterpart` and `superseded-by`, or a destination change, moves none: {F-4} (**D1**) |
+> | fresh | — | GRANT · F5 (the U11 (h) redo; `c989dacf`) | GRANT · **W1**, **W1b** (the two-commit redo) | not in bound | X: the author's commit deletes the signer's object (link 2/3, **A1**). Order: re-dispose or change the unit first, so the row is stale, orphaned or signed-unrouted; then withdraw; then delete or re-key | AUTH. The row goes stale only if a pinned hash moves (**S3**). For a row that renders nothing, a move between `no-consumer-counterpart` and `superseded-by`, or a destination change, moves none until F-4 (a)'s pin applies (§ 2a, "Re-disposition") (**D1**) |
 > | stale | — | IN stale, and a pinned hash moves (F5) · **S1**, **S2** | IN stale · **W3** | line | X: withdraw first (as fresh) | AUTH |
 > | signed-unrouted | — | IN stale if stale, else GRANT | IN signed-unrouted · **W4**, **W6** | not in bound | X: withdraw first | AUTH (may route it) |
 > | orphaned | — (no current unit) | — | IN orphaned · **W2**, **W6** (the v3 shape) | — | signed: X, withdraw first, then re-key, then `sign` from unsigned-routed (the v3 order); unsigned: AUTH | AUTH |
@@ -168,9 +168,9 @@ Each item gives its edit sites with before and after text. "The signing-act ball
 > - A **redo**, re-making an act whose audit read anything but `anchored`, is the fresh row's `re-sign`, or the fresh row's `withdraw` followed by a `sign`. Either way it is GRANT. Its only lawful route with no grant is a branch cut before the act, where the row is in bound again (the U11 (g) route), and that route exists only before merge.
 > - An **authoring round trip** also puts a fresh row in bound with no grant: the author re-disposes it to `retained`, the signer withdraws it (signed-unrouted), the author re-disposes it back, and the signer signs it (unsigned-routed). Every link holds. It is the same class as a canonical edit that stales a row, and it is visible only in history. The claims pass counts round trips (Stacy R1 N-3).
 >
-> {F-1: the re-attestation and grant paragraph}
+> **Grants and re-attestation.** No row is in bound for a re-attestation (Spec 125-B U3) until a ballot in U3's tasks round sets its bound, once U3's identity mechanism is known. A clause-5 grant does not pass `--ci` link 1. It is executed only where the row is in bound: on a branch cut before the act, or after an authoring change that stales it.
 >
-> {F-4: the re-disposition paragraph}
+> **Re-disposition** *(F-4 (a); applied with Spec 125-B U3's re-attestation round, per Peter's 2026-11-08 ratification record)*. From that application, for a row that renders nothing, `renderedHash` is the hash of the row's `disposition` and `destination`: `hashEntry({ disposition, destination })`, `destination` omitted where the row has none. A re-disposition or a destination change then moves it, and the row goes stale like any other. Until that application, such a move moves no pinned hash and leaves the row fresh (§ 1 item 12 of ballot 2026-11-08-signing-act-shape-review), and the claims pass reads it.
 
 **What this cell set rests on.** Every IN, GRANT and X cell restates a ratified clause, except the rows items 3–5 change: the withdraw cells for orphaned, signed-unrouted and stale; and item 4's "at the act's first parent". The table adds one state the sweep cannot compute from a tree as the signature stands: the fresh rendering-less row whose disposition its signer never judged. That state is F-4's. *(R0 claimed "no state the sweep cannot compute"; Stacy R1 B-2 showed that claim false.)* "signed-unrouted" and "orphaned" are lists the sweep already half-computes: `routedPopulation`'s `all`, and the orphaned-key refusal.
 
@@ -180,10 +180,10 @@ Each item gives its edit sites with before and after text. "The signing-act ball
 - Before, (i): "(i) the rows whose signature or confirmation changed ⊆ the stale list;"
 - After, (i): "(i) each row whose signature or confirmation changed is on the list its act kind names (§ 2a) at the commit's first parent;"
 - Before, (iv): "(iv) the PR body lists the acts — the set in (i), one line each, `<dispositions file>#<row> — <seat> — <commit sha7>`, beside the pasted stale list."
-- After, (iv): "(iv) the PR body lists the acts — the set in (i), one line each, `<dispositions file>#<row> — <seat> — <kind> (<list>) — <commit sha7>` (`<operative-set file>#<anchor>` for a confirmation), where `<kind>` is one of § 2a's closed kinds and `<list>` is the list the row was on at the commit's first parent {F-1: the granted form} — beside the pasted lists, each naming the commit it was taken at."
+- After, (iv): "(iv) the PR body lists the acts — the set in (i), one line each, `<dispositions file>#<row> — <seat> — <kind> (<list>) — <commit sha7>` (`<operative-set file>#<anchor>` for a confirmation), where `<kind>` is one of § 2a's closed kinds and `<list>` is the list the row was on at the commit's first parent — beside the pasted lists, each naming the commit it was taken at."
 - Before, the hold form: "`<dispositions file>#<row> — <seat> — hold: <reason>` for a signature, `<operative-set file>#<anchor> — <seat> — hold: <reason>` for a C16 confirmation".
 - After, the hold form: "`<dispositions file>#<row> — <seat> — hold (<list>): <reason>` for a signature, `<operative-set file>#<anchor> — <seat> — hold (<list>): <reason>` for a C16 confirmation, where `<list>` is the list the row is on when the hold is given". *(Stacy R1 § 6, condition 2.)*
-- The rest of the hold sentence is unchanged. Its pointer line gains `*(amended <date> by ballot 2026-11-08-signing-act-shape-review item 2; prior text at <A>.)*`. The 2026-10-21 note under it ("'the stale list' in (i) and (iv) reads as clause 3's bound") is kept as history and marked superseded by this item.
+- The rest of the hold sentence is unchanged. Its pointer line gains `*(amended 2026-11-08 by ballot 2026-11-08-signing-act-shape-review item 2; prior text at <A>.)*`. The 2026-10-21 note under it ("'the stale list' in (i) and (iv) reads as clause 3's bound") is kept as history and marked superseded by this item.
 
 **Why the kind and the list go in the line.** Each line can then be checked against `--census-link1` over the PR's range (K1), which prints the same kind and list tokens byte for byte. That is Stacy's reading at R1 § 6, condition 1. A pasted list is one snapshot, and S13's order crosses list states, so the pasted lists are context for the line, not its proof. A withdrawal is visible as one, not as an act that moved a hash.
 
@@ -201,11 +201,11 @@ After:
 
 > 3. **Bound — the lists.** A signing act is valid only for a row on the list its kind names in § 2a, at the act's commit's first parent. The lists are the freshness **stale list** and **unsigned-routed list**, and, for a withdrawal only, the **orphaned list** and the **signed-unrouted list**, as the C16 `operative-set-freshness` sweep reports them (`npm run check:122:diff-guard`, which runs the sweep first). The lists are taken before signing, **re-taken each round** (where a refusal's re-disposition moves a pinned hash, the re-sign that follows is in bound; where it moves none, § 2a's re-disposition paragraph governs), and **pasted into the PR body**, each naming the commit it was taken at. The lists are a property of the committed tree. A stale entry carried onto a unit branch by merging `main` is in bound on that branch, exactly as one the branch's own change created. **An act is judged against the rendering committed at its first parent, so the regeneration it rests on is committed before it.**
 
-The erratum pointer stays. A new pointer is added: `*(amended <date> by ballot 2026-11-08-signing-act-shape-review items 3–5; prior text at <A>.)*`. The bold last sentence is item 5's. The parenthetical's correction is Stacy R1 B-2.
+The erratum pointer stays. A new pointer is added: `*(amended 2026-11-08 by ballot 2026-11-08-signing-act-shape-review items 3–5; prior text at <A>.)*`. The bold last sentence is item 5's. The parenthetical's correction is Stacy R1 B-2.
 
 **Site 3b — the signing-act ballot, § 2 clause 5.**
 - Before: "5. **Out of bound.** Re-signing a row **not** on the stale list (a signer changing its mind) needs a real grant, and the claims pass counts it separately."
-- After: "5. **Out of bound.** An act on a row that is on none of the lists its kind names — a re-sign, refusal, re-confirmation or withdrawal on a fresh row (a signer changing its mind), or a redo of an act whose audit read anything but `anchored` — needs a real grant, and the claims pass counts it separately. {F-1: clause 5's last sentence}"
+- After: "5. **Out of bound.** An act on a row that is on none of the lists its kind names — a re-sign, refusal, re-confirmation or withdrawal on a fresh row (a signer changing its mind), or a redo of an act whose audit read anything but `anchored` — needs a real grant, and the claims pass counts it separately. A granted act does not pass `--ci` link 1; a grant is executed only where the row is in bound."
 - The pointer is the same as site 3a's.
 
 ### Item 4 — Link 1 by list membership at the first parent (the `actMoved` fix)
@@ -223,8 +223,8 @@ Before (verbatim):
 
 After:
 
-> - **Link 1, decided per signing commit, at its first parent**: the head is fresh by construction, so link 1 is never read from the head's lists. Each act's kind is read from the row's pinned object (§ 2a). The row must be on that kind's list in the first parent's tree, computed by the freshness sweep's own function over that tree (`freshness.ts` `listsAt`), with the consumer rendering committed in that tree. An undecidable list fails it. A `re-sign` or `re-confirm` must also move the row's pinned `canonicalHash` or `renderedHash` (F5) {F-4: the F5 exception, if any}. A row whose hashes moved only because `main` was merged is on the stale list at the first parent, so it passes (F14, clause 3). {F-1: the granted-act sentence}
->   *(amended <date> by ballot 2026-11-08-signing-act-shape-review item 4; prior text at <A>. The 2026-10-21 first-signature note below is this rule's `sign` and `refuse` case, unchanged.)*
+> - **Link 1, decided per signing commit, at its first parent**: the head is fresh by construction, so link 1 is never read from the head's lists. Each act's kind is read from the row's pinned object (§ 2a). The row must be on that kind's list in the first parent's tree, computed by the freshness sweep's own function over that tree (`freshness.ts` `listsAt`), with the consumer rendering committed in that tree. An undecidable list fails it. A `re-sign` or `re-confirm` must also move the row's pinned `canonicalHash` or `renderedHash` (F5). A row whose hashes moved only because `main` was merged is on the stale list at the first parent, so it passes (F14, clause 3).
+>   *(amended 2026-11-08 by ballot 2026-11-08-signing-act-shape-review item 4; prior text at <A>. The 2026-10-21 first-signature note below is this rule's `sign` and `refuse` case, unchanged.)*
 
 **Site 4c — the instrument** (application PR, in my standing scope).
 - `freshness.ts` exports `listsAt(read, files)`. It returns `{ stale, unsignedRouted, orphaned, signedUnrouted, errors }` over a tree read through `read`, with the rendered hash computed from that tree's committed `canonical/_consumer-output/`. `runFreshnessSweep` calls it over the working tree, so there is one code path, not a second copy.
@@ -267,7 +267,7 @@ The table's cells hold whatever F-2 rules. Link 7 is § 3's evidence rule, and i
 **The classification.**
 - **By law today (clause 3): 0 of 190 (narrow), and 0 of 429 (wide), are in bound for any act a re-attestation could make.** Every row is fresh or signed-unrouted, and so is every unit. A re-attestation is clause 5's out-of-bound act.
 - **At the gate today, that is not what `--ci` enforces.** A one-commit re-sign or re-confirm fails F5. The two-commit redo (withdraw, then sign with the same hashes) passes (§ 1 item 11). So U3's re-attestation could pass `--ci` today *out of bound*.
-- **At the gate after item 4**, the two-commit redo fails at the withdrawal (W1b, W5c), and every re-attesting shape fails link 1, granted or not, {F-1: unless F-1 (a)'s grant list names it}.
+- **At the gate after item 4**, the two-commit redo fails at the withdrawal (W1b, W5c), and every re-attesting shape fails link 1, granted or not (F-1 (d)).
 
 *(Corrected at R2, Stacy R1 B-1. R0 said "U3's re-attestation cannot pass `--ci` under the ratified text, granted or not". As a statement about the shipped gate that was false.)*
 
@@ -315,7 +315,7 @@ The four-fixes item 2 wrapper's refusal of `-q` is Data's design and rides the R
 
   > | S14 | **The rendering you judge is committed before you act.** Your act is judged against the rendering committed at its first parent. Print on a clean tree after the regeneration commit (the print mode's `read at` line ends `clean`), never against a regeneration that is only in your working tree. A re-sign whose staleness is in an uncommitted regeneration fails `--ci` link 1. A first signature made before its rendering is committed reads `record absent 7` for good. | signing-act ballot § 2 clause 3 (its last sentence) | `--ci` link 1 (S1); `--audit` link 7 |
 
-- **{F-1}, {F-2} and {F-4}** add the seat-brief text in § 6 under each option.
+- **The ruled forks' seat-brief text**: F-1 (d) adds none. F-2 (b): S6's checked-by cell gains "for a row that renders nothing, your print-mode output for that row (its header and `canonicalHash:`)". F-4 (a): S4 gains "For a row that renders nothing, `renderedHash` is `hashEntry({ disposition, destination })`." — applied with F-4 (a)'s pin, at Spec 125-B U3's round, not in this ballot's application PR.
 
 **`governance/classification-map.md`, row `signing-act-consistency`.**
 - **The `rule:` line.**
@@ -324,7 +324,7 @@ The four-fixes item 2 wrapper's refusal of `-q` is Data's design and rides the R
   - Same line, before: "(stale or unsigned-routed list;". After: "(the act kind's list at the first parent;".
 - **The git-links surface string**: "the stale-list / unsigned-routed-list bound" → "the act-kind list bound at the first parent".
 - **Its `census` field** gains `--census-link1` (site 4c).
-- **One history line**: `{ date: <application date>, change: "SHAPE REVIEW APPLIED (ballot .kiro/docs/ballots/2026-11-08-signing-act-shape-review.md, RATIFIED <ruling>): § 2a's closed table of row states and act kinds, the kind read from the pinned object; clause 3's bound is the act kind's list at the commit's first parent (stale, unsigned-routed, and for a withdrawal orphaned or signed-unrouted), and the act is judged against the rendering committed there; clause 6 (iv) and hold lines carry the kind and the list; --ci link 1 decides by list membership (freshness.ts listsAt), with F5 kept for re-sign and re-confirm; the sweep prints orphaned and signed-unrouted lines; census field gains --census-link1; F-1 <outcome>; F-2 <outcome>; F-3 <outcome>; F-4 <outcome>; check_state unchanged (armed), ARMING at the PR's merge (Stacy)", by: thurgood }`.
+- **One history line**: `{ date: <application date>, change: "SHAPE REVIEW APPLIED (ballot .kiro/docs/ballots/2026-11-08-signing-act-shape-review.md, RATIFIED Peter 2026-11-08T17:45:34Z): § 2a's closed table of row states and act kinds, the kind read from the pinned object; clause 3's bound is the act kind's list at the commit's first parent (stale, unsigned-routed, and for a withdrawal orphaned or signed-unrouted), and the act is judged against the rendering committed there; clause 6 (iv) and hold lines carry the kind and the list; --ci link 1 decides by list membership (freshness.ts listsAt), with F5 kept for re-sign and re-confirm; the sweep prints orphaned and signed-unrouted lines; census field gains --census-link1; F-1 (d), re-attestation bound left to 125-B U3's tasks round; F-2 (b), the print record tied by target and canonicalHash; F-3 (a); F-4 (a), its pin, S4 line and the 261 re-signs applied at 125-B U3's round; check_state unchanged (armed), ARMING at the PR's merge (Stacy)", by: thurgood }`.
 
 ---
 
@@ -358,11 +358,12 @@ That is 18 cases, against the charter record's estimate of about 10. FU1–FU32,
 
 ## 5. Application (one PR, Peter-merged, after ratification and before U3's re-attestation is scheduled)
 
-1. **Record-first.** This file's Status reads `RATIFIED (Peter, <date>)` with his words and the F-1 to F-4 picks, committed before any site.
+1. **Record-first.** This file's Status reads `RATIFIED (Peter, 2026-11-08T17:45:34Z)` with his words and the F-1 to F-4 picks, committed before any site. *(Done at the Status commit.)*
 2. **Open-branch check.** List the open PRs and unit branches whose range touches `canonical/profiles/**` or `canonical/operative-sets/**` (`gh pr list --search` plus `git branch -r`). Item 4 makes link 1 stricter on an armed required step. Each one is re-run against the application head, and any act that turns red is reported before merge, never adapted.
-3. **The signing-act ballot**: sites 1a, 1b, 2, 3a, 3b, 4a, 4b, and the § 6 text of each fork's ruled option, exactly as written, with the pointers. Errata line: `§§ 2, 2a, 3, 4.1, 4.2 (and 4.4 under F-2 (c)): the row-state × act table, the closed act kinds read from the pinned object, withdrawal in bound (orphaned, signed-unrouted), link 1 by list membership at the first parent, the ordering sentence, F-1/F-2/F-3/F-4 as ruled (ballot 2026-11-08-signing-act-shape-review; RATIFIED <date> — <words>).`
-4. **The instrument**: site 4c, site 5b, and the ruled options' instrument halves, with § 4's fixtures as Stacy specifies them. W1, W1b, W5c, S1 and X1 (and D1 under F-4 (a) or (b)) are recorded red at the merge base in the PR body.
-5. **The restatements**: § 3's seat-brief and register sites, and the ruled options' seat-brief text.
+3. **The signing-act ballot**: sites 1a, 1b, 2, 3a, 3b, 4a, 4b, and the § 6 text of each fork's ruled option, exactly as written, with the pointers. Errata line: `§§ 2, 2a, 3, 4.1, 4.2 (and 4.4 under F-2 (c)): the row-state × act table, the closed act kinds read from the pinned object, withdrawal in bound (orphaned, signed-unrouted), link 1 by list membership at the first parent, the ordering sentence, F-1/F-2/F-3/F-4 as ruled (ballot 2026-11-08-signing-act-shape-review; RATIFIED 2026-11-08T17:45:34Z — Peter: "Ratified, F-1 (d), F-2 (b), F-3 (a), F-4 (a)").`
+4. **The instrument**: site 4c, site 5b, and the ruled options' instrument halves, with § 4's fixtures as Stacy specifies them. W1, W1b, W5c, S1 and X1 are recorded red at the merge base in the PR body.
+5. **The restatements**: § 3's seat-brief and register sites, and the ruled options' seat-brief text, except F-4 (a)'s.
+5a. **F-4 (a) is not in this PR.** Its pin (`derive.ts`'s empty-span `renderedHash`, with the sweep's and print mode's use of it), its S4 line, fixture D1 and the 261 re-signs it forces are applied together at Spec 125-B U3's re-attestation round (the ratification record's "What was ruled"). The pin cannot land alone: it stales all 261 rows, and the sweep would fail the PR that carried it. This PR applies § 2a's "Re-disposition" paragraph as resolved, which states both the interim and the pin. Site 7's line on the U3 record names this.
 6. **Census re-runs** (README "Re-runs"):
    - `--census-routed` at the PR's base and head must be equal; if they differ, stop and report.
    - The governance-examples census on the applied seat brief must equal § 7's proposed digest, re-run on the ruled after-text.
@@ -383,7 +384,7 @@ That is 18 cases, against the charter record's estimate of about 10. FU1–FU32,
 
 ---
 
-## 6. Forks for Peter (not picked), with each option's after-text
+## 6. Forks for Peter, with each option's after-text — ruled 2026-11-08T17:45:34Z: F-1 (d), F-2 (b), F-3 (a), F-4 (a)
 
 Each option below gives its text at every site it touches. The "{F-n}" marks in § 2 and § 3 take that text.
 
@@ -413,7 +414,7 @@ Item 4 removes the accidents through which out-of-bound acts pass today: the v3 
 - *Cost*: a new record form that no check reads for signer = `c1Seat`.
 - *Surviving counter*: the most valuable re-attestation evidence sits outside the chain, unchecked. "Only where the row is in bound" includes the authoring round trip (§ 2a), so a determined author and signer can reach any fresh row without a grant. This is visible only in history.
 
-**(d) Classification now; the bound at U3's tasks round.**
+**(d) Classification now; the bound at U3's tasks round. — RULED (Peter, 2026-11-08T17:45:34Z).**
 - *§ 2a paragraph {F-1}*:
   > **Grants and re-attestation.** No row is in bound for a re-attestation (Spec 125-B U3) until a ballot in U3's tasks round sets its bound, once U3's identity mechanism is known. A clause-5 grant does not pass `--ci` link 1. It is executed only where the row is in bound: on a branch cut before the act, or after an authoring change that stales it.
 - *Clause 5's last sentence {F-1}*: as (b).
@@ -432,10 +433,10 @@ These are 261 of 426 routed rows, and 22 of #758's 40 acts.
 - *Instrument*: none. *Fixture R2*: pins today's verdict.
 - *Surviving counter*: one verdict means two things, and most rows can never leave it. That teaches readers to discount it. The 18.5 four and #758's twenty-two are already read as "by design" in prose, which is the rot the reporting rule exists to stop.
 
-**(b) The print record, tied by target and `canonicalHash`.**
+**(b) The print record, tied by target and `canonicalHash`. — RULED (Peter, 2026-11-08T17:45:34Z).**
 - *§ 3 table, row 7, after*: "| 7 | Each signed row's rendered line appears verbatim in a tool result in that transcript; for a row that renders nothing, that transcript's print-mode output for the row (§ 4.2) | the harness store | `--audit` |"
 - *§ 4.2 bullet, added*:
-  > - **A row that renders nothing** (no rendered piece at the act's commit) anchors link 7 on one tool result that carries the print mode's output for that row. That output must have its header line `verify-signing-chain --print — … — <record>#<fragment>` naming the row's own target, the line `(the row renders nothing — no rendered piece)`, and a `canonicalHash:` line equal to the signature's pinned `canonicalHash`. `renderedHash:` is not matched: under no F-4 option does it identify a row. With no such result, the act reads `FAIL` 7. A row that renders nothing is never `record absent` 7 for that reason alone. The transcript is read as link 7 reads it; RS-36's `late-read` rule, when ratified, applies here too. *(added <date> by ballot 2026-11-08-signing-act-shape-review F-2 (b).)*
+  > - **A row that renders nothing** (no rendered piece at the act's commit) anchors link 7 on one tool result that carries the print mode's output for that row. That output must have its header line `verify-signing-chain --print — … — <record>#<fragment>` naming the row's own target, the line `(the row renders nothing — no rendered piece)`, and a `canonicalHash:` line equal to the signature's pinned `canonicalHash`. `renderedHash:` is not matched: under no F-4 option does it identify a row. With no such result, the act reads `FAIL` 7. A row that renders nothing is never `record absent` 7 for that reason alone. The transcript is read as link 7 reads it; RS-36's `late-read` rule, when ratified, applies here too. *(added 2026-11-08 by ballot 2026-11-08-signing-act-shape-review F-2 (b).)*
 - *Seat brief*: S6's checked-by cell gains "for a row that renders nothing, your print-mode output for that row (its header and `canonicalHash:`)". The four-fixes template's step 1 already requires that print.
 - *Instrument*: a matcher in `runAudit`'s link-7 branch. Fixture R2, with Stacy's two controls.
 - *Cost*: one matcher, three fixtures, the § 3 row and one § 4.2 bullet.
@@ -443,7 +444,7 @@ These are 261 of 426 routed rows, and 22 of #758's 40 acts.
 
 **(c) A distinct verdict.**
 - *§ 4.4 before*: "**One verdict per act, from a closed set: `anchored` · `unanchored` · `record absent` · `FAIL` · `anomaly`**, with the link number on every verdict but `anchored`."
-- *§ 4.4 after*: "**One verdict per act, from a closed set: `anchored` · `unanchored` · `record absent` · `FAIL` · `anomaly` · `n/a`**, with the link number on every verdict but `anchored`. `n/a` is given only at link 7, only for a row that renders nothing at the act's commit. It is never `anchored`, never counted as `record absent`, never green, and never widening (§ 5.4)." *(amended <date> by ballot 2026-11-08-signing-act-shape-review F-2 (c); prior text at <A>.)*
+- *§ 4.4 after*: "**One verdict per act, from a closed set: `anchored` · `unanchored` · `record absent` · `FAIL` · `anomaly` · `n/a`**, with the link number on every verdict but `anchored`. `n/a` is given only at link 7, only for a row that renders nothing at the act's commit. It is never `anchored`, never counted as `record absent`, never green, and never widening (§ 5.4)." *(amended 2026-11-08 by ballot 2026-11-08-signing-act-shape-review F-2 (c); prior text at <A>.)*
 - *§ 4.2 bullet, added*: "- **A row that renders nothing** reads `n/a` 7, 'the row renders nothing' (§ 4.4)."
 - *Register*: the harness-links surface's REPORTING comment gains `n/a` in its verdict set.
 - *Seat brief*: S6's checked-by cell gains "a row that renders nothing reads `n/a 7`".
@@ -453,14 +454,14 @@ These are 261 of 426 routed rows, and 22 of #758's 40 acts.
 
 ### F-3 — Does an act committed before its rendering ever anchor?
 
-**(a) No.**
+**(a) No. — RULED (Peter, 2026-11-08T17:45:34Z).**
 - *Text*: none beyond clause 3's last sentence (site 3a) and site 5b's message.
 - *Fixture R1*: `record absent 7` with item 5's message.
 - *Surviving counter*: `999c4c6f`-shaped acts, signed against the right content in the wrong order, stay `record absent 7` for good. Item 5's message at least says why.
 
 **(b) Yes, by hash.**
 - *§ 4.2 bullet, added*:
-  > - **An act committed before its rendering**: where the row has no rendered piece at the act's commit, link 7 reads the first later commit in the range whose rendering of the row hashes to the signature's pinned `renderedHash`, and anchors with the note `rendering from <sha8>`. Under F-2 that fallback never applies to a row that renders nothing at that later commit either. *(added <date> by ballot 2026-11-08-signing-act-shape-review F-3 (b).)*
+  > - **An act committed before its rendering**: where the row has no rendered piece at the act's commit, link 7 reads the first later commit in the range whose rendering of the row hashes to the signature's pinned `renderedHash`, and anchors with the note `rendering from <sha8>`. Under F-2 that fallback never applies to a row that renders nothing at that later commit either. *(added 2026-11-08 by ballot 2026-11-08-signing-act-shape-review F-3 (b).)*
 - *Instrument*: the fallback in `runAudit`. Fixture R1 with a control (a later rendering with a different hash → `record absent` 7).
 - *Surviving counter*: clause 8 means (b) rescues no past act. In future it only forgives a breach of S14. Link 7 still requires the line in a tool result, so the real cost is a second path into link 7 that pays for the wrong order.
 
@@ -470,7 +471,7 @@ Today a move between `no-consumer-counterpart` and `superseded-by`, or a change 
 
 **Reach** (Stacy R2 N-7). A `re-pointed` row's `destination` is pinned by nothing either (§ 1 item 12). (a) and (c) reach only rows that render nothing, and leave that sub-case as a residual with 0 instances on record. (b) reaches every signed row, that sub-case included.
 
-**(a) Pin the disposition.**
+**(a) Pin the disposition. — RULED (Peter, 2026-11-08T17:45:34Z).**
 - *§ 2a paragraph {F-4}*:
   > **Re-disposition.** For a row that renders nothing, `renderedHash` is the hash of the row's `disposition` and `destination`: `hashEntry({ disposition, destination })`, `destination` omitted where the row has none. A re-disposition or a destination change then moves it, and the row goes stale like any other.
 - *§ 4.1 F5 exception {F-4}*: none.
@@ -913,6 +914,135 @@ I read Stacy's R3 whole and spliced it above byte for byte. She passes with no o
 - **Her condition on `7eb517fca`** is recorded and is hers. The split shape was lawful when it was made, so its red census line is never a finding on Sparky.
 - **Census**: unchanged since R3, so nothing was re-run. `main` has moved to `bebe7fa84`, which changes only `governance/DesignerPunk-Integration-Guide.md` among the census inputs. The application's input-by-input re-run reads that doc.
 - **Status** stays DRAFT. Peter ratifies, and picks F-1 to F-4.
+
+---
+
+## 11. Resolved after-texts
+
+*(Appended by the Status commit, 2026-11-08, under Peter's "Ratified, F-1 (d), F-2 (b), F-3 (a), F-4 (a)" (2026-11-08T17:45:34Z; record `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ratifies-signing-act-shape-review.md`). Nothing here is new text except the timing bridge named under Site 1b: each block resolves a block in §§ 2, 3 and 6 with the ruled option chosen and the ratification date filled. `<A>` (the application PR's base) is filled at application. The application diff is compared with this section byte for byte. F-4 (a)'s instrument half, its S4 line and its re-signs are applied at Spec 125-B U3's round (§ 5 step 5a) and are listed last.)*
+
+
+**Site 1a** — the signing-act ballot, § 2, after clause 8:
+
+> 9. **The shapes.** § 2a is the closed table of row states and the acts on them. An edit to a signing object that is none of § 2a's act kinds is not a signing act. It is authoring, or a finding.
+>    *(added 2026-11-08 by ballot 2026-11-08-signing-act-shape-review item 1.)*
+
+**Site 1b** — the signing-act ballot, new § 2a. The "Re-disposition" paragraph is the one bridge: F-4 (a)'s ruled text, with the record's timing ("timed with 125-B U3's round") and the interim state (§ 1 item 12) stated, so the paragraph is true from this application on:
+
+> ### 2a. Row states and acts *(added 2026-11-08 by ballot 2026-11-08-signing-act-shape-review items 1–3 and 5)*
+>
+> **States.** Each one is decided over a committed tree by the freshness sweep's own function (`freshness.ts` `listsAt`). That is the C16 sweep's lists and the census mode's population.
+> - **unsigned-routed**: routed (C18, clause 5), no signature. On the sweep's `unsigned-routed` list.
+> - **unsigned-unrouted**: a current row that does not route and carries no signature (a `retained` row; a re-pointed body row C18 does not route). On no list.
+> - **fresh**: signed, routed, both pinned hashes current. On no list.
+> - **stale**: signed, a pinned hash ≠ current. For a record unit: `canonicalHash` ≠ current, or absent. On the sweep's `stale` list.
+> - **refused**: a signed row whose signature carries `refuse`. It is otherwise fresh or stale and takes that state's cells. While it stands, S-T3 reads red.
+> - **signed-unrouted**: signed, current key, not routed. On the sweep's `signed-unrouted` list.
+> - **orphaned**: the row's or record unit's key names nothing current (the `[orphaned-key]` refusal). On the sweep's `orphaned` list.
+> - **deleted**: the row is absent.
+>
+> A **hold** is not a state. It is a clause 6 line on a row in bound, naming the list the row is on, and it resolves as the row's later in-bound act, or as *withdrawn* when the row leaves the bound. That is the hold's word, an end with no edit. It is not the act `withdraw`.
+>
+> **Act kinds (closed).** An act's kind is read from **the row's pinned object**: the dispositions `signature` sub-object for a signature, the record unit's `canonicalHash` for a confirmation. The sheet section never decides the kind. An object absent at the first parent and present at the commit is a first act; present then absent is a withdrawal; present at both and changed is a re-act. A commit that changes only a sheet section is a re-act on that row. So a first act carries its pinned object and its sheet section **in one commit**. A section committed alone after its signature reads as a re-act on a fresh row and fails link 1 (`7eb517fca`).
+> - `sign`: a first signature that assents;
+> - `refuse`: a signature carrying `refuse`, first or on a signed row;
+> - `re-sign`: an assenting signature replacing a signature;
+> - `confirm`: a record unit's first `canonicalHash`, with its sheet section;
+> - `re-confirm`: a confirmation replacing a confirmation;
+> - `withdraw`: a signature, or a record unit's `canonicalHash`, removed. The sheet section is a ledger and is kept, with one added line `withdrawn: <date> — <reason>` (the form at `2f63d2708` and `17cf39eac`); a later act on the key writes into it ("One section per key" below). A withdrawal that removes the section instead is still a `withdraw`, by its pinned object;
+> - `hold`: a line, with no edit (clause 6).
+>
+> **One section per key.** A key's sheet section is its ledger for every act on that key. A later act on a key whose section is kept, after a withdrawal or otherwise, writes into that section, as every in-place re-act does: the section's field lines (`signer:`, and for a confirmation `canonicalHash:` and `items:`) carry the current act's values, the act adds a dated paragraph, and earlier entries and any `withdrawn:` line stay below as prose. A second section with the same heading fails the sweep (two note blocks) and link 2.
+>
+> **Authoring acts on the same rows.** These are never signing acts: row add, row delete, re-key (a delete plus an add), re-dispose (any change of `disposition` or `destination`, among `retained`, `re-pointed`, `superseded-by` and `no-consumer-counterpart`), overlay text and pins, operative-set items, and the regeneration of `canonical/_consumer-output/**`. Each runs under charter scope or a grant, in a commit that touches no signing object (link 2).
+>
+> **The table.** "IN *list*": in bound when the row is on *list* at the act's first parent; link 1 decides. "GRANT": clause 5; link 1 fails it, granted or not (F-1 (d)). "AUTH": authoring; link 2 confines it. "X": no lawful single commit does it; the cell names the lawful order. "—": no such act. Verdicts are link verdicts of `walkRange` at the act's commit. `--ci` over a range also needs the sweep green at the range's head, which a lone withdrawal does not leave (a record unit with no `canonicalHash` is stale; a routed row with no signature turns S-T3 red). The fixture ids are the table's (§ 4.5 list; Stacy's).
+>
+> | State | `sign` · `refuse` (first) | `re-sign` · `refuse` (signed row) | `withdraw` | `hold` | row delete · re-key | re-dispose |
+> |---|---|---|---|---|---|---|
+> | unsigned-routed | IN unsigned-routed · FU1–FU32 | — | — | line | AUTH | AUTH (may leave the population) |
+> | unsigned-unrouted | GRANT · FU (the #337/#378 shape) | — | — | not in bound | AUTH | AUTH (may route it) |
+> | fresh | — | GRANT · F5 (the U11 (h) redo; `c989dacf`) | GRANT · **W1**, **W1b** (the two-commit redo) | not in bound | X: the author's commit deletes the signer's object (link 2/3, **A1**). Order: re-dispose or change the unit first, so the row is stale, orphaned or signed-unrouted; then withdraw; then delete or re-key | AUTH. The row goes stale only if a pinned hash moves (**S3**). For a row that renders nothing, a move between `no-consumer-counterpart` and `superseded-by`, or a destination change, moves none until F-4 (a)'s pin applies (§ 2a, "Re-disposition") (**D1**) |
+> | stale | — | IN stale, and a pinned hash moves (F5) · **S1**, **S2** | IN stale · **W3** | line | X: withdraw first (as fresh) | AUTH |
+> | signed-unrouted | — | IN stale if stale, else GRANT | IN signed-unrouted · **W4**, **W6** | not in bound | X: withdraw first | AUTH (may route it) |
+> | orphaned | — (no current unit) | — | IN orphaned · **W2**, **W6** (the v3 shape) | — | signed: X, withdraw first, then re-key, then `sign` from unsigned-routed (the v3 order); unsigned: AUTH | AUTH |
+> | deleted | — | — | — | — | removing a sheet section that keys to nothing is cleanup, not an act; adding one fails link 2 | — |
+> | record unit: stale | `confirm` / `re-confirm` IN stale, and a hash moves (F5) | | IN stale | line | items, unit add: AUTH | — |
+> | record unit: fresh | — | `re-confirm` GRANT · F5 (`c989dacf`) | GRANT · **W5b**, **W5c** | not in bound | — | — |
+> | record unit: orphaned | — | — | IN orphaned · **W5a** | — | re-key: X, withdraw first | — |
+>
+> **Across acts.**
+> - A seat that acts in a range authors its own charter in no commit of that range (clause 4; F12′, link 2).
+> - A **redo**, re-making an act whose audit read anything but `anchored`, is the fresh row's `re-sign`, or the fresh row's `withdraw` followed by a `sign`. Either way it is GRANT. Its only lawful route with no grant is a branch cut before the act, where the row is in bound again (the U11 (g) route), and that route exists only before merge.
+> - An **authoring round trip** also puts a fresh row in bound with no grant: the author re-disposes it to `retained`, the signer withdraws it (signed-unrouted), the author re-disposes it back, and the signer signs it (unsigned-routed). Every link holds. It is the same class as a canonical edit that stales a row, and it is visible only in history. The claims pass counts round trips (Stacy R1 N-3).
+>
+> **Grants and re-attestation.** No row is in bound for a re-attestation (Spec 125-B U3) until a ballot in U3's tasks round sets its bound, once U3's identity mechanism is known. A clause-5 grant does not pass `--ci` link 1. It is executed only where the row is in bound: on a branch cut before the act, or after an authoring change that stales it.
+>
+> **Re-disposition** *(F-4 (a); applied with Spec 125-B U3's re-attestation round, per Peter's 2026-11-08 ratification record)*. From that application, for a row that renders nothing, `renderedHash` is the hash of the row's `disposition` and `destination`: `hashEntry({ disposition, destination })`, `destination` omitted where the row has none. A re-disposition or a destination change then moves it, and the row goes stale like any other. Until that application, such a move moves no pinned hash and leaves the row fresh (§ 1 item 12 of ballot 2026-11-08-signing-act-shape-review), and the claims pass reads it.
+
+**Site 2** — the signing-act ballot, § 2 clause 6:
+
+- After, (i): "(i) each row whose signature or confirmation changed is on the list its act kind names (§ 2a) at the commit's first parent;"
+- After, (iv): "(iv) the PR body lists the acts — the set in (i), one line each, `<dispositions file>#<row> — <seat> — <kind> (<list>) — <commit sha7>` (`<operative-set file>#<anchor>` for a confirmation), where `<kind>` is one of § 2a's closed kinds and `<list>` is the list the row was on at the commit's first parent — beside the pasted lists, each naming the commit it was taken at."
+- After, the hold form: "`<dispositions file>#<row> — <seat> — hold (<list>): <reason>` for a signature, `<operative-set file>#<anchor> — <seat> — hold (<list>): <reason>` for a C16 confirmation, where `<list>` is the list the row is on when the hold is given". *(Stacy R1 § 6, condition 2.)*
+- Pointer: `*(amended 2026-11-08 by ballot 2026-11-08-signing-act-shape-review item 2; prior text at <A>.)*`
+
+**Site 3a** — the signing-act ballot, § 2 clause 3, with the pointer `*(amended 2026-11-08 by ballot 2026-11-08-signing-act-shape-review items 3–5; prior text at <A>.)*`:
+
+> 3. **Bound — the lists.** A signing act is valid only for a row on the list its kind names in § 2a, at the act's commit's first parent. The lists are the freshness **stale list** and **unsigned-routed list**, and, for a withdrawal only, the **orphaned list** and the **signed-unrouted list**, as the C16 `operative-set-freshness` sweep reports them (`npm run check:122:diff-guard`, which runs the sweep first). The lists are taken before signing, **re-taken each round** (where a refusal's re-disposition moves a pinned hash, the re-sign that follows is in bound; where it moves none, § 2a's re-disposition paragraph governs), and **pasted into the PR body**, each naming the commit it was taken at. The lists are a property of the committed tree. A stale entry carried onto a unit branch by merging `main` is in bound on that branch, exactly as one the branch's own change created. **An act is judged against the rendering committed at its first parent, so the regeneration it rests on is committed before it.**
+
+**Site 3b** — the signing-act ballot, § 2 clause 5, same pointer:
+
+After: "5. **Out of bound.** An act on a row that is on none of the lists its kind names — a re-sign, refusal, re-confirmation or withdrawal on a fresh row (a signer changing its mind), or a redo of an act whose audit read anything but `anchored` — needs a real grant, and the claims pass counts it separately. A granted act does not pass `--ci` link 1; a grant is executed only where the row is in bound."
+
+**Site 4a** — the signing-act ballot, § 3, table row 1:
+
+After: "| 1 | The row is on its act kind's list (§ 2a) at the commit's first parent | the freshness sweep's lists over that tree | `--ci` |"
+
+**Site 4b** — the signing-act ballot, § 4.1:
+
+> - **Link 1, decided per signing commit, at its first parent**: the head is fresh by construction, so link 1 is never read from the head's lists. Each act's kind is read from the row's pinned object (§ 2a). The row must be on that kind's list in the first parent's tree, computed by the freshness sweep's own function over that tree (`freshness.ts` `listsAt`), with the consumer rendering committed in that tree. An undecidable list fails it. A `re-sign` or `re-confirm` must also move the row's pinned `canonicalHash` or `renderedHash` (F5). A row whose hashes moved only because `main` was merged is on the stale list at the first parent, so it passes (F14, clause 3).
+>   *(amended 2026-11-08 by ballot 2026-11-08-signing-act-shape-review item 4; prior text at <A>. The 2026-10-21 first-signature note below is this rule's `sign` and `refuse` case, unchanged.)*
+
+**F-2 (b)** — the signing-act ballot, § 3 table row 7, and a new § 4.2 bullet:
+
+*§ 3 table, row 7, after*: "| 7 | Each signed row's rendered line appears verbatim in a tool result in that transcript; for a row that renders nothing, that transcript's print-mode output for the row (§ 4.2) | the harness store | `--audit` |"
+
+  > - **A row that renders nothing** (no rendered piece at the act's commit) anchors link 7 on one tool result that carries the print mode's output for that row. That output must have its header line `verify-signing-chain --print — … — <record>#<fragment>` naming the row's own target, the line `(the row renders nothing — no rendered piece)`, and a `canonicalHash:` line equal to the signature's pinned `canonicalHash`. `renderedHash:` is not matched: under no F-4 option does it identify a row. With no such result, the act reads `FAIL` 7. A row that renders nothing is never `record absent` 7 for that reason alone. The transcript is read as link 7 reads it; RS-36's `late-read` rule, when ratified, applies here too. *(added 2026-11-08 by ballot 2026-11-08-signing-act-shape-review F-2 (b).)*
+
+**F-1 (d)** and **F-3 (a)** — no text beyond Sites 1b and 3b (F-1 (d)) and Site 3a's last sentence and Site 5b's message (F-3 (a)).
+
+**Site 5b** — `verify-signing-chain --audit`, message only:
+
+`record absent 7 — the row's rendering is committed after the act (<sha8>); the act was not judged against a committed rendering (clause 3)`
+
+**Seat brief** — `governance/signing-seat-brief.md` (rows replace the current row of the same id; S13 and S14 follow S12):
+
+- Authorities list: "ballot `.kiro/docs/ballots/2026-11-08-signing-act-shape-review.md` (§ 2 clauses 3, 5, 6 and 9, and § 2a, the row states and acts);"
+| S1 | **Act only on rows in bound, by the list your act's kind names.** The freshness sweep (`npm run check:122:diff-guard`) prints four lists: `stale`, `unsigned-routed`, `orphaned` and `signed-unrouted`. A first signature or refusal needs the row on `unsigned-routed`. A re-sign, a refusal of a signed row, a confirmation or a re-confirmation needs it on `stale`. A withdrawal needs it on `stale`, `orphaned` or `signed-unrouted`. The lists are taken before acting, re-taken each round, and pasted into the PR body, each naming the commit it was taken at. A row on none of its kind's lists is not yours to act on under this rule. | signing-act ballot § 2 clauses 3, 5 and 9, and § 2a (ballot 2026-11-08-signing-act-shape-review). Which rows route: Spec 123 design § C18 clause 5 (a `re-pointed` frontmatter or members row routes; routes-floor ballot § 2) | `--ci` link 1 (F5, the FU, W and S cases); the pasted lists, read in the PR body |
+| S7 | **Your sheet section is yours alone, one per key.** It is headed `` ## `#<anchor>` ``, where the anchor is the evidence anchor (`#identity` for a body row, `#frontmatter:<path>` for a frontmatter row), and it carries a `signer: <seat>` line. Write it in the same commit as the signature or confirmation it records: a section committed alone afterwards is a re-act on a fresh row and fails `--ci` link 1. A key has one section for every act on it. A later act, after a withdrawal or otherwise, writes into it: its field lines carry the current values, you add a dated paragraph, and earlier entries and any `withdrawn:` line stay below. Never add a second section with the same heading. You do not edit another seat's section. The preamble counts as your object only when every section of the sheet names you. *Convention, not law, and no check reads it*: the #445 sheets place new sections before the first `## Signing run summary` or `## Re-sign run summary` heading, or at the end where there is neither. | § 2 clause 1 (b); § 2a ("One section per key"; ballot 2026-11-08-signing-act-shape-review); the preamble reading is the instrument's (`verify-signing-chain.ts` header L74–75) | `--ci` link 2 (a section's `signer:` equals the trailer; a second section with the same heading); link 1 (a section alone, X1); the sweep's evidence check (one note block) |
+| S8 | **A hold is a line, not an edit.** "Not yet, until X" makes no sheet, signature or confirmation edit. It is a line in the PR body's acts list: `<dispositions file>#<row> — <seat> — hold (<list>): <reason>` for a signature, or `<operative-set file>#<anchor> — <seat> — hold (<list>): <reason>` for a confirmation, where `<list>` is the list the row is on. A hold is not a signing act. It resolves as the row's later in-bound act, or as **withdrawn** when the row leaves the bound. | § 2 clause 6 (as amended 2026-10-22, ballot `2026-10-22-hold-act-recorded-in-pr-body`, and by ballot 2026-11-08-signing-act-shape-review) | the claims pass reads the PR body |
+| S12 | **Every act is reported.** Each act is a line in the PR body: `<dispositions file>#<row> — <seat> — <kind> (<list>) — <commit sha7>` (`<operative-set file>#<anchor>` for a confirmation). `<kind>` is one of `sign`, `refuse`, `re-sign`, `confirm`, `re-confirm` and `withdraw`, and `<list>` is the list the row was on. A refusal is reported like any act. Any S8 hold lines go beside them. A refusal is a fact for the report, not a reason to change the judgment (S6): it stands until the profile author's re-disposition is answered by an in-bound act, and while it stands the profile's real test reads it as red (S-T3, "zero standing refusals", `tools/agent-generator/__tests__/consumer-profile.real.test.ts` L187). | § 2 clause 6 (iv), as amended by ballot 2026-11-08-signing-act-shape-review; clause 4 (a re-disposition answering a refusal is authoring) | the claims pass reads the PR body, against `--census-link1` over the range |
+| S13 | **Withdraw before anyone re-keys or deletes a signed row.** A signed row cannot be re-keyed or deleted in one commit: the profile author's commit would delete your signature, and your commit would edit authoring. The order is: (1) the row reaches `stale`, `orphaned` or `signed-unrouted` (a canonical change, a rename, or a re-disposition by its author); (2) you withdraw in one commit, removing the row's `signature` (or the unit's `canonicalHash`) and keeping your sheet section, with one added line `withdrawn: <date> — <reason>`; (3) the author re-keys or deletes the unsigned row; (4) you sign the re-keyed row fresh, from `unsigned-routed`. | signing-act ballot § 2 clauses 1, 3 and 4, and § 2a; the ledger rule (ballots README § "Conventions") | `--ci` links 1–3 (the W cases, A1) |
+| S14 | **The rendering you judge is committed before you act.** Your act is judged against the rendering committed at its first parent. Print on a clean tree after the regeneration commit (the print mode's `read at` line ends `clean`), never against a regeneration that is only in your working tree. A re-sign whose staleness is in an uncommitted regeneration fails `--ci` link 1. A first signature made before its rendering is committed reads `record absent 7` for good. | signing-act ballot § 2 clause 3 (its last sentence) | `--ci` link 1 (S1); `--audit` link 7 |
+- S6, checked-by cell, gains (F-2 (b)): "for a row that renders nothing, your print-mode output for that row (its header and `canonicalHash:`)"
+
+**Register** — `governance/classification-map.md`, row `signing-act-consistency`:
+
+- **The `rule:` line.**
+  - Before: "for a row on the branch's freshness stale list or its unsigned-routed list (both printed by the freshness sweep, taken before signing, re-taken per round, pasted into the PR)".
+  - After: "for a row on the list its act kind names at the act's first parent (signing ballot § 2a: the freshness stale list, its unsigned-routed list, and for a withdrawal its orphaned or signed-unrouted list; all printed by the freshness sweep, taken before signing, re-taken per round, pasted into the PR with the commit each was taken at)".
+  - Same line, before: "(stale or unsigned-routed list;". After: "(the act kind's list at the first parent;".
+- **The git-links surface string**: "the stale-list / unsigned-routed-list bound" → "the act-kind list bound at the first parent".
+- **Its `census` field** gains `--census-link1` (site 4c).
+- **One history line**: `{ date: <application date>, change: "SHAPE REVIEW APPLIED (ballot .kiro/docs/ballots/2026-11-08-signing-act-shape-review.md, RATIFIED Peter 2026-11-08T17:45:34Z): § 2a's closed table of row states and act kinds, the kind read from the pinned object; clause 3's bound is the act kind's list at the commit's first parent (stale, unsigned-routed, and for a withdrawal orphaned or signed-unrouted), and the act is judged against the rendering committed there; clause 6 (iv) and hold lines carry the kind and the list; --ci link 1 decides by list membership (freshness.ts listsAt), with F5 kept for re-sign and re-confirm; the sweep prints orphaned and signed-unrouted lines; census field gains --census-link1; F-1 (d), re-attestation bound left to 125-B U3's tasks round; F-2 (b), the print record tied by target and canonicalHash; F-3 (a); F-4 (a), its pin, S4 line and the 261 re-signs applied at 125-B U3's round; check_state unchanged (armed), ARMING at the PR's merge (Stacy)", by: thurgood }`.
+
+**Deferred to Spec 125-B U3's round (F-4 (a); § 5 step 5a)** — not in this ballot's application PR:
+
+- `tools/agent-generator/derive.ts`: for a row with no rendered span, `renderedHash` is `hashEntry({ disposition, destination })`, `destination` omitted where absent; the sweep and the print mode use it (Lina consulted, shared core).
+- Seat brief S4 gains: "For a row that renders nothing, `renderedHash` is `hashEntry({ disposition, destination })`."
+- Fixture D1 (stale after the re-disposition), and the 261 re-signs, in bound (stale), by seven seats.
+- The register history line for that PR names the changed hash definition.
 
 ---
 
