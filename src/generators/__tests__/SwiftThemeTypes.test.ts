@@ -187,3 +187,22 @@ describe('resolved values on the real definitions', () => {
     expect(new Set(member('x')).size).toBeGreaterThan(1);
   });
 });
+
+describe('the wcag case names its built-in source (design § 4, [LEONARDO R2])', () => {
+  const wcagComment = (o: object, platform: 'ios' | 'android') => {
+    const out = generator.generateNativeThemes(platform, o as ReturnType<typeof configS>).join('\n');
+    const lines = out.split('\n');
+    const i = lines.findIndex(l => /\bcase wcag\b|\bWcag\b\s*[,(]?/.test(l) && !/instance|Themes\./.test(l));
+    return lines.slice(Math.max(0, i - 2), i + 1).join('\n');
+  };
+  it('names the bridge map on iOS and Android when a WCAG map is not registered', () => {
+    const o = { ...configS(), wcagSource: { wcagLight: 'registered', wcagDark: 'bridge' } };
+    expect(wcagComment(o, 'ios')).toContain('built-in dark-wcag map from @3fn/core applied');
+    expect(wcagComment(o, 'android')).toContain('built-in dark-wcag map from @3fn/core applied');
+  });
+  it('adds nothing when both WCAG maps are the consumer\'s own, or no source is given', () => {
+    const own = { ...configS(), wcagSource: { wcagLight: 'registered', wcagDark: 'registered' } };
+    expect(swift(own as ReturnType<typeof configS>)).not.toContain('@3fn/core');
+    expect(swift(configS())).not.toContain('@3fn/core');
+  });
+});

@@ -4,6 +4,9 @@
 **Spec**: 125-B — Classification Map & Deferred Enforcement Layers
 **Status**: Tasks Phase
 **Dependencies**: requirements.md (17, merged PR #72) + design.md (C1–C9, DD1–DD8, merged PR #73 — DD7/DD8 RATIFIED by that merge)
+**Criteria mode**: spec-level
+
+> *Declared 2026-11-08 (Thurgood), in the U3 re-home amendment.* This `tasks.md` predates Spec 127 and was legacy. The amendment that ticks Task 5 and re-homes Task 6 is material, so the parity check asks for a declaration (Spec 127 Req 6.3). `spec-level` matches how this spec was run: its parents have no per-parent criteria in the Spec 127 form. The spec discharges once, at its CLOSEOUT claims pass.
 
 ---
 
@@ -28,7 +31,7 @@
 | **U1b-r — Campaign roster** | U1b Campaign | One PR (Task 5.1) | Roster + campaign measurement protocol + baseline + register methodology notes + wave-task instantiation | Gate SATISFIED: the verdict ballot (`2026-08-02-u1-pilot-closeout-verdict.md`, PROCEED). |
 | **U1b wave units** | U1b Campaign | One PR per wave (5.2+, instantiated by 5.1) | Per wave: ratified rows + candidate diff + probe/trial evidence + prune + wave ballot | 5.1 merged. **Unit identities land at 5.1's instantiation — a recorded, conscious deviation from name-all-units-up-front [STACY R1]: the reviewed 5.W template IS the unit shape; 5.1's PR merge is the check on its verbatim instantiation.** |
 | **U1b-c — Campaign closeout** | U1b Campaign | One PR (5.Z) | Campaign record + dial decision point + Peter's campaign-verdict ballot | Campaign window closed (final wave's window closed). |
-| **U3 — Governance layer** | — | Declared, NOT broken down | CODEOWNERS + PR-approval-as-ratification + Exp-3-informed diff-gates | Gated on U2 (Exp 3 evidence) + Peter's scheduling; platform settings are Peter's action. Charter grain per design C9. |
+| **U3 — Governance layer** | — | **RE-HOMED 2026-11-08, not a unit of this spec** | Carried by the charter `.kiro/issues/2026-11-08-125b-u3-governance-layer.md` (Req 13 and design C9 verbatim, the precondition ledger, the re-attestation pointer) | None here. Peter closed 125-B without U3 (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-f4-two-pr-and-u3-rehome.md` item 4). |
 | **Elective — Autonomy dial** | — | No PR unless elected | Policy amendment only | **RE-DEFERRED at Task 3.2's session (ballot Decision (b)); the decision point re-fires at the U1b campaign closeout (5.Z)** (Req 15). |
 
 **Why the pilot spans three units (structural necessity, not preference):** the observation window (Req 8) measures ordinary work merged AFTER the prune and BEFORE the closeout — so the prune must merge mid-phase and the closeout must follow ~N=20 PRs later. A single-PR pilot is physically impossible. The phase's coherence lives in its evidence chain (protocol → probe/trial → prune → window → closeout) — three units whose Gate column couples them exactly as the law couples sequential dependent units. **Bandwidth check**: 4 substantive units in the pilot phase (U1-s, U1-p, U1-c, U2) — at the declared ceiling; all four merged. *(Amended 2026-08-02 [STACY R1]: U1b adds roster + per-wave + closeout units under ballot P3 — waves may OVERLAP, with batching sized against Peter's review cadence per wave; the ceiling concern is managed per-burst rather than by total unit count, and the pace-change law times prune merges to burst starts.)*
@@ -247,9 +250,10 @@
     - NET-NEW root `setupFilesAfterEnv` wiring (own gate-bite scoped); root lanes ONLY (sub-package deferral as register row + version-agnostic constraint recorded); allowlist seeded from PR #39 adjudications (jsdom doc-addition folds in), one-entry-per-line, churn counts parsed objects; promotion follows allowlist
     - _Requirements: 11.1–11.4; Design: C8_
 
-- [ ] 5. U1b: Map at Scale — **AMENDED 2026-08-02 per the verdict ballot** (was: gated placeholder; authored post-verdict per this task's own terms)
+- [x] 5. U1b: Map at Scale — **AMENDED 2026-08-02 per the verdict ballot** (was: gated placeholder; authored post-verdict per this task's own terms)
 
   **Type**: Parent (campaign phase — units declared below)
+  **Success Criteria:** none — the campaign's acceptance is its closeout verdict ballot, `.kiro/docs/ballots/2026-09-18-u1b-campaign-closeout-verdict.md` D1 (COMPLETE), and each unit carried its own parent-grade docs *(declared 2026-11-08 at the U3 re-home, when this parent was ticked; it had no criteria block before)*
   **Gate (SATISFIED)**: the RECORDED CLOSEOUT VERDICT BALLOT — `.kiro/docs/ballots/2026-08-02-u1-pilot-closeout-verdict.md` (**PROCEED AS DESIGNED**; at-scale params P1–P3; no methodology amendments required — closeout §2)
   **Amendment provenance**: reviewed by Ada/Lina/Stacy against the ballot's parameters (feedback.md § "U1b Tasks Amendment Feedback"); Peter's merge of the amendment PR settles the grouping.
 
@@ -311,10 +315,8 @@
     - Peter's campaign verdict as a record-first ballot (complete / continue with more waves / park remainder)
     - _Requirements: 10.6 (validation), 15.1–15.2, 17's conventions_
 
-- [ ] 6. U3: Governance Layer — GATED PLACEHOLDER (charter grain per design C9)
-
-  **Type**: Parent (placeholder)
-  **Gate**: U2 merged (Exp 3 evidence) + Peter's scheduling; CODEOWNERS/branch-protection settings are Peter's platform actions
-  - CODEOWNERS mapping; PR-approval-as-ratification for gated surfaces (layer 1 stays for ungated); authority-row entry `proposed → armed`; Exp-3-informed diff-gates designed then
-  - _Requirements: 13.1–13.4_
-  - **Carried obligation at U3's merge (named 2026-11-01, Thurgood; record only, it settles no design)**: `.kiro/issues/2026-10-15-123-125b-u3-re-attestation.md` — the one-time re-attestation of Spec 123's interim C1 records once per-seat authoring identity exists (Stacy re-attests; Thurgood enumerates and runs `verify-signing-chain`). Named here under Peter's fork E, "Yes, any spec that names the record" (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` R11 line 17), so the record can route in place to this file.
+**Task 6 (U3: Governance Layer) — RE-HOMED 2026-11-08; not a task of this spec.** Peter closed 125-B without U3 (2026-11-08T18:56:04Z, *"I'm fine with them not being part of 131"*, and 19:06:05Z, *"Re: Buckets 3 and 4, proceed as the relevant team members recommend"*; record `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-f4-two-pr-and-u3-rehome.md` item 4). What Task 6 held now lives in the charter `.kiro/issues/2026-11-08-125b-u3-governance-layer.md`:
+  - Req 13.1–13.4 and design C9, carried verbatim (charter § 2); this spec does not deliver them.
+  - The arming preconditions (charter § 3) and the `record-first-ratification` gated-surfaces scope, which stays `proposed` (ballot `.kiro/docs/ballots/2026-11-08-125b-u3-rehome.md`, applied in this amendment's PR).
+  - The carried re-attestation obligation, `.kiro/issues/2026-10-15-123-125b-u3-re-attestation.md`, by pointer (charter § 6); its Trigger is `manual` since #805.
+  *Superseded text, abridged (the full text is `git show 3c120ed4e:.kiro/specs/125-B-classification-map/tasks.md`, L314–320):* "- [ ] 6. U3: Governance Layer — GATED PLACEHOLDER (charter grain per design C9) · **Type**: Parent (placeholder) · **Gate**: U2 merged (Exp 3 evidence) + Peter's scheduling; CODEOWNERS/branch-protection settings are Peter's platform actions · CODEOWNERS mapping; PR-approval-as-ratification for gated surfaces (layer 1 stays for ungated); authority-row entry `proposed → armed`; Exp-3-informed diff-gates designed then · _Requirements: 13.1–13.4_ · **Carried obligation at U3's merge** … `.kiro/issues/2026-10-15-123-125b-u3-re-attestation.md` …"

@@ -1267,7 +1267,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 10 — `init` runs `generate`; per-platform output paths
 
-- [ ] 15. `init` runs `generate`, and `platforms:` writes each platform where its build reads it (U10)
+- [x] 15. `init` runs `generate`, and `platforms:` writes each platform where its build reads it (U10)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Thurgood (Sonnet) — INSTALL derivation and `install-doc.test.ts`
   **Traces**: Req 2.10, 11.1–11.4, 12.1–12.4 · design §§ 12a, 14
@@ -1305,14 +1305,14 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 15 Complete: init runs generate; per-platform output paths (129)"` opens U10's PR (Peter-merged: `governance/**`); report the URL; STOP.
 
-  - [ ] 15.1 `init` runs `generate`; the failure path; the closing message
+  - [x] 15.1 `init` runs `generate`; the failure path; the closing message
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 11.1, 11.2, 11.4_
-  - [ ] 15.2 INSTALL's founder count and `path-steps`; the derivation and its test
+  - [x] 15.2 INSTALL's founder count and `path-steps`; the derivation and its test
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Leonardo consulted on the step text
     - _Requirements: 11.3_
-  - [ ] 15.3 `platforms:`, `PLATFORM_KEYS`, validation, the file-name check; the harness consumer's D4 layout
+  - [x] 15.3 `platforms:`, `PLATFORM_KEYS`, validation, the file-name check; the harness consumer's D4 layout
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - Kenya and Data consulted on the layout; no lane changes
     - _Requirements: 12.1, 12.2, 12.3, 12.4_

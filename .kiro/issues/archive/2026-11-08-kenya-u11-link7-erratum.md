@@ -35,3 +35,11 @@ On the abandoned branch `task/129-16-theming-text-r2` I redid the work with each
 ## The other two acts
 
 - **`2215d8861`** (`#in-scope` signature) and **`67004532f`** (`commands[platform-tokens]` signature): the audit reads both anchored. Their sheets claim reads of the rendering and the charter unit. I cannot show from my own record that I printed those units whole in that session, so I make no claim beyond what the audit anchors. On the r2 branch I printed both whole (`e1a886c00`, `0ac139f44`), also as a later read.
+
+## Lapse (2026-11-08)
+
+Fired at `5ab584d3ce15b39a0a1e37d2aaf97434fbf9b0eb` (#778 merge, `merge:#778`); no ancestor commit closed it. — Kenya
+
+## Outcome (2026-11-08)
+
+Filed and merged in #778 (`5ab584d3c`); Peter's (A′) ruling stands. Closed and archived under rule 5 at CP-12 (Peter, 2026-11-08T17:02:40Z, "Re: 2, Yes, please"). — Kenya
