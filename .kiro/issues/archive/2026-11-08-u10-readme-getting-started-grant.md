@@ -43,4 +43,4 @@ Counter-argument and what survives: the old step 5 told the reader Claude Code a
 
 ## Outcome
 
-Open until U10 merges.
+**Closed 2026-11-08 (Thurgood, owner; rule 5).** The fixing PR was #777 (U10, Spec 129 Task 15), squash-merged to `main` as `3578cc5be` at 2026-11-08T13:59:23Z. Its README diff is the two granted regions and nothing else, made in `d6554a53f`: (a) the numbered list under "**Use it in your project:**", replaced by design § 14's four steps, and (b) the line after it, replaced by the trust/enable sentence with the Install guide link. Git shows them as one hunk (`@@ -130,13 +130,12 @@`) because they are adjacent, and the README diff of `3578cc5be` is byte-identical to `d6554a53f`'s. The grant expires with this close. Archived under rule 5.
