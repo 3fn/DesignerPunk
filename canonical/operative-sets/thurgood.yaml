@@ -205,7 +205,7 @@ units:
       - id: scope-34
         kind: member
         label: "compare.ts, its test and the harness README"
-        text: "From Spec 129 U12's merge you also own `scripts/harness/compare.ts` and `compare.test.ts`, and `harness/README.md` (ballot 2026-11-07-native-lane-ownership item 4 and § 8 F-5), the verdict oracle for every harness context"
+        text: "From Spec 129 U12's merge you also own `scripts/harness/compare.ts` and `compare.test.ts`, `harness/README.md` (ballot 2026-11-07-native-lane-ownership item 4 and its amendments), the verdict oracle for every harness context"
       - id: scope-35
         kind: obligation
         label: "Owning them never changes a verdict rule"
