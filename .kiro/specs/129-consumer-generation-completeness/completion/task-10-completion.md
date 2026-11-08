@@ -66,3 +66,5 @@ Primary Artifacts: all shipped as declared
 ## Subtask docs
 
 `task-10-1-completion.md`, `task-10-2-completion.md`, `task-10-3-completion.md`.
+
+*Correction, Ada, 2026-11-08 (ARMING batch 6, F1).* The earlier statement that `docs/tokens.css` was not changed is false: #774 (squash `7c143845f`) changed it by +22/−18 lines. The three groups of change: the `blur000` and `opacity100` reasoning comments; U8's shadow `color-mix` composites; the four `--shadow-*-100` variables. The likely cause is a pack-time rebuild swept in by a broad stage. The change stands under Peter's ruling of 2026-11-08T14:25:31Z ("Leave it, and go for U12"; `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-tokens-css-and-u12-go.md`). Measured: on a clean tree at `85fa21017` joined with that record, `docs/tokens.css` on `main` equals what `node scripts/build-browser-bundles.js` writes now (after `generate-platform-tokens.ts`); `git diff --stat docs/tokens.css` was empty. The earlier text above is left as written.
