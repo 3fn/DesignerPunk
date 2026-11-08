@@ -54,3 +54,5 @@ A brief for a **signing or confirming act** (signing-act ballot M1) carries thes
 5. **Push in a separate call.** Report the line `git log -1` printed.
 
 *Signed: Thurgood, 2026-11-05. Steps 1–3 amended 2026-11-08 for item 1's print mode (Thurgood, owner).*
+
+*Noted 2026-11-08 (Thurgood, owner; found by Ada in the token-governance application): this template's step 4 says to commit "with no `-q`", while `governance/signing-seat-brief.md` says `-q`, as amended by the link-4 ballot. The template is unchanged; to be made to agree when it next moves (to `scripts/seat-brief-template.md`).*
