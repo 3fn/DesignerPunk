@@ -90,7 +90,7 @@ Branch → PR → required checks → merge.
 6. **Stop-and-wait composes unchanged**: authorization to START the next task remains a separate, explicit grant (Start Up Tasks #3). A merge accepts the finished task; it does not, by itself, instruct the agent to begin the next one. Direction for what follows typically arrives with or after the merge; absent it, the agent remains stopped.
 7. **A change request is authorization to resume, not a completion.** If Peter reviews the PR and requests changes instead of merging, the change request authorizes the agent to resume on that branch: fix, push, re-report the PR URL, and STOP again.
 8. If required checks fail, the task is not complete and not mergeable: fix on the same branch. If the PR is green but unmergeable (the branch conflicts with an advanced `main`), update the branch from `main` on the same branch. Every push re-runs the checks.
-9. **A checks-only merge is NOT ratification.** For governance-law changes, the record-first ballot protocol (`.kiro/docs/ballots/README.md`) remains the ratification mechanism throughout 125-A — the gate verifies mechanics, not authority. PR-approval-as-ratification arrives with 125-B's CODEOWNERS layer.
+9. **A checks-only merge is NOT ratification.** For governance-law changes, the record-first ballot protocol (`.kiro/docs/ballots/README.md`) remains the ratification mechanism — the gate verifies mechanics, not authority. PR-approval-as-ratification arrives only when the gated-surfaces scope of register row `record-first-ratification` (`governance/classification-map.md`) moves from `proposed` to `armed`. *(amended 2026-11-08 by ballot 2026-11-08-125b-u3-rehome item 1; prior text at `77958cbb6`)*
 
 ### Coherent Units (the merge granularity)
 
@@ -126,7 +126,7 @@ Branch → PR → required checks → merge.
 
 - **Agents open PRs; Peter merges on green** during bake-in (Spec 125-A Task 5's gate). Agents NEVER merge their own PRs.
 - Any later **delegation of merge-on-green must be a recorded rule** (ballot or committed record with date and scope) — never a verbal grant. The relayed-authority lesson: authority is a record.
-- **Standing carve-out, surviving any delegation**: PRs touching governance law (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent prompts/configs) stay Peter-merged — the closest ratification proxy until 125-B's CODEOWNERS layer.
+- **Standing carve-out, surviving any delegation**: PRs touching governance law (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent prompts/configs) stay Peter-merged — the closest ratification proxy until the gated-surfaces scope of register row `record-first-ratification` is `armed`. *(amended 2026-11-08 by ballot 2026-11-08-125b-u3-rehome item 2; prior text at `77958cbb6`)*
 
 ### Emergency Procedure
 
