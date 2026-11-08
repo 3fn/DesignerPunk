@@ -12,6 +12,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as yaml from 'js-yaml';
 
 /**
  * Result of token usage validation
@@ -243,7 +244,8 @@ const WORKAROUND_PATTERNS = {
   scaleEffect: /scaleEffect\s*\(\s*0\.9/gi,
   
   // Android ripple workaround
-  ripple: /rememberRipple\s*\(/gi,
+  // Also matches the deprecated remember-prefixed name (separately banned by AndroidRememberRipple.guard)
+  ripple: /ripple\s*\(/gi,
 };
 
 /**
@@ -369,11 +371,31 @@ function getSuggestionForCategory(category: keyof typeof TOKEN_CATEGORIES): stri
 /**
  * Validate token usage in a source file
  */
+/**
+ * Android ripple allow-list, read from the component's contract (not hard-coded).
+ * A component may use `ripple(...)` press feedback only when its contracts.yaml
+ * `interaction_pressed.behavior` carries a line `Android press feedback: ripple`.
+ * Everything else stays on blend-token pressed colour (spec 031).
+ * Ruling: Peter, 2026-11-07T22:16:40Z.
+ */
+export function componentDeclaresAndroidRipple(filePath: string, root: string = process.cwd()): boolean {
+  const m = filePath.replace(/\\/g, '/').match(/(?:^|\/)components\/core\/([^/]+)\//);
+  if (!m) return false;
+  try {
+    const doc = yaml.load(fs.readFileSync(path.resolve(root, 'src/components/core', m[1], 'contracts.yaml'), 'utf8')) as any;
+    const behavior: unknown = doc?.contracts?.interaction_pressed?.behavior;
+    return typeof behavior === 'string' && /^\s*Android press feedback:\s*ripple\b/m.test(behavior);
+  } catch {
+    return false;
+  }
+}
+
 export function validateTokenUsage(source: string, filePath: string): TokenUsageValidationResult {
   const platform = detectPlatform(filePath);
   const errors: TokenUsageError[] = [];
   const warnings: TokenUsageWarning[] = [];
   const lines = source.split('\n');
+  const rippleAllowed = platform === 'android' && componentDeclaresAndroidRipple(filePath);
   
   let inlineStyleViolations = 0;
   let hardcodedValueViolations = 0;
@@ -457,6 +479,7 @@ export function validateTokenUsage(source: string, filePath: string): TokenUsage
     
     // Check for workaround patterns
     for (const [name, pattern] of Object.entries(WORKAROUND_PATTERNS)) {
+      if (name === 'ripple' && rippleAllowed) continue;
       pattern.lastIndex = 0;
       const match = pattern.exec(line);
       if (match) {
