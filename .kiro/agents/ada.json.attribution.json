@@ -324,23 +324,47 @@
     {
       "lines": [
         91,
+        91
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/harness/consumer.ts]"
+    },
+    {
+      "lines": [
+        92,
+        92
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/harness/__tests__/consumer.test.ts]"
+    },
+    {
+      "lines": [
+        93,
         93
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[harness/pins.yaml]"
+    },
+    {
+      "lines": [
+        94,
+        96
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        94,
-        94
+        97,
+        97
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        95,
-        95
+        98,
+        98
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

@@ -46,7 +46,7 @@
         54,
         61
       ],
-      "op": "passthrough",
+      "op": "render",
       "source": ".kiro/steering/Agent-Directory.md#ada-rosetta-token-specialist"
     },
     {
@@ -94,7 +94,7 @@
         110,
         117
       ],
-      "op": "passthrough",
+      "op": "render",
       "source": ".kiro/steering/Agent-Directory.md#kenya-ios-platform-engineer"
     },
     {
@@ -102,7 +102,7 @@
         118,
         125
       ],
-      "op": "passthrough",
+      "op": "render",
       "source": ".kiro/steering/Agent-Directory.md#data-android-platform-engineer"
     },
     {

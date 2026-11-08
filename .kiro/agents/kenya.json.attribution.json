@@ -92,10 +92,26 @@
     {
       "lines": [
         43,
+        43
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[harness/ios/**]"
+    },
+    {
+      "lines": [
+        44,
+        44
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[scripts/harness/probe-swift.ts]"
+    },
+    {
+      "lines": [
+        45,
         45
       ],
       "op": "render",
-      "source": "C1:frontmatter+ambient-manifest"
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[scripts/harness/parse-swift.ts]"
     },
     {
       "lines": [
@@ -103,12 +119,60 @@
         46
       ],
       "op": "render",
-      "source": "canonical/agents/kenya.md#frontmatter:kiro.welcomeMessage"
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[scripts/harness/__tests__/probe-swift.test.ts]"
     },
     {
       "lines": [
         47,
         47
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[scripts/harness/__tests__/parse-swift.test.ts]"
+    },
+    {
+      "lines": [
+        48,
+        48
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[scripts/harness/__tests__/fixtures/swift/**]"
+    },
+    {
+      "lines": [
+        49,
+        49
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[scripts/harness/__tests__/fixtures/parse-swift/**]"
+    },
+    {
+      "lines": [
+        50,
+        50
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[harness/pins.yaml]"
+    },
+    {
+      "lines": [
+        51,
+        53
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        54,
+        54
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        55,
+        55
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

@@ -44,7 +44,15 @@
       "allowedPaths": [
         ".kiro/specs/**",
         "docs/specs/**",
-        ".kiro/issues/**"
+        ".kiro/issues/**",
+        "harness/android/**",
+        "scripts/harness/probe-kotlin.ts",
+        "scripts/harness/parse-kotlin.ts",
+        "scripts/harness/__tests__/probe-kotlin.test.ts",
+        "scripts/harness/__tests__/parse-kotlin.test.ts",
+        "scripts/harness/__tests__/fixtures/kotlin/**",
+        "scripts/harness/__tests__/fixtures/parse-kotlin/**",
+        "harness/pins.yaml"
       ]
     }
   },

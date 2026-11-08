@@ -286,8 +286,8 @@ writeScope:
   - "scripts/harness/native-rules.ts"
   - "scripts/harness/__tests__/native-rules.test.ts"
   - "scripts/harness/__tests__/native-rules-emitter.test.ts"
-  # ballot 2026-11-07-native-lane-ownership item 4 and § 8 F-5 (RATIFIED Peter 2026-11-08), active from Spec 129 U12's merge:
-  # the harness comparator, with its test, and its prose form; the limits are in the In Scope compile-harness bullet
+  # ballot 2026-11-07-native-lane-ownership item 4 (RATIFIED Peter 2026-11-08), active from Spec 129 U12's merge: the
+  # harness comparator, with its test; the limits are in the In Scope compile-harness bullet
   - "scripts/harness/compare.ts"
   - "scripts/harness/__tests__/compare.test.ts"
   - "harness/README.md"
