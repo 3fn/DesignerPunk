@@ -86,3 +86,9 @@ These are falsification cases in `scripts/harness/__tests__/stability.test.ts`. 
 13. **A short read**: a stub whose page 2 fails, or whose pages hold fewer runs than `total_count`. Every condition of every context reads not yet measurable, and the record names the shortfall.
 
 The record's "Rules applied" paragraph states the amended reading. The fixing PR regenerates `evidence/harness-stability.md`.
+
+---
+
+## Outcome (rule 5)
+
+**2026-11-08, Thurgood**: fixed in `scripts/harness/stability.ts` by the PR on `fix/129-stability-unfinished-and-pagination`. The script now decides each pull-request run's job per context (finished, ended with no job, or unfinished), lists an unfinished job and never skips over it, and leaves a condition "not yet measurable" when an unfinished pull-request job comes before the last run it reads. It reads the runs endpoint and every per-run list page by page, and a short read makes every condition of every context not yet measurable. Acceptance cases 1, 1b, 2 to 11, 11b, 12 and 13 are in `scripts/harness/__tests__/stability.test.ts` (13b to 13d are added for the window); case 1 is red at `beccbf134` (`queuePoor` false, cold runs 802 to 804) and green after. `evidence/harness-stability.md` is regenerated at the PR head. **Still owed to the PR body**: the two `**Consulted**:` lines (Kenya on condition 3 and 5, Data on how the script reads a context's job). **Not done here, and not Thurgood's to do in a code PR**: Decision 6's interim bullet ("Until `stability.ts` reads this way …") in `tasks.md` still stands as text; lifting it is a tasks amendment. Archived in the closing PR (rule 5).

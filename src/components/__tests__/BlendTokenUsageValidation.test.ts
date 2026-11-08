@@ -26,6 +26,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { componentDeclaresAndroidRipple } from '../../validators/StemmaTokenUsageValidator';
 
 // Component source file paths
 const COMPONENT_PATHS = {
@@ -75,8 +76,9 @@ const WORKAROUND_PATTERNS = {
   scaleEffect: /scaleEffect\s*\(\s*0\.9[0-9]/i,
   
   // Android Material ripple workaround for pressed state
-  materialRipple: /ripple\s*=\s*rememberRipple/i,
-  indicationRipple: /indication\s*=\s*rememberRipple/i
+  // Allowed only where the component's contracts.yaml declares it (componentDeclaresAndroidRipple)
+  materialRipple: /ripple\s*=\s*\w*ripple\s*\(/i,
+  indicationRipple: /indication\s*=\s*\w*ripple\s*\(/i
 };
 
 /**
@@ -728,6 +730,37 @@ describe('Layer 2 Validation: Component Blend Token Usage', () => {
         expect(hasBlendTokenValue(source, BLEND_TOKEN_VALUES.iconLighter))
           .toBe(true);
       }
+    });
+  });
+
+  /**
+   * Android ripple allow-list: read from each component's contract (Peter, 2026-11-07).
+   * Bite: the same construct is reported outside the allow-list and not inside it.
+   */
+  describe('Android ripple allow-list (contract-read)', () => {
+    const fixture = 'indication = ripple(bounded = true)';
+
+    it('detects ripple(...) as a workaround pattern', () => {
+      expect(findWorkarounds(fixture)).toContain('indicationRipple');
+      expect(findWorkarounds('Box(modifier = m)')).not.toContain('indicationRipple');
+    });
+
+    it('allows ripple only for components whose contract declares it', () => {
+      const allowed = ['Button-Icon', 'Input-Checkbox-Base', 'Input-Radio-Base'];
+      for (const c of allowed) {
+        expect(componentDeclaresAndroidRipple(`src/components/core/${c}/platforms/android/X.android.kt`)).toBe(true);
+      }
+      for (const c of ['Button-CTA', 'Container-Base', 'Input-Text-Base']) {
+        expect(componentDeclaresAndroidRipple(`src/components/core/${c}/platforms/android/X.android.kt`)).toBe(false);
+      }
+    });
+
+    it('reports the fixture outside the allow-list and not inside it', () => {
+      const outside = findWorkarounds(fixture).length > 0 &&
+        !componentDeclaresAndroidRipple('src/components/core/Button-CTA/platforms/android/ButtonCTA.android.kt');
+      const inside = !componentDeclaresAndroidRipple('src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt');
+      expect(outside).toBe(true);
+      expect(inside).toBe(false);
     });
   });
 });

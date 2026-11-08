@@ -10,7 +10,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { ApiJob, ApiRun, RawInput, analyze, carriedOver, contextOf, normalize, parseInfra, parseVerdict, render } from '../stability';
+import { ApiJob, ApiRun, RawInput, analyze, analyzeRaw, carriedOver, contextOf, fetchRaw, normalize, parseInfra, parseVerdict, render } from '../stability';
 
 const load = (name: string): RawInput =>
   JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'stability', name), 'utf8')) as RawInput;
@@ -111,12 +111,18 @@ describe('condition 2: each break rule', () => {
     expect(c.streak).toBe(2);
   });
   it('ten consecutive clean pull-request runs meet condition 2; a break at the sixth of twelve leaves a streak of six', () => {
-    const raw = load('streak.json');
-    const clean = ctx(raw, 'harness-android-tokens');
+    // streak.json lists each run's job for one context only; a real pull-request run lists all four, and a
+    // completed run that lists none for a context is a break (Decision 6). So each context reads the runs that list it.
+    const only = (name: string): RawInput => {
+      const r = load('streak.json');
+      const keep = r.runs.filter((x) => r.jobsByRun[x.id].some((j) => j.name === name));
+      return { ...r, runs: keep };
+    };
+    const clean = ctx(only('harness-android-tokens'), 'harness-android-tokens');
     expect(clean.pullRequestRuns).toBe(12);
     expect(clean.streak).toBe(12);
     expect(clean.streakMet).toBe(true);
-    const broken = ctx(raw, 'harness-android-components');
+    const broken = ctx(only('harness-android-components'), 'harness-android-components');
     expect(broken.streak).toBe(6);
     expect(broken.streakMet).toBe(false);
   });
@@ -307,56 +313,309 @@ describe('a partial re-run (run 42379456009, recorded): the verdict is read from
   });
 });
 
-describe('a run that is not yet completed (MP-1; Peter, README rule 10, 2026-11-07T20:21:05Z)', () => {
-  const AT = 'harness-android-tokens';
+describe('a job that has not finished (tasks.md § "Decision 6", amendment 11; record 2026-11-07-stability-unfinished-job-read-as-measured)', () => {
+  const IOS = 'harness-ios-tokens';
   const META = { repo: 'owner/repo', workflow: 'native-harness.yml', generatedAt: '2026-11-07T12:00:00Z' };
   type Mutable = {
-    runs: ApiRun[];
+    runs: (ApiRun & { run_attempt: number })[];
     jobsByRun: Record<number, ApiJob[]>;
     checkRunsBySha: Record<string, { id: number; name: string; conclusion: string | null }[]>;
     annotationsByJob: Record<number, { title: string | null; message: string }[]>;
+    xcodePinBySha?: Record<string, string>;
   };
   const copy = (name: string): Mutable => JSON.parse(JSON.stringify(load(name))) as Mutable;
-  // break-no-verdict: 301 PASS, 302 died before the comparator (a break), 303 PASS. Make 303 unfinished.
-  const unfinished = (raw: Mutable, runId: number, status: string): Mutable => {
-    const run = raw.runs.find((r) => r.id === runId)!;
-    run.status = status;
-    run.conclusion = null;
-    for (const j of raw.jobsByRun[runId]) {
+  const raw$ = (m: Mutable): RawInput => m as unknown as RawInput;
+  const run$ = (m: Mutable, id: number) => m.runs.find((r) => r.id === id)!;
+  /** Null a job's conclusion (job side, check-run side, or both). */
+  const unfinishJob = (m: Mutable, jobId: number, sides: 'job' | 'check' | 'both' = 'both'): void => {
+    for (const js of Object.values(m.jobsByRun)) for (const j of js) if (j.id === jobId && sides !== 'check') {
       j.conclusion = null;
       j.completed_at = null;
-      raw.annotationsByJob[j.id] = [];
-      for (const crs of Object.values(raw.checkRunsBySha)) for (const cr of crs) if (cr.id === j.id) cr.conclusion = null;
     }
-    return raw;
+    if (sides !== 'job') for (const crs of Object.values(m.checkRunsBySha)) for (const cr of crs) if (cr.id === jobId) cr.conclusion = null;
   };
+  const section = (text: string, context: string): string => {
+    const at = text.indexOf(`## ${context}`);
+    const next = text.indexOf('\n## ', at + 1);
+    return text.slice(at, next === -1 ? undefined : next);
+  };
+  const addJob = (m: Mutable, runId: number, id: number, name: string, conclusion: string | null, notes: { title: string; message: string }[]): void => {
+    const r = run$(m, runId);
+    m.jobsByRun[runId].push({ id, run_id: runId, run_attempt: r.run_attempt, name, head_sha: r.head_sha, conclusion, created_at: r.created_at, started_at: r.created_at, completed_at: conclusion === null ? null : r.created_at });
+    m.checkRunsBySha[r.head_sha] = [...(m.checkRunsBySha[r.head_sha] ?? []), { id, name, conclusion }];
+    m.annotationsByJob[id] = notes;
+  };
+  // ios-queue.json: runs 801..804, each lists harness-generate and harness-ios-tokens. Job 900041 is run 801's iOS job.
 
-  it.each(['in_progress', 'queued'])('a %s run is skipped: not a break, not counted', (status) => {
-    const c = ctx(unfinished(copy('break-no-verdict.json'), 303, status) as unknown as RawInput, AT);
-    expect(c.skippedRuns).toEqual([{ runId: 303, status, headSha: 'b300000000000000000000000000000000000000', event: 'pull_request' }]);
-    expect(c.runs.map((r) => r.runId)).toEqual([301, 302]);
-    expect(c.runs.find((r) => r.runId === 302)?.breaks).toEqual(['no harness-verdict annotation (failed before the comparator)']);
-    expect(c.streak).toBe(0); // 302 breaks; the unfinished 303 neither extends nor restarts the count
+  it('1: a run-level unfinished iOS job (Kenya\'s mutation) reads conditions 3 and 5 not yet measurable, and names run 801', () => {
+    const m = copy('ios-queue.json');
+    run$(m, 801).status = 'in_progress';
+    unfinishJob(m, 900041);
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    expect(c.skippedRuns.map((r) => r.runId)).toEqual([801]);
+    expect(c.queuePoor).toBeNull();
+    expect(c.coldMet).toBe(false);
+    const text = section(render(analyzeRaw(raw$(m)), META), IOS);
+    const c3 = text.split('\n').find((l) => l.startsWith('- **Condition 3**'))!;
+    const c5 = text.split('\n').find((l) => l.startsWith('- **Condition 5**'))!;
+    for (const l of [c3, c5]) {
+      expect(l).toContain('not yet measurable');
+      expect(l).toContain('801');
+      expect(l).not.toContain('fewer than three');
+    }
+    expect(text).not.toContain('within the ceiling');
+    expect(text).not.toContain('POOR');
   });
-  it('an unfinished run after a clean streak leaves the streak where it was', () => {
-    const raw = copy('streak.json');
-    const lastId = [...raw.runs].reverse().find((r) => raw.jobsByRun[r.id].some((j) => j.name === AT))!.id;
-    const before = ctx(raw as unknown as RawInput, AT).streak;
-    unfinished(raw, lastId, 'in_progress');
-    const c = ctx(raw as unknown as RawInput, AT);
-    expect(c.skippedRuns.map((r) => r.runId)).toEqual([lastId]);
-    expect(c.streak).toBe(before - 1); // the run is no longer counted, and it is not a break
+  it('1b: the run stays completed and only the job\'s conclusion is null: the same result', () => {
+    const m = copy('ios-queue.json');
+    unfinishJob(m, 900041, 'job');
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    expect(run$(m, 801).status).toBe('completed');
+    expect(c.skippedRuns.map((r) => r.runId)).toEqual([801]);
+    expect(c.queuePoor).toBeNull();
+    expect(c.coldBlock).toContain('801');
   });
-  it('a record with no status field (older fixtures) is read as finished', () => {
-    const raw = copy('break-no-verdict.json');
-    for (const r of raw.runs) delete (r as { status?: string }).status;
-    const c = ctx(raw as unknown as RawInput, AT);
-    expect(c.skippedRuns).toEqual([]);
-    expect(c.runs).toHaveLength(3);
+  it('2 (control): with run 804 unfinished, the cold runs are 801 to 803 and condition 5 is POOR', () => {
+    const m = copy('ios-queue.json');
+    unfinishJob(m, 900047);
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    expect(c.skippedRuns.map((r) => r.runId)).toEqual([804]);
+    expect(c.coldRuns.map((r) => r.runId)).toEqual([801, 802, 803]);
+    expect(c.coldBlock).toBeNull();
+    expect(c.queuePoor).toBe(true);
   });
-  it('the rendered record lists skipped runs, with id and status, in a section of its own', () => {
-    const text = render(analyze(normalize(unfinished(copy('break-no-verdict.json'), 303, 'in_progress') as unknown as RawInput)), META);
-    expect(text).toContain('**Skipped runs**');
-    expect(text).toMatch(/\| 303 \| `b30000000` \| pull_request \| in_progress \|/);
+  it('3: an Android job that finished carrying harness-infra, in a run whose iOS job is queued, is on the infra list and in the rate', () => {
+    const m = copy('ios-queue.json');
+    run$(m, 801).status = 'in_progress';
+    unfinishJob(m, 900041);
+    addJob(m, 801, 990001, 'harness-android-tokens', 'failure', [{ title: 'harness-infra', message: 'repo.maven.apache.org 403 resolve' }]);
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === 'harness-android-tokens')!;
+    expect(c.infraRuns.map((r) => r.runId)).toEqual([801]);
+    expect(c.infraRate).toBeGreaterThan(0);
+    expect(c.skippedRuns.map((r) => r.runId)).not.toContain(801);
+  });
+  it('4: a finished Android job that breaks the streak, in a run whose iOS job is queued, is a break for condition 2', () => {
+    const m = copy('ios-queue.json');
+    run$(m, 801).status = 'in_progress';
+    unfinishJob(m, 900041);
+    addJob(m, 801, 990002, 'harness-android-tokens', 'failure', []);
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === 'harness-android-tokens')!;
+    expect(c.runs.find((r) => r.runId === 801)?.breaks).toEqual(['no harness-verdict annotation (failed before the comparator)']);
+  });
+  describe('5: an unfinished pull-request job older than the newest finished pull-request run', () => {
+    const AT = 'harness-android-tokens';
+    it('leaves condition 2 not yet measurable, names the run, and the streak is not met', () => {
+      const m = copy('break-no-verdict.json');
+      unfinishJob(m, m.jobsByRun[302].find((j) => j.name === AT)!.id);
+      const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === AT)!;
+      expect(c.skippedRuns.map((r) => r.runId)).toEqual([302]);
+      expect(c.streakBlock).toContain('302');
+      expect(c.streakMet).toBe(false);
+      expect(section(render(analyzeRaw(raw$(m)), META), AT)).toMatch(/Condition 2\*\*.*not yet measurable \(.*302/);
+    });
+    it('control: an unfinished job after a clean streak leaves the streak where it was', () => {
+      const m = copy('break-no-verdict.json');
+      unfinishJob(m, m.jobsByRun[303].find((j) => j.name === AT)!.id);
+      const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === AT)!;
+      expect(c.skippedRuns.map((r) => r.runId)).toEqual([303]);
+      expect(c.streakBlock).toBeNull();
+      expect(c.streak).toBe(0); // 302 still breaks
+    });
+    it('control: an unfinished dispatched job in the same position blocks nothing and is listed', () => {
+      const m = copy('break-no-verdict.json');
+      run$(m, 302).event = 'workflow_dispatch';
+      unfinishJob(m, m.jobsByRun[302].find((j) => j.name === AT)!.id);
+      const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === AT)!;
+      expect(c.skippedRuns.map((r) => [r.runId, r.event])).toEqual([[302, 'workflow_dispatch']]);
+      expect(c.streakBlock).toBeNull();
+    });
+  });
+  it('6: the skipped table gives the Xcode pin; an unknown pin blocks like the current pin, another known pin does not', () => {
+    const m = copy('ios-queue.json');
+    m.xcodePinBySha = { ['g2' + '0'.repeat(38)]: '26.6', ['g3' + '0'.repeat(38)]: '26.6', ['g4' + '0'.repeat(38)]: '26.6', ['g1' + '0'.repeat(38)]: '26.5' };
+    unfinishJob(m, 900041);
+    const other = analyzeRaw(raw$(m), { currentXcodePin: '26.6' }).contexts.find((x) => x.context === IOS)!;
+    expect(other.skippedRuns[0].xcodePin).toBe('26.5');
+    expect(other.coldBlock).toBeNull();
+    delete m.xcodePinBySha['g1' + '0'.repeat(38)];
+    const unknown = analyzeRaw(raw$(m), { currentXcodePin: '26.6' }).contexts.find((x) => x.context === IOS)!;
+    expect(unknown.skippedRuns[0].xcodePin).toBe('unknown');
+    expect(unknown.coldBlock).toContain('801');
+    expect(unknown.queuePoor).toBeNull();
+    expect(render(analyzeRaw(raw$(m), { currentXcodePin: '26.6' }), META)).toMatch(/\| 801 \| `g10000000` \| pull_request \| completed \| 1 \| the job has no conclusion[^|]*\| unknown \|/);
+  });
+  it('7: a run still in harness-generate lists no job for any context: every context lists 801 as no job listed', () => {
+    const m = copy('ios-queue.json');
+    run$(m, 801).status = 'in_progress';
+    m.jobsByRun[801] = m.jobsByRun[801].filter((j) => j.name === 'harness-generate');
+    const a = analyzeRaw(raw$(m));
+    for (const c of a.contexts) expect(c.skippedRuns.map((r) => [r.runId, r.noJobListed])).toContainEqual([801, true]);
+    const ios = a.contexts.find((x) => x.context === IOS)!;
+    expect(ios.queuePoor).toBeNull();
+    expect(ios.coldBlock).toContain('801');
+    expect(render(a, META)).toContain('no job listed');
+  });
+  it('8: a pending re-run: only attempt 1\'s job is listed for a run at attempt 2; the context reads unfinished and attempt 1 is not read', () => {
+    const m = copy('ios-queue.json');
+    run$(m, 802).run_attempt = 2;
+    run$(m, 802).status = 'in_progress';
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    expect(c.skippedRuns.map((r) => r.runId)).toEqual([802]);
+    expect(c.skippedRuns[0].why).toContain('earlier attempt');
+    expect(c.runs.map((r) => r.runId)).not.toContain(802);
+    expect(c.coldBlock).toContain('802');
+  });
+  it('9: a completed run that lists no job for a context is a break for condition 2, and the record lists it', () => {
+    const m = copy('ios-queue.json');
+    m.jobsByRun[802] = m.jobsByRun[802].filter((j) => j.name !== IOS);
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    expect(c.runs.find((r) => r.runId === 802)?.breaks).toEqual(["ended with no job (the completed run's latest attempt lists none)"]);
+    expect(c.streak).toBe(2); // 803, 804 after the break
+    expect(section(render(analyzeRaw(raw$(m)), META), IOS)).toContain('ended with no job');
+  });
+  it('9b: a completed run whose latest attempt lists none while attempt 1 does reads as ended with no job', () => {
+    const m = copy('ios-queue.json');
+    run$(m, 802).run_attempt = 2;
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    const r = c.runs.find((x) => x.runId === 802)!;
+    expect(r.breaks).toEqual(["ended with no job (the completed run's latest attempt lists none)"]);
+    expect(r.last.verdict).toBeNull();
+  });
+  it('10: a run with no status and no job for the context reads unfinished; with its job finished it reads finished', () => {
+    const m = copy('ios-queue.json');
+    delete (run$(m, 801) as { status?: string }).status;
+    delete (run$(m, 802) as { status?: string }).status;
+    m.jobsByRun[801] = m.jobsByRun[801].filter((j) => j.name !== IOS);
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    expect(c.skippedRuns.map((r) => r.runId)).toEqual([801]);
+    expect(c.runs.map((r) => r.runId)).toContain(802);
+  });
+  it('11: a job with a conclusion whose check run has none reads unfinished', () => {
+    const m = copy('ios-queue.json');
+    unfinishJob(m, 900041, 'check');
+    const c = analyzeRaw(raw$(m)).contexts.find((x) => x.context === IOS)!;
+    expect(c.skippedRuns.map((r) => r.runId)).toEqual([801]);
+  });
+  it('11b: both conclusions present and different: the check run\'s is read and the record prints both', () => {
+    const m = copy('ios-queue.json');
+    for (const crs of Object.values(m.checkRunsBySha)) for (const cr of crs) if (cr.id === 900041) cr.conclusion = 'failure';
+    const a = analyzeRaw(raw$(m));
+    expect(a.contexts.find((x) => x.context === IOS)!.runs.find((r) => r.runId === 801)?.last.conclusion).toBe('failure');
+    expect(render(a, META)).toContain('failure (check run; job success)');
+  });
+
+  describe('the window (Stacy N-1)', () => {
+    const SHA = (n: number): string => `p${String(n).padStart(3, '0')}`.padEnd(40, '0');
+    /** 113 pull-request runs, ids 1..113, each with harness-generate and harness-ios-tokens (PASS), served newest first, 100 per page. */
+    const stub = (opts: { failPage2?: boolean; total?: number } = {}) => {
+      const runs = Array.from({ length: 113 }, (_, i) => 113 - i).map((id) => ({ id, head_sha: SHA(id), event: 'pull_request', run_attempt: 1, conclusion: 'success', status: 'completed', created_at: `2026-11-07T10:${String(id % 60).padStart(2, '0')}:00Z` }));
+      const calls: string[] = [];
+      const get = async (path: string): Promise<unknown> => {
+        calls.push(path);
+        const page = Number(/[?&]page=(\d+)/.exec(path)![1]);
+        const per = Number(/[?&]per_page=(\d+)/.exec(path)![1]);
+        if (/workflows\/.*\/runs/.test(path)) {
+          if (opts.failPage2 && page === 2) throw new Error('GET runs page 2: 502 Bad Gateway');
+          return { total_count: opts.total ?? 113, workflow_runs: runs.slice((page - 1) * per, page * per) };
+        }
+        const jobs = /actions\/runs\/(\d+)\/jobs/.exec(path);
+        if (jobs) {
+          const id = Number(jobs[1]);
+          const mk = (jid: number, name: string) => ({ id: jid, run_id: id, run_attempt: 1, name, head_sha: SHA(id), conclusion: 'success', created_at: '2026-11-07T10:00:00Z', started_at: '2026-11-07T10:00:30Z', completed_at: '2026-11-07T10:03:00Z' });
+          return { total_count: 2, jobs: [mk(id * 10, 'harness-generate'), mk(id * 10 + 1, IOS)] };
+        }
+        if (/check-runs\?/.test(path) && !/annotations/.test(path)) {
+          const sha = /commits\/(\w+)\/check-runs/.exec(path)![1];
+          const id = Number(sha.slice(1, 4));
+          return { total_count: 1, check_runs: [{ id: id * 10 + 1, name: IOS, conclusion: 'success' }] };
+        }
+        const jid = Number(/check-runs\/(\d+)\/annotations/.exec(path)![1]);
+        return jid % 10 === 1 ? [{ title: 'harness-verdict', message: 'harness-verdict: harness-ios-tokens PASS' }] : [];
+      };
+      return { get, calls };
+    };
+    it('12: a window of 113 runs at 100 per page is read in full; the three oldest runs stay the counted cold runs', async () => {
+      const { get, calls } = stub();
+      const r = await fetchRaw('o/r', 'native-harness.yml', 'tok', undefined, get);
+      expect(r.runs).toHaveLength(113);
+      expect(calls.filter((p) => /workflows\/.*\/runs/.test(p))).toHaveLength(2);
+      const a = analyzeRaw(r);
+      expect(a.window).toEqual({ totalCount: 113, runsRead: 113, shortfall: null });
+      expect(a.contexts.find((x) => x.context === IOS)!.coldRuns.map((x) => x.runId)).toEqual([1, 2, 3]);
+      expect(render(a, META)).toContain('`total_count` 113; 113 runs read — read in full');
+    });
+    it('13: a page that fails makes every condition of every context not yet measurable and names the shortfall', async () => {
+      const r = await fetchRaw('o/r', 'native-harness.yml', 'tok', undefined, stub({ failPage2: true }).get);
+      const a = analyzeRaw(r);
+      expect(a.window?.shortfall).toContain('runs page 2 failed');
+      for (const c of a.contexts) {
+        expect(c.streakBlock).toContain('short');
+        expect(c.coldBlock).toContain('short');
+        expect(c.streakMet).toBe(false);
+        expect(c.coldMet).toBe(false);
+        expect(c.queuePoor).toBeNull();
+      }
+      expect(render(a, META)).toContain('SHORT READ');
+    });
+    it('13b: pages that hold fewer runs than total_count read as a short window too', async () => {
+      const r = await fetchRaw('o/r', 'native-harness.yml', 'tok', undefined, async (path) => {
+        const body = (await stub().get(path)) as { total_count?: number };
+        return /workflows\/.*\/runs/.test(path) ? { ...body, total_count: 150 } : body;
+      });
+      expect(analyzeRaw(r).window?.shortfall).toBe('read 113 of 150 runs');
+    });
+    it('13c: a branch filter is a short window', async () => {
+      const r = await fetchRaw('o/r', 'native-harness.yml', 'tok', 'main', stub().get);
+      expect(analyzeRaw(r).window?.shortfall).toContain('branch filter');
+    });
+    it('13d: a per-run list that fails leaves that run\'s jobs unfinished', async () => {
+      const { get } = stub();
+      const r = await fetchRaw('o/r', 'native-harness.yml', 'tok', undefined, async (path) => {
+        if (/actions\/runs\/50\/jobs/.test(path)) throw new Error('boom');
+        return get(path);
+      });
+      const c = analyzeRaw(r).contexts.find((x) => x.context === IOS)!;
+      expect(c.skippedRuns.map((x) => x.runId)).toEqual([50]);
+    });
   });
 });
+
+describe('consult findings (Kenya D1/D2, Data default-name), fail-safe reads', () => {
+  const IOS = 'harness-ios-tokens';
+  const META = { repo: 'owner/repo', workflow: 'native-harness.yml', generatedAt: '2026-11-07T12:00:00Z' };
+  const G = (n: number): string => `g${n}` + '0'.repeat(38);
+  it('D1: a finished iOS run with an unknown pin, with a pin given, blocks conditions 3 and 5; a known other pin does not', () => {
+    const raw = JSON.parse(JSON.stringify(load('ios-queue.json'))) as RawInput & { xcodePinBySha: Record<string, string> };
+    raw.xcodePinBySha = { [G(2)]: '26.6', [G(3)]: '26.6', [G(4)]: '26.6' }; // run 801's SHA is unknown
+    const c = ctx(raw, IOS, { currentXcodePin: '26.6' });
+    expect(c.coldBlock).toContain('801');
+    expect(c.coldMet).toBe(false);
+    expect(c.queuePoor).toBeNull();
+    raw.xcodePinBySha[G(1)] = '26.5';
+    const known = ctx(raw, IOS, { currentXcodePin: '26.6' });
+    expect(known.coldBlock).toBeNull();
+    expect(known.coldRuns.map((r) => r.runId)).toEqual([802, 803, 804]);
+  });
+  it('D2: the record prints the pin used, or says every pin counts', () => {
+    const raw = load('ios-queue.json');
+    expect(render(analyze(normalize(raw), { currentXcodePin: '26.6' }), META)).toContain('**Xcode pin used for iOS condition 3**: 26.6.');
+    expect(render(analyze(normalize(raw)), META)).toContain('none given, so every pin counts');
+  });
+  it('default-name: a PASS verdict on a job that concluded failure is neither clean nor cold; conditions 2 and 3 read not yet measurable', () => {
+    const raw = JSON.parse(JSON.stringify(load('cold-met.json'))) as RawInput;
+    const before = ctx(raw, 'harness-android-tokens');
+    expect(before.coldMet).toBe(true);
+    const victim = before.coldRuns[0].last;
+    for (const crs of Object.values(raw.checkRunsBySha)) for (const cr of crs) if (cr.id === jobIdOf(raw, victim.runId)) (cr as { conclusion: string }).conclusion = 'failure';
+    const c = ctx(raw, 'harness-android-tokens');
+    expect(c.coldBlock).toContain(String(victim.runId));
+    expect(c.coldBlock).toContain('PASS verdict');
+    expect(c.streakBlock).toContain(String(victim.runId));
+    expect(c.coldMet).toBe(false);
+    expect(c.streakMet).toBe(false);
+  });
+});
+
+function jobIdOf(raw: RawInput, runId: number): number {
+  return raw.jobsByRun[runId].find((j) => j.name === 'harness-android-tokens')!.id;
+}

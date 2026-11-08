@@ -61,6 +61,8 @@ contracts:
       on the radio button or label area.
       Color darkens further than hover (OKLCH ΔL 0.05–0.10, chroma preserved).
       Android: ripple effect. Web/iOS: press color feedback.
+      Android press feedback: ripple
+      (the declaration the Android ripple allow-list reads; spec 129 ripple ruling, 2026-11-07).
     wcag: "2.4.7 Focus Visible"
     platforms: [web, ios, android]
     validation:
