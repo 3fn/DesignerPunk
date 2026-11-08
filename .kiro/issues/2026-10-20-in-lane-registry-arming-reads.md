@@ -3,7 +3,8 @@
 **Date**: 2026-10-20
 **Status**: ACTIVE (standing — one read per registry PR, appended below; this record does not close while the registry exists)
 **Owner**: **Stacy** — the reads are hers (her ARMING row's registry-path limb, ballot `2026-10-20-in-lane-guard-registry-additive-entries`, P1b, as recommended in her first read below). **Filed by**: Thurgood (Civitas steward, issues-convention owner), at the coordinator's direction, 2026-10-20 (README rule 10: a record filed for another owner names its filer; rule 9 governs every later edit, so the body is Stacy's from here).
-**Trigger**: `path:.github/in-lane-guards.json` — every PR that changes the registry fires her read at its merge; the path, not the PR's claim, keys it (her residual 3). Read through `3610718aa` (2026-11-07). *(Written by the filer, 2026-10-20; Stacy may re-rule it, rule 9.)*
+**Trigger**: `path:.github/in-lane-guards.json` — every PR that changes the registry fires her read at its merge; the path, not the PR's claim, keys it (her residual 3). Read through `a17cb2b34` (2026-11-08). *(Written by the filer, 2026-10-20; Stacy may re-rule it, rule 9.)*
+*Trigger re-ruled 2026-11-08 (Stacy, owner, rules 9 and 11): read-through only, `3610718aa` → `a17cb2b34`; the token is unchanged. `git log --first-parent 3610718aa..a17cb2b34 -- .github/in-lane-guards.json` lists one commit, #781 (`a17cb2b34`), and its read is appended below. Superseded, kept verbatim: "Read through `3610718aa` (2026-11-07)."*
 *Trigger re-ruled 2026-11-07 (Stacy, owner, rules 9 and 11): read-through only, `3a41f0023` → `3610718aa`; the token is unchanged. `git log --first-parent 3a41f0023..3610718aa -- .github/in-lane-guards.json` lists three commits, #708 (`55276795e`), #713 (`05beb0dfc`) and #727 (`16d44a500`), and each read is appended below. Superseded, kept verbatim: "Read through `3a41f0023` (2026-10-29)."*
 *Trigger re-ruled 2026-10-29 (Stacy, owner, rules 9 and 11): the token is unchanged; the line gains the read-through prose, so `<tc>` moves past the firing read below (#519, `f9b99f750`), the same re-arm as `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`. Authority: my ownership of the record (rule 9) and the read appended below. Superseded line, kept verbatim: "keys it (her residual 3). *(Written by the filer, 2026-10-20; Stacy may re-rule it, rule 9.)*"*
 **Class**: P2 obligation (guard) · owed-act *(set 2026-10-20 by the filer, Thurgood, rule 12; Stacy, as owner, may re-class. A registry removal or modification is detected only by this read, after acceptance — the floor step has no memory of N (her residual 3) — so a missed read leaves a guard weaker than its claim.)*
@@ -159,3 +160,19 @@ No `.skip`, `.todo`, `.only` or `xit` in any of the eight files at `<m>` (grep c
 **Standards implications**: none beyond the one in `arming-reads-2026-11-07.md` (the tasks-row grants).
 
 *Signed: Stacy, 2026-11-07.*
+
+## ARMING read, registry-path limb — #781 (`a17cb2b34`), 2026-11-08 (Stacy)
+
+Read at its merge `<m>` = `a17cb2b34`, against `<m>^` = `7689dd804`. The PR is U12, Spec 129, and it adds two entries under Thurgood's standing P1b scope (Task 18 C18).
+
+1. **The PR's `.github/**` changes are exactly the registry**: `git diff --numstat <m>^ <m> -- .github` prints `12	0	.github/in-lane-guards.json` and nothing else.
+2. **The additivity predicate** (ballot `2026-10-20-in-lane-guard-registry-additive-entries` § 2), with `git show <m>^:.github/in-lane-guards.json` as its old side, prints `true`. No existing entry is touched.
+3. **The check's line**: `54 registered in-lane guards; 54 selected`, with N = 54 = `jq '.guards|length'` at `<m>`. It is from #781's CI, the `lane-functional-root` job of Lane Timing run 42498427784 at the PR's final head `6c61a7b71`, which I read with credentials. The job concluded `success`.
+4. **Each added entry's `config`** is `scripts/jest.config.js`. It is run by the unconditional step "Run scripts/** test suite (npm run test:scripts)" (no `if:`, no `continue-on-error`) of `lane-functional-root`, whose `name:` resolves to that context on `pull_request`. The step calls the `package.json` script `test:scripts` = `jest --config scripts/jest.config.js`, and the same log prints `PASS scripts/harness/__tests__/d2-check.test.ts` and `PASS scripts/harness/__tests__/native-rules-emitter.test.ts`. Each `record` resolves at `<m>` (`tasks.md` Task 18, the row named) and names the guard.
+5. **The assertion each record rests on**:
+   - `d2-check.test.ts`: `describe('d2-check.ts — falsification cases from Peter\'s F-4 ruling (append-only)')` (L140) and `describe('d2-check.ts — the design rule, as a grep …')` (L242). **Bites.**
+   - `native-rules-emitter.test.ts`: "iOS: the emitted holder members equal the module's instances …" (L49) and its Android twin (L67). **Bites.**
+
+**Result**: the predicate is `true`, no existing entry is touched, and neither entry guards in name only. **No finding.** It is recorded as SF-1's read in Spec 129's CLOSEOUT pass (`.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`).
+
+*Signed: Stacy, 2026-11-08.*
