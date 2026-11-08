@@ -330,6 +330,31 @@ jobs:
             ~/.gradle/wrapper
           key: harness-gradle-${{ runner.os }}-${{ hashFiles('harness/android/gradle/libs.versions.toml', 'harness/android/gradle/wrapper/gradle-wrapper.properties', 'harness/pins.yaml') }}
 
+      # Spec 129 Task 20 (U7a): the default config name compiles. A second `generate` in a copy of the consumer with
+      # no top-level `name`, then :tokens and :probe (given only ProbeFamily.kt) under `DesignerPunk`, the one name
+      # where the theme type and the provider function share a name in one package. HarnessConsumer stays as it
+      # is above. The step has no `if:` and no `continue-on-error`; it sits after "Save the Gradle cache" so the
+      # saved cache is unchanged, and writes only under harness-out/default-name/. It annotates in its own shell
+      # because a failing step stops before any later one.
+      - name: Default-name compile (harness/android/lane.ts --default-name)
+        run: |
+          set +e
+          out=$(npx tsx harness/android/lane.ts --default-name --consumer "${RUNNER_TEMP}/harness-consumer" --work "${GITHUB_WORKSPACE}/harness-out/default-name" 2>&1)
+          status=$?
+          set -e
+          printf '%s\n' "$out"
+          line=$(printf '%s\n' "$out" | grep '^default-name:' | tail -n 1 || true)
+          if [ -z "$line" ]; then
+            echo "::error title=default-name::no default-name line"
+            exit 1
+          fi
+          if [ "$status" -eq 0 ]; then
+            echo "::notice title=default-name::$line"
+          else
+            echo "::error title=default-name::$line"
+            exit 1
+          fi
+
       - name: Upload the lane output (logs, run file, comparator output)
         if: always()
         uses: actions/upload-artifact@v4

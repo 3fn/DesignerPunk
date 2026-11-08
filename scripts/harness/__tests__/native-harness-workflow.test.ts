@@ -134,3 +134,51 @@ describe('the event and the inputs', () => {
     expect(readers).toEqual(['harness-generate: Forced failure (dispatch input force_generate_failure)']);
   });
 });
+
+describe('harness-android-tokens: the default-name step (Task 20, U7a)', () => {
+  const NAME = 'Default-name compile (harness/android/lane.ts --default-name)';
+  const steps = doc.jobs['harness-android-tokens'].steps as Array<Step & { 'continue-on-error'?: unknown }>;
+  const names = steps.map((s) => s.name);
+  const step = steps.find((s) => s.name === NAME)!;
+  const run = step?.run ?? '';
+
+  it('is exactly one step running --default-name, and no other job runs the option', () => {
+    expect(steps.filter((s) => (s.run ?? '').includes('--default-name')).length).toBe(1);
+    expect(step).toBeDefined();
+    for (const [id, job] of Object.entries(doc.jobs)) {
+      if (id === 'harness-android-tokens') continue;
+      expect(job.steps.some((s) => (s.run ?? '').includes('--default-name'))).toBe(false);
+    }
+  });
+  it('sits directly before "Upload the lane output", after "Save the Gradle cache"', () => {
+    const at = names.indexOf(NAME);
+    expect(names[at - 1]).toBe('Save the Gradle cache');
+    expect(names[at + 1]).toMatch(/^Upload the lane output/);
+  });
+  it('has no if: key and no continue-on-error key', () => {
+    expect(Object.keys(step)).not.toContain('if');
+    expect(Object.keys(step)).not.toContain('continue-on-error');
+  });
+  it('runs the fixed command', () => {
+    expect(run).toContain('npx tsx harness/android/lane.ts --default-name --consumer "${RUNNER_TEMP}/harness-consumer" --work "${GITHUB_WORKSPACE}/harness-out/default-name"');
+  });
+  it('annotates notice on a pass, error on a fail, and error when no line was printed', () => {
+    expect(run).toContain('::notice title=default-name::$line');
+    expect(run).toContain('::error title=default-name::$line');
+    expect(run).toContain('::error title=default-name::no default-name line');
+  });
+  it('writes no path that an existing step reads', () => {
+    const work = /--work "\$\{GITHUB_WORKSPACE\}\/(harness-out\/[\w-]+)"/.exec(run)?.[1];
+    expect(work).toBe('harness-out/default-name');
+    for (const p of ['harness-out/compare.txt', 'harness-out/infra.json', 'harness-out/selftest/infra.json', 'harness-out/resolved.ok', 'harness-out/run-harness-android-tokens.json']) {
+      expect(p.startsWith(`${work}/`)).toBe(false);
+      expect(run).not.toContain(p);
+    }
+  });
+  it('leaves the other contexts and the existing android-tokens steps in place', () => {
+    expect(Object.keys(doc.jobs).sort()).toEqual(['harness-android-components', 'harness-android-tokens', 'harness-generate', 'harness-ios-components', 'harness-ios-tokens']);
+    for (const n of ['Lane (harness/android/lane.ts)', 'Comparator (scripts/harness/compare.ts)', 'Verdict annotation', 'Save the Gradle cache']) {
+      expect(names).toContain(n);
+    }
+  });
+});

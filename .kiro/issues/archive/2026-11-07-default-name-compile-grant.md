@@ -37,3 +37,11 @@ Per `.kiro/issues/README.md` rule 8:
 ## Counter-argument and what survives
 
 The step raises the false-red surface of a required job, to guard a regression nobody has proposed. Data's local run at `3610718aa` already compiled the default name (`evidence/2026-11-07-mp4-default-name-run/`). What survives: that run is self-attested, so only a CI context makes the default name's evidence independent before any release that carries U6, and U8 and later units change what `:tokens` holds, which the step then compiles under the default name. *(Corrected 2026-11-07 in the review fold, `[ADA TASKS R5]` fix 1: the earlier text said U8 adds `DesignerPunk*`-shaped names; U8 adds `<Component>Tokens` names, which cannot clash with the default name.)* A flake in the step counts toward the demotion read's attempts-differ signal (`tasks.md` § "Decision 6", step 6 (b)), the same as any flake in the job, and an environment fault in the copy or the second `generate` carries no `harness-infra` (the compile runs `--offline`, so a registry is never reached).
+
+---
+
+## Outcome (2026-11-07)
+
+**Closed — the grant was exercised and is spent.** Fixing PR: #747 (Spec 129 U7a, Task 20), head H `d3b3c2d64`, all required checks green. Its `.github/**` diff is `.github/workflows/native-harness.yml` only, inside the admitted list: `git diff --numstat` shows 25 added, 0 deleted lines, so no `**Deleted lines**:` block was owed. The step ran in `harness-android-tokens` on the `native-harness` PR run 42427309603 at H and printed `default-name: PASS …`: https://github.com/3fn/DesignerPunk/actions/runs/42427309603. This line is the rule 5 outcome and the close; the record moves to `archive/` by `git mv` in this commit, content otherwise unchanged (rule 2). The grant expires at #747's merge (rule 8); the merge SHA is not recorded here because the move needs no SHA, and the squash commit is findable from #747. Stacy's ARMING read at that merge is hers and is not made here.
+
+— Thurgood

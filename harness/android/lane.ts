@@ -37,12 +37,15 @@
  * Usage:
  *   npx tsx harness/android/lane.ts --consumer <root> --work <dir> [--prepare-only] [--pins <file>]
  *   npx tsx harness/android/lane.ts --selftest --work <dir>       the planted-internal self-test (Req 2.7)
+ *   npx tsx harness/android/lane.ts --default-name --consumer <root> --work <dir>
+ *                                                                 the default-name compile (Task 20, U7a)
  *
  * Exit status: 0 when the run files were written (a failing Gradle build is a result, not an error here);
  * 1 when a step of this script failed; 2 on a usage error. `--selftest` exits 1 when its expectations fail.
  */
 
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import { spawnSync } from 'child_process';
 import * as yaml from 'js-yaml';
@@ -57,7 +60,7 @@ import {
   type ProbeGroups,
 } from '../../scripts/harness/probe-kotlin';
 import { parseKotlin } from '../../scripts/harness/parse-kotlin';
-import { checkHarnessConsumerConfig } from '../../scripts/harness/native-rules';
+import { checkHarnessConsumerConfig, providerReads } from '../../scripts/harness/native-rules';
 import type { RunCheck, RunFile } from '../../scripts/harness/compare';
 
 // ─── Constants ───────────────────────────────────────────────────────────────────────────────────
@@ -639,20 +642,366 @@ export function selftest(repoRoot: string, work: string, log: (line: string) => 
   return failures.length === 0;
 }
 
+// ─── The default-name compile (Task 20, U7a; design § 2 "The default-name step", § 4 "Android provider") ──────────
+
+/**
+ * The product name `loadConfig` resolves when the config has no top-level `name`: `DEFAULTS.name` in
+ * `src/config/ConfigLoader.ts`. A changed default turns the step red, and the line names both values.
+ */
+export const DEFAULT_PRODUCT_NAME = 'DesignerPunk';
+/** The abbreviation the harness consumer's config keeps (`harness/pins.yaml` § consumer; not ConfigLoader's `DP`). */
+export const DEFAULT_ABBREVIATION = 'HX';
+export const DEFAULT_NAME_FILE = 'ProbeFamily.kt';
+
+/** `consumer.ts`'s `READ_CONFIG_SCRIPT`: the call that resolves the consumer's config with its installed `loadConfig`. */
+const READ_CONFIG_SCRIPT =
+  "const { loadConfig } = require(process.argv[1]);" +
+  "loadConfig(process.cwd()).then((c) => { process.stdout.write(JSON.stringify(c)); })" +
+  ".catch((e) => { console.error((e && e.stack) || String(e)); process.exit(1); });";
+
+/** The part of the resolved config the step reads. */
+export interface ResolvedDefaultConfig {
+  name: string;
+  abbreviation: string;
+  themes: { name: string; mode?: string }[];
+}
+
+/**
+ * The spans of the top-level properties named `key` in the object literal `defineConfig({ ... })`: each is
+ * `[start, end)`, from the key to the end of its value (the next comma at the object's own depth, or its closing brace).
+ * A small scanner: it skips strings, template literals and comments, and counts `{ [ (` depth.
+ */
+function topLevelPropertySpans(text: string, key: string): Array<[number, number]> {
+  const call = text.indexOf('defineConfig(');
+  if (call < 0) return [];
+  const open = text.indexOf('{', call);
+  if (open < 0) return [];
+  const spans: Array<[number, number]> = [];
+  let depth = 0;
+  let i = open;
+  let spanStart = -1;
+  let expectKey = false;
+  const skipString = (quote: string): void => {
+    i += 1;
+    while (i < text.length && text[i] !== quote) i += text[i] === '\\' ? 2 : 1;
+  };
+  while (i < text.length) {
+    const c = text[i];
+    if (c === '/' && text[i + 1] === '/') { while (i < text.length && text[i] !== '\n') i += 1; continue; }
+    if (c === '/' && text[i + 1] === '*') { const e = text.indexOf('*/', i + 2); i = e < 0 ? text.length : e + 2; continue; }
+    if (depth === 1 && expectKey) {
+      const m = /^(?:'([^']*)'|"([^"]*)"|([A-Za-z_$][\w$]*))\s*(:)?/.exec(text.slice(i));
+      if (m && (m[1] ?? m[2] ?? m[3]) === key && m[4] === ':') { spanStart = i; expectKey = false; i += m[0].length; continue; }
+      if (/\s/.test(c)) { i += 1; continue; }
+      expectKey = false;
+    }
+    if (c === '"' || c === "'" || c === '`') { skipString(c); i += 1; continue; }
+    if (c === '{' || c === '[' || c === '(') {
+      depth += 1;
+      if (depth === 1) expectKey = true;
+    } else if (c === '}' || c === ']' || c === ')') {
+      depth -= 1;
+      if (depth === 0) { if (spanStart >= 0) spans.push([spanStart, i]); return spans; }
+    } else if (c === ',' && depth === 1) {
+      if (spanStart >= 0) { spans.push([spanStart, i + 1]); spanStart = -1; }
+      expectKey = true;
+    }
+    i += 1;
+  }
+  return spans;
+}
+
+/** How many top-level `name` properties the config text declares. */
+export function topLevelNameCount(configText: string): number {
+  return topLevelPropertySpans(configText, 'name').length;
+}
+
+/**
+ * The config with its one top-level `name` property removed and every other line kept: the theme entries' own `name:`
+ * keys and `abbreviation` stay. Throws unless exactly one such property exists. A property alone on its line takes
+ * its indentation and line break with it.
+ */
+export function removeTopLevelName(configText: string): string {
+  const spans = topLevelPropertySpans(configText, 'name');
+  if (spans.length !== 1) throw new Error(`the config declares ${spans.length} top-level \`name\` properties, expected 1`);
+  let [start, end] = spans[0];
+  const lineStart = configText.lastIndexOf('\n', start - 1) + 1;
+  if (configText.slice(lineStart, start).trim() === '') {
+    const lineEnd = configText.indexOf('\n', end);
+    if (configText.slice(end, lineEnd < 0 ? configText.length : lineEnd).trim() === '') { start = lineStart; end = lineEnd < 0 ? configText.length : lineEnd + 1; }
+  }
+  return configText.slice(0, start) + configText.slice(end);
+}
+
+/** The identifier a `// @provider` line reads: `DesignerPunkTheme { }` or `probe(DesignerPunkThemeFamily.Base)`. Null when the line has none. */
+function providerIdentifier(line: string): string | null {
+  const code = line.slice(0, line.indexOf('// @provider ')).trim();
+  const m = /^(?:probe\()?([A-Za-z_][A-Za-z0-9_]*)/.exec(code);
+  return m ? m[1] : null;
+}
+
+export interface DefaultNameInputs {
+  /** The Gradle log and its exit status. */
+  log: string;
+  exitCode: number;
+  /** The parser roots for the copy: `gen` is the copy's Android output folder. */
+  roots: Plan['roots'];
+  /** The files given to `:probe`, as paths. */
+  probeSources: readonly string[];
+  /** The name the probe was generated with, and the text of the `ProbeFamily.kt` that was compiled. */
+  probeName: string;
+  probeSource: string;
+  /** The count of `.kt` files in the copy's Android output folder. */
+  writtenKt: number;
+  /** The config `loadConfig` resolved from the copy, and the copy's config text. */
+  resolved: ResolvedDefaultConfig;
+  configText: string;
+}
+
+export interface DefaultNameVerdict {
+  pass: boolean;
+  /** The one `default-name:` line. */
+  line: string;
+  failures: string[];
+}
+
+/**
+ * The default-name step's verdict (Task 20). Pure: every input is a value. The step passes only when all of these hold,
+ * and the failures it finds are all listed.
+ */
+export function defaultNameVerdict(input: DefaultNameInputs): DefaultNameVerdict {
+  const failures: string[] = [];
+  const parsed = parseKotlin({ log: input.log, exitCode: input.exitCode, roots: input.roots });
+  const [tokens, probe, dp] = parsed.compiles;
+  const keyed = [tokens, probe, dp].reduce((n, c) => n + [...c.diagnostics.values()].reduce((a, b) => a + b, 0), 0);
+  const unrooted = tokens.unrooted.length + probe.unrooted.length + dp.unrooted.length;
+  const unattributed = parsed.unattributed.length;
+  const warnings = input.log.split(/\r?\n/).filter((l) => l.startsWith('w: ')).length;
+  const gen = parseSourceCounts(input.log).tokensGen;
+
+  if (tokens.outcome !== 'succeeded') failures.push(`:tokens:compileDebugKotlin ${tokens.outcome}`);
+  if (probe.outcome !== 'succeeded') failures.push(`:probe:compileDebugKotlin ${probe.outcome}`);
+  if (input.exitCode !== 0) failures.push(`Gradle exit ${input.exitCode}`);
+  const closing = input.log.split(/\r?\n/).filter((l) => /^BUILD (?:SUCCESSFUL|FAILED)\b/.test(l));
+  if (closing.length === 0) failures.push('the log has no closing BUILD line');
+  else if (!/^BUILD SUCCESSFUL\b/.test(closing[closing.length - 1])) failures.push('the log does not end BUILD SUCCESSFUL');
+  if (keyed > 0) failures.push(`${keyed} keyed diagnostic(s)`);
+  if (unrooted > 0) failures.push(`${unrooted} unrooted diagnostic(s)`);
+  if (unattributed > 0) failures.push(`${unattributed} unattributed diagnostic(s)`);
+
+  if (input.resolved.name !== DEFAULT_PRODUCT_NAME) failures.push(`resolved name ${input.resolved.name}, expected ${DEFAULT_PRODUCT_NAME}`);
+  if (input.resolved.abbreviation !== DEFAULT_ABBREVIATION) failures.push(`resolved abbreviation ${input.resolved.abbreviation}, expected ${DEFAULT_ABBREVIATION}`);
+  if (topLevelNameCount(input.configText) > 0) failures.push('the config copy still declares a top-level name');
+
+  if (input.probeName !== DEFAULT_PRODUCT_NAME) failures.push(`the probe was given name ${input.probeName}, expected ${DEFAULT_PRODUCT_NAME}`);
+  const providerLines = input.probeSource.split(/\r?\n/).filter((l) => l.includes('// @provider '));
+  const wrong = providerLines.map(providerIdentifier).filter((id) => id === null || !id.startsWith(`${DEFAULT_PRODUCT_NAME}Theme`));
+  if (providerLines.length === 0) failures.push('the compiled ProbeFamily.kt has no provider read');
+  if (wrong.length > 0) failures.push(`${wrong.length} provider read(s) do not name ${DEFAULT_PRODUCT_NAME}Theme`);
+  if (!providerLines.some((l) => l.includes('family ='))) failures.push('no provider read is a `family =` call');
+
+  if (gen === undefined || gen < 1) failures.push(`:tokens gen=${gen ?? 'absent'}, expected at least 1`);
+  else if (gen !== input.writtenKt) failures.push(`:tokens gen=${gen} against ${input.writtenKt} .kt file(s) written`);
+
+  const sources = input.probeSources.map((p) => p.slice(p.lastIndexOf('/') + 1));
+  if (sources.length !== 1 || sources[0] !== DEFAULT_NAME_FILE) failures.push(`the probe source list is [${sources.join(', ')}], expected [${DEFAULT_NAME_FILE}]`);
+
+  const read = /^probe: provider read (\d+) of (\d+)\s*$/m.exec(input.log);
+  let readText = 'absent';
+  if (read === null) failures.push('the log has no `provider read` line');
+  else {
+    readText = `${read[1]} of ${read[2]}`;
+    const expected = providerReads(input.resolved.themes, 'android').length;
+    if (read[1] !== read[2]) failures.push(`provider read ${readText}`);
+    if (Number(read[2]) !== expected) failures.push(`provider read m=${read[2]}, expected ${expected} from the resolved themes`);
+  }
+
+  const pass = failures.length === 0;
+  const line =
+    `default-name: ${pass ? 'PASS' : 'FAIL'} name=${input.resolved.name} abbreviation=${input.resolved.abbreviation} probe-name=${input.probeName} ` +
+    `tokens=${tokens.outcome} probe=${probe.outcome} keyed=${keyed} unrooted=${unrooted} unattributed=${unattributed} warnings=${warnings} ` +
+    `gen=${gen ?? 'absent'} provider read ${readText}` +
+    (pass ? '' : ` (${failures.join('; ')})`);
+  return { pass, line, failures };
+}
+
+class DefaultNameSetupError extends Error {
+  constructor(public readonly step: string, detail: string) {
+    super(`${step}: ${detail}`);
+  }
+}
+
+export interface DefaultNameOptions {
+  repoRoot: string;
+  consumer: string;
+  work: string;
+  /** Where the copy goes; `RUNNER_TEMP`, else `os.tmpdir()`. */
+  tempRoot: string;
+  log: (line: string) => void;
+}
+
+/** Symlinks each entry of the workspace's `node_modules`, except `@3fn`, into the copy's `node_modules`. Returns how many it linked. */
+function linkWorkspaceModules(workspaceModules: string, copyModules: string): number {
+  fs.mkdirSync(copyModules, { recursive: true });
+  let linked = 0;
+  for (const entry of fs.readdirSync(workspaceModules)) {
+    if (entry === '@3fn') continue;
+    const target = path.join(copyModules, entry);
+    if (fs.existsSync(target)) continue;
+    fs.symlinkSync(fs.realpathSync(path.join(workspaceModules, entry)), target);
+    linked += 1;
+  }
+  return linked;
+}
+
+/**
+ * Runs the whole option and returns the one `default-name:` line with the exit status. A setup failure returns
+ * `default-name: FAIL setup (<step>: <detail>)`. Nothing else it prints begins with `default-name:`.
+ */
+export function runDefaultName(options: DefaultNameOptions, gradle: (androidDir: string, laneDir: string, args: readonly string[]) => GradleRun = runGradle): { code: number; line: string } {
+  const { repoRoot, log } = options;
+  const work = path.resolve(options.work);
+  const androidDir = path.join(repoRoot, 'harness', 'android');
+  let copy: string | undefined;
+  try {
+    fs.mkdirSync(work, { recursive: true });
+    const consumer = fs.realpathSync(options.consumer);
+    const manifest = JSON.parse(fs.readFileSync(path.join(consumer, 'harness-consumer.json'), 'utf8')) as ManifestLike;
+
+    // The copy: outside the workspace, so the original consumer is untouched.
+    fs.mkdirSync(options.tempRoot, { recursive: true });
+    copy = fs.mkdtempSync(path.join(options.tempRoot, 'default-name-'));
+    if (path.relative(repoRoot, copy) === '' || !path.relative(repoRoot, copy).startsWith('..')) throw new DefaultNameSetupError('copy', `${copy} is inside the workspace`);
+    fs.cpSync(consumer, copy, { recursive: true, verbatimSymlinks: true });
+    const linked = linkWorkspaceModules(path.join(repoRoot, 'node_modules'), path.join(copy, 'node_modules'));
+    log(`harness-android: default name copy: ${copy}; linked ${linked} workspace node_modules entries (lockfile versions, not the consumer's own install)`);
+
+    // The config: its one top-level `name` removed.
+    const configPath = path.join(copy, 'designerpunk.config.ts');
+    if (!fs.existsSync(configPath)) throw new DefaultNameSetupError('config', 'the consumer has no designerpunk.config.ts');
+    let configText: string;
+    try {
+      configText = removeTopLevelName(fs.readFileSync(configPath, 'utf8'));
+    } catch (e) {
+      throw new DefaultNameSetupError('config', (e as Error).message);
+    }
+    fs.writeFileSync(configPath, configText);
+
+    // generate and loadConfig, with the copy's installed package.
+    const packageRoot = path.join(copy, manifest.packageRoot);
+    const bin = path.join(packageRoot, 'bin', 'designerpunk.js');
+    const env = { ...process.env };
+    delete env.NODE_PATH;
+    const resolveConfig = (): ResolvedDefaultConfig & { outputDir: string; platforms?: { android?: { output?: string } } } => {
+      const r = spawnSync(process.execPath, ['-e', READ_CONFIG_SCRIPT, path.join(packageRoot, 'dist', 'config', 'ConfigLoader.js')], { cwd: copy, env, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+      if (r.status !== 0) throw new DefaultNameSetupError('loadConfig', (r.stderr || r.error?.message || `exit ${r.status}`).trim().split('\n').slice(-3).join(' '));
+      try {
+        return JSON.parse(r.stdout);
+      } catch {
+        throw new DefaultNameSetupError('loadConfig', 'the resolved config is not JSON');
+      }
+    };
+    const resolvedFull = resolveConfig();
+    const resolved: ResolvedDefaultConfig = {
+      name: resolvedFull.name,
+      abbreviation: resolvedFull.abbreviation,
+      themes: Array.isArray(resolvedFull.themes) ? resolvedFull.themes.map((t) => ({ name: t.name, mode: t.mode })) : [],
+    };
+    fs.writeFileSync(path.join(work, 'resolved-config.json'), `${JSON.stringify(resolvedFull, null, 2)}\n`);
+    const outRel = resolvedFull.platforms?.android?.output ?? resolvedFull.outputDir;
+    const genRoot = path.resolve(copy, outRel);
+    if (path.relative(copy, genRoot).startsWith('..') || genRoot === copy) throw new DefaultNameSetupError('output', `the Android output folder ${genRoot} is not inside the copy`);
+    fs.rmSync(genRoot, { recursive: true, force: true });
+    fs.mkdirSync(genRoot, { recursive: true });
+
+    const generate = spawnSync(process.execPath, [bin, 'generate'], { cwd: copy, env, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+    fs.writeFileSync(path.join(work, 'generate.txt'), `${generate.stdout ?? ''}${generate.stderr ?? ''}`);
+    if (generate.status !== 0) throw new DefaultNameSetupError('generate', ((generate.stderr || generate.stdout || '').trim().split('\n').slice(-2).join(' ')) || `exit ${generate.status}`);
+    const genRelative = walkKotlin(genRoot);
+    if (genRelative.length === 0) throw new DefaultNameSetupError('generate', `wrote no .kt file under ${genRoot}`);
+    const genAbsolute = genRelative.map((r) => path.join(genRoot, r));
+
+    // The probe: ProbeFamily.kt only, for the name loadConfig resolved.
+    const laneDir = path.resolve(work, 'lane');
+    fs.rmSync(laneDir, { recursive: true, force: true });
+    fs.mkdirSync(path.join(laneDir, 'empty-res'), { recursive: true });
+    const probeName = resolved.name;
+    const probe = generateProbe({ index: { primitives: {}, semantics: {}, components: {} }, config: { name: probeName, themes: resolved.themes }, productFiles: [] });
+    const probeFiles = writeProbe(laneDir, probe);
+    const familyFile = probeFiles.find((f) => path.basename(f) === DEFAULT_NAME_FILE);
+    if (!familyFile) throw new DefaultNameSetupError('probe', `probe-kotlin wrote no ${DEFAULT_NAME_FILE}`);
+    const write = (name: string, lines: readonly string[]): void => fs.writeFileSync(path.join(laneDir, name), lines.length > 0 ? `${lines.join('\n')}\n` : '');
+    write('tokens.sources', genAbsolute);
+    write('probe.sources', [...probeFiles].sort(byCodePoint));
+    write('dp.pkg.sources', []);
+    write('dp.gen.sources', []);
+    write('dp.res', [path.join(laneDir, 'empty-res')]);
+    fs.copyFileSync(familyFile, path.join(work, DEFAULT_NAME_FILE));
+
+    // One Gradle invocation, offline: :tokens with the regenerated Kotlin, :probe with ProbeFamily.kt only.
+    const args = ['--offline', ...SELFTEST_GRADLE_ARGS];
+    log(`harness-android: default name invocation: (cd harness/android && HARNESS_LANE_DIR=${laneDir} ./gradlew ${args.join(' ')})`);
+    log(`harness-android: default name file order: :tokens ${genAbsolute.length} generated file(s), then :probe ${probeFiles.map((f) => path.basename(f)).join(', ')}`);
+    for (const f of genAbsolute) log(`  ${f}`);
+    const run = gradle(androidDir, laneDir, args);
+    fs.writeFileSync(path.join(work, LOG_FILE), run.log);
+
+    const verdict = defaultNameVerdict({
+      log: run.log,
+      exitCode: run.exitCode,
+      roots: { gen: genRoot, pkg: path.join(work, 'no-package'), probe: path.join(laneDir, 'src') },
+      probeSources: probeFiles,
+      probeName,
+      probeSource: fs.readFileSync(familyFile, 'utf8'),
+      writtenKt: genRelative.length,
+      resolved,
+      configText: fs.readFileSync(configPath, 'utf8'),
+    });
+    fs.writeFileSync(path.join(work, 'verdict.txt'), `${verdict.line}\n`);
+    return { code: verdict.pass ? 0 : 1, line: verdict.line };
+  } catch (error) {
+    const detail = error instanceof DefaultNameSetupError ? error.message : `setup: ${(error as Error).message}`;
+    const line = `default-name: FAIL setup (${detail.replace(/\s+/g, ' ').slice(0, 400)})`;
+    try {
+      fs.mkdirSync(work, { recursive: true });
+      fs.writeFileSync(path.join(work, 'verdict.txt'), `${line}\n`);
+    } catch {
+      // the line below is the record
+    }
+    return { code: 1, line };
+  } finally {
+    if (copy) fs.rmSync(copy, { recursive: true, force: true });
+  }
+}
+
 // ─── Command line ────────────────────────────────────────────────────────────────────────────────
 
 export function main(argv: readonly string[], log: (line: string) => void = console.log): number {
   const repoRoot = path.resolve(__dirname, '..', '..');
   const flags = new Set<string>();
   const values = new Map<string, string>();
+  // With --default-name every exit prints exactly one `default-name:` line, a usage error included.
+  const usage = (message: string): number => {
+    log(argv.includes('--default-name') ? `default-name: FAIL setup (usage: ${message})` : `lane: ${message}`);
+    return 2;
+  };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
-    if (arg === '--prepare-only' || arg === '--selftest') flags.add(arg);
+    if (arg === '--prepare-only' || arg === '--selftest' || arg === '--default-name') flags.add(arg);
     else if (arg === '--consumer' || arg === '--work' || arg === '--pins' || arg === '--infra-out') {
       const value = argv[++i];
-      if (value === undefined) { log(`lane: ${arg} needs a value`); return 2; }
+      if (value === undefined) return usage(`${arg} needs a value`);
       values.set(arg, value);
-    } else { log(`lane: unknown argument ${arg}`); return 2; }
+    } else return usage(`unknown argument ${arg}`);
+  }
+  if (flags.has('--default-name')) {
+    // Exactly one line beginning `default-name:` on every exit, usage errors included.
+    const consumer = values.get('--consumer');
+    const workDir = values.get('--work');
+    if (!consumer || !workDir) return usage('--default-name --consumer <root> --work <dir>');
+    const result = runDefaultName({ repoRoot, consumer, work: workDir, tempRoot: process.env.RUNNER_TEMP || os.tmpdir(), log });
+    log(result.line);
+    return result.code;
   }
   const work = values.get('--work');
   if (!work) { log('lane: usage: --consumer <root> --work <dir> [--prepare-only] [--pins <file>] | --selftest --work <dir> [--infra-out <dir>]'); return 2; }

@@ -29,6 +29,12 @@ import {
   buildRunFiles,
   assertOneCopyPerName,
   classifyResolveFailure,
+  defaultNameVerdict,
+  removeTopLevelName,
+  runDefaultName,
+  topLevelNameCount,
+  main as laneMain,
+  type DefaultNameInputs,
   resolveAndReport,
   resolveFailureRunFiles,
   resolveStep,
@@ -789,6 +795,159 @@ describe('probe-kotlin: the resolve step (Task 19.1)', () => {
       const files = resolveFailureRunFiles(stub(), { log: '', exitCode: 1 }, 'x');
       expect(files['harness-android-components'].files).toEqual({ gen: { compiled: 0, floor: 3 }, pkg: { compiled: 0, floor: 41 } });
       expect(files['harness-android-tokens'].files).toEqual({ gen: { compiled: 0, floor: 3 } });
+    });
+  });
+});
+
+// ─── The default-name compile (Task 20, U7a) ─────────────────────────────────────────────────────
+
+describe('the default-name verdict (Task 20)', () => {
+  const EVIDENCE = path.join(__dirname, '..', '..', '..', '.kiro', 'specs', '129-consumer-generation-completeness', 'evidence', '2026-11-07-mp4-default-name-run');
+  // Data's committed log at c09b9be27 (a local run, self-attested), and the files beside it.
+  const LOG = fs.readFileSync(path.join(EVIDENCE, 'gradle-tokens-and-probefamily.txt'), 'utf8');
+  const PROBE = fs.readFileSync(path.join(EVIDENCE, 'ProbeFamily.kt'), 'utf8');
+  const SPELLED_OUT = fs.readFileSync(path.join(EVIDENCE, 'consumer.designerpunk.config.spelled-out-reference.ts'), 'utf8');
+  const NAME_UNSET = fs.readFileSync(path.join(EVIDENCE, 'consumer.designerpunk.config.ts'), 'utf8');
+
+  const base = (): DefaultNameInputs => ({
+    log: LOG,
+    exitCode: 0,
+    roots: { gen: '/c/dist/tokens', pkg: '/w/no-package', probe: '/w/lane/src' },
+    probeSources: ['/w/lane/src/ProbeFamily.kt'],
+    probeName: 'DesignerPunk',
+    probeSource: PROBE,
+    writtenKt: 3,
+    resolved: { name: 'DesignerPunk', abbreviation: 'HX', themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }] },
+    configText: NAME_UNSET,
+  });
+  const TOKENS_HEADER = '> Task :tokens:compileDebugKotlin\n';
+  const verdictOf = (changes: Partial<DefaultNameInputs>) => defaultNameVerdict({ ...base(), ...changes });
+  const failsWith = (changes: Partial<DefaultNameInputs>, reason: RegExp): void => {
+    const v = verdictOf(changes);
+    expect(v.pass).toBe(false);
+    expect(v.failures.join(' | ')).toMatch(reason);
+    expect(v.line).toMatch(/^default-name: FAIL /);
+  };
+
+  it('passes on the committed MP-4 log with that run\'s other inputs', () => {
+    const v = verdictOf({});
+    expect(v.failures).toEqual([]);
+    expect(v.pass).toBe(true);
+    expect(v.line).toBe(
+      'default-name: PASS name=DesignerPunk abbreviation=HX probe-name=DesignerPunk tokens=succeeded probe=succeeded keyed=0 unrooted=0 unattributed=0 warnings=0 gen=3 provider read 5 of 5',
+    );
+  });
+
+  it('counts a planted w: line and still passes', () => {
+    const v = verdictOf({ log: LOG.replace(TOKENS_HEADER, `${TOKENS_HEADER}w: file:///c/dist/tokens/DesignTokens.android.kt:3:1 Deprecated\n`) });
+    expect(v.pass).toBe(true);
+    expect(v.line).toContain('warnings=1');
+  });
+
+  describe('fails, once each, on', () => {
+    it('one planted located e: line', () => {
+      failsWith({ log: LOG.replace(TOKENS_HEADER, `${TOKENS_HEADER}e: file:///c/dist/tokens/DesignTokens.android.kt:3:1 Unresolved reference 'X'.\n`) }, /1 keyed diagnostic/);
+    });
+    it(':tokens FAILED with exit 1 and only an unlocated e: line', () => {
+      failsWith({ exitCode: 1, log: LOG.replace(TOKENS_HEADER, '> Task :tokens:compileDebugKotlin FAILED\ne: The compiler crashed\n').replace('BUILD SUCCESSFUL', 'BUILD FAILED') }, /:tokens:compileDebugKotlin failed/);
+    });
+    it('one e: line whose path is under no root', () => {
+      failsWith({ log: LOG.replace(TOKENS_HEADER, `${TOKENS_HEADER}e: file:///elsewhere/X.kt:1:1 Boom\n`) }, /1 unrooted diagnostic/);
+    });
+    it('no :tokens:compileDebugKotlin outcome', () => {
+      failsWith({ log: LOG.replace(TOKENS_HEADER, '') }, /:tokens:compileDebugKotlin not-run/);
+    });
+    it('no :probe:compileDebugKotlin outcome', () => {
+      failsWith({ log: LOG.replace('> Task :probe:compileDebugKotlin\n', '') }, /:probe:compileDebugKotlin not-run/);
+    });
+    it('a log with no closing BUILD line', () => {
+      failsWith({ log: LOG.replace(/BUILD SUCCESSFUL.*\n?/, '') }, /no closing BUILD line/);
+    });
+    it('gen=0', () => {
+      failsWith({ log: LOG.replace('gen=3', 'gen=0'), writtenKt: 0 }, /gen=0, expected at least 1/);
+    });
+    it('gen=2 against 3 written', () => {
+      failsWith({ log: LOG.replace('gen=3', 'gen=2') }, /gen=2 against 3/);
+    });
+    it('a probe given a file besides ProbeFamily.kt', () => {
+      failsWith({ probeSources: ['/w/lane/src/ProbeFamily.kt', '/w/lane/src/ProbeTokens.kt'] }, /\[ProbeFamily\.kt, ProbeTokens\.kt\]/);
+    });
+    it('no provider read line', () => {
+      failsWith({ log: LOG.replace(/^probe: provider read .*\n/m, '') }, /no `provider read` line/);
+    });
+    it('provider read 0 of 0', () => {
+      failsWith({ log: LOG.replace('provider read 5 of 5', 'provider read 0 of 0') }, /m=0, expected 5/);
+    });
+    it('provider read 4 of 5', () => {
+      failsWith({ log: LOG.replace('provider read 5 of 5', 'provider read 4 of 5') }, /provider read 4 of 5/);
+    });
+    it('a run whose only provider read is the default DesignerPunkTheme { }', () => {
+      const onlyDefault = PROBE.split('\n').filter((l) => !l.includes('// @provider ') || l.includes('@provider default')).join('\n');
+      failsWith({ probeSource: onlyDefault, log: LOG.replace('provider read 5 of 5', 'provider read 1 of 1') }, /no provider read is a `family =` call/);
+    });
+    it('a log and probe source named for HarnessConsumer', () => {
+      failsWith(
+        { log: LOG.replace(/DesignerPunk/g, 'HarnessConsumer'), probeSource: PROBE.replace(/DesignerPunk/g, 'HarnessConsumer'), probeName: 'HarnessConsumer' },
+        /provider read\(s\) do not name DesignerPunkTheme/,
+      );
+    });
+    it('a resolved name of HarnessConsumer', () => {
+      failsWith({ resolved: { ...base().resolved, name: 'HarnessConsumer' } }, /resolved name HarnessConsumer, expected DesignerPunk/);
+    });
+    it('a resolved abbreviation of DP', () => {
+      failsWith({ resolved: { ...base().resolved, abbreviation: 'DP' } }, /resolved abbreviation DP, expected HX/);
+    });
+    it('a config copy that still declares a top-level name', () => {
+      failsWith({ configText: SPELLED_OUT }, /still declares a top-level name/);
+    });
+  });
+
+  describe('the config copy', () => {
+    it('loses the top-level name and keeps every other line (abbreviation, the theme entries\' name: keys)', () => {
+      const out = removeTopLevelName(SPELLED_OUT);
+      expect(topLevelNameCount(SPELLED_OUT)).toBe(1);
+      expect(topLevelNameCount(out)).toBe(0);
+      expect(out.split('\n')).toEqual(SPELLED_OUT.split('\n').filter((l) => l !== "  name: 'DesignerPunk',"));
+      expect(out).toContain("abbreviation: 'HX'");
+      expect(out).toContain("{ name: 'dark', mode: 'dark'");
+      expect(out).toContain("{ name: 'wcag', mode: 'light'");
+    });
+    it('matches the evidence run\'s own name-unset config', () => {
+      expect(removeTopLevelName(SPELLED_OUT)).toBe(NAME_UNSET);
+    });
+    it('refuses a config with no top-level name', () => {
+      expect(() => removeTopLevelName(NAME_UNSET)).toThrow(/0 top-level `name`/);
+    });
+  });
+
+  describe('the option\'s one default-name: line', () => {
+    const countLines = (lines: string[]): number => lines.filter((l) => l.startsWith('default-name:')).length;
+
+    it('a setup failure prints FAIL setup, once', () => {
+      const lines: string[] = [];
+      const work = fs.mkdtempSync(path.join(os.tmpdir(), 'dn-work-'));
+      const code = laneMain(['--default-name', '--consumer', path.join(work, 'missing'), '--work', path.join(work, 'out')], (l) => lines.push(l));
+      expect(code).toBe(1);
+      expect(countLines(lines)).toBe(1);
+      expect(lines[lines.length - 1]).toMatch(/^default-name: FAIL setup \(/);
+      fs.rmSync(work, { recursive: true, force: true });
+    });
+    it('a usage error prints one line too', () => {
+      const lines: string[] = [];
+      expect(laneMain(['--default-name', '--work', '/tmp/x'], (l) => lines.push(l))).toBe(2);
+      expect(countLines(lines)).toBe(1);
+      expect(lines[0]).toMatch(/^default-name: FAIL setup \(usage:/);
+    });
+    it('runDefaultName names the step that failed when the config has no top-level name to remove', () => {
+      const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dn-consumer-'));
+      fs.writeFileSync(path.join(root, 'harness-consumer.json'), JSON.stringify({ packageRoot: 'node_modules/@3fn/core' }));
+      fs.writeFileSync(path.join(root, 'designerpunk.config.ts'), NAME_UNSET);
+      const lines: string[] = [];
+      const r = runDefaultName({ repoRoot: path.resolve(__dirname, '..', '..', '..'), consumer: root, work: path.join(root, 'out'), tempRoot: os.tmpdir(), log: (l) => lines.push(l) });
+      expect(r.code).toBe(1);
+      expect(r.line).toMatch(/^default-name: FAIL setup \(config: the config declares 0 top-level `name` properties/);
+      expect(countLines(lines)).toBe(0);
+      fs.rmSync(root, { recursive: true, force: true });
     });
   });
 });
