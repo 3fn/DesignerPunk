@@ -31,9 +31,16 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: data
-canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
+canonicalHash: sha256:fa54f8cf858c8d1c441c911b7c59cbcff4064990a50cb11ae99e5ae9c6f4fd23
 items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, scope-11, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17
 date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d, C16): Spec 129 U11, Task 16.2's text.** A new act, read fresh. Item `scope-2` moves with the canonical text; the other 16 items are unchanged. The record below is superseded (canonicalHash `sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e`, 17 items).
+- **What changed**: one bullet. `canonical/agents/data.md` `#in-scope` bullet 2 now reads "theme-varying colors via `LocalDPTheme.current`" where it read "`Local{Abbreviation}Theme.current`". Thurgood committed my drafted text verbatim at `448d4fe7d` (Task 16.2, profile-author act under F12′); the overlay pin and the `scope-2` text moved with it, and Lina regenerated at `e10072c9d`. No other line of the unit changed.
+- **What I read, in this session, through tool results**: the whole unit in `canonical/agents/data.md` (`### In Scope`, 13 lines, with the Android-lane bullet); the same unit as rendered in `canonical/_consumer-output/_canonical/agents/data.md`, `cc/.claude/agents/data.md` and `kiro/.kiro/agents/data-prompt.md` (12 lines each); the diff of `448d4fe7d` for `canonical/agents/data.md`, `canonical/operative-sets/data.yaml` and `data.overlay.md`; the `#in-scope` row in `data.dispositions.yaml` with its two removals. Compared line by line: the three renderings differ from the canonical unit in two lines only, bullet 3 (re-pointed to the shipped sources, `subtraction-5`) and the Android-lane bullet (removed, `subtraction-1`).
+- **The hash**: I computed it myself, with `hashText` over `partition(splitFrontmatter(src).body).units` for `#in-scope` in `canonical/agents/data.md` at `e10072c9d`: `sha256:fa54f8cf858c8d1c441c911b7c59cbcff4064990a50cb11ae99e5ae9c6f4fd23`. It equals the overlay pin `## @unit #in-scope @ sha256:fa54f8cf…` and the sweep's "canonical unit is now" value.
+- **Items re-read against the unit**: each of the 17 item texts is a verbatim substring of the unit and occurs once (checked by script). `scope-2` reads "Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `LocalDPTheme.current`", the unit's bullet 2 byte for byte. It stays operative: I can break it by reading a theme-varying colour from anywhere but `LocalDPTheme.current`. `scope-9` to `scope-17` are unchanged and cover the Android-lane bullet as before.
+- **Ruling: CONFIRMED at 17 items, not corrected.** The 2026-11-08 and 2026-09-29 rulings below stand.
 
 **Re-confirmed 2026-11-08 (Req 11.6.5d, C16): the native-lane ownership ballot, site 2.**
 - **What changed**: one new last bullet in `#in-scope`, "**The native compile harness's Android lane …**". Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled at 2026-11-08T00:33:06Z), items 1 and 3. Thurgood applied it as author at `b46dff5d3`, with F-5 (a) in the "Not yours" list (`harness/README.md` is "Thurgood's; you review its hunks in your sections") and F-4 (b) leaving `d2-check.ts` bare. I read the ballot's site-2 after-text and the applied bullet, and they agree once those two ruled choices are applied.
