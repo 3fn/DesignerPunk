@@ -131,6 +131,10 @@ Lina's text, byte-exact, from [LINA R1] items 1, 2 and 4 (L-1, L-2, L-3, the F-2
 
   **Why deferred**: each is a `canonical/agents/**` edit, LAW, Peter-merged, with a regeneration and a re-sign. Peter ratified this measure as presented, and none of these three was in it. Until they land, the baseline header makes growth visible in the diff, and Stacy has said she will read the report as a courtesy line.
 
+### 2.7 Attribute and value half (Lina's predicate, version 1)
+
+The attribute and value half reads a web example's tags, attributes, enumerated values and css custom-property declarations, by Lina's predicate version 1 (§ 8.11). *(added 2026-11-09 by ballot 2026-11-08-governance-examples-guard-attribute-predicate item 1.)*
+
 ## 3. Recommendation, counter-argument (fold-back applied), residual
 
 **Recommendation**: both halves and the import surface, as § 2 states them, built under a grant after the Status commit.
@@ -703,3 +707,23 @@ The fence opening `# product/tokens/layout.yaml` (L699 at `a19481725`) is preced
 ```yaml
 # product/tokens/layout.yaml
 ````
+
+### 8.11 The attribute and value predicate, version 1 (Lina's text, byte-exact; module header)
+
+*(added 2026-11-09 by ballot 2026-11-08-governance-examples-guard-attribute-predicate item 1.)*
+
+````
+- **A-1: scope.** Fenced blocks tagged `html`, or not tagged, and the JSX of blocks tagged `tsx` or `jsx`. Only elements whose tag name contains a hyphen are read. Inline code spans are out of scope in this version.
+- **A-2: the registered tags.** A tag is DesignerPunk's when a `customElements.define('<tag>', …)` call with a string-literal tag appears in `src/components/**/platforms/web/*.web.ts`. A hyphenated tag in scope that no such call registers fails (a misspelled or retired tag, e.g. `<input-text>`). `<!-- example: consumer -->` skips **only** this check: a consumer's own elements are not DesignerPunk's. A-3 to A-5 still run for every registered tag in the block.
+- **A-3: attributes.** Each attribute on a registered tag must be one of:
+  (a) a string in that element's `observedAttributes` array literal;
+  (b) the argument of a `getAttribute`, `hasAttribute` or `toggleAttribute` call with a string literal, in the same `*.web.ts` file;
+  (c) a global HTML attribute: `id`, `class`, `style`, `slot`, `part`, `hidden`, `title`, `lang`, `dir`, `tabindex`, `role`, `inert`, any `aria-*`, any `data-*`, or any `on[a-z]+` event-handler content attribute.
+  An attribute that matches none fails. The check compares the hyphenated attribute names, never the schema's camelCase prop names: `borderRadius` is Container-Base's prop, and as an attribute it fails, because the element observes `border-radius`.
+- **A-4: enumerated values.** For an attribute that passes A-3 (a) or (b), find the element's schema prop: the prop whose name equals the attribute with hyphens removed, compared case-insensitively (`test-id` → `testID`). If that prop's `type` is a union of quoted string literals (`"'primary' | 'secondary' | 'tertiary'"`) or the prop carries `validation.enum`, the attribute's value must be one of them (`variant="danger"` fails). Boolean props, values containing `${` or `{{`, and attributes with no schema prop are not value-checked.
+- **A-5: CSS self-reference.** In fenced blocks tagged `css`, a declaration whose property is a custom property (`--name`) fails when its value contains `var(--name` for the same name: the declaration redeclares a token as itself (RL-31 (i)).
+- **A-6: the check reads syntax and does not render or run anything.** HTML is read by a tolerant tokenizer, with no DOM. The element sources are read by `ts.createSourceFile`, with no program and no `dist/`. An `observedAttributes` that is not an array literal (a spread, a computed list) is reported as **not read** for that element, counted in the report line, never as a pass. **A twin-agreement test** pins the syntax read to the running elements: for every registered tag whose `observedAttributes` is an array literal, the syntactic list equals the built class's runtime `observedAttributes` (jsdom, after `define`), and the test fails on any difference. For a not-read element, A-3 runs with (a) empty. The report line prints the count, e.g. `not read: 10 of 34`.
+- **A-7: markers and keys.** `<!-- example: generic -->` skips the block entirely. Key: doc, half (`tag`, `attribute`, `value` or `css-self-reference`), the failing string, and its occurrence index in the doc. The line number is informational only. Hits found at adoption go on the pending list, each homed in a record, as § 2.4 does for the existing halves.
+````
+
+**Limits, stated**: A-3 cannot see an attribute the element reads some other way (a `dataset` read, a generic `attributeChangedCallback` loop), so such a valid attribute fails. That is the safe direction, and it is cleared by a marker or by naming the attribute in `observedAttributes`. A-4 reads values only through the schema, so an element that validates a value the schema does not list is not checked. *Signed: Lina, 2026-11-01.*

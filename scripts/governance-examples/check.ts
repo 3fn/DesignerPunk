@@ -1,21 +1,26 @@
 #!/usr/bin/env node
 /*
 THE GOVERNANCE-EXAMPLES GUARD. Ballot .kiro/docs/ballots/2026-10-26-governance-examples-guard.md
-(RATIFIED, Peter, 2026-10-26; #495). Owner: Thurgood (the instrument). Predicates: the token-name
-half is Ada's (version 1), the file-shape half and the import surface are Lina's (version 1).
+(RATIFIED, Peter, 2026-10-26; #495), as amended by ballot
+.kiro/docs/ballots/2026-11-08-governance-examples-guard-attribute-predicate.md (RATIFIED, Peter,
+2026-11-09, F-1 (a); #836). Owner: Thurgood (the instrument). Predicates: the token-name half is
+Ada's (version 1); the file-shape half, the import surface and the attribute and value half are
+Lina's (version 1 each).
 
 The served governance docs teach by example. This guard reads the examples' token names, the
-files their blocks declare, the shape of a declared token file, and their @3fn/core import lines,
-and fails a string that does not resolve, unless the pending list (pending.json) names it.
+files their blocks declare, the shape of a declared token file, their @3fn/core import lines, and
+the tags, attributes, enumerated values and css custom-property declarations of their web
+examples, and fails a string that does not resolve, unless the pending list (pending.json) names it.
 
 Run it: `npx tsx scripts/governance-examples/check.ts` prints the report line and exits 1 on a
 failure (an unlisted hit, a stale pending entry, an unknown marker value); `--census` prints one
-sorted line per doc (<doc>\t<candidates>:<failing>:<opted out>) and the selected count;
+sorted line per doc (<doc>\t<candidates>:<failing>:<opted out>, the attribute half's reads
+counted in all three, F-1 (a)) and the selected count;
 `--hits` lists every failing string. The import surface needs `npm run build` first. The test
 (__tests__/governance-examples.test.ts) is the registered guard: `npm run test:scripts`, in the
 required lane-functional-root job.
 
-The texts below are the ballot's § 8 blocks, byte-exact, each between its two "====" lines. The
+The texts below are the ballot's § 8 blocks (§ 8.11 from the amendment), byte-exact, each between its two "====" lines. The
 test compares each with the ballot. Where this code and a text differ, the text governs and the
 code is the defect.
 
@@ -116,6 +121,20 @@ A pass is evidence that every string and path the guard selected, in the docs it
 A marker on the line directly before a fence covers that one fence. A marker placed directly after an inline code span covers that one span. The values are generic and consumer; any other value fails. A hunk that only adds or removes a marker on a governance path is EXECUTION (ballot 2026-10-26-governance-examples-guard § 2.3), and the PR body carries one line per marker, marker: <doc> <string> — <reason>; a marker added where a pending entry stood is named as a conversion.
 ==== end § 8.5
 
+==== § 8.11 The attribute and value predicate, version 1 (Lina's text, byte-exact)
+- **A-1: scope.** Fenced blocks tagged `html`, or not tagged, and the JSX of blocks tagged `tsx` or `jsx`. Only elements whose tag name contains a hyphen are read. Inline code spans are out of scope in this version.
+- **A-2: the registered tags.** A tag is DesignerPunk's when a `customElements.define('<tag>', …)` call with a string-literal tag appears in `src/components/**/platforms/web/*.web.ts`. A hyphenated tag in scope that no such call registers fails (a misspelled or retired tag, e.g. `<input-text>`). `<!-- example: consumer -->` skips **only** this check: a consumer's own elements are not DesignerPunk's. A-3 to A-5 still run for every registered tag in the block.
+- **A-3: attributes.** Each attribute on a registered tag must be one of:
+  (a) a string in that element's `observedAttributes` array literal;
+  (b) the argument of a `getAttribute`, `hasAttribute` or `toggleAttribute` call with a string literal, in the same `*.web.ts` file;
+  (c) a global HTML attribute: `id`, `class`, `style`, `slot`, `part`, `hidden`, `title`, `lang`, `dir`, `tabindex`, `role`, `inert`, any `aria-*`, any `data-*`, or any `on[a-z]+` event-handler content attribute.
+  An attribute that matches none fails. The check compares the hyphenated attribute names, never the schema's camelCase prop names: `borderRadius` is Container-Base's prop, and as an attribute it fails, because the element observes `border-radius`.
+- **A-4: enumerated values.** For an attribute that passes A-3 (a) or (b), find the element's schema prop: the prop whose name equals the attribute with hyphens removed, compared case-insensitively (`test-id` → `testID`). If that prop's `type` is a union of quoted string literals (`"'primary' | 'secondary' | 'tertiary'"`) or the prop carries `validation.enum`, the attribute's value must be one of them (`variant="danger"` fails). Boolean props, values containing `${` or `{{`, and attributes with no schema prop are not value-checked.
+- **A-5: CSS self-reference.** In fenced blocks tagged `css`, a declaration whose property is a custom property (`--name`) fails when its value contains `var(--name` for the same name: the declaration redeclares a token as itself (RL-31 (i)).
+- **A-6: the check reads syntax and does not render or run anything.** HTML is read by a tolerant tokenizer, with no DOM. The element sources are read by `ts.createSourceFile`, with no program and no `dist/`. An `observedAttributes` that is not an array literal (a spread, a computed list) is reported as **not read** for that element, counted in the report line, never as a pass. **A twin-agreement test** pins the syntax read to the running elements: for every registered tag whose `observedAttributes` is an array literal, the syntactic list equals the built class's runtime `observedAttributes` (jsdom, after `define`), and the test fails on any difference. For a not-read element, A-3 runs with (a) empty. The report line prints the count, e.g. `not read: 10 of 34`.
+- **A-7: markers and keys.** `<!-- example: generic -->` skips the block entirely. Key: doc, half (`tag`, `attribute`, `value` or `css-self-reference`), the failing string, and its occurrence index in the doc. The line number is informational only. Hits found at adoption go on the pending list, each homed in a record, as § 2.4 does for the existing halves.
+==== end § 8.11
+
 Readings the code makes where a text is silent (each is the owner's to confirm or correct):
   - "exists from the repo root" (L-3) is read as: a tracked file, or a directory holding one
     (`git ls-files`), so a run does not depend on untracked or built files.
@@ -126,6 +145,27 @@ Readings the code makes where a text is silent (each is the owner's to confirm o
   - A marker-shaped comment with a value outside the closed set fails wherever it appears outside
     a fence or a code span. A valid marker that is neither directly before a fence nor directly
     after a code span covers nothing, and is not a failure.
+  Readings for § 8.11 (the attribute half):
+  - A-1/A-6: one tolerant tokenizer reads the html, untagged, tsx and jsx blocks. Only opening
+    and self-closing tags are read; closing tags and <!-- --> comments are not. Tag and attribute
+    names are compared as written, case-sensitive. A JSX `{...}` value is an expression, not a
+    literal value, so A-4 does not check it.
+  - A-2: the define call is `<x>.customElements.define('<tag>', <Class>)` or
+    `customElements.define(...)`. Its class's `observedAttributes` is a static getter whose body
+    is one `return`, or a static property. Either must be an array literal of string literals,
+    or it is not read (A-6).
+  - A-4: "the element's schema" is the one tracked `*.schema.yaml` in the component directory
+    above `platforms/web/`, read for its `properties:` map. A union counts only when every member
+    is quoted.
+  - A-5: "contains `var(--name`" is applied as a substring test, as written. A longer name that
+    begins with the declared one fires too (Token-Family-Shadow L380 and L388 at adoption).
+  - A-7: the failing string is the tag (tag), the attribute name (attribute), the value (value),
+    or the declared custom property (css-self-reference).
+  - Opted out: under `generic`, each read the half would make counts in the doc's opted-out
+    number, and each that would fail counts in K. Under `consumer`, so does each unregistered
+    tag. M still counts marker sites.
+  - The pending header's `entries: <N>` and per-kind counts are the baselines of both adoptions:
+    the first adoption's four, and the attribute half's four from its own adoption.
 */
 
 import { execFileSync } from 'child_process';
@@ -143,6 +183,8 @@ import * as ts from 'typescript';
 export const PREDICATE_VERSION = 1;
 /** Lina's file-shape rule (L-1, L-2, L-3) and the import surface (F-2 (c)), version 1 (§ 8.4). */
 export const FILE_SHAPE_RULE_VERSION = 1;
+/** Lina's attribute and value predicate (A-1 to A-7), version 1 (§ 8.11). */
+export const ATTRIBUTE_PREDICATE_VERSION = 1;
 
 /** The one doc both halves exclude (P-2, Peter: yes). Stated once, here. */
 export const EXCLUDED_DOCS: readonly string[] = ['governance/classification-map.md'];
@@ -176,8 +218,8 @@ export const IMPORT_COMPILER_OPTIONS: ts.CompilerOptions = {
 export const MARKER_VALUES = ['generic', 'consumer'] as const;
 export type MarkerValue = (typeof MARKER_VALUES)[number];
 
-/** The four halves a pending entry may name (§ 8.6's header). */
-export const HALVES = ['token-name', 'declared-path', 'shape', 'import'] as const;
+/** The halves a pending entry may name (§ 8.6's header, with the attribute half's four kinds, § 8.11 A-7). */
+export const HALVES = ['token-name', 'declared-path', 'shape', 'import', 'tag', 'attribute', 'value', 'css-self-reference'] as const;
 export type Half = (typeof HALVES)[number];
 
 /** Thrown when an input cannot be read. The guard never passes empty (Lina R-d, Ada R-4, Stacy C-e). */
@@ -813,6 +855,289 @@ export function typeCheckImports(
 }
 
 // ============================================================================
+// The attribute and value half (§ 8.11, Lina's predicate v1: A-1 to A-7)
+// ============================================================================
+
+/** A-1: the fence tags whose HTML is read ('' is an untagged fence), and those whose JSX is read. */
+export const HTML_FENCE_TAGS: readonly string[] = ['html', ''];
+export const JSX_FENCE_TAGS: readonly string[] = ['tsx', 'jsx'];
+/** A-5: the fence tag whose declarations are read. */
+export const CSS_FENCE_TAGS: readonly string[] = ['css'];
+/** A-3 (c): the global HTML attributes, plus any aria-*, data-* or on[a-z]+ (GLOBAL_ATTRIBUTE_RE). */
+export const GLOBAL_ATTRIBUTES: readonly string[] = [
+  'id', 'class', 'style', 'slot', 'part', 'hidden', 'title', 'lang', 'dir', 'tabindex', 'role', 'inert',
+];
+export const GLOBAL_ATTRIBUTE_RE = /^(?:aria-.+|data-.+|on[a-z]+)$/;
+/** A-2: the element sources. */
+export const WEB_SOURCE_RE = /^src\/components\/(?:.+\/)?platforms\/web\/[^/]+\.web\.ts$/;
+/** A-3 (b): the attribute-reading calls whose string-literal argument counts. */
+export const ATTRIBUTE_READ_CALLS: readonly string[] = ['getAttribute', 'hasAttribute', 'toggleAttribute'];
+
+export interface SchemaProp {
+  /** A-4: the enumerated values, or undefined when the prop is not value-checked. */
+  values?: string[];
+}
+
+export interface ElementInfo {
+  tag: string;
+  file: string;
+  /** A-3 (a): the `observedAttributes` array literal, or undefined when it is not read (A-6). */
+  observed?: string[];
+  /** A-3 (b): string-literal arguments of getAttribute, hasAttribute and toggleAttribute in the file. */
+  reads: Set<string>;
+  /** A-4: the schema's props, keyed by the name lowercased. Empty when the element has no schema. */
+  props: Map<string, SchemaProp>;
+}
+
+function unwrapArray(e: ts.Expression): ts.Expression {
+  return unwrap(e);
+}
+
+/** The string list of an array literal of string literals, or undefined (a spread, a constant, a computed element). */
+function stringArrayLiteral(e: ts.Expression | undefined): string[] | undefined {
+  if (!e) return undefined;
+  const x = unwrapArray(e);
+  if (!ts.isArrayLiteralExpression(x)) return undefined;
+  const out: string[] = [];
+  for (const el of x.elements) {
+    if (ts.isStringLiteral(el) || ts.isNoSubstitutionTemplateLiteral(el)) out.push(el.text);
+    else return undefined;
+  }
+  return out;
+}
+
+/** A class's `observedAttributes`: a static getter's single returned expression, or a static property's initializer. */
+function observedOf(cls: ts.ClassLikeDeclaration): string[] | undefined {
+  for (const m of cls.members) {
+    const isStatic = (ts.getModifiers(m as ts.HasModifiers) ?? []).some((k) => k.kind === ts.SyntaxKind.StaticKeyword);
+    if (!isStatic || !m.name || !ts.isIdentifier(m.name) || m.name.text !== 'observedAttributes') continue;
+    if (ts.isGetAccessorDeclaration(m)) {
+      const body = m.body?.statements ?? ts.factory.createNodeArray<ts.Statement>();
+      const ret = body.filter(ts.isReturnStatement);
+      if (body.length !== 1 || ret.length !== 1) return undefined;
+      return stringArrayLiteral(ret[0].expression);
+    }
+    if (ts.isPropertyDeclaration(m)) return stringArrayLiteral(m.initializer);
+    return undefined;
+  }
+  return undefined;
+}
+
+/**
+ * One element source, read by syntax only (A-6): `ts.createSourceFile`, no program, no `dist/`.
+ * Returns each `customElements.define('<tag>', <Class>)` call's tag, with the class's
+ * `observedAttributes` (undefined when not an array literal) and the file's attribute reads.
+ */
+export function readElementSource(source: string, file: string): Omit<ElementInfo, 'props'>[] {
+  const sf = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const classes = new Map<string, ts.ClassLikeDeclaration>();
+  const defines: { tag: string; cls?: string }[] = [];
+  const reads = new Set<string>();
+  const visit = (n: ts.Node): void => {
+    if (ts.isClassDeclaration(n) && n.name) classes.set(n.name.text, n);
+    if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression)) {
+      const name = n.expression.name.text;
+      const obj = n.expression.expression;
+      const arg = n.arguments[0];
+      if (name === 'define' && /(?:^|\.)customElements$/.test(obj.getText(sf)) && arg && ts.isStringLiteral(arg)) {
+        const second = n.arguments[1];
+        defines.push({ tag: arg.text, cls: second && ts.isIdentifier(second) ? second.text : undefined });
+      }
+      if (ATTRIBUTE_READ_CALLS.includes(name) && arg && (ts.isStringLiteral(arg) || ts.isNoSubstitutionTemplateLiteral(arg))) {
+        reads.add(arg.text);
+      }
+    }
+    ts.forEachChild(n, visit);
+  };
+  visit(sf);
+  return defines.map((d) => {
+    const cls = d.cls ? classes.get(d.cls) : undefined;
+    return { tag: d.tag, file, observed: cls ? observedOf(cls) : undefined, reads };
+  });
+}
+
+/** A-4: a prop's enumerated values: a type that is a union of quoted string literals, or `validation.enum`. */
+export function enumeratedValues(prop: unknown): string[] | undefined {
+  if (!prop || typeof prop !== 'object') return undefined;
+  const p = prop as { type?: unknown; validation?: { enum?: unknown } };
+  const en = p.validation && typeof p.validation === 'object' ? p.validation.enum : undefined;
+  if (Array.isArray(en) && en.length > 0 && en.every((v) => typeof v === 'string')) return en as string[];
+  if (typeof p.type === 'string' && /^\s*'[^']*'(?:\s*\|\s*'[^']*')*\s*$/.test(p.type)) {
+    return [...p.type.matchAll(/'([^']*)'/g)].map((m) => m[1]);
+  }
+  return undefined;
+}
+
+/** The schema beside an element source: the one tracked `*.schema.yaml` in the component directory above `platforms/web/`. */
+function schemaProps(repoRoot: string, file: string, tracked: readonly string[]): Map<string, SchemaProp> {
+  const props = new Map<string, SchemaProp>();
+  const dir = file.replace(/\/platforms\/web\/[^/]+$/, '');
+  const schemas = tracked.filter((t) => t.startsWith(dir + '/') && /^[^/]+\.schema\.yaml$/.test(t.slice(dir.length + 1)));
+  if (schemas.length !== 1) return props;
+  const doc = yaml.load(fs.readFileSync(path.join(repoRoot, schemas[0]), 'utf8')) as { properties?: Record<string, unknown> } | null;
+  const ps = doc && typeof doc === 'object' && doc.properties && typeof doc.properties === 'object' ? doc.properties : {};
+  for (const [name, p] of Object.entries(ps)) props.set(name.toLowerCase(), { values: enumeratedValues(p) });
+  return props;
+}
+
+/** A-2: the registered tags, each with its A-3 and A-4 inputs. Throws if no element source registers a tag. */
+export function loadElements(repoRoot: string, tracked: readonly string[]): Map<string, ElementInfo> {
+  const out = new Map<string, ElementInfo>();
+  const sources = tracked.filter((t) => WEB_SOURCE_RE.test(t)).sort();
+  if (sources.length === 0) throw new GuardInputError('no src/components/**/platforms/web/*.web.ts source is tracked');
+  for (const file of sources) {
+    const full = path.join(repoRoot, file);
+    if (!fs.existsSync(full)) throw new GuardInputError(`element source missing: ${file}`);
+    const props = schemaProps(repoRoot, file, tracked);
+    for (const e of readElementSource(fs.readFileSync(full, 'utf8'), file)) out.set(e.tag, { ...e, props });
+  }
+  if (out.size === 0) throw new GuardInputError('no element source registers a tag with customElements.define');
+  return out;
+}
+
+export interface TagRead {
+  tag: string;
+  line: number;
+  attrs: { name: string; value?: string; expression: boolean; line: number }[];
+}
+
+const TAG_OPEN_RE = /<([A-Za-z][A-Za-z0-9]*(?:-[A-Za-z0-9]*)+)(?=[\s/>]|$)/g;
+
+/**
+ * A-6's tolerant tokenizer: every opening or self-closing tag whose name holds a hyphen, with its
+ * attributes. No DOM. Comments are skipped; closing tags are not read. A `{...}` value is an
+ * expression (JSX), never a literal value.
+ */
+export function readTags(lines: FenceLine[]): TagRead[] {
+  const text = lines.map((l) => l.text).join('\n');
+  const starts: number[] = [];
+  let acc = 0;
+  for (const l of lines) {
+    starts.push(acc);
+    acc += l.text.length + 1;
+  }
+  const lineAt = (off: number): number => {
+    let idx = 0;
+    for (let s = 0; s < starts.length; s++) if (off >= starts[s]) idx = s;
+    return lines[idx]?.n ?? 0;
+  };
+  const comments: [number, number][] = [];
+  for (const m of text.matchAll(/<!--[\s\S]*?(?:-->|$)/g)) comments.push([m.index ?? 0, (m.index ?? 0) + m[0].length]);
+  const inComment = (off: number): boolean => comments.some(([a, b]) => off >= a && off < b);
+  const out: TagRead[] = [];
+  TAG_OPEN_RE.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = TAG_OPEN_RE.exec(text)) !== null) {
+    if (inComment(m.index)) continue;
+    const t: TagRead = { tag: m[1], line: lineAt(m.index), attrs: [] };
+    let i = m.index + m[0].length;
+    for (;;) {
+      while (i < text.length && /\s/.test(text[i])) i++;
+      if (i >= text.length || text[i] === '>' || text[i] === '<') break;
+      if (text[i] === '/' && text[i + 1] === '>') break;
+      if (text[i] === '/') {
+        i++;
+        continue;
+      }
+      if (text[i] === '{') {
+        // A JSX spread or comment: skip the balanced braces.
+        let depth = 0;
+        for (; i < text.length; i++) {
+          if (text[i] === '{') depth++;
+          else if (text[i] === '}' && --depth === 0) {
+            i++;
+            break;
+          }
+        }
+        continue;
+      }
+      const nm = /^[^\s"'>/={}<]+/.exec(text.slice(i));
+      if (!nm) {
+        i++;
+        continue;
+      }
+      const at = i;
+      i += nm[0].length;
+      let j = i;
+      while (j < text.length && /[ \t]/.test(text[j])) j++;
+      let value: string | undefined;
+      let expression = false;
+      if (text[j] === '=') {
+        j++;
+        while (j < text.length && /[ \t]/.test(text[j])) j++;
+        const q = text[j];
+        if (q === '"' || q === "'") {
+          const end = text.indexOf(q, j + 1);
+          value = end < 0 ? text.slice(j + 1) : text.slice(j + 1, end);
+          i = end < 0 ? text.length : end + 1;
+        } else if (q === '{') {
+          expression = true;
+          let depth = 0;
+          let k = j;
+          for (; k < text.length; k++) {
+            if (text[k] === '{') depth++;
+            else if (text[k] === '}' && --depth === 0) {
+              k++;
+              break;
+            }
+          }
+          value = text.slice(j, k);
+          i = k;
+        } else {
+          const uq = /^[^\s>]+/.exec(text.slice(j));
+          value = uq ? uq[0] : '';
+          i = j + value.length;
+        }
+      }
+      t.attrs.push({ name: nm[0], value, expression, line: lineAt(at) });
+    }
+    out.push(t);
+  }
+  return out;
+}
+
+/** A-3: whether an attribute passes, and by which clause. */
+export function attributeClause(name: string, el: ElementInfo): 'a' | 'b' | 'c' | undefined {
+  if ((el.observed ?? []).includes(name)) return 'a';
+  if (el.reads.has(name)) return 'b';
+  if (GLOBAL_ATTRIBUTES.includes(name) || GLOBAL_ATTRIBUTE_RE.test(name)) return 'c';
+  return undefined;
+}
+
+/** A-4: the enumerated values an attribute's value must be one of, or undefined when it is not value-checked. */
+export function valueCheck(attr: { name: string; value?: string; expression: boolean }, el: ElementInfo): string[] | undefined {
+  if (attr.value === undefined || attr.expression) return undefined;
+  if (attr.value.includes('${') || attr.value.includes('{{')) return undefined;
+  const prop = el.props.get(attr.name.replace(/-/g, '').toLowerCase());
+  return prop?.values;
+}
+
+export interface CssDecl {
+  property: string;
+  value: string;
+  line: number;
+}
+
+/** A-5's reading: every custom-property declaration (`--name: value`) in a css block. */
+export function cssDeclarations(lines: FenceLine[]): CssDecl[] {
+  const out: CssDecl[] = [];
+  for (const l of lines) {
+    for (const m of l.text.matchAll(/(?<![A-Za-z0-9_-])(--[A-Za-z0-9_-]+)\s*:\s*([^;{}]*)/g)) {
+      out.push({ property: m[1], value: m[2], line: l.n });
+    }
+  }
+  return out;
+}
+
+/**
+ * A-5, as the text reads: the value contains `var(--name` for the declared name. The text is a
+ * substring test, so a longer name that begins with the declared one (`var(--name-x)`) fires too.
+ */
+export function isSelfReference(d: CssDecl): boolean {
+  return d.value.includes('var(' + d.property);
+}
+
+// ============================================================================
 // One run
 // ============================================================================
 
@@ -841,6 +1166,21 @@ export interface RunResult {
   shapesPass: number;
   importLines: number;
   importLinesPass: number;
+  /** A-2: hyphenated tags read, and those registered. */
+  tags: number;
+  tagsRegistered: number;
+  /** A-3: attributes read on registered tags, and those that pass. */
+  attributes: number;
+  attributesPass: number;
+  /** A-4: enumerated values checked, and those that pass. */
+  values: number;
+  valuesPass: number;
+  /** A-5: custom-property declarations read, and the self-references among them. */
+  cssDeclarations: number;
+  cssSelfReferences: number;
+  /** A-6: registered elements whose `observedAttributes` is not read, and all registered elements. */
+  elementsNotRead: number;
+  elements: number;
   optedOut: number;
   optedOutGeneric: number;
   optedOutConsumer: number;
@@ -858,23 +1198,27 @@ export interface GuardInputs {
   tracked: string[];
   nameSet: NameSet;
   exportsMap: Record<string, unknown>;
+  /** A-2: the registered tags (§ 8.11). */
+  elements: Map<string, ElementInfo>;
 }
 
 /** Read every input from the repo; throws if any cannot be read. */
 export function readInputs(repoRoot: string): GuardInputs {
   const exportsMap = loadExportsMap(repoRoot);
   assertBuiltTypes(repoRoot, exportsMap);
+  const tracked = trackedFiles(repoRoot);
   return {
     repoRoot,
     docs: scopeDocs(repoRoot),
-    tracked: trackedFiles(repoRoot),
+    tracked,
     nameSet: loadNameSet(path.join(repoRoot, 'token-index')),
     exportsMap,
+    elements: loadElements(repoRoot, tracked),
   };
 }
 
 export function runGuard(inputs: GuardInputs): RunResult {
-  const { repoRoot, docs, tracked, nameSet, exportsMap } = inputs;
+  const { repoRoot, docs, tracked, nameSet, exportsMap, elements } = inputs;
   if (docs.length === 0) throw new GuardInputError('the scope holds no docs');
   const pattern = candidatePattern(nameSet);
   const r: RunResult = {
@@ -888,6 +1232,16 @@ export function runGuard(inputs: GuardInputs): RunResult {
     shapesPass: 0,
     importLines: 0,
     importLinesPass: 0,
+    tags: 0,
+    tagsRegistered: 0,
+    attributes: 0,
+    attributesPass: 0,
+    values: 0,
+    valuesPass: 0,
+    cssDeclarations: 0,
+    cssSelfReferences: 0,
+    elementsNotRead: [...elements.values()].filter((e) => e.observed === undefined).length,
+    elements: elements.size,
     optedOut: 0,
     optedOutGeneric: 0,
     optedOutConsumer: 0,
@@ -983,6 +1337,76 @@ export function runGuard(inputs: GuardInputs): RunResult {
       // Import surface.
       const lines = extractImportLines(f);
       if (lines.length > 0) importBlocks.push({ key: `${doc}#${fi}`, doc, lines, generic });
+      // The attribute and value half (§ 8.11). Under generic every read is opted out (A-7);
+      // under consumer only A-2's reads of unregistered tags are (A-2).
+      const optOut = (failing: boolean): void => {
+        dc.optedOut++;
+        if (failing) r.wouldFail++;
+      };
+      const hit = (half: Half, string: string, line: number): void => {
+        raw.push({ doc, half, string, line });
+        dc.failing++;
+      };
+      if (HTML_FENCE_TAGS.includes(f.lang) || JSX_FENCE_TAGS.includes(f.lang)) {
+        for (const t of readTags(f.lines)) {
+          const el = elements.get(t.tag);
+          if (generic) {
+            optOut(!el);
+            if (el) {
+              for (const a of t.attrs) {
+                const clause = attributeClause(a.name, el);
+                optOut(!clause);
+                const vals = clause === 'a' || clause === 'b' ? valueCheck(a, el) : undefined;
+                if (vals) optOut(!vals.includes(a.value as string));
+              }
+            }
+            continue;
+          }
+          if (!el) {
+            if (consumer) optOut(true);
+            else {
+              r.tags++;
+              dc.candidates++;
+              hit('tag', t.tag, t.line);
+            }
+            continue;
+          }
+          r.tags++;
+          r.tagsRegistered++;
+          dc.candidates++;
+          for (const a of t.attrs) {
+            r.attributes++;
+            dc.candidates++;
+            const clause = attributeClause(a.name, el);
+            if (!clause) {
+              hit('attribute', a.name, a.line);
+              continue;
+            }
+            r.attributesPass++;
+            const vals = clause === 'a' || clause === 'b' ? valueCheck(a, el) : undefined;
+            if (!vals) continue;
+            r.values++;
+            dc.candidates++;
+            if (vals.includes(a.value as string)) r.valuesPass++;
+            else hit('value', a.value as string, a.line);
+          }
+        }
+      }
+      if (CSS_FENCE_TAGS.includes(f.lang)) {
+        for (const d of cssDeclarations(f.lines)) {
+          const self = isSelfReference(d);
+          if (generic) {
+            optOut(self);
+            continue;
+          }
+          r.cssDeclarations++;
+          dc.candidates++;
+          if (self) {
+            r.cssSelfReferences++;
+            hit('css-self-reference', d.property, d.line);
+          }
+        }
+      }
     });
   }
 
@@ -1045,12 +1469,15 @@ export interface PendingFile {
 export interface Baseline {
   sha: string;
   date: string;
+  /** The attribute half's adoption (§ 8.11). */
+  attributeSha: string;
+  attributeDate: string;
   entries: number;
   perHalf: Record<Half, number>;
 }
 
 export const HEADER_RE =
-  /^adopted: ([0-9a-f]{7,40}) (\d{4}-\d{2}-\d{2}); entries: (\d+) \(token-name (\d+), declared-path (\d+), shape (\d+), import (\d+)\)$/;
+  /^adopted: ([0-9a-f]{7,40}) (\d{4}-\d{2}-\d{2}); attribute half adopted: ([0-9a-f]{7,40}) (\d{4}-\d{2}-\d{2}); entries: (\d+) \(token-name (\d+), declared-path (\d+), shape (\d+), import (\d+), tag (\d+), attribute (\d+), value (\d+), css-self-reference (\d+)\)$/;
 
 export function parseHeader(header: string): Baseline {
   const m = HEADER_RE.exec(header);
@@ -1058,14 +1485,29 @@ export function parseHeader(header: string): Baseline {
   return {
     sha: m[1],
     date: m[2],
-    entries: Number(m[3]),
-    perHalf: { 'token-name': Number(m[4]), 'declared-path': Number(m[5]), shape: Number(m[6]), import: Number(m[7]) },
+    attributeSha: m[3],
+    attributeDate: m[4],
+    entries: Number(m[5]),
+    perHalf: {
+      'token-name': Number(m[6]),
+      'declared-path': Number(m[7]),
+      shape: Number(m[8]),
+      import: Number(m[9]),
+      tag: Number(m[10]),
+      attribute: Number(m[11]),
+      value: Number(m[12]),
+      'css-self-reference': Number(m[13]),
+    },
   };
 }
 
-export function formatHeader(sha: string, date: string, entries: { half: Half }[]): string {
-  const c = (h: Half): number => entries.filter((e) => e.half === h).length;
-  return `adopted: ${sha} ${date}; entries: ${entries.length} (token-name ${c('token-name')}, declared-path ${c('declared-path')}, shape ${c('shape')}, import ${c('import')})`;
+export function formatHeader(b: Baseline): string {
+  const c = b.perHalf;
+  return (
+    `adopted: ${b.sha} ${b.date}; attribute half adopted: ${b.attributeSha} ${b.attributeDate}; entries: ${b.entries} ` +
+    `(token-name ${c['token-name']}, declared-path ${c['declared-path']}, shape ${c.shape}, import ${c.import}, ` +
+    `tag ${c.tag}, attribute ${c.attribute}, value ${c.value}, css-self-reference ${c['css-self-reference']})`
+  );
 }
 
 export const PENDING_PATH = 'scripts/governance-examples/pending.json';
@@ -1122,6 +1564,9 @@ export function formatReport(r: RunResult, pendingCount: number): string {
     `${r.resolved.namespace} namespace, ${r.resolved['dtcg-path']} dtcg-path, ${r.resolved.glob} glob); ` +
     `${r.fileNames} file names; ${r.declaredPaths} declared paths (${r.declaredPathsResolve} resolve); ` +
     `${r.shapes} token-file shapes (${r.shapesPass} pass); ${r.importLines} import lines (${r.importLinesPass} type-check); ` +
+    `${r.tags} tags (${r.tagsRegistered} registered); ${r.attributes} attributes (${r.attributesPass} pass); ` +
+    `${r.values} enumerated values (${r.valuesPass} pass); ${r.cssSelfReferences} css self-references; ` +
+    `not read: ${r.elementsNotRead} of ${r.elements}; ` +
     `${r.optedOut} opted out (${r.optedOutGeneric} generic, ${r.optedOutConsumer} consumer; ${r.wouldFail} would fail if read); ` +
     `${pendingCount} pending`
   );
@@ -1133,7 +1578,7 @@ export function formatCensus(r: RunResult): string[] {
     .map(([doc, c]) => `${doc}\t${c.candidates}:${c.failing}:${c.optedOut}`);
   const selected = r.candidates + r.declaredPaths + r.shapes + r.importLines;
   lines.push(
-    `selected: ${selected} (${r.candidates} token-name candidates, ${r.declaredPaths} declared paths, ${r.shapes} token-file shapes, ${r.importLines} import lines) over ${r.docs} docs; predicate v${PREDICATE_VERSION}, file-shape rule v${FILE_SHAPE_RULE_VERSION}`,
+    `selected: ${selected} (${r.candidates} token-name candidates, ${r.declaredPaths} declared paths, ${r.shapes} token-file shapes, ${r.importLines} import lines) over ${r.docs} docs; predicate v${PREDICATE_VERSION}, file-shape rule v${FILE_SHAPE_RULE_VERSION}, attribute predicate v${ATTRIBUTE_PREDICATE_VERSION}`,
   );
   return lines;
 }

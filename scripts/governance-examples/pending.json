@@ -1,4 +1,53 @@
 {
-  "header": "adopted: bdbe72a32 2026-10-26; entries: 69 (token-name 56, declared-path 9, shape 2, import 2)",
-  "entries": []
+  "header": "adopted: bdbe72a32 2026-10-26; attribute half adopted: 5642cffe3 2026-11-09; entries: 75 (token-name 56, declared-path 9, shape 2, import 2, tag 3, attribute 1, value 0, css-self-reference 2)",
+  "entries": [
+    {
+      "doc": ".kiro/steering/start-up-tasks.md",
+      "half": "tag",
+      "string": "test-file-path",
+      "occurrence": 0,
+      "line": 98,
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+    },
+    {
+      "doc": "governance/Component-Family-Badge.md",
+      "half": "tag",
+      "string": "list-item",
+      "occurrence": 0,
+      "line": 403,
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+    },
+    {
+      "doc": "governance/Component-Family-Badge.md",
+      "half": "tag",
+      "string": "card-header",
+      "occurrence": 0,
+      "line": 412,
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+    },
+    {
+      "doc": "governance/Component-Family-Form-Inputs.md",
+      "half": "attribute",
+      "string": "autocomplete",
+      "occurrence": 0,
+      "line": 1098,
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Shadow.md",
+      "half": "css-self-reference",
+      "string": "--shadow-container",
+      "occurrence": 0,
+      "line": 380,
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Shadow.md",
+      "half": "css-self-reference",
+      "string": "--shadow-fab",
+      "occurrence": 0,
+      "line": 388,
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+    }
+  ]
 }
