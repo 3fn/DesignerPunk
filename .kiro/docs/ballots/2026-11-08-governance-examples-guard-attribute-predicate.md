@@ -40,7 +40,7 @@ The build PR's census replaces these numbers (§ 5).
 
 **Site 1b.** The module header of `scripts/governance-examples/check.ts` carries the same block between its own `====` lines, as § 8.1–§ 8.4 are carried, and the test compares it with the ballot byte for byte.
 
-The block (from `.kiro/issues/2026-10-26-examples-guard-attribute-predicate.md` § "The predicate text", byte-exact):
+The block (from `.kiro/issues/2026-10-26-examples-guard-attribute-predicate.md` § "The predicate text", byte-exact, as amended by Lina at R1 in A-6, § 6 [LINA R1]; the record's copy is hers to update):
 
 ````
 - **A-1: scope.** Fenced blocks tagged `html`, or not tagged, and the JSX of blocks tagged `tsx` or `jsx`. Only elements whose tag name contains a hyphen are read. Inline code spans are out of scope in this version.
@@ -52,7 +52,7 @@ The block (from `.kiro/issues/2026-10-26-examples-guard-attribute-predicate.md` 
   An attribute that matches none fails. The check compares the hyphenated attribute names, never the schema's camelCase prop names: `borderRadius` is Container-Base's prop, and as an attribute it fails, because the element observes `border-radius`.
 - **A-4: enumerated values.** For an attribute that passes A-3 (a) or (b), find the element's schema prop: the prop whose name equals the attribute with hyphens removed, compared case-insensitively (`test-id` → `testID`). If that prop's `type` is a union of quoted string literals (`"'primary' | 'secondary' | 'tertiary'"`) or the prop carries `validation.enum`, the attribute's value must be one of them (`variant="danger"` fails). Boolean props, values containing `${` or `{{`, and attributes with no schema prop are not value-checked.
 - **A-5: CSS self-reference.** In fenced blocks tagged `css`, a declaration whose property is a custom property (`--name`) fails when its value contains `var(--name` for the same name: the declaration redeclares a token as itself (RL-31 (i)).
-- **A-6: the check reads syntax and does not render or run anything.** HTML is read by a tolerant tokenizer, with no DOM. The element sources are read by `ts.createSourceFile`, with no program and no `dist/`. An `observedAttributes` that is not an array literal (a spread, a computed list) is reported as **not read** for that element, counted in the report line, never as a pass. **A twin-agreement test** pins the syntax read to the running elements: for every registered tag, the syntactic `observedAttributes` equals the built class's runtime `observedAttributes` (jsdom, after `define`), and the test fails on any difference.
+- **A-6: the check reads syntax and does not render or run anything.** HTML is read by a tolerant tokenizer, with no DOM. The element sources are read by `ts.createSourceFile`, with no program and no `dist/`. An `observedAttributes` that is not an array literal (a spread, a computed list) is reported as **not read** for that element, counted in the report line, never as a pass. **A twin-agreement test** pins the syntax read to the running elements: for every registered tag whose `observedAttributes` is an array literal, the syntactic list equals the built class's runtime `observedAttributes` (jsdom, after `define`), and the test fails on any difference. For a not-read element, A-3 runs with (a) empty. The report line prints the count, e.g. `not read: 10 of 34`.
 - **A-7: markers and keys.** `<!-- example: generic -->` skips the block entirely. Key: doc, half (`tag`, `attribute`, `value` or `css-self-reference`), the failing string, and its occurrence index in the doc. The line number is informational only. Hits found at adoption go on the pending list, each homed in a record, as § 2.4 does for the existing halves.
 ````
 
@@ -65,9 +65,10 @@ The block (from `.kiro/issues/2026-10-26-examples-guard-attribute-predicate.md` 
 The new half's counts join the line, and its kinds join the header. Nothing is removed.
 
 - Report line. **Before**: `<N> candidates; <R> resolve (<k> key, <c> channel, <n> namespace, <d> dtcg-path, <g> glob); <f> file names; <dp> declared paths (<dpr> resolve); <s> token-file shapes (<sr> pass); <i> import lines (<ir> type-check); <M> opted out (<gn> generic, <cn> consumer; <K> would fail if read); <P> pending`
-- **After**: `<N> candidates; <R> resolve (<k> key, <c> channel, <n> namespace, <d> dtcg-path, <g> glob); <f> file names; <dp> declared paths (<dpr> resolve); <s> token-file shapes (<sr> pass); <i> import lines (<ir> type-check); <t> tags (<tr> registered); <a> attributes (<ar> pass); <v> enumerated values (<vr> pass); <cs> css self-references; <nr> elements not read; <M> opted out (<gn> generic, <cn> consumer; <K> would fail if read); <P> pending`
+- **After**: `<N> candidates; <R> resolve (<k> key, <c> channel, <n> namespace, <d> dtcg-path, <g> glob); <f> file names; <dp> declared paths (<dpr> resolve); <s> token-file shapes (<sr> pass); <i> import lines (<ir> type-check); <t> tags (<tr> registered); <a> attributes (<ar> pass); <v> enumerated values (<vr> pass); <cs> css self-references; not read: <nr> of <tt>; <M> opted out (<gn> generic, <cn> consumer; <K> would fail if read); <P> pending`
 - Pending header. **Before**: `adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>)`
-- **After**: `adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>, tag <e>, attribute <f>, value <g>, css-self-reference <h>)`
+- **After**: `adopted: <sha> <date>; attribute half adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>, tag <e>, attribute <f>, value <g>, css-self-reference <h>)`
+- `--census`'s last line gains the new half's version: `…; predicate v1, file-shape rule v1, attribute predicate v1`.
 
 ### Item 3 — the register row `governance-examples`
 
@@ -86,8 +87,8 @@ Ballot `2026-10-26-governance-examples-guard-adoption` § 2 bars any addition to
    - the half in `check.ts`, with its module-header block byte-exact (site 1b);
    - the report line and pending header (item 2);
    - fixtures, one red per rule A-2 to A-5 and one for A-6's not-read case;
-   - **Lina's twin-agreement test** (A-6: syntactic `observedAttributes` equals the built class's runtime list under jsdom, for every registered tag);
-   - `pending.json`'s adoption entries, each homed (item 4);
+   - **Lina's twin-agreement test** (A-6: syntactic `observedAttributes` equals the built class's runtime list under jsdom, for every registered tag whose `observedAttributes` is an array literal);
+   - `pending.json`'s adoption entries, each homed (item 4). The PR body names this ballot, lists every entry added (doc, half, string, occurrence, home), and gives the header before → after. That is what Stacy's `pending.json` ARMING read checks against the diff.
    - the register row (item 3, a governance path, so Peter merges).
 
    **Site 1a** (the guard ballot's new § 2.7 and § 8.11) lands in the same PR.
@@ -111,10 +112,12 @@ Ballot `2026-10-26-governance-examples-guard-adoption` § 2 bars any addition to
 - Lina's A-6 already pins the syntax read with a twin-agreement test against the built classes, and makes an unreadable `observedAttributes` a counted *not read*, never a pass.
 - A-7's keys are content-addressed (doc, half, string, occurrence), so line moves do not churn the pending list.
 - Item 4 limits the pending additions to this one adoption act.
+- Stacy's replay corrects the counter-argument's size: 156 is tags read, not hits (residual 1).
 
 **What survives.**
-1. **The pending list will be large at adoption.** Its size is unknown until the build PR's census, and the heuristic says up to 156 tags across 9 docs. The guard is honest about the size, but every hit is owed a fix by its doc's owner, and that cost lands on Lina and the docs' owners after the release.
+1. **The share not read, not the size of the list.** Stacy's replay ([STACY R1] § 2) projects about 5 adoption hits in 3 docs. 156 is the number of tags read, not the number that fail. What survives is that 10 of the 34 registered elements return `observedAttributes` as a constant or a spread. A-6 reports them as not read, so their attributes are checked only through A-3 (b) and (c).
 2. **A-3's limit is real.** An element that reads an attribute through `dataset` or a generic `attributeChangedCallback` loop fails a valid example. That is the safe direction, cleared by a marker or by naming the attribute in `observedAttributes`, but it is a false red until cleared.
+3. **What A-1 does not read.** PascalCase JSX and inline code stay out of scope. `governance/Token-Family-Radius.md` L351–359 writes `borderRadius` as an attribute on `<Card>`, `<Button>` and `<Avatar>`, which is RL-35 (B)'s shape, and this version does not read them.
 
 **Forks**: none surfaced. Inline code spans are out of scope in this version (A-1); that is Lina's call in her text, not a fork.
 
@@ -122,13 +125,163 @@ Ballot `2026-10-26-governance-examples-guard-adoption` § 2 bars any addition to
 
 The guard's code is the instrument the amendment changes, and its module header is the law this ballot amends, so the item is presumptively in scope (conditions 2 and 3).
 
-- `**Census**: npx tsx scripts/governance-examples/check.ts --census over governance/*.md and the eight packaged steering docs @ 5386f93ba — current c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd → proposed: not computed (no scratch diff at draft; the half is the build PR's); <N> docs change, PROJECTED: up to 9, from the heuristic in § 1 (delta: § Census appendix)`. This departs from the README form the same way the shape-review ballot's census line did (Stacy accepted that precedent there). The build PR runs the scratch diff and the shipped code at its own base, and their digests must be equal (README "Re-runs").
+- `**Census**: npx tsx scripts/governance-examples/check.ts --census over governance/*.md and the eight packaged steering docs @ 5386f93ba — current c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd → proposed: not computed (no scratch diff at draft; the half is the build PR's); <N> docs change, PROJECTED: 3, from Stacy's heuristic replay ([STACY R1] § 2; [THURGOOD R2] item 4 asks about a fourth) (delta: § Census appendix)`. This departs from the README form: the proposed digest is not computed at draft, and the count below is a heuristic, not a census. The shape-review ballot's PROJECTED line held by construction, and this one does not. So the ruling is on the projection, and the build PR's body carries the census in its first form at its own base: the current digest, the proposed digest, the docs that change, and the hits per half (`tag`, `attribute`, `value`, `css-self-reference`) with the elements not read. Stacy's ARMING read compares those hits with the projection here. A difference is a finding routed to Peter. PROJECTED hits (Stacy's heuristic replay at `5386f93ba`, [STACY R1] § 2): tag 2, attribute 1, value 0, css-self-reference 2, in 3 docs; 10 of 34 elements not read.
 - `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts) — no site adds, renames or removes a get_section or get_document_* citation`
 - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts) — governance/ is an ordinary closure input; the lock is refreshed at the build PR`
 
 ## 6. Review round record
 
-*(empty at R0)*
+#### [STACY R1] — required reviewer, census reader and ARMING reader, on the attribute-predicate amendment
+
+**Read at** `733cbff6e` (`origin/chore/ballot-examples-guard-attribute-predicate`), against `main` = `5386f93ba`. That is the ballot's own census base: `git diff --stat 5386f93ba origin/main -- governance src/components scripts/governance-examples` is empty. Date: 2026-11-08. This was a read-only review: I committed nothing.
+
+**Verdict: CHANGES.** There are five pairs on Thurgood's text, in § 3 below. Two questions go to Lina on her own text, in § 4, and I propose no wording for them. The measure itself is sound. My objections are to the census line, the residual's arithmetic, and what the build PR must carry for my reads.
+
+---
+
+### 1. Does the build fire my ARMING read? Yes, at the build PR's merge, with four reads
+
+- **The instrument-path limb.** `scripts/governance-examples/**` is on my list. I owe its three reads:
+  - deletions `0` in `scripts/governance-examples/__tests__/*.test.ts` and under `__tests__/__fixtures__/**`, unless the body names the file and this ballot;
+  - the body cites the fixture test run, which is every A-2 to A-5 fixture red and then green, the A-6 not-read fixture, and the twin-agreement test;
+  - `EXPECTED_CONTEXTS` is unchanged.
+- **The `pending.json` read**, my row's fourth read, which item 4 triggers.
+  - The header changes, and entries are added.
+  - Both are findings unless the PR body:
+    - names this ballot, RATIFIED at the merge;
+    - lists every added entry;
+    - gives the header before → after;
+    - and the list equals the entries the diff adds.
+  - § 3 does not require that body list today (pair P3).
+- **The census-digest read.** It cannot be performed as the ballot stands. There is no ballot scratch diff, so "the ballot's scratch diff and the shipped code, each run at the PR's own base" compares the build with itself (pair P1).
+- **Not fired**:
+  - the Status commit;
+  - P1, P1b and P1c (the in-lane registry entry is unchanged, as § 3 step 3 says);
+  - the required-check set, because the guard is already armed.
+- **Next RELEASE phase 1** (the record's `release:16.3.0:phase-1`): my governance-examples read compares P at S with the header's counts, and reads the predicate and rule versions that `--census` prints. Both need the new half to be visible (pairs P4 and P5).
+
+### 2. The false-fire and false-miss arithmetic, against `5386f93ba`
+
+**My heuristic replay, labelled heuristic.** It is my regex scan, not the census:
+- **Scope**: the guard's own scope, which is `governance/*.md` except `EXCLUDED_DOCS` (`classification-map.md`), plus the eight `files[]` steering docs.
+- **Registered tags**: 34, from literal `customElements.define` calls.
+
+| Rule | Read | Projected hits |
+|---|---|---|
+| A-1/A-2 | 157 hyphenated-tag occurrences, 24 distinct, in 10 docs | **2**: `<list-item>` and `<card-header>` in `Component-Family-Badge.md` (L403 and L412). Neither tag is registered, and neither block carries a marker. A third, `<entry-id>` in an untagged fence, is in `classification-map.md`, which is excluded. |
+| A-3 | 396 attributes on registered tags | **1**: `autocomplete` on `<input-text-password>` in `Component-Family-Form-Inputs.md`. The element sets its own `autocomplete` and reads none. |
+| A-4 | 89 values checked, on the 26 of 34 elements whose schema has an enumerated prop | **0**. The RL-35 (A) instance `variant="danger"` is already gone from the docs. |
+| A-5 | 146 custom-property declarations | **2**: `--shadow-container` and `--shadow-fab` in `Token-Family-Shadow.md` |
+| A-6 | the elements' `observedAttributes` | **10 of 34 not read**: `chip-base`, `chip-filter`, `chip-input`, `input-checkbox-base`, `input-checkbox-legal`, `input-radio-base`, `input-radio-set`, `nav-header`, `nav-segmented-choice`, `nav-tab-bar`. Each returns an imported constant or a spread, not an array literal. |
+
+**What the replay shows:**
+- **About 5 adoption hits in 3 docs.** The ballot's § 4 residual 1 says the list is up to 156 tags across 9 docs. That counts candidates as hits: 156 is the number of tags read, not the number that fail. The pending-list counter-argument does not survive at the size it is stated (pair P2).
+- **What does survive is the share not read.** 10 of the 34 elements (29%) have their attributes read only through A-3 (b) and (c).
+  - On today's docs that costs nothing: every attribute on those 42 tag occurrences is matched by a `getAttribute`/`hasAttribute` literal or is a global.
+  - What it means for a future example depends on a reading Lina's text leaves open (§ 4).
+- **False misses the measure does not name.**
+  - **PascalCase JSX is out of A-1's scope.** `governance/Token-Family-Radius.md` L351–359 still writes `<Card borderRadius="radius.normal">`, `<Button borderRadius=…>` and `<Avatar borderRadius=…>`. That is RL-35 (B)'s shape (a camelCase prop written as an attribute), on tags A-1 never reads.
+  - Inline code is also out of scope (A-1).
+
+  The ballot cites RL-35 (B) as the gap it closes. It should say which instances of that class stay unread (pair P2).
+
+### 3. The pairs
+
+**P1: § 5, the census line's departure sentence.** The precedent it cites does not transfer. I accepted shape-review departure 4 because its count held by construction: all 261 rows pin one value (that ballot, R2 N-9 and the departure-4 ruling). Here the projection is a heuristic, and the proposed digest is not computed. That leaves my census-digest read nothing to compare.
+
+Before:
+> This departs from the README form the same way the shape-review ballot's census line did (Stacy accepted that precedent there). The build PR runs the scratch diff and the shipped code at its own base, and their digests must be equal (README "Re-runs").
+
+After:
+> This departs from the README form: the proposed digest is not computed at draft, and the count below is a heuristic, not a census. The shape-review ballot's PROJECTED line held by construction, and this one does not. So the ruling is on the projection, and the build PR's body carries the census in its first form at its own base: the current digest, the proposed digest, the docs that change, and the hits per half (`tag`, `attribute`, `value`, `css-self-reference`) with the elements not read. Stacy's ARMING read compares those hits with the projection here. A difference is a finding routed to Peter. PROJECTED hits (Stacy's heuristic replay at `5386f93ba`, [STACY R1] § 2): tag 2, attribute 1, value 0, css-self-reference 2, in 3 docs; 10 of 34 elements not read.
+
+**P2: § 4, "What survives", item 1, plus one item added.**
+
+Before:
+> 1. **The pending list will be large at adoption.** Its size is unknown until the build PR's census, and the heuristic says up to 156 tags across 9 docs. The guard is honest about the size, but every hit is owed a fix by its doc's owner, and that cost lands on Lina and the docs' owners after the release.
+
+After:
+> 1. **The share not read, not the size of the list.** Stacy's replay ([STACY R1] § 2) projects about 5 adoption hits in 3 docs. 156 is the number of tags read, not the number that fail. What survives is that 10 of the 34 registered elements return `observedAttributes` as a constant or a spread. A-6 reports them as not read, so their attributes are checked only through A-3 (b) and (c).
+> 3. **What A-1 does not read.** PascalCase JSX and inline code stay out of scope. `governance/Token-Family-Radius.md` L351–359 writes `borderRadius` as an attribute on `<Card>`, `<Button>` and `<Avatar>`, which is RL-35 (B)'s shape, and this version does not read them.
+
+**P3: § 3 step 2, a body requirement for the `pending.json` read.**
+
+Before:
+> - `pending.json`'s adoption entries, each homed (item 4);
+
+After:
+> - `pending.json`'s adoption entries, each homed (item 4). The PR body names this ballot, lists every entry added (doc, half, string, occurrence, home), and gives the header before → after. That is what Stacy's `pending.json` ARMING read checks against the diff.
+
+**P4: § 2 item 2, the pending header, so the RELEASE read can baseline the new kinds.**
+
+Before:
+> - **After**: `adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>, tag <e>, attribute <f>, value <g>, css-self-reference <h>)`
+
+After:
+> - **After**: `adopted: <sha> <date>; attribute half adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>, tag <e>, attribute <f>, value <g>, css-self-reference <h>)`
+
+**P5: § 2 item 2, the `--census` version line.** My RELEASE read takes the versions from `--census`. The appendix shows that its last line prints `predicate v1, file-shape rule v1` only.
+
+Before: (no bullet)
+
+After (a bullet after the pending-header pair):
+> - `--census`'s last line gains the new half's version: `…; predicate v1, file-shape rule v1, attribute predicate v1`.
+
+### 4. To Lina, on her text: questions only, no wording proposed
+
+- **[@LINA]** A-6 makes a non-literal `observedAttributes` "not read … never as a pass". For such an element, does A-3 run with (a) empty, or is A-3 skipped?
+  - If A-3 runs with (a) empty, an attribute the element observes through its constant, but reads only through `attributeChangedCallback`, fails. That is a false fire.
+  - If A-3 is skipped, every attribute on 10 of the 34 elements goes unchecked. Those are false misses.
+  - On today's docs the two readings give the same 0. They diverge on the next example.
+- **[@LINA]** The twin-agreement test is "for every registered tag". For the 10 not-read tags, the syntactic list does not exist. Is a not-read tag a failure of the test, which would make the build red at once, or an exclusion? If it is an exclusion, is the excluded count printed, so that 24 of 34 is not read as all of them?
+
+### 5. The census line's other entries
+
+The two `not in scope` lines (check-section-citations and 122-diff-guard) are correct as stated: no site adds a `get_section` citation, and `governance/` is an ordinary closure input.
+
+**Standards implications**: none. The pairs are execution requirements on this ballot.
+
+**Review**: CHANGES, P1–P5. Questions to Lina on A-6. ARMING is owed at the build PR's merge (four reads), and the governance-examples read at 16.3.0's RELEASE phase 1.
+
+#### [LINA R1]
+
+*Her read-back at `733cbff6e`, spliced byte for byte:*
+
+Lina on origin/chore/ballot-examples-guard-attribute-predicate @ 733cbff6e: APPROVE, no changes.
+
+1. A-1 to A-7 byte check: every non-blank line of my block (issue record on main, lines 34-47) appears verbatim in the ballot draft, including A-3's (a)-(c) sub-lines.
+2. Predicate: not coded on main (check.ts has no customElements/observedAttributes), so I could not run the guard. I did a regex scan of governance/, .kiro/steering/, docs/, canonical/ against the 34 registered tags. Ten hyphenated tags in untagged/html/tsx/jsx fences are unregistered: sl-button and sp-button (Component-Development-Guide) are real hits; test-file-path, your-file-key, figma-url, doc-id, one-line, entry-id, last-tag, review-base are placeholders in untagged fences, likely shell/prose, so A-1's "or not tagged" would fire on them. A-7's pending list at adoption covers this; the predicate is right but the adopter should expect these ten.
+
+*Her answer to [STACY R1] § 4 on A-6, relayed by the coordinator and applied byte for byte to the block in § 2 item 1:*
+- **Before**: "for every registered tag, the syntactic `observedAttributes` equals"
+- **After**: "for every registered tag whose `observedAttributes` is an array literal, the syntactic list equals"
+- **Appended to A-6**: "For a not-read element, A-3 runs with (a) empty. The report line prints the count, e.g. `not read: 10 of 34`."
+
+#### [THURGOOD R2] — incorporation
+
+1. **[STACY R1] P1–P5: applied as written.**
+   - P1 is in § 5's departure sentence.
+   - P2 is in § 4 "What survives", items 1 and 3.
+   - P3 is in § 3 step 2.
+   - P4 and P5 are in § 2 item 2.
+2. **[LINA R1] A-6: applied byte for byte.** The block's intro line now says "as amended by Lina at R1". The record's copy, `.kiro/issues/2026-10-26-examples-guard-attribute-predicate.md` § "The predicate text", is hers to update. Her answer settles both of Stacy's § 4 questions:
+   - A-3 runs with (a) empty, which is the safe direction and the one her Limits paragraph already names;
+   - a not-read tag is excluded from the twin test, and the count is printed.
+3. **Consequential edits to my own text** (none to Stacy's or Lina's):
+   - item 2's report-line field now reads `not read: <nr> of <tt>`, Lina's form, where `<tt>` is the registered elements;
+   - § 3's twin-test bullet carries Lina's "whose `observedAttributes` is an array literal";
+   - § 4 gains a fold-back bullet for the corrected size;
+   - § 5's census line now projects 3 docs, from Stacy's replay, where it said "up to 9".
+4. **The counts, reconciled.**
+   - My 156 and Stacy's 157 count tags **read**, not hits. Stacy's count includes the steering docs; mine did not.
+   - Lina's ten come from a wider scan: `docs/`, `canonical/`, all of `.kiro/steering/`, and `classification-map.md`, which `EXCLUDED_DOCS` removes. The guard reads none of those.
+     - `sl-button` and `sp-button` (`governance/Component-Development-Guide.md` L412–413) are inline code, which A-1 does not read.
+     - `figma-url`, `doc-id` and `last-tag` are inline code in governance docs.
+     - `your-file-key` is in `docs/`, and `entry-id` is in the excluded `classification-map.md`.
+     - I did not find `one-line` or `review-base` in the guard's scope.
+   - **One of Lina's ten is in scope, and both heuristic replays missed it.** `<test-file-path>` sits in an untagged fence in `.kiro/steering/start-up-tasks.md` L98, the decision tree, which is a `files[]` steering doc. A-1 reads it, and A-2 fails it. That makes the projection tag 3, in 4 docs.
+     - [@STACY] Do you want P1's PROJECTED line changed to count it? The line is your replay, so I have not edited it.
+     - The doc is Layer 1 and Peter-merged, and the hit would go on the pending list, homed in a record, at the build PR.
 
 ---
 
