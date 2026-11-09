@@ -1426,7 +1426,7 @@ FIX=c-near-empty
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.1.0
+REL=16.3.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
@@ -1790,7 +1790,7 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 | F (freeze commit) | `PLACEHOLDER-F` | the batching PR |
 | Prompt commit (`COMMIT=` in step 0) | `PLACEHOLDER-PROMPT-COMMIT` (the merge of the PR carrying this file) | read from `main` after the merge |
 
-**17.2 The Kiro conformance pair: reason line (§ 15.3; the recurring record's discharge clause).** No change to either Kiro rendering of consumer-Thurgood or consumer-Stacy since the 16.2.0 candidate's freeze (`7db066e4f`). Measured 2026-11-08 at the base of this branch (`c3fd1893a`):
+**17.2 The Kiro conformance pair: run as a fourth sitting (§ 15.3).** Ruled by Peter, 2026-11-09T04:30:59Z, on #850: "(a), run it as a fourth sitting" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-ruling-kiro-pair-fourth-sitting.md`). The pair is beat 1 (consumer-Thurgood) then beat 2 (consumer-Stacy), in Kiro, against the same candidate and F as the three persona sittings; frozen prompts are `prompts/16.3.0/conformance-kiro-beat-{1,2}.md`; its launch blocks are § 15.3's, with `REL=16.3.0`; its records are `records/16.3.0/conformance-kiro-beat-{1,2}.md`. This replaces the reason line the first draft of this section carried; the pair is no longer left owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`, whose discharge is the pair's records. The measured rendering diff below is the record's `why-run:` evidence, measured 2026-11-08 at the base of this branch (`c3fd1893a`):
 
 ```
 $ git log --format='%h %s' 7db066e4f..HEAD -- canonical/_consumer-output/kiro
@@ -1814,6 +1814,6 @@ $ git diff --name-only 7db066e4f HEAD -- canonical/_consumer-output/kiro | grep 
 0
 ```
 
-Neither `thurgood-prompt.md` nor `stacy-prompt.md` is in the diff. **The limit of this line**: the pair has never run (16.1.0: quota; 16.2.0: not in the trio), so "unchanged since 7db066e4f" is not "exercised". The pair stays owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`, which this line does not close. The Kiro steering diffs above (core goals, directory attribution) do reach both seats' loaded context; I read them as not touching either seat's conduct, and say so as a judgment, not a measurement.
+Neither `thurgood-prompt.md` nor `stacy-prompt.md` is in the diff, so the pair also tests renderings unchanged since the 16.2.0 candidate; it has never run on Kiro (16.1.0: setup only, quota; 16.2.0: not in the trio), so it is the first exercise of either seat on Kiro.
 
 **17.3 The `init` Return (R3-1).** Written into § 11 Run 3 step 7 (and conditionally Run 2 step 7). The operator sheet for Peter: `tests/onboarding-trio/records/16.3.0/operator-sheet.md`.
