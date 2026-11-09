@@ -296,8 +296,8 @@ describe("Lina's file-shape rule and the import surface", () => {
     expect(resolveDeclaredPath('src/components/core/Button-Icon/buttonIcon.tokens.ts', tracked)).toBe(true);
     expect(resolveDeclaredPath('Button-CTA/platforms/web/ButtonCTA.web.ts', tracked)).toBe(true);
     expect(resolveDeclaredPath('ButtonCTA/tokens.ts', tracked)).toBe(false);
-    expect(resolveDeclaredPath('tokens.ts', tracked)).toBe(false); // two tracked tokens.ts files
-    expect(tracked.filter((t) => t.endsWith('/tokens.ts') && t.startsWith('src/components/')).length).toBeGreaterThan(1);
+    expect(resolveDeclaredPath('tokens.ts', tracked)).toBe(false); // two tracked tokens.ts files: Badge-Label-Base's and the plain-map fixture
+    expect(tracked.filter((t) => t.endsWith('/tokens.ts') && t.startsWith('src/components/')).length).toBe(1); // Badge-Label-Base only, since Badge-Count-Notification's became badgeNotificationColorMap.ts
   });
   it('L-1: a declared token file must hold an exported defineComponentTokens(...) binding', () => {
     expect(hasExportedDefineCall("export const T = defineComponentTokens({ component: 'X' });")).toBe(true);
@@ -361,8 +361,8 @@ describe("Lina's twin-agreement test: the syntax predicate agrees with the loade
     .sort();
   const plainMap = path.join(FIXTURES, 'plain-map');
 
-  it('runs over the seven real token files', () => {
-    expect(realTokenFiles).toHaveLength(7);
+  it('runs over the six real token files', () => {
+    expect(realTokenFiles).toHaveLength(6);
   });
 
   it('agrees on every real file and on the plain-map fixture; the naming rule agrees with the loader’s', () => {

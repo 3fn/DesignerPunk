@@ -18,7 +18,7 @@
  * 
  * COLOR TOKENS (Spec 058):
  * Badge notification color tokens are defined in the component directory at
- * src/components/core/Badge-Count-Notification/tokens.ts following the Rosetta
+ * src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts following the Rosetta
  * System architecture. Android uses generated platform tokens:
  * - DesignTokens.color_feedback_notification_background (references pink400)
  * - DesignTokens.color_feedback_notification_text (references white100)
@@ -97,7 +97,7 @@ enum class BadgeCountNotificationSize {
  * 
  * Fixed notification colors - not configurable by consumers.
  * These tokens reference the component color tokens defined in
- * src/components/core/Badge-Count-Notification/tokens.ts:
+ * src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts:
  * - BadgeNotificationColorTokens['notification.background'] → pink400 (#CC2257)
  * - BadgeNotificationColorTokens['notification.text'] → white100 (#FFFFFF)
  * 

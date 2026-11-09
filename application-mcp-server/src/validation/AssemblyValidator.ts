@@ -16,9 +16,11 @@ import { checkPropValues } from './PropValueChecker';
 import { AssemblyNode, AssemblyValidationResult, AssemblyIssue, AssemblyCoverage } from '../models';
 
 export class AssemblyValidator {
-  private accessibilityChecker = new AccessibilityChecker();
+  private accessibilityChecker: AccessibilityChecker;
 
-  constructor(private indexer: ComponentIndexer) {}
+  constructor(private indexer: ComponentIndexer) {
+    this.accessibilityChecker = new AccessibilityChecker((name) => indexer.getComponent(name));
+  }
 
   validate(assembly: AssemblyNode): AssemblyValidationResult {
     const errors: AssemblyIssue[] = [];

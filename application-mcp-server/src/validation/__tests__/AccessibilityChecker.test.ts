@@ -116,4 +116,43 @@ describe('AccessibilityChecker', () => {
     });
     expect(issues.some(i => i.rule === 'form-needs-accessible-name')).toBe(true);
   });
+
+  describe('no-nested-interactive (WCAG 4.1.2)', () => {
+    const meta = (active: string[], props: Record<string, unknown> = {}) =>
+      ({
+        properties: props,
+        contracts: { active: Object.fromEntries(active.map((c) => [c, {}])) },
+      }) as any;
+    const table: Record<string, any> = {
+      Card: meta(['interaction_pressable'], { interactive: { type: 'boolean', default: false } }),
+      Btn: meta(['interaction_pressable', 'interaction_focusable']),
+      Field: meta(['interaction_focusable']),
+      Badge: meta([]),
+      Box: meta([]),
+    };
+    const c = new AccessibilityChecker((n) => table[n]);
+    const rules = (t: any) => c.check(t).filter((i) => i.rule === 'no-nested-interactive');
+
+    it('errors for a pressable node holding a pressable child', () => {
+      const [i] = rules({ component: 'Card', props: { interactive: true }, children: [{ component: 'Btn' }] });
+      expect(i.severity).toBe('error');
+      expect(i.wcag).toBe('4.1.2');
+    });
+    it('errors for a focusable descendant at any depth', () => {
+      expect(rules({ component: 'Card', props: { interactive: true }, children: [{ component: 'Box', children: [{ component: 'Field' }] }] })).toHaveLength(1);
+    });
+    it('reads the interactive prop: a non-interactive card (given or default) is not pressable', () => {
+      expect(rules({ component: 'Card', props: { interactive: false }, children: [{ component: 'Btn' }] })).toEqual([]);
+      expect(rules({ component: 'Card', children: [{ component: 'Btn' }] })).toEqual([]);
+    });
+    it('does not flag non-interactive children', () => {
+      expect(rules({ component: 'Card', props: { interactive: true }, children: [{ component: 'Badge' }, { component: 'Box' }] })).toEqual([]);
+    });
+    it('does not flag a pressable inside a non-pressable parent', () => {
+      expect(rules({ component: 'Box', children: [{ component: 'Btn' }] })).toEqual([]);
+    });
+    it('does not run without a resolver', () => {
+      expect(new AccessibilityChecker().check({ component: 'Card', props: { interactive: true }, children: [{ component: 'Btn' }] })).toEqual([]);
+    });
+  });
 });
