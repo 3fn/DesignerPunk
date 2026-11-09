@@ -25,3 +25,5 @@ RELEASE-FLOW is Thurgood's file and a governance path. His edit to L162 and L254
 - **Fixing PR**: branch `fix/retire-postpublish`. It cites this path list, and it is diffed against the list as it stood at the activating merge (rule 8).
 - **Activation**: Peter's merge of the PR that files this record, whose body names this section (rule 8). The grant expires at the fixing PR's merge.
 - **Not a governance-law path, and not `.github/**`**: no ARMING line or `**Deleted lines**:` block is owed.
+
+**Outcome (2026-11-09, Ada, rule 5)**: the fixing PR, branch `fix/retire-postpublish`, changes `package.json` by the one `scripts.postpublish` line, which is inside the grant's limit, and edits no other path outside the list but the two records it closes. The grant expires at that PR's merge. Archived in the same PR.
