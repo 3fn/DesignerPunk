@@ -43,6 +43,7 @@ import {
   registryPinRefusedTokenMessage,
   isSingleFamilyTokenFile,
   singleFamilyTokenFilesMessage,
+  FIRST_COMPONENT_COPY_VERSION,
 } from '../sync/Migration';
 import type { PackageFetcher, MigrationAssessment, RegistryAuthFailure } from '../sync/Migration';
 import { registryAuthFailedMessage, cannotTellGroupMessage } from '../shared/errorCatalog';
@@ -64,9 +65,17 @@ function spec104Rewrite(s: string): string {
   return s.replace(/from\s+['"]\.\.\/(?:\.\.\/)*build\/tokens(?:\/[^'"]*)?['"]/g, `from '@3fn/core/build'`);
 }
 
+/**
+ * The constant floor (11.0.0) has no captured snapshot. The fixtures stand it in with the oldest captured one
+ * (11.2.1), whose copies are the same bytes for these fixtures' purposes; a registry that lists the floor then
+ * has nothing unreachable.
+ */
+const SNAPSHOT_STAND_IN: Record<string, string> = { [FIRST_COMPONENT_COPY_VERSION]: '11.2.1' };
+const snapKey = (v: string): string => SNAPSHOT_STAND_IN[v] ?? v;
+
 function shipped(version: string): Record<string, string> {
   const out: Record<string, string> = {};
-  for (const [rel, h] of Object.entries(SNAP.versions[version])) out[rel] = SNAP.blobs[h];
+  for (const [rel, h] of Object.entries(SNAP.versions[snapKey(version)])) out[rel] = SNAP.blobs[h];
   return out;
 }
 
@@ -80,9 +89,9 @@ function writeCopiesAt(root: string, version: string): void {
 }
 
 /** A fixture fetcher over the snapshots — `available` models the rail (which versions it can serve). */
-function snapshotFetcher(scratch: string, opts: { listed?: string[] | null; available?: string[]; auth?: RegistryAuthFailure } = {}) {
-  const listed = opts.listed === undefined ? Object.keys(SNAP.versions) : opts.listed;
-  const available = new Set(opts.available ?? Object.keys(SNAP.versions));
+function snapshotFetcher(scratch: string, opts: { listed?: string[] | null; available?: string[]; auth?: RegistryAuthFailure; floorShipsNothing?: boolean } = {}) {
+  const listed = opts.listed === undefined ? [FIRST_COMPONENT_COPY_VERSION, ...Object.keys(SNAP.versions)] : opts.listed;
+  const available = new Set(opts.available ?? [FIRST_COMPONENT_COPY_VERSION, ...Object.keys(SNAP.versions)]);
   const calls: string[] = [];
   const lists: number[] = [];
   const fetcher: PackageFetcher = {
@@ -93,11 +102,14 @@ function snapshotFetcher(scratch: string, opts: { listed?: string[] | null; avai
     ...(opts.auth ? { authFailure: () => opts.auth! } : {}),
     fetch: (v) => {
       calls.push(v);
-      if (!available.has(v) || !SNAP.versions[v]) return null;
+      if (!available.has(v) || !SNAP.versions[snapKey(v)]) return null;
       const root = path.join(scratch, '.fixture-tarballs', v, 'package');
       if (!fs.existsSync(root)) {
         writeFile(root, 'package.json', JSON.stringify({ name: '@3fn/core', version: v }));
-        for (const [rel, content] of Object.entries(shipped(v))) writeFile(root, rel, content);
+        // `floorShipsNothing`: the floor version is retrieved, but matches none of the copies' files.
+        if (!(opts.floorShipsNothing && v === FIRST_COMPONENT_COPY_VERSION)) {
+          for (const [rel, content] of Object.entries(shipped(v))) writeFile(root, rel, content);
+        }
       }
       return root;
     },
@@ -203,7 +215,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
     test('the 11.3.0–11.8.x window (transform private to init): a .ts file only that window could explain → cannot-tell', () => {
       writeCopiesAt(scratch, '12.0.5');
       // Reached only if no newer version matches: serve the window alone.
-      const { fetcher } = snapshotFetcher(scratch, { listed: ['11.3.0'] });
+      const { fetcher } = snapshotFetcher(scratch, { listed: [FIRST_COMPONENT_COPY_VERSION, '11.3.0'], floorShipsNothing: true });
       const a = assess(scratch, fetcher, '14.1.0');
       const badge = a.components.find((c) => c.name === 'Badge-Label-Base')!;
       expect(badge.files.find((f) => f.file === 'tokens.ts')!.verdict).toBe('cannot-tell');
@@ -227,7 +239,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(DP_LEGACY.version).toBe('12.0.3');
       expect(out.migration!.trigger).toBe('legacy-manifest');
       expect(out.migration!.upperBound).toEqual({ version: '12.0.5', source: 'lockfile' });
-      expect(out.migration!.range).toEqual(['12.0.5', '11.3.0', '11.2.1']);
+      expect(out.migration!.range).toEqual(['12.0.5', '11.3.0', '11.2.1', '11.0.0']);
       expect(calls[0]).toBe('12.0.5');
       expect(out.migration!.components.map((c) => c.verdict)).toEqual(['unmodified', 'unmodified']);
       expect(con.output()).toContain(unmodifiedCopiesMessage(2, COMPONENTS));
@@ -269,7 +281,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
     writeFile(scratch, edited, `${readText(scratch, edited)}\n// hers\n`);
     const withWindow = assess(scratch, snapshotFetcher(scratch).fetcher, '14.1.0');
     expect(withWindow.components.find((c) => c.name === 'Button-Icon')!.verdict).toBe('cannot-tell');
-    const withoutWindow = assess(scratch, snapshotFetcher(scratch, { listed: ['11.2.1', '12.0.5', '13.0.0', '14.0.0', '14.1.0'] }).fetcher, '14.1.0');
+    const withoutWindow = assess(scratch, snapshotFetcher(scratch, { listed: [FIRST_COMPONENT_COPY_VERSION, '11.2.1', '12.0.5', '13.0.0', '14.0.0', '14.1.0'] }).fetcher, '14.1.0');
     expect(withoutWindow.components.find((c) => c.name === 'Button-Icon')!.verdict).toBe('modified');
   });
 
@@ -310,10 +322,10 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       writeCopiesAt(scratch, PRE_104);
       const { fetcher } = snapshotFetcher(scratch, { available: ['13.0.0', '14.0.0', '14.1.0'] });
       const a = assess(scratch, fetcher, '14.1.0');
-      expect(a.failed).toEqual(['12.0.5', '11.3.0', '11.2.1']);
+      expect(a.failed).toEqual(['12.0.5', '11.3.0', '11.2.1', '11.0.0']);
       const bi = a.components.find((c) => c.name === 'Button-Icon')!;
       expect(bi.files.find((f) => f.file === 'contracts.yaml')!.verdict).toBe('cannot-tell');
-      expect(bi.files.find((f) => f.file === 'contracts.yaml')!.cause).toEqual({ kind: 'fetch-failed', version: '12.0.5, 11.3.0, 11.2.1' });
+      expect(bi.files.find((f) => f.file === 'contracts.yaml')!.cause).toEqual({ kind: 'fetch-failed', version: '12.0.5 and 3 older versions back to 11.0.0' });
       expect(bi.verdict).toBe('cannot-tell');
     });
 
@@ -407,7 +419,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
 
     test('the login line covers only copies a retrieval failure left undecided: with every version retrieved, an unrecoverable transform keeps its catalog row and no login line prints', () => {
       writeCopiesAt(scratch, '12.0.5');
-      const a = assess(scratch, snapshotFetcher(scratch, { listed: ['11.3.0'], auth: AUTH }).fetcher, '14.1.0');
+      const a = assess(scratch, snapshotFetcher(scratch, { listed: [FIRST_COMPONENT_COPY_VERSION, '11.3.0'], auth: AUTH, floorShipsNothing: true }).fetcher, '14.1.0');
       expect(a.failed).toEqual([]);
       const lines = migrationLines(a);
       expect(lines.some((l) => l.startsWith('your npm registry refused'))).toBe(false);
@@ -491,45 +503,28 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(m).toMatch(/The safe route for copies made before 13\.0\.0 is to renew the token/);
       expect(m).toMatch(/those versions exist only on GitHub Packages/);
       expect(m).toMatch(/If you remove the mapping instead/);
-      expect(m).toMatch(/left in place only if your old \.kiro\/sync-manifest\.json records a last sync before 13\.0\.0/);
-      expect(m).toMatch(/otherwise it can read as your fork/);
+      expect(m).toMatch(/A copy that matches none of those versions is then left in place for you to decide by hand/);
+      expect(m).toMatch(/not called your fork/);
+      expect(m).not.toMatch(/last sync/);
       expect(m).not.toMatch(/stays where it is/);
     });
 
-    test('the guard\'s covered case: a registry listing nothing as old as the last sync → cannot-tell, never modified', () => {
+    test('the rule: a registry listing nothing as old as the constant floor → cannot-tell, never modified (whatever the last sync says)', () => {
       writeCopiesAt(scratch, PRE_104); // 11.2.1 copies: the raw import matches nothing from 13.0.0 on
-      const publicRail = snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher;
-      const a = assessComponentCopies(scratch, {
-        fetcher: publicRail,
-        upperBound: { version: '14.1.0', source: 'lockfile' },
-        trigger: 'legacy-manifest',
-        lastSyncVersion: '12.0.3',
-      });
+      const a = assess(scratch, snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher, '14.1.0');
       expect(a.unlistedBefore).toBe('13.0.0');
       const badge = a.components.find((c) => c.name === 'Badge-Label-Base')!;
       expect(badge.verdict).toBe('cannot-tell');
       expect(badge.files.find((f) => f.file === 'tokens.ts')!.cause).toEqual({
         kind: 'fetch-failed',
-        version: '12.0.3 (your registry lists no version before 13.0.0)',
+        version: `${FIRST_COMPONENT_COPY_VERSION} (your registry lists no version before 13.0.0)`,
       });
-      // Bite: without the last-sync floor, the same copies read as forks (the defect this guards).
-      const unguarded = assess(scratch, snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher, '14.1.0');
-      expect(unguarded.components.find((c) => c.name === 'Badge-Label-Base')!.verdict).toBe('modified');
     });
 
-    test('the guard\'s RESIDUAL, pinned so it stays visible: last sync 13.2.0, copies from 11.2.1, public listing → still modified (a heuristic floor, not a proven bound)', () => {
-      // design.md C7: the last sync is not the copy version, and a skipped update leaves older copies. The guard
-      // reads the last sync as a floor, so it misses this. The sound fix is a fork:
-      // .kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md. If that lands, this expectation flips.
+    test('precision returns when the floor is listed: a registry listing 11.0.0 onward still calls a real fork modified', () => {
       writeCopiesAt(scratch, PRE_104);
-      const a = assessComponentCopies(scratch, {
-        fetcher: snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher,
-        upperBound: { version: '14.1.0', source: 'lockfile' },
-        trigger: 'legacy-manifest',
-        lastSyncVersion: '13.2.0',
-      });
+      const a = assess(scratch, snapshotFetcher(scratch, { listed: [FIRST_COMPONENT_COPY_VERSION, '11.2.1', '13.0.0', '14.0.0', '14.1.0'] }).fetcher, '14.1.0');
       expect(a.unlistedBefore).toBeUndefined();
-      expect(a.components.find((c) => c.name === 'Badge-Label-Base')!.verdict).toBe('modified');
     });
   });
 

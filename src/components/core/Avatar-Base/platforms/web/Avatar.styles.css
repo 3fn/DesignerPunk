@@ -361,7 +361,7 @@
  * - Force borders for all avatar types
  * - Ensure focus indicators are visible when in interactive wrapper
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .avatar {
     border: var(--border-emphasis) solid currentColor;
   }

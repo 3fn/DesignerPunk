@@ -439,7 +439,7 @@ describe('Badge-Count-Notification Unit Tests', () => {
     });
 
     it('should have high contrast mode support', () => {
-      expect(cssContent).toContain('prefers-contrast: high');
+      expect(cssContent).toContain('prefers-contrast: more');
     });
 
     it('should have reduced motion support', () => {

@@ -544,7 +544,7 @@ describe('Button-Icon Stemma Validators', () => {
       }
       
       // Check for high contrast media query (now in external CSS file)
-      expect(combinedSource).toContain('prefers-contrast: high');
+      expect(combinedSource).toContain('prefers-contrast: more');
     });
     
     it('should support reduced motion preference', () => {

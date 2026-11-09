@@ -573,7 +573,7 @@ export function generateThemesLine(themes: ReadonlyArray<{ name: string; mode: s
 
 /** The one suffix the `Themes:` line carries (design.md catalog row "generate — registered theme not emitted", amended 2026-11-08; wording Leonardo's). */
 export const GENERATE_THEMES_SUFFIX =
-  ' — registered and applied: a dark or wcag theme you register replaces DesignerPunk\'s built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme';
+  ' — registered and applied: a dark or wcag theme you register replaces DesignerPunk\'s built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme that overrides a colour is written as :root[data-theme="<name>"] on web (it matches the <html> element only; a theme that overrides no colour writes no web block, and shows your base tokens), and every other theme is written as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme';
 
 /** The config line that registers all three of DesignerPunk's built-in WCAG and dark maps (the bridge warning names it). */
 export const BUILTIN_THEME_REGISTRATION_LINES: Readonly<Record<'dark' | 'wcagLight' | 'wcagDark', string>> = Object.freeze({

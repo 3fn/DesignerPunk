@@ -106,7 +106,7 @@ contracts:
       - High contrast mode applies border for visibility (web)
     test_approach: |
       Calculate contrast ratio between text and background. Verify >= 4.5:1.
-      Test with prefers-contrast: high (web).
+      Test with prefers-contrast: more (web).
     required: true
 
   accessibility_text_scaling:

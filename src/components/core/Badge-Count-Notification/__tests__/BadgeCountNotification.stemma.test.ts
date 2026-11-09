@@ -320,7 +320,7 @@ describe('Badge-Count-Notification Stemma Validators', () => {
         return;
       }
 
-      expect(combinedSource).toContain('prefers-contrast: high');
+      expect(combinedSource).toContain('prefers-contrast: more');
     });
 
     it('should support reduced motion preference', () => {

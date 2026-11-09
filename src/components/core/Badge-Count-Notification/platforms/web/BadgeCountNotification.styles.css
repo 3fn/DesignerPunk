@@ -17,7 +17,7 @@
  * family. These semantic tokens are defined in src/tokens/semantic/ColorTokens.ts and
  * generated to CSS custom properties by the token build pipeline.
  * 
- * @see ../../tokens.ts for component color token references
+ * @see ../../badgeNotificationColorMap.ts for component color token references
  * @see src/tokens/semantic/ColorTokens.ts for semantic token definitions
  * @see .kiro/specs/044-badge-base/design.md for design specification
  * @see .kiro/specs/046-input-checkbox-base Task 8.2 for semantic token migration
@@ -159,7 +159,7 @@
  * ============================================================================ */
 
 /* High contrast mode support */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .badge-count-notification {
     border: 1px solid currentColor;
   }
