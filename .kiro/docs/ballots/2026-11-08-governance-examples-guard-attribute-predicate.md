@@ -120,7 +120,11 @@ Ballot `2026-10-26-governance-examples-guard-adoption` § 2 bars any addition to
 2. **A-3's limit is real.** An element that reads an attribute through `dataset` or a generic `attributeChangedCallback` loop fails a valid example. That is the safe direction, cleared by a marker or by naming the attribute in `observedAttributes`, but it is a false red until cleared.
 3. **What A-1 does not read.** PascalCase JSX and inline code stay out of scope. `governance/Token-Family-Radius.md` L351–359 writes `borderRadius` as an attribute on `<Card>`, `<Button>` and `<Avatar>`, which is RL-35 (B)'s shape, and this version does not read them.
 
-**Forks**: none surfaced. Inline code spans are out of scope in this version (A-1); that is Lina's call in her text, not a fork.
+**Forks**: one. **F-1, what the per-doc `--census` line counts.**
+- **(a) Recommended (Thurgood, Stacy): the new half's reads.** `<N>` projects 21 docs (§ 2 item 2; [THURGOOD R3] item 2). *Cost*: the census delta to read at the build PR is 21 docs, not 4. *Counter that survives*: 17 of the 21 lines change with no hit in them, so most of the delta is count growth that a reader must check is only that.
+- **(b) Token-name reads only, with the new half shown in the last line.** `<N>` projects the 4 docs with a hit, and § 2 item 2's per-doc bullet reads instead: "The per-doc `--census` line counts token-name reads only; the new half's counts are in the last line." *Cost*: a doc's own line does not show that doc's tag, attribute, value or css reads and hits; they show only in the last line and the report line. *Counter that survives*: the per-doc line and the report line then count different reads, so a doc's line can read clean while the report is red.
+
+Inline code spans are out of scope in this version (A-1); that is Lina's call in her text, not a fork.
 
 ## 5. Census
 
@@ -355,6 +359,31 @@ My R1 entry, spliced in § 6, stays as written. This R2 records the correction.
 3. **The false fire.** `<test-file-path>` goes on the pending list at the build PR, homed in a record, as A-7 and item 4 provide. Clearing it is the owner's choice, made in that record and not here:
    - an `<!-- example: generic -->` marker on the fence;
    - or a rewording of the placeholder in `start-up-tasks.md`, which is Peter-merged.
+
+#### [STACY R3] — `c782e68e6`
+
+R1–R4 are applied as I wrote them. The stale strings appear only in my spliced quotes. One pair remains: `[THURGOOD R3]` item 2 leaves "the other definition … open to Peter at the ruling", but § 4 still reads "**Forks**: none surfaced". A choice left to Peter has to appear where the ruling reads it.
+
+**§ 4, the Forks line.**
+
+Before:
+> **Forks**: none surfaced. Inline code spans are out of scope in this version (A-1); that is Lina's call in her text, not a fork.
+
+After:
+> **Forks**: one. **F-1, what the per-doc `--census` line counts.** (a) Recommended: the new half's reads, so `<N>` projects 21 docs (§ 2 item 2; [THURGOOD R3] item 2). (b) Token-name reads only, with the new half shown in the last line, so `<N>` projects the 4 docs with a hit. *Counter to (a)*: the census delta to read at the build PR is 21 docs, not 4. Inline code spans are out of scope in this version (A-1); that is Lina's call in her text, not a fork.
+
+With that applied: CONFIRM.
+
+#### [THURGOOD R4] — incorporation
+
+[STACY R3]'s Forks pair is applied. Her (a) and (b) are kept, as is her counter to (a). At the coordinator's direction, F-1 adds three things for Peter's ruling:
+- the cost of each option;
+- the counter-argument that survives against (b);
+- the § 2 item 2 bullet as it reads under (b).
+
+**Confirmations**:
+- Lina at `c782e68e6`: her A-block is byte-identical; this commit leaves it untouched.
+- Stacy: CONFIRM, with this pair applied.
 
 ---
 
