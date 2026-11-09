@@ -158,3 +158,24 @@
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   Forced Colors Support (Web-Authoring-Standards Hard Rule 6)
+   System-colour keywords are required here; they are not tokens.
+   The selected state must not depend on background-color or box-shadow,
+   which forced colors replaces (Canvas) or removes. No forced-color-adjust
+   override is used: system-colour keywords are honoured as authored.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .segmented-choice__indicator {
+    box-sizing: border-box;
+    border: var(--border-emphasis) solid Highlight;
+    box-shadow: none;
+  }
+
+  .segmented-choice__segment:focus-visible {
+    outline: var(--accessibility-focus-width) solid ButtonText;
+    outline-offset: var(--accessibility-focus-offset);
+  }
+}
