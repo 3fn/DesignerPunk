@@ -400,19 +400,19 @@ Badge components resolve tokens at render time using platform-appropriate mechan
 #### List Item with Badge
 
 ```html
-<list-item>
-  <span slot="label">Messages</span>
-  <badge-count-notification slot="trailing" count="5"></badge-count-notification>
-</list-item>
+<li>
+  <span>Messages</span>
+  <badge-count-notification count="5"></badge-count-notification>
+</li>
 ```
 
 #### Card Header with Status
 
 ```html
-<card-header>
-  <span slot="title">Document Title</span>
-  <badge-label-base slot="trailing" label="Draft"></badge-label-base>
-</card-header>
+<header>
+  <span>Document Title</span>
+  <badge-label-base label="Draft"></badge-label-base>
+</header>
 ```
 
 ### Accessibility Considerations
