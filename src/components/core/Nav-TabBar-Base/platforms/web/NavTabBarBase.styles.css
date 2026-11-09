@@ -279,3 +279,28 @@
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   Forced Colors Support (Web-Authoring-Standards Hard Rule 6)
+   System-colour keywords are required here; they are not tokens.
+   The active dot is a drawn shape, so it gets a system-colour border as well
+   as a fill; the decorative glow gradient is dropped. No forced-color-adjust
+   override is used: system-colour keywords are honoured as authored.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .tab-bar__dot {
+    box-sizing: border-box;
+    border: var(--border-emphasis) solid Highlight;
+    background-color: Highlight;
+  }
+
+  .tab-item[aria-selected="true"]::before {
+    background: none;
+  }
+
+  .tab-item:focus-visible {
+    outline: var(--accessibility-focus-width) solid ButtonText;
+    outline-offset: var(--accessibility-focus-offset);
+  }
+}
