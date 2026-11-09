@@ -25,10 +25,10 @@ describe('validate_assembly coverage', () => {
 
   it('names the accessibility rules that ran, on every result', () => {
     const r = validator.validate({ component: 'Container-Base' });
-    expect(r.coverage.accessibilityRules).toEqual(['form-needs-accessible-name', 'form-needs-submit-action', 'page-needs-accessible-name']);
+    expect(r.coverage.accessibilityRules).toEqual(['form-needs-accessible-name', 'form-needs-submit-action', 'page-needs-accessible-name', 'no-nested-interactive']);
   });
 
-  it('the trio tree: valid with no accessibility issue, and coverage says what was not checked', () => {
+  it('the trio tree: the nested Button-CTA is an error, and coverage still lists what was not checked', () => {
     const tree: AssemblyNode = {
       component: 'Container-Card-Base',
       props: { interactive: true },
@@ -38,11 +38,10 @@ describe('validate_assembly coverage', () => {
       ],
     };
     const r = validator.validate(tree);
-    expect(r.accessibility).toEqual([]);
-    // Nested interactive controls are not among the rules that ran (V2 is owed), so an empty list
-    // does not say the tree is free of them.
-    expect(r.coverage.accessibilityRules).not.toContain('no-nested-interactive');
-    // Icon-Base's `name` is typed IconBaseName with no values list: accepted, and listed as unchecked.
+    expect(r.valid).toBe(false);
+    expect(r.accessibility.map((a) => a.rule)).toEqual(['no-nested-interactive']);
+    expect(r.coverage.accessibilityRules).toContain('no-nested-interactive');
+    // Icon-Base's `name` is typed IconBaseName with no values list: accepted, and listed as unchecked (V3 is owed).
     expect(r.coverage.notChecked).toContainEqual({ path: 'root.children[0]', component: 'Icon-Base', prop: 'name', type: expect.stringContaining('IconBaseName') });
   });
 
@@ -53,10 +52,12 @@ describe('validate_assembly coverage', () => {
 
   it('ACCESSIBILITY_RULES lists every rule the checker emits (the two stay in step)', () => {
     const emitted = new Set<string>();
-    const checker = new AccessibilityChecker();
+    const indexer = (validator as unknown as { indexer: ComponentIndexer }).indexer;
+    const checker = new AccessibilityChecker((n) => indexer.getComponent(n));
     const trees: AssemblyNode[] = [
       { component: 'Container-Base', props: { semantic: 'fieldset' } },
       { component: 'Container-Base', props: { semantic: 'main' } },
+      { component: 'Container-Card-Base', props: { interactive: true }, children: [{ component: 'Button-CTA' }] },
     ];
     for (const t of trees) for (const issue of checker.check(t)) emitted.add(issue.rule);
     expect([...emitted].sort()).toEqual([...ACCESSIBILITY_RULES].sort());
