@@ -39,9 +39,16 @@ date: 2026-09-29
 ## `#web-theming`
 
 confirmer: sparky
-canonicalHash: sha256:53f54eff9fa5c5276111571328010a676600e3295aaa79a7b23bd24c154108e2
+canonicalHash: sha256:1f4b9544eca14b77ed0baf33f41d90065d5697aa9ca397e4def5616a06c29c07
 items: theming-1, theming-2, theming-3, theming-5, theming-4
-date: 2026-11-07
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08: the empty-theme clause (Thurgood's authoring correction, `2981514512771253fcd074abe44d1ec95474ba93`; regeneration `ac6d6d71d`).** A new act, read fresh. The 2026-11-07 record below is superseded (canonicalHash `sha256:53f54eff9fa5c5276111571328010a676600e3295aaa79a7b23bd24c154108e2`, 5 items).
+- **What changed**: two lines of the unit. It now says a theme that overrides a colour is written as a block of its own, and a theme that overrides no colour writes no block, so `data-theme="<name>"` shows the base; and `theming-5` is limited to a registered theme that overrides a colour. The `theming-2` and `theming-5` item texts and labels were re-quoted to match (profile author). The earlier unit's wording implied every registered theme gets a block.
+- **What I read, in this session, through tool results**: the unit as `--print` gave it (one call, unfiltered, read at `ac6d6d71d`, tree clean); the five items of `#web-theming` in `canonical/operative-sets/sparky.yaml`; and the code the clause rests on, `src/generators/TokenFileGenerator.ts` L1105-L1131, where the theme's block is returned empty (`if (overrides.length === 0) return lines;`) before the `:root[data-theme=...]` line is pushed.
+- **The hash**: I computed it in this act with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#web-theming`) on this worktree's `canonical/agents/sparky.md`: `sha256:1f4b9544eca14b77ed0baf33f41d90065d5697aa9ca397e4def5616a06c29c07`. It equals the print's `canonicalHash:`. No hash from any brief was used.
+- **Items re-read against the unit**: each of the five item texts is a verbatim substring of the unit and occurs exactly once (checked by script). `theming-2` and `theming-5` are operative: a consumer can violate each by registering a theme with no colour override and expecting a block or a look from it, or by setting `data-theme` on an element other than `<html>`. `theming-1`, `theming-3` and `theming-4` are unchanged.
+- **Ruling: CONFIRMED at 5 items, not corrected.** I edited no item text; the 2026-11-07 ruling below stands as history.
 
 **Re-confirmed 2026-11-07 (Req 11.6.5d): Spec 129 Task 14, my drafted lines L311-L313.** A new act, read fresh. The 2026-10-23 record below is superseded (canonicalHash `sha256:652f612ef3132d946ee6d1b2f2bfc05646257df9bbc3f51409b92ec6a760514d`, 5 items). The consumer row is `retained`, so it carries no signature to re-sign.
 - **What changed**: `canonical/agents/sparky.md` L311-L313 now carry my drafted text (Ada applied it at `85e730f84`); the profile author re-quoted `theming-2`, `theming-3` and `theming-5` at `645f9ed62`; Lina regenerated the agent layer at `d35ab492b`. The unit no longer says that only the `wcag` block exists, that there is no dark-only theme, or that a registered theme does not emit on web. It now says `wcag` is always generated and every other registered theme adds its own `:root[data-theme="<name>"]` block; a one-mode theme (`light` or `dark`) shows its colours in that scheme and base in the other, and does not force the page's scheme; mode `both` gives one look in both; the theme still applies page-wide from `<html>` only, and subtree theming is still not decided.
