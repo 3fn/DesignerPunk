@@ -368,7 +368,7 @@
  * - Ensure focus indicators are visible
  * - Use border.borderEmphasis (2px) and border.borderHeavy (4px) tokens
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .button-cta {
     border: var(--border-emphasis) solid currentColor; /* 2px */
   }

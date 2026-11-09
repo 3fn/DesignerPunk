@@ -84,7 +84,7 @@ const BASE_STYLES = `
     }
   }
   
-  @media (prefers-contrast: high) {
+  @media (prefers-contrast: more) {
     .container-base {
       border-width: var(--border-emphasis);
     }

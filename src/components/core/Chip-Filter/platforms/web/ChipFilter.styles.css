@@ -76,7 +76,7 @@
 /**
  * Ensure selected chips remain visible in Windows High Contrast Mode.
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .chip-filter--selected {
     border: var(--border-emphasis) solid currentColor;
     /* Use system highlight colors in high contrast mode */

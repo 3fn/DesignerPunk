@@ -441,13 +441,44 @@
    High Contrast Mode Support
    ========================================================================== */
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .checkbox__box {
     border: var(--border-emphasis) solid currentColor;
   }
 
   .checkbox__input:focus-visible ~ .checkbox__touch-target .checkbox__box {
     outline-width: var(--border-heavy);
+  }
+}
+
+/* ==========================================================================
+   Forced Colors Support (Web-Authoring-Standards Hard Rule 6)
+   System-colour keywords are required here; they are not tokens.
+   Widths and offsets stay tokens.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .checkbox__box {
+    border: var(--border-emphasis) solid ButtonText;
+  }
+
+  .checkbox--checked .checkbox__box,
+  .checkbox--indeterminate .checkbox__box {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+
+  .checkbox__box icon-base {
+    color: HighlightText;
+  }
+
+  .checkbox--error .checkbox__box {
+    border-style: dashed;
+  }
+
+  .checkbox__input:focus-visible ~ .checkbox__touch-target .checkbox__box {
+    outline: var(--accessibility-focus-width) solid Highlight;
+    outline-offset: var(--accessibility-focus-offset);
   }
 }
 

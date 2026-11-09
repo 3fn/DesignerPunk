@@ -90,7 +90,7 @@ const BASE_STYLES = `
   }
 
   /* High contrast mode — applied to composed container-base via CSS custom property inheritance */
-  @media (prefers-contrast: high) {
+  @media (prefers-contrast: more) {
     container-base {
       --_card-high-contrast-border: var(--border-emphasis);
     }

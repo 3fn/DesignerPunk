@@ -177,7 +177,7 @@
  * Ensure container remains visible and usable in high contrast mode.
  * Borders become more prominent to maintain visual structure.
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .container-base {
     /* Ensure borders are visible in high contrast mode */
     border-width: 2px;

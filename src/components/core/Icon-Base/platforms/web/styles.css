@@ -196,7 +196,7 @@
  * This maintains visibility and readability for users who need
  * enhanced contrast.
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .icon-base {
     stroke: currentColor !important;
   }

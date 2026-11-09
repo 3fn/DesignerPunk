@@ -226,3 +226,14 @@ On branch `task/129-12-component-theme-reads` (Spec 129 Task 12, U7; the PR numb
 - **Moved to Spec 132 (D5, D6)**: A3, I1, I2, I3, A1, A2, A4 and A6's non-ripple parts (Requirement 8.4). Nothing in 129 accepts them. They stay open here, and the Trigger line is unchanged until the claims pass re-rules the native half.
 
 *Signed: Lina, 2026-11-07.*
+
+## Web items W1 and W2 built, browser verification owed (2026-11-08, Lina, owner, rule 9)
+
+On branch `fix/drawn-control-web-w1-w2`:
+
+- **W2**: `prefers-contrast: high` becomes `prefers-contrast: more` in all 32 source lines under `src/` outside the sync fixtures (20 rules in 18 components, the 9 pinned test assertions, the 2 contract lines, the Progress-Indicator-Node-Base README line). `package-snapshots.json` is a pack-time snapshot of released package content and is left as it is. `governance/Token-Family-Responsive.md:704` is Ada's and is not touched.
+- **W1**: `@media (forced-colors: active)` blocks in Input-Checkbox-Base and Input-Radio-Base (`ButtonText` borders, `Highlight` fill and dot, `HighlightText` check glyph, `Highlight` focus ring; widths and offsets stay tokens). Input-Checkbox-Legal inherits the box and is checked in the browser. The Spec 130 switch thumb has no component yet and stays an acceptance line for 130.
+- **Not fixed, flagged to Peter**: Nav-SegmentedChoice-Base (selected indicator is `background-color` plus `box-shadow`) and Nav-TabBar-Base (selected dot is `background-color`, and the glow is a gradient) read as at risk under forced colors. Sparky's browser check decides.
+- **Still owed**: Sparky's browser verification (the PR body lists the steps and pass criteria). The items stay open until his dated line is appended here.
+
+*Signed: Lina, 2026-11-08.*

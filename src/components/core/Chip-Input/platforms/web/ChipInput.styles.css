@@ -76,7 +76,7 @@
 /**
  * Ensure Chip-Input remains visible in Windows High Contrast Mode.
  */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .chip-input__trailing-icon {
     /* Ensure X icon is visible in high contrast mode */
     color: currentColor;

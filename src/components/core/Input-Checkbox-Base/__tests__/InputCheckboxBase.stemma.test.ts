@@ -399,7 +399,21 @@ describe('Input-Checkbox-Base Stemma Validators', () => {
         return;
       }
       
-      expect(combinedSource).toContain('prefers-contrast: high');
+      expect(combinedSource).toContain('prefers-contrast: more');
+    });
+
+    // CSS-text presence only: jsdom cannot evaluate media queries. Visibility is
+    // verified in a browser (see .kiro/issues/2026-10-18-drawn-control-drift-ios-android-web.md, W1).
+    it('should support forced-colors mode with system colours on the drawn box (W1)', () => {
+      if (!combinedSource) {
+        console.warn('Component files not found, skipping test');
+        return;
+      }
+
+      expect(combinedSource).toContain('@media (forced-colors: active)');
+      expect(combinedSource).toMatch(/forced-colors: active\)[\s\S]*\.checkbox__box[\s\S]*ButtonText/);
+      expect(combinedSource).toMatch(/forced-colors: active\)[\s\S]*background-color: Highlight/);
+      expect(combinedSource).toMatch(/forced-colors: active\)[\s\S]*icon-base[\s\S]*HighlightText/);
     });
     
     it('should support reduced motion preference', () => {

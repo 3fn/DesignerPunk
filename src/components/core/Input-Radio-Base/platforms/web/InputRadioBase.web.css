@@ -463,13 +463,44 @@
    High Contrast Mode Support
    ========================================================================== */
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .radio__circle {
     border: var(--border-emphasis) solid currentColor;
   }
 
   .radio__input:focus-visible ~ .radio__touch-target .radio__circle {
     outline-width: var(--border-heavy);
+  }
+}
+
+/* ==========================================================================
+   Forced Colors Support (Web-Authoring-Standards Hard Rule 6)
+   System-colour keywords are required here; they are not tokens.
+   Widths and offsets stay tokens.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .radio__circle {
+    border: var(--border-emphasis) solid ButtonText;
+  }
+
+  .radio--selected .radio__circle {
+    border-color: Highlight;
+  }
+
+  /* The dot is painted with background-color, which forced colors would
+     replace with Canvas: give it a system colour so it stays visible. */
+  .radio__dot {
+    background-color: Highlight;
+  }
+
+  .radio--error .radio__circle {
+    border-style: dashed;
+  }
+
+  .radio__input:focus-visible ~ .radio__touch-target .radio__circle {
+    outline: var(--accessibility-focus-width) solid Highlight;
+    outline-offset: var(--accessibility-focus-offset);
   }
 }
 
