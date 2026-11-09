@@ -37,6 +37,14 @@ import { attachUsage } from '../shared/vocabulary';
 import { registryAuthFailedMessage, cannotTellGroupMessage } from '../shared/errorCatalog';
 
 export const LEGACY_COMPONENT_ROOT = 'src/components/core';
+
+/**
+ * The first `@3fn/core` version whose package shipped `src/` (and with it `src/components/core` copies):
+ * 11.0.0, the first tag where the package is `@3fn/core` with `"src/"` in `files` (v10.2.0 is
+ * `designer-punk-v2` with no `files`). A constant, so no copy can predate it. Option B of
+ * `.kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md`.
+ */
+export const FIRST_COMPONENT_COPY_VERSION = '11.0.0';
 export const CONSUMER_COMPONENT_ROOT = 'src/components';
 
 export type MigrationVerdict = 'unmodified' | 'modified' | 'cannot-tell';
@@ -288,14 +296,13 @@ export interface MigrationAssessment {
   /** The first login refusal the fetcher met (R2 (b)) — reported once, as a login problem. */
   authFailure?: RegistryAuthFailure;
   /**
-   * The oldest version the registry lists, when it is newer than a HEURISTIC floor: the legacy manifest's last
-   * sync, else the installed bound. When that happens, a copy that matches nothing listed is `cannot-tell`,
-   * not `modified`. The floor is NOT a proven lower bound. Design C7 says the last sync is not the copy version,
-   * and a skipped update leaves older copies (legacy sync never managed `src/components/core`). So a copy older
-   * than the oldest listed version, in a repo whose last sync (or bound) is listed, still reads as `modified`.
-   * The guard only ever turns `modified` into `cannot-tell`; it never makes a copy `unmodified`, so it cannot
-   * cause a removal. The sound alternative (a constant floor) is a fork filed as
-   * `.kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md`.
+   * The oldest version the registry lists, when it is newer than the constant floor
+   * (`FIRST_COMPONENT_COPY_VERSION`). When that happens, a copy that matches nothing listed is `cannot-tell`,
+   * not `modified`: a copy is called edited only when every version from the earliest one that could have made
+   * it up to the installed one was retrieved. The floor is a fact of release history, not the legacy manifest's
+   * last sync (design C7: that is not the copy version, and legacy sync never managed `src/components/core`).
+   * The rule only ever turns `modified` into `cannot-tell`; it never makes a copy `unmodified`, so it cannot
+   * cause a removal. Ruled option B: `.kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md`.
    */
   unlistedBefore?: string;
 }
@@ -349,11 +356,6 @@ export function assessComponentCopies(
     trigger: MigrationAssessment['trigger'];
     /** The installed package on disk (`node_modules/@3fn/core`): judged FIRST, with no fetch (R2 (a)). */
     installed?: { version: string; root: string };
-    /**
-     * The legacy manifest's `version` (the last sync), when there is one. Used as a HEURISTIC floor for the
-     * unlisted-range guard; it is not the copy version, and copies can be older (design C7).
-     */
-    lastSyncVersion?: string | null;
   },
 ): MigrationAssessment {
   const coreDir = path.join(projectRoot, LEGACY_COMPONENT_ROOT);
@@ -419,10 +421,13 @@ export function assessComponentCopies(
     assessment.range = listed!
       .filter((v) => parseVersion(v) && compareVersions(v, opts.upperBound.version!) <= 0)
       .sort((a, b) => compareVersions(b, a));
-    // The unlisted-range guard (a heuristic, see `unlistedBefore`). If the registry lists nothing as old as the
-    // last sync (else the installed bound), a copy matching nothing it lists is `cannot-tell`, not `modified`.
-    // A copy older than the oldest listed version in a repo whose floor IS listed is not caught: still `modified`.
-    oldestNeeded = opts.lastSyncVersion && parseVersion(opts.lastSyncVersion) ? opts.lastSyncVersion : opts.upperBound.version!;
+    // The unlisted-range rule (option B, a constant floor). If the registry lists nothing as old as the earliest
+    // version that could have made a copy (else the installed bound, when that is older), a copy matching nothing
+    // it lists is `cannot-tell`, not `modified`: its version may simply be unreachable.
+    oldestNeeded =
+      compareVersions(FIRST_COMPONENT_COPY_VERSION, opts.upperBound.version!) <= 0
+        ? FIRST_COMPONENT_COPY_VERSION
+        : opts.upperBound.version!;
     const oldestListed = listed!.filter((v) => parseVersion(v)).sort(compareVersions)[0];
     if (oldestListed === undefined || compareVersions(oldestNeeded, oldestListed) < 0) {
       rangeIncomplete = true;
@@ -821,17 +826,15 @@ export const REGISTRY_PIN_ORDER_CAUTION =
  * Replaces the ordering caution when the registry refused this run's requests (R2 (c)). With a refused token
  * the mapping already blocks every fetch, so waiting protects nothing. Renewing the token is the safe route
  * for copies made before 13.0.0 (only GitHub Packages serves those versions). Removing the mapping lets sync
- * judge against what npm's default registry lists, but the unlisted-range guard only keeps a pre-13 copy in
- * place when the old manifest's last sync is before 13.0.0 (a heuristic floor, `unlistedBefore`); otherwise
- * such a copy can read as a fork. The text says exactly that, and promises nothing more.
+ * judge against what npm's default registry lists; a copy that matches nothing listed is then left in place,
+ * because the registry lists nothing as old as the first version that could have made it.
  */
 export function registryPinRefusedTokenMessage(code: string): string {
   return (
     `Your registry refused this run's requests (${code}), so the mapping already blocks every fetch and waiting for 'sync --migrate-components' protects nothing. ` +
     `The safe route for copies made before 13.0.0 is to renew the token and run 'npx designerpunk sync' again: those versions exist only on GitHub Packages. ` +
     `If you remove the mapping instead, sync judges your copies against the versions npm's default registry lists (13.0.0 and later). ` +
-    `A copy made before 13.0.0 is then left in place only if your old .kiro/sync-manifest.json records a last sync before 13.0.0; ` +
-    `otherwise it can read as your fork, and 'sync --migrate-components' would move it.`
+    `A copy that matches none of those versions is then left in place for you to decide by hand, not called your fork, because npm's default registry lists nothing as old as the first version that could have made it.`
   );
 }
 

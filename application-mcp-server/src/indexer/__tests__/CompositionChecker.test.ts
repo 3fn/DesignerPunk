@@ -111,6 +111,22 @@ describe('checkComposition', () => {
   });
 });
 
+describe('checkComposition: conditional rules without parentProps', () => {
+  const parent = makeMeta('Card', { rules: [{ when: { prop: 'interactive', equals: true }, then: { children: { prohibited: ['Child'] } } }] } as CompositionDefinition);
+  const child = makeMeta('Child', null);
+
+  it('says the conditional rules were not evaluated when no parentProps were given', () => {
+    const r = checkComposition(parent, 'Child', makeIndex(parent, child));
+    expect(r.allowed).toBe(true);
+    expect(r.reason).toContain('conditional rules');
+    expect(r.reason).toContain('no parentProps');
+  });
+
+  it('keeps the plain reason when parentProps were given and no rule matched', () => {
+    expect(checkComposition(parent, 'Child', makeIndex(parent, child), { interactive: false }).reason).toBe('No applicable constraint');
+  });
+});
+
 describe('validateRequires', () => {
   it('returns complete when all required types present', () => {
     const parent = makeMeta('Set', {

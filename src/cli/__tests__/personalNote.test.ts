@@ -242,7 +242,7 @@ describe('catalog strings — equal to their design rows (read from design.md at
   });
   test('generate — registered theme: the suffix, as amended 2026-11-08 when Spec 129 item (i) landed (the registered themes are applied)', () => {
     const suffix =
-      ' — registered and applied: a dark or wcag theme you register replaces DesignerPunk\'s built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme';
+      ' — registered and applied: a dark or wcag theme you register replaces DesignerPunk\'s built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme that overrides a colour is written as :root[data-theme="<name>"] on web (it matches the <html> element only; a theme that overrides no colour writes no web block, and shows your base tokens), and every other theme is written as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme';
     expect(generateThemesLine([{ name: 'dark', mode: 'dark' }])).toBe(`Themes: dark (dark)${suffix}`);
     expect(generateThemesLine([{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }])).toBe(`Themes: dark (dark), wcag (light)${suffix}`);
     expect(generateThemesLine([{ name: 'dark', mode: 'dark' }])).not.toContain('light and dark mode');

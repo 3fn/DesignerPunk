@@ -54,6 +54,13 @@ export function checkComposition(
   }
 
   // No constraints matched — allowed by default
+  if (comp.rules && comp.rules.length > 0 && !parentProps) {
+    return {
+      allowed: true,
+      reason: `No applicable constraint. ${parent.name} has conditional rules that were not evaluated because no parentProps were given`,
+      rule: 'static',
+    };
+  }
   return { allowed: true, reason: 'No applicable constraint', rule: 'static' };
 }
 
