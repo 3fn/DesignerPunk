@@ -42,12 +42,32 @@ See the CHANGELOG's "Upgrading from 16.2.0" (five steps). **From 16.1.0 or earli
 
 ## 🧪 Onboarding evidence
 
-The 16.3.0 trio runs as written before S (Peter's (a), #844): three persona runs and the Kiro conformance pair as a fourth sitting (Peter, 2026-11-09T04:30:59Z, on #850). The candidate, F and the run results are filled in here before S, from the trio records PR.
+The 16.3.0 trio runs as written before S (Peter's (a), #844): three persona runs, and the Kiro conformance pair as a fourth sitting (Peter, 2026-11-09T04:30:59Z, on #850).
+
+1. **Candidate**, the release PR's pushed head (protocol § 17.1, "the batching PR's candidate"):
+   - **F**: `bd7e340b37b5c4872b2c3ffcbb1df53cd28c22e7`;
+   - **pack**: `3fn-core-16.3.0.tgz`, sha1 `7c0fc15745ed7210736e4b20dab3c240ffa3c46e`, sha256 `625e7cb5d9b6272a165137646e4ed513efaec02b6a29632e7b1da98eecc23fd3`;
+   - 1739 files, 6710710 bytes; pack-assert 115/115; publish path 16 (floor 16).
+   - **How it was built**: `npx tsx scripts/release-publish.ts --dry-run bd7e340b37b5c4872b2c3ffcbb1df53cd28c22e7`, in a fresh clone at F. The tarball and `release-publish-record.json` were copied unchanged to `u5-pack/16.3.0/`. The record carries the sha1; the sha256 is `shasum -a 256` of the same file.
+   - **What it lacks**: unlike 16.1.0's and 16.2.0's main-commit candidates, this candidate carries the release PR's own diff (version, CHANGELOG, notes). It lacks only the squash itself.
+   - **Staleness**: a later commit on this branch that touches a `files[]` path makes the candidate stale. Any such commit is named in the PR body.
+2. **The runs and their findings**: filled in here from the trio records PR, before S.
 
 ## 📦 Packed output against the previous public artifact (RELEASE-FLOW step 2)
 
-Filled in before S: the 16.2.0 public tarball's file set against this release's candidate, and the diffs of the generated files the CHANGELOG describes.
+- **The previous release's tarball**: `npm pack @3fn/core@16.2.0 --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org`, sha1 `6f8210a604e7b72d293e60a74a6a292b9eda7a2a`, equal to the 16.2.0 step-6 record's (`docs/releases/16.2.0/publish-verification.txt` L24).
+- **The file set**, against the candidate at F (`LC_ALL=C comm -3`): **7 removed, 45 added**.
+  - **Removed**:
+    - the four native root token files `dist/{Design,Component}Tokens.{ios.swift,android.kt}` (Spec 129 Task 17; the CHANGELOG's Removed and item (iii));
+    - `dist/components/core/Badge-Count-Notification/tokens.{js,d.ts}`, renamed to `badgeNotificationColorMap.{js,d.ts}` (#830). They sit under no `exports` entry, so no consumer import resolves to them;
+    - `src/components/core/Icon-Base/platforms/android/res/drawable/README.md`, moved out of `res/` (#695).
+  - **Added**:
+    - 14 files under `dist/cli/` and 12 under `dist/generators/`: Spec 129's `generate`, `init` and `sync` code;
+    - `dist/config/` (4), `dist/themes/` (4) and `dist/tokens/color/primitives/shadow.{js,d.ts}`;
+    - `badgeNotificationColorMap.{js,d.ts}`;
+    - the six component-token definition files under `src/components/core/` and `src/tokens/color/primitives/shadow.ts` (Task 13).
+- **At S**, the author repeats the file-set compare on 5.1's tarball and pastes it in the step-6 `.txt`.
 
 ## 📦 Dependency disclosure (ballot `2026-10-03-hermetic-publish-path` § 7)
 
-Filled in before S, from `git diff --stat v16.2.0 <S> -- '*package-lock.json' '*package.json'`.
+**No embedded dependency version changed against 16.2.0's public artifact.** `git diff --stat v16.2.0 bd7e340b3 -- '*package-lock.json' '*package.json'` changes only the root `package.json` (its version and `files[]`) and `package-lock.json`'s two version fields.
