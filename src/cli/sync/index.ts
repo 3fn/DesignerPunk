@@ -586,8 +586,6 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
           trigger,
           // R2 (a): the installed package on disk is judged first, with no fetch.
           installed: { version: pkg.version, root: pkg.root },
-          // The legacy manifest's last sync — read even after conversion, since the old file is kept.
-          lastSyncVersion: loadLegacyManifest(projectRoot)?.version ?? null,
         });
       } finally {
         fetcher.dispose?.();
