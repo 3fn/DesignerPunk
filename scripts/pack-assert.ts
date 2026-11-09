@@ -147,7 +147,7 @@ export function assertPackListing(listing: PackListing): Finding[] {
     `component metadata floor: schema=${schemaCount} contracts=${contractsCount} component-meta=${componentMetaCount} (expect equal, > 0)`);
 
   // --- 3a. DesignerPunk's six harvestable component-token definition files (Spec 129 Req 5.1) ---
-  // `generate` harvests these as its third source. Badge-Count-Notification/tokens.ts is a constants
+  // `generate` harvests these as its third source. Badge-Count-Notification/badgeNotificationColorMap.ts is a constants
   // object outside the pipeline (it registers no tokens), so it is not one of the six.
   for (const f of HARVESTABLE_COMPONENT_TOKEN_FILES) {
     check(packedPaths.has(f), `harvestable component token file present: ${f}`);

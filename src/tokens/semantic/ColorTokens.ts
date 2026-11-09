@@ -23,7 +23,7 @@
  * 
  * MIGRATED TO COMPONENT DIRECTORIES (Spec 058):
  * - avatar = MIGRATED to src/components/core/Avatar-Base/avatar.tokens.ts
- * - badge = MIGRATED to src/components/core/Badge-Count-Notification/tokens.ts
+ * - badge = MIGRATED to src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts
  *   (Note: Badge component tokens reference the semantic color.feedback.notification.* tokens)
  * 
  * All color tokens reference mode-aware primitive color tokens that support
@@ -660,13 +660,13 @@ export const colorTokens: Record<string, Omit<SemanticToken, 'primitiveTokens'>>
    * - color.avatar.agent.icon -> AvatarColorTokens['agent.icon']
    * - color.avatar.default.border -> AvatarColorTokens['default.border']
    * 
-   * Badge tokens migrated to src/components/core/Badge-Count-Notification/tokens.ts:
+   * Badge tokens migrated to src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts:
    * - color.badge.notification.background -> BadgeNotificationColorTokens['notification.background']
    * - color.badge.notification.text -> BadgeNotificationColorTokens['notification.text']
    * 
    * Import from the canonical locations:
    * import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
-   * import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+   * import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/badgeNotificationColorMap';
    * 
    * @see .kiro/specs/058-component-token-architecture-cleanup for migration details
    */
@@ -783,7 +783,7 @@ export const colorTokens: Record<string, Omit<SemanticToken, 'primitiveTokens'>>
  *   - color.avatar.human.icon
  *   - color.avatar.agent.icon
  *   - color.avatar.default.border
- * - Removed 2 Badge component tokens (migrated to src/components/core/Badge-Count-Notification/tokens.ts):
+ * - Removed 2 Badge component tokens (migrated to src/components/core/Badge-Count-Notification/badgeNotificationColorMap.ts):
  *   - color.badge.notification.background
  *   - color.badge.notification.text
  * 
@@ -902,10 +902,10 @@ export const scrimColorTokens = Object.fromEntries(scrimColorTokenNames.map(n =>
 //
 // Use canonical imports instead:
 //   import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
-//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/badgeNotificationColorMap';
 // ============================================================================
 
 // Deprecated helper functions removed (Spec 104) — use canonical imports instead:
 //   import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
-//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/badgeNotificationColorMap';
 
