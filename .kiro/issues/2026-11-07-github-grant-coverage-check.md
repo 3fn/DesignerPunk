@@ -4,7 +4,7 @@
 **Owner**: Thurgood (the instrument's author; `scripts/completion-claims/**` is his standing scope). Filed by Thurgood under `.kiro/issues/README.md` rule 10, in the PR that applies ballot `2026-11-07-github-grants-are-issue-row-grants` (§ 8 item 7; Ada R1 amendment 3, Lina R1).
 **Status**: OPEN
 **Class**: P2 obligation (guard) · owed-act
-**Trigger**: release:next:phase-1
+**Trigger**: `release:next:phase-1`
 
 ---
 
@@ -19,3 +19,5 @@ The added-line half that Stacy R1 names: an added `continue-on-error: true` pass
 ## Grant paths
 
 None. Nothing is written under this record until it is amended with a list in a merged PR (rule 10).
+
+*Trigger token back-ticked 2026-11-09 (Thurgood, owner, rule 1 format; the event is unchanged). The 16.3.0 walk found it untokened to the walk's grep (`.kiro/issues/2026-11-09-release-16.3.0-walk.md`, back-fill finding).*
