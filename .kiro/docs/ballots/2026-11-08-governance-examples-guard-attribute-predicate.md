@@ -69,6 +69,7 @@ The new half's counts join the line, and its kinds join the header. Nothing is r
 - Pending header. **Before**: `adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>)`
 - **After**: `adopted: <sha> <date>; attribute half adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>, tag <e>, attribute <f>, value <g>, css-self-reference <h>)`
 - `--census`'s last line gains the new half's version: `…; predicate v1, file-shape rule v1, attribute predicate v1`.
+- The per-doc `--census` line (`<doc>\t<candidates>:<failing>:<optedOut>`) counts the new half's reads in its three numbers. That is: tags, attributes, values and css declarations read; their hits; and their opted-out reads.
 
 ### Item 3 — the register row `governance-examples`
 
@@ -115,7 +116,7 @@ Ballot `2026-10-26-governance-examples-guard-adoption` § 2 bars any addition to
 - Stacy's replay corrects the counter-argument's size: 156 is tags read, not hits (residual 1).
 
 **What survives.**
-1. **The share not read, not the size of the list.** Stacy's replay ([STACY R1] § 2) projects about 5 adoption hits in 3 docs. 156 is the number of tags read, not the number that fail. What survives is that 10 of the 34 registered elements return `observedAttributes` as a constant or a spread. A-6 reports them as not read, so their attributes are checked only through A-3 (b) and (c).
+1. **The share not read, not the size of the list.** Stacy's replay ([STACY R1] § 2, corrected at [STACY R2]) projects 6 adoption hits in 4 docs, one of them a false fire: `<test-file-path>`, a placeholder in an untagged fence. 156 is the number of tags read, not the number that fail. What survives is that 10 of the 34 registered elements return `observedAttributes` as a constant or a spread. A-6 reports them as not read, so their attributes are checked only through A-3 (b) and (c).
 2. **A-3's limit is real.** An element that reads an attribute through `dataset` or a generic `attributeChangedCallback` loop fails a valid example. That is the safe direction, cleared by a marker or by naming the attribute in `observedAttributes`, but it is a false red until cleared.
 3. **What A-1 does not read.** PascalCase JSX and inline code stay out of scope. `governance/Token-Family-Radius.md` L351–359 writes `borderRadius` as an attribute on `<Card>`, `<Button>` and `<Avatar>`, which is RL-35 (B)'s shape, and this version does not read them.
 
@@ -125,7 +126,7 @@ Ballot `2026-10-26-governance-examples-guard-adoption` § 2 bars any addition to
 
 The guard's code is the instrument the amendment changes, and its module header is the law this ballot amends, so the item is presumptively in scope (conditions 2 and 3).
 
-- `**Census**: npx tsx scripts/governance-examples/check.ts --census over governance/*.md and the eight packaged steering docs @ 5386f93ba — current c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd → proposed: not computed (no scratch diff at draft; the half is the build PR's); <N> docs change, PROJECTED: 3, from Stacy's heuristic replay ([STACY R1] § 2; [THURGOOD R2] item 4 asks about a fourth) (delta: § Census appendix)`. This departs from the README form: the proposed digest is not computed at draft, and the count below is a heuristic, not a census. The shape-review ballot's PROJECTED line held by construction, and this one does not. So the ruling is on the projection, and the build PR's body carries the census in its first form at its own base: the current digest, the proposed digest, the docs that change, and the hits per half (`tag`, `attribute`, `value`, `css-self-reference`) with the elements not read. Stacy's ARMING read compares those hits with the projection here. A difference is a finding routed to Peter. PROJECTED hits (Stacy's heuristic replay at `5386f93ba`, [STACY R1] § 2): tag 2, attribute 1, value 0, css-self-reference 2, in 3 docs; 10 of 34 elements not read.
+- `**Census**: npx tsx scripts/governance-examples/check.ts --census over governance/*.md and the eight packaged steering docs @ 5386f93ba — current c13c9780ba78265c40aed99293a5d4e72fdb710438509053637a164d52868bfd → proposed: not computed (no scratch diff at draft; the half is the build PR's); <N> docs change, PROJECTED: 21, the docs carrying a hyphenated tag in scope (10) or a css custom-property declaration (12) that the new half reads, with one doc in both; 4 of them have a hit (Stacy's heuristic replay, [STACY R2]) (delta: § Census appendix)`. This departs from the README form: the proposed digest is not computed at draft, and the count below is a heuristic, not a census. The shape-review ballot's PROJECTED line held by construction, and this one does not. So the ruling is on the projection, and the build PR's body carries the census in its first form at its own base: the current digest, the proposed digest, the docs that change, and the hits per half (`tag`, `attribute`, `value`, `css-self-reference`) with the elements not read. Stacy's ARMING read compares those hits with the projection here. A difference is a finding routed to Peter. PROJECTED hits (Stacy's heuristic replay at `5386f93ba`, as corrected at [STACY R2]): tag 3, attribute 1, value 0, css-self-reference 2, in 4 docs; 10 of 34 elements not read. One tag hit, `<test-file-path>` at `.kiro/steering/start-up-tasks.md` L98, is a placeholder in an untagged, indented fence, so it is a false fire of A-1's untagged scope. The R1 replay missed it because it did not read indented fences.
 - `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts) — no site adds, renames or removes a get_section or get_document_* citation`
 - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts) — governance/ is an ordinary closure input; the lock is refreshed at the build PR`
 
@@ -282,6 +283,78 @@ Lina on origin/chore/ballot-examples-guard-attribute-predicate @ 733cbff6e: APPR
    - **One of Lina's ten is in scope, and both heuristic replays missed it.** `<test-file-path>` sits in an untagged fence in `.kiro/steering/start-up-tasks.md` L98, the decision tree, which is a `files[]` steering doc. A-1 reads it, and A-2 fails it. That makes the projection tag 3, in 4 docs.
      - [@STACY] Do you want P1's PROJECTED line changed to count it? The line is your replay, so I have not edited it.
      - The doc is Layer 1 and Peter-merged, and the hit would go on the pending list, homed in a record, at the build PR.
+
+#### [STACY R2] — the final draft at `6e6847aec`, read against my pairs
+
+**Read at** `6e6847aec`, against `main` = `5386f93ba`. Date: 2026-11-08. This was a read-only review: I committed nothing.
+
+**Verdict: four pairs remain, R1 to R4.** P1–P5 are applied as I wrote them. Lina's A-6 change answers both of my questions.
+
+The recount is right, and the miss was mine. My R1 replay matched fences only at column 0. `start-up-tasks.md` L98 is inside a fence indented three spaces, so the replay never read it. I re-ran the replay with indented fences (up to three spaces) and with `classification-map.md` excluded. It now gives:
+
+| Half | Hits | Where |
+|---|---|---|
+| tag | 3 | `<list-item>`, `<card-header>`, `<test-file-path>` |
+| attribute | 1 | `autocomplete` on `<input-text-password>` |
+| value | 0 | 89 values checked |
+| css-self-reference | 2 | `Token-Family-Shadow.md` |
+
+That is 6 hits in 4 docs (Badge, Form-Inputs, start-up-tasks, Shadow), with 10 of 34 elements not read. `<test-file-path>` is a placeholder, not an example element. It is a **false fire** of A-1's "or not tagged" scope, which is the class Lina's R1 names.
+
+**A second error, in the census line's unit.** P1 and my R1 counted the docs that have a hit. The census `<N>` counts the docs whose census line differs (README "Census" form). `formatCensus` prints each doc's line as `<doc>\t<candidates>:<failing>:<optedOut>`. So if the new half's reads join those counts, the line changes in every doc where the half reads anything. That is **21 docs**: 10 carry a hyphenated tag in scope, and 12 carry a css custom-property declaration, with one doc in both. The draft does not say whether the per-doc line counts the new half's reads, so `<N>` is undefined as written (R3).
+
+---
+
+**R1: § 5, the census line's `<N>`.**
+
+Before:
+> <N> docs change, PROJECTED: 3, from Stacy's heuristic replay ([STACY R1] § 2; [THURGOOD R2] item 4 asks about a fourth) (delta: § Census appendix)
+
+After:
+> <N> docs change, PROJECTED: 21, the docs carrying a hyphenated tag in scope (10) or a css custom-property declaration (12) that the new half reads, with one doc in both; 4 of them have a hit (Stacy's heuristic replay, [STACY R2]) (delta: § Census appendix)
+
+**R2: § 5, P1's PROJECTED hits sentence.**
+
+Before:
+> PROJECTED hits (Stacy's heuristic replay at `5386f93ba`, [STACY R1] § 2): tag 2, attribute 1, value 0, css-self-reference 2, in 3 docs; 10 of 34 elements not read.
+
+After:
+> PROJECTED hits (Stacy's heuristic replay at `5386f93ba`, as corrected at [STACY R2]): tag 3, attribute 1, value 0, css-self-reference 2, in 4 docs; 10 of 34 elements not read. One tag hit, `<test-file-path>` at `.kiro/steering/start-up-tasks.md` L98, is a placeholder in an untagged, indented fence, so it is a false fire of A-1's untagged scope. The R1 replay missed it because it did not read indented fences.
+
+**R3: § 2 item 2, a bullet after the `--census` version bullet, so that `<N>` has a meaning.**
+
+Before: (no bullet)
+
+After:
+> - The per-doc `--census` line (`<doc>\t<candidates>:<failing>:<optedOut>`) counts the new half's reads in its three numbers. That is: tags, attributes, values and css declarations read; their hits; and their opted-out reads.
+
+*(If Thurgood prefers the other definition, where the per-doc line stays token-name only and the new half shows only in the last line, then R1's 21 becomes the 4 docs with a hit. Either definition is decidable. The ballot must state one of them.)*
+
+**R4: § 4 "What survives", item 1, the first sentence's numbers.**
+
+Before:
+> Stacy's replay ([STACY R1] § 2) projects about 5 adoption hits in 3 docs.
+
+After:
+> Stacy's replay ([STACY R1] § 2, corrected at [STACY R2]) projects 6 adoption hits in 4 docs, one of them a false fire: `<test-file-path>`, a placeholder in an untagged fence.
+
+My R1 entry, spliced in § 6, stays as written. This R2 records the correction.
+
+**The ARMING lines**: I stand behind them as they are written. My four reads fire at the build PR's merge, and the governance-examples read fires at 16.3.0's RELEASE phase 1. My ARMING read compares the build PR's per-half hits with R2's projection.
+
+**Standards implications**: none.
+
+#### [THURGOOD R3] — incorporation
+
+1. **[STACY R2] R1–R4: applied as written.** R1 and R2 are in § 5's census line, R3 in § 2 item 2, and R4 in § 4 "What survives", item 1.
+2. **R3's fork: I take her stated definition.** The per-doc line counts the new half's reads. So `<N>` projects 21 docs, not 4.
+   - **Why**: the per-doc line is what a doc's owner reads. Leaving the half out of it would hide a doc's attribute and tag failures behind the last line.
+   - It also keeps the per-doc line and the report line (item 2) counting the same reads.
+   - **The cost**: the census digest moves in 21 docs at the build PR, which is a larger delta to read than 4.
+   - The other definition is open to Peter at the ruling.
+3. **The false fire.** `<test-file-path>` goes on the pending list at the build PR, homed in a record, as A-7 and item 4 provide. Clearing it is the owner's choice, made in that record and not here:
+   - an `<!-- example: generic -->` marker on the fence;
+   - or a rewording of the placeholder in `start-up-tasks.md`, which is Peter-merged.
 
 ---
 
