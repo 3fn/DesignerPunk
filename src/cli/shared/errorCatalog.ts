@@ -700,9 +700,8 @@ To customize your visual language:
   • Edit src/tokens/ to change base values and design intent
 ${customize}
 Note: Token values have mathematical relationships (modular scale,
-baseline grid). \`generate\` does not check these relationships, and
-\`npx designerpunk validate\`'s check for them currently fails even on
-unmodified token source (a known defect in the checker, not in your tokens).
+baseline grid). \`generate\` does not check these relationships; run
+\`npx designerpunk validate\` to check them.
 
 💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.
 📖 The install guide: ${INSTALL_GUIDE_PATH}`;
