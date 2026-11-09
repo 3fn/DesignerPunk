@@ -244,6 +244,12 @@ signer: sparky
 
 signer: sparky
 
+**RE-SIGN 2026-11-08 - ASSENT, surviving 3/3**: `ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback`. A new act on a stale row, read fresh. The `canonicalHash` did not move (`sha256:d672fc52acae749a0c20e074c640a050e935ca09ebafeb63ef4ca43729346be6`); the `renderedHash` moved from `sha256:aa49df238aa1e7d769147d0ba706f99f0dc968941d8c8c551c484ecb217eb3fc` to `sha256:fc814c7053419240077e6e0a6c1a5c7aaec6e37f291d52863fd1754634d62f87`, which I computed with `renderedHashOf(readConsumerSpans(<worktree>), rowSpanSource('canonical/agents/sparky.md','body','#mcp-practice-notes'))`; it equals the print's `renderedHash:` (printed at `23222ef5b`, tree clean). I judged the three items afresh against the rendering (the three pieces are identical).
+- `ground-truth-live-mcp` survives. The rendering says ground truth is live and to reach for `get_token_details` / `search_tokens` (application) for token values rather than reading generated CSS by hand. That entails the function (query the live tools, not a snapshot).
+- `rebuild-product` survives, verbatim.
+- `mcp-fallback` survives. The rendering falls back to the installed package's component metadata and type declarations, to its governance docs under `node_modules/@3fn/core/governance/`, and to Grep/Glob over my own `.test.ts` files; it still says to check index health if queries consistently fail. Every compliant implementation of the item complies with the rendering.
+- **What moved**: the authoring correction (MP-5) changed the governance-docs path from `node_modules/@3fn/core/.kiro/steering/` to `node_modules/@3fn/core/governance/`. My 2026-09-29 entry below recorded that `package.json` `files` ships `.kiro/steering/`. That was wrong as I stated it: `files` names only the eight identity docs there one by one, and ships `governance/` whole. I checked `package.json` `files` for `governance/` this time. The 2026-09-29 entry stands as history.
+
 **RE-SIGN 2026-09-29 — ASSENT, surviving 3/3**: `ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback`. This resolves my phase-two refusal: Thurgood re-authored the row at `5a6e35d3`, so this is not assent-only. I re-judged the unit in full against the new rendering.
 - `ground-truth-live-mcp` survives, unchanged from phase two.
 - `rebuild-product` is verbatim.
