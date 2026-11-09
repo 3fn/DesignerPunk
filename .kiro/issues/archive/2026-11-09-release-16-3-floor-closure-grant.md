@@ -23,3 +23,10 @@
 - **Activation**: Peter's merge of the record-only PR that adds this file.
 - **Expiry**: #852's merge.
 - **Close**: #852 adds rule 5's dated outcome line here and moves this file to `archive/` in the same PR.
+
+## Outcome (2026-11-09)
+
+Closed by its fixing PR, #852 (`release/16.3.0`), under rule 5. Thurgood.
+- **The act**: `npx tsx scripts/floor-closure.ts` was run at the release branch after merging `main` (`de4ae81e0`), and its output committed unedited. `filesChecked` and `seedFileCount` move from 54 to 55, and `generatedAt` moves from `2026-09-26T23:23:20.952Z` to the run time. No closure path changes.
+- **In the list**: the one path the grant names, `floor-closure.json`. `scripts/floor-closure.ts` and its test are untouched.
+- **No ARMING line**: no `.github/**` path.

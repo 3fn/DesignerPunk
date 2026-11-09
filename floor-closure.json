@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-26T23:23:20.952Z",
+  "generatedAt": "2026-11-09T05:02:14.014Z",
   "note": "snapshot; the arbiter is the post-diet packed consumer-guard run (Req 3.9, Task 9).",
   "closure1": {
     "description": "rewrite completeness over the transformed copy (governs C4, never files[])",
-    "filesChecked": 54,
+    "filesChecked": 55,
     "escapingReferences": [],
     "zeroEscapes": true
   },
   "closure2": {
     "description": "the package's own runtime closure of src/tokens (governs files[])",
-    "seedFileCount": 54,
+    "seedFileCount": 55,
     "files": [
       "src/build/tokens/ComponentToken.ts",
       "src/build/tokens/ComponentTokenGenerator.ts",
