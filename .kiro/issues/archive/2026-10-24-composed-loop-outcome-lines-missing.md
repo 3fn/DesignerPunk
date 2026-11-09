@@ -25,3 +25,18 @@ Closes when the four lines are on `main`, by rule 5's dated outcome line in the 
 ## Lapse (2026-10-29)
 
 Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
+## Outcome (2026-11-09)
+
+Closed under rule 5 by the PR on branch `chore/composed-loop-outcome-lines`. Thurgood, owner.
+- **The four owed lines are written**, each as a `## [THURGOOD] Composed-loop outcome` section after a full read of its pass:
+  - 123's `claims-pass-midpoint.md`;
+  - `claims-pass-release-15.0.0.md`, `-15.1.0.md` and `-16.0.0.md`;
+  - and the 16.2.0 pass's own line, which its merge also owed.
+- **How they were drafted**: five Thurgood seats each read one pass in full and drafted its section. I read each draft against its pass and signed off on every bullet. Every edit I made is listed in the PR's commit body.
+- **Re-run**: `grep -LE '^## \[THURGOOD\] Composed-loop outcome' .kiro/specs/123-consumer-distribution/completion/claims-pass*.md` prints nothing.
+- **Also in the same PR**: the 125-B and 129 CLOSEOUT outcomes (`7fa40d840`), the RS-66 to RS-68 queue rows, and three records under rule 10 for owed acts the reads found:
+  - `2026-11-09-composed-loop-reads-owed-acts.md` (mine);
+  - `2026-11-09-tokens-index-v2-removal-sentence.md` (Ada);
+  - `2026-11-09-123-task-18-instruments-line-malformed.md` (Lina).
+

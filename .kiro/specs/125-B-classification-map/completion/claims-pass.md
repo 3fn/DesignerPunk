@@ -202,3 +202,12 @@ The criteria are each parent's `**Success Criteria:**` bullets in `tasks.md`, pl
 *No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*
 
 *Signed: Stacy, 2026-11-08.*
+
+## [THURGOOD] Composed-loop outcome (2026-11-08)
+
+I read the whole pass at `5386f93ba`, not only its `Standards implications:` lines. These outcomes are about what the docs and checks should teach; none re-decides what the audit concluded. CL-1 to CL-4 come to me by the remediation route as well, and CL-1 is fixed in #816 (the CL-1 CORRECTION).
+
+- **S-1: adopted.** The owed-set script's closing-commit reading governs. My charter already describes the script that way ("The anchor printed is the spec's closing commit"), and so does RELEASE-FLOW step 5a. Only the predicate's first clause still keys on the final declared unit. Vehicle: that clause, restated to the closing commit, in the next ballot that amends `canonical/agents/thurgood.md` (LAW, Peter-merged).
+- **S-2: adopted.** A straggler sweep lists the after-texts of ratified but unapplied ballots apart from its ledger hits, because they become law at their application. Vehicle: one sentence in `.kiro/docs/ballots/README.md` § "Conventions", under "Straggler sweep on an instrument PR" (LAW), queued for the next ballots-README ballot.
+- **S-3: declined-with-reason.** Dry-running an application before ratification needs the authoring commit's tree, which does not exist yet. The edit discipline already makes the applier stop or disclose and substitute (README § "Conventions", "if a before-text does not match, stop … and report"). #806 did exactly that. One instance; a second one opens it.
+- **S-4: adopted.** The Completion Documentation Guide should say that a legacy spec's material amendment takes `spec-level` mode and discharges at CLOSEOUT, because `per-parent` reds the parents that predate ratification. That describes parity's shipped behaviour, so it is a CORRECTION of an omission. Vehicle: a guide CORRECTION PR, mine.
