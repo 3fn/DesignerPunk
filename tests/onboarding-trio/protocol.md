@@ -1780,15 +1780,15 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 
 *Added 2026-11-08 under the grant in `.kiro/issues/2026-11-09-release-16-3-trio-grant.md` (#845). Peter's ruling (#844, `3b7e1183854a7696a0bdbe886861c32a29c354eb`): release 16.3.0 now; the trio run as written, option (a): every persona runs once against the 16.3.0 preview candidate before S.*
 
-**17.1 The candidate, to be filled.** The candidate is produced by Thurgood's batching PR. Nothing below is known yet, and no run starts until each row is filled by a commit of this file's successor note or the records' F3 field.
+**17.1 The candidate (filled 2026-11-09).** Built by Thurgood's batching PR #852 (`release/16.3.0`, head `acd96c6aa`) with `npx tsx scripts/release-publish.ts --dry-run bd7e340b37b5c4872b2c3ffcbb1df53cd28c22e7`, exit 0. It is stored on the launcher's machine; nothing is built for the runs. Re-checked by Leonardo against the stored file and its `release-publish-record.json` before filling.
 
 | Item | Value | Source |
 |---|---|---|
-| Pack name | `PLACEHOLDER-PACK-NAME` (expected `3fn-core-<version>.tgz`, stored at `u5-pack/16.3.0/`) | the batching PR's candidate |
-| sha1 | `PLACEHOLDER-SHA1` | the candidate's `release-publish-record.json` |
-| sha256 | `PLACEHOLDER-SHA256` | the same |
-| F (freeze commit) | `PLACEHOLDER-F` | the batching PR |
-| Prompt commit (`COMMIT=` in step 0) | `PLACEHOLDER-PROMPT-COMMIT` (the merge of the PR carrying this file) | read from `main` after the merge |
+| Pack name | `3fn-core-16.3.0.tgz`, at `/Users/3fn/Documents/Work Projects/Kiro/u5-pack/16.3.0/` with `release-publish-record.json` | #852 |
+| sha1 | `7c0fc15745ed7210736e4b20dab3c240ffa3c46e` (`shasum -a 1` of the stored file; equal to #852's) | the candidate's `release-publish-record.json` |
+| sha256 | `625e7cb5d9b6272a165137646e4ed513efaec02b6a29632e7b1da98eecc23fd3` (`shasum -a 256` of the stored file) | the same |
+| F (freeze commit) | `bd7e340b37b5c4872b2c3ffcbb1df53cd28c22e7` (equal to the record's `commit`, checked with `jq -r .commit`) | the batching PR |
+| Prompt commit (`COMMIT=` in step 0) | `430151c01c5a27f52ac1fd57a326410ffad1d9a6` (#850's squash on `main`, which carries the protocol, the three persona prompts and both conformance prompts; the fill PR after it changes none of them) | read from `main` after the merge |
 
 **17.2 The Kiro conformance pair: run as a fourth sitting (§ 15.3).** Ruled by Peter, 2026-11-09T04:30:59Z, on #850: "(a), run it as a fourth sitting" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-ruling-kiro-pair-fourth-sitting.md`). The pair is beat 1 (consumer-Thurgood) then beat 2 (consumer-Stacy), in Kiro, against the same candidate and F as the three persona sittings; frozen prompts are `prompts/16.3.0/conformance-kiro-beat-{1,2}.md`; its launch blocks are § 15.3's, with `REL=16.3.0`; its records are `records/16.3.0/conformance-kiro-beat-{1,2}.md`. This replaces the reason line the first draft of this section carried; the pair is no longer left owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`, whose discharge is the pair's records. The measured rendering diff below is the record's `why-run:` evidence, measured 2026-11-08 at the base of this branch (`c3fd1893a`):
 
