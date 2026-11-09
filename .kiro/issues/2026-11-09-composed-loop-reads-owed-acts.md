@@ -42,3 +42,31 @@
    - **The act**: a CORRECTION of the comment, with a `history` line (truth: that archived record).
    - **Held** because a `governance/` edit refreshes `canonical/generated.lock`, which another open PR holds. It lands in the next lock-carrying PR of mine.
    - *Progress (2026-11-09, Thurgood)*: done on branch `chore/law-ratified-row-comment-correction`, after #838 freed the lock. The row's comment is corrected and gains a history line. The item closes at that PR's merge.
+
+## Item 4, read (2026-11-09, Thurgood, owner)
+
+- **The read.** I named the corrected class for each of the twelve PRs from its `**Edit kind**:` CORRECTION lines, and swept the class's reach at `main` `e6533d83a`: `governance/`, `.kiro/steering/`, `.kiro/hooks/RELEASE-FLOW.md`, `canonical/agents/`, `canonical/profiles/consumer/`, `docs/consumer/`.
+
+| PR | Class corrected | Sweep, at `e6533d83a` | Result |
+|---|---|---|---|
+| #542 | register `education` cites into charter lines | charter-line cites in `governance/classification-map.md` (forms vary: `L<n>`, `:<n>`) | no cite past its file's end; **content not re-verified** for each cite (left: a cite-by-cite read is Spec 131's register work) |
+| #546 | product tokens described as component tokens | `git grep -iE 'product tokens? (are\|is) (a )?component\|component tokens? \(product'` | **0 hits**; true |
+| #550 | a `moved` pointer without its date | `git grep -nE '\*?\(moved [^0-9]'` | **0 hits**; true |
+| #577, #603 | Android token types (spacing as `Float`, "never append `.dp`") | `git grep -iE 'spacing.*Float\|Float.*spacing\|append .\.dp\|\.dp\b.*(never\|always)'` | **0 hits**; true |
+| #578 | component token files taught as a reference map | `git grep -i 'reference map'` | **0 hits**; true |
+| #595 | token-doc example names that are not index keys | the governance-examples guard's tag and name halves, which read the class mechanically | **0 pending at S** for the classes the guard covers (16.2.0 pass); true |
+| #604 | a charter's theming lines on what `generate` emits | Data's charter L298 and overlay L40, the sibling lines | they state the static object plus the theme surface; true |
+| #606, #614 | owed-set descriptions against `scripts/owed-set.sh` | `git grep 'final declared unit'` | 5 hits (RELEASE-FLOW L75; `stacy.md` L439, L447; both overlays' unit-class lines). The predicate's first clause keys on the final declared unit while the script anchors on the closing commit. This is the 125-B CLOSEOUT outcome's S-1, which names a vehicle and no record. **Filed here as item 7.** |
+| #609 | worked examples that name files or scripts that do not exist | test-file names in the reach, against `git ls-files`; `package.json` scripts | **Still false, 3 places in `governance/Test-Development-Standards.md`**, outside the ranges #609 corrected. They are bash fences with no `<!-- example: generic -->` marker. L1706 `npm run lint:stemma`: no such script. L1871 `ButtonCTA.icon-integration.test.ts`: no such file. L1710–L1716: the Input-Text-Search paths of the generic worked example, unmarked in this fence. Also L87–L88 and L1045 name `Icon.test.ts` and `Icon.accessibility.test.ts`, the pre-rename names; `Icon-Base/__tests__/IconBase.test.ts` exists. **Owner: Thurgood. Fix: a CORRECTION (truth: `git ls-files`, `package.json`), folded into the 16.3.0 batching PR, which carries the lock anyway.** |
+| #612 | a volatile count stated as current | `git grep -E '[0-9]+ tools'` in `.kiro/steering/` and the MCP docs | `DesignerPunk-Systems-Overview.md` L180 "14 tools" is already recorded (`2026-11-01-systems-overview-l180-product-mcp-volatile-count.md`, (b) at the walk). `governance/MCP-Evolution-Roadmap.md` L32–L36, § "Current State (Post-071)", says "Product MCP: Not yet built" and gives Application MCP counts. It is dated by its heading, but it reads as current. **Owner: Thurgood (Shared doc). Fix: the same batching-PR CORRECTION (retitle the section as a dated snapshot, or bring it current).** |
+
+**What is still false**:
+- `Test-Development-Standards.md`, at L1706, L1871, L1710–L1716, L87–L88 and L1045;
+- `MCP-Evolution-Roadmap.md` § "Current State (Post-071)".
+
+Both are mine, and both are fixed as CORRECTIONs in the 16.3.0 batching PR. Neither is a P0 as I read them: each is a worked or historical example in a `governance/` doc, not a consumer instruction. **If the batching PR does not carry them, they go to Peter's floor-class batch at the walk.**
+
+7. **The owed-set predicate's first clause** (125-B CLOSEOUT outcome, S-1; #606/#614's class).
+   - RELEASE-FLOW L75, `stacy.md` L439 and `thurgood.md`'s LIVENESS text state `closeout-owed(S)` as "S's final declared unit has merged". The script reads the spec's closing commit.
+   - **The act**: restate the clause to the closing commit. Thurgood's and RELEASE-FLOW's lines are mine; Stacy's are hers (RS-64's pairing).
+   - **Vehicle**: the next ballot that amends `canonical/agents/thurgood.md`, or Spec 131's owed-set work if that comes first.
