@@ -19,6 +19,10 @@ import { loadElements, trackedFiles } from '../check';
 const REPO = path.resolve(__dirname, '..', '..', '..');
 const BUNDLE = path.join(REPO, 'dist/browser/designerpunk.umd.js');
 
+/** The jsdom window's registry. tsconfig.scripts.json carries no DOM lib, so it is typed here. */
+type Registry = { get(tag: string): { observedAttributes?: readonly string[] } | undefined };
+const registry = (): Registry => (globalThis as unknown as { customElements: Registry }).customElements;
+
 describe("Lina's twin-agreement test (A-6): the syntactic observedAttributes equals the built class's", () => {
   const elements = loadElements(REPO, trackedFiles(REPO));
 
@@ -30,7 +34,7 @@ describe("Lina's twin-agreement test (A-6): the syntactic observedAttributes equ
   });
 
   it('every registered tag is defined by the built bundle', () => {
-    const missing = [...elements.keys()].filter((t) => !customElements.get(t));
+    const missing = [...elements.keys()].filter((t) => !registry().get(t));
     expect(missing).toEqual([]);
   });
 
@@ -42,7 +46,7 @@ describe("Lina's twin-agreement test (A-6): the syntactic observedAttributes equ
     expect(literal.length).toBeGreaterThan(0);
     const disagree = literal
       .map((e) => {
-        const ctor = customElements.get(e.tag) as unknown as { observedAttributes?: readonly string[] } | undefined;
+        const ctor = registry().get(e.tag);
         return { tag: e.tag, syntactic: e.observed, runtime: ctor?.observedAttributes ? [...ctor.observedAttributes] : undefined };
       })
       .filter((x) => JSON.stringify(x.syntactic) !== JSON.stringify(x.runtime));
