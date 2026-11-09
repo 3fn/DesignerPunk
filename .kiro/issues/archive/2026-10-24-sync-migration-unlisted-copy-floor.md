@@ -54,3 +54,5 @@ Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S
 *(2026-11-01, Lina, owner, rules 9 and 11: Trigger re-ruled as above. The superseded Trigger line, verbatim:)*
 
 > **Trigger**: `release:next:phase-1` — Peter's pick between the options below, and the fixing PR that applies it, before the next release's RELEASE phase 1. At that walk this record is fixed, or carried with the fork still open for Peter (rule 1: a P2 that rides another change takes this token).
+
+**Outcome (2026-11-09, Lina, owner, rule 5)**: Option B applied as the rule by Ada's PR #829 (`202b7fb3c`, merged 2026-11-09T01:00:00Z): the migration's floor is the constant `FIRST_COMPONENT_COPY_VERSION = '11.0.0'` (or the installed bound if older), so an unmatched copy is `cannot-tell` unless every version from that floor was retrieved. Floor checked from the components side: 11.0.0 is the first `@3fn/core` tag with `src/` in `files` (v10.2.0 was `designer-punk-v2`). The cost stands as the record states it: adopters on the public registry lose automatic fork verdicts. Closed and archived in this PR.
