@@ -17,6 +17,10 @@
  *      the seven real token files and the plain-map fixture; the naming rule agrees with the loader's.
  *   7. The real corpus against pending.json: no unlisted hit, no stale entry, no unknown marker; the
  *      baseline header holds; every entry's home is an open record that names the doc.
+ *   8. Lina's attribute and value half (§ 8.11, ballot 2026-11-08-governance-examples-guard-attribute-
+ *      predicate): the A-block's sibling file byte-exact (site-1b erratum); one red and one green per
+ *      rule A-2 to A-5; A-6's not-read case (A-3 runs with (a) empty, counted); A-7's markers.
+ *      The twin-agreement test (A-6) is governance-examples.twin.test.ts, which needs jsdom.
  *
  * The import surface needs the built types (`npm run build`); the lane builds before test:scripts.
  */
@@ -27,6 +31,7 @@ import * as path from 'path';
 import { loadComponentTokens } from '../../../src/cli/loadComponentTokens';
 import type { ResolvedConfig } from '../../../src/config/ConfigLoader';
 import {
+  ATTRIBUTE_PREDICATE_VERSION,
   EXCLUDED_DOCS,
   FILE_SHAPE_RULE_VERSION,
   GuardInputError,
@@ -44,10 +49,12 @@ import {
   hasExportedDefineCall,
   isTokenFileName,
   judge,
+  loadElements,
   loadExportsMap,
   loadNameSet,
   loadPending,
   parseHeader,
+  readElementSource,
   readInputs,
   resolveCandidate,
   resolveDeclaredPath,
@@ -65,6 +72,9 @@ const FIXTURES = path.join(__dirname, '__fixtures__');
 const nameSet = loadNameSet(path.join(REPO, 'token-index'));
 const exportsMap = loadExportsMap(REPO);
 const tracked = trackedFiles(REPO);
+const elements = loadElements(REPO, tracked);
+const ATTRIBUTE_BALLOT = path.join(REPO, '.kiro/docs/ballots/2026-11-08-governance-examples-guard-attribute-predicate.md');
+const ATTRIBUTE_FILE = path.join(REPO, 'scripts/governance-examples/attribute-predicate.md');
 
 /** A token candidate that resolves, so a synthetic doc never trips the zero-candidate floor. */
 const KEY_LINE = 'A real key: `color.feedback.success.text`.';
@@ -88,12 +98,17 @@ function synth(docs: Record<string, string>, over: Partial<GuardInputs> = {}): G
     tracked,
     nameSet,
     exportsMap,
+    elements,
     ...over,
   };
 }
 
 function emptyPending(): PendingFile {
-  return { header: 'adopted: 0000000 2026-10-26; entries: 0 (token-name 0, declared-path 0, shape 0, import 0)', entries: [] };
+  return {
+    header:
+      'adopted: 0000000 2026-10-26; attribute half adopted: 0000000 2026-11-09; entries: 0 (token-name 0, declared-path 0, shape 0, import 0, tag 0, attribute 0, value 0, css-self-reference 0)',
+    entries: [],
+  };
 }
 
 function fence(lang: string, body: string, marker?: string): string {
@@ -119,9 +134,25 @@ describe('the module header carries the ballot § 8.1–8.5 texts byte-exact', (
     expect(text.length).toBeGreaterThan(100);
     expect(source.includes(text)).toBe(true);
   });
+  it('§ 8.11: the sibling file is the A-block byte for byte, in both ballots; the header points to it (site-1b erratum)', () => {
+    const fromBallot = (file: string, opener: (l: string) => boolean): string => {
+      const lines = fs.readFileSync(file, 'utf8').split('\n');
+      const i = lines.findIndex(opener);
+      expect(i).toBeGreaterThan(0);
+      const open = lines.indexOf('````', i);
+      const close = lines.indexOf('````', open + 1);
+      return lines.slice(open + 1, close).join('\n') + '\n';
+    };
+    const sibling = fs.readFileSync(ATTRIBUTE_FILE, 'utf8');
+    expect(sibling.length).toBeGreaterThan(100);
+    expect(sibling).toBe(fromBallot(ATTRIBUTE_BALLOT, (l) => l.startsWith('The block (from')));
+    expect(sibling).toBe(block('8.11') + '\n');
+    expect(source).toContain('Carried in scripts/governance-examples/attribute-predicate.md, byte-exact');
+  });
   it('carries the version constants and the one stated exclusion', () => {
     expect(PREDICATE_VERSION).toBe(1);
     expect(FILE_SHAPE_RULE_VERSION).toBe(1);
+    expect(ATTRIBUTE_PREDICATE_VERSION).toBe(1);
     expect(EXCLUDED_DOCS).toEqual(['governance/classification-map.md']);
   });
 });
@@ -463,5 +494,88 @@ describe('the served corpus', () => {
         named: true,
       });
     }
+  });
+});
+
+// ============================================================================
+// 8. Lina's attribute and value half (§ 8.11)
+// ============================================================================
+
+describe("Lina's attribute and value half (A-1 to A-7)", () => {
+  const html = (body: string, marker?: string): string => `${KEY_LINE}\n${fence('html', body, marker)}`;
+  const halves = (doc: string): string[] => runGuard(synth({ 'a.md': doc })).hits.map((h) => `${h.half} ${h.string}`);
+
+  it('reads the registered tags from the element sources: 34 tags, 10 not read', () => {
+    expect(elements.size).toBe(34);
+    expect([...elements.values()].filter((e) => e.observed === undefined).map((e) => e.tag).sort()).toEqual([
+      'chip-base', 'chip-filter', 'chip-input', 'input-checkbox-base', 'input-checkbox-legal',
+      'input-radio-base', 'input-radio-set', 'nav-header', 'nav-segmented-choice', 'nav-tab-bar',
+    ]);
+  });
+  it('A-2: an unregistered hyphenated tag fails; a registered one passes; consumer skips only A-2', () => {
+    expect(halves(html('<input-text label="Name"></input-text>'))).toEqual(['tag input-text']);
+    expect(halves(html('<button-cta label="Go"></button-cta>'))).toEqual([]);
+    const r = runGuard(synth({ 'a.md': html('<list-item><button-cta variant="danger"></button-cta></list-item>', 'consumer') }));
+    expect(r.hits.map((h) => `${h.half} ${h.string}`)).toEqual(['value danger']);
+    expect(r.perDoc.get('governance/a.md')!.optedOut).toBe(2); // the consumer marker site, and the unregistered tag
+  });
+  it('A-1: tsx and untagged blocks are read; PascalCase tags, closing tags, comments and other tags are not', () => {
+    expect(halves(`${KEY_LINE}\n${fence('tsx', 'const x = <input-text label="a" />;')}`)).toEqual(['tag input-text']);
+    expect(halves(`${KEY_LINE}\n${fence('', 'npm test -- <test-file-path>')}`)).toEqual(['tag test-file-path']);
+    expect(halves(`${KEY_LINE}\n${fence('tsx', '<Card borderRadius="x" />')}`)).toEqual([]);
+    expect(halves(html('<!-- <input-text> --></input-text>'))).toEqual([]);
+    expect(halves(`${KEY_LINE}\n${fence('bash', '<input-text>')}`)).toEqual([]);
+  });
+  it('A-3: an attribute neither observed, read nor global fails; (a), (b) and (c) pass', () => {
+    expect(halves(html('<container-base borderRadius="normal"></container-base>'))).toEqual(['attribute borderRadius']);
+    expect(halves(html('<container-base border-radius="normal"></container-base>'))).toEqual([]);
+    expect(halves(html('<chip-base label="x" test-id="t"></chip-base>'))).toEqual([]); // (b): getAttribute reads
+    expect(halves(html('<button-cta id="a" class="b" aria-label="c" data-x="d" onclick="e()" slot="s"></button-cta>'))).toEqual([]);
+  });
+  it('A-4: an enumerated value outside the union fails; inside passes; templates and expressions are not checked', () => {
+    expect(halves(html('<button-cta variant="danger"></button-cta>'))).toEqual(['value danger']);
+    expect(halves(html('<button-cta variant="primary"></button-cta>'))).toEqual([]);
+    expect(halves(html('<button-cta variant="${v}"></button-cta>'))).toEqual([]);
+    expect(halves(`${KEY_LINE}\n${fence('tsx', 'const b = <button-cta variant={v} />;')}`)).toEqual([]);
+  });
+  it('A-5: a custom property declared as var() of itself fails; another name passes', () => {
+    expect(halves(`${KEY_LINE}\n${fence('css', ':root { --x-y: var(--x-y); }')}`)).toEqual(['css-self-reference --x-y']);
+    expect(halves(`${KEY_LINE}\n${fence('css', ':root { --x-y: var(--z); }')}`)).toEqual([]);
+    // The text is a substring test: a longer name that begins with the declared one fires too (A-5 v2 is Lina's).
+    expect(halves(`${KEY_LINE}\n${fence('css', ':root { --x: var(--x-offset); }')}`)).toEqual(['css-self-reference --x']);
+  });
+  it('A-6: a non-literal observedAttributes is not read, counted, and A-3 runs with (a) empty', () => {
+    const src = [
+      "const OBSERVED = ['tone'];",
+      'class Probe extends HTMLElement {',
+      '  static get observedAttributes() { return [...OBSERVED]; }',
+      "  connectedCallback() { this.getAttribute('label'); }",
+      '}',
+      "customElements.define('probe-el', Probe);",
+    ].join('\n');
+    const [probe] = readElementSource(src, 'src/components/core/Probe/platforms/web/Probe.web.ts');
+    expect(probe.observed).toBeUndefined();
+    const els = new Map([['probe-el', { ...probe, props: new Map() }]]);
+    const r = runGuard(synth({ 'a.md': html('<probe-el tone="warm" label="x"></probe-el>') }, { elements: els }));
+    expect(r.hits.map((h) => `${h.half} ${h.string}`)).toEqual(['attribute tone']);
+    expect(formatReport(r, 0)).toContain('not read: 1 of 1;');
+    const [lit] = readElementSource(src.replace('[...OBSERVED]', "['tone']"), 'x.web.ts');
+    expect(lit.observed).toEqual(['tone']);
+  });
+  it('A-7: generic skips the block and counts its reads as opted out; keys carry the half', () => {
+    const r = runGuard(synth({ 'a.md': html('<input-text label="Name"></input-text>', 'generic') }));
+    expect(r.hits).toEqual([]);
+    expect(r.wouldFail).toBe(1);
+    expect(r.perDoc.get('governance/a.md')!.optedOut).toBe(2); // the marker site, and the tag read
+    const p = emptyPending();
+    const hit = runGuard(synth({ 'a.md': html('<input-text></input-text>') }));
+    expect(judge(hit, p).pass).toBe(false);
+    p.entries.push({ doc: 'governance/a.md', half: 'tag', string: 'input-text', occurrence: 0, home: 'x' });
+    expect(judge(hit, p).pass).toBe(true);
+  });
+  it('F-1 (a): the per-doc census line counts the half’s reads', () => {
+    const r = runGuard(synth({ 'a.md': html('<button-cta variant="danger"></button-cta>') }));
+    // 1 token-name candidate; 1 tag, 1 attribute, 1 value read; 1 failing.
+    expect(formatCensus(r)[0]).toBe('governance/a.md\t4:1:0');
   });
 });
