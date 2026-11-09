@@ -411,7 +411,7 @@ InputTextEmail(
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `type` | `'password' \| 'text'` | No | `'password'` | Toggles between masked and visible |
-| `autocomplete` | `'current-password' \| 'new-password'` | No | `'current-password'` | Password autofill type |
+| `isNewPassword` | `boolean` | No | `false` | Sets the autofill type: `new-password` when true, else `current-password`. Web: the `is-new-password` attribute. The element sets `autocomplete` itself; it takes no `autocomplete` prop |
 | `showPassword` | `boolean` | No | `false` | Whether password is currently visible |
 | `onToggleVisibility` | `(visible: boolean) => void` | No | - | Visibility toggle callback |
 | `showToggle` | `boolean` | No | `true` | Whether to show toggle button |
@@ -1095,7 +1095,6 @@ Form Inputs components resolve tokens through the Rosetta System's semantic-to-p
     id="login-password"
     label="Password"
     value=""
-    autocomplete="current-password"
     required
   ></input-text-password>
   
