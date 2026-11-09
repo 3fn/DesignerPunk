@@ -39,7 +39,8 @@
       "string": "--shadow-container",
       "occurrence": 0,
       "line": 380,
-      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md",
+      "note": "false fire, A-5 v2 (.kiro/issues/2026-11-09-examples-guard-a5-token-boundary.md)"
     },
     {
       "doc": "governance/Token-Family-Shadow.md",
@@ -47,7 +48,8 @@
       "string": "--shadow-fab",
       "occurrence": 0,
       "line": 388,
-      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md"
+      "home": ".kiro/issues/2026-11-09-examples-guard-attribute-half-adoption-hits.md",
+      "note": "false fire, A-5 v2 (.kiro/issues/2026-11-09-examples-guard-a5-token-boundary.md)"
     }
   ]
 }

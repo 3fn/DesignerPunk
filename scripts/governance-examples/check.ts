@@ -20,7 +20,7 @@ counted in all three, F-1 (a)) and the selected count;
 (__tests__/governance-examples.test.ts) is the registered guard: `npm run test:scripts`, in the
 required lane-functional-root job.
 
-The texts below are the ballot's § 8 blocks (§ 8.11 from the amendment), byte-exact, each between its two "====" lines. The
+The texts below are the ballot's § 8 blocks (§ 8.11 by pointer, from the amendment), byte-exact, each between its two "====" lines. The
 test compares each with the ballot. Where this code and a text differ, the text governs and the
 code is the defect.
 
@@ -122,17 +122,10 @@ A marker on the line directly before a fence covers that one fence. A marker pla
 ==== end § 8.5
 
 ==== § 8.11 The attribute and value predicate, version 1 (Lina's text, byte-exact)
-- **A-1: scope.** Fenced blocks tagged `html`, or not tagged, and the JSX of blocks tagged `tsx` or `jsx`. Only elements whose tag name contains a hyphen are read. Inline code spans are out of scope in this version.
-- **A-2: the registered tags.** A tag is DesignerPunk's when a `customElements.define('<tag>', …)` call with a string-literal tag appears in `src/components/**/platforms/web/*.web.ts`. A hyphenated tag in scope that no such call registers fails (a misspelled or retired tag, e.g. `<input-text>`). `<!-- example: consumer -->` skips **only** this check: a consumer's own elements are not DesignerPunk's. A-3 to A-5 still run for every registered tag in the block.
-- **A-3: attributes.** Each attribute on a registered tag must be one of:
-  (a) a string in that element's `observedAttributes` array literal;
-  (b) the argument of a `getAttribute`, `hasAttribute` or `toggleAttribute` call with a string literal, in the same `*.web.ts` file;
-  (c) a global HTML attribute: `id`, `class`, `style`, `slot`, `part`, `hidden`, `title`, `lang`, `dir`, `tabindex`, `role`, `inert`, any `aria-*`, any `data-*`, or any `on[a-z]+` event-handler content attribute.
-  An attribute that matches none fails. The check compares the hyphenated attribute names, never the schema's camelCase prop names: `borderRadius` is Container-Base's prop, and as an attribute it fails, because the element observes `border-radius`.
-- **A-4: enumerated values.** For an attribute that passes A-3 (a) or (b), find the element's schema prop: the prop whose name equals the attribute with hyphens removed, compared case-insensitively (`test-id` → `testID`). If that prop's `type` is a union of quoted string literals (`"'primary' | 'secondary' | 'tertiary'"`) or the prop carries `validation.enum`, the attribute's value must be one of them (`variant="danger"` fails). Boolean props, values containing `${` or `{{`, and attributes with no schema prop are not value-checked.
-- **A-5: CSS self-reference.** In fenced blocks tagged `css`, a declaration whose property is a custom property (`--name`) fails when its value contains `var(--name` for the same name: the declaration redeclares a token as itself (RL-31 (i)).
-- **A-6: the check reads syntax and does not render or run anything.** HTML is read by a tolerant tokenizer, with no DOM. The element sources are read by `ts.createSourceFile`, with no program and no `dist/`. An `observedAttributes` that is not an array literal (a spread, a computed list) is reported as **not read** for that element, counted in the report line, never as a pass. **A twin-agreement test** pins the syntax read to the running elements: for every registered tag whose `observedAttributes` is an array literal, the syntactic list equals the built class's runtime `observedAttributes` (jsdom, after `define`), and the test fails on any difference. For a not-read element, A-3 runs with (a) empty. The report line prints the count, e.g. `not read: 10 of 34`.
-- **A-7: markers and keys.** `<!-- example: generic -->` skips the block entirely. Key: doc, half (`tag`, `attribute`, `value` or `css-self-reference`), the failing string, and its occurrence index in the doc. The line number is informational only. Hits found at adoption go on the pending list, each homed in a record, as § 2.4 does for the existing halves.
+Carried in scripts/governance-examples/attribute-predicate.md, byte-exact, not here. The text
+contains a glob whose "*" and "/" would end this comment. Site-1b erratum to ballot
+2026-11-08-governance-examples-guard-attribute-predicate, ratified by Peter 2026-11-09, (b).
+The test compares that file with the ballot's block byte for byte.
 ==== end § 8.11
 
 Readings the code makes where a text is silent (each is the owner's to confirm or correct):
