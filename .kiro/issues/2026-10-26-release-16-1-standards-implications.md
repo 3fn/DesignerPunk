@@ -501,6 +501,37 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Vehicle**: Spec 131 (the governance-cost class), or a standalone instrument PR if 131's requirements round does not take it.
 - **Consult**: Lina (generator shared core); Stacy (signing chain, which reads the lock's neighbours).
 
+## RS-66 — five PR-body reads still run only at the claims pass (appended 2026-11-09)
+
+- **Source**: 123's 16.2.0 RELEASE pass, S-3, with its evidence: 131 bodies, read through three handoffs. Composed-loop outcome adopted 2026-11-09. Filed under README rule 10, and under this record's "During 16.2.0" line (rows routed to Spec 131).
+- **The gap**: `merge-hold` and `law-ratified` now read their PR-body lines at PR time (ballot `2026-11-07-merge-hold-and-law-ratified-checks`, #722, #727). Five reads are still the pass's alone, from a relayed `gh` capture:
+  - the consult line;
+  - the straggler sweep;
+  - the `**Sweep**:` line;
+  - the ARMING read's `**Agent**:` line;
+  - and, at the pass, the body as a whole.
+- **Disposition (proposed)**: routed to Spec 131 with the class option already there (`inbound-from-2026-10-30-release-flow-as-run.md` L7): read PR-body lines from git, not a relayed capture.
+- **Vehicle**: Spec 131's requirements round.
+- **Consult**: Stacy (the reader).
+
+## RS-67 — consumer-Leonardo's charter does not say to check a token name before writing it into a screen spec (appended 2026-11-09)
+
+- **Source**: 123's 16.2.0 RELEASE pass, S-4 (R3-20: the routing cue alone did not fire in the trio). Composed-loop outcome adopted 2026-11-09. Filed under README rule 10.
+- **The gap**: consumer-Leonardo writes token names into screen specs without a `search_tokens` or `get_token_details` check.
+- **Disposition (proposed)**: a ballot amending `canonical/agents/leonardo.md` (LAW, Peter-merged), co-drafted with Leonardo.
+- **Surviving counter**: the instrument half (`2026-10-25-product-mcp-screen-token-refs-unchecked.md`, routed to 131) is the mechanical fix. If it lands, the charter line may be a review that the check makes redundant.
+- **Vehicle**: the next Leonardo charter ballot, or 131 if its instrument half lands first.
+- **Consult**: Leonardo (owner of the charter text).
+
+## RS-68 — the CORRECTION `**Sweep**:` line has no complier and no reader at PR time (appended 2026-11-09)
+
+- **Source**: 123's 16.2.0 RELEASE pass, S-7 and RL-47, with U-3 (the `**Consulted**:` and `**Straggler sweep**:` lines, same class). Composed-loop outcome adopted 2026-11-09. Filed under README rule 10.
+- **The count**: 0 of 12 CORRECTION PRs after RS-40 carried the line, across four seats, and its reader missed it once.
+- **Disposition (proposed)**: Spec 131 rules mechanize-or-remove for the `**Sweep**:` line. Mechanize means a check that reads it, like `edit-kind-pointers`. Remove means leaning on the instrument sweeps. Peter's 2026-11-08 inbound (`inbound-from-peter-2026-11-08-mechanical-over-review.md`) is the frame. The rule itself changes only through 131's LAW.
+- **The past twelve are not this row**: they are item 4 of `.kiro/issues/2026-11-09-composed-loop-reads-owed-acts.md`.
+- **Vehicle**: Spec 131's requirements round.
+- **Consult**: Stacy (the reader).
+
 ## Finding (appended 2026-10-26): two publish rows have no `census` field
 
 - **Source**: Stacy's R1 on the batch ballot, S-5 ("Finding, never a gate"): neither `hermetic-publish-path` nor `publish-rail-guard` carries a `census` field (`governance/classification-map.md` L878–L915 at `61581c641`). The census rule's in-scope form runs the row's census mode, and the exempt form's ground (2) needs `census: none — <why>`; with neither, an in-scope item on either instrument has no lawful census line (ballot `2026-10-19-instrument-census-at-draft` § 2, F-3 (A): the owner builds the census mode before the first in-scope item on that instrument leaves DRAFT).
