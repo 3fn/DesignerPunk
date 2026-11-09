@@ -557,9 +557,9 @@ The pipeline shows where tokens are being read from. With the config `init` writ
 📦 MyProduct (MP)
    Tokens: src/tokens  (local)
    Output: dist/tokens
-   Themes: dark (dark), wcag (both) — registered and applied: a dark or wcag theme you register replaces DesignerPunk's built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme is written as :root[data-theme="<name>"] on web (it matches the <html> element only) and as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme
+   Themes: dark (dark), wcag (both) — registered and applied: a dark or wcag theme you register replaces DesignerPunk's built-in one (one you leave unregistered is still applied from the package, with a warning); any other theme that overrides a colour is written as :root[data-theme="<name>"] on web (it matches the <html> element only; a theme that overrides no colour writes no web block, and shows your base tokens), and every other theme is written as a theme instance on iOS and Android; a theme of one mode shows your base tokens in its other scheme
 ```
-The `Themes:` line lists what your config registers; every one is applied (see "Themes").
+The `Themes:` line lists what your config registers; every one is applied (see "Themes"). *(corrected 2026-11-08: the sample copies the reworded message of #824, a theme that overrides no colour writes no web block; `.kiro/issues/2026-11-08-themes-line-web-clause-false-for-empty-theme.md`; truth: `src/generators/TokenFileGenerator.ts` L1116; prior text at `5386f93ba`)*
 
 The `(local)` annotation means tokens resolve from your configured `tokenSource` path. If `tokenSource` is omitted, you'll see `(package)` — meaning tokens come from the installed `@3fn/core` package.
 
