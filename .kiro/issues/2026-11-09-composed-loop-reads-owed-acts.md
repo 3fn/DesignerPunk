@@ -41,3 +41,4 @@
    - `governance/classification-map.md` § `law-ratified-at-head` reads `check_state: armed`. Its comment line still says "ARMED-CONDITIONAL until the gate script's N=21 PASS line is pasted into the grant record". That line is pasted at `.kiro/issues/archive/2026-11-07-merge-hold-checks-build-grant.md` L54.
    - **The act**: a CORRECTION of the comment, with a `history` line (truth: that archived record).
    - **Held** because a `governance/` edit refreshes `canonical/generated.lock`, which another open PR holds. It lands in the next lock-carrying PR of mine.
+   - *Progress (2026-11-09, Thurgood)*: done on branch `chore/law-ratified-row-comment-correction`, after #838 freed the lock. The row's comment is corrected and gains a history line. The item closes at that PR's merge.
