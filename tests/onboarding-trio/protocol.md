@@ -1,6 +1,6 @@
 # The persona trio — run protocol
 
-**Spec**: 123-consumer-distribution · **Task**: 25 (U5) · **Operator and author**: Leonardo · **Launcher**: Peter (ruling 2026-10-14: every harness session is launched by Peter from a macOS Terminal window, not from a shell inside the Claude app) · **Written**: 2026-10-14 · **Revised for release 5 (16.1.0)**: §§ 2, 5.0, 5.1, 8, 9, 11, 12, 13 and 15.3, under the write grant in `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` (Peter, 2026-10-25: "T is (A)") · **Revised for release 6 (16.2.0)**: §§ 5.0, 8 (F25) and 9, and the `REL` line of each § 11 run block, under the write grant in `.kiro/issues/2026-10-30-release-16-2-trio-grant.md` (#570, `0184efb3fd7b2956677351fdf84899767a5ac74a`) (the collective's disposition under Peter's delegation, `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` @ `d34fc7786`; Peter, 2026-10-30: "Re: 8, your launch time", R8@`0184efb3fd7b2956677351fdf84899767a5ac74a`)
+**Spec**: 123-consumer-distribution · **Task**: 25 (U5) · **Operator and author**: Leonardo · **Launcher**: Peter (ruling 2026-10-14: every harness session is launched by Peter from a macOS Terminal window, not from a shell inside the Claude app) · **Written**: 2026-10-14 · **Revised for release 5 (16.1.0)**: §§ 2, 5.0, 5.1, 8, 9, 11, 12, 13 and 15.3, under the write grant in `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` (Peter, 2026-10-25: "T is (A)") · **Revised for release 6 (16.2.0)**: §§ 5.0, 8 (F25) and 9, and the `REL` line of each § 11 run block, under the write grant in `.kiro/issues/2026-10-30-release-16-2-trio-grant.md` (#570, `0184efb3fd7b2956677351fdf84899767a5ac74a`) (the collective's disposition under Peter's delegation, `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` @ `d34fc7786`; Peter, 2026-10-30: "Re: 8, your launch time", R8@`0184efb3fd7b2956677351fdf84899767a5ac74a`) · **Revised for release 7 (16.3.0)**: §§ 8 (F25), 9, the `REL` line of each § 11 run block, the `operator-unblock` note in § 11 Runs 2 and 3 step 7, and a new § 17, under the write grant in `.kiro/issues/2026-11-09-release-16-3-trio-grant.md` (#845, `dfac4b77d5bcaba5dd7c2ccd76c32b15bd1084eb`) (Peter, #844, `3b7e1183854a7696a0bdbe886861c32a29c354eb`: release 16.3.0 now, the trio run as written, option (a))
 **Traces**: Reqs 22, 23, 24.2/24.2a, 25.1, 25.5, 15B.3 · design C30, C8 · tasks.md § "UNIT 5" run discipline
 **Instruments block**: `.kiro/specs/123-consumer-distribution/completion/task-25-instruments.md`
 
@@ -181,7 +181,7 @@ Each run produces `tests/onboarding-trio/records/<release>/<run-id>.md` from rel
 | F22 | `15B.3:` | run 3 only, and present as `not applicable — run 3 only` in runs 1 and 2: did the persona keep `init` (birth, once) and `generate` (the pipeline, every token change) apart? `held`, `did not hold`, or `cannot-tell`, with the evidence quoted |
 | F23 | `dd9:` | run 3 only (`not applicable — run 3 only` otherwise): the notice as printed, quoted; whether she recovered via the notice (`attach --target=kiro` or equivalent), quoted; and the sentence that one run cannot establish which harness is the majority |
 | F24 | `persona-close:` | the persona's closing note from the birth session, verbatim |
-| F25 | `prior-findings:` | one line per prior finding (`governance/release-management-system.md` § "The Release Recipe" step 6): every finding the previous release's three trio records recorded and did not disposition `fixed-and-observed`, written `- disposition: <id> — <fixed-and-observed\|fixed-not-observed\|still-present> — <basis>`. The basis names the fix (its PR) or that none has merged, and either what in this run observed the site or `not reached in this run — <why>`. A finding no fix has reached reads `still-present`, and its basis says `observed` or `not reached in this run`, so a carried finding the run never met is not read as a re-observation. Release 5's prior set is release 4's 36 trio findings (R1-1–R1-14, R2-1–R2-10, R3-1–R3-12). Release 6's is release 5's: 52 per record, the 31 of release 4's findings that not all three 16.1.0 records dispositioned `fixed-and-observed` and the 21 new (R1-15–R1-21, R2-11–R2-17, R3-13–R3-19), listed in `prompts/16.2.0/prior-findings.md` with the dated reading (Thurgood, 2026-10-30) it rests on |
+| F25 | `prior-findings:` | one line per prior finding (`governance/release-management-system.md` § "The Release Recipe" step 6): every finding the previous release's three trio records recorded and did not disposition `fixed-and-observed`, written `- disposition: <id> — <fixed-and-observed\|fixed-not-observed\|still-present> — <basis>`. The basis names the fix (its PR) or that none has merged, and either what in this run observed the site or `not reached in this run — <why>`. A finding no fix has reached reads `still-present`, and its basis says `observed` or `not reached in this run`, so a carried finding the run never met is not read as a re-observation. Release 5's prior set is release 4's 36 trio findings (R1-1–R1-14, R2-1–R2-10, R3-1–R3-12). Release 6's is release 5's: 52 per record, the 31 of release 4's findings that not all three 16.1.0 records dispositioned `fixed-and-observed` and the 21 new (R1-15–R1-21, R2-11–R2-17, R3-13–R3-19), listed in `prompts/16.2.0/prior-findings.md` with the dated reading (Thurgood, 2026-10-30) it rests on. Release 7's is `prompts/16.3.0/prior-findings.md`: 56 per record, the 51 of release 6's 52 that not all three 16.2.0 records dispositioned `fixed-and-observed` (R1-20 is the one not carried) and the 5 new (R1-22, R1-23, R2-18, R2-19, R3-20), under the same stricter reading |
 | F26 | `carried-cells:` | Kiro runs: one line per row of `.kiro/issues/2026-10-15-123-cannot-tell-cells.md` that names this run-id (rows 1–3: `trio-2-designer`; row 4: `trio-3-pm`; row 1's re-observation is any Kiro founder-cold cell), with the re-observation, or `cannot-tell — <the same reason>` and what was tried (§ 12). CC runs: `not applicable — no carried cell names a cc run` |
 
 ### 8.3 The cold-observation cell (shared with Task 26.4 and Task 28)
@@ -213,10 +213,10 @@ The host facts are separate lines, under `host-toolchain`, recorded as facts wit
 
 The check establishes that every field is present with a well-formed value. It does not judge observations (S-T-A3). Stacy's RELEASE pass, phase 1, over the release's delta reads the operator logs' content and the `subject: leonardo` findings *(re-pointed 2026-10-25 from Spec 123's CLOSEOUT, which has run and does not fire for a recurring run; `.kiro/issues/2026-10-25-consumer-screen-spec-complete-unbound.md` row 2)*.
 
-Run from the repo root at the records' commit; paste the output into the records PR body (release 4: the Task 25 completion doc). Set `REL` to the release; the disposition count is 36 per record for release 5 and 52 for release 6 (F25; `prompts/16.2.0/prior-findings.md`):
+Run from the repo root at the records' commit; paste the output into the records PR body (release 4: the Task 25 completion doc). Set `REL` to the release; the disposition count is 36 per record for release 5, 52 for release 6 (F25; `prompts/16.2.0/prior-findings.md`) and 56 for release 7 (`prompts/16.3.0/prior-findings.md`):
 
 ```sh
-REL=16.2.0
+REL=16.3.0
 for f in tests/onboarding-trio/records/$REL/trio-*.md; do
   echo "== $f"
   for label in 'run-id:' 'frozen-prompt:' 'candidate:' 'fixture:' 'target:' 'source-access:' 'harness-user-state:' 'host-toolchain (ios):' 'host-toolchain (android):' 'session-launched-by:' 'operator-log:' 'budget:' 'stop:' 'wall-clock:' 'path-steps-walked:' 'first-MCP-load:' 'cold-observation:' 'c8c-observations:' 'probe:' 'sample:' 'discovery:' 'findings:' '15B.3:' 'dd9:' 'persona-close:' 'prior-findings:' 'carried-cells:'; do
@@ -266,7 +266,7 @@ FIX=a-ts-service
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.2.0
+REL=16.3.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
@@ -429,7 +429,7 @@ FIX=b-static-site
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.2.0
+REL=16.3.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
@@ -543,7 +543,7 @@ KENV=""; echo "isolation: none — real profile (warm run)" | tee "$R/out/isolat
 cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typescript" kiro-cli chat
 ```
 
-**Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
+**Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it, except the `init` Return noted at the end of this step. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`). The `init` Return note applies if `init` is run in this session and waits (R3-1): press Return on an empty `Product name:` and then on an empty `Abbreviation:` prompt, and log both.
 
 ```sh
 cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/birth.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
@@ -609,7 +609,7 @@ FIX=c-near-empty
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.2.0
+REL=16.3.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
@@ -723,7 +723,7 @@ KENV=""; echo "isolation: none — real profile (warm run)" | tee "$R/out/isolat
 cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typescript" kiro-cli chat
 ```
 
-**Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
+**Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it, except the `init` Return below. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`). **`operator-unblock` for bare `init` (R3-1, observed at 16.2.0)**: under Kiro's shell tool, `init` printed the DD9 notice and `Product name:`, then waited about 685 s (11 min 26 s) with nothing able to answer. When `birth.txt` stops growing and shows `Product name:`, press Return on the empty prompt in the birth window, and again when `Abbreviation:` appears (the second prompt appears only after the first Return). Say so in the paste-back, with each prompt's text. Nothing else is typed.
 
 ```sh
 cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/birth.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
@@ -1426,7 +1426,7 @@ FIX=c-near-empty
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.1.0
+REL=16.3.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
@@ -1775,3 +1775,45 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
 **Paste back for `product-query`**: steps 0–6 in full; step 8 and step 9 in full; any prompt you answered in step 6, word for word, with your answer; anything else you typed and why. Then: "`product-query` done; files in `/tmp/dp-trio/product-query/out`."
+
+## 17. Release 7 (16.3.0): candidate placeholders, the Kiro pair's reason line, and the operator sheet
+
+*Added 2026-11-08 under the grant in `.kiro/issues/2026-11-09-release-16-3-trio-grant.md` (#845). Peter's ruling (#844, `3b7e1183854a7696a0bdbe886861c32a29c354eb`): release 16.3.0 now; the trio run as written, option (a): every persona runs once against the 16.3.0 preview candidate before S.*
+
+**17.1 The candidate, to be filled.** The candidate is produced by Thurgood's batching PR. Nothing below is known yet, and no run starts until each row is filled by a commit of this file's successor note or the records' F3 field.
+
+| Item | Value | Source |
+|---|---|---|
+| Pack name | `PLACEHOLDER-PACK-NAME` (expected `3fn-core-<version>.tgz`, stored at `u5-pack/16.3.0/`) | the batching PR's candidate |
+| sha1 | `PLACEHOLDER-SHA1` | the candidate's `release-publish-record.json` |
+| sha256 | `PLACEHOLDER-SHA256` | the same |
+| F (freeze commit) | `PLACEHOLDER-F` | the batching PR |
+| Prompt commit (`COMMIT=` in step 0) | `PLACEHOLDER-PROMPT-COMMIT` (the merge of the PR carrying this file) | read from `main` after the merge |
+
+**17.2 The Kiro conformance pair: run as a fourth sitting (§ 15.3).** Ruled by Peter, 2026-11-09T04:30:59Z, on #850: "(a), run it as a fourth sitting" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-ruling-kiro-pair-fourth-sitting.md`). The pair is beat 1 (consumer-Thurgood) then beat 2 (consumer-Stacy), in Kiro, against the same candidate and F as the three persona sittings; frozen prompts are `prompts/16.3.0/conformance-kiro-beat-{1,2}.md`; its launch blocks are § 15.3's, with `REL=16.3.0`; its records are `records/16.3.0/conformance-kiro-beat-{1,2}.md`. This replaces the reason line the first draft of this section carried; the pair is no longer left owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`, whose discharge is the pair's records. The measured rendering diff below is the record's `why-run:` evidence, measured 2026-11-08 at the base of this branch (`c3fd1893a`):
+
+```
+$ git log --format='%h %s' 7db066e4f..HEAD -- canonical/_consumer-output/kiro
+6264524f1 CORRECTION: Sparky's empty-theme web clause and consumer governance path; Sparky's two C1 acts (Thurgood, Spar
+e34dc7909 Apply the Token-Governance theme-registry ballot, F-1 (a) (129 Req 15.6) (#789)
+a17cb2b34 Unit 12: Closeout (129) (#781)
+d74057506 Task 16 Complete: Kenya's and Data's theming text and the consumer overlays (129) (#775)
+c2b844152 Task 14 Complete: generate reads the consumer's own source (129) (#763)
+261cd1a3c Apply the native-lane ownership ballot: standing owners for the harness producers (129) (#758)
+3d34cc7e4 Apply ballot 2026-11-05-core-goals-android-minimum: Core Goals states the Android minimum, API 26 (Thurgood; s
+
+$ git diff --stat 7db066e4f HEAD -- canonical/_consumer-output/kiro      # files only
+ kiro/.kiro/agents/ada-prompt.md
+ kiro/.kiro/agents/data-prompt.md   (+ .attribution.json)
+ kiro/.kiro/agents/kenya-prompt.md  (+ .attribution.json)
+ kiro/.kiro/agents/sparky-prompt.md
+ kiro/.kiro/steering/designerpunk-agent-directory.md.attribution.json
+ kiro/.kiro/steering/designerpunk-core-goals.md
+ 8 files changed, 274 insertions(+), 329 deletions(-)
+$ git diff --name-only 7db066e4f HEAD -- canonical/_consumer-output/kiro | grep -ci 'thurgood\|stacy'
+0
+```
+
+Neither `thurgood-prompt.md` nor `stacy-prompt.md` is in the diff, so the pair also tests renderings unchanged since the 16.2.0 candidate; it has never run on Kiro (16.1.0: setup only, quota; 16.2.0: not in the trio), so it is the first exercise of either seat on Kiro.
+
+**17.3 The `init` Return (R3-1).** Written into § 11 Run 3 step 7 (and conditionally Run 2 step 7). The operator sheet for Peter: `tests/onboarding-trio/records/16.3.0/operator-sheet.md`.
