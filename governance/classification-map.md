@@ -1351,10 +1351,11 @@ verification:
   checks: ["law-ratified"]
   # The job `law-ratified` in .github/workflows/merge-hold.yml (scripts/completion-claims/merge-hold.ts --job law-ratified).
   #   Armed by ballot item 5: the grant .kiro/issues/2026-11-07-merge-hold-checks-build-grant.md, the throwaway PR #726 that showed it red
-  #   (run 42400738704), EXPECTED_COUNT 20 -> 21 (this change) and Peter's branch-protection change; ARMED-CONDITIONAL until the gate script's N=21 PASS line is pasted into the grant record.
+  #   (run 42400738704), EXPECTED_COUNT 20 -> 21 (this change) and Peter's branch-protection change. ARMED: the gate script's N=21 PASS line is pasted into the grant record (.kiro/issues/archive/2026-11-07-merge-hold-checks-build-grant.md L54).
 education:
   disposition: "LAW HOME: .kiro/steering/Task-Completion-Protocol.md § 'Branch and PR Conventions' (the Edit kind line, and the law-ratified check that reads it); LAW RECORD: ballot 2026-11-07-merge-hold-and-law-ratified-checks"
 history:
   - { date: 2026-11-07, change: "entry created by ballot 2026-11-07-merge-hold-and-law-ratified-checks (EXECUTION, item 4), check_state proposed until the promotion of item 5 (grant, red-once throwaway PR, Peter's branch-protection change, count 20 -> 21)", by: thurgood }
   - { date: 2026-11-07, change: "PROMOTED to required: check_state proposed -> armed in the promotion PR (EXECUTION, ballot item 5 step 3). law-ratified shown red once by throwaway PR #726 (run 42400738704: a LAW line citing a DRAFT ballot, a governance file with no Edit-kind line). EXPECTED_CONTEXTS +1 and EXPECTED_COUNT 20 -> 21 in verify-gate-registration.sh, under the grant .kiro/issues/2026-11-07-merge-hold-checks-build-grant.md. Peter adds the required status check named law-ratified in branch protection after this merge", by: thurgood }
+  - { date: 2026-11-09, change: "CORRECTION of the comment line (truth: .kiro/issues/archive/2026-11-07-merge-hold-checks-build-grant.md L54, the gate script's 'PASS: all 21 required contexts present' line, pasted 2026-11-07): it read ARMED-CONDITIONAL until that line was pasted; it is pasted, so the row is armed without condition. check_state, checks and rule unchanged. Record: .kiro/issues/2026-11-09-composed-loop-reads-owed-acts.md item 6", by: thurgood }
 ```
