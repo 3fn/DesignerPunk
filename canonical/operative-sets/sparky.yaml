@@ -86,16 +86,16 @@ units:
         text: "Web theming uses the `data-theme` attribute on the `<html>` element — all descendant DesignerPunk components inherit themed CSS custom property values automatically (including through Shadow DOM). The generated selector is `:root[data-theme=\"wcag\"]`, which matches only `<html>`, so a theme applies page-wide"
       - id: theming-2
         kind: obligation
-        label: "wcag and each registered theme get a :root block; data-theme elsewhere matches nothing"
-        text: "Base theme applies at `:root` with no attribute. `wcag` is always generated, as `:root[data-theme=\"wcag\"]`, and every other theme your config registers adds a block of its own, `:root[data-theme=\"<name>\"]`. Set one name on `<html>` (`<html data-theme=\"wcag\">`). Do not write `data-theme` on any other element expecting scoped theming: on any other element it matches nothing, and the components inside get base values. Whether a subtree can be themed is not decided yet, so it is not available now; do not promise it"
+        label: "a theme that overrides a colour gets a :root block, one that overrides none gets none; data-theme elsewhere matches nothing"
+        text: "Base theme applies at `:root` with no attribute. A theme that overrides a colour is written as a block of its own: `wcag` as `:root[data-theme=\"wcag\"]`, and every other theme your config registers as `:root[data-theme=\"<name>\"]`. A theme that overrides no colour writes no block, so `data-theme=\"<name>\"` shows the base. Set one name on `<html>` (`<html data-theme=\"wcag\">`). Do not write `data-theme` on any other element expecting scoped theming: on any other element it matches nothing, and the components inside get base values. Whether a subtree can be themed is not decided yet, so it is not available now; do not promise it"
       - id: theming-3
         kind: obligation
         label: "Dark mode follows the preferred scheme; a one-mode theme does not force it"
         text: "Dark mode follows the user's preferred colour scheme through the generated `light-dark()` values and `color-scheme` on `:root`. A registered theme of mode `dark` is not a forced-dark page: it shows its colours in the dark scheme and base in the light scheme, and a theme of mode `light` is the mirror. Register the theme in mode `both` to get one look in both schemes"
       - id: theming-5
         kind: obligation
-        label: "A registered theme emits on web as a :root block and applies page-wide from <html>"
-        text: "A theme registered in `designerpunk.config.ts` emits on web as `:root[data-theme=\"<name>\"]`, a selector that matches `<html>` only, so set `<html data-theme=\"<name>\">` and the theme applies page-wide, through Shadow DOM. A theme on any other element still matches nothing, and the components inside get base values. A theme of one mode (`light` or `dark`) shows its own colours in that colour scheme and base in the other, and it does not force the page's scheme. Whether a subtree can be themed is not decided yet, so do not promise it"
+        label: "A registered theme that overrides a colour emits on web as a :root block and applies page-wide from <html>"
+        text: "A theme registered in `designerpunk.config.ts` that overrides a colour emits on web as `:root[data-theme=\"<name>\"]`, a selector that matches `<html>` only, so set `<html data-theme=\"<name>\">` and the theme applies page-wide, through Shadow DOM. A theme on any other element still matches nothing, and the components inside get base values. A theme of one mode (`light` or `dark`) shows its own colours in that colour scheme and base in the other, and it does not force the page's scheme. Whether a subtree can be themed is not decided yet, so do not promise it"
       - id: theming-4
         kind: obligation
         label: "Product repos install @3fn/core and run npx designerpunk gen"
