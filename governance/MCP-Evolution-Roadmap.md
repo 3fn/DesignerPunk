@@ -30,7 +30,9 @@ Strategic gaps are easy to identify in conversation and easy to forget between s
 
 ---
 
-## Current State (Post-071)
+## State after Spec 071 (a dated snapshot, not today's state)
+
+*(corrected 2026-11-09: the heading read as current, and the Product MCP has since shipped (`dist/mcp/product-mcp.js`, built in Spec 081 and extended in 097, 107 and 108). For current counts, ask each server: `get_index_health`, `get_component_health`. `.kiro/issues/2026-11-09-composed-loop-reads-owed-acts.md` item 4; prior text at `430151c01`)*
 
 - Docs MCP: Steering docs, token governance, component standards — queryable via progressive disclosure
 - Application MCP: 10 tools, 9 family guidance YAMLs, 9 experience patterns, 34 components indexed

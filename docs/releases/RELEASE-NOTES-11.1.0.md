@@ -1,5 +1,8 @@
 # Release 11.1.0
 
+> **Never released (corrected 2026-11-09, Thurgood, release author).** There is no `v11.1.0` tag and no 11.1.0 publish: Spec 102's "publish 11.1.0" step never ran, the version was skipped, and 102's work shipped in **11.2.0** (`v11.2.0`, `9f954cf68`, via Spec 103). The text below is kept as written, because Spec 102's `tasks.md` cites this file; it describes no release. Record: `.kiro/issues/2026-11-04-release-notes-11-1-0-describes-a-release-that-never-shipped.md`.
+
+
 **Date**: 2026-05-07  
 **Previous**: 11.0.0  
 **Bump**: minor

@@ -1700,8 +1700,9 @@ describe('Input-Text-Search Properties', () => {
 
 #### Phase 6: Pre-Merge Validation
 
-Complete validation checklist before merging:
+Complete validation checklist before merging. *(This continues the generic Input-Text-Search example: the component and its test files do not exist in this repository, and `npm run lint:stemma` is not a script here; run your project's own lint step. Corrected 2026-11-09: the fence named files and a script that do not exist; `.kiro/issues/2026-11-09-composed-loop-reads-owed-acts.md` item 4; prior text at `430151c01`.)*
 
+<!-- example: generic -->
 ```bash
 # 1. Run all linting validators
 npm run lint:stemma
@@ -1866,6 +1867,9 @@ describe('Button-CTA + Icon-Base Contract Properties', () => {
 
 #### Phase 4: Validate No Regression
 
+*(Generic: `ButtonCTA.icon-integration.test.ts` is an illustrative name, not a file in this repository; run the integration tests your component actually has. Corrected 2026-11-09: the fence named a file that does not exist; `.kiro/issues/2026-11-09-composed-loop-reads-owed-acts.md` item 4; prior text at `430151c01`.)*
+
+<!-- example: generic -->
 ```bash
 # Run integration tests
 npm test -- src/components/core/Button-CTA/__tests__/ButtonCTA.icon-integration.test.ts
