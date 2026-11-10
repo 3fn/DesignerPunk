@@ -40,6 +40,32 @@ Transcripts are not committed.
 - **Step-1 substitution**: Priya ran `npm init -y` (no `package.json` existed), then `npm install ./.pack/3fn-core-candidate.tgz`: "added 123 packages, and audited 124 packages in 3s … 4 vulnerabilities (2 low, 2 moderate)".
 - **`package-lock.json`**: `node_modules/@3fn/core` is the candidate file (`file:.pack/3fn-core-candidate.tgz`), version 16.3.0.
 
+### candidate-delta:
+**Peter's ruling (a2)**, 2026-11-09T23:28:14Z, "(a2), proceed as recommended" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-ruling-init-validate-line-a2.md` on #852's branch): `init`'s closing `validate` line was found false at sitting 4, fixed with Leonardo's wording and re-packed as F2. Sittings 2, 3 and 4 stand on **F1**; sitting 1 runs on **F2**. This run's candidate is F1. The measured delta (Thurgood, 2026-11-09, from the two dry-run tarballs, read only; his table is `f1-f2-delta.md`, reproduced here):
+
+| | F1 (this run) | F2 |
+|---|---|---|
+| commit | `bd7e340b37b5c4872b2c3ffcbb1df53cd28c22e7` | `08eb6c4cb9c105035988b6160d69d85233321ace` |
+| pack | `u5-pack/16.3.0/3fn-core-16.3.0.tgz` | `u5-pack/16.3.0-F2/3fn-core-16.3.0.tgz` |
+| sha1 | `7c0fc15745ed7210736e4b20dab3c240ffa3c46e` | `60537fdcad0945823ae0273807c98abf2dc0b658` |
+| sha256 | `625e7cb5d9b6272a165137646e4ed513efaec02b6a29632e7b1da98eecc23fd3` | `dc6f7c75fd97948bb809b06bf8671003d68cdd7125ecac35668cbe2a48e939ba` |
+| files / bytes | 1739 / 6710710 | 1739 / 6710528 |
+
+- **`git diff --stat F1 F2`** (7 files, 86 insertions, 20 deletions): the ruling record (31 lines), `docs/releases/release-16.3.0.md`, `src/cli/__tests__/errorCatalog.test.ts` (4), `src/cli/shared/errorCatalog.ts` (5), `tests/consumer-integration.test.ts` (8), `tests/onboarding-trio/protocol.md` (12), `tests/onboarding-trio/records/16.3.0/operator-sheet.md` (20). Only `src/cli/shared/errorCatalog.ts` is a packed path.
+- **Packed file list**: identical, 1739 files, 0 added, 0 removed (`diff` of the sorted `find` of both extracted tarballs).
+- **Packed files whose content differs (6)**: the `init` closing string, in three copies (`dist/cli/shared/errorCatalog.js`, and the two MCP bundles that embed it, `dist/mcp/application-mcp.js` and `dist/mcp/product-mcp.js`), and build stamps only (`dist/mcp/tool-manifest.json` `generatedAt`; `dist/types/generated/TokenTypes.d.ts` and `.js` `Generated:`). The string diff, the same in each:
+```diff
+< baseline grid). `generate` does not check these relationships, and
+< `npx designerpunk validate`'s check for them currently fails even on
+< unmodified token source (a known defect in the checker, not in your tokens).
+---
+> baseline grid). `generate` does not check these relationships; run
+> `npx designerpunk validate` to check them.
+```
+- **Anything else**: none. (The old claim remains in F2's packed `CHANGELOG.md` only, in the 16.0.0 entry's history, as written.)
+- **What this run read**: `birth.txt` L195 printed the old string in `init`'s closing note, in both `init` runs' output the persona read. Priya ran no `validate`, so the claim was read and not tested by her.
+- **So the fix is `fixed-not-observed` here.** This record read the old string and could not observe the fix; the new string is observed only on sitting 1's F2 run. Records 1–4 span two candidates, which is a Peter ruling on Req 23.7's "against the release's packed candidate", not a finding.
+
 ### fixture:
 `tests/onboarding-trio/fixtures/c-near-empty` at `430151c01`, committed in the run repo as `42ccad9 initial commit`. Lendly, a web app where neighbours lend tools; no `package.json`.
 
@@ -209,7 +235,7 @@ Persona (c)'s **new** findings in this release. Re-observations are in F25. IDs 
 | # | Axis | Finding | Evidence | Route (proposed) |
 |---|---|---|---|---|
 | R3-21 | **agent-harness fluency** · **false claim at its reader** | **INSTALL § 3 says `init` "stops with an error" where no terminal is attached, "an agent's shell, or CI". Kiro's shell tool attaches a terminal, so for Kiro the sentence is false, and the persona who believed it (and then asked for help) stalled for 251 s.** The guard is `!process.stdin.isTTY` (`dist/cli/init.js` L231); under kiro-cli 2.12.1 stdin is a TTY and `init` prompts, invisibly when piped through `head`. This is R3-1's site met a second release running, by a different path (`init --help`, R1-15). The persona read the sentence correctly and still stalled, so the sentence's example ("an agent's shell") is the false part. | INSTALL L62 in the candidate; `birth.txt` L88, L100–105; "Completed in 251.455s"; `init.js` L231, L249–250; `designerpunk.js` L124 (`--help` handled for the root command only) | Thurgood or Ada for the sentence (INSTALL's owner); Ada (CLI) for `init --help` and the TTY guard (Spec 131 item C4) |
-| R3-22 | outside the axes (tool) · `subject: leonardo` | **`validate_assembly` answers an assembly passed as a string with "Component \"undefined\" not found in catalog", rather than saying the input has the wrong type.** The persona could not learn from the message that the call, not the tree, was wrong. Whether the string came from the model or from kiro-cli's argument handling is not distinguishable here. | the stored call and result (`out/kiro-conversations/272d7252…`, history entries 4–5) | Lina (application MCP): reject non-object input with a message that names it |
+| R3-22 | outside the axes (tool) · `subject: leonardo` | **`validate_assembly` answers an assembly passed as a string with "Component \"undefined\" not found in catalog", rather than saying the input has the wrong type.** The persona could not learn from the message that the call, not the tree, was wrong. **Reproduced in sitting 4 with a different agent**: consumer-Thurgood's beat 1 (attempt 2, `out/kiro-conversations/b73be1a4…`) made one `validate_assembly` call with an object (`valid: true`, with prop warnings), then two with a string and got the same "Component \"undefined\" not found in catalog", read it as "The root needs to be a component itself … Let me wrap it" and "The root node needs a `component` field", and re-sent a string the second time; the call ended in an object again at the end of the stored history. Whether the string came from the model or from kiro-cli's argument handling is not distinguishable here. | the stored call and result (`out/kiro-conversations/272d7252…`, history entries 4–5); `conformance-kiro` `b73be1a4…`, entries 26–32 | Lina (application MCP): reject non-object input with a message that names it |
 | R3-23 | outside the axes · **`subject: leonardo`** | **A failed whole-tree validation was neither retried nor reported.** He ran six pair checks instead, and told Priya the components are "all web-ready" and the plan is ready to hand to Sparky, with no word that the whole-tree check did not run. The charter's Step 4 says to validate the assembly and "resolve any composition constraint violations; document gaps or workarounds". | the same rows; his answer (F18) | Stacy's cross-read (the RELEASE phase 1 reading of `subject: leonardo` findings) |
 
 **Observations that are not findings** (release read):

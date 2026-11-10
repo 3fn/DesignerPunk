@@ -44,6 +44,32 @@ Transcripts are not committed.
 - **Step-1 substitution**: Rosa ran `npm init -y`, edited the resulting `package.json` (name `atelier-nord`, a description), then `npm install ./.pack/3fn-core-candidate.tgz`: "added 123 packages, and audited 124 packages in 3s … 4 vulnerabilities (2 low, 2 moderate)" (R1-14, R2-11, R1-22).
 - **`package-lock.json`**: `node_modules/@3fn/core` `"version": "16.3.0"`, `"resolved": "file:.pack/3fn-core-candidate.tgz"`. That is the candidate file, not a registry URL.
 
+### candidate-delta:
+**Peter's ruling (a2)**, 2026-11-09T23:28:14Z, "(a2), proceed as recommended" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-ruling-init-validate-line-a2.md` on #852's branch): `init`'s closing `validate` line was found false at sitting 4, fixed with Leonardo's wording and re-packed as F2. Sittings 2, 3 and 4 stand on **F1**; sitting 1 runs on **F2**. This run's candidate is F1. The measured delta (Thurgood, 2026-11-09, from the two dry-run tarballs, read only; his table is `f1-f2-delta.md`, reproduced here):
+
+| | F1 (this run) | F2 |
+|---|---|---|
+| commit | `bd7e340b37b5c4872b2c3ffcbb1df53cd28c22e7` | `08eb6c4cb9c105035988b6160d69d85233321ace` |
+| pack | `u5-pack/16.3.0/3fn-core-16.3.0.tgz` | `u5-pack/16.3.0-F2/3fn-core-16.3.0.tgz` |
+| sha1 | `7c0fc15745ed7210736e4b20dab3c240ffa3c46e` | `60537fdcad0945823ae0273807c98abf2dc0b658` |
+| sha256 | `625e7cb5d9b6272a165137646e4ed513efaec02b6a29632e7b1da98eecc23fd3` | `dc6f7c75fd97948bb809b06bf8671003d68cdd7125ecac35668cbe2a48e939ba` |
+| files / bytes | 1739 / 6710710 | 1739 / 6710528 |
+
+- **`git diff --stat F1 F2`** (7 files, 86 insertions, 20 deletions): the ruling record (31 lines), `docs/releases/release-16.3.0.md`, `src/cli/__tests__/errorCatalog.test.ts` (4), `src/cli/shared/errorCatalog.ts` (5), `tests/consumer-integration.test.ts` (8), `tests/onboarding-trio/protocol.md` (12), `tests/onboarding-trio/records/16.3.0/operator-sheet.md` (20). Only `src/cli/shared/errorCatalog.ts` is a packed path.
+- **Packed file list**: identical, 1739 files, 0 added, 0 removed (`diff` of the sorted `find` of both extracted tarballs).
+- **Packed files whose content differs (6)**: the `init` closing string, in three copies (`dist/cli/shared/errorCatalog.js`, and the two MCP bundles that embed it, `dist/mcp/application-mcp.js` and `dist/mcp/product-mcp.js`), and build stamps only (`dist/mcp/tool-manifest.json` `generatedAt`; `dist/types/generated/TokenTypes.d.ts` and `.js` `Generated:`). The string diff, the same in each:
+```diff
+< baseline grid). `generate` does not check these relationships, and
+< `npx designerpunk validate`'s check for them currently fails even on
+< unmodified token source (a known defect in the checker, not in your tokens).
+---
+> baseline grid). `generate` does not check these relationships; run
+> `npx designerpunk validate` to check them.
+```
+- **Anything else**: none. (The old claim remains in F2's packed `CHANGELOG.md` only, in the 16.0.0 entry's history, as written.)
+- **What this run read**: `birth.txt` L226 printed the old string in `init`'s closing note ("`npx designerpunk validate`'s check for them currently fails even on unmodified token source (a known defect in the checker, not in your tokens)"). Rosa ran no `validate` in this run, so the claim was read and not tested by her.
+- **So the fix is `fixed-not-observed` here.** This record read the old string and could not observe the fix; the new string is observed only on sitting 1's F2 run. Records 1–4 span two candidates, which is a Peter ruling on Req 23.7's "against the release's packed candidate", not a finding.
+
 ### fixture:
 `tests/onboarding-trio/fixtures/b-static-site` at `430151c01`, committed in the run repo as `97dbe6b initial commit`. It has three pages, one stylesheet and no `package.json`.
 
@@ -147,7 +173,7 @@ INSTALL § 3 BECOME, **four steps** as shipped in this candidate (the protocol s
   - **`init` now writes the first token output itself.** Its single run printed the file list (59 token-source files, one component-token file, `.kiro/settings/mcp.json`, "Agent layer (kiro): 121 files written", `jest.config.js`, `tsconfig.test.json`, `.designerpunkignore`, 3 starter specs, the `.gitignore` block, the manifest), then ran generation: "✅ WEB / IOS / ANDROID … All platforms are mathematically consistent", "Primitives: 217 · Semantics: 193 · Component tokens: 33", "✅ System tokens generated", "Your token output is in dist/tokens. Run `npx designerpunk generate` after every token change."
   - **Rosa never ran `generate`.** At 16.2.0 it was her step 3.
   - The `Themes:` line printed with the **corrected web clause** (the Themes P0): "… any other theme that overrides a colour is written as :root[data-theme="<name>"] on web (it matches the <html> element only; a theme that overrides no colour writes no web block, and shows your base tokens), and every other theme is written as a theme instance on iOS and Android; …".
-  - It also printed the note on `validate`'s known failing check and "💡 After future upgrades, run `npx designerpunk sync`".
+  - It also printed the note on `validate`'s "known failing check", **which is false on this candidate** (see `candidate-delta:`), and "💡 After future upgrades, run `npx designerpunk sync`".
 - **3 personal note** — done. She read the template and replaced its TODO sections in her own voice (a `str_replace` on `.designerpunk/personal-note.local.md`).
 - **4 restart** — **not reachable inside the session**. She named it ("step 4 is to restart my agent session so the MCP servers connect — that can't happen in this terminal"), and the launcher performed it as `open`.
 - **Beyond the path, on her own initiative**: she read the generated `dist/tokens/DesignTokens.web.css` (first 40 lines), `.kiro/settings/mcp.json`, and the `.kiro/skills` and agent listings, and filled `product/overview.yaml` (the studio, a brand site, web only). She ran no MCP smoke test, no `validate`, no README edit.
