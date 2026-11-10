@@ -1,6 +1,6 @@
 # Record — `conformance-kiro-beat-1` (release 7, 16.3.0)
 
-**Status**: **RUN, beat 1 INCOMPLETE.** The identity probe ran and passed. Beat 1 was attempted **twice** and both attempts ended on **Kiro's rate limit** (`harness-error`), the second after partial work. Beat 2 ran on what attempt 2 left (`conformance-kiro-beat-2.md`). Nothing here is read as "Thurgood completed the re-grounding".
+**Status**: **RUN, beat 1 INCOMPLETE.** The identity probe ran and passed. Beat 1 was attempted **twice** and both attempts ended on **Kiro's rate limit** (`harness-error`), the second after partial work. Beat 2 ran on what attempt 2 left (`conformance-kiro-beat-2.md`). Nothing here is read as "Thurgood completed the re-grounding". **Peter ruled (2026-11-10T00:47:47Z, "(a), let it stand with the gap stated") that this record stands as 16.3.0's with the gap stated** (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-10-peter-ruling-kiro-pair-beat1-stands.md`); a complete beat 1 stays owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`.
 **Agent**: consumer-Thurgood (beat 1: re-grounding spec tasks 1–5; probe: identity) · **Harness**: kiro (kiro-cli) · **Protocol**: `tests/onboarding-trio/protocol.md` § 15.3
 **Frozen prompt**: `tests/onboarding-trio/prompts/16.3.0/conformance-kiro-beat-1.md`
 **Run order (disclosed)**: fourth of the four 16.3.0 sittings, run on 2026-11-09T23:16:13Z to 2026-11-10T00:06:11Z (`out/start.utc`, `out/end.utc`), after the F1→F2 ruling at 23:28:14Z (during the run). `trio-1-backend` is not written yet.

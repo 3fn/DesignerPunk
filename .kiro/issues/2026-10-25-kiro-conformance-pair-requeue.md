@@ -76,5 +76,6 @@ Peter ruled, on #850 (2026-11-09T04:30:59Z, "(a), run it as a fourth sitting"), 
 
 - **Ran**: both identity probes (passed on three of four items each, one cannot-tell each) and beat 2 (consumer-Stacy's claims-check: 8 claims, 6 verdicts that hold against the repo).
 - **Did not finish**: beat 1 (consumer-Thurgood, re-grounding tasks 1–5). Both attempts ended on Kiro's rate limit ("Request quota exceeded") after the retry warnings; attempt 2 left a README commit (`a4571c4`) and four untracked spec documents, with no screen spec, no report and no recorded approval. Beat 2 audited that partial output.
+- **Ruled** (Peter, 2026-11-10T00:47:47Z, "(a), let it stand with the gap stated"; `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-10-peter-ruling-kiro-pair-beat1-stands.md`): the incomplete beat 1 stands as 16.3.0's record, and this record stays open for the re-run.
 - **Still owed**: a complete beat 1 (and so a beat 2 against a finished assignment). **Trigger**: `manual` — the event is Peter's answer on #855 (accept the gap, or re-run beat 1) and, for a re-run, the Kiro rate limit clearing; the 2026-11-01 credit reset in the header has happened and no longer is the event. Class fix proposed in the record (CK-2): pace beat 1 or split its five tasks across sessions.
 
