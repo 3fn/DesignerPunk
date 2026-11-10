@@ -4,7 +4,40 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
-## [Unreleased]
+## [16.3.0] — Release 7 (`generate` writes the whole token output a native project needs, the empty-theme `Themes:` fix, web accessibility fixes, `sync`'s copy-migration floor, `validate_assembly`'s nested-control check)
+
+This release is still for building web products, with the agent layer for Claude Code and Kiro. **Native rendering is not yet proven.** Do not start a native product on it yet. `generate` now writes complete token output for iOS (SwiftUI) and Android (Jetpack Compose), and DesignerPunk's own checks compile that output and its component source (see "Known limitations"). But nothing has linked an app, run a test or rendered a screen on a device. Native support is claimed only when a later release says so.
+
+This is the seventh planned entry in the plan's numbering, and a minor release. Native changes ship in minors until that support claim. No web export, file or behaviour that a web project relies on was removed or changed incompatibly.
+
+### Added
+
+- **`generate` writes the native theme.** On iOS: the `DesignerPunkTheme` protocol, one struct per theme instance, the `\.dpTheme` environment value and a theme-family enum. On Android: the `DesignerPunkTheme` data class, `LocalDPTheme`, and one instance per theme. Every colour semantic is read through the theme, not the static `DesignTokens` object.
+- **`generate` ships DesignerPunk's component tokens into your native output.** The package carries its six component-token definition files, and `generate` binds them to your own primitives by name in `ComponentTokens.ios.swift` and `ComponentTokens.android.kt`. A component-token group you declare replaces DesignerPunk's whole group, and `generate` says so. Web is unchanged: it keeps `@3fn/core/component-tokens.css`.
+- **`init` runs `generate`.** Your token output and `token-index/` exist as soon as `init` finishes. It closes with "Your token output is in `<output>`. Run `npx designerpunk generate` after every token change."
+- **`platforms:` in `designerpunk.config.ts`** writes each platform where its build reads it, for example `platforms: { ios: { output: './ios/DesignerPunk' }, android: { output: './android/designerpunk' } }`.
+- **`validate_assembly` reports nested interactive controls** (an interactive component inside another) as an accessibility error, WCAG 4.1.2, from the components' active contracts.
+- **The config types** `SemanticOverrideMap`, `SemanticOverride` and `ThemeOverridePair` can be imported from `@3fn/core/config`.
+
+### Changed
+
+- **`generate` reads the whole token source `init` copied**: the colour palette, opacity, motion and layering, the font-size and line-height values behind icon sizes, and the DTCG/Figma export, as well as spacing and typography. A change you make to any of them shows in your output.
+- **The dark and WCAG override maps are read by registration.** For each built-in theme your config registers, `generate` reads your own map. `init` now writes the WCAG entry with both maps (`{ light, dark }`, `mode: 'both'`).
+- **A theme you register is applied.** On web it is written as `:root[data-theme="<name>"]`, which matches the `<html>` element only. On iOS and Android it is a theme instance. A theme of one mode shows the base look in its other scheme.
+- **`generate` refuses a theme it cannot name on both platforms**, naming the config entry. It also refuses a non-colour key in any theme override map, naming the entry, the map and the key, and writes nothing. Before, it wrote broken output and exited 0.
+- **`generate` warns, and never fails**, in three cases, naming what it found:
+  - a component token whose spacing or sizing value is off the 2 px grid with no `offGridReason`;
+  - a `.kt` file of yours in `com.designerpunk.tokens` or `com.designerpunk.components.*`;
+  - a primitive that DesignerPunk's component tokens read and your output no longer defines.
+- **`sync` judges freshness by content**, not file times, and says when your generated output is not what `generate` would write now.
+- **`sync`'s component-copy migration is surer about what it does not know.** It reports a copy as `modified` only when it could read every `@3fn/core` version from 11.0.0 to the one you have installed. Otherwise it reports `cannot-tell`, where before it could guess.
+- **`npx designerpunk validate` passes on unmodified token source.** Its mathematical-relationships check reads each token by its family. Colour, font family, easing and breakpoint are not evaluated, and every other family must state an equation that its value meets.
+
+### Fixed
+
+- **The `generate` `Themes:` line no longer claims a web block for a theme that writes none.** A registered theme that overrides no colour writes no `:root[data-theme]` block, and the line now says so.
+- **High-contrast styles apply on the web.** Eighteen components queried `prefers-contrast: high`, a value no browser matches; they now use `prefers-contrast: more`.
+- **Forced-colors mode on the web.** Under Windows high contrast (`forced-colors: active`), Input-Checkbox-Base and Input-Radio-Base now draw their box, check and dot in system colours. Nav-SegmentedChoice-Base and Nav-TabBar-Base mark the selected item with an outline in `Highlight`, not with a background colour that forced colors removes.
 
 ### Removed
 
@@ -15,6 +48,25 @@ This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are n
 - **Item (iii), above:** a project that read one of the four removed files from `node_modules/@3fn/core/dist/` must read its own generated output instead.
 - **I-1: Android sizing tokens are emitted as `Dp`.** A Kotlin read that appended `.dp` to a sizing constant must drop it.
 - **I-2: Android `fontSize` tokens are emitted as `TextUnit`.** A Kotlin read that treated a font size as a number must be updated to the `TextUnit` type.
+
+### Known limitations
+
+- **Native rendering is not proven.** DesignerPunk's native compile harness builds what a packed install's `generate` writes, for an iOS 17.0 deployment target (Swift 6) and Android API 26 (`minSdk`). At this release:
+  - iOS and Android token files: compile except 0 pinned errors, listed at `harness/expected/harness-ios-tokens.tsv` and `harness/expected/harness-android-tokens.tsv` in the DesignerPunk repository; no app linked, no tests run;
+  - iOS component source: compile except 49 pinned errors, listed at `harness/expected/harness-ios-components.tsv`; no app linked, no tests run;
+  - Android component source: compile except 93 pinned errors, listed at `harness/expected/harness-android-components.tsv`; no app linked, no tests run.
+
+  Do not start a native product on this release.
+- **The token source a theme can override is colour only.** A theme override map changes colours; `generate` refuses any other key.
+- **`generate`'s off-grid warning covers spacing and sizing component tokens only.** Radius, font size and colour custom values are not checked.
+
+### Upgrading from 16.2.0
+
+1. Install 16.3.0: `npm install @3fn/core@16.3.0`.
+2. Run `npx designerpunk generate`. Your output now includes the native theme and DesignerPunk's component tokens if you build for iOS or Android, and every token source file `init` copied is read.
+3. If `generate` refuses a theme override map entry that is not a colour, remove that key from the map: theme maps change colours only.
+4. Native projects only: read your generated files, not anything under `node_modules/@3fn/core/dist/`, and apply item (iii), I-1 and I-2 above.
+5. Run `npx designerpunk sync` to bring your agent files current. If its component-copy migration reports `cannot-tell`, compare that copy with the package's yourself before you replace it.
 
 ## [16.2.0] — Release 6 (token-index platform names, sync's MCP-config repair, assembly coverage, web prop forms, served-doc corrections)
 

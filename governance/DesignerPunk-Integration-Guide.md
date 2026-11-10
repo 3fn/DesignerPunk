@@ -404,7 +404,7 @@ So a change to `color.action.navigation` shows in light mode without the WCAG th
 - Nothing changed on the page: check that the page loads your own `DesignTokens.web.css` from your `output` directory, not `@3fn/core/tokens.css`, and reload it.
 - `generate` stopped with an "Orphaned override key": a token that a dark or WCAG override map names is missing from your token source, so no token files were written (see "Token Source Configuration"). Put the token back.
 - You changed a palette colour itself (what `purple300` is) and a place on the page did not change: check that the page loads your own `DesignTokens.web.css`, and that the token you changed is not pinned by a theme block (see "Themes").
-- `npx designerpunk validate` exits with an error from its mathematical-relationships check: that check currently fails even on unmodified token source, a known defect in the checker (see "Generating tokens — options"). Its other three checks are still worth reading.
+- `npx designerpunk validate` exits with an error from its mathematical-relationships check: the token you changed no longer states the relationship its family requires. Each family other than colour, font family, easing and breakpoint must state an equation that its value meets (see "Generating tokens — options"). On unmodified token source the check passes. *(corrected 2026-11-09: the check passes on unmodified source since Spec 129 U5; `.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`; prior text at `430151c01`)*
 
 ### Walkthrough: Make it look like your brand
 
@@ -585,7 +585,7 @@ To validate token definitions without generating files:
 npx designerpunk validate
 ```
 
-This checks semantic reference integrity, required fields, mathematical relationships, and family membership. The mathematical-relationships check currently fails even on unmodified token source and makes `validate` exit non-zero (a known checker defect); read the other three checks' results after editing token source files.
+This checks semantic reference integrity, required fields, mathematical relationships, and family membership, and it passes on unmodified token source. The mathematical-relationships check reads each token by its family: colour, font family, easing and breakpoint descriptions are not evaluated, and every other family must state an equation that its value meets. *(corrected 2026-11-09: the check passes on unmodified source since Spec 129 U5; `.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`; prior text at `430151c01`)*
 
 `generate` writes the files listed in section 4, and `token-index/` at your project root.
 

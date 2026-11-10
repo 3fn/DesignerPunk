@@ -303,8 +303,8 @@ describe('errorCatalog — Task 22.2 additions', () => {
     const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true, generated: false, outputDir: 'dist/tokens' });
     expect(m).not.toContain('The validator will warn');
     const flat = m.replace(/\s+/g, ' '); // the note wraps at 72 columns
-    expect(flat).toContain('`generate` does not check these relationships, and');
-    expect(flat).toContain("`npx designerpunk validate`'s check for them currently fails even on unmodified token source (a known defect in the checker, not in your tokens).");
+    expect(flat).toContain('`generate` does not check these relationships; run `npx designerpunk validate` to check them.');
+    expect(flat).not.toContain('known defect');
   });
 
   test('the optional jest line names the five devDependencies the preset and the tsconfig.test.json `init` writes declare', () => {
