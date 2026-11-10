@@ -1817,3 +1817,5 @@ $ git diff --name-only 7db066e4f HEAD -- canonical/_consumer-output/kiro | grep 
 Neither `thurgood-prompt.md` nor `stacy-prompt.md` is in the diff, so the pair also tests renderings unchanged since the 16.2.0 candidate; it has never run on Kiro (16.1.0: setup only, quota; 16.2.0: not in the trio), so it is the first exercise of either seat on Kiro.
 
 **17.3 The `init` Return (R3-1).** Written into § 11 Run 3 step 7 (and conditionally Run 2 step 7). The operator sheet for Peter: `tests/onboarding-trio/records/16.3.0/operator-sheet.md`.
+
+**17.4 The `candidate-delta:` field (release 7 only; Peter's (a2), 2026-11-09T23:28:14Z).** Every 16.3.0 record carries a `candidate-delta:` field after `candidate:`, built from Thurgood's measured F1→F2 delta: F1 and F2 with both pack sha1s, sha256s and file and byte counts; `git diff --stat F1 F2`; the packed file-list diff; the packed files whose content differs, with the string diff; what the record's run read of the changed string; and the line that the fix is `fixed-not-observed` in a record that ran on F1. Sittings 2, 3 and 4 ran on F1; sitting 1 runs on F2. The schema check (§ 9) does not count the field.
