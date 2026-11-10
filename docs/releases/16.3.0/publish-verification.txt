@@ -1,0 +1,120 @@
+# Release 16.3.0 — publish verification (RELEASE-FLOW step 6: 6a rail guard + 6b two-registry record)
+
+STATUS: SKELETON. Written at S by the release author. Everything under "FILL AFTER PUBLISH" is a placeholder: the orchestrator and Peter fill it after the tag, 5.3 and 5.4. Nothing below a PLACEHOLDER marker has been run.
+
+Date: 2026-11-10 (skeleton) · Operator: the orchestrator runs the step-6 and 6b commands from the MAIN checkout (/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2); Peter runs 5.3 and 5.4 in his own terminal.
+S (the release commit, to be tagged and published): 6f507c039ed4140eee4578aa6b75d713a5d4ad9d (the squash of PR #852, merged 2026-11-10T01:00:01Z).
+Tag: PLACEHOLDER — v16.3.0 → S · tag object · tagger time · pushed time (fill after 5.2)
+Grant: .kiro/issues/2026-11-09-release-16-3-files-grant.md, path docs/releases/16.3.0/** (the post-publish record PR's extent). Its other paths expired at #852's merge.
+Practice (rulings item 19 / RS-17): EVERY run is pasted, failing ones included, in order, with its clock and exit code. Every timestamp below is a registry's own time or a clock read; none is an estimate.
+
+## How S was reached (for the reader)
+
+S = 6f507c039 (#852, the release PR). PLACEHOLDER — whether any release fix followed S, and that the tag, 5.3 and 5.4 all name it (fill after the tag).
+Phase 1 (Stacy): PLACEHOLDER — her RELEASE phase-1 record PR number and merge state. Merge order: her phase-1 PR, then this record's PR.
+
+## Comparands (6b)
+
+### 5.3 release-publish-record.json (verbatim)
+PLACEHOLDER — copied unchanged from the path 5.3 prints (A3). Not yet run.
+
+### 5.1 dry run at S (before the tag), tally — orchestrator, main checkout, 2026-11-10T01:16:25Z–01:17:04Z, exit 0 (A3)
+$ npx tsx scripts/release-publish.ts --dry-run 6f507c039ed4140eee4578aa6b75d713a5d4ad9d
+release-publish: dry-run of @3fn/core@16.3.0 at 6f507c039ed4140eee4578aa6b75d713a5d4ad9d (fresh clone of https://github.com/3fn/DesignerPunk.git)
+[… npm ci, check:drift, closure compare, npm pack with prepack build, verify:token-index-clean, pack-assert; the npm notice file-list lines and the 115 assertion lines elided; full log kept outside the repo …]
+115/115 assertions passed.
+
+tarball:    /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-9GgsBS/out/3fn-core-16.3.0.tgz
+sha1:       0656fdfe86c1e398a5af432e5aa967c2013d9738
+files:      1739   bytes: 6710535   pack-assert: 115/115   publish path: 16 (floor 16)
+record:     /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-9GgsBS/out/release-publish-record.json
+
+DRY RUN — nothing was published, and this tarball is never published: 5.3 builds the release tarball again at the tag, and 5.4 publishes only that one.
+EXIT=0
+
+### 5.1 file-set compare against the previous public artifact (RELEASE-FLOW step 2, "At each S") — Thurgood, 2026-11-10T01:19:26Z
+$ shasum <5.1 tarball> <public 16.2.0 tarball, npm pack @3fn/core@16.2.0 from registry.npmjs.org>
+0656fdfe86c1e398a5af432e5aa967c2013d9738  <dp-release-9GgsBS>/out/3fn-core-16.3.0.tgz
+6f8210a604e7b72d293e60a74a6a292b9eda7a2a  …/scratchpad/pub-16.2.0/3fn-core-16.2.0.tgz   (equals the 16.2.0 record's 5.3 sha1)
+$ LC_ALL=C comm -3 <(tar -tzf <16.2.0> | LC_ALL=C sort) <(tar -tzf <5.1> | LC_ALL=C sort)   (column 1 removed, column 2 added)
+package/dist/ComponentTokens.android.kt
+package/dist/ComponentTokens.ios.swift
+package/dist/DesignTokens.android.kt
+package/dist/DesignTokens.ios.swift
+	package/dist/cli/freshness.d.ts
+	package/dist/cli/freshness.js
+	package/dist/cli/packageComponentSource.d.ts
+	package/dist/cli/packageComponentSource.js
+	package/dist/cli/shared/componentTokenReferences.d.ts
+	package/dist/cli/shared/componentTokenReferences.js
+	package/dist/cli/shared/platformOutputs.d.ts
+	package/dist/cli/shared/platformOutputs.js
+	package/dist/cli/shared/reservedKotlinPackages.d.ts
+	package/dist/cli/shared/reservedKotlinPackages.js
+	package/dist/cli/sync/ComponentTier.d.ts
+	package/dist/cli/sync/ComponentTier.js
+	package/dist/cli/sync/ReplacedGroups.d.ts
+	package/dist/cli/sync/ReplacedGroups.js
+	package/dist/components/core/Badge-Count-Notification/badgeNotificationColorMap.d.ts
+	package/dist/components/core/Badge-Count-Notification/badgeNotificationColorMap.js
+package/dist/components/core/Badge-Count-Notification/tokens.d.ts
+package/dist/components/core/Badge-Count-Notification/tokens.js
+	package/dist/config/TokenSetLoader.d.ts
+	package/dist/config/TokenSetLoader.js
+	package/dist/config/platforms.d.ts
+	package/dist/config/platforms.js
+	package/dist/generators/TokenSet.d.ts
+	package/dist/generators/TokenSet.js
+	package/dist/generators/native/FontFamilyStack.d.ts
+	package/dist/generators/native/FontFamilyStack.js
+	package/dist/generators/native/KotlinImports.d.ts
+	package/dist/generators/native/KotlinImports.js
+	package/dist/generators/native/ThemeEmitter.d.ts
+	package/dist/generators/native/ThemeEmitter.js
+	package/dist/generators/oklch/NativeColorUtils.d.ts
+	package/dist/generators/oklch/NativeColorUtils.js
+	package/dist/generators/themeOverrideCategories.d.ts
+	package/dist/generators/themeOverrideCategories.js
+	package/dist/themes/resolveThemeMaps.d.ts
+	package/dist/themes/resolveThemeMaps.js
+	package/dist/themes/themeRefusals.d.ts
+	package/dist/themes/themeRefusals.js
+	package/dist/tokens/color/primitives/shadow.d.ts
+	package/dist/tokens/color/primitives/shadow.js
+	package/src/components/core/Avatar-Base/avatar.tokens.ts
+	package/src/components/core/Badge-Label-Base/tokens.ts
+	package/src/components/core/Button-Icon/buttonIcon.tokens.ts
+	package/src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts
+package/src/components/core/Icon-Base/platforms/android/res/drawable/README.md
+	package/src/components/core/Input-Checkbox-Base/checkbox-sizing.tokens.ts
+	package/src/components/core/Input-Radio-Base/radio-sizing.tokens.ts
+	package/src/tokens/color/primitives/shadow.ts
+7 removed, 45 added; 1701 → 1739 files. The same 7 and 45 as the release notes' § "Packed output" (docs/releases/release-16.3.0.md): the four native root token files, Badge-Count-Notification's tokens.{js,d.ts}, and Icon-Base's res/drawable/README.md removed; the dist/cli, dist/generators, dist/config, dist/themes and shadow files, badgeNotificationColorMap.{js,d.ts} and the seven component-token source files added.
+
+## FILL AFTER PUBLISH (placeholders; nothing below has been run)
+
+### 5.3 publish to GitHub Packages — Peter, his terminal, from the MAIN checkout
+PLACEHOLDER — $ npx tsx scripts/release-publish.ts 16.3.0 --expect-sha 6f507c039ed4140eee4578aa6b75d713a5d4ad9d
+
+### 5.4 publish to npmjs — Peter
+PLACEHOLDER
+
+### 6 — publish-rail guard
+PLACEHOLDER — $ VERSION=16.3.0 ./scripts/verify-publish-rail.sh
+
+### 6b — npmjs metadata, GitHub Packages metadata, both tarballs, independent re-read
+PLACEHOLDER — every run pasted in order with its clock and exit code, as in docs/releases/16.2.0/publish-verification.txt
+
+### Per registry
+PLACEHOLDER
+
+### Comparand table (all four must equal the 5.3 record's sha1)
+PLACEHOLDER
+
+## Verdict
+PLACEHOLDER
+
+## Post-merge obligations recorded here (for Stacy's phase 2)
+- Phase 2 (Stacy) triggers at the step-6 record PR's merge; it reads this file.
+- PLACEHOLDER — the walk record is closed and archived in this PR (rule 5) after Stacy's phase-1 record merges; the 16.3.0 files grant (docs/releases/16.3.0/**) expires at this PR's merge and is closed and archived in this PR (rule 5). Both outcome lines name the merges and are written when those SHAs exist.
+- GitHub release: step 7, last: gh release create v16.3.0 --notes-file docs/releases/release-16.3.0.md
