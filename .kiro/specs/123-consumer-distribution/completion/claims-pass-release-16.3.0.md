@@ -1,6 +1,8 @@
 # Claims Pass — RELEASE 16.3.0: release 7
 
-**One floor-class row holds the tag.** `governance/Test-Development-Standards.md` L87–L88 and L1045 still name `Icon.test.ts`, `Icon.accessibility.test.ts`, `createIcon()` and an `Icon` class. None of them exists at S. The doc ships in the package, and those lines are embedded in the Stacy and Thurgood charters. The walk record and the owner's own record both said that if the release PR left these lines, they would go to Peter as floor-class rows before S. #852 left them, and its own `**Sweep**:` line says so. No one asked Peter. RELEASE-FLOW 3a says only Peter waives a floor-class row, so the row needs a fix or his quoted, dated waiver before the tag (RL-49). Nothing else in this read holds the tag. 5.1 is green at S, there is no P0 record at the root, and the owed set has 0 candidates.
+> **Verdict update (2026-11-10, Stacy): nothing in this read holds the tag now.** Peter waived RL-49 at 2026-11-10T01:59:34Z: "Yes, I waive RL-49 as stated" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-10-peter-waives-rl49-16-3-0.md`, joined here from `9bf9dec5b`, byte-identical). He was answering the orchestrator's question, which named TDS L87–L88 and L1045–L1047, a fix after the tag under a record owned by Thurgood due by the next release's S, and the 26 code-example calls in the same fix. This releases the hold. It covers release 16.3.0 only. **The fix is owed** under Thurgood's record `.kiro/issues/2026-11-10-tds-worked-example-names-rl49.md` (filed in #856, not yet on `main`). **RL-49 stays floor-class until the fix lands**, and if the fix is still open at the next walk, the row returns to Peter (the waiver record's own terms). The verdict below is kept as it was first written, so the ledger shows the state at S.
+
+*As first written (2026-11-10, before the waiver):* **One floor-class row holds the tag.** `governance/Test-Development-Standards.md` L87–L88 and L1045 still name `Icon.test.ts`, `Icon.accessibility.test.ts`, `createIcon()` and an `Icon` class. None of them exists at S. The doc ships in the package, and those lines are embedded in the Stacy and Thurgood charters. The walk record and the owner's own record both said that if the release PR left these lines, they would go to Peter as floor-class rows before S. #852 left them, and its own `**Sweep**:` line says so. No one asked Peter. RELEASE-FLOW 3a says only Peter waives a floor-class row, so the row needs a fix or his quoted, dated waiver before the tag (RL-49). Nothing else in this read holds the tag. 5.1 is green at S, there is no P0 record at the root, and the owed set has 0 candidates.
 
 **Date**: 2026-11-10 (phase 1, UTC; read from 2026-11-10T01:18Z, written by 2026-11-10T01:55Z)
 **Grain**: RELEASE. Release 7, the plan's seventh CHANGELOG entry. A minor (Peter, 2026-11-09T03:33:57Z, "Re: 1, Yes. Re: 2, (a) …", `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-rulings-release-16-3-0.md`, #844).
@@ -30,14 +32,14 @@
 
 ## For the tag (read this first)
 
-- **One floor-class row, RL-49** (`governance/Test-Development-Standards.md` L87–L88, L1045). It is not fixed at S and it has no waiver. It goes to Peter as an `**Open for Peter**:` line in this record's PR. **It holds the tag** until it is fixed or waived.
+- **One floor-class row, RL-49** (`governance/Test-Development-Standards.md` L87–L88, L1045). It is not fixed at S and it has no waiver. It goes to Peter as an `**Open for Peter**:` line in this record's PR. **It holds the tag** until it is fixed or waived. *(Waived 2026-11-10T01:59:34Z; the update at the top.)*
 - **The two 3a greps at S**: 19 due rows, and 0 P0 records (exit 1). The walk does not row three of the hits. One is the walk record itself, one is a grant, and one is a record filed 28 s before the walk merged. None is a P0. All three are listed below with their rule-11 state.
 - **5.1 at S**: green. `3fn-core-16.3.0.tgz`, sha1 `0656fdfe86c1e398a5af432e5aa967c2013d9738`, 1739 files, 6710535 bytes, pack-assert 115/115, publish path 16 (floor 16).
 - **5a and 5b**: the release PR did not paste them (RL-50). I ran both at S. The owed set has 0 candidates, and the row-sum identity holds. `completion-criteria-parity` reads `check_state: armed`.
 - **The delegate audit**: `142 / 142` (Ada) plus `4 / 4` (Leonardo, #806 at 125-B CLOSEOUT). N = 146 is my own count. Peter ruled that the 12 flagged acts stand.
 - **The rule-11 read at S**: 15 records lapse on the B2 reading. Seven of them escalate to Peter (RL-52). None of this holds the tag.
 - **The fallback question on the records' home** was not put to Peter (RL-51). The release goes ahead at the interim home, as the law says, so this does not hold the tag.
-- **Verdict**: **RL-49 holds the tag.** RL-50 to RL-62 do not. Each one is routed to its owner, or to Peter where the law names him.
+- **Verdict**: **RL-49 held the tag at this writing.** It is now released by Peter's waiver of 2026-11-10T01:59:34Z (the update at the top). RL-50 to RL-62 do not hold it. Each one is routed to its owner, or to Peter where the law names him.
 
 ---
 
@@ -375,6 +377,8 @@ Each record's Trigger-line history comes from `scratchpad/stacy163/trig-hist.txt
 
 ### RL-49: High (floor-class; Thurgood; **holds the tag**): the TDS lines that the walk and its owner committed to Peter's floor batch shipped unfixed and unwaived
 
+**Update (2026-11-10, Stacy): hold released by Peter's waiver.** "Yes, I waive RL-49 as stated", 2026-11-10T01:59:34Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-10-peter-waives-rl49-16-3-0.md`). The waiver covers 16.3.0 only. The fix is owed under Thurgood's record `.kiro/issues/2026-11-10-tds-worked-example-names-rl49.md` (filed in #856, not yet on `main`), due by the next release's S, with the 26 fence calls in scope, the two charters regenerated with the seats' re-confirms, and Lina consulted on the component API names. **The row stays floor-class until the fix lands.** If it is still open at the next walk, it returns to Peter. The finding text below is kept as first written.
+
 See § "The release-falsity-floor read" above. `governance/Test-Development-Standards.md` L87–L88 and L1045 name `Icon.test.ts`, `Icon.accessibility.test.ts`, `createIcon()` and an `Icon` class, and none of them exists at S. The doc ships in the package, and the lines are ambient in the Stacy and Thurgood charters. The walk ("they come back here as floor-class rows before S") and the owner's record ("they go to Peter's floor-class batch at the walk") made the promise. #852's `**Sweep**:` line shows the lines were left, and nobody asked Peter before S.
 - **Owed**: a fix on `main` (which moves S, back to step 1), or Peter's quoted, dated waiver, before 5.2.
 - **The author's reading** (not P0, a worked example) goes to Peter with the row.
@@ -488,6 +492,7 @@ See § "The signing-act walk".
 The same four lines are in this PR's body. Only line 1 holds the tag.
 
 1. **Floor-class row (holds the tag)**: `governance/Test-Development-Standards.md` L87–L88 and L1045 name `Icon.test.ts`, `Icon.accessibility.test.ts`, `createIcon()` and an `Icon` class. None of them exists at S. The doc ships, and the lines are in the Stacy and Thurgood charters. The walk and its owner both committed them to your floor batch if the release PR left them, and #852 left them. Do you waive them for 16.3.0 (your words, dated), or are they fixed before the tag (a new S)? And do the 26 `createIcon(` / `createButtonCTA(` calls in the same doc's fences join the same answer? Thurgood reads them as not P0. I read L87–L88 and L1045 as P0, narrowly, and the fences as illustrations.
+   **Peter answered**: 2026-11-10T01:59:34Z — "Yes, I waive RL-49 as stated" — .kiro/specs/129-consumer-generation-completeness/evidence/2026-11-10-peter-waives-rl49-16-3-0.md. The hold is released for 16.3.0; the fix is owed under `.kiro/issues/2026-11-10-tds-worked-example-names-rl49.md` (filed in #856, not yet on `main`).
 2. **The records' home (RELEASE-FLOW step 6 fallback; not tag-holding)**: standing write scope over `.kiro/docs/releases/**` now for Stacy, Thurgood, Ada, Lina and Leonardo (ballot `2026-10-29-release-claims-pass-record-home` option (b)), or the interim home for this release? The law put this question in the capture record's re-rule PR. That PR does not exist. This release is at the interim home, as the law says.
 3. **Rule-11 escalations (one batch; not tag-holding)**: seven records lapse at S on B2 and owe you spec / drop / fix-now: `2026-10-24-b-ci-post-flip-owed-acts` (second lapse; its items wait on ballot #460), `2026-10-26-release-16-1-standards-implications` (routed to 131), `2026-11-05-hand-written-readiness-claims-disagree-with-generated-readiness`, `2026-11-08-generate-component-token-warning-spacing-sizing-only`, `2026-11-08-icon-base-name-values-list-unchecked`, `2026-11-09-examples-guard-a5-token-boundary`, and `2026-10-25-token-docs-unvetted-name-hits` (second lapse on my reading; no lapse on the outcome-line reading). B2's own deadline passed at this S. Does B2 go to its own ballot now, or does 131's rule-11 rewrite come forward?
 4. **Signing and guard reads (not tag-holding)**: (a) Does your 2026-11-09T04:27:04Z "stand as recorded" for my 12 flagged acts also cover the 24 non-Stacy flagged acts at #758, #775 and #676 (RL-60)? (b) #846 rewrote the examples guard's adoption header from 75 entries to 72 with no ballot named. The ARMING row routes that to you as an unadmitted weakening of a floor (RL-53). Does the header go back to 75, or does a ballot admit running counts?
@@ -559,7 +564,7 @@ The same four lines are in this PR's body. Only line 1 holds the tag.
 
 ## Forced negative (this pass)
 
-- **One floor-class row is unwaived at S** (RL-49). Every other floor surface the walk read is fixed at S.
+- **One floor-class row was unwaived at S** (RL-49). Peter waived it for 16.3.0 at 2026-11-10T01:59:34Z, and the fix is owed by the next release's S. Every other floor surface the walk read is fixed at S.
 - **No ❌ in any criterion row.** No parent criteria were re-read here (they were read at the CLOSEOUT passes).
 - **Unverifiable claims are named, not counted green**: see § "Method".
 - **Fifteen records lapse on a reading whose deadline has passed** (RL-52). The lapses are reported, not acted on, except on my own record.
