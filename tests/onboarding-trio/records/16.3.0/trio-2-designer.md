@@ -11,7 +11,7 @@
 - the two conversation rows the after-step exported, read only, from the **real** profile's kiro-cli database (`out/kiro-conversations/`, § 5.1).
 
 Transcripts are not committed.
-**Run order (disclosed)**: second of the four 16.3.0 sittings; `trio-1-backend` and the others are not written yet, so cross-references to them in this record are to records that do not exist at this commit.
+**Run order (disclosed)**: second of the four 16.3.0 sittings; `trio-1-backend.md`, `trio-3-pm.md` and the two conformance records are written in this PR; the cross-references to them in this record are to those files.
 **Operator acts before the run (disclosed)**: none before step 0. In the preflight session (13:08:36Z), at the orchestrator's direction, Peter typed `/usage` to read the Kiro credits for the operator sheet, then Esc and `/quit`. The figure he read, relayed: **KIRO FREE, 12.59 of 50 credits used, resets 2026-12-01**. **It is not in the captured history** (`a5d78ef3….history` holds `/quit` only; the typescript has no usage text), so it is relayed, not read from a file. The preflight is otherwise the fixed one.
 
 **Operator acts after the run (disclosed)**:
@@ -323,7 +323,7 @@ One line per prior finding (56; `tests/onboarding-trio/prompts/16.3.0/prior-find
 - disposition: R1-11 — fixed-not-observed — fix: in the protocol (§ 4). Not reached in this run: kiro-cli has no turn flag; the budget was observed by count (F11).
 - disposition: R1-12 — fixed-not-observed — fix: Task 26.5. Not reached in this run: Kiro, no `.claude/settings.json`.
 - disposition: R1-13 — fixed-not-observed — fix: in the protocol (`CLAUDE_CONFIG_DIR`). Not reached in this run: Kiro, isolated with `KIRO_HOME`.
-- disposition: R1-14 — still-present — fix state as `trio-1-backend`'s line (not written yet). Observed: "4 vulnerabilities (2 low, 2 moderate)" across 124 packages, the same line as `trio-2-designer` at 16.2.0. The repo's only dependency is `@3fn/core`. `npm audit` was not re-run after this run, so the advisory list is not re-read.
+- disposition: R1-14 — still-present — fix state as `trio-1-backend`'s line. Observed: "4 vulnerabilities (2 low, 2 moderate)" across 124 packages, the same line as `trio-2-designer` at 16.2.0. The repo's only dependency is `@3fn/core`. `npm audit` was not re-run after this run, so the advisory list is not re-read.
 - disposition: R1-15 — still-present — no fix merged (the CLI record, routed to Spec 131). Not reached in this run: Rosa ran no `--help` of any kind.
 - disposition: R1-16 — still-present — no charter line, no pipeline fix. Not reached in this run: no Ada probe. The same class sits in the recolour advice (R2-14).
 - disposition: R1-17 — still-present — no fix merged. Not reached in this run: no Ada probe.

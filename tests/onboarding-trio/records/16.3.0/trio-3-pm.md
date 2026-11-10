@@ -11,7 +11,7 @@
 - the two conversation rows the after-step exported, read only, from the **real** profile's kiro-cli database (`out/kiro-conversations/`, § 5.1).
 
 Transcripts are not committed.
-**Run order (disclosed)**: third of the four 16.3.0 sittings, after `trio-2-designer` (which ended 13:21:55Z). `trio-1-backend` and the Kiro pair are not written yet, so cross-references to them are to records that do not exist at this commit.
+**Run order (disclosed)**: third of the four 16.3.0 sittings, after `trio-2-designer` (which ended 13:21:55Z). `trio-1-backend.md` and the two conformance records are written in this PR; the cross-references to them in this record are to those files.
 **Operator acts before the run (disclosed)**: none before step 0. In the preflight session, at the orchestrator's direction, Peter typed `/usage`, then Esc and `/quit`. Result, **in the capture and the history** (`d106d9d0….history`: `/usage`, `/quit`): "Credits (18.64 of 50 covered in plan)".
 
 **Operator acts after the run (disclosed)**:
@@ -285,7 +285,7 @@ One line per prior finding (56; `tests/onboarding-trio/prompts/16.3.0/prior-find
 - disposition: R1-11 — fixed-not-observed — fix: in the protocol (§ 4). Not reached in this run: kiro-cli has no turn flag; the budget was observed by count (F11).
 - disposition: R1-12 — fixed-not-observed — fix: Task 26.5. Not reached in this run: Kiro, no `.claude/settings.json`.
 - disposition: R1-13 — fixed-not-observed — fix: in the protocol (`CLAUDE_CONFIG_DIR`). Not reached in this run: Kiro, isolated with `KIRO_HOME`.
-- disposition: R1-14 — still-present — fix state as `trio-1-backend`'s line (not written yet). Observed: "4 vulnerabilities (2 low, 2 moderate)" across 124 packages, the same line as at 16.2.0; Priya did not remark on it. `npm audit` was not re-run, so the advisory list is not re-read.
+- disposition: R1-14 — still-present — fix state as `trio-1-backend`'s line. Observed: "4 vulnerabilities (2 low, 2 moderate)" across 124 packages, the same line as at 16.2.0; Priya did not remark on it. `npm audit` was not re-run, so the advisory list is not re-read.
 - disposition: R1-15 — still-present — no fix merged (the CLI record, routed to Spec 131). **Observed, and it cost the run 251 s**: Priya ran `npx designerpunk init --help 2>&1 | head -60`. `init` does not read `--help`; it began a birth (DD9 notice, `Product name:`) and waited on stdin until the operator pressed Return twice (F10, R3-1, R3-21).
 - disposition: R1-16 — still-present — no charter line, no pipeline fix. Not reached in this run: no Ada probe.
 - disposition: R1-17 — still-present — no fix merged. Not reached in this run: no Ada probe.
