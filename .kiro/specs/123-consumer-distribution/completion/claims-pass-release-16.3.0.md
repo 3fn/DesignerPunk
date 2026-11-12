@@ -186,6 +186,7 @@ Each record's Trigger-line history comes from `scratchpad/stacy163/trig-hist.txt
 | `2026-10-15-123-u5-instrument-findings` (Thurgood; P2 record) | `58cab211d` (2026-11-01) | none | **lapses** (first; no escalation) |
 | `2026-10-24-b-ci-post-flip-owed-acts` (Thurgood; P2 guard) | `58cab211d` | none (`13e1637e7` touched the file, not the Trigger) | **lapses** (second distinct SHA, after `38f4ece47`) → **Peter** (spec / drop / fix-now). Its items already wait on ballot #460, still DRAFT |
 | `2026-10-25-token-docs-unvetted-name-hits` (Ada · Lina; P2 record) | `ddb4d9482` | `## Outcome (2026-11-01, Ada, owner)` at `d0624830c`, for **item A only**; item B (Lina's 24 README lines) is open | **contested**. On rule 11's letter, a dated outcome line after the setting commit is a close. On the record's own text, item B stays open, which is not a close. **My reading: second lapse** (after `38f4ece47`) → **Peter**. The other reading: no lapse, and the record stays open for item B |
+| ↳ *correction (2026-11-12, Stacy)* | | | **No lapse; my reading withdrawn.** The Outcome section ends "Closed under rule 5" (L121), after `ddb4d9482` and before S. The DLG fix-now was the sweep (item A), which #595 delivered. So the record is closed and not yet archived. Item B (Lina's 24 README lines) goes to a new Lina record (rule 10). Agreed by Ada, Thurgood and me in the owners' read-only consult (Thurgood, Stacy, Lina, Ada; three rounds, 2026-11-12; round files in the orchestrator's scratchpad `consult-163/`); recorded in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md` |
 | `2026-10-26-release-16-1-standards-implications` (Thurgood; P2 guard) | `58cab211d` | none (`130a3b397`, `5df204e2e` touched the body) | **lapses** (first) → **Peter**. It is routed to 131 in place and is not in the standing class (R11 line 15: "The RS queue … is not in the class"). 131's outline names it, so the spec answer is carried out, and its own deadline was this S |
 | `2026-10-29-claims-pass-record-homes-…` (**Stacy**; P2 record) | `e841f2138` | none | **lapses** (first; no escalation). **I am its owner.** This PR appends its `## Lapse` heading and re-rules it (rule 11; rules 1, 9) |
 | `2026-10-29-release-records-home-switch` (Thurgood; P2 record) | `58cab211d` | none | **lapses** (first; no escalation). Its own Lapse paragraph names this release as the fallback's, and the question was not asked (RL-51) |
@@ -194,6 +195,7 @@ Each record's Trigger-line history comes from `scratchpad/stacy163/trig-hist.txt
 | `2026-11-05-hand-written-readiness-…` (Lina; P2 guard) | `2622faf3e` (after 16.2.0's S) | none | **lapses** (first) → **Peter** |
 | `2026-11-05-signing-act-prevention-four-fixes` (Thurgood; P2 guard) | `da269cb6b` | `3f739b07f` (#779): Trigger line changed, "Item 1 re-ruled 2026-11-08 (Thurgood, owner …; authority: Peter's ruling of 2026-11-08T12:20:05Z …)" | **no lapse** |
 | `2026-11-07-github-grant-coverage-check` (Thurgood; P2 guard) | `9d89982f8` (not backticked) | `5d72723ea` (#851): the token backticked, with "*Trigger token back-ticked 2026-11-09 (Thurgood, owner, rule 1 format; the event is unchanged)*" | **no lapse on the letter.** A format change counts as a re-rule. The counter-reading is that a re-rule that moves no event is not one |
+| ↳ *correction (2026-11-12, Stacy)* | | | **Lapses; my reading withdrawn.** At `9d89982f8` the Trigger had no backticks, so it was not a rule-1 token, and #851 set the token. Under B2, "the commit that set the token is not itself a re-rule". It is a first lapse of a P2 `(guard)`, so it goes to Peter. Agreed by Thurgood and me in the owners' read-only consult (Thurgood, Stacy, Lina, Ada; three rounds, 2026-11-12; round files in the orchestrator's scratchpad `consult-163/`) |
 | `2026-11-08-generate-component-token-warning-…` (Ada; P2 guard) | `7c143845f` (#774) | none | **lapses** (first) → **Peter**. Its prose names "the release that carries Spec 129 U5", which is this one |
 | `2026-11-08-icon-base-name-values-list-unchecked` (Lina; P2 guard) | `58501ed8f` (#827) | none | **lapses** (first) → **Peter** |
 | `2026-11-09-composed-loop-reads-owed-acts` (Thurgood; P2 record) | `5df204e2e` (#833) | none (`83e3a1dc6`, `c3fd1893a` touched the body) | **lapses** (first; no escalation). Item 4 is partly open (RL-49) |
@@ -204,6 +206,7 @@ Each record's Trigger-line history comes from `scratchpad/stacy163/trig-hist.txt
 | `2026-11-09-release-16.3.0-walk` (Thurgood; P2 record) | `5d72723ea` | — | **not yet fired.** It fires at this record's merge (16.1.0 precedent) and closes and archives in Thurgood's post-S PR. If that PR merges after this one, rule 11 reads a lapse here, as at 16.1.0 |
 
 - **Totals**: 19 hits. **15 lapse** on B2, counting token-docs on my reading and the 11.1.0 notes on rule 11's letter. 2 do not lapse, 1 is excluded (the grant) and 1 has not fired (the walk).
+- *Totals, corrected 2026-11-12 (Stacy)*: still **15 lapse** and **7 escalate**, but the members changed. token-docs left (no lapse) and github-grant-coverage joined (a lapse, P2 `(guard)`). The non-lapses are now signing-act-prevention and token-docs.
 - **Escalations owed to Peter (rule 11), seven**:
   - b-ci, the RS queue, hand-written-readiness, generate-component-token-warning, icon-base and a5-token-boundary: P2 `(guard)`;
   - token-docs: P2 `(record)`, second lapse, on my reading.
@@ -394,6 +397,8 @@ See § "The release-falsity-floor read" above. `governance/Test-Development-Stan
 
 ### RL-51: Medium (process; Thurgood; not tag-relevant): the fallback question on the records' home was not put to Peter at the second release
 
+**Update (2026-11-12, Stacy): ruled.** Peter, 2026-11-12T13:25:17Z: "(b), move now in one ballot" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-records-home-b.md`). The release records and the § 5.3 delegate file move to `.kiro/docs/releases/<v>/` now, without waiting for Spec 131's owners file. The vehicle is one ballot drafted by Thurgood and ratified by Peter, record-first. It carries the five seats' standing write scope over `.kiro/docs/releases/**`, the RELEASE-FLOW step 6 switch, and the capture record's close. The ruling directs the vehicle and ratifies no text yet written. Records already written, this one included, stay where they are unless the new ballot says otherwise. My consult position was (c), the interim home plus a one-site ballot, and Peter ruled (b). The finding text below is kept as first written.
+
 - RELEASE-FLOW step 6, "Where a release's records live", fallback bullet: "at the walk of the second release whose walk record's first `main at:` SHA descends from that ballot's application merge … the capture record's re-rule PR at that release carries one `**Open for Peter**:` line … standing write scope for the five seats now (that ballot's option (b)), or the interim home for this release."
 - 16.3.0 is that second release (#559 `a4e7fa12c` is an ancestor of `c3fd1893a`; 16.2.0's `2c00cea49` was the first).
 - No re-rule PR for `2026-10-29-release-records-home-switch.md` exists in the delta. The file has no commit in `v16.2.0..S`. #851's body has no `**Open for Peter**:` line. The walk rows the record `carried` without naming a hold.
@@ -403,6 +408,22 @@ See § "The release-falsity-floor read" above. `governance/Test-Development-Stan
 
 ### RL-52: Medium (records; owners as listed; not tag-relevant): fifteen records lapse at S and seven escalate; the B2 reading's own deadline fired
 
+**Update (2026-11-12, Stacy): ruled.** Peter, 2026-11-12T13:29:02Z: "As recommended" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md`), on the seven-row batch after the owners' read-only consult (Thurgood, Stacy, Lina, Ada; three rounds, 2026-11-12; round files in the orchestrator's scratchpad `consult-163/`).
+- **The seven, as ruled**:
+  - b-ci: fix-now, with ballot #460's F-1 to F-4 ruled in one sitting;
+  - the RS queue: spec 131;
+  - github-grant-coverage: fix-now (a warn-only check, my fixtures first);
+  - hand-written readiness: fix-now on the ~80 lines, with the class question moved to a new rule-10 record for 132;
+  - icon-base: fix-now;
+  - a5: fix-now via an A-5 erratum ballot;
+  - generate-warning: drop, after a Req 13.2 amendment.
+  - Every fix-now is due by 16.4.0's S (`release:16.4.0:phase-1`, then `merge:#<N>`).
+- **Add-on**: Ada files a P3 record for the false "DTCG generation failed (non-blocking)" warning.
+- **(c) B2 goes to its own small ballot now** (Thurgood drafts). It includes a line that a "carried" walk row is not a re-rule.
+- **My corrected readings**: token-docs is out of the batch (no lapse; closed under rule 5), and github-grant-coverage is in (a lapse). See the table's correction rows.
+- **Owed now**: each owner writes the disposition into their own record, citing the batch file (rules 1 and 9). The non-escalating lapses stay with their owners.
+- The finding text below is kept as first written.
+
 - **(a) The plan line that did not run.** #851's body says "other owners' carried rows are re-ruled by them before S (rule 11)". Of the 13 rows the walk carried, no owner re-ruled one before S. The lapse table above lists each record with its owner. That is Thurgood ×8, Lina ×4 (two co-owned), Ada ×2 (one co-owned) and Stacy ×1. Under README rule 10, a plan stated only in a PR body, citing no record, "is a finding on the PR that wrote it".
 - **(b) The escalations**: b-ci, the RS queue, hand-written-readiness, generate-component-token-warning, icon-base, a5-token-boundary and token-docs (on my reading) go to Peter with spec / drop / fix-now (`**Open for Peter**:` line 3).
 - **(c) B2's deadline.** "131's README rule 11 is ratified by 16.3.0's S, or the working reading B2 goes to its own ballot then" (`2026-10-26-rule-11-standing-records-lapse-reading.md`, Trigger prose). Spec 131 has no requirements at S, so B2 now owes its own ballot. Every lapse above rests on B2.
@@ -410,6 +431,11 @@ See § "The release-falsity-floor read" above. `governance/Test-Development-Stan
 - **Routed**: (a) to each owner, (b) to Peter, (c) to Thurgood (the rule-11 record's owner).
 
 ### RL-53: Medium (ARMING, `pending.json` fourth read; Lina; to Peter by the row's text; not tag-relevant): #846 rewrote the examples guard's baseline header
+
+**Update (2026-11-12, Stacy): settled by the owners, with no question to Peter. Restore by a one-item ballot.** The header goes back to 75 under a one-item ballot naming "header 72 → 75", ratified by Peter (adoption § 2 clause 4: "a ballot, RATIFIED at that PR's merge, that names the change"). It does not ride the A-5 erratum, so it cannot wait on that census. Lina agreed in the owners' read-only consult (Thurgood, Stacy, Lina, Ada; three rounds, 2026-11-12; round files in the orchestrator's scratchpad `consult-163/`), and the route is recorded in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md`.
+- **My wording corrected**: in effect this was not a weakening. The ceiling test ("the entry count stays at or below the adopted count") got stricter. It was a breach of clause 4's form, and it made the RELEASE comparand false, because the header is the adoption baseline, not a running count.
+- **Class option** (Lina's, which I back): pin the header in the guard's test, and correct `check.ts` L1605.
+- The finding text below is kept as first written.
 
 - `pending.json`'s header changed from "entries: 75 (… tag 3, attribute 1 …)" to "entries: 72 (… tag 1, attribute 0 …)", and #846's body names no ratified ballot. The read says "a changed key, `home` or `header` is a finding on the author, routed to Peter as an unadmitted weakening of a floor".
 - **My reading, offered**: the deletions are clean, and the guard is green at S. The header is the adoption baseline, though, and the RELEASE pass compares P against it. Rewriting it to the post-fix count makes the baseline say 72 where 75 were adopted.
@@ -464,6 +490,16 @@ See § "The governance-examples read". **Routed**: to Thurgood.
 
 ### RL-60: Medium (signing walk; to Peter; not tag-relevant): 24 non-Stacy flagged acts, 22 FAIL 7 and 2 anomaly 4, with no reader named
 
+**Update (2026-11-12, Stacy): settled by § 5.4, with no question to Peter. #857 item (4a) is withdrawn.** § 5.4 reads: "A `FAIL`, an `anomaly` … sends every act by that seat in that PR into J." No rule asks anyone to rule that the acts stand.
+- The flagged seats' acts on #758, #775 and #676 go into J. #676's anomaly 4 reads "cannot show the commit succeeded", not "store layout unrecognized", so it widens too.
+- J's blind re-judgment is still owed and not run.
+- The 19 pre-#816 "renders nothing" lines become instances in `2026-11-09-link7-f2b-applied-before-816.md` (Thurgood).
+- The 3 rendered-line FAILs go back to their seats: Data's `#in-scope` on #758, and Kenya's `#ios-theming-spec-094` ×2 on #775. Each seat points to its print record or re-signs.
+- § 8 trigger (a) is the route to Peter for anything a recording slip does not explain.
+- **My round-1 claim corrected**: § 5.1 makes me the walker, not the one who decides whether an act stands.
+- **Class option**: RS-36's amendment names a reader for non-Stacy flags.
+- Agreed in the owners' read-only consult (Thurgood, Stacy, Lina, Ada; three rounds, 2026-11-12; round files in the orchestrator's scratchpad `consult-163/`), and recorded in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md`. The finding text below is kept as first written.
+
 See § "The signing-act walk".
 - 19 of #758's FAIL 7 lines are pre-#816 `writeScope` rows (Ada, Data, Kenya). That is the shape Peter let stand for my 10.
 - #758 has 1 more, Data's `#in-scope` rendered-line FAIL 7.
@@ -489,13 +525,16 @@ See § "The signing-act walk".
 
 ## Open for Peter
 
-The same four lines are in this PR's body. Only line 1 holds the tag.
+The same four lines are in this PR's body. Only line 1 held the tag. *(2026-11-12: lines 1–3 answered by Peter; line 4 withdrawn as questions, as noted under it.)*
 
 1. **Floor-class row (holds the tag)**: `governance/Test-Development-Standards.md` L87–L88 and L1045 name `Icon.test.ts`, `Icon.accessibility.test.ts`, `createIcon()` and an `Icon` class. None of them exists at S. The doc ships, and the lines are in the Stacy and Thurgood charters. The walk and its owner both committed them to your floor batch if the release PR left them, and #852 left them. Do you waive them for 16.3.0 (your words, dated), or are they fixed before the tag (a new S)? And do the 26 `createIcon(` / `createButtonCTA(` calls in the same doc's fences join the same answer? Thurgood reads them as not P0. I read L87–L88 and L1045 as P0, narrowly, and the fences as illustrations.
    **Peter answered**: 2026-11-10T01:59:34Z — "Yes, I waive RL-49 as stated" — .kiro/specs/129-consumer-generation-completeness/evidence/2026-11-10-peter-waives-rl49-16-3-0.md. The hold is released for 16.3.0; the fix is owed under `.kiro/issues/2026-11-10-tds-worked-example-names-rl49.md` (filed in #856, not yet on `main`).
 2. **The records' home (RELEASE-FLOW step 6 fallback; not tag-holding)**: standing write scope over `.kiro/docs/releases/**` now for Stacy, Thurgood, Ada, Lina and Leonardo (ballot `2026-10-29-release-claims-pass-record-home` option (b)), or the interim home for this release? The law put this question in the capture record's re-rule PR. That PR does not exist. This release is at the interim home, as the law says.
+   **Peter answered**: 2026-11-12T13:25:17Z — "(b), move now in one ballot" — .kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-records-home-b.md.
 3. **Rule-11 escalations (one batch; not tag-holding)**: seven records lapse at S on B2 and owe you spec / drop / fix-now: `2026-10-24-b-ci-post-flip-owed-acts` (second lapse; its items wait on ballot #460), `2026-10-26-release-16-1-standards-implications` (routed to 131), `2026-11-05-hand-written-readiness-claims-disagree-with-generated-readiness`, `2026-11-08-generate-component-token-warning-spacing-sizing-only`, `2026-11-08-icon-base-name-values-list-unchecked`, `2026-11-09-examples-guard-a5-token-boundary`, and `2026-10-25-token-docs-unvetted-name-hits` (second lapse on my reading; no lapse on the outcome-line reading). B2's own deadline passed at this S. Does B2 go to its own ballot now, or does 131's rule-11 rewrite come forward?
+   **Peter answered**: 2026-11-12T13:29:02Z — "As recommended" — .kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md. (The batch as ruled: token-docs out, github-grant-coverage in, B2 to its own ballot.)
 4. **Signing and guard reads (not tag-holding)**: (a) Does your 2026-11-09T04:27:04Z "stand as recorded" for my 12 flagged acts also cover the 24 non-Stacy flagged acts at #758, #775 and #676 (RL-60)? (b) #846 rewrote the examples guard's adoption header from 75 entries to 72 with no ballot named. The ARMING row routes that to you as an unadmitted weakening of a floor (RL-53). Does the header go back to 75, or does a ballot admit running counts?
+   *Withdrawn as questions (2026-11-12, Stacy)*: (a) is settled by § 5.4 into J, and (b) by a one-item ballot. Both were settled by the owners in the owners' read-only consult (Thurgood, Stacy, Lina, Ada; three rounds, 2026-11-12; round files in the orchestrator's scratchpad `consult-163/`), and recorded in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md` (§ "Settled by the seats; no question to Peter"), which Peter answered "As recommended".
 
 ---
 
