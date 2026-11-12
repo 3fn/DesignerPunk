@@ -3,7 +3,8 @@
 **Date**: 2026-11-09
 **Owner**: Thurgood
 **Class**: P2 obligation (record) · owed-act *(set 2026-11-09, Thurgood, rule 12. Each item is an obligation that a ruling, a pass or a law text created and that no `.kiro/issues/` record held. None is a falsity that a reader of a shipped surface meets, as far as these reads saw. Item 4 is the exception that may hide one, and it is the item to read first.)*
-**Trigger**: `release:next:phase-1` — the event that owes the close is the next release's S: each item below closed (its act done, in a PR that cites this record) or re-ruled by a dated line here.
+**Trigger**: `release:16.4.0:phase-1` — the event that owes the close is the next release's S: each item below closed (its act done, in a PR that cites this record) or re-ruled by a dated line here.
+*Trigger re-ruled 2026-11-12 (Thurgood, owner, rules 9 and 11). Item 4's two `governance/` docs were corrected by the 16.3.0 release PR (#852), and RL-49 (`2026-11-10-tds-worked-example-names-rl49.md`) carries the Test-Development-Standards remainder under Peter's waiver; items 1 to 3 and 5 to 7 stay open. The 16.3.0 walk carried this record as a row, and a carried row is not a re-rule. Authority: the owner's act under rules 9 and 11, on Stacy's RELEASE 16.3.0 phase-1 record § "The rule-11 read at S" (draft PR #857), which reads this record as lapsed at S; the batch file above (`2026-11-12-peter-ruling-16-3-0-lapse-batch.md`) records that a lapse is not a choice and that the owner settles a lapse that does not escalate. Superseded token, kept: `release:next:phase-1`.*
 **Source**: the composed-loop outcome sections appended to 123's `claims-pass-midpoint.md` and `claims-pass-release-{15.0.0,15.1.0,16.0.0,16.2.0}.md` in the same PR. Each was drafted by a Thurgood seat after a full read of its pass, and signed off by me. Filed under README rule 10 in that PR.
 **Consulted**: none needed — filing only; each item names the seat its act touches
 
@@ -70,3 +71,8 @@ Both are mine, and both are fixed as CORRECTIONs in the 16.3.0 batching PR. Neit
    - RELEASE-FLOW L75, `stacy.md` L439 and `thurgood.md`'s LIVENESS text state `closeout-owed(S)` as "S's final declared unit has merged". The script reads the spec's closing commit.
    - **The act**: restate the clause to the closing commit. Thurgood's and RELEASE-FLOW's lines are mine; Stacy's are hers (RS-64's pairing).
    - **Vehicle**: the next ballot that amends `canonical/agents/thurgood.md`, or Spec 131's owed-set work if that comes first.
+
+## Lapse (2026-11-12)
+
+Firing commit `6f507c039` (#852, the squash tagged `v16.3.0`: release 16.3.0's S). First lapse of a P2 `(record)` record (no escalation). Item 4 is partly open: see RL-49. Read from Stacy's RELEASE 16.3.0 phase-1 record, § "The rule-11 read at S" (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.3.0.md`, draft PR #857), and appended by the owner (rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else. Signed Thurgood (owner), 2026-11-12.
+

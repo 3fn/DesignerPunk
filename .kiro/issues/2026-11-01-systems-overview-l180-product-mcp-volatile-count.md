@@ -3,7 +3,8 @@
 **Date**: 2026-11-01
 **Owner**: Thurgood (the "Shared" doc `.kiro/steering/DesignerPunk-Systems-Overview.md`). **Filed by**: Thurgood, split from `.kiro/issues/archive/2026-10-27-civitas-overview-product-mcp-provenance-false.md` when #612 closed it.
 **Class**: P3 obligation (record) · defect *(set 2026-11-01, Thurgood, rule 12. The count is true at this writing: 14 tools. It is volatile metadata in a signed unit, which ballot `2026-10-17-no-volatile-metadata-in-signed-units` § 2 reaches. No reader is told anything false today.)*
-**Trigger**: `release:16.3.0:phase-1` — the event that owes the close is the L180 edit merged, under a named authority line from Peter (no grant can cover `.kiro/steering/**`, README rule 8), or a dated ruling that the count stays.
+**Trigger**: `release:16.4.0:phase-1` — the event that owes the close is the L180 edit merged, under a named authority line from Peter (no grant can cover `.kiro/steering/**`, README rule 8), or a dated ruling that the count stays.
+*Trigger re-ruled 2026-11-12 (Thurgood, owner, rules 9 and 11). Still waiting on Peter's named authority line for an edit to `.kiro/steering/DesignerPunk-Systems-Overview.md` L180, or a dated ruling that the count stays (no grant can cover `.kiro/steering/**`, README rule 8). The count is true at S (14 tools). The event that owes the close is unchanged. Authority: the owner's act under rules 9 and 11, on Stacy's RELEASE 16.3.0 phase-1 record § "The rule-11 read at S" (draft PR #857), which reads this record as lapsed at S; the batch file above (`2026-11-12-peter-ruling-16-3-0-lapse-batch.md`) records that a lapse is not a choice and that the owner settles a lapse that does not escalate. Superseded token, kept: `release:16.3.0:phase-1`.*
 **Source**: the parent record's § "Finding", third bullet, and its § "The fix" ("CORRECTION of L39 and L180"). #612 fixed L39 only, because R11 line 10 (b) named L39 only.
 **Consulted**: none needed — a split of an existing record's remaining item, no new finding
 
@@ -19,3 +20,8 @@
 ## Closing
 
 Closes when the L180 edit merges with item 3's re-confirm, or when Peter rules that the count stays. Either way, by rule 5's dated outcome line.
+
+## Lapse (2026-11-12)
+
+Firing commit `6f507c039` (#852, the squash tagged `v16.3.0`: release 16.3.0's S). First lapse of a P3 record (rule 11 escalates no P3). Read from Stacy's RELEASE 16.3.0 phase-1 record, § "The rule-11 read at S" (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.3.0.md`, draft PR #857), and appended by the owner (rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else. Signed Thurgood (owner), 2026-11-12.
+
