@@ -9,7 +9,7 @@ Practice (rulings item 19 / RS-17): EVERY run is pasted, failing ones included, 
 ## How S was reached (for the reader)
 
 S = 6f507c039 (#852, the release PR). No release fix followed it: S did not move, and the tag, 5.3 and 5.4 all name it.
-Phase 1 (Stacy): her RELEASE phase-1 record for 16.3.0 is #857 (draft at this writing; it holds on Peter's items (2)–(4)). Merge order: #857, then this record's PR (#856).
+Phase 1 (Stacy): her RELEASE phase-1 record for 16.3.0 is #857, merged 2026-11-12T21:57:37Z, squash cdad1107852985abcd3f4294bc69a000095e52c6. It held the tag on RL-49 until Peter's waiver of 2026-11-10T01:59:34Z. Merge order: #857, then this record's PR (#856).
 
 ## Comparands (6b)
 
@@ -183,7 +183,8 @@ No mismatch: no release incident. The 5.1 dry-run tarball's sha1 (0656fdfe…) d
 All four sha1s (npmjs dist.shasum, npmjs fetched bytes, GitHub Packages dist.shasum and GitHub Packages fetched bytes) equal the 5.3 record's sha1, 31c0b0bf05f5ea5450c48418d700a348da2a1523. Both registries hold the one tarball 5.3 built at the tag, with 1739 files and 6710535 bytes. The rail passed on its first run, exit 0. 16.3.0 landed where consumers install from, and nothing was published out of flow. One attempt (5.4 attempt 1) failed on the operator's piping and published nothing.
 
 ## Post-merge obligations recorded here (for Stacy's phase 2)
-- This PR (#856) stays a draft until #857 (Stacy's phase-1 record) merges. #857 holds on Peter's items (2)–(4). Merge order: #857, then #856.
+- #857 (Stacy's phase-1 record) merged 2026-11-12T21:57:37Z, before this PR.
 - Phase 2 (Stacy) triggers at this step-6 record PR's merge; it reads this file.
-- The walk record (.kiro/issues/2026-11-09-release-16.3.0-walk.md) closes and archives in this PR (rule 5) after #857 merges, with its outcome line naming #857's squash SHA. The 16.3.0 files grant (docs/releases/16.3.0/**) expires at this PR's merge and is closed and archived in this PR (rule 5), at .kiro/issues/archive/2026-11-09-release-16-3-files-grant.md. Neither move is made yet: the SHAs do not exist.
+- The walk record is closed and archived in this PR (rule 5), after Stacy's phase-1 record merged (#857, `cdad11078`, 2026-11-12T21:57:37Z). It is now `.kiro/issues/archive/2026-11-09-release-16.3.0-walk.md`.
+- The 16.3.0 files grant (docs/releases/16.3.0/**) expires at this PR's merge. It is closed and archived in this PR (rule 5), at `.kiro/issues/archive/2026-11-09-release-16-3-files-grant.md`.
 - GitHub release: step 7, last: gh release create v16.3.0 --notes-file docs/releases/release-16.3.0.md

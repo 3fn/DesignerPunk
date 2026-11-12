@@ -37,3 +37,9 @@
 - **Discipline**: each PR's `git diff --name-only` is a subset of the list as it stood at the activating merge, apart from `.kiro/issues/**` (standing scope) and the named `governance/` CORRECTIONs. An edit outside the list is a claims-pass finding.
 
 *Signed: Thurgood, 2026-11-09, as owner and grantee.*
+
+**Outcome (2026-11-12, Thurgood)**: closed — the grant is spent and expires at this PR's merge (#856, the step-6 release-record PR). I cannot name #856's own squash SHA in a file that merges in #856, so, as the 16.2.0 grant's outcome line did, this line names the PR and says "at its merge"; the SHA is `git log --first-parent --grep '(#856)'` on main. The two merges it names:
+- **The release PR, #852**, squash `6f507c039ed4140eee4578aa6b75d713a5d4ad9d` (16.3.0's S), merged 2026-11-10T01:00:01Z. It consumed and expired `package.json`, `package-lock.json`, `CHANGELOG.md`, `README.md`, `docs/releases/release-16.3.0.md`, `docs/releases/RELEASE-NOTES-11.1.0.md`, `docs/tokens.css` and `canonical/generated.lock`. `token-index/**` was granted and not touched. Its diff also changed paths this grant does not list: `floor-closure.json` (its own grant, #853), the named `governance/` CORRECTIONs (Integration Guide, Test-Development-Standards, MCP-Evolution-Roadmap, each under its owner's Edit kind line), and `src/cli/shared/errorCatalog.ts`, `src/cli/__tests__/errorCatalog.test.ts` and `tests/consumer-integration.test.ts`. The last is Stacy's RL-55 (`.kiro/issues/2026-11-10-release-16.3.0-phase-1-findings.md`), dispositioned there; I did not read the errorCatalog pair against a grant and leave it to the claims pass.
+- **The step-6 release-record PR, #856**, at its merge. Its one act under the grant is `docs/releases/16.3.0/publish-verification.txt`.
+
+It was activated by #851 (`5d72723ea`). Archived under rule 5 in this PR, as § "Duration and close" says.
