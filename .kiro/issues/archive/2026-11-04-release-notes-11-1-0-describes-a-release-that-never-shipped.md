@@ -19,3 +19,9 @@
 ## The choice for the owner
 
 Delete it, correct it with a banner saying 11.1.0 was skipped and 102's work shipped in 11.2.0, or leave it with a reason. The record does not pick. Spec 102's tasks.md is a ledger and keeps its citations either way.
+
+## Lapse (2026-11-12)
+
+Firing commit `6f507c039` (#852, the squash tagged `v16.3.0`: release 16.3.0's S). First lapse of a P3 record on rule 11's letter (no escalation); the walk may instead read it as done-but-unclosed (rule 6). The fix was at S and no outcome line had been added (Stacy's RL-61). Read from Stacy's RELEASE 16.3.0 phase-1 record, § "The rule-11 read at S" (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.3.0.md`, draft PR #857), and appended by the owner (rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else. Signed Thurgood (owner), 2026-11-12.
+
+**Outcome (2026-11-12, Thurgood, owner, rule 5)**: closed. The file was corrected, not removed: `docs/releases/RELEASE-NOTES-11.1.0.md` carries a banner (L3) saying 11.1.0 never released and 102's work shipped in 11.2.0, with the original text kept below it. The correction merged in #852 (`6f507c039`, 16.3.0's S). The record's own Trigger (`release:16.3.0:phase-1`) fired at that S; this line closes the lapse heading above. Archived in this PR under rule 5.
