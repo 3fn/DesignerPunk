@@ -18,3 +18,10 @@
 - #857 item (4a) and item (4b), and #856's lapse question, are closed as settled, on the grounds stated in 2.1–2.3.
 - Still owed, and not answered by this: Peter's ratification of the one-item header ballot (72 → 75), and his J sample, which carries the 24 acts.
 - Each marker is answered by a `**Peter answered**:` line citing this file at that PR's head.
+
+## Correction (2026-11-12T21:48:37Z, the orchestrator; Stacy found these at #857)
+
+- **"RELEASE-FLOW § 5.4" in 2.1 is a miscitation.** The widening rule is § 5.4 of ballot `.kiro/docs/ballots/2026-10-01-signing-act-chain.md`. RELEASE-FLOW has no § 5.4.
+- **"§ 8 trigger (a) routes to Peter" in 2.1 is wrong.** Trigger (a) of that ballot's § 8 is "one walked mismatch that a recording slip does not explain". On it, Thurgood charters an issue. It does not go straight to Peter.
+- **"his J sample, which carries the 24 acts" under "What was ruled" is wrong.** The 24 non-Stacy acts go to J's blind fresh-seat re-judgment (§ 5.2). Peter's own sample (§ 5.3) covers the acts Stacy signed.
+- Peter's answer stands. What he was asked was whether item (4a) needs a ruling of his, and these corrections do not change that: the acts go into J by § 5.4, so no ruling is needed. Still owed: J's re-judgment of the 24 acts, plus the header ballot and Peter's ratification of it.
