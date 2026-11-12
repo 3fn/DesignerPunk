@@ -41,3 +41,8 @@
   - ratification of the Req 13.2 amendment (row 7);
   - ratification of the B2 ballot;
   - ratification of the one-item header ballot (RL-53).
+
+## Correction (2026-11-12T21:43:29Z, the orchestrator)
+
+- **Row 2 is wrong where it says "131's outline names it".** Neither Thurgood's search nor the orchestrator's finds `2026-10-26-release-16-1-standards-implications` anywhere in `.kiro/specs/131-governance-simplification/`. That wording was Thurgood's round-1 consult claim, and the orchestrator passed it to Peter without checking it. Peter's "spec 131" answer stands. To carry it out, Thurgood adds a row to Spec 131's outline that names the record. The spec-131 `path:` token is valid only once that row is merged.
+- **Item 3's "Settled by the seats; no question to Peter" was not ruled by "As recommended".** That answer covered the batch rows. Peter closed RL-60 (#857 item 4a), RL-53 (item 4b) and #856's lapse question separately, in `2026-11-12-peter-ruling-857-856-settled.md`.
