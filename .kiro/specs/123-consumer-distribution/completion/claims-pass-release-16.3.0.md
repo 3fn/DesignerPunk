@@ -627,6 +627,8 @@ My verdict is that RL-49 holds the tag. It rests on reading two worked-example l
 
 *Signed: Stacy, 2026-11-10.*
 
+*(Phase 2 is the dated section at the end of this file, after Appendix A.)*
+
 ---
 
 ## Appendix A — the signing-act walk, per-act lines (§ 5.1; non-Stacy acts)
@@ -962,3 +964,120 @@ counts (beside the per-act lines, never in place of them; no total is green): 2 
 {"label":"consistency, not identity","header":"PR #676 (refs/pull/676/head = 9bb09b59)","filter":{"mode":"exclude-signer","seat":"stacy","selected":2,"withheld":2},"acts":[{"sha":"ff9d1423ebcfa621b2f4d737fbe9f52b1c0b1a1e","subject":"Data re-confirm (C16): data #android-specific-guidance:preamble — confirmed at 7 (Core Goals Android-minimum ballot, site 2)","row":"canonical/operative-sets/data.yaml#android-specific-guidance:preamble","seat":"data","verdict":"anomaly","detail":"the one candidate (agent-a3052a4b6342a0217.jsonl) cannot show the commit succeeded — form outside the closed success-evidence set","preRatification":false,"widen":true,"link":4},{"sha":"b9361f02a175a1feaff894717d9447d5073be940","subject":"Data re-sign (C1): data #android-specific-guidance:preamble — assent, surviving 7 of 7 (Core Goals Android-minimum ballot, site 2)","row":"canonical/profiles/consumer/data.dispositions.yaml#android-specific-guidance:preamble","seat":"data","verdict":"anomaly","detail":"the one candidate (agent-a3052a4b6342a0217.jsonl) cannot show the commit succeeded — form outside the closed success-evidence set","preRatification":false,"widen":true,"link":4}]}
 ```
 
+
+---
+
+## Phase 2 — 2026-11-12 (read at the merged step-6 record PR #856, `de952df76`)
+
+**Nothing in phase 2 is against the release.** The tag is on S. The one rail run passed. All four 6b sha1s equal the 5.3 record's sha1. My own npmjs read agrees.
+
+**`publish-rail liveness: committed`**, at #856's merge: squash `de952df765c6dcf5b07f0a2b63dfd3daa27327cf`, merged 2026-11-12T22:10:52Z (`gh pr view 856`).
+
+**No merge-confirmation line is owed.** I read every file below from `de952df76`, the merged commit, in my worktree detached there. I did not read an open PR's head.
+
+**Date**: 2026-11-12, read from 22:11Z, written by 22:30Z.
+**Trigger**: RELEASE phase 2 (RELEASE-FLOW step 6), the merge of the step-6 release-record PR.
+**Home**: unchanged, the interim home. Peter's ruling of 2026-11-12T13:25:17Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-records-home-b.md`) moves the records "now, in one ballot". That ballot is not drafted at `de952df76`, and the ruling keeps records already written where they are.
+
+### The tag
+
+- `git ls-remote --tags origin 'v16.3.0*'` gives `ba0d3a66d5acf6329908aa0684b0c5557de2dc18 refs/tags/v16.3.0` and `6f507c039ed4140eee4578aa6b75d713a5d4ad9d refs/tags/v16.3.0^{}`.
+- **So the tag is on S.** S did not move: RL-49 was waived, not fixed.
+- The `.txt` gives the tag object's tagger time as 2026-11-10T02:01:28Z. I did not re-read it.
+
+### The committed step-6 record (`docs/releases/16.3.0/publish-verification.txt` at `de952df76`, 190 lines)
+
+- **The rail**: **one run**, at 2026-11-10T02:15:00Z, with VERSION=16.3.0, from the main checkout at `6f507c039`. Its output is "PASS: @3fn/core@16.3.0 visible on npmjs; tarball host verified", `exit=0`. There are no failing runs to paste, and the record says every run is pasted.
+- **The 5.3 record**, pasted verbatim: `mode publish`, `commit 6f507c039…`, `sha1 31c0b0bf05f5ea5450c48418d700a348da2a1523`, `fileCount 1739`, `bytes 6710535`, `checks 115/115`, `createdAt 2026-11-10T02:06:26.437Z`.
+- **The 5.1 tally**: pasted, and equal to what I read at phase 1 (115/115, 1739 files, 6710535 bytes, publish path 16 (floor 16), sha1 `0656fdfe…`). As in every release, the 5.1 sha1 differs from 5.3's. The 5.3 record is the comparand.
+- **6b, per registry**:
+  - **registry.npmjs.org**:
+    - present;
+    - `time["16.3.0"]` = 2026-11-10T02:14:39.161Z;
+    - `dist.fileCount` 1739 (1739 in the fetched tarball);
+    - `dist.shasum` `31c0b0bf…`, and fetched-bytes sha1 `31c0b0bf…`;
+    - `latest` 16.3.0.
+  - **npm.pkg.github.com**:
+    - present;
+    - publish time 2026-11-10T02:06:28Z;
+    - 1739 files in the fetched tarball;
+    - `dist.shasum` `31c0b0bf…`, and fetched-bytes sha1 `31c0b0bf…`.
+  - **The comparand table**: all four sha1s equal the 5.3 record's sha1, and `cmp` reports the npmjs, GitHub Packages and 5.3 tarballs byte-identical. **No release incident.**
+- **5.4**:
+  - Attempt 1 failed with `EOTP` and published nothing. The record names the cause as the orchestrator's brief, which piped npm's stdout through `tee`, so the web-2FA prompt never showed.
+  - Attempt 2 published. It has no log, and is recorded from Peter's screen. The registry's own `time` (02:14:39.161Z) is the oracle, not npm's "+" line, which RELEASE-FLOW step 6 says is not evidence.
+- **The operator's observations**, checked against the `.txt`: rail ≈02:15:00Z, four sha1s `31c0b0bf…` with 1739 files and 6710535 bytes, 5.3 at 02:06:28Z, the 5.4 EOTP, and npmjs time 02:14:39.161Z. **All five are true as the record states them.** The GitHub release time is checked below.
+
+### My independent re-read (2026-11-12T22:12Z)
+
+- **npmjs**:
+  - `curl -s https://registry.npmjs.org/@3fn%2fcore` gives `dist-tags.latest` 16.3.0, `time["16.3.0"]` 2026-11-10T02:14:39.161Z, `dist.shasum` `31c0b0bf05f5ea5450c48418d700a348da2a1523` and `fileCount` 1739.
+  - The tarball, fetched with `curl` from `dist.tarball`: `shasum` gives `31c0b0bf05f5ea5450c48418d700a348da2a1523`, 6710535 bytes, and `tar -tzf | wc -l` gives 1739. **Equal to the record.**
+- **GitHub Packages**: `not re-verified — this seat's token cannot read the package (HTTP 403 on https://npm.pkg.github.com/@3fn%2fcore)`. I accept the committed record's read, which names no `read:packages` fallback.
+- **The GitHub release** (`gh release view v16.3.0`): `publishedAt` 2026-11-10T02:17:57Z, not a draft, target `main`.
+  - Its body equals `docs/releases/release-16.3.0.md` at `de952df76`, apart from one trailing newline.
+  - **Step 7's order holds**: the rail PASS (02:15:00Z) and 6b (02:15:09Z) both come before the announcement (02:17:57Z).
+  - The 6b record merged to `main` two days after the announcement. Step 7 asks for "a matching 6b record", not a merged one. I note it, and it is not a finding.
+
+### The carried items
+
+- **RL-49**:
+  - Waived for 16.3.0 (Peter, 2026-11-10T01:59:34Z).
+  - The fix is owed under `.kiro/issues/2026-11-10-tds-worked-example-names-rl49.md`, merged in #856, owner Thurgood. Thurgood classes it `P0 false-claim · defect`. Its Trigger is `release:next:phase-1`, and it returns to Peter if still open at the next walk.
+  - The floor-class status stands until the fix lands.
+  - At the next walk the root carries a P0 record, so the next phase-1 P0 grep will hit it. That is the intended reading.
+- **The records home** (RL-51): ruled (b), with the ballot owed by Thurgood.
+- **The lapse batch** (RL-52): ruled "As recommended". The owners' dispositions are owed in each record. The walk's archive line says they are "settled in #858 (`chore/163-lapse-dispositions`)", which is not on `main` at `de952df76` and which I did not read.
+- **RL-53 and RL-60**: closed as settled (Peter, 2026-11-12T21:43:29Z). The header ballot, its ratification, and J's re-judgment of the 24 acts are still owed.
+- **The walk record**:
+  - Its trigger fired at #857's merge (`cdad11078`, 21:57:37Z), as phase 1 predicted.
+  - Thurgood closed and archived it in #856 (22:10:52Z), after the firing. On rule 11's letter that is a first lapse at `cdad11078` (P2 `(record)`, so no escalation), as at 16.1.0.
+  - I record the lapse here and do not edit the archived file, because rule 2 keeps an archived record's content unchanged.
+- **The files grant**: closed and archived in #856 at its fixing PR's merge, as its "Duration and close" says. No walk finding.
+
+### Thurgood's grant closing line: the errorCatalog pair he left to the claims pass
+
+`archive/2026-11-09-release-16-3-files-grant.md` L42 says: "I did not read the errorCatalog pair against a grant and leave it to the claims pass." **My read: in scope, not a finding.**
+- `src/cli/shared/errorCatalog.ts` and `src/cli/__tests__/errorCatalog.test.ts` changed in #852 in one commit, `512b81af1` ("Fix init's closing note …"). Its `Agent: Ada` trailer is reachable from `refs/pull/852/head` (`988c173ab`). It is the only commit in `6f507c039^..refs/pull/852/head` that touches either file.
+- `src/cli/**` is in Ada's charter `writeScope` at S (`canonical/agents/ada.md` L246; ballot 2026-10-17-standing-write-scope-six-roots § 2.1). So no grant was needed.
+- The authority for the change is Peter's (a2) ruling (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-ruling-init-validate-line-a2.md`).
+- The only path in #852 that no scope or grant covers is still `tests/consumer-integration.test.ts` (RL-55).
+
+### Phase-2 findings
+
+- **RL-63: Low (record form; Thurgood; known and queued): the release notes ship their "Date" line unfilled.**
+  - `docs/releases/release-16.3.0.md` L3 reads "**Date**: the tag's date (written at step 6)". The GitHub release body, created with `--notes-file`, carries that line as it is.
+  - It is a placeholder, not a false statement. No reader is misled about the date, since the tag and the release show it. But it is the second release running (16.2.0 did the same).
+  - The coordinator says it is in Thurgood's post-release queue. I did not read the queue's record path, so the row is also filed in the findings record (rule 10).
+- **RL-64: Low (process; the orchestrator, as briefer, and Thurgood, for RELEASE-FLOW 5.4): a brief piped the 2FA publish through `tee`.**
+  - Nothing was published. The script's refusal text sent the operator to the packument, and the second attempt was clean.
+  - The class is a command a brief rewrites so that it loses its TTY.
+  - **Standards implication S-7**: 5.4's text, or the publish script, should say that the `--npmjs` run is never piped. The script could refuse when stdout is not a TTY.
+
+### Before Peter's J sample (§ 5.3)
+
+**Nothing in phase 2 is owed before it.**
+- No commit in `6f507c039..de952df76` touches `canonical/profiles/**` or `canonical/operative-sets/**`. So phase 2 adds no signing act, and the population is the one phase 1 counted.
+- **The pool is 146 Stacy-signed acts**:
+  - 142 in Ada's delegate file (11 PRs; #806 excluded);
+  - 4 on #806, walked by Leonardo at 125-B CLOSEOUT.
+- **Within the pool**:
+  - the 12 flagged acts (11 FAIL 7 and 1 anomaly 4), which Peter's 2026-11-09T04:27:04Z ruling keeps in his J;
+  - the 4 `record absent` acts (#752 ×1, #746 ×3).
+- **What I cannot settle**: whether the 4 on #806 already count toward a 125-B CLOSEOUT Peter sample. That record is Leonardo's file and 125-B's pass.
+- **The line stands**: `Peter sample (Stacy-signed): 0 / 146`.
+
+### Standards implications (phase 2)
+
+`Standards implications: list`
+- **S-7**: as RL-64. An unpiped `--npmjs` run, or a TTY refusal in `release-publish.ts`.
+- **S-8**: RL-63's placeholder has now shipped twice. The notes template could carry no "Date" line before step 6, or step 7 could fill it.
+
+### Forced negative (phase 2)
+
+- **No ❌.**
+- **`not re-verified`**: the GitHub Packages read (403) and the 5.3 exit code. The operator reported the exit code, and the log carries no exit line.
+- **Not taken from any instrument**: the 5.4 attempt-2 screen text, a relay of Peter's screen.
+- **Nothing unverified is rolled into the verdict.** The verdict rests on the committed `.txt`, and on my own npmjs and tag reads.
+
+*Signed: Stacy, 2026-11-12.*
