@@ -100,18 +100,21 @@ ios:
 android:
   # The workflow's `runs-on`, by version, never `-latest`. Image read 2026-11-06: 20261101.360.1 (Ubuntu 24.04.5),
   # JAVA_HOME_17_X64 = 17.0.21+9 (the image default), Gradle 9.8.2 preinstalled, Android platforms up to 37.
+  # Moved 2026-11-27 (ballot 2026-11-07-native-lane-ownership item 3, P1-P6; prior values at 3a3bd072b): image
+  # 20261122.23 replaced the default JDK 17 with a Temurin respin its release notes list as 17.0.21+2, which reports
+  # java.version "17.0.21.1"; imageVersion and java.version take the values the runner reported.
   runner: ubuntu-24.04
-  imageVersion: "20261101.360.1"
+  imageVersion: "20261122.23.1"
   note: "These are harness pins, not platform minimums. A Kotlin compile checks no API level (Req 2.9)."
   # The toolchain match (Req 3.11): the lane reports these five fields and the comparator fails on any difference.
   # Each value is a quoted string. They are what Gradle RESOLVED and printed, not what a file asked for:
-  #   java.version          System.getProperty("java.version") of the JDK that ran Gradle (17.0.21 is Temurin 17.0.21+9)
+  #   java.version          System.getProperty("java.version") of the JDK that ran Gradle (17.0.21.1 is the Temurin respin on image 20261122.23)
   #   gradle.version        the Gradle the wrapper runs (harness/android/gradle/wrapper/gradle-wrapper.properties names it)
   #   kotlin.version        kotlin-compiler-embeddable on the Kotlin Gradle plugin's own classpath, not the image's kotlinc
   #   agp.version           the Android Gradle plugin that built the modules
   #   compose.bom.version   the androidx.compose:compose-bom component in :tokens' resolved compile classpath
   toolchain:
-    java.version: "17.0.21"
+    java.version: "17.0.21.1"
     gradle.version: "9.8.2"
     kotlin.version: "2.4.21"
     agp.version: "9.5.0"
