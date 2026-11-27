@@ -90,3 +90,52 @@ Android has no twin of this list: all 34 main component composables are public (
 - The same holds for the harness charter's dated 2026-10-20 evaluation entry (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` L180): its "Core Goals says 'Android: Not yet constrained'" and its provisional host `minSdk = 24` are a ledger, kept inline. The harness pin is now 26 (Spec 129 `design.md` § 0 and § 2).
 
 Signed Data, 2026-11-05.
+
+## Android render probe result (2026-11-27, Data): obligation (1), Android half
+
+Recorded by the probe's fixing PR, #884, under `.kiro/issues/archive/2026-11-27-android-render-probe-workflow-grant.md` (the grant, activated by #878). The workflow is `.github/workflows/android-render-probe.yml`, and the toy module is `harness/android/render-probe/`. No DesignerPunk component was rendered: the probe measures the runner, not our components.
+
+**The measured run**:
+- Run: https://github.com/3fn/DesignerPunk/actions/runs/46040355947 (`pull_request`, head `18d74ba2954ab86d480dd6903c81a9e3f463a17a`), conclusion `success`.
+- Job: 2026-11-27T17:16:17Z to 17:23:45Z, about 7.5 minutes.
+- Runner image: `Image: ubuntu-24.04`, `Version: 20261122.23.1`.
+- Its `render-probe:` lines, verbatim (artifacts expire after 7 days):
+
+```
+render-probe: runner-image=ubuntu24 20261122.23.1
+render-probe: kvm-before exists=yes mode=crw-rw---- group=kvm
+render-probe: kvm-before open=no
+render-probe: kvm-after exists=yes mode=crw-rw-rw- group=kvm
+render-probe: kvm-after open=yes
+render-probe: download-emulator=ok seconds=13
+render-probe: download-api26=ok seconds=20
+render-probe: download-api36=ok seconds=17
+render-probe: accel-check=accel: 0 KVM (version 12) is installed and usable. accel
+render-probe: boot-api26=ok seconds=35
+render-probe: instrumented-api26=PASS seconds=145
+render-probe: boot-api36=ok seconds=56
+render-probe: instrumented-api36=PASS seconds=33
+render-probe: robolectric=PASS seconds=53
+```
+
+**What it shows**:
+- **KVM is usable on the free `ubuntu-24.04` runner** once GitHub's documented udev rule is applied. Before the rule, `/dev/kvm` exists, but the runner user cannot open it.
+- **Download and boot are cheap**:
+  - the AOSP `default` x86_64 system images download in about 20 s each;
+  - the emulator boots to `sys.boot_completed=1` in 35 s at API 26 and 56 s at API 36.
+  - `instrumented-api26`'s 145 s includes the first Gradle build of the module.
+- **No licence was asked for.** Every `sdkmanager` and `avdmanager` call read stdin from `/dev/null`.
+- **A Compose UI test passes** on the emulator at both API levels, and under Robolectric (SDK 34).
+
+**What it changes in Spec 132** (#880):
+- **P-8 does not arise on this evidence**: no billed runner is needed for an emulator lane.
+- It is one sample. Lane stability is a later read, over many runs, as for the compile harness's tiers.
+
+**A finding from the first run, 46039771588** (head `fdb3c81f6`, VERIFIED from its log):
+- Compose 1.12.1, under the pinned BOM 2026.09.00, requires `compileSdk` 37 or later: `checkDebugUnitTestAarMetadata` failed on 11 dependencies.
+- The compile harness pins `compileSdk 36` and never sees this, because it runs only `compileDebugKotlin`, not the AAR metadata check that an app or test APK build runs.
+- So the D4 Android app needs `compileSdk` 37 at this BOM. The probe module compiles against 37.
+- This bears on `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md`, item 1.
+- That run's other failure, an AVD created outside the emulator's search path, was my setup's, and it is fixed.
+
+*Signed: Data, 2026-11-27.*

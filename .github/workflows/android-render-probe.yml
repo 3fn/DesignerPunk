@@ -10,16 +10,13 @@
 #
 # Not a required context: it is in neither EXPECTED_CONTEXTS nor complete-task.sh's REQUIRED_WORKFLOWS. It accepts
 # no licence: every sdkmanager and avdmanager call reads stdin from /dev/null, so a licence prompt fails the step
-# instead of being answered. The pull_request trigger is path-filtered to the probe's own paths.
+# instead of being answered. The probe ran on its fixing PR (#884) under a path-filtered pull_request trigger,
+# removed before merge, so on main this file is workflow_dispatch only (the grant record's Run budget).
 
 name: android-render-probe
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - '.github/workflows/android-render-probe.yml'
-      - 'harness/android/render-probe/**'
 
 permissions:
   contents: read
