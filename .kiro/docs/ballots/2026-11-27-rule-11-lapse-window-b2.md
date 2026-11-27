@@ -2,18 +2,20 @@
 
 **Date**: 2026-11-27 (drafted from 2026-11-27T14:01:46Z, `date -u`; R2 from 2026-11-27T14:35:50Z)
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/issues/README.md` and of `.kiro/issues/2026-10-26-rule-11-standing-records-lapse-reading.md`, which carries B2's deadline). Direction: Peter, 2026-11-12T13:29:02Z, "As recommended", on the 16.3.0 lapse batch, whose class option reads "B2 goes to its own small ballot now, with Thurgood drafting. It includes a line that a 'carried' walk row is not a re-rule" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md` § "What was ruled"). The orchestrator's brief to draft: Peter, 2026-11-27, "Let's brief Thurgood now".
-**Status**: **DRAFT (R3)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure, ratifies nothing and answers no fork in § 6. Only Peter's dated words in this Status line ratify it (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). *R1 head `bb2a902d9`. R2 folds `[STACY R1]` (§ 8) and adds one severable item (3) and two sites (4 and 5). R3 folds `[STACY R2]` (she signs the R2 folds) and Lina's #868 cross-read.*
+**Status**: **DRAFT (R4)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure, ratifies nothing and answers no fork in § 6. Only Peter's dated words in this Status line ratify it (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). *R1 head `bb2a902d9`. R2 folds `[STACY R1]` (§ 8) and adds one severable item (3) and two sites (4 and 5). R3 folds `[STACY R2]` (she signs the R2 folds) and Lina's #868 cross-read. R4 records Peter's F-1 answer and folds it, with site 6.*
+**Answered so far (not a ratification)**: Peter, received 2026-11-27T16:33:44Z (the orchestrator's clock, at receipt), verbatim, the line break as he wrote it: "Re: 1, (a) with the three guards" / "Re: 2 & 3, Yes". What he was asked: **1**, "F-1: (a) with the three guards, or (b)?"; **2**, "Fix the gate's search inside B2: yes or no?"; **3**, "Your inbound definition as its own small ballot, with those five seats consulted: yes or no?". Read: **F-1 = (a) with the three guards** (item 2 as folded below); **the gate widening rides this ballot** (site 6); **the inbound definition goes to its own ballot** (`2026-11-27-inbound-handoff-notes-definition`, not this one). **F-2 and F-3 are unanswered**, and the ballot as a whole is not ratified.
 **Required reviewer**: **Stacy** (R1 done, § 8). The standing-records record names her ("LAW; Peter ratifies, record-first; Stacy required reviewer", § "The fix"). She wrote B2's corrected wording, she counts lapses in every RELEASE phase 1, and she is the census reader.
 **Reviewers**: none further. Lina set B2's deadline and Ada read its spec-row consequence; both agreed in consult-163 (rounds 1–3, 2026-11-12) that B2 goes to its own ballot. Lina's #868 depends on item 1's reading of a prose-only Trigger change, which § 2 decides and § 5 applies to her record.
 **Consulted**: Stacy — R1 (§ 8): signs item 1's intent, not its R1 text; one input undecidable (which token fires at a relapse-only S), fixed by her quoted sentences, folded; closes unwindowed accepted on two conditions, both folded; F-1: an intake file does not meet "the spec taking the record in", Peter's pick; census reason corrected; one always-loaded straggler (start-up-tasks L136) found, now site 4. Thurgood, Lina, Ada — consult-163 rounds 1–3 (2026-11-12), with Stacy: B2 to its own ballot, with the `carried` line. Item 3 is my class option from my A-5 erratum consult (2026-11-27).
 **Class**: LAW. It changes when a record lapses (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds").
 **Amends**:
-- `.kiro/issues/README.md` rule 11: its first sentence replaced (item 1); **severable** one clause in the spec-answer sentence (item 2, F-1) and one sentence after "A lapsed fix-now returns without that option." (item 3, F-3).
+- `.kiro/issues/README.md` rule 11: its first sentence replaced (item 1); one sentence in the spec-answer sentence's place (item 2, F-1 answered (a)); **severable** one sentence after "A lapsed fix-now returns without that option." (item 3, F-3).
 - `governance/classification-map.md` row `issues-obligation-lapse`: the `rule:` line, the LAW HOME, one history line (§ 4 step 3).
 - `.kiro/steering/start-up-tasks.md` item 9, L136, one sentence (site 4).
 - `.kiro/hooks/RELEASE-FLOW.md` item 3a, L37, one sentence after the disposition list (site 5).
+- `governance/Process-Spec-Planning.md` § "Before Formalizing: Records That Name the Spec", L141, the hand-add sentence (site 6; Peter's "2 … Yes").
 
-**Cap**: rule 11's first sentence; its two restatements (start-up-tasks L136, RELEASE-FLOW 3a); the register row; and, severable, items 2 and 3. **Not in the cap**: the standing-records sentence ("a firing owes a read, not a close"), which stays routed to Spec 131 by its record's Trigger (§ 5); the waiting-spec figure (RELEASE-FLOW 3a's figure lines); any script.
+**Cap**: rule 11's first sentence; its two restatements (start-up-tasks L136, RELEASE-FLOW 3a); the register row; item 2 (F-1 answered); the gate's hand-add (site 6); and, severable, item 3. **Not in the cap**: the definition of an inbound (its own ballot, per Peter's "3 … Yes"); the standing-records sentence ("a firing owes a read, not a close"), which stays routed to Spec 131 by its record's Trigger (§ 5); the waiting-spec figure (RELEASE-FLOW 3a's figure lines); any script.
 
 **Retroactivity**: none. The 16.2.0 and 16.3.0 lapse reads already used B2 as the working reading. This ballot gives that reading standing from its application merge and re-decides no past lapse (§ 5). Stacy walked 13 rows of 16.2.0 and 8 of 16.3.0 by script against the R2 text (her Q1, Q6).
 
@@ -79,13 +81,20 @@ It has no lower bound. Read literally, any re-rule anywhere in a record's histor
 
 **What it does not change**: what fires a record (rule 1), beyond reading `path:` as firing once; the post-walk carry; the spec-answer sentence (unless F-1); the count (distinct SHAs); escalation; grants; the release falsity floor.
 
-### Item 2 — severable, only if F-1 is taken: the spec answer carried out by an intake file
+### Item 2 — the spec answer carried out by an intake file (F-1 answered: "(a) with the three guards", Peter, 2026-11-27T16:33:44Z)
 
 In rule 11's spec-answer sentence (L20 at `3a3bd072b`), **before**: "A **spec** answer is carried out when the spec's design outline merges and names the record." **After**:
 
-> A **spec** answer is carried out when the spec's design outline, or an `inbound-from-*.md` file in the spec's directory, merges and names the record *(ballot 2026-11-27-rule-11-lapse-window-b2, item 2)*.
+> A **spec** answer is carried out when, after the answer, the spec's design outline, or an `inbound-from-*.md` file in the spec's directory, merges and names the record. An inbound file carries it out only if `design-outline.md` exists in the spec's directory at that file's merge base and the file names its author on an `**Author**:` line.
 
-"Names the record" keeps its existing test (`grep -F` of the record's file name, with or without a `.kiro/issues/` prefix). If item 2 is taken, Process-Spec-Planning § "Before Formalizing: Records That Name the Spec" needs its hand-add clause widened to "or an `inbound-from-*` file names" (Stacy R1, Q4); that is outside this cap and is filed under README rule 10 at application.
+The two sentences are the combined text Peter answered (`.../consults-2026-11-27/answers/thurgood-b2-f1-recheck.md`, "Combined position"), unchanged. At application the README carries the inline citation after them, *(ballot 2026-11-27-rule-11-lapse-window-b2, item 2)*, as each rule-11 edit does.
+
+**The three guards, decidable without the author**:
+- **"Names the record"** keeps its existing test: `grep -F` of the record's file name, with or without a `.kiro/issues/` prefix, in the merged file.
+- **"After the answer"**: the answer is the commit that adds Peter's dated words, the evidence or rulings record his spec answer is cited from (the record's disposition line cites it). The carrying file counts only if `git merge-base --is-ancestor <that commit> <the file's adding commit>` exits 0. An earlier passing mention does not carry out a later answer (Stacy R3: 29 of 139 root records are already named by some intake file).
+- **"`design-outline.md` exists … at that file's merge base"**: `git cat-file -e <merge-base>:.kiro/specs/<dir>/design-outline.md` exits 0. An inbound cannot create a spec directory, or park a record in one that is not a waiting spec (RELEASE-FLOW 3a: "holds `design-outline.md` and no `requirements.md`"). A placeholder outline, as 132 had, qualifies.
+- **"Names its author on an `**Author**:` line"**: `grep -m1 '^\*\*Author\*\*: '` on the file. It records who the filer says it is, not proof; git cannot say (49 of 53 intake files' adding commits carry no `Agent:` trailer).
+- **What carrying out still is**: placing the answer with the spec, so the record stops returning to Peter, and starting its owner's re-rule. It accepts nothing. Acceptance is the requirements gate's `intake | re-rule | leave` line (Process-Spec-Planning § "Before Formalizing"), which site 6 makes reach inbound-named records. An inbound never closes or re-rules a record (item 1: "nothing outside the record's own file").
 
 ### Item 3 — severable, only if F-3 is taken: a fix-now record keeps its release token
 
@@ -106,6 +115,15 @@ In rule 11, after "A lapsed fix-now returns without that option.", insert:
 - **Pointer**, at the end of the bullet: `*(amended <application date> by ballot 2026-11-27-rule-11-lapse-window-b2, site 4; prior text at `3a3bd072b`)*`.
 - **Why**: Stacy R1, Q5. After item 1 the old sentence under-reads lapses at every seat's session start, and the R1 straggler grep (`re-ruled it`) did not reach it.
 
+### Site 6 — `governance/Process-Spec-Planning.md` § "Before Formalizing: Records That Name the Spec", L141 (the gate's hand-add; Peter's "2 … Yes")
+
+- **Before** (L141 at `3a3bd072b`, unchanged at `8553499b1`): `A record the outline cites but the grep misses is added by hand.`
+- **After** (Stacy R3's sentence and command, verbatim):
+  > A record that the outline or an `inbound-from-*.md` file in the spec's directory names, but the grep misses, is added by hand: `grep -ohE '[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9.-]+\.md' .kiro/specs/<dir>/design-outline.md .kiro/specs/<dir>/inbound-from-*.md | sort -u`, each hit kept if `.kiro/issues/<hit>` exists at the root.
+- **Pointer**, at the end of the sentence: `*(amended <application date> by ballot 2026-11-27-rule-11-lapse-window-b2 site 6; prior text at `3a3bd072b`)*`. `governance/**` owes one (ballots README § "Where the pointer is owed").
+- **Why**: a live defect, under any F-1 answer. At `8553499b1` the gate's grep for Spec 131 misses two root records that 131's `inbound-from-*` files name, `2026-10-15-123-onboarding-trio-recurring.md` and `2026-10-20-web-element-api-and-form-participation.md` (Stacy R3, VERIFIED; re-checked by Thurgood with `comm` of the two lists). Without the widening, 131's author never lists them.
+- **Sequencing with the inbound-definition ballot**: both edit `governance/Process-Spec-Planning.md`, in different sections (this one L141; that one § "Handoff Notes", L2823–L2835). Neither text depends on the other. Whichever application merges second rebases; the hunks do not overlap. Both refresh the lock, so they take places in the same queue (§ 4 step 7).
+
 ### Site 5 — `.kiro/hooks/RELEASE-FLOW.md` item 3a, L37 (the walk author's reading)
 
 - **After** "… or **lapse** (rule 11).", insert: `A **carried** row is a read, not a re-rule: a carried record lapses at S unless its own file closes it, or re-rules it in its window (README rule 11), before S. The walk record's own token fires at the merge of the phase-1 record that reads it, not at S. *(added <application date> by ballot 2026-11-27-rule-11-lapse-window-b2, site 5)*`
@@ -115,7 +133,7 @@ In rule 11, after "A lapsed fix-now returns without that option.", insert:
 
 ## 3. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: item 1 and sites 4–5 as written. F-1: leave it (lean). F-2: (A), as written (lean). F-3: take it (lean).
+**Recommendation**: item 1 and sites 4–6 as written. F-1: answered (a) with the three guards (Peter, 2026-11-27T16:33:44Z). F-2: (A), as written (lean). F-3: take it (lean).
 
 **Counter-arguments, run against item 1**:
 - **(i) New law inside a simplification that will rewrite rule 11 anyway.** Spec 131 rewrites the README. A ballot now is churn.
@@ -145,18 +163,19 @@ In rule 11, after "A lapsed fix-now returns without that option.", insert:
 1. **The Status commit** (record-first): `**Status**: **RATIFIED (Peter, <date>)**` with his words and his F-1, F-2 and F-3 answers, and the ballots README roll entry.
 2. **`.kiro/issues/README.md` rule 11**: item 1 as ratified, item 2 if F-1 is taken, item 3 if F-3 is taken. The README is not a governance path, so no `**Edit kind**:` line is owed for it. The PR body cites this ballot, and the README carries the inline ballot citation (`.kiro/docs/ballots/README.md` § "Conventions").
 3. **`governance/classification-map.md` row `issues-obligation-lapse`**:
-   - `rule:` line: "a record neither closed nor re-ruled by an ancestor of a firing commit lapses" becomes "a record not closed by an ancestor of a firing commit (the archive move, or an outcome line closing the whole record), and not re-ruled by a commit in its window (after its previous firing and, when its own token fires, after the commit that set that token, which is not a re-rule; nothing outside the record's file counts, a walk record's `carried` row included), lapses". If F-1 is taken, "when the spec's design outline merges naming the record" becomes "when the spec's design outline, or an inbound-from-*.md file in its directory, merges naming the record". If F-3 is taken, the line gains "a fix-now record keeps its release token until its fixing PR closes it, and at that S only its close, or a re-rule on Peter's dated answer, saves it".
-   - `education` LAW HOME gains "ballot 2026-11-27-rule-11-lapse-window-b2 § 2 (rule 11's lapse window, what a close is, and the `carried` row)"; POINTER-GRADE gains "start-up-tasks item 9; RELEASE-FLOW 3a's carried sentence".
+   - `rule:` line: "a record neither closed nor re-ruled by an ancestor of a firing commit lapses" becomes "a record not closed by an ancestor of a firing commit (the archive move, or an outcome line closing the whole record), and not re-ruled by a commit in its window (after its previous firing and, when its own token fires, after the commit that set that token, which is not a re-rule; nothing outside the record's file counts, a walk record's `carried` row included), lapses". Under F-1's answer, "when the spec's design outline merges naming the record" becomes "when, after the answer, the spec's design outline, or an inbound-from-*.md file in its directory (with a design-outline.md at its merge base and an **Author**: line), merges naming the record". If F-3 is taken, the line gains "a fix-now record keeps its release token until its fixing PR closes it, and at that S only its close, or a re-rule on Peter's dated answer, saves it".
+   - `education` LAW HOME gains "ballot 2026-11-27-rule-11-lapse-window-b2 § 2 (rule 11's lapse window, what a close is, and the `carried` row)"; POINTER-GRADE gains "start-up-tasks item 9; RELEASE-FLOW 3a's carried sentence; Process-Spec-Planning § 'Before Formalizing', the hand-add".
    - One history line. `checks` and `check_state` unchanged.
-4. **Sites 4 and 5** as written.
+4. **Sites 4, 5 and 6** as written.
 5. **`.kiro/issues/2026-10-26-rule-11-standing-records-lapse-reading.md`**: one dated body line, mine as owner (rule 9): "B2's half is discharged by ballot 2026-11-27-rule-11-lapse-window-b2 (applied at #<N>); the standing-records question stays, Trigger unchanged." The Trigger line is not touched.
 6. **The PR body carries**:
    - `**Edit kind**: governance/classification-map.md — EXECUTION (.kiro/docs/ballots/2026-11-27-rule-11-lapse-window-b2.md § 4 step 3)`;
    - `**Edit kind**: .kiro/steering/start-up-tasks.md — LAW (.kiro/docs/ballots/2026-11-27-rule-11-lapse-window-b2.md)`;
    - `**Edit kind**: .kiro/hooks/RELEASE-FLOW.md — LAW (.kiro/docs/ballots/2026-11-27-rule-11-lapse-window-b2.md)`;
+   - `**Edit kind**: governance/Process-Spec-Planning.md — LAW (.kiro/docs/ballots/2026-11-27-rule-11-lapse-window-b2.md)`;
    - the `**Consulted**:` line; the census lines re-run at its base; the straggler sweep lines.
 7. **Lock order.** `governance/` and `.kiro/steering/` are input-closure roots, so this application refreshes `canonical/generated.lock` (and regenerates the always-loaded surfaces that render start-up-tasks). The records-home application (`2026-11-27-release-records-home-now`) and the A-5 erratum application refresh it too. **Order, proposed: this application first, then records-home, then A-5.** This one is the smallest regeneration and has no seat acts, so it clears the lock slot fastest; records-home carries five first signatures and Stacy's re-sign, which a rebase over this one does not disturb (no shared text site). Each later PR rebases and regenerates after the earlier merges. Any other lock-carrying PR open at the time takes its place in the same queue (at R2: Ada's CORRECTION #872, draft, which refreshes `canonical/generated.lock`). The orchestrator names the order in each brief.
-8. **Checks**, each pasted in the PR body: `npm run -s check:section-citations`; `npm run -s check:122:diff-guard`; `node scripts/validate-steering-metadata.js`; `npm run test:scripts`; `npx tsx scripts/completion-claims/edit-kind-pointers.ts --pr <N>`; `bash scripts/issues-owned.sh --pr <N> --base origin/main --head HEAD`; the `law-ratified` and `merge-hold` checks at the head.
+8. **Checks**, each pasted in the PR body: `npm run -s check:section-citations`; `npm run -s check:122:diff-guard`; `node scripts/validate-steering-metadata.js`; `npm run test:scripts`; `npx tsx scripts/completion-claims/edit-kind-pointers.ts --pr <N>`; `bash scripts/issues-owned.sh --pr <N> --base origin/main --head HEAD`; the `law-ratified` and `merge-hold` checks at the head; after merge, the docs MCP's `rebuild_index` (Process-Spec-Planning is served).
 9. **Straggler sweep**: `git grep -n -F "re-ruled" -- .kiro/issues/README.md governance canonical/agents .kiro/steering .kiro/hooks/RELEASE-FLOW.md` (widened from R1's `re-ruled it`, Stacy R1, Q5), and `git grep -n -F "carried" -- .kiro/hooks/RELEASE-FLOW.md`. Each section holding a hit is read whole and listed `true`, `fixed` or `left: <reason>`. Expected: README L15 (rule 6), RELEASE-FLOW L41 and L56 read whole; start-up-tasks L136 `fixed` (site 4); RELEASE-FLOW 3a's **carried** `fixed` (site 5).
 10. **Not edited**: Spec 131's outline § 13 (131's rewrite takes rule 11 as it then stands); `scripts/issues-owned.sh` and `scripts/harness/compare.ts` (§ 3 residual 4).
 
@@ -168,7 +187,7 @@ In rule 11, after "A lapsed fix-now returns without that option.", insert:
 - `**Census**: not in scope — fired-records (scripts/issues-owned.sh --pr; warn-only) — item 1 edits no file the check loads and no code it runs: the PR mode reads git and the records only, lists records a merge fires by token, labels any changed Trigger line re-ruled-here without reading a dated reason, bounds a path: fire by the commit that last changed a Trigger line (already-fired@), reads no walk record and computes no lapse; every line it prints at a given base and head is the same before and after` *(Stacy R1, Q5, verbatim; the R1 reason was false in two clauses)*
 - `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts) — the rule-line clause, the LAW HOME string, the history line and sites 4–5 carry no get_section / get_document_* citation`
 - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts; governance/ and .kiro/steering/ are input-closure roots) — both are ordinary closure inputs; no rule, pattern or grammar changes; the lock is refreshed at application, where its verdict is read`
-- `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts) — its scope excludes the register and includes start-up-tasks.md; site 4's sentence carries no token name, no CSS attribute and no example block, so its verdict for that file is unchanged`
+- `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts) — its scope excludes the register and includes start-up-tasks.md and governance/Process-Spec-Planning.md; site 4's sentence and site 6's sentence carry no token name, no CSS attribute and no example block, so its verdict for either file is unchanged` *(site 6 added at R4. UNVERIFIED by a run: the application PR runs `npm run test:scripts` at its base, and a changed verdict for Process-Spec-Planning.md stops the application)*
 - `**Census**: not in scope — publish-rail-guard (scripts/verify-publish-rail.sh) — site 5 adds a sentence to 3a's walk text; no rail text, exit code, assertion or verdict changes`
 - `**Census**: not in scope — hermetic-publish-path (scripts/release-publish.ts) — site 5 is text in the row's education home that the script does not read`
 - **The seat mode** of `scripts/issues-owned.sh` is in no row's `checks`. It bounds a `path:` fire by the commit that last changed a Trigger line. That agrees with item 1's start where the last Trigger change set the token. Where a prose-only re-rule followed the setting commit, the seat mode's bound is later than item 1's, and it can print a later `FIRED@`, or none, for a record item 1 reads as fired earlier (Stacy R1, Q5). Recorded, no line owed.
@@ -192,7 +211,7 @@ In rule 11, after "A lapsed fix-now returns without that option.", insert:
 
 ## 6. Forks for Peter (none is picked here)
 
-- **F-1: is a spec answer carried out by an intake file, without an outline edit?** (Severable item 2; Peter has not ruled on it.)
+- **F-1: is a spec answer carried out by an intake file, without an outline edit? — ANSWERED.** Peter, received 2026-11-27T16:33:44Z, verbatim: "Re: 1, (a) with the three guards". Item 2 carries it. The options and counters below are kept as they were put, with the R3 re-check that moved both seats' leans to (a) (`consults-2026-11-27/answers/thurgood-b2-f1-recheck.md`, `stacy-b2-f1-recheck.md`).
   - **(a) Take it**: "the spec's design outline, or an `inbound-from-*.md` file in the spec's directory, merges and names the record". An outline edit resets the waiting-spec figure (RELEASE-FLOW 3a; ballot `2026-11-04-waiting-spec-row`); an intake file does not.
   - **(b) Leave it**: each spec answer costs one chore PR adding an outline row, as #859 did for the RS queue (`029c66cb7`).
   - **(c) Leave it, and stop a line that only names a record from restarting the waiting-spec figure** (Stacy R1, Q4; she gave no text). The figure is counted from "the outline's last-touching commit". (c) removes (b)'s cost without moving acceptance to the filer. It needs a RELEASE-FLOW 3a edit and a change to the script that counts the figure (`baseline-snapshot.sh` L143), which my outline-row consult costed as ballot-sized (a marker convention or a hunk read). No text is drafted; if Peter picks (c), it is drafted at R3 or as its own ballot.
@@ -415,3 +434,12 @@ In rule 11, after "A lapsed fix-now returns without that option.", insert:
 - **#868 and #833**: Lina's agreement and Stacy's check are in § 5; the count (3 under (A), 4 under (B)) and "#833 is not a firing".
 - **Lina's consequence**: named in § 5 as the standing-records gap left to Spec 131.
 - **Fixtures**: her (10) and (11) join § 7.
+
+#### [PETER] F-1 and the two companion questions (2026-11-27; recorded by Thurgood)
+- **His words**, verbatim, received 2026-11-27T16:33:44Z (the orchestrator's `date -u` at receipt; relayed by the orchestrator): **"Re: 1, (a) with the three guards"** / **"Re: 2 & 3, Yes"**.
+- **What he had been asked**: 1, "F-1: (a) with the three guards, or (b)?"; 2, "Fix the gate's search inside B2: yes or no?"; 3, "Your inbound definition as its own small ballot, with those five seats consulted: yes or no?" (the five: Leonardo, Lina, Ada, Kenya, Data). Before it he had read the Thurgood and Stacy R3 re-check (both leaning (a)), after stating his model of inbounds: "Inbounds are intended to be 'sticky notes' for specs that have not yet started …" (`consults-2026-11-27/b2-f1-recheck-question.md`).
+- **What it decides**: item 2's text (folded at R4); site 6 joins this ballot; the definition goes to `2026-11-27-inbound-handoff-notes-definition`.
+- **What it does not decide**: F-2, F-3, or ratification of this ballot.
+
+#### [THURGOOD R4]
+*2026-11-27T16:34:16Z (`date -u`).* Folded Peter's F-1 answer: item 2 is the combined text, unchanged, with its three guards' tests; site 6 is Stacy R3's sentence and command with a pointer; the Amends, Cap, register clause, Edit kind list, checks (`rebuild_index`) and census line follow. F-2 and F-3 stay open. **[@STACY]** Site 6 is your sentence verbatim and item 2 your combined wording; confirm nothing was lost in transcription. → § 2 item 2, site 6 -- [THURGOOD R4]
