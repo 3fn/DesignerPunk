@@ -15,6 +15,15 @@ Model Context Protocol server providing component metadata, experience patterns,
 | `check_composition` | Check if a parent-child composition is valid |
 | `get_component_health` | Index health status — component/pattern/guidance counts, warnings |
 
+**Build provenance (`build`)**: when the server runs as a process from a source checkout (`node application-mcp-server/dist/index.js` in this repository), `get_component_health` and `rebuild_index` also carry `build`, which says whether the running build matches the source beside it. Its `state` is one of:
+
+- `fresh`: the build was made from the source now beside it.
+- `stale`: the source has changed since the build. A warning beginning `build older than source` is added, and the status becomes `degraded`. Run `npm run build` in `application-mcp-server/`, then restart the server.
+- `unrecorded`: the check applies, but `dist/build-info.json` is missing or unreadable. A warning beginning `build provenance unrecorded` is added, and the status becomes `degraded`.
+- `not-applicable`: not a source checkout (the packaged bundle `dist/mcp/application-mcp.js` a consumer runs, or no `src/`), or running from TypeScript source (`npm run dev`). No warning is added.
+
+`npm run build` cleans `dist/`, runs `tsc`, then writes `dist/build-info.json`. `rebuild_index` re-reads the component data; it does not rebuild the code, so it does not clear `stale`. The contract is `.kiro/issues/2026-11-27-mcp-build-provenance-contract.md`; this server's copy is `src/build-provenance/`, a contract-bound twin of the docs server's.
+
 ### Experience Patterns
 
 | Tool | Description |
