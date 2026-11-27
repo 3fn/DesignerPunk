@@ -91,6 +91,18 @@ final class RenderSpikeUITests: XCTestCase {
         XCTAssertEqual(button.value as? String, "1")
     }
 
+    // R1 probe (T-13): an XCUIElement snapshot carries no hidden or accessibility-element flag.
+    func testSnapshotProbe() throws {
+        let app = launch(screen: "good", scheme: "light")
+        XCTAssertTrue(app.buttons["fixture.button"].waitForExistence(timeout: 10))
+        for id in ["fixture.button", "fixture.decorative.hidden", "fixture.decorative.wrapper", "fixture.empty"] {
+            let e = app.descendants(matching: .any)[id]
+            let d = try e.snapshot().dictionaryRepresentation
+            let keys = d.keys.map { "\($0.rawValue)" }.sorted()
+            print("SPIKE snap \(id) keys=\(keys) label=\(d[.label] ?? "") elementType=\(d[.elementType] ?? "")")
+        }
+    }
+
     // MARK: - 2. Ink check, per scheme and theme family
 
     private func inkRun(scheme: String, family: String) {

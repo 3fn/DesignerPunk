@@ -36,6 +36,9 @@ struct FixtureRoot: View {
             switch FixtureArgs.screen {
             case "bad": BadScreen()
             case "typo": TypographyScreen()
+            case "t12": T12Screen()
+            case "t13hidden": T13Screen(hidden: true)
+            case "t13visible": T13Screen(hidden: false)
             default: GoodScreen()
             }
         }

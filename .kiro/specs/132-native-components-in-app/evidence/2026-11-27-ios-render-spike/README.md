@@ -81,13 +81,66 @@ All VERIFIED, and the same set in both runs.
 - So a blanket `.all` audit on D4's catalog screen will report Dynamic Type issues wherever those lines render.
 - Whether that is a defect or an accepted exclusion is a typography decision: Ada for the tokens, Lina for the components, Leonardo for the product view. It belongs in 132's outline round, not in this file.
 
+## Added 2026-11-27: the R2 probes (Spec 132's outline cross-read)
+
+These four probes were run for `[KENYA R1]` and `[KENYA R2]` in `.kiro/specs/132-native-components-in-app/feedback/design-outline.md`. The setup is the same as above: Xcode 27.2, iOS 26.0 simulator (23A343), iPhone 17, deployment target 17.0, nothing downloaded.
+- **Re-run from these committed files (run 3)**: 13 tests, 0 failures, `** TEST SUCCEEDED **`, 69.9 s of test time.
+- **The 13 tests**: the original nine, plus `testSnapshotProbe`, `T13Tests.testHidden`, `T13Tests.testVisible` and `T12Tests.testDynamicTypeAudit`.
+- **The four probe tests measure; they assert nothing.** Their `SPIKE ` lines below are the record.
+
+### 4. T-13: what can tell that a view is hidden from VoiceOver
+
+- **XCUITest snapshot** (`testSnapshotProbe`). The `dictionaryRepresentation` for the hidden circle has the same keys as any visible "other" element: `displayID`, `elementType` (1), `enabled`, `frame`, `hasFocus`, `horizontalSizeClass`, `identifier`, `label` (empty), `selected`, `title`, `verticalSizeClass`, `windowContextID`. **There is no hidden or accessibility-element flag.** VERIFIED.
+- **Hidden images with no custom identifier** (`T13Screens.swift`, `T13Tests.swift`). Screen `t13hidden` has two SF Symbol images, both `.accessibilityHidden(true)`, one also carrying a custom identifier. Screen `t13visible` has the same two images, not hidden.
+
+| Read | `t13hidden` | `t13visible` |
+|---|---|---|
+| `app.images` | 2: `star.fill` "Favorite", `t13.hidden.withId` "Love" | 2: the same, with the visible identifier |
+| `app.descendants(matching: .any).count` | 10 | 10 |
+| In-app walk: labels of objects with `isAccessibilityElement == true` | Anchor, Walk, not run | Anchor, **Favorite**, **Love**, Walk, not run |
+
+- **What the walk is.** `AXWalk.run()` runs inside the app, triggered by a button while XCUITest drives it. From each window it recurses through `accessibilityElementCount()` / `accessibilityElement(at:)`, `accessibilityElements` and `subviews`.
+- **Finding 5.** XCUITest's query cannot tell hidden from visible: a hidden image is found even with no custom identifier. The in-app walk can: the hidden images drop out, and the known-bad twin brings them back. VERIFIED, identical in three runs (two during R2, and run 3).
+  - The walk's elements expose no `accessibilityIdentifier`, so its assertion has to match by **label**.
+  - The walk ran under XCUITest. Run without an accessibility client attached, it is UNVERIFIED and may return nothing, which is my reading of `kenya-plan-r1.md`'s zero-element result.
+
+### 5. T-12: fixed and scaled type under the Dynamic Type audit
+
+- **The screen** (`T12Screen.swift`, `T12Tests.swift`) shows three texts at `DesignTokens.fontSize100`:
+  - `.font(.system(size:))`;
+  - a `ViewModifier` with `@ScaledMetric(relativeTo: .body)` feeding `.system(size:weight:)`;
+  - `.font(.custom("Figtree", size:, relativeTo: .body))`.
+- **Finding 6.** `performAccessibilityAudit(for: .dynamicType)` flags only the fixed form ("Dynamic Type font sizes are unsupported", type 65536), and neither scaled form. VERIFIED.
+- **A related compile check** (VERIFIED, `swiftc -typecheck`, iOS 17.0 target, not part of the fixture): `.system(size:weight:relativeTo:)` does not exist. The compiler reports "extra argument 'relativeTo' in call".
+
+### 6. T-4: an adopter package importing the root package by local path
+
+- **The layout** (`t4-local-path/`): a root `Package.swift` with one target, `DesignerPunk`. That target holds only the consumer's generated `DesignTokens.ios.swift` and `ComponentTokens.ios.swift`, which are gitignored, copied in, and must come from a consumer named `Probe`. Then an adopter package at `ios/AdopterComponents/` whose `FilterBar` imports `DesignerPunk` and reads `DesignTokens`, `\.dpTheme` and `.probeTheme(_:)`.
+- **Build command**: `xcodebuild build -scheme AdopterComponents -destination 'generic/platform=iOS Simulator'`, run from `ios/AdopterComponents/`.
+- **Finding 7.**
+
+| Dependency line | Result |
+|---|---|
+| `.package(name: "DesignerPunk", path: "../..")` (committed) | `** BUILD SUCCEEDED **`, no warnings |
+| `.package(path: "../..")` | "Could not resolve package dependencies: unknown package 'DesignerPunk' in dependencies of target 'AdopterComponents'; valid packages are: 't4-local-path'" |
+
+  - A path dependency's package identity is the **directory name of the adopter's repository**, not our manifest's `name`.
+  - So generated manifests, code samples and the walkthrough must write the `name:` form.
+  - Both rows VERIFIED, run from these committed files.
+
+### 7. A file added to a synchronized folder needs no project edit
+
+`T12Screen.swift`, `T13Screens.swift`, `T12Tests.swift` and `T13Tests.swift` joined their targets with no change to `project.pbxproj`. That is evidence for T-3. VERIFIED: `git diff` shows `project.pbxproj` unchanged since `cabf37ada`.
+
 ## What was not run
 
 - **The iOS 17 runtime: not run.** No iOS 17 simulator runtime is installed (only iOS 26.0). Getting one needs either:
   - a local download (`xcodebuild -downloadPlatform`, several gigabytes, size UNVERIFIED), which Peter approves; or
   - a dispatched CI run on an older image, which needs Peter's go and an issue-row grant for a `.github/workflows/` change.
 
-  Neither was asked for or done. Whether Xcode 27.2 can run an iOS 17 runtime at all is UNVERIFIED. The standing wording therefore holds: built for iOS 17.0, not run on 17 (Spec 129 `design.md` § 0). This is item 2 of the goal record's § "iOS obligations filed here under rule 10 (2026-11-27, Kenya)".
+  Neither was asked for or done. Whether Xcode 27.2 can run an iOS 17 runtime at all is UNVERIFIED.
+
+  **Update, 2026-11-27.** Peter approved a local download ("Re: 2, (a)", received 2026-11-27T17:20:36Z) and picked "17.5" (received 2026-11-27T18:07:40Z). Apple's Xcode support table lists Xcode 27.2's simulator range as "iOS 17 or later" (READ, developer.apple.com/support/xcode, 2026-11-27T17:24Z). But `xcodebuild -downloadPlatform iOS -buildVersion 17.5` printed "iOS 17.5 is not available for download." and exited 70 at 2026-11-27T18:08:51Z, with no prompt; an earlier attempt with the build number `21F79` failed the same way. Nothing was downloaded. The obligation is held in `.kiro/issues/2026-11-27-ios-17-runtime-probe-owed.md`. The standing wording therefore holds: built for iOS 17.0, not run on 17 (Spec 129 `design.md` § 0). This is item 2 of the goal record's § "iOS obligations filed here under rule 10 (2026-11-27, Kenya)".
 - **CI**: everything ran on this Mac. Whether a standard `macos-26` runner gives the same numbers is UNVERIFIED.
 - **VoiceOver speech, Dynamic Type at the largest size, reduce motion**: not run.
 - **Any DesignerPunk component**: not rendered (see "Not a gate" above).
