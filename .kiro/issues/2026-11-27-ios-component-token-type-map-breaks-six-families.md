@@ -1,14 +1,16 @@
-# Issue: the iOS component-token emitter's type map breaks six families; a component token in color, fontWeight, fontFamily, duration, easing or scale makes `generate` emit Swift that is wrong or does not compile, and `generate` says nothing
+# Issue: the native component-token emitters' type maps break six families; a component token in color, fontWeight, fontFamily, duration, easing or scale makes `generate` emit Swift or Kotlin that is wrong or does not compile, and `generate` says nothing
+
+*(Title widened 2026-11-27, Ada, after `[DATA R1]`: the Android emitter is in the same class. The file name keeps "ios" because #872 cites the path.)*
 
 **Date**: 2026-11-27
 **Owner**: Ada (the component-token generator, `src/generators/TokenFileGenerator.ts`, and `defineComponentTokens`)
 **Consulted**:
 - Kenya (iOS): **answered** in `[KENYA R1]`, 2026-11-27, read-only. She reproduced the colour failure independently and found that the class is wider than colour; her results are in the table below.
-- Lina (component tokens; the consumer of the colour fork): not yet consulted.
-- Data (Android): not consulted; see "Not checked".
-**Class**: P1 consumer-blocking · defect *(set 2026-11-27, Ada, rule 12; Kenya leans the same way.)*
+- Lina (component tokens; the consumer of the colour fork): **pending**.
+- Data (Android): **answered** in `[DATA R1]` part (B), 2026-11-27, read-only. He emitted the six families on both paths in his own consumer and read the Kotlin. He could not compile it, because the machine has no JDK. His results are in § "Android" below. *(Line updated 2026-11-27, Ada.)*
+**Class**: P1 consumer-blocking · defect *(set 2026-11-27, Ada, rule 12; Kenya leans the same way. Re-read 2026-11-27 after Data's R1: the class is unchanged. The Android findings widen the reach and do not change the reading. A reference-path duration, easing or scale token fails the Kotlin compile of the consumer's tokens module, which is the same "one token fails the module" consequence as on iOS, and so it is now on both native targets.)*
 - **The input is accepted.** `defineComponentTokens` is a public API (`@3fn/core/build`), its `family` is a `string`, and the generator handles colour explicitly with `case 'color'`.
-- **One bad token fails the whole module.** `ComponentTokens.ios.swift` is one file that holds every component's enum, and shipped components such as Avatar and Button-Icon read it. So a single bad token fails the module, and every DesignerPunk component in the consumer's iOS target fails with it.
+- **One bad token fails the whole module.** `ComponentTokens.ios.swift` is one file that holds every component's enum, and shipped components such as Avatar and Button-Icon read it. So a single bad token fails the module, and every DesignerPunk component in the consumer's iOS target fails with it. `ComponentTokens.android.kt` is one file too. On Android, one unresolved reference fails the Kotlin compile of the module that holds it (Data, REASONING from the emitted file).
 - **The failure is silent where it starts.** `generate` exits 0 with no warning, and the error surfaces later in Xcode, in a generated file the consumer did not write.
 - **Not P0**: no release note or served doc claims these families work. The served docs said, falsely, that the call "takes numeric families only". That is corrected in `.kiro/issues/2026-11-27-served-docs-say-component-tokens-take-numeric-families-only.md` (PR #872).
 - **Counter, carried** (Kenya's, and mine): the trigger is opt-in. No shipped component, scaffold token or known consumer hits it, and there is a clean workaround: semantic colours through `\.dpTheme`, and none of the six families. So "P2 (guard), latent until a consumer opts in" is defensible. I rate it P1 because the failure is silent: a consumer cannot tell they have opted into a broken path.
@@ -72,22 +74,57 @@ These families compile correctly on both paths (Kenya; Ada for the value path): 
 
 ## Not checked
 
-- **Android** was not compiled, because there is no `kotlinc` on either machine, and Data has not been consulted.
-  - **Value path**: the colour token emits `val odd = 7`, an `Int`, not a `Color` (Ada).
-  - **Reference path**: Android's formatter also emits flat `DesignTokens.<name>`, but `DesignTokens.android.kt` nests `object Duration` (with `val Duration150 = 150`), `object Easing` and `object Scale` (Ada read this in her consumer's emitted file, at L556, L581 and L596). So the same reference-path failure is likely on Android for those three families. This is UNVERIFIED by any compile.
+- **Android** was not compiled. No JDK or `kotlinc` is on this machine (Data checked: `java -version` finds no runtime).
+  - Data has since read the emitted Kotlin for all six families. His results are in § "Android" below. They are still not compiled.
 - **Web** emits `--probecolor-odd: 7;` and a raw `150` for a duration. Neither breaks a build. Both are wrong wherever they are used as a colour or a time.
 - **The inferred-type fix below** was not compiled. Kenya compiled the explicit-type hand-patch only.
 
+## Android (`[DATA R1]` part (B); emitted and read, not compiled)
+
+**Method** (VERIFIED by Data):
+- The package was packed at `3a3bd072b` and used in a scratch consumer, with one `defineComponentTokens` call per family, each with a value-path and a reference-path token.
+- `generate` exited 0, with no warning naming any probe token.
+- He read the consumer's `dist/tokens/ComponentTokens.android.kt` (L77–L124) and `DesignTokens.android.kt`.
+- **No compile was run.** There is no JDK on this machine. Every "fails" below is Data's REASONING, with high confidence: each one is a reference to a member that does not exist at any level of the emitted `DesignTokens` object.
+
+| Family | Value path | Reference path |
+|---|---|---|
+| **color** | `val fillValue = 7`: compiles as an `Int`, the wrong type. It fails at any use that expects `Color`. | `val fillRef = DesignTokens.purple_300`: **compiles**. The `val` is untyped, so `Color` is inferred, and it is correct. |
+| **fontWeight** | `500`: an `Int`, not `FontWeight`. It fails at the use. | `DesignTokens.font_weight_500`: **compiles**, inferring `FontWeight`. |
+| **fontFamily** | `3`: an `Int` with no meaning. | `DesignTokens.font_family_body`: **compiles**, inferring `FontFamily`. |
+| **duration** | `150`: an `Int` in milliseconds, **the right type and unit** on Android, where the primitive is `Int` ms. | `DesignTokens.duration_150`: **fails**, with an unresolved reference. The member is `DesignTokens.Duration.Duration150`. |
+| **easing** | `1`: an `Int` with no meaning. An easing is a `CubicBezierEasing`. | `DesignTokens.easing_standard`: **fails**, with an unresolved reference. The member is `DesignTokens.Easing.EasingStandard`. |
+| **scale** | `0.96`: a `Double`, where the primitive is a `Float` (`0.96f`). It fails at a `Float` parameter, for example `graphicsLayer(scaleX = …)`. This failure is Android's alone. | `DesignTokens.scale_096`: **fails**, with an unresolved reference. The member is `DesignTokens.Scale.Scale096`. |
+
+**Root cause on Android** (VERIFIED by Data, reading `src/generators/TokenFileGenerator.ts` at `3a3bd072b`):
+- It is the same class as on iOS: a second, lossy copy of the platform type map.
+- `formatAndroidComponentTokenValue` (L657–L676):
+  - emits every reference as a flat `DesignTokens.<name>`, under the comment "A primitive is a flat member of DesignTokens". That is false for the motion families, which `src/build/platforms/AndroidMotionTokenFormatter.ts` nests (L41, L96, L156);
+  - adds `.dp` or `.sp` for six families and emits `String(token.value)` for every other family.
+- `validateAndroidComponentTokenSyntax` checks only the package line and balanced braces, so `generate` reports success.
+- Android's untyped `val`s hide the declared-type half of the class at the declaration. The nested motion objects expose the other half.
+
+**Not triggered by anything shipped** (VERIFIED by Data):
+- Shipped component-token files declare only sizing and spacing, and the scaffold's `progress.ts` adds borderWidth.
+- The harness's Android `gen` tier compiles the consumer's `ComponentTokens.android.kt`, but its consumer is the `init` scaffold. So, as on iOS, his lane cannot catch this class today.
+
 ## Fix shape (no fix is authorized by this record)
 
-Kenya's class-level shape, which she hand-tested on the reference path with explicit types:
-1. **Reference path**: emit the member with no type annotation, so Swift infers it. That gives `public static let fillRef = DesignTokens.purple300`, the way `DesignTokens` already writes its semantic aliases. Take the qualified member path (`DesignTokens.Duration.duration150`) from the same source that emits `DesignTokens`, never from a second map. If colour stays, add `import SwiftUI` to `ComponentTokens.ios.swift`.
-2. **Value path**: give a member a type only where the family has a numeric Swift literal. Convert duration from milliseconds to seconds. Refuse the rest (color, fontFamily, easing). Whether that refusal is a warning or a failure of `generate` is Peter's to rule: a refusal at load fails `generate`, and Req 13.2 holds a failure for a major or for Q7. A number never means a colour on any platform, so this is a cross-platform refusal, not an iOS patch.
-3. **Guard**: add a fixture with one component token per family, in both paths, that `generate`s and typechecks the emitted pair. The fixture belongs in `Consumer Guard` or in the harness consumer (the harness is Kenya's lane, and `consumer.ts` is mine). This closes the instrument gap above.
+Kenya's class-level shape, which she hand-tested on the iOS reference path with explicit types, with Data's Android parts added:
+1. **Reference path**: on iOS, emit the member with no type annotation, so Swift infers it (Android's `val`s are already untyped, which is why its colour, fontWeight and fontFamily references compile). On both platforms, take the qualified member path from the formatter that emits `DesignTokens`: `DesignTokens.Duration.Duration150`, `DesignTokens.Easing.EasingStandard` and `DesignTokens.Scale.Scale096` on Android, from `src/build/platforms/AndroidMotionTokenFormatter.ts`. On iOS, an unannotated member gives `public static let fillRef = DesignTokens.purple300`, the way `DesignTokens` already writes its semantic aliases, and the qualified path is `DesignTokens.Duration.duration150`. On neither platform should the path come from a second map. If colour stays, add `import SwiftUI` to `ComponentTokens.ios.swift`.
+2. **Value path**: give a member a type only where the family has a numeric Swift literal. Convert duration from milliseconds to seconds on iOS; Android keeps `Int` milliseconds, which is the primitive's type there. Emit scale as a `Float` on Android (`0.96f`). Refuse the rest on both platforms (color, fontWeight, fontFamily, easing; Data adds fontWeight from Android, where a value-path `500` is an `Int`, not a `FontWeight`). Whether that refusal is a warning or a failure of `generate` is Peter's to rule: a refusal at load fails `generate`, and Req 13.2 holds a failure for a major or for Q7. A number never means a colour on any platform, so this is a cross-platform refusal, not an iOS patch.
+3. **Guard**: add a fixture with one component token per family, on both paths, that `generate`s and compiles the emitted files on each native platform.
+   - **Where it lives**: the class option is the harness consumer, `scripts/harness/consumer.ts`, which is mine (ballot `2026-11-07-native-lane-ownership` item 5; Data and Kenya proposed it). Its iOS and Android `gen` tiers already compile the consumer's `ComponentTokens.*`, so one fixture would cover both lanes (Kenya's iOS lane, Data's Android lane). A `Consumer Guard` case is the alternative.
+   - **Cost**: until the emitter is fixed, those tokens turn both `gen` tiers red. So the fixture lands with the fix, or with its failures listed in `harness/expected/**`.
+   - **What my standing scope does not cover**: it covers neither the second route nor this fixture alone. Item 5 keeps `harness/expected/**` and every fixture unchanged, and needs every context that was green at the reference run to be green at the head.
+     - Landing the fixture with the fix, all green, fits item 5 only if adding tokens to the driver is not a change to "what it decides". I read it as a change, so it goes by spec row or by an issue-row grant.
+     - Listing the failures in `harness/expected/**` needs Thurgood, with Data and Kenya reviewing (UNVERIFIED as to who owns `harness/expected/**`; item 5 names it only as unchanged).
+   - **Surviving counter (Data)**: a fixture tests only the families someone listed. Two checks would catch an unlisted family. One is a refusal at `defineComponentTokens` for any family with no emission rule. The other is a compile of the generated files at `generate`. Neither check exists today.
+   - **This closes the instrument gap above.**
 4. **A fork, which is a policy question and not part of the fix. Peter decides, with Ada's lean and Lina as the consumer.** Should static colour component tokens be allowed, or refused?
    - **Allow**: emit `Color` and say plainly that it is static.
    - **Refuse**: send every component colour through semantic tokens on the theme, which is DesignerPunk's practice (`governance/Token-Governance.md` § "Component Token Usage" and its Best Practice note).
-   - **What decides it**: a colour component token can reference only a primitive, so it pins one static colour and bypasses `\.dpTheme`, and it will not follow dark or WCAG. On iOS each primitive is emitted as one constant, even though 22 of the 54 colour primitives vary by mode or theme in source (Kenya, counted by script). How the generator chooses that single value is Ada's to confirm (UNVERIFIED).
+   - **What decides it**: a colour component token can reference only a primitive, so it pins one static colour and bypasses `\.dpTheme` (on Android, `LocalDPTheme.current`; Data: it reads the same there), and it will not follow dark or WCAG. On iOS each primitive is emitted as one constant, even though 22 of the 54 colour primitives vary by mode or theme in source (Kenya, counted by script). How the generator chooses that single value is Ada's to confirm (UNVERIFIED).
    - This is the question `059-component-color-token-investigation` asked. Its closure is named for re-reading in #872's record.
 5. **When this record closes**, the clause the CORRECTION in #872 adds to `governance/Token-Governance.md` L160 and L556 and to `governance/Token-Quick-Reference.md` L224 becomes false. The fix PR removes it, as a CORRECTION that cites this record.
 
