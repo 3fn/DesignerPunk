@@ -909,6 +909,623 @@ Sparky has no cross-read unless T-7's web column is contested.
 
 **Consulted**: Kenya, Data, Lina, Ada, Leonardo, Stacy and Sparky, through their R1 entries above.
 
+
+#### [LINA R2]
+
+**Read at**: `97f1e8672` (`spec/132-design-outline`, #880), in a detached scratch worktree; component source unchanged from `8553499b1`. Read-only.
+
+**Mentions in `[THURGOOD R2]`**: none is addressed to me alone. My items are the cross-read list's 1, 3, 4 and 7, answered below.
+
+---
+
+**1. T-1, the `rendering:` shape: I move to one field. Leonardo and I converge, so T-1 closes.**
+- **Why I move.** My R1 rested on "the mixed case is real on both platforms". Leonardo's read corrects the Android half, and I re-checked it.
+  - Android's Input-Text-Base is a `BasicTextField`, and Compose draws its text with our style. Its caret is ours: `cursorBrush = SolidColor(theme.color_action_primary)`, `InputTextBase.android.kt` L328, VERIFIED.
+  - So the only system-drawn part in the catalogue is iOS Input-Text-Base's text field interior, one component on one platform (his grep; my R1 grep found the same set, VERIFIED).
+  - My constraint (part names are D5 fixture identifiers) is exactly the per-component property list D5 already keeps (plan-r2 § 1, "D5 details", "Token check"). A schema field would hold it a second time.
+- **The shape**: per platform, `kind: platform | drawn` plus a `reason`. Where a drawn component wraps a system part, the reason names that part. For example, iOS Input-Text-Base: "drawn container around the system text field; text, caret and selection are the system's".
+- **Revisit when**: a second component wraps a system control, as Leonardo says.
+- **Surviving counter (his)**: a prose reason is not machine-read, so "which parts the adopter's theme does not reach" becomes structured data later if served readiness or an agent needs it.
+- **His UNVERIFIED, answered**: Android themes the caret (above). **iOS does not.**
+  - `InputTextBase.ios.swift` sets no `.tint`, `.accentColor` or caret colour (VERIFIED, grep finds none), so the iOS caret and selection follow the app's tint, not the DesignerPunk theme.
+  - That is a platform-parity gap in my component, separate from T-1. I file it as a rule-10 record after this round, and it is the first item in Input-Text-Base's iOS `reason` until fixed.
+
+**3. T-13, the iOS hidden-view check: I move to Kenya's proposal. My in-app walk is ruled out.**
+- **Why.** Her 129 measurement found that walking SwiftUI's accessibility tree from inside the process returns zero elements (`kenya-plan-r1.md` § 3, VERIFIED by her, carried). Her new probe shows an `XCUIElement` snapshot carries no hidden or accessibility-element flag (VERIFIED by her, locally). So nothing in the process or in XCUITest separates a hidden element from a visible one with an empty label.
+- **What the contract asks.** Icon-Base `accessibility_hidden`:
+  - `behavior:` names the mechanism per platform ("iOS: .accessibilityHidden(true)");
+  - `validation:` says "Icons not announced by screen readers" and "Icons not in accessibility tree" (`src/components/core/Icon-Base/contracts.yaml` L75–L87, VERIFIED).
+- **The check I accept, as the contract's iOS validation lines** (they go into the contract-validation ballot's `platform_validation`, T-9):
+  1. **Static, the primary check**: the decorative subtree carries `.accessibilityHidden(true)`, read by ViewInspector or by D6's static half. Its known-bad case is the modifier removed.
+     - This proves the contract's stated mechanism, so it is a faithful check of "as described", given the platform's guarantee for that modifier.
+  2. **Runtime, the consequence, in the D4 app**: decorative parts carry no identifier, and the component's frame adds no element for them. This holds only if Kenya's 15-minute probe shows an un-identified hidden view is absent from the query (UNVERIFIED). If it is not absent, this line drops, and the static check stands alone.
+  3. **Speech**: a labelled device read (P-3), never a simulator claim.
+- **The same lines serve** `accessibility_decorative` on the three Progress-Indicator primitives (VERIFIED, the only other components carrying the concept).
+- **Surviving counter**: a static check proves the modifier is present, not that VoiceOver skips the view. A parent's `.accessibilityElement(children: .combine)` could fold the icon's content back in. I have not checked whether our chips do this (UNVERIFIED). The runtime line, or the device read, is what catches that, which is why line 2 matters if the probe allows it.
+
+**4. T-8, the readiness tables: I pick Thurgood's combined form (generated regions plus a byte-equality test), with one change.**
+- **Why.** It removes the drift class instead of detecting it, and it reuses a working instrument pair (`scripts/derive-install-doc.ts` and `install-doc.test.ts`, as he cites; UNVERIFIED by me at this head).
+- **The change: one table, not thirteen.** The generated region lives only in `governance/Component-Readiness-Status.md`. The family docs replace their tables with a pointer sentence to it.
+  - That answers his surviving counter, that every readiness move would rewrite about 13 governance docs and need Peter's merge per family unit: each unit then touches one region in one doc.
+  - Readiness per component is also served by the application MCP (`get_component_summary` readiness, VERIFIED in R1), so agents lose nothing.
+- **Surviving counter**: a reader of a family doc loses inline status and makes one more hop. The pointer conversion also has to correct or remove the ~80 hand-written lines that my 16.4.0 fix-now record owes. Whichever lands first sets the other's base. Those are two of my records, and I sequence them. The pick is formally made in requirements, as my record says; this is my answer for it.
+
+**7. T-12, where the text style lives: I agree with Ada. It lives in the semantic typography token. One condition comes from the call sites.**
+- **The 30 calls, classified by what they pass as `size:`** (VERIFIED, `perl -0777` over `src/components/core/*/platforms/ios/*.swift`, tests excluded):
+
+  | Kind of size | Calls | Notes |
+  |---|---|---|
+  | A semantic typography token's `.fontSize` | 10 | e.g. `typographyLabelMd.fontSize` |
+  | A primitive | 9 | `fontSize050` ×6; `fontSize075` ×3, **the three chips** |
+  | A component-computed size | 9 | `size.fontSize`, `labelFontSize`, `effectiveLabelFontSize` |
+  | A literal | 2 | `40` in `RoundedPointyTopHexagon.swift` L348, after its first preview marker at L277, so preview code (REASONING); and `14` in `ButtonVerticalListSet.ios.swift` L545, production, the error-message text |
+
+- **So Ada's mapping fixes the 10 directly.** The other 20 have no semantic token to read, and they are mine to resolve:
+  - **The 9 primitive calls** move to the semantic typography token for their role. Token Governance's selection order puts semantic before primitive. Where no semantic token fits the role, it is a token need for Ada, under Peter's review (P-13), not a component-level choice.
+    - The chips' label (`fontSize075`, medium weight) is the slice's case. Which semantic token it maps to, `typographyLabelSm` or another, is UNVERIFIED and is my design-round item.
+  - **The 9 computed calls** are size-variant tables inside the components. Each variant row names a typography token instead of a bare size.
+  - **The literal `14`** is a token-compliance defect in production code in my component. I file it as a rule-10 record after this round, whatever T-12 decides.
+- **Where this lands**: Ada's P-13 mapping covers the token side. The component side (20 call sites, including the chips) is component repair in each family's unit. In the first family it is the three chip labels.
+- **Surviving counter (Ada's, which I share)**: scaled text breaks layouts sized by fixed tokens. Chips are safe on height (`minHeight: ChipTokens.tapArea` is a minimum), but their padding and icon sizing at the largest sizes are not measured. The slice is where that is first priced.
+
+---
+
+**Records I owe from this round** (rule 10, my owner acts, filed after the round in one record-only PR, not here):
+- (a) iOS Input-Text-Base does not theme its caret or selection.
+- (b) `ButtonVerticalListSet.ios.swift` L545 hard-codes `size: 14`.
+
+*Signed: Lina, 2026-11-27.*
+
+#### [LEONARDO R2]
+
+**Read at**: `spec/132-design-outline` @ `97f1e8672` (R2 outline; the feedback doc with all seven R1 entries and `[THURGOOD R2]`), in a scratchpad worktree. Source reads are at the same head, whose component tree is unchanged from `8553499b1`. Read-only; nothing committed.
+
+**Mentions first.** `[THURGOOD R2]` has no `[@LEONARDO]` tag. Its T-1 note asks whether either of us conceded off the record. **I did not.** My only position is my R1 entry, and this entry moves it (item 1).
+
+---
+
+**Item 1 — T-1, the `rendering:` shape. I move to Lina's constrained `platformParts:`, with two refinements. We converge, and T-1 can close.** → design-outline.md § 5.2 T-1
+
+- **Why I move.** My own R1 surviving counter was that "a reason written in prose is not machine-read". Lina's constraint answers it: each part must be an accessibility identifier D5 can find, and must carry a reason. The served schema, not only the test, then says which pixels are ours. That is a consumer fact as well as a test input. VERIFIED: the iOS Input-Text-Base sets no `.tint(` or `accentColor` (`grep`, `InputTextBase.ios.swift`), so its caret and selection follow the adopter's app tint, not our tokens. An adopter's agent should be able to read that from the MCP.
+- **Refinement 1: the identifier must belong to the component, not the fixture.** The text-entry part is inside our view, so a fixture cannot label it. VERIFIED: the iOS component carries identifiers only on its helper and error text (`\(id)-helper` L366, `\(id)-error` L375), none on the field. So the shape implies a small component change on iOS: an identifier on the field, derived from the component's id (for example `<id>-text-entry`). That is Lina's change, and it belongs with the field.
+- **Refinement 2: Android Input-Text-Base lists no part.** I hold here against Lina's "the mixed case is real on both platforms". VERIFIED in `InputTextBase.android.kt`: `BasicTextField` (from L264) is given `textStyle = LocalTextStyle.current.copy(… color = theme.color_text_default)` and `cursorBrush = SolidColor(theme.color_action_primary)`. Compose draws the text and caret with our tokens. So on Android it is `kind: drawn` with no `platformParts:`, and D5 samples it whole.
+  - One shared gap: neither platform sets selection colours. VERIFIED: no `selection` or `tint` in either file. That is a theming gap, not a `platformParts:` case, because a selection highlight is not on screen in a static render. I flag it to Lina for the contract or the token review; it is not part of T-1.
+- **So the first population is one entry**: iOS Input-Text-Base, `platformParts: [{ id: text-entry, reason: "system text field: text, caret and selection drawn by the system; caret and selection follow the app tint" }]`.
+- **Surviving counter**: it is a schema field whose only use is one component on one platform. Lina's guard on over-claiming (each part has a reason and is read at the claims pass) is a read, not a test. I accept both, because the served consumer fact is worth one field. If no second case appears by the end of 132, the field still costs almost nothing.
+
+**Item 5 — T-14 (ii), and its effect on P-2 and P-7. Option (ii) makes "per family" true in the build, and removes most of my P-7 semver gap, but only if the manifest's threshold is the claim tier, not the compile tier.** → design-outline.md § 5.2 T-14; § 5.1 P-2, P-7
+
+Kenya, Data and Ada choose between (i) and (ii). This is the consumer reading of (ii) only.
+
+- **What (ii) does for P-7.** My R1 gap was that an adopter can call any family's public API from the first claim, while the per-family API pass still changes it. Under (ii), a family that is not in the manifest is not in the adopter's module, so it cannot be called and carries no semver promise. Adding a family later adds public API, which is a minor. That makes the Kotlin opt-in annotation and the Swift workaround unnecessary for not-ready families (REASONING).
+- **The condition: which tier the manifest admits.** T-14 (ii), as Lina worded it, compiles families "at or past the compile tier". The support claim is at the D5/D6 tier (P-2). A family that compiles but is not yet claimed would be in the module and callable, which reopens the gap for that window. **Consumer lean**: the adopter's default manifest admits **claimed** families only. A compile-tier set is opt-in, behind a flag our own harness and repair lanes use. That flag is the module-level equivalent of an opt-in annotation.
+- **A ratchet**: once a family is claimed it never leaves the default manifest. Dropping it would be a breaking change, so D9's diff reads "family added" as additive and "family removed" as breaking.
+- **One source**: the manifest's family list, served readiness (D7), the overlay text (P-2 (b)) and T-18's warning should all read the same derived readiness. Then a component the MCP offers is exactly a component the adopter's build contains. If they read different sources, consumer Leonardo can spec a component that the platform agent's build then rejects as an unknown type.
+- **D4 must build the adopter's default manifest**, not the full set. Otherwise D4 proves a module adopters do not get. Repair progress on the full set is a separate lane.
+- **P-2**: (ii) makes T-18 more valuable, not less. Without it, selecting an unclaimed component fails at the build, after the screen spec is written. With it, the failure moves to spec time.
+- **P-7's release question**: under (ii), the first claim only adds to what adopters have, so a minor is semver-valid. 17.0.0 would be a chosen marker, not a semver necessity (REASONING; Peter's pick). **Ada's counter still holds under (ii)**: the generated token API compiles for every family, so aliases are owed from the first claim for the whole token surface.
+- **Under (i)**: every family's public API is in the module at the first claim, so P-7 needs its semver-status answer (each change a major, or unstable markers) in full.
+- **Surviving counter against (ii)**: `generate`'s output then depends on readiness data from the release, so a consumer's dependency is partial and changes across releases without any change to their config. That is new behaviour for `generate`, and it is Ada's to weigh. The "Native status" text has to explain it in one sentence.
+
+**Item 7 — T-12 / P-13, type scaling: the product view. The text style belongs on the typography token (Ada's mapping), with a reasoned per-component override. I agree with Ada; Lina's "the emitter … once per role" is the same answer.** → design-outline.md § 5.2 T-12; § 5.1 P-13
+
+- **Why the token, from the product side.** A product screen is mostly text that is not inside our components: headings, body, captions, styled directly with semantic typography tokens (token-first, Core Goals). Adopter components (D10, WP6) do the same.
+  - A style chosen inside each of our components scales our 18 files and leaves every product screen's own text fixed. Only a token-level mapping reaches it (REASONING).
+  - VERIFIED from Ada R1: the generated iOS `TypographyToken` has no text style today, so nothing outside our components can scale.
+- **Hierarchy at large sizes is a product decision the mapping makes.** On iOS each text style grows by its own ratio, so the anchor chosen per role (for example `h1` → `.largeTitle`, `bodyMd` → `.body`) decides whether a heading still reads above body text at the largest size. The mapping should be reviewed as a set, against one product screen at the largest Dynamic Type size, not token by token. The fixture product screen (my R1, T-19's sibling) is that screen.
+- **Android** scales with `sp` (VERIFIED, Ada R1). Recent Android versions scale large text non-linearly (REASONING; UNVERIFIED for our range), so the platforms will not match exactly at the extremes. Same hierarchy, platform-native curve: that is the True Native reading.
+- **Overrides**: a component that must not grow (Kenya's and Lina's fixed-height cases) records a reasoned exception. That is a per-component P-4 case, not a token exception.
+- **Pick**: token mapping (Ada), put to Peter as P-13.
+- **Surviving counter**: the anchors are partly taste, and a token-structure change needs Peter's review. A per-component choice is cheaper and local. And either way, the real cost is layout repair at large sizes, measured first in the slice.
+
+**Item 10 — T-3, the iOS project form, read for the walkthrough. Hand-written, objectVersion 77 with synchronized folders (Kenya's #879 form).** → design-outline.md § 5.2 T-3
+
+- **Why, for the walkthrough.** An adopter creates their project in Xcode, and a new project in a current Xcode is that same form: synchronized folders, `objectVersion 77` (REASONING, from Xcode 16's defaults; Kenya to confirm). So a hand-written fixture has the shape the adopter already has. "Add our package to your project" is then the same edit in D4 and in the walkthrough.
+  - XcodeGen would make D4 prove a path almost no adopter is on, and the walkthrough would have to teach a tool or skip the step D4 exercised.
+- **Make D4's project the walkthrough's evidence**: create the fixture project once by doing the walkthrough's steps, and commit it. Its "add local package" hunk in `project.pbxproj` becomes "What the agent does" for that step, cited by commit. The walkthrough gives two ways:
+  - the human path: Xcode's "Add Package Dependencies…", then "Add Local…";
+  - the agent path: the `pbxproj` edit, named as fragile, and checked by building.
+
+  This applies the D8 idea to a step that is not code.
+- **Kenya's counter on review**: synchronized folders mean adding a source file no longer edits `project.pbxproj` (REASONING), so the file churns far less after creation. The hostile-to-review cost falls mostly on the one creation commit.
+- **Pick**: hand-written. Kenya and Data decide.
+- **Surviving counter**: synchronized folders need Xcode 16 or later to open the fixture. An adopter on an older Xcode cannot open D4's project, and the walkthrough has to state the Xcode floor. I accept it, because the harness pins Xcode 26.x and App Store submission requires a recent Xcode (REASONING; UNVERIFIED as a current Apple rule).
+
+---
+
+**Summary**:
+- Item 1: **moved** to Lina's constrained `platformParts:`, with a component-owned identifier and no Android part. Converged; T-1 can close.
+- Item 5: (ii) **resolves P-7's not-ready-family gap** if the adopter's default manifest admits claimed families only, with a ratchet and one readiness source. Ada's token-alias counter stands.
+- Item 7: **agree** with Ada (token mapping, reviewed as a set against one screen); P-13 is Peter's.
+- Item 10: **hand-written** project form, with D4's project created by the walkthrough's own steps.
+
+**New for Peter**: none beyond P-7 and P-13 as they stand. Item 5's "claimed families only, by default" is a refinement of T-14 (ii) for Kenya, Data and Ada, and reaches Peter only through P-7.
+
+#### [KENYA R2]
+
+**Read at**: `spec/132-design-outline` `97f1e8672` (#880): the R2 outline, the seven R1 entries and `[THURGOOD R2]`. Read-only on #880.
+
+**Four new local measurements.** I ran them this round on this Mac (Xcode 27.2, iOS 26.0 simulator, deployment target 17.0; nothing downloaded) to settle items 3, 6, 7 and 11. They are **not yet committed**. Under the brief's "commit only what you cite", I will add them to #879's evidence in a separate commit right after this entry, with the iOS 17 run Peter approved at 17:20:36Z. Until then, read them as VERIFIED by me and not yet citable by path.
+
+`[THURGOOD R2]` has no `[@KENYA]` mention beyond the cross-read list, so the items follow.
+
+---
+
+**Item 2: T-5, the persisted theme string. I MOVE to Data's key.**
+- **What Data proposes** (`[DATA R1]` § 5.2 T-5): store a stable `key` equal to the registered theme's config `name`, not the generated identifier, and store the scheme separately.
+- **Why I move.** On iOS, the family's case names are the generator's lower-camel transform of the config names. A raw value implied by the case name (`case highContrast` stores `"highContrast"`) therefore ties stored data to the generator's casing rule, which is Data's objection to Kotlin's `name`, and it applies to Swift too.
+- **The iOS form.** The generator emits **explicit raw literals equal to the config `name`**: `case highContrast = "high-contrast"`, `case base = "base"`, and so on. Swift infers nothing from the identifier. One string set then serves both platforms (Data's `fromKey`; iOS `init?(rawValue:)`).
+  - Typechecked at iOS 17.0 under Swift 6 with `@AppStorage`: VERIFIED, toy file. `@AppStorage` binds a `String`-raw `RawRepresentable` enum directly.
+- **The scheme is stored separately on iOS too.** The family has no dark case; the provider reads `colorScheme`. The app stores its own system/light/dark choice and applies `.preferredColorScheme`.
+- **Surviving counter (shared with Data):** a stored value breaks when an adopter renames a theme in their config.
+  - That is a change the adopter can see. A generator casing change would not be.
+  - D9's diff must still report a removed or renamed case as breaking.
+  - 132's documentation needs the migration line: unknown key → `nil` → fall back to `base`.
+- **Converged.** No fork remains on the string. It closes at `design.md`, per the record's Trigger.
+
+**Item 3: T-13, the iOS hidden-view check. I MOVE to Lina's in-app walk, on new measurements. Both my R1 runtime proposal and my 129 R1 zero-element finding are superseded.**
+- **Measured** (VERIFIED, two runs, identical output):
+  - The screen has an anchor `Text`, two SF Symbol images (one carries a custom identifier), and a button. The button runs an in-app walk from each window: `accessibilityElementCount()` / `accessibilityElement(at:)` / `accessibilityElements`, plus `subviews`, collecting every object whose `isAccessibilityElement` is true.
+  - The walk runs while XCUITest drives the app.
+  - Two variants: both images `.accessibilityHidden(true)`, and neither hidden.
+
+| Read | Hidden variant | Visible variant |
+|---|---|---|
+| XCUITest `app.images` | **2** (`star.fill` "Favorite", `t13.hidden.withId` "Love") | **2** (same) |
+| XCUITest `app.descendants(matching: .any).count` | 10 | 10 |
+| **In-app walk, accessibility elements** | **3**: Anchor, Walk, report | **5**: Anchor, **Favorite**, **Love**, Walk, report |
+
+- **What the measurements show.**
+  1. **XCUITest cannot see hiding at all.** A hidden image with no custom identifier is still found, with its symbol label, and the element counts are equal in both variants. This falsifies my R1 "runtime element count with no identifiers".
+  2. **The in-app walk reads the tree VoiceOver iterates.** The hidden images drop out, and the known-bad twin (not hidden) brings them back, 3 against 5. That is Lina's lean, now measured.
+  3. **The walk's elements expose no `accessibilityIdentifier`** (every entry reads `-`). So the assertion matches by **label**: the decorative content's label (for example "Favorite") must be absent, not an identifier.
+- **Why my 129 R1 found zero elements**: my reading, UNVERIFIED. That walk ran with no accessibility client attached. SwiftUI appears to build the UIKit accessibility tree only while a client, here XCUITest, is connected. So the walk must run **inside a UI-test session**, never as a bare hostless unit test.
+- **The shape I'd take to design.** D5 and D6's iOS oracle for `accessibility_hidden` / `accessibility_decorative` is:
+  - the in-app walk in the D4 app, triggered under XCUITest;
+  - asserting the decorative label is absent from the accessibility elements;
+  - with the known-bad twin, the same view without `.accessibilityHidden(true)`, asserting it present.
+  - The static check (ViewInspector or a source check) becomes optional, not primary.
+- **Surviving counter:** the walk depends on an undocumented behaviour, that SwiftUI populates the tree only while a client is attached. It is measured on iOS 26.0 only. The iOS 17 run Peter just approved will test it there: I will add this probe to that run. The walk is also a test-only hook compiled into the fixture app, so it lives in D4's fixture, not in our components.
+- **For Stacy:** the twin discriminates (3 against 5, in both runs), so the check is falsifiable as D6 requires.
+- **Android (Data):** a semantics-property assertion under Robolectric with a known-bad twin. D6 takes one oracle name per platform. Converged across platforms on mechanism-per-platform.
+
+**Item 5: T-14, one module and many families. I pick (ii), a family-scoped manifest.**
+- **Why (ii) on iOS.**
+  - `generate` already owns the root `Package.swift` (WP4), so scoping its target's `sources:` to the ready families plus their closure costs one list. That `sources:` scopes an SPM target is REASONING, from SPM's manifest API; I did not run it at this head.
+  - Under (ii) a not-ready family **is not in the module**, so an adopter cannot call its public API. That dissolves P-7's semver problem for iOS (item 11). Under (i), every family's API is exposed from the first claim.
+  - (i) also puts 45 iOS and 89 Android pinned entries before the first render. That reverses (x′)'s "first family, then measure".
+- **Conditions I'd attach.**
+  1. Lina's closure list per family is data `generate` reads, not code. Chip → Icon-Base, the blend helper, the tokens.
+  2. **The harness gains a context that compiles the ready-set manifest at zero errors.** The whole-package context keeps its pinned list. Otherwise the module adopters build is not the module we check.
+  3. The closure includes the blend helper, which is broken on both platforms (Lina, item A). So (ii) still pays the shared blend repair in the slice, and the measured-cost record books it as shared.
+- **Surviving counter:** the manifest becomes readiness-aware, so `generate`'s output depends on the release's readiness state. Each upgrade silently adds families, and new type names, to the adopter's module. Whether a newly added type can collide with an adopter type is UNVERIFIED: their module imports ours, and Swift usually prefers the local declaration. The D9 rehearsal should include an upgrade that adds a family.
+
+**Item 6: T-4, where adopter tokens live. The local-path import holds, measured, with one fix. On Ada's fork I AGREE with (a).**
+- **Measured** (VERIFIED, `xcodebuild build` for `generic/platform=iOS Simulator`, `** BUILD SUCCEEDED **`):
+  - A root package: target `DesignerPunk`, holding only the consumer's generated `DesignTokens` and `ComponentTokens`, since our components do not compile yet.
+  - An adopter package at `ios/AdopterComponents/` with `.package(path: "../..")`.
+  - An adopter `FilterBar` that imports `DesignerPunk` and reads `DesignTokens.space100`, `\.dpTheme` and `.probeTheme(.wcag)` from its own module.
+  - Together with my 129 R2 toy (app → root package, VERIFIED there), both levels of the D4 layout now link.
+- **The fix the measurement found.**
+  - With a plain `.package(path: "../..")`, the product reference `package: "DesignerPunk"` **fails**: "unknown package 'DesignerPunk' … valid packages are: '<the repo directory name>'".
+  - The package identity of a path dependency is the **adopter's repository directory name**, not our manifest's `name`.
+  - `.package(name: "DesignerPunk", path: "../..")` fixes it, with no deprecation warning at tools 5.9 (VERIFIED).
+  - So generated manifests, D8's samples and the walkthrough must write the `name:` form. Otherwise every adopter's line differs. This is Ada's manifest condition 3 made concrete, and Leonardo's walkthrough needs it.
+- **Ada's fork, (a) all groups in our module or (b) adopter-only groups in theirs.** I AGREE with (a). Our components read only our module's groups, and (b) splits the replacement rule across two modules for a defect class that #870's fix plus the one-token-per-family fixture removes.
+  - **Surviving counter (hers, and it stands):** any future emitter defect again fails our module, and every DesignerPunk component, for every adopter with one custom token. The containment (b) would buy is real.
+  - **Condition:** the fixture guard lands before D10, as § 4.1 says.
+
+**Item 7: T-12 for iOS 17. Both scaled forms exist at iOS 17, but one API in R1 does not exist, and the token-side emission must not be a computed `Font`.**
+- **Measured** (VERIFIED, `swiftc -typecheck`, iOS 17.0 target, Swift 6):
+  - `.system(size:weight:relativeTo:)` **does not exist**: "extra argument 'relativeTo' in call". Lina's R1 example form needs replacing.
+  - `@ScaledMetric(relativeTo:)` inside a `ViewModifier` feeding `.system(size:weight:)` compiles.
+  - `.font(.custom(_:size:relativeTo:))` compiles.
+- **Measured** (VERIFIED, XCUITest audit on iOS 26.0): `performAccessibilityAudit(for: .dynamicType)` flags the fixed `.system(size: DesignTokens.fontSize100)` and does **not** flag either scaled form. So the fix clears the audit.
+- **The iOS constraint for Ada's emitter (P-13).**
+  - A static `font` property on `TypographyToken`, computed with `UIFontMetrics`, reads the app-wide content size once. It does **not** follow SwiftUI's `dynamicTypeSize` environment, so a D5 variant set through the environment would not scale it. That is REASONING from how `UIFontMetrics` and `@ScaledMetric` differ; not run.
+  - So the iOS emission should be a **view modifier** (for example `.dpFont(DesignTokens.typographyBodyMd)`) carrying `@ScaledMetric(relativeTo:)` for the system family, and `Font.custom(_:size:relativeTo:)` where a family is named.
+  - The **text style still lives in the token**. That is Ada's mapping, Peter's review under P-13, and I agree with putting it there. Only the emission's shape changes.
+- **iOS 17 availability.** All three APIs are iOS 14 or later, from training data; the typecheck at a 17.0 target passed (VERIFIED). The audit result itself is measured on iOS 26.0 only, and the approved iOS 17 run will repeat it.
+- **Surviving counter (the shared one):** scaled type grows fixed-height layouts. The slice's three chips use `minHeight` (Lina), which is safe; badges and rows may not be.
+
+**Item 9: T-15 and P-15, CI grants. I pick (a), applied per lane rather than per unit, with lanes designed to be data-driven. (b) is not needed.**
+- **The precedent is already on `main`.** The native harness keeps its runner and toolchain pins in `harness/pins.yaml`, outside `.github/**`. #867 moved Android's pins with no workflow edit (VERIFIED, `git log 3a3bd072b..8553499b1`; `harness/pins.yaml`).
+- **The same design for 132.** Each lane's workflow (iOS render, Android render, D4 build, D8 samples, D9 upgrade/diff, P-9's range builds) is written **once**, under one issue-row grant at the first family's tasks round. The family list and test selection are read from a file under `harness/` or 132's fixture directory.
+  - Later family units then touch no `.github/**` path, and need no grant.
+  - The grant count is the number of lanes, about five or six, not lanes × ten-plus families.
+- **Why not (b):** a standing workflow-scope ballot is a charter change whose width is the risk (M1's own counter). A per-lane grant is exact, and it is only needed once if the lanes are data-driven.
+- **Surviving counter:** a lane's later structural fix (a new step, a runner-class change) still needs a grant. The first family's unit carries five or six grant PRs at once: a burst of Peter merges and Stacy ARMING reads in one sitting. That is the real cost, and it is front-loaded, not removed.
+
+**Item 10: T-3, the iOS project form. I pick a hand-written `.xcodeproj` with synchronized folders.**
+- **Why:**
+  - Leonardo's point holds (`[LEONARDO R1]`): the walkthrough teaches D4's form, and adopters have a plain `.xcodeproj`.
+  - #879's project built and ran with no generator (VERIFIED).
+  - New this round: I added three source files (`T13Screens.swift`, `T12Screen.swift`, two test files) to its synchronized folders, and they compiled and ran **with no `project.pbxproj` edit** (VERIFIED). So the "hostile to review" counter mostly does not bite: the `pbxproj` changes only when targets or settings change, not per file or per family.
+- **Surviving counter:** synchronized folders need Xcode 16 or later to open. An adopter on an older Xcode cannot open the D4 fixture as written. That is fine for our CI, which pins Xcode 26.6, and for 132's documented floor, which must say "Xcode 16 or later" for the fixture. Their own project format is theirs.
+  - The step that needs a human is still adding the local package in Xcode's UI (Leonardo). The walkthrough must teach the `.package(name:path:)` identity from item 6.
+- **XcodeGen** would add a pinned tool for a problem that synchronized folders already remove. I would not take it.
+
+**Item 11: P-7, Swift's semver idiom for not-ready families. Leonardo's REASONING confirmed, with one measured idiom and one caveat.**
+- **Measured** (VERIFIED, `swiftc` two-module typecheck, iOS 17.0):
+  - `@_spi(Preview) public struct NotReady` in one module is **invisible** to a plain `import`: "cannot find 'NotReady' in scope".
+  - It is visible to `@_spi(Preview) import`.
+  - So Swift **has** a working opt-in mechanism, the twin of Kotlin's `@RequiresOptIn`. It is **underscored**, meaning not a stable public language feature (from training data; UNVERIFIED whether its status changed after my cutoff).
+- **The SPM-idiomatic alternative is a separate library product**, for example `DesignerPunkPreview`, that an adopter must depend on by name. That is a supported, non-underscored opt-in. It costs a second target and a split closure.
+- **Under T-14 (ii)** (item 5), neither is needed for iOS, because a not-ready family is not compiled into the module at all. That is the strongest reason I pick (ii).
+- **For Ada's "aliases from the first claim for the whole token surface":** I AGREE. The generated token API is shared by every family, so per-family readiness does not scope it. Swift's mechanism is `@available(*, deprecated, renamed:)`, which she named.
+- **Surviving counter:** if (ii) is not chosen, `@_spi` is the only in-code opt-in. An underscored attribute in a public package is a promise about a feature Swift does not promise, and a toolchain could change it.
+
+---
+
+**Summary**: item 2 moved to Data's config-name key, with explicit raw literals; item 3 moved to Lina's in-app walk, on measurements that also falsify my own R1 proposal; item 5 picks (ii); item 6 agrees with (a), the import holds with the `name:` fix; item 7 says the text style lives in the token and iOS emits a modifier, not a computed `Font`; item 9 picks (a) per lane, with data-driven lanes; item 10 picks hand-written; item 11 confirms `@_spi` and the separate-product idiom, made moot under (ii).
+
+#### [DATA R2]
+
+**Read at**: `97f1e86726f4ce04f6c569114d4cd0cafc625e88` (`spec/132-design-outline`, #880): the R2 outline, and the feedback file with the seven R1 entries and `[THURGOOD R2]`. I read it in my own scratchpad worktree, read-only. The new Android evidence below comes from a scratch consumer packed from `3a3bd072b` and from #884's runs. **Labels**: **VERIFIED**, I ran or read it myself; **REASONING**, an inference; **UNVERIFIED**, nobody checked it. No Kotlin was compiled on this machine, which has no JDK.
+
+`[THURGOOD R2]` has no `[@DATA]` mention. The items below are the cross-read list's, in its order.
+
+---
+
+**2. T-5, the persisted theme string. HOLD the config name, and propose Kenya's raw value equal to it, which converges.** → design-outline.md § 5.2 "T-5"
+- **What is emitted today** (VERIFIED, read in the scratch consumer's generated files):
+  - Swift: `public enum ProbeThemeFamily: Sendable, Hashable, CaseIterable { case base; case wcag }`.
+  - Kotlin: `enum class ProbeThemeFamily { Base, Wcag }`.
+  - So the Swift case names are lower camel and the Kotlin entries are Pascal case, both derived from the registered theme's config `name`.
+  - For `base` and `wcag`, Kenya's "case name" and my "config name" are the same string. They diverge for a multi-word name such as `high-contrast`: the Swift case is `highContrast`, the Kotlin entry `HighContrast`, the config `high-contrast`. That last part is REASONING about how the generator cases names; I have not run a multi-word theme.
+- **Why I hold the config name.** It is the only string both platforms share by construction. The case names are two different spellings from two casing rules, so a cross-platform preference sync, which Kenya wants too, needs one of them to be the source. The config name is that source.
+- **The convergence.** Kenya's raw value can be the config name, explicitly: Swift allows any string as a raw value, for example `case highContrast = "high-contrast"`. Her `@AppStorage` typecheck holds for any `String` raw value (REASONING from her toy, which used a `String`-backed enum).
+- **Her surviving counter applies to both options:** a theme renamed in the adopter's config orphans every stored value. It needs the documentation's migration line (record point 3), and D9 reporting a removed case or key as breaking.
+- **What would make me move:** if Kenya shows the Swift generator cannot emit an explicit raw value for a case without breaking `CaseIterable` or the case names, then the case name it is, and Android's `key` matches it.
+
+**3. T-13, the Android oracle. AGREE with Lina's form for Icon-Base, and correct my R1's mechanism.** → design-outline.md § 5.2 "T-13"
+- **Icon-Base's Android contract is met by `contentDescription = null`, not by a hiding property** (VERIFIED):
+  - `IconBase.android.kt` L71 passes `contentDescription = null` to `Icon(…)`.
+  - `contracts.yaml` L75–L87 states the Android mechanism as "contentDescription=null".
+- **So the oracle for this contract is Lina's**: in the **merged** tree, the one TalkBack reads, the component contributes no node carrying an image role or a content description for the icon.
+  - Under the hood, Material's `Icon` adds its `contentDescription` and `Role.Image` semantics only when the description is non-null. That is REASONING from the Compose API; the pinned BOM is not checked.
+  - The **known-bad twin** is the same icon with a non-null `contentDescription`, which must be found.
+- **My R1's `HideFromAccessibility` / `clearAndSetSemantics` assertion** is the oracle for a component that hides a subtree that *would* otherwise have semantics. That case is not Icon-Base's.
+- **So the per-platform validation line should name the mechanism the contract states**, not one Android property for every hidden contract. That fits D6's per-platform oracle name.
+- **It runs under Robolectric.** #884's first runs show a Compose UI test passing there (§ 6 below).
+- **Surviving counter-argument**: the merged tree is what TalkBack *receives*, not what it *says*. Speech stays outside done (P-3).
+
+**5. T-14, one module and many families. CHOOSE (ii), the family-scoped manifest.** → design-outline.md § 5.2 "T-14"
+- **Why not (i)**: it moves all of D3's repair (45 iOS and 89 Android entries, plus blend, at `8553499b1`, VERIFIED in the outline § 2) ahead of the first family's app. Then the first family measures every family's repair, and the cut the plan was approved on ("one vertical slice, then one unit per family") is undone. That is a scope change Peter would have to hear.
+- **Why (ii) is cheap on Android**:
+  - A Gradle module's sources can be an explicit file list. The compile harness already builds its modules that way: `lane.ts` writes the lists, and `harness/android/tokens/build.gradle.kts` `laneFiles` reads them (VERIFIED).
+  - So the manifest `generate` writes can list the files of the families at or past the compile tier, plus their closure. Lina's list for Chip is Icon-Base, the blend helper and the tokens.
+- **(ii) also answers half of P-7**: a family the manifest does not compile is not callable. So "the semver status of not-ready families' API" applies only to families that are compiled but not yet claimed (item 11).
+- **Surviving counter-arguments**:
+  1. The manifest becomes readiness-aware, which couples `generate` to readiness data. Ada owns that coupling, and its source should be the same one T-7 uses.
+  2. An adopter who names a not-included composable gets a bare "Unresolved reference". The overlay and INSTALL must say which families are in.
+  3. The harness then has two compile sets: all files for D3, and the scoped set for D4.
+- **A third shape, for the design round, not picked**: one Gradle module or Swift target per family, with declared dependencies. That makes the closure explicit in the build graph rather than in a list `generate` keeps.
+  - Its cost: cross-family `internal` use becomes impossible, so Lina's access pass grows.
+  - I name it because it is the class-level form of (ii). I do not pick it.
+
+**6. T-4, where adopter tokens live. CONFIRM the local-path import (REASONING, not yet built), AGREE with Ada's (a), and #873's Kotlin read is DONE.** → design-outline.md § 5.2 "T-4", § 4.1
+- **The local-path import in the D4 Android layout:**
+  - `init` adds two `settings.gradle.kts` lines: `include(":designerpunk")` and `project(":designerpunk").projectDir = file("node_modules/@3fn/core/<android module folder>")`. That is the shape (a) recorded in plan-r2 § 2, WP4.
+  - The adopter's component module then declares `implementation(project(":designerpunk"))`.
+  - That is a standard Gradle local project dependency. **It holds by Gradle's design (REASONING), and it is UNVERIFIED in this layout until D4 builds.**
+  - What *is* VERIFIED is the half before it: in 129's R3, an adopter-style module compiled our component source from `node_modules` against generated tokens, with nothing copied (`data-plan-r1.md` § 1).
+- **Ada's fork: (a), all groups in our module.** On Android:
+  - our components read `object <Component>Tokens` in `com.designerpunk.tokens`;
+  - the package refusal reserves that package (`src/cli/shared/reservedKotlinPackages.ts`, per Ada R1);
+  - so (b) would emit adopter-only groups into the adopter's own package, which is a second emission target and a second package rule for one defect class that the emitter fix removes.
+  - **Surviving counter (Ada's own)**: under (a), a future emitter defect fails our module for every adopter with one custom token. (b) would contain it.
+- **#873 on Android: the emitted forms are correctly typed (VERIFIED as emitted; compile UNVERIFIED, REASONING high).**
+  - **Method**: the same three product forms Ada probed, a hard colour, a ref to a colour primitive and a ref to a colour semantic, in `product/tokens/probe-colors.yaml`. `generate` exited 0.
+  - **Result**, in `dist/tokens/product/ProductTokens.android.kt`:
+    - `val brandHard = Color(0xFFFF3366)`, Compose's `Long` ARGB constructor;
+    - `val brandPrimRef = DesignTokens.purple_300`, untyped, so it infers `Color`;
+    - `val brandSemRef: Color @Composable @ReadOnlyComposable get() = LocalDPTheme.current.color_action_primary`.
+  - So the defect is iOS-only. § 4.1's "Android … was not compiled (Ada; Data not yet consulted)" can read **"Android: read by Data; emitted forms are correctly typed; not compiled"**.
+  - **One non-blocking difference**: the hard colour is emitted in sRGB (`Color(0xFF…)`), while every generated primitive and semantic colour is Display P3. A hex is sRGB by definition, so this is correct. A reader comparing values across files should know it.
+
+**9. T-15, CI grants for 132's lanes. CHOOSE (a), one grant per unit, made cheap by riding the unit's tasks PR.** → design-outline.md § 5.2 "T-15", § 5.1 P-15
+- **(a)'s cost is lower than R1 said (REASONING, from the README).**
+  - Rule 8 activates a grant at "Peter's merge of a PR whose body names the grant".
+  - Rule 10 forbids only a grant list "authored only inside the diff it bounds", and the diff a grant bounds is the *fixing* (unit) PR.
+  - So each unit's grant record can travel in that unit's tasks-round PR. That PR is merged by Peter anyway, and carries the ARMING line. That adds **no extra Peter merge per unit**.
+  - Stacy's ARMING read still runs at two merges per unit.
+  - Thurgood and Stacy should confirm this reading of rule 10 before it is relied on.
+- **Why not (b)**: a standing workflow-scope ballot widens two charters for the life of 132, ten-plus families. M1's own counter ("permanent scope for temporary work … charters drift toward 'everything'") applies directly.
+- **Surviving counter-argument (the strong one)**:
+  - A grant expires at its unit's merge. Every later fix to a lane that has already landed needs a new grant, which is how `native-harness.yml` works today: "an issue-row grant per fix" (my charter).
+  - Once render lanes are required checks, an external break, such as a runner image or an emulator release, blocks every PR until a grant-backed fix merges.
+  - So (a) is right for *building* the lanes. *Maintaining* them is the gap (b) would fill, and it comes due at the first lane's promotion to required.
+  - **The fork I surface, for that promotion**: a per-lane ownership ballot like `2026-11-07-native-lane-ownership`, written at promotion, versus grant-per-fix. Peter's, then; not now.
+
+**10. T-3, the iOS project form. CHOOSE hand-written, deferring to Kenya's evidence.** → design-outline.md § 5.2 "T-3"
+- **Why**:
+  - Kenya's #879 project built and ran with no generator (VERIFIED by her).
+  - Leonardo's walkthrough point holds: adopters already have a plain `.xcodeproj`.
+  - XcodeGen adds a tool to pin and to keep in the supply chain for no runtime gain.
+- **Android has no twin question**: the Gradle Kotlin DSL is plain reviewable text.
+- **The rest of T-3's Android half**:
+  - the emulator and Robolectric split follows the probe, and the probe answers P-8 (§ 6 below);
+  - Robolectric carries semantics, input and layout either way.
+- **Surviving counter (Kenya's)**: a `pbxproj` is hostile to review, so a change to the project file is read by trust. A small mitigation: the D4 project's file list is checked against the fixture folder by a test, so an unreviewed file addition fails.
+
+**11. P-7, the Kotlin idiom for not-ready API. CONFIRM `@RequiresOptIn`.** → design-outline.md § 5.1 "P-7"
+- **The idiom**: an annotation class such as `@RequiresOptIn(level = RequiresOptIn.Level.ERROR, message = "…not yet supported…") annotation class ExperimentalDesignerPunkApi`.
+  - Each public declaration of a not-ready family is marked with it.
+  - A caller must write `@OptIn(ExperimentalDesignerPunkApi::class)`, or pass the compiler flag `-opt-in=…`, or the build fails.
+  - This is the idiom Compose itself uses (`@ExperimentalFoundationApi`, `@ExperimentalMaterial3Api`).
+  - It is stable in Kotlin (REASONING from training data; the Kotlin version this was stabilized in is not checked).
+- **Limits**:
+  - It is per declaration: a marker cannot annotate a whole file or package (REASONING). So the per-family API pass applies it to each public composable and type.
+  - Removing the marker at a family's claim is additive and non-breaking.
+- **D9 interplay**: the Kotlin public-API dump tools can exclude opt-in-marked declarations from the stable surface (the binary-compatibility validator's `nonPublicMarkers`; REASONING, version UNVERIFIED). So D9's diff can treat not-ready API as not yet promised.
+- **With T-14 (ii)**: families the manifest leaves out need no marker. The marker is for compiled-but-not-claimed families only.
+- **Surviving counter**: opt-in at `ERROR` makes the first-family release feel "experimental" to every adopter who touches a not-ready family, and `WARNING` is easy to ignore. The level is a product call for Leonardo, not a technical one.
+
+**§ 6 and P-8, the Android probe (#884): VERIFIED from its runs.** → design-outline.md § 6
+- **Run 46039771588** (head `fdb3c81f6`, runner image `ubuntu24 20261122.23.1`):
+  - **`/dev/kvm`** exists. Before the udev rule it is `crw-rw---- group=kvm` and the runner user cannot open it. **After the rule**, it is `crw-rw-rw-` and opens. The emulator's `-accel-check` printed "KVM (version 12) is installed and usable".
+  - **Downloads**, with no licence prompt and stdin from `/dev/null`: the emulator package in 14 s, the API 26 system image in 28 s, the API 36 image in 22 s.
+  - **Boots and Robolectric failed on my setup, not the runner's**: the AVD was created where the emulator does not look, and the build failed its AAR metadata check.
+- **A finding for P-9 and D4, from that failure (VERIFIED, the run's log)**: Compose 1.12.1, under the pinned BOM 2026.09.00, "requires … compile against version 37 or later of the Android APIs". The harness pins `compileSdk 36`.
+  - The compile harness never sees this, because it runs only `compileDebugKotlin`, not the AAR metadata check that an app or test APK build runs.
+  - So **the D4 Android app cannot build at the harness's `compileSdk`**. The adopter's `compileSdk` floor is 37 at this BOM.
+  - It belongs in P-9's axes. It is not a harness defect. Moving the harness pin to 37 would be a choice, not a repair, under ballot `2026-11-07-native-lane-ownership` item 3, so it goes by a grant or spec row if wanted.
+- **Run 46040355947** (head `18d74ba29`, `compileSdk 37`, one AVD home): **`success`**, about 7.5 minutes, same runner image.
+  - Downloads, all with no licence prompt: the emulator package in 13 s, the API 26 image in 20 s, the API 36 image in 17 s.
+  - Boots to `sys.boot_completed=1`: 35 s at API 26, 56 s at API 36.
+  - The instrumented Compose smoke test passes at both levels: 145 s at API 26, which includes the first Gradle build, and 33 s at API 36.
+  - The Robolectric Compose test passes in 53 s.
+  - The verbatim `render-probe:` lines are in #884's body and in the goal record's § "Android render probe result (2026-11-27, Data)", on #884.
+- **P-8**: **it does not arise on this evidence.** KVM is usable on the free `ubuntu-24.04` runner after the documented udev rule, and the emulator boots and runs a Compose test in under a minute per level. This is one sample: lane stability is a later read.
+- **The `compileSdk` 37 finding** is recorded as a dated line on my toolchain-range record (`.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md`, item 1), in #884.
+
+*Signed: Data, 2026-11-27.*
+
+#### [ADA R2]
+
+Read at `97f1e8672` (`spec/132-design-outline`, #880), in my own detached worktree. Nothing is committed or pushed. VERIFIED means checked by me at that head unless another commit is named; REASONING and UNVERIFIED are as in R1.
+
+**A correction to my R1 first.** My T-12 count, 26 calls in 14 files, matched only the one-line form. The outline's 30 in 18 is right: I re-ran it with `perl -0777` over the non-test iOS component files and got 30 (VERIFIED). § 4.1 and the T-4, P-13 and T-7 owner rows carry my R1 as I meant it.
+
+- **Item 5, T-14 (one module, many families): I pick (ii), a family-scoped manifest that `generate` writes.** → design-outline.md § 5.2 T-14
+  - **It fits the manifest design I accepted in plan R2.** That manifest is already computed from what `generate` knows, and it already leaves out component folders the adopter has shadowed (`ada-plan-r2.md` L46–L56, VERIFIED, read). Leaving out families below the compile tier is the same kind of filter.
+  - **The inclusion test must not be served readiness.** It should be the committed compile state: a family is in only if it has zero pinned entries in `harness/expected/*.tsv`. That is decidable from git, and it keeps the manifest independent of D7's derivation (item 8). Then the closure is added: Lina's list, for example Chip → Icon-Base, the blend helper and the tokens.
+  - **Component-token groups follow the same filter.** `generate` emits our component-token groups only for included families, plus every adopter group.
+    - Otherwise a not-ready family's tokens are public API in a module whose components are absent.
+    - Together these give a property worth having for P-7: **at the first claim, a not-ready family has no public API at all, on the component side or the token side** (item 11).
+  - **Why not (i)**:
+    - (i) holds the first family's app until 45 iOS and 89 Android entries outside the slice are fixed (outline § 2, VERIFIED, Thurgood).
+    - The slice then stops being a measure of one family's cost, and the measured-cost record measures all the repair, which changes what Peter reads at re-placement.
+    - (i) is cheaper to build: there is no closure list and no filter.
+  - **Surviving counter to (ii)**: the closure is a hand-kept list.
+    - A wrong closure is a link failure in the adopter's build, which is the failure mode T-14 exists to avoid.
+    - The guard is to compile each included family's closure alone in the harness. That is one more harness case per family and one more harness context per platform (REASONING; Kenya and Data price it).
+    - With no such case, I would rather have (i).
+  - **The sources filter itself** (SwiftPM `sources:`/`exclude:`, a Gradle `sourceSets` exclude) is Kenya's and Data's to confirm (UNVERIFIED by me).
+- **Item 6, T-4 (where adopter tokens live): hold my fork and my lean (a). Kenya and Data have not yet answered the local-path import, and that is theirs.** → T-4
+  - **T-14 (ii) does not change the fork.** Adopter groups are emitted whatever the filter, so one bad adopter token still fails our module under (a). (a)'s safety still rests on #870's fix and the both-paths fixture.
+  - **For Data's #873 question: yes, read it before requirements.** `src/build/product/emitters/KotlinEmitter.ts` L71–L85 (VERIFIED, read) has two lines a compile would test:
+    - **The hard colour** `Color(0xFF${hex})` assumes a six-digit `#RRGGBB`. A `#RRGGBBAA` or `#RGB` value gives a literal of the wrong length (REASONING).
+    - **Whether the generated file imports `androidx.compose.ui.graphics.Color`** (UNVERIFIED by me).
+
+    Its reference path uses the index's Android name (`DesignTokens.${resolvedPlatformPath.android}`), which is right for nested motion members if the index name is qualified, as Swift's emitter assumes (`'Duration.'`, `SwiftEmitter.ts` L91). That is UNVERIFIED for Android.
+- **Item 7, T-12 and P-13 (where the text style lives): converge on the token, with one change that answers Lina's alternative.** → T-12, P-13
+  - **Where the 30 calls get their size** (VERIFIED, `perl -0777`, the size argument of each call):
+    - 9 read `DesignTokens.fontSize…` primitives;
+    - 10 read a typography semantic's `.fontSize` (`typographyLabelMd`, `typographyCaption`, `typographyButtonMd` and others);
+    - 9 read a component-local size (`size.fontSize`, `labelFontSize`, and so on);
+    - 2 are literals.
+  - So **a style on typography tokens reaches 10 calls directly**. The other 20 read a size with no role, and a size cannot carry a text style without inventing a size-to-style table, which would be wrong for primitives.
+  - **The settlement I propose, for Lina to accept or change**:
+    1. **The role lives on the typography semantic token.** It is a platform-neutral scale role (body, label, caption, title, and so on), so no Apple concept enters Rosetta. The Swift generator maps role → `Font.TextStyle`. Android and web ignore it, because `sp` and `rem` already scale.
+    2. **The scaling mechanism is generated once**: a SwiftUI modifier taking a typography token, built on `@ScaledMetric(relativeTo:)` for the system family and `Font.custom(_:size:relativeTo:)` for a named one. Both exist on iOS 14 and later, so iOS 17 is covered (Kenya R1 cites them; UNVERIFIED by a run).
+    3. **The 20 calls move onto typography semantics.** That is the component side (Lina), and it is semantic-first token use anyway. Where no semantic fits, it is a token-creation question for Peter, folded into P-13's review, not a per-component style choice.
+  - **This takes Lina's "the emitter carries it" branch and drops "the components choose it once per role".** Eighteen files choosing a style is the drift the token avoids.
+  - **Surviving counter**: the 20 moves are more component work than a per-call `relativeTo:`, and each needs a semantic that fits. Some, for example Avatar's literal 40 or the badge sizes, may need new typography semantics, which widens P-13 from "approve a mapping" to "approve a mapping and some tokens". The draft has to list them before sitting 2.
+- **Item 8, T-7 (D7's source): agree with Stacy's lean. The hermetic rule points to the committed file, and the committed file needs one more rule to be decidable.** → T-7
+  - **What the rule says** (`governance/classification-map.md` row `hermetic-publish-path`, VERIFIED, read): "built by the committed publish script in a fresh clone at the version's tag …; the registries' sha1s SHALL equal the script's recorded sha1".
+    - It does not forbid network reads: the script already reads the npmjs packument in publish mode (`scripts/release-publish.ts` L61, L91, VERIFIED, read).
+    - But that read decides whether to publish. It never changes what is packed.
+  - **A GitHub-API read at publish would change what is packed**: the readiness file would be built from live state, not from the tag's tree.
+    - The 5.1 dry run (at S) and the 5.3 publish (at the tag) could then pack different readiness if a check re-ran in between.
+    - The derivation would also move from the row's commit-held scope into its live-state scope, which no census can re-read.
+    - So the API form is against the rule's intent, even where its letter is silent. As the script's owner, I would not build it.
+  - **The committed form, and its gap**:
+    - The check results at S cannot be committed inside S: they exist only after CI runs on that commit.
+    - So the file holds results measured on a named earlier commit `R`, the release PR's head before the commit that adds the file. The rule that makes it decidable: `git diff --name-only R..S` lists only the results file. The derivation and pack-assert refuse otherwise.
+    - The release PR is squashed while current with `main`, so S's tree is R's tree plus the file (REASONING; the release PR's required checks make it current).
+  - **Where it lands**: the publish script builds `packageReadiness.generated.ts` from that file inside the fresh clone, and pack-assert checks that the packed file equals the derivation.
+    - It is a change to a ratified instrument, so it needs its own census line.
+    - RELEASE-FLOW's step text is Thurgood's.
+  - **Surviving counter**: one more file in the release PR, and one more refusal. A release whose checks re-ran after `R` publishes the readiness of `R`, not the latest run. That is the honest reading, but a re-run can no longer correct the packed readiness without a new release.
+- **Item 11, P-7 (semver status of not-ready families): it composes with my R1 point, and with T-14 (ii) the hard case goes away.** → P-7
+  - **My R1 point stands for the shared token surface.** `DesignTokens` primitives and semantics, the theme types and `ComponentTokens` itself are not family-scoped, so no per-family opt-in marking can make them unstable. They are API from the first claim, and a rename after it needs an alias.
+  - **Per-family token groups** (`ChipTokens` and the like) can follow their family's status.
+    - **Under T-14 (ii)** they are not emitted until the family is included, so they have no status to mark.
+    - **Under (i)**, every family's groups are public from the first claim. They need Leonardo's marking: Kotlin `@RequiresOptIn` on the not-ready groups (REASONING; Data confirms the idiom). For Swift, a deprecation-message workaround (REASONING; Kenya confirms). Otherwise every later per-family change costs a major.
+  - **So**: (ii) answers P-7's not-ready question structurally, because what is not compiled is not promised. (i) needs the marking and pays the Swift workaround's cost.
+  - **Counter**: under (ii), a family's arrival in a later minor is an API addition, which D9's diff must show as an addition and not flag as a break. The D9 tool configuration has to allow that (UNVERIFIED; T-10's owners).
+
+**Moved / held / agreed**:
+- item 5: I chose (ii);
+- item 6: held (a), and asked Data to read #873's Kotlin emitter, giving two lines to check;
+- item 7: moved, to a role on the token plus a generated modifier, with the 20 calls moving onto semantics;
+- item 8: agreed with Stacy, adding the `R..S` rule;
+- item 11: agreed, and folded with T-14 (ii).
+
+**Consulted**: none needed. This is a review entry.
+
+*Signed: Ada, 2026-11-27.*
+
+#### [STACY R2]
+
+*I read #880 at `97f1e8672` (`spec/132-design-outline`), the R2 outline and the feedback doc with all seven R1 entries and `[THURGOOD R2]`, in a detached worktree of my own, on 2026-11-27. This is read-only and I committed nothing. VERIFIED means I checked it at that head, or at the commit named, with the command or file named. UNVERIFIED means I did not check it.*
+
+**Mentions**: `[THURGOOD R2]` has no question to me. Its line on my standards implications records two adoptions: the sessions line as a proposed M4 instrument, and the D6 summary as T-16. I agree with both, and the guide change waiting for first-family evidence is right.
+
+**Item 3, T-13 (the iOS hidden-view check), read for verifiability: I agree with Kenya, with one move and one D-row flag.** → design-outline.md § 5.2 T-13
+
+- **D6's own bite rule settles Lina's walk against Kenya's measurement, mechanically.** Each contract test has a known-bad case that must make it fail (plan-r2 D6 details, VERIFIED).
+  - Lina's in-app walk is UNVERIFIED, as her entry says.
+  - Kenya's committed finding is that walking SwiftUI's accessibility tree from inside the process returns zero elements (`kenya-plan-r1.md` § 3, VERIFIED there by her). If that holds, the walk reports "hidden node absent" for every view. It passes vacuously, and its known-bad twin (the same view without `.accessibilityHidden(true)`) is never found, so the test never fails.
+  - So no argument is needed: the walk is an oracle only if its known-bad twin fails. Run the twin first, and the result decides.
+- **Kenya's snapshot measurement needs committing before the design round rests on it.** Her entry says "VERIFIED locally … run once and not committed". It is the evidence that rules out the snapshot route.
+  - Under "commit what you cite" (the volatile-paths record, `.kiro/issues/2026-11-27-committed-records-cite-volatile-paths.md` on #871), the probe test and its output belong in #879's evidence README, with the Xcode and simulator versions.
+  - Until then it is a report I cannot re-read.
+- **Kenya's two-part iOS check is verifiable, with one labelling consequence.**
+  - **Static (her primary)**: deterministic and bite-testable. Remove the modifier and the check must fail.
+    - But it proves the declaration, not the effect. A parent can change the effect, for example by combining children or replacing the representation.
+    - So static-only evidence is not `semantics-tested`, and readiness must not say it is. D7's kinds (`builds`, `renders (…)`, `contract-tested`, `semantics-tested`, `device-read (human)`; plan-r2 L101, VERIFIED) have no static kind.
+    - **If the static check is the only iOS evidence for this contract, D7 needs a kind for it** (for example `static-checked`). That is a D7 wording change, and so Peter's (condition 2). Otherwise readiness over-claims the contract on iOS. List it with P-1's D-row changes if it arises.
+  - **Runtime element count (her consequence)**: behavioural, and its known-bad twin is natural (an un-hidden decorative part adds one element in the frame).
+    - Whether an un-identified hidden view is absent from the query is UNVERIFIED (her 15-minute probe).
+    - **If the probe confirms it, I would make the runtime count the evidence that sets the readiness kind, with static as a second, labelled line.** That is my one move from Kenya's ordering.
+    - **Surviving counter**: the count depends on an XCUITest behaviour nobody has confirmed, and a frame-bounded count can be fragile to layout. Static is deterministic. If the probe is ambiguous, Kenya's order stands and the D7 kind above is owed.
+- **Android (Data): verifiable as proposed.**
+  - A positive assertion on the merged semantics tree under Robolectric: no node and no description for the icon.
+  - Known-bad: a non-null `contentDescription`. Data VERIFIED `contentDescription = null` at Icon-Base Android L71.
+  - Robolectric counts for semantics in D6's tool weight (plan-r2, VERIFIED).
+  - The property's name in the pinned BOM is UNVERIFIED (Data), and the first test's compile settles it.
+- **For T-16**: the D6 summary should carry, per contract and platform, the oracle's name and its evidence kind, beside the state and the known-bad result. Then "a per-platform oracle name for the same contract" is something my CLOSEOUT can read.
+- **The device read stays P-12, a D5 change**, as folded. Both seats keep it as a fallback only (VERIFIED, P-12 row).
+
+**Item 9, T-15 and P-15 (CI grants), reading (b)'s width: hold. (b) has not yet earned its width.** → design-outline.md § 5.2 T-15, § 5.1 P-15
+
+- **The base rate decides, as it did for M1.**
+  - M1 was narrowed to P1 at R2 on a measured base rate (ballot `2026-09-27-ci-regime-standing-scope` L3, VERIFIED): P1's task recurred twice in two days, while P2–P4 recurred at most once in 80 days and went per event.
+  - T-15 is uncosted, so (b) is being weighed against "ten-plus families" times "each unit". That multiplication is not yet shown.
+- **The D4 rule points the other way.** "The component list comes from the committed catalog. The fixture is generated from it, and the job fails on any component it did not construct" (plan-r2 D4 details, VERIFIED, L109).
+  - Lanes built that way are catalog-driven. A later family unit adds components and fixtures under `harness/**` and component paths, and touches no `.github/**` file.
+  - The workflow additions then cluster in the slice (the render lanes, the D4 builds and D8's sample build) and near the claim (D9's upgrade and diff, P-9's range builds). That is roughly five to eight grants in total, not one per family (REASONING; the design round's lane count decides).
+  - At `97f1e8672` the only native workflow is `native-harness.yml` (VERIFIED, `ls .github/workflows`).
+- **My read: (a), plus one design-round obligation.** The lanes are catalog-driven, so a per-family unit edits no `.github/**` path. The design round's count of workflow edits per unit is the evidence for revisiting (b). If it shows recurring per-unit edits, (b) is worth drafting.
+- **If (b) is drafted, its width needs these limits.** Each one is decidable from the diff, and each is what my ARMING read would check:
+  1. **An exact file list, no glob.** A glob such as `.github/workflows/native-*.yml` admits files nobody has named.
+  2. **Additive, or each deletion named.** `git diff --numstat` deletions are `0` on the listed files, or the PR body quotes each deleted line, as for issue-row grants.
+  3. **M1's excluded acts carried**: no new required context; no change to `EXPECTED_CONTEXTS`'s count; no step, floor or assertion removed or weakened. Promotion stays on its own route: Peter's branch protection, Thurgood's registration.
+  4. **No permission widening** beyond `contents: read`, and no secrets, without a named act.
+  5. **An expiry event**: the scope ends at the merge of 132's CLOSEOUT claims pass (`.kiro/specs/132-native-components-in-app/completion/claims-pass.md`). That answers M1's own counter, "permanent scope for temporary work", with a git-visible end.
+  6. **The ARMING read at each PR** under these limits, recorded at column 0 the way grant reads are.
+- **What (b) also costs** that (a) does not: a charter change for two seats (Kenya, Data), so a ballot, two consults and their signing acts, before the first lane.
+- **Surviving counter to my hold**: if the design round finds that per-family fixtures need per-family workflow edits after all (for example, per-family jobs for CI-minute reasons), then (a)'s grants do multiply. Each costs Peter a merge, and me two reads. The count decides, and it is not in yet.
+
+**Item 12, § 3 and T-17 (the measured-cost record): I agree with the folded rows, with four refinements. On the 131 column I move to Thurgood's proposal, with three conditions.** → design-outline.md § 3, § 5.2 T-17
+
+- **The folded rows match my R1 proposals** (VERIFIED, § 3 table at `97f1e8672`): the window, the sessions line or the estimate label, CI tables pasted at writing, the D6 summary (T-16) with exclusions as a fraction, defects by `git log --diff-filter=A`, the extrapolation as REASONING with its bias counts and the instrumentation note. Lina's added row, shared costs booked apart, is right.
+- **Refinement 1: "Shared costs, booked apart" needs the sessions line to carry the work package.**
+  - `**Sessions**: <seat> <n>; …` cannot be split into the blend repair, T-12 and T-13 afterwards.
+  - **Change**: `**Sessions**: <seat> <n> (<work package>); …`, with the shared work packages named in the tasks round. CI minutes split the same way, by workflow.
+- **Refinement 2: "Peter's sittings" needs a grouping rule, or it counts answers.**
+  - Today alone, Peter's answers on B2 landed at 16:33:44Z, 16:38:05Z and 17:01:22Z (recorded in the ballot's Status and Answered lines). Is that one sitting or three?
+  - **Change**: report the raw count of receipt times (decidable), and sittings under a stated grouping rule (for example, receipt times within the same orchestrator exchange, or less than two hours apart), with the rule printed beside the number.
+- **Refinement 3: paste the CI table per unit, not once at the end.** The record is written when the first family closes, which may be weeks after its first runs. Each unit's completion doc should carry its own run table (run ID, workflow, runner label, duration) at its merge, and the record sums them. That is the same reasoning as T-16's per-unit summary.
+- **Refinement 4: the sessions line is self-attested, and the record says so.** My pass can check that each first-family parent completion doc carries the line, and that the record's sums equal the lines. It cannot check that the numbers are true. The row should read "self-reported per parent".
+- **The 131 column (T-17): I move to Thurgood's proposal, that he sizes 131, over dropping the column.** Peter's re-placement compares the remaining families against 131, so a one-sided record leaves him the comparison to make himself. Three conditions make the estimate a fair comparator rather than a number fitted to the answer:
+  1. **Committed before the first family's data exists**, not merely "before the record is written". That means before the first first-family unit PR merges (decidable: the estimate's commit is an ancestor of that merge). This is my plan-R1 principle in another place: numbers written after the comparison is visible get bent toward it.
+  2. **The same units and a stated scope**: sessions by seat, Peter's sittings and, where it applies, CI minutes, over a named span of 131 (its requirements through its CLOSEOUT, or its first unit). The method is labelled REASONING. Where 131's cost ledger (`.kiro/specs/131-governance-simplification/inbound-governance-cost-ledger.md`) gives measured inputs, the estimate cites them.
+  3. **The conflict stated**: Thurgood is 131's formalizer and owns the measured-cost record's form. A line saying so, and one other seat's read of the method before it is committed, is enough. I read whether it is verifiable, not whether it is right.
+  - And one calibration line, owed later: 131's CLOSEOUT pass reads the estimate against what 131 actually cost. I will carry it there.
+  - **Surviving counter**: a forecast of 131 set beside a measured 132 family is still not like for like. One is measured and one is reasoned, whatever the units. The record must say so in the column's header, or Peter reads the two numbers as the same kind.
+- **T-14's (i) note**: agreed. If (i) is picked, the record measures all of the repair, and Peter is told at the pick (VERIFIED, § 3).
+
+**Summary**:
+- **Item 3, T-13**: I agree with Kenya. One move: the runtime count sets the readiness kind if her probe confirms it. One flag: static-only evidence needs a D7 kind, which is Peter's (condition 2). Lina's walk is decided by its known-bad twin.
+- **Item 9, T-15**: hold on (b) until the design round's lane count shows per-unit workflow edits. With catalog-driven lanes, (a) costs a handful of grants. If (b) comes, six limits apply.
+- **Item 12, § 3 and T-17**: agree with the folded rows, plus four refinements: the work package in the sessions line, a grouping rule for sittings, the CI table per unit, and the self-attested label. On the 131 column I move to Thurgood's proposal, with three conditions: committed before the first family's data, the same units and scope, and the conflict stated.
+
+**Standards implications**: none new. The sessions-line form (with the work package) and the per-unit CI table both feed the guide change Thurgood holds back until the first family.
+
+**My counter-argument to this entry, folded back**: I keep asking for committed numbers on a record whose purpose is speed of decision. Folding that in, each refinement is a line in a doc that is written anyway. HOWEVER, what survives: the 131 estimate's "commit before the first family's data" condition can delay T-17. If Thurgood can't size 131 before the first unit merges, the column drops to one-sided by default. That is a cost to Peter's comparison, which only Thurgood's timing can avoid.
+
+#### [LINA R3]
+
+**T-1 only.** Read: `leonardo-r2.md` (his item 1), against component source at `origin/main` `017514064` (Input-Text-Base unchanged from `8553499b1`). Read-only for #880.
+
+**Final position: the constrained `platformParts:`, in Leonardo's R2 form. We converge. T-1 closes with this shape, and no fork goes to Peter.**
+
+I own the schema, so this is my pick:
+
+- **Per platform**, `kind: platform | drawn` plus a `reason`, as before.
+- **An optional `platformParts:`**, allowed only when `kind: drawn`. It is a list of `{ id, reason }`.
+  - `id` is an accessibility identifier that **the component itself sets**, derived from its own id (for example `<id>-text-entry`). The fixture does not set it. This is his refinement 1, and it is right: a fixture cannot label a view inside our component. Today the iOS component labels only its helper and error text (`InputTextBase.ios.swift` L366, L375, VERIFIED), so the field needs one new identifier. That is my change.
+- **The first population is one entry**: iOS Input-Text-Base, `text-entry`. **Android lists no part** (his refinement 2, which I already accepted in R2: `BasicTextField`'s text and caret are drawn with our tokens, `InputTextBase.android.kt` L328, VERIFIED).
+- **One home, not two.** D5 reads `platformParts:` from the schema the application MCP serves. It does not keep a copy in its own per-component sample list.
+  - That answers the duplication argument I made in R2, and it is why I move back.
+  - The identifier change is owed under either shape, because D5 must find the field to exclude it. Given that, the served, machine-readable form costs one schema sub-key more than the prose form, and it tells an adopter's agent which pixels our theme does not reach.
+
+**Surviving counter (mine, carried from both rounds)**:
+- It is a schema field whose only use is one component on one platform.
+- The guard against over-claiming ("the system draws it" as an escape from a failing ink check) is a reason on each part, read at the claims pass. That is a read, not a test.
+- If no second case appears by 132's CLOSEOUT, the field stays as a one-entry list. I accept that cost.
+
+**Not T-1, but owed now**: Leonardo found that **neither platform sets selection colours** (VERIFIED: no `selection` colour, `tint` or `accentColor` in either Input-Text-Base file; Android sets only `cursorBrush`). I fold that into the theming record I file today, beside the iOS caret. The record is not part of the `rendering:` shape.
+
+*Signed: Lina, 2026-11-27.*
+
+#### [LEONARDO R3]
+
+**T-1 only.** Read: `lina-r2.md` (her item 1), against my R2. Read-only.
+
+**Final position: one field.** Per platform, `kind: platform | drawn` plus a `reason`. Where a drawn component wraps a system part, the reason names that part. This is Lina's R2 shape, which was my R1 shape. **We do not differ. T-1 closes, and no fork goes to Peter.**
+
+- **Why I stop here instead of crossing again.** My only reason for moving to `platformParts:` in R2 was a consumer fact: the iOS caret and selection follow the app's tint, not the DesignerPunk theme. Lina now treats that as what it is, a parity defect in her component, to be fixed at the source (her rule-10 record (a)). She is not describing it in the schema.
+  - Fixing it is better for adopters than describing it. Once the iOS field takes its caret and selection colours from the theme, the "parts the adopter's theme doesn't reach" fact goes away, and so does the case for a structured field.
+  - VERIFIED, as both of us found: Android draws its own caret (`cursorBrush = SolidColor(theme.color_action_primary)`, `InputTextBase.android.kt` L328). The iOS file sets no `.tint`, `.accentColor` or caret colour.
+- **The consumer conditions I attach, both already in Lina's R2:**
+  1. Until record (a) is fixed, iOS Input-Text-Base's `reason` says plainly that the caret and selection follow the app tint, not the theme. That way the served schema does not imply a theming promise the component does not keep.
+  2. The trigger to revisit is a second component that wraps a system control. That is when a structured field earns its place.
+- **Surviving counter** (mine, and Lina records it): a prose reason is not machine-read. If record (a) stays open past the claim of the family that holds Input-Text-Base, adopters' agents can see the gap only by reading prose. In that case the fix is to close (a) before that claim, not to add a field.
+
+*Leonardo, 2026-11-27.*
+
+#### [THURGOOD R3]
+
+*2026-11-27. The R2 cross-read entries above (Lina, Leonardo, Kenya, Data, Ada, Stacy) and the two T-1 R3 entries (Lina, Leonardo) are spliced byte for byte from the seats' files, in the order the orchestrator listed them. `design-outline.md` is now R3. Record states read at `origin/main` `017514064`.*
+
+**Closed by the cross-read** (each → design-outline.md § 5.2):
+- **T-3**: a hand-written `.xcodeproj` with synchronized folders (Kenya, Data, Leonardo). Kenya measured that adding files needs no `project.pbxproj` edit.
+- **T-4 (a)**: all token groups in our module (Ada, Kenya, Data). The local-path import is VERIFIED on iOS with `.package(name: "DesignerPunk", path: …)`, because the plain form fails (Kenya). It stays REASONING on Android until D4 builds.
+- **T-5**: the config name is the stored string. Kenya moved; Data held. iOS writes it as explicit raw literals and Android as a `key`.
+- **T-13**: the in-app walk under a UI-test session, with its known-bad twin. Kenya measured 3 elements against 5. Lina's R2 predates that measurement, so her confirmation is owed in the design round. **I did not mark this one closed on her behalf.** Data has the Android oracle.
+- **T-14 (ii)**: a family-scoped manifest (Ada, Kenya, Data, with Leonardo's consumer reading). **The inclusion threshold is still open between Ada and Leonardo.** Ada's is the committed compile state. Leonardo's is claimed families by default, with a ratchet and one readiness source. The threshold decides P-7's not-claimed half, so it is named there.
+- **T-15 (a)**: per lane, with data-driven lanes. This reconciles Kenya's "per lane", Data's "per unit" and Stacy's catalog-driven lanes. If lanes read their family list from a file, the only units that edit a workflow are the slice and the claim unit. So the grants are per lane, and a grant is needed per unit only where a unit edits a workflow. Data's reading of rules 8 and 10 is that a grant record can travel in the unit's tasks-round PR. I agree with it, as the steward of these rules: rule 10 bars a grant list "authored only inside the diff it bounds", and the tasks PR is not the diff it bounds. Stacy's ARMING read is still hers to confirm. The maintenance fork Data raised goes under "Later".
+- **T-11**: carried as closed from R2.
+
+**Converging, with an act still owed**:
+- **T-7**: Stacy's committed results file, with Ada's `R..S` rule. It changes a ratified instrument (row `hermetic-publish-path`), so it needs a census line. **RELEASE-FLOW's step text is mine, and it is LAW**, so it goes to Peter as a ballot when the design is drafted (§ 5.1, "Later"). Sparky's web-column question is unanswered.
+- **T-12 / P-13**: Ada's settlement. A scale role goes on the typography semantic tokens, and iOS emits a view modifier, not a computed `Font` (Kenya). The 20 calls that read no semantic move onto semantics. Lina classified them: 10 semantic, 9 primitive, 9 computed, 2 literal. Kenya's correction is folded in: `.system(size:weight:relativeTo:)` does not exist. P-13 grows to the mapping plus any new typography tokens, which Ada lists before the sitting.
+- **P-7**: under T-14 (ii) most of it falls away. What remains is the release itself and, if the threshold is the compile tier, opt-in marking: Kotlin `@RequiresOptIn` (Data) and Swift `@_spi` or a separate product (Kenya). Aliases for the whole shared token surface are owed from the first claim either way, and every seat agrees.
+- **T-17**: accepted under Stacy's three conditions and four refinements (§ 3). Sizing 131 is my act, and it must land before the first first-family unit PR merges.
+
+**T-1 does not converge. It goes to Peter as P-16.** The positions crossed three times. In R1, Lina moved to `platformParts:` while Leonardo withdrew it. In R2 they swapped. In R3 Lina returned to the constrained `platformParts:` and Leonardo returned to one field. Each final entry says "we converge", on different shapes. P-16 gives both shapes with their counters, plus option (C), the owner's call: Lina owns the schema under her record. The facts both agree on are in T-1's row.
+
+**New facts folded**:
+- **Data's Android probe passed** on #884 (run 46040355947): KVM is usable after the udev rule, boots take 35 s and 56 s, and no licence prompt appeared. **P-8 does not arise.**
+- **The `compileSdk` 37 finding** (Compose 1.12.1 under BOM 2026.09.00) goes into D4 and P-9, and onto the toolchain-range record (#881, now on `main`). Six records now fire at `requirements.md`.
+- **#884 merges before #880**, as precondition 2.
+- **Peter chose the local iOS 17 download** (P-10, iOS). The time 2026-11-27T17:20:36Z is as Kenya's R2 cites it; his verbatim words are not yet in a committed record. The version, 17.0 or 17.5, is still open with him, and the run has not happened. The iOS 17 probe's rule-10 record is owed in the PR that records his go (Stacy R1).
+- **Records**: #870, #873, #877 and #881 merged. Lina's #885 (the caret and selection theming, and the literal `14`) is open.
+- **One promise in R1 did not land**: #877 merged without Lina's `@ a953ac70d` pin on its Source cites (VERIFIED). The pointer is now hers to add, under rule 9.
+
+**Peter's sitting-2 batch, in decision order** (design-outline.md § 5.1):
+1. P-1
+2. P-2
+3. P-7
+4. P-6, once the iOS 17 run is in
+5. P-3
+6. P-4
+7. P-5
+8. P-13
+9. P-16
+10. P-14, if the orchestrator includes it
+
+Only if they arise: P-11 and P-12. Later: P-9, the lane-maintenance fork, and T-7's RELEASE-FLOW ballot.
+
+**The close**: Kenya and Data are not signalled yet. Their close commit comes after Peter's batch (§ 7, precondition 3).
+
+**Consulted**: Lina, Leonardo, Kenya, Data, Ada and Stacy, through their R2 entries above; Lina and Leonardo again through their T-1 R3 entries.
+
 ---
 
 ## Requirements Feedback
