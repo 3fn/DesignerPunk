@@ -50,7 +50,7 @@ The three moved numbers: `entries` 72 → 75, `tag` 1 → 3, `attribute` 0 → 1
 
 1. **The Status commit** (record-first): Peter's words naming item 1, the ruling record, and the ballots README roll entry, on this ballot's branch.
 2. **The application PR**, Thurgood's (he holds `pending.json` under adoption § 2 clause 1, in his standing scope):
-   - the one-line diff in § 2, nothing else in `pending.json`;
+   - the one-line diff in § 2, nothing else from this item;
    - its body names this ballot, says its Status reads RATIFIED, and gives the header before → after (the two texts above) and "entries added or re-keyed: none". That is what Stacy's site-1c read checks (adoption ballot § 3 site 1c: "unless the PR body names a ballot whose Status reads RATIFIED at `<m>` … and lists every entry added or re-keyed and the header before → after");
    - **`**Agent**:` line**: `Thurgood`. The item moves no entry, so no clause-2(a) owner is needed. If Thurgood carries it in the same PR as the A-5 v2 application, which deletes the two Shadow entries homed in a record whose `**Owners**:` field parses to Lina, that PR's line names both: `Thurgood, Lina`.
    - checks: `npm run test:scripts` (the guard's test, green before and after; § 6), `npm test`.
