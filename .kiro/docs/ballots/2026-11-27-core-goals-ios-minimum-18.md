@@ -38,7 +38,7 @@
 **Before** (L28 at `e03d3ae3f`):
 > - iOS: 17.0+
 
-**After** (one line, same line number; `2026-11-27` filled by the Status commit, here and in site 3c's removal):
+**After** (one line, same line number; `<ratification date>` filled by the Status commit, here and in site 3c's removal):
 > - iOS: 18.0+ *(Amended 2026-11-27 by ballot 2026-11-27-core-goals-ios-minimum-18, item 1; prior text at `e03d3ae3f`.)*
 
 - The pointer follows L29's form, the Android precedent.
@@ -159,7 +159,7 @@ At application the sweep is re-run on the changed tree. Any hit outside this tab
 
 ## 8. Application (on ratification; one PR, Peter-merged)
 
-1. Status commit (record-first), with `2026-11-27` filled.
+1. Status commit (record-first), with `<ratification date>` filled.
 2. Thurgood's authoring commit: site 1; site 2 byte for byte from Kenya's text; sites 3a–3c, **including re-grounding the two overlay pins**, which is authoring (the pin must equal the current `canonicalHash` at the re-sign; no `canonicalHash` field moves here).
 3. Kenya's commit: site 4 (pins, `lane.ts` comment, the test), under this ballot's grants.
 4. Thurgood's commit: site 5's guide lines with their pointers; INSTALL regenerated.
