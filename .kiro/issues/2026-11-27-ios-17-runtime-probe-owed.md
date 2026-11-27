@@ -33,3 +33,9 @@
   2. A one-off CI run on `macos-15`, which needs an issue-row grant for its workflow.
   3. "Not now".
 - His answer is recorded here when it is given.
+
+## Parked (2026-11-27, Kenya)
+
+- **Peter, received 2026-11-27T18:24:49Z (orchestrator relay), verbatim**: "Yes, ask Kenya and park the download".
+- **The question he is weighing, received 18:18:45Z, verbatim**: "This is making me wonder if we should just work from the most current version. Please, forgive my ignorance, but maybe we should just be running the simulations on whatever version Apple recommends at the time? Honest thoughts?"
+- **What "park" means here**: no route to an iOS 17 runtime is tried (no manual import, no CI image) until his answer to that question. The obligation stays here, and the Trigger is unchanged. His answer re-rules or closes this record.
