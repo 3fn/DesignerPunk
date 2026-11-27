@@ -1098,3 +1098,60 @@ Lina's `ContainerCardBase` L816 fix lands before the harness unit's first PR, no
 - **What**: `.kiro/specs/133-color-track/design-outline.md` § 4 records, as Ada's reading marked UNVERIFIED, what Requirements 9.2 and 7.4 leave behind for the colour-track spec: the removal of five of the six non-test `ColorTokens.ts` importers outside the token tier, and the barrel and its consumer copies remaining.
 - **Owed**: when the Requirement 9.2 parent (Ada; one of the parent splits in the requirements' parent list) lands, its completion doc states which importers it removed and what remains, and `133-color-track/design-outline.md` § 4 is corrected to match in the same unit. The tasks round names that step as a closing step of the 9.2 parent. This is a note and adds no acceptance criterion.
 - Source: `[ADA P-2]` § 1 and § 3, accepted by Peter at 2026-11-05T13:05:54Z ("yes, 4 (a), 7 (a)").
+
+---
+
+## Requirements amendment 1 (2026-11-27, post-closeout): Requirement 13.2 narrowed to the families with a grid rule (16.3.0 lapse batch, row 7)
+
+**Status**: **DRAFT**. Nothing in `requirements.md` is edited yet. The in-place edit lands on this branch only after Peter's dated words ratify one of the texts below; this PR's `**Open for Peter**:` line holds it until then.
+**Authority to draft**: Peter, 2026-11-12T13:29:02Z, "As recommended", row 7 of the 16.3.0 lapse batch: "**drop**, after a Spec 129 requirements amendment narrowing Req 13.2 to 'spacing and sizing, and borderWidth if it has a grid rule'. `defineComponentTokens` cannot declare radius, fontSize or colour. Thurgood authors the amendment, Ada is consulted, and Peter ratifies" (`evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md`). The orchestrator's brief: Peter, 2026-11-27, "Let's brief Thurgood now".
+**Author**: Thurgood (formalizer). **Consulted**: Ada (Requirement 13's owner; her question is below). **Ratifies**: Peter.
+**Vehicle**: this spec's convention for amending a merged requirements file: a numbered amendment recorded here, a dated line in place in `requirements.md`, and a header line naming it (see `requirements.md` L6–L9 and the in-place lines at L36, L90, L119). Spec 129 is closed (U12, #781; `completion/claims-pass.md` exists), so this is the first amendment after closeout and is numbered apart from the tasks amendments. No law names a different vehicle for a closed spec's requirements; `.kiro/specs/**` is not a governance path, so no ballot or `**Edit kind**:` line is owed. The PR still carries a `**Consulted**:` line (Agent-Directory § "Primary Agent (Orchestrator)", a spec's requirements is a trigger surface).
+
+### The text
+
+**Before** (`requirements.md` L342 at `3a3bd072b`, byte-exact):
+
+> 2. Row 21, under the rule the design rules: WHEN a consumer's component token has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+**After, text (a)** (Peter's words, made decidable):
+
+> 2. Row 21, under the rule the design rules: WHEN a consumer's component token in a family whose grid design § 12 (D-8) rules (today `spacing` and `sizing`; `borderWidth` once a grid rule for it is written there) has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+**After, text (b)** (flat, Ada's 2026-11-12 finding):
+
+> 2. Row 21, under the rule the design rules: WHEN a consumer's component token in the `spacing` or `sizing` family has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+**The dated line in place**, after the criterion: `*(Amended <ratification date>, requirements amendment 1 (post-closeout), lapse-batch row 7, Peter's "As recommended" of 2026-11-12T13:29:02Z and his ratification of <date>; prior text at `3a3bd072b`: "WHEN a consumer's component token has a non-conforming custom value THEN".)*`
+
+**The header line**, after L9: `**Amended after closeout (<date>)**: Requirement 13.2, requirements amendment 1 (`feedback/requirements.md`), with a dated line in place.`
+
+**Unchanged**: the criterion's second sentence (the lane fails on a non-conforming DesignerPunk token, under the coordinator's full rule set: spacing, sizing, radius, fontSize, colour); Requirement 13's user story; design § 12 (D-8), which already rules conformance for the families with a grid ("`BASE × k × step`"); `completion/task-10-completion.md` and `completion/claims-pass.md`, which are ledgers and keep their text (Task 10's C3 ⚠️ row stands as recorded).
+
+### The premise, checked: owed before ratification
+
+The ruling's reason is "`defineComponentTokens` cannot declare radius, fontSize or colour" (Ada R2: "takes numeric families only (spacing, sizing, borderWidth) and has no colour family"). **At the function, that is false at the base.**
+- `ComponentTokenConfig.family` is typed `string` (`src/build/tokens/defineComponentTokens.ts` L144–L145), and its doc comment gives `'fontSize'` and `'radius'` as examples.
+- **VERIFIED by a probe** (2026-11-27, `npx tsx`, at `3a3bd072b`): `defineComponentTokens({ component, family, tokens: { a: { value: 7 } } })` returns `{"a":7}` without throwing for `family` `'radius'`, `'fontSize'`, `'color'` and `'borderWidth'`. For each of the four, `checkGridConformance(family, 7)` returns `null`, so `generate`'s warning (`gridConformanceErrors`, imported at `src/cli/designerpunk.ts` L29) stays silent.
+- **UNVERIFIED**: whether `generate`'s harvest, emit or an earlier validation refuses such a token after the call returns. If nothing does, a consumer can declare an off-grid radius component token today and get no warning. The narrowing would then stop the requirement covering a case a consumer can reach, and "drop" would rest on a false ground.
+- **If Ada confirms that a consumer can reach it**, this amendment is not the vehicle Peter ruled. Row 7 goes back to him with its three options and the corrected premise; the record's other options were "rule the three definitions, then fix-now" (Ada R1's fork (a)) and spec. If she shows that a later step refuses it, the ruling's premise holds at the pipeline level, and the amendment proceeds with her evidence cited here.
+
+### Ada's question (the orchestrator dispatches it)
+
+The question file is outside the repository (the brief to Thurgood names the path); its text is reproduced here so a lost scratchpad loses nothing:
+1. **The premise**: run a consumer `generate` (a Consumer Guard-style fixture, or your own harness) with a component token declared `family: 'radius'`, value `7`. Does any step refuse it, and does `generate` warn? Paste the command and what it prints. Do the same for `'fontSize'` and `'color'`.
+2. **The text**: (a) or (b)? Is (a)'s "a family whose grid design § 12 (D-8) rules" decidable as you read D-8, and is your borderWidth finding (no grid rule written anywhere) still true at `3a3bd072b`?
+3. **The record**: your `2026-11-08-generate-component-token-warning-spacing-sizing-only.md` drops "when the amendment is ratified and merged". Its Trigger re-tokens to `merge:#<N>` with this PR's number. Do you take that act on this PR?
+4. **Anything else in Requirement 13, design § 12 or Task 10's docs** that the narrowing makes false and that this amendment should name.
+
+### Forks for Peter (none is picked here)
+
+- **F-0, which comes first: is the ruling's premise true?** If Ada's question 1 finds that a consumer can reach a radius, fontSize or colour component token, row 7's "drop" rests on a false premise, and the row returns to Peter with spec, drop or fix-now. That is his call, not an amendment. The drafter does not recommend proceeding on the premise as stated.
+- **F-1, the text, if the premise holds: (a) or (b)?**
+  - **(a)** keeps Peter's words and makes them decidable: the reach follows design § 12 (D-8), so a later grid rule for borderWidth brings its warning in without a second requirements amendment.
+  - **(b)** is flat. It matches the code and Ada's finding that no borderWidth grid rule exists.
+  - **The drafter leans (b).** A requirement whose reach moves with a design edit can change what `generate` owes without anyone editing the requirement. A design change that adds a borderWidth grid rule can amend 13.2 in the same PR.
+  - **Surviving counter to (b)**: it changes Peter's ruled words ("and borderWidth if it has a grid rule"), so it is put to him as a change to them. It also needs a second amendment whenever a grid rule is added.
+  - **Surviving counter to (a)**: the parenthesis is a cross-reference a reader must chase, and "once a grid rule for it is written there" moves the requirement with the design text. Design § 12 is Ada's to amend, and the requirement would follow her edit with no requirements-round review.
+
+*Signed: Thurgood, 2026-11-27.*
