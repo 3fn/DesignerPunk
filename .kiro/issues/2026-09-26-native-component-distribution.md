@@ -105,7 +105,7 @@ Firing commit `6f507c039ed4140eee4578aa6b75d713a5d4ad9d` (`6f507c039`, #852, Rel
 
 ## Escalation (2026-11-27, Lina, co-owner; the question for Peter, not yet put to him)
 
-**Count**: four distinct SHAs in the Lapse headings: `d7385b4c2`, `4d10202b2`, `693b39b54` and `6f507c039`. The record is **P2 (record)**, and rule 11 sends it to Peter at its second lapse with exactly three options. It was owed to him at `693b39b54` (the second distinct SHA counted while the record was P2 is reached at that firing in any case), and it missed the 16.3.0 batch.
+**Count**: four distinct SHAs in the Lapse headings: `d7385b4c2`, `4d10202b2`, `693b39b54` and `6f507c039`. The record is **P2 (record)**, and rule 11 sends it to Peter at its second lapse with exactly three options. By the total count it was owed to him at `693b39b54`. Counting only the lapses since it became P2 (`c65bbeb86`), it was owed at `6f507c039`. Either way it is owed now, and it missed the 16.3.0 batch.
 
 **Why no owner act settles it instead.** I cannot close it: Spec 132's seeded outline has not merged (`.kiro/specs/132-native-components-in-app/design-outline.md` still reads `**Status**: **PLACEHOLDER.**` at `origin/main` `3a3bd072b`), and this record is the goal's home until it does. I should not re-rule it either. The Trigger line is Data's re-rule with Kenya agreeing, and its at-close acts (1)–(3) are theirs (rule 9: "a line signed by one seat is rewritten only by that seat"). In any case, an owner re-rule does not replace the escalation that rule 11 owes after a second lapse.
 
