@@ -464,6 +464,15 @@ Check index health status and metrics.
 }
 ```
 
+**Build provenance (`build`)**: when the server runs as a process from a source checkout (`node mcp-server/dist/index.js` in this repository), the response also carries `build`, which says whether the running build matches the source beside it. Its `state` is one of:
+
+- `fresh`: the build was made from the source now beside it.
+- `stale`: the source has changed since the build. A warning beginning `build older than source` is added, and the status becomes `degraded`. Run `npm run build` in `mcp-server/`, then restart the server.
+- `unrecorded`: the check applies, but `dist/build-info.json` is missing or unreadable. A warning beginning `build provenance unrecorded` is added, and the status becomes `degraded`.
+- `not-applicable`: not a source checkout (the packaged bundle a consumer runs, or no `src/`), or running from TypeScript source. No warning is added.
+
+`rebuild_index` re-reads the docs; it does not rebuild the code, so it does not clear `stale`. The contract is `.kiro/issues/2026-11-27-mcp-build-provenance-contract.md`.
+
 ---
 
 #### 8. `rebuild_index`

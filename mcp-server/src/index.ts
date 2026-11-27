@@ -26,6 +26,7 @@ import { QueryEngine, QueryMetrics } from './query/QueryEngine';
 import { FileWatcher } from './watcher/FileWatcher';
 import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
 import { resolveLogsDir } from './utils/logs-dir';
+import { checkBuildProvenance } from './build-provenance/BuildProvenance';
 
 // Import tool definitions and handlers
 import {
@@ -87,6 +88,18 @@ export const tools = [
  */
 const STALENESS_EXEMPT_TOOLS = new Set(['get_index_health', 'rebuild_index']);
 
+/** Options for {@link MCPDocumentationServer}. */
+interface ServerOptions {
+  /**
+   * The directory the running build was loaded from (`__dirname` of the entry
+   * module). When set, health reports carry build provenance. The entry point
+   * always sets it; in-process construction (tests) may leave it unset.
+   */
+  distDir?: string;
+  /** The entry module's file (`__filename`); a `.ts` entry means ts-node. */
+  entryFile?: string;
+}
+
 class MCPDocumentationServer {
   private server: Server;
   private indexer: DocumentIndexer;
@@ -96,12 +109,21 @@ class MCPDocumentationServer {
   private steeringDirectory: string;
   private isRunning: boolean = false;
 
-  constructor(steeringDirectory: string = DEFAULT_STEERING_DIR) {
+  constructor(steeringDirectory: string = DEFAULT_STEERING_DIR, options: ServerOptions = {}) {
     this.steeringDirectory = steeringDirectory;
 
     // Initialize DocumentIndexer with logs directory — absolute, never under the
     // working directory (utils/logs-dir.ts; was the cwd-relative mcp-server/logs).
     this.indexer = new DocumentIndexer(resolveLogsDir());
+
+    // Build provenance: every health read reports whether the running build
+    // matches its source (.kiro/issues/2026-11-27-mcp-build-provenance-contract.md).
+    if (options.distDir) {
+      const { distDir, entryFile } = options;
+      this.indexer.setBuildProvenanceProbe(() => checkBuildProvenance({ distDir, entryFile }));
+      const report = checkBuildProvenance({ distDir, entryFile });
+      console.error(`[MCP Server] Build provenance: ${report.state} — ${report.reason}`);
+    }
 
     // Initialize QueryEngine with metrics logging
     this.queryEngine = new QueryEngine(this.indexer, this.logMetrics.bind(this));
@@ -428,7 +450,7 @@ async function main(): Promise<void> {
     );
   }
 
-  const server = new MCPDocumentationServer(steeringDir);
+  const server = new MCPDocumentationServer(steeringDir, { distDir: __dirname, entryFile: __filename });
   await server.start();
 }
 
@@ -447,7 +469,7 @@ if (require.main === module) {
 }
 
 // Export for testing
-export { MCPDocumentationServer };
+export { MCPDocumentationServer, type ServerOptions };
 
 // Spec 121 Req 5.5: re-export the machine-consumable workflow-rule artifact so
 // the agent generator (Spec 122) can import and propagate it (esp. summary-first)
