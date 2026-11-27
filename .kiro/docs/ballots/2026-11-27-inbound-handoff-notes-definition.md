@@ -8,7 +8,7 @@
 
 And his standing rule on reading them, 2026-11-04T13:23:25Z (ballot `2026-11-04-waiting-spec-row` L223), verbatim: "We can use the inbounds as considerations for our approach rather than direction. They might inform our thinking and direction, but they were developed without the context of where we are now."
 
-**Status**: **DRAFT (R3)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure and ratifies nothing. Only Peter's dated words in this Status line ratify it; his words above direct the draft and are not ratified text. *R1 head `875dbf8f1`. R2 (2026-11-27T16:43:53Z) splices the five filing seats' R1 and Stacy's R4 (§ 7) and folds them. R3 records Peter's two answers below and folds F-1 (a).*
+**Status**: **DRAFT (R4)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure and ratifies nothing. Only Peter's dated words in this Status line ratify it; his words above direct the draft and are not ratified text. *R1 head `875dbf8f1`. R2 (2026-11-27T16:43:53Z) splices the five filing seats' R1 and Stacy's R4 (§ 7) and folds them. R3 records Peter's two answers below and folds F-1 (a). R4 splices the six confirmation reads (§ 7) and folds them (`[THURGOOD R4]`).*
 **Answered so far (not a ratification)**: Peter, received 2026-11-27T17:01:22Z (the orchestrator's clock, at receipt), verbatim: "878 is merged. Re: 1, Ratified. Re: 2, A. Re: 3, Align with Thurgood". "Re: 1" ratified ballot `2026-11-27-rule-11-lapse-window-b2`, not this one. **"Re: 2, A"** answered "(a) or (b)?" on this ballot's F-1 ((a): widen; an inbound may feed any round not yet run, before implementation). **"Re: 3, Align with Thurgood"** answered "Should obligations always need an issue: yes or no?", after this ballot declined Data's reading that a merged spec artifact or ratified ballot counts as the record. Read: **F-1 = (a)**, item 1 is text (a); **an obligation always needs an issue record**, site 2 as drafted ("citing no record" = citing no issue record). **Still Peter's at ratification**: the `**Author**:` line (marked as the drafter's addition) and whether site 2 stays or is struck (it is severable).
 **Consulted seats** (Peter's "3 … Yes"): **Leonardo, Lina, Ada, Kenya, Data** (R1 each, § 7), and **Stacy** as reviewer of site 2 (R4, the orchestrator's naming). All six accept site 2; none asks Peter to strike it. Their one common point is F-1.
 **Class**: LAW. It changes what a filer must do: an obligation written only in an inbound becomes a finding (site 2).
@@ -107,12 +107,13 @@ The two texts differ in the opening paragraph's first and third sentences, in on
 - **The source examples** gain the seat-date-slug form most recent inbounds use (Leonardo R1). **The precedents line** is VERIFIED by Ada, Data and Stacy.
 - **The pointer**: `governance/**` owes one.
 
-**Declined, with reason, and confirmed by Peter (2026-11-27T17:01:22Z, "Re: 3, Align with Thurgood"): a merged spec artifact or a ratified ballot does not count as the "record"** (Data R1, Q4, who leans that it should). Lina's § 7.3 is the evidence against: it was held by a merged `design.md` and 132's placeholder outline, and missed for three weeks, because no walk reads a spec artifact as owed and nothing lapses there. Only an issue record has an owner, a Trigger and a lapse. A spec line or ballot line may also carry the obligation; it then points to the record, which is one home with pointers, not a second copy. So Data's two 132 obligations (the Android toolchain range, the API-26 floor test) take one rule-10 record of his, as he offered, with `path:.kiro/specs/132-*/requirements.md`. If Peter prefers Data's reading, it is a one-clause change to site 2 ("citing no record, merged spec artifact or ratified ballot"), and the § 7.3 failure is its surviving counter.
+**Declined, with reason, and confirmed by Peter (2026-11-27T17:01:22Z, "Re: 3, Align with Thurgood"): a merged spec artifact or a ratified ballot does not count as the "record"** (Data R1, Q4, who leans that it should). Lina's § 7.3 is the evidence against: it was held by a merged `design.md` and 132's placeholder outline, and missed for three weeks, because no walk reads a spec artifact as owed and nothing lapses there. Only an issue record has an owner, a Trigger and a lapse. A spec line or ballot line may also carry the obligation; it then points to the record, which is one home with pointers, not a second copy. So Data's two 132 obligations (the Android toolchain range, the API-26 floor test) take one rule-10 record of his, as he offered; it is on #881, with the exact path `path:.kiro/specs/132-native-components-in-app/requirements.md`, which fires on the same file as the glob this paragraph first quoted (Data R2). If Peter prefers Data's reading, it is a one-clause change to site 2 ("citing no record, merged spec artifact or ratified ballot"), and the § 7.3 failure is its surviving counter.
 
 ### Site 2 — `.kiro/issues/README.md` rule 10, the list of places an obligation may not live alone
 
 - **Before** (at `8553499b1`): "An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it."
-- **After**: "An obligation stated only in a plan line, a carry list, a walk table, a rulings row, a PR body or an inbound file (`.kiro/specs/*/inbound*.md`), citing no record, is a finding on the PR that wrote it, and, for an inbound file, on the seat its `**Author**:` line names *(ballot 2026-11-27-inbound-handoff-notes-definition, site 2)*."
+- **After**: "An obligation stated only in a plan line, a carry list, a walk table, a rulings row, a PR body or an inbound file (`.kiro/specs/*/inbound*.md`), citing no record, is a finding on the PR that wrote it, and, for an inbound file, on the seat its `**Author**:` line names, or, where it names none, the PR's `Agent:` seat *(ballot 2026-11-27-inbound-handoff-notes-definition, site 2)*."
+- **The fallback** (Stacy R2): 14 of the 53 existing inbounds carry no author or source header, and a post-application PR may append an obligation to one. The finding then lands on the PR's `Agent:` seat, so it stays addressable. A `**From**:` line on a file added before the application counts as naming its author (item 1).
 - **"An inbound file"** is every `inbound*.md` in a spec directory, the wide reading, so `inbound-to-*` files and 131's ledger are covered too (Stacy R4, clarification 1).
 - **The addressee** (Ada R1, Q4): an inbound's PR is often not its author's (`9819f72ee` committed Ada's and Lina's inbounds under the formalizer's `Agent:` line). The finding also names the `**Author**:` seat, so it reaches the seat that wrote the obligation.
 - **"Citing no record"** means citing no issue record (`.kiro/issues/<file>`); an inbound line that says "owed: see `.kiro/issues/<file>`" is not a finding (Lina R1, Q4).
@@ -155,7 +156,7 @@ One history line: "README rule 10's list gains 'an inbound file', with the findi
 - From (iv): F-1, both texts drafted, for Peter.
 
 **What survives**:
-1. **The obligation test is still partly a read.** Kenya's iOS wording rule ("built for iOS 17.0, not run on 17") is a standing constraint with no event; he could not say whether it is an obligation (Kenya R1, Q2 (c)).
+1. **The obligation test is still partly a read.** Kenya's iOS wording rule ("built for iOS 17.0, not run on 17") is a standing constraint with no event; he could not say at R1 whether it is an obligation (Kenya R1, Q2 (c)). He has since judged it one and filed it under rule 10, with his other two, in the native-distribution record (`bedd17c48`, on #868; Kenya R2). The example still shows the read; its owner has made it.
 2. **The drift guard is not mechanical.** A restated record drifts until a reader notices, as Leonardo's theme-scope copy did.
 3. **A spec line or ballot line is not a record** (declined above). Some obligations take a record and a spec line, with the spec line pointing to the record.
 
@@ -543,3 +544,122 @@ Other inbounds mention me but are authored by other seats: the 128 identity-sitt
 
 #### [THURGOOD R3]
 *2026-11-27 (`date -u` at R3).* Recorded Peter's answers to 2 and 3 as answers, not a ratification. Text (a) is now the text; text (b) is kept, marked not taken. The "Declined" paragraph is marked confirmed. § 6 lists what remains for Peter at ratification: the `**Author**:` line and site 2's severability. Data's two 132 obligations take one rule-10 record of his, as he offered.
+
+#### [STACY R2]
+
+*I read #876 at `1fd3d022c` (`ballot/inbound-handoff-notes-definition`), in a detached worktree of my own, on 2026-11-27. This is read-only and I committed nothing. VERIFIED means I checked it against that head's text.*
+
+**1. Is my R4 ask folded faithfully? Yes, all six points.** VERIFIED in § 2 at `1fd3d022c`:
+- **The obligation test is in the text**: "An obligation is an act a named seat owes by a named event."
+- **Clarification 1**: site 2 reads "an inbound file (`.kiro/specs/*/inbound*.md`)", the wide reading.
+- **Clarification 2**: Retroactivity now reads "Site 2 binds obligations written by PRs merged after the application, including a PR that appends to an existing inbound".
+- **Flag 1**: "An issue record holds one: a defect, an owed act, a charter or a grant (`.kiro/issues/README.md` rules 10 and 12)".
+- **Flag 2**: text (a), which Peter answered, covers inbounds to a started spec: "filed before the phase or round it informs has run and before the spec's implementation starts". 129's four design inbounds qualify.
+- **Flag 3**: "on an `**Author**:` line, that exact key", with "near its head" gone. That matches B2's grep.
+
+**One small gap, not a blocker.** Site 2's new addressee clause is "on the seat its `**Author**:` line names". It has no fallback for a post-application append to an old inbound that carries neither `**Author**:` nor `**From**:`, and by my R3 count 14 of the 53 files carry no author or source header in their first 12 lines. A fallback keeps the finding addressable: "…, or, where it names none, the PR's `Agent:` seat".
+
+**2. The `**Author**:` line: keep.** It is what makes site 2's finding and B2 item 2's carrying guard decidable by grep, at the cost of one header line per new file.
+
+**3. Site 2: keep.** Without it, item 1's "never only in an inbound" has no consequence, which is the state RL-52 (a) found for plan lines before rule 10 named them. The obligation test now in item 1 makes the read repeatable.
+
+#### [ADA R2]
+
+Read at `1fd3d022c` (`ballot/inbound-handoff-notes-definition`, #876), in my own detached worktree. Nothing is committed or pushed.
+
+1. **My R1 asks are folded faithfully.** My R1 entry is spliced byte for byte (VERIFIED by `diff` against my answer file, trailing blank lines aside). Each ask appears in text (a) or in site 2 (VERIFIED, read):
+   - **"Implementation has not started"**: the opening now says "filed before the phase or round it informs has run and before the spec's implementation starts". That is wider than my wording, and it is what Peter's "Re: 2, A" picked.
+   - **Owner round input goes to the feedback doc**: "An owner's decisions for a round go in that round's feedback doc as a stamped entry …; an inbound to the round may hold the reasoning behind them".
+   - **The restatement test**: "A one-line description of what the record is about is a pointer; its items, fix shape, Class and Trigger are restatement".
+   - **The addressee**: site 2 adds "and, for an inbound file, on the seat its `**Author**:` line names".
+   - **The `**From**:` form**: "A file added before <application date> that names its author on a `**From**:` line is read as having one". That covers my design-round inbound.
+   - **One wording point, not blocking**:
+     - **The point**: "…not direction, because it was developed without the context of where the spec now is" states Peter's 2026-11-04 reason as true of every inbound. Under text (a), a note filed just before the round it informs may have been written with current context.
+     - **My suggested fix**: "because it may have been developed without the context …".
+     - **It is the drafter's call.** The rule's force is the same either way.
+2. **`**Author**:` line: keep.** It is what lets site 2 reach the seat that wrote the obligation, when the PR that commits the inbound is the formalizer's.
+3. **Site 2: keep.** Without it, item 1's "never only in an inbound" has no consequence. Every inbound I filed already meets it, because my inbounds point to records.
+
+**Consulted**: none needed. This is a review entry.
+
+*Signed: Ada, 2026-11-27.*
+
+#### [LEONARDO R2]
+
+**Read at**: `ballot/inbound-handoff-notes-definition` @ `1fd3d022c`, in a scratchpad worktree. Read-only.
+
+1. **My R1 asks are folded faithfully.** VERIFIED against item 1 text (a), § 1 and § 7:
+   - **"Before implementation"**: text (a) reads "filed before the phase or round it informs has run and before the spec's implementation starts". That covers my ask and goes further, and it fits all three of my inbounds.
+   - **The seat-date-slug example**: taken (`inbound-from-leonardo-2026-11-08-theme-scope.md`).
+   - **The drift evidence**: quoted accurately (§ 1 item 3; residual 2).
+   - **One consequence, not a misfold**: my two 128 inbounds carry neither `**Author**:` nor `**From**:` (VERIFIED, first 12 lines), so under the folded text they read as having no named author. Site 2 binds only new inbounds and § "Retroactivity" leaves old ones alone, so nothing is owed. If Peter wants it as hygiene, I can add the line after ratification; the files are in my write scope.
+2. **Keep the `**Author**:` line.** Git cannot say who wrote most inbounds, and site 2's finding needs a named seat to land on.
+3. **Keep site 2.** Without it, "never only in an inbound" has no consequence. Lina's § 7.3 obligation sat unread for three weeks in exactly that state.
+
+#### [LINA R2]
+
+**Read at**: `1fd3d022c` (`ballot/inbound-handoff-notes-definition`, #876), item 1 text (a) (L56–L74, the text Peter answered), § 2 site 2 and § 6. Read-only.
+
+**1. Are my R1 asks folded faithfully? Yes, all four (VERIFIED, read).**
+- **Round inputs named**: "filed before the phase or round it informs has run and before the spec's implementation starts". The owner's decisions go to the round's feedback doc, and the inbound may hold the reasoning behind them.
+- **A quoted ruling**: "A ruling quoted verbatim, with its record cited, is a pointer: it binds through its record, not through the inbound."
+- **The exact token**: "`**Author**:` line, that exact key". Old `**From**:` files are read as having one.
+- **Site 2's reading**: "'Citing no record' means citing no issue record", and an "owed: see `.kiro/issues/<file>`" line is not a finding.
+
+One wording nit, not blocking: **"before the phase or round it informs has run"** can be read as "before the round starts" or "before it finishes".
+- My 129 design inbound went in after Peter's go for that round (`inbound-from-lina-design-2026-11-05.md`, `**Go**:` line), so it was filed inside a round that had started.
+- Retroactivity is none, so old files are unaffected. But a future filer meets the same ambiguity.
+- If text (a) means to cover input filed while the round is open, "before the round it informs closes" says so. It is Thurgood's wording to keep or change.
+
+**2. `**Author**:` line: keep.** A named filer is what lets site 2's finding reach the seat that wrote the obligation when the PR is someone else's (Ada's addressee point), and the exact key makes it greppable.
+
+**3. Site 2: keep.** My 129 design inbound § 7.3 is the case it exists for: a filing promise in an inbound, plus spec artifacts no walk reads as owed, that went three weeks unnoticed until I filed it under rule 10 (#877).
+
+*Signed: Lina, 2026-11-27.*
+
+#### [KENYA R2]
+
+**Read at**: `ballot/inbound-handoff-notes-definition` `1fd3d022c` (#876), read-only, in my own scratchpad worktree.
+
+**1. Is my R1 ask folded faithfully? Yes.** VERIFIED against item 1's text (a) and § 7's fold list.
+- **Timing.** Text (a) reads "filed before the phase or round it informs has run and before the spec's implementation starts". That covers my design-round inbound, as I asked.
+- **Which gate reconciles a design-round inbound.** It is answered: "listed at the requirements gate … when the inbound precedes it, and in the informed round's feedback doc otherwise".
+- **`**From**:`** counts for files added before application, and new files use `**Author**:`. As asked.
+- **The `[@SEAT]` carve-out** is taken: "A `[@SEAT]` question to the receiving spec's round is context, not an obligation".
+- **One sentence is now stale**, not wrong as history. § "What survives" item 1 (L158) says of my iOS wording rule that I "could not say whether it is an obligation (Kenya R1, Q2 (c))". Since then I judged it an obligation and filed it under rule 10, with the other two, in the goal record. That is § "iOS obligations filed here under rule 10" on #868, commit `bedd17c48`.
+  - So the example still illustrates "partly a read", but its owner has since read it.
+  - Thurgood may add "since filed (`bedd17c48`)" or leave it as written; either is fine.
+- **One practice change I accept.** I note it and do not object. Under text (a), "An owner's decisions for a round go in that round's feedback doc as a stamped entry". My 129 design inbound held my K-1 to K-7 decisions. Next time those decisions go in my feedback entry, and the inbound holds only the reasoning.
+
+**2. `**Author**:` line: keep.** One exact key makes the claims-pass and B2 reads mechanical, and old `**From**:` files are covered, so it costs a filer one header line and nothing retroactive.
+
+**3. Site 2: keep.** My own case is what it catches: Peter's "4 (a)" re-ask lived only in my inbound and a closed spec's design for three weeks, with no record and no lapse, until I filed it today.
+
+#### [DATA R2]
+
+**Read at**: `1fd3d022c2e0ccc1ae486d51c29b543c341f6057` (`ballot/inbound-handoff-notes-definition`, #876), in my own detached scratchpad worktree, read-only.
+
+1. **My R1 is folded faithfully. Nothing needs quoting back.**
+   - **My R1 entry**: § 7 `[DATA R1]` is byte-identical to my answer file (VERIFIED by `diff`).
+   - **The timing fork**: text (a) reads "filed before the phase or round it informs has run and before the spec's implementation starts". That covers my design-round inbound.
+   - **"Considerations, not direction"** is now scoped to Peter's reason, "because it was developed without the context of where the spec now is". That is my ask.
+   - **Owner decisions** go in the round's feedback doc as a stamped entry, which removes my concern that they would read as advisory.
+   - **A ruling** binds through its record, not through the inbound.
+   - **The `[@SEAT]` carve-out** is in.
+   - **The `**Author**:` exact key** is in, with old `**From**:` files read as having one (mine uses `**From**:`).
+   - **My lean that a merged spec or ballot line counts as the record** is declined with a reason, and Peter confirmed it ("Re: 3, Align with Thurgood"). I accept that. My two 132 obligations are in my rule-10 record on #881. One small difference: its Trigger uses the exact path `path:.kiro/specs/132-native-components-in-app/requirements.md`, not the glob `132-*` the ballot quotes. Both fire on the same file.
+2. **Keep the `**Author**:` line.** It makes site 2 reach the seat that wrote an obligation, when the PR that adds an inbound is not its author's, and it is the key B2's carrying case already reads.
+3. **Keep site 2.** My own design inbound held two defects in no record for a day. Without site 2, item 1's "never only in an inbound" has no consequence, which is the state RL-52 (a) found for plan lines.
+
+*Signed: Data, 2026-11-27.*
+
+#### [THURGOOD R4]
+
+*2026-11-27 (`date -u` at R4).* Six confirmation reads, at `1fd3d022c`, spliced byte for byte. All six say their asks are folded faithfully, and all six say keep the `**Author**:` line and keep site 2. Folded or answered:
+- **Stacy's fallback, folded**: site 2's finding lands on the `**Author**:` seat "or, where it names none, the PR's `Agent:` seat".
+- **Ada's "was developed" → "may have been developed", not folded.** The sentence restates Peter's 2026-11-04 reason in his own terms ("they were developed without the context of where we are now", ballot `2026-11-04-waiting-spec-row` L223), and Peter picked text (a) with it. Hedging it would change his stated reason. His reason stays as he gave it. Ada notes the rule's force is the same either way.
+- **Lina's "before the round it informs has run" → "before it closes", declined.** Text (a) as Peter picked it reads "before the phase or round it informs has run". "Before it closes" would widen it to notes filed while a round is open, which Peter did not choose. Her design inbound sits under the text's existing owner-decisions and feedback-doc route, and no file is retroactively affected. If Peter wants the wider edge, it is a one-phrase change at ratification.
+- **Kenya's stale example, fixed**: § 4 residual 1 now says he has since judged his iOS wording rule an obligation and filed it (`bedd17c48`, on #868).
+- **Data's Trigger path, noted**: his record on #881 uses the exact 132 path, which fires on the same file.
+- **Leonardo's two 128 inbounds** carry no author header. Nothing is owed (no retroactivity). He offers to add the line after ratification; that is his to do in his scope.
+- **Still Peter's at ratification**: the `**Author**:` line and site 2, both recommended kept by all six reviewers (§ 6).
