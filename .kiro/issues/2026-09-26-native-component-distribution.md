@@ -90,3 +90,30 @@ Android has no twin of this list: all 34 main component composables are public (
 - The same holds for the harness charter's dated 2026-10-20 evaluation entry (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` L180): its "Core Goals says 'Android: Not yet constrained'" and its provisional host `minSdk = 24` are a ledger, kept inline. The harness pin is now 26 (Spec 129 `design.md` § 0 and § 2).
 
 Signed Data, 2026-11-05.
+
+## Lapse (2026-11-27)
+
+Firing commit `4d10202b2b9d535401a1452643780656a5d0b694` (`4d10202b2`, #633, Release 16.2.0's S, merged 2026-11-04T01:29:29Z). This record lapsed at `d7385b4c2` (the heading above), and rule 11 says "A record still open after a lapse lapses again at each later release's S." No ancestor of `4d10202b2` closed or re-ruled it after `d7385b4c2`: the re-rule to `path:harness/**` is `c65bbeb86` (#653), merged after this S, and is not its ancestor (`git merge-base --is-ancestor c65bbeb86 4d10202b2` fails). The record was P3 then, so this lapse alone escalated nothing. The 2026-11-05 heading above was written after this S and did not name it. Appended by an owner at session start (rule 11; Start Up Tasks item 9). Signed Lina, 2026-11-27.
+
+## Lapse (2026-11-27)
+
+Firing commit `693b39b547bddc83466f4b185ca54601c3fc97d3` (`693b39b54`, #791, Spec 129's CLOSEOUT claims pass, merged 2026-11-08): the first commit to touch `.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`, this record's `path:` token. That pass routed the owed act to Kenya and Data (its § "This file fires" table: "The switch to `release:next:phase-1` at 129's close (#684)"). None of the three at-close acts is in an ancestor of `693b39b54`: (1) no render-probe result is recorded here; (2) the Trigger still carries the CLOSEOUT token; (3) no ask to Peter for Spec 132's outline round is recorded. The Trigger line was last changed in `a953ac70d` (#723, 2026-11-07), an ancestor. I do not read that commit as a re-rule against this firing, for three reasons. Its token and event did not change. It only reworded obligation (2)'s close event, from "132's outline" to "the seeded outline". And the text it left standing says "If they do not, the charter takes one recorded first lapse at CLOSEOUT." Under the working B2 reading, the commit that set the token (`19c1dea43`, #684) is not a re-rule either. Whether a prose-only Trigger change counts as a re-rule is still open, in B2's ballot (Thurgood); if B2 rules that it does, this heading is wrong and the next one moves with it. Signed Lina, 2026-11-27.
+
+## Lapse (2026-11-27)
+
+Firing commit `6f507c039ed4140eee4578aa6b75d713a5d4ad9d` (`6f507c039`, #852, Release 16.3.0's S, merged 2026-11-10T01:00:01Z). The record was still open after its `693b39b54` lapse, and no commit on this file lies between `693b39b54` and `6f507c039` (`git log 693b39b54..6f507c039 -- <this file>` is empty). It is not rowed in the 16.3.0 walk record (`.kiro/issues/archive/2026-11-09-release-16.3.0-walk.md`), which rows `release:` and `tag:` tokens, so it missed the 16.3.0 escalation batch that Peter answered at 2026-11-12T13:29:02Z. Signed Lina, 2026-11-27.
+
+## Escalation (2026-11-27, Lina, co-owner; the question for Peter, not yet put to him)
+
+**Count**: four distinct SHAs in the Lapse headings: `d7385b4c2`, `4d10202b2`, `693b39b54` and `6f507c039`. The record is **P2 (record)**, and rule 11 sends it to Peter at its second lapse with exactly three options. It was owed to him at `693b39b54` (the second distinct SHA counted while the record was P2 is reached at that firing in any case), and it missed the 16.3.0 batch.
+
+**Why no owner act settles it instead.** I cannot close it: Spec 132's seeded outline has not merged (`.kiro/specs/132-native-components-in-app/design-outline.md` still reads `**Status**: **PLACEHOLDER.**` at `origin/main` `3a3bd072b`), and this record is the goal's home until it does. I should not re-rule it either. The Trigger line is Data's re-rule with Kenya agreeing, and its at-close acts (1)–(3) are theirs (rule 9: "a line signed by one seat is rewritten only by that seat"). In any case, an owner re-rule does not replace the escalation that rule 11 owes after a second lapse.
+
+**The question** (rule 11: spec, drop or fix-now):
+- **Spec: recommended, Spec 132.** This is the vehicle Peter already chose for this goal: "A yes, B (a), C yes; (x′) as defined", 2026-11-05T04:07:43Z, and the order "Let's go (x′)", 2026-11-05T04:06:22Z. The answer is carried out when the **seeded** outline (plan-r2 § 6 item 8) merges and names this record, not the 2026-11-07 placeholder. The placeholder holds "no requirements, no design and no scope decision", and this record's Goal section already reads its close that way. From that merge, Kenya and Data re-rule the Trigger to the event that owes the close, and the record closes under rule 5. *Counter that survives*: the placeholder is a merged design outline that names this record, so under rule 11's letter a spec answer would be carried out at once. The recommendation therefore asks Peter to rule the seeded outline as the carrying event. Until it merges, each later lapse returns the record to him with this answer quoted.
+- **Fix-now**: not fit. Both distribution shapes are spec-scale ("Cost class: spec-scale, medium-large"; "medium, days to about a week"), and nothing could land by 16.4.0's S.
+- **Drop**: not recommended. It removes the home of Peter's 2026-11-05 goal and the D1–D10 citation before Spec 132's outline holds them.
+
+**Still owed, separately** (Kenya and Data, this record's Trigger obligations): (1) the render-probe result recorded here; (3) the ask to Peter for his go on Spec 132's outline round, which is his under the sequential gates. The orchestrator should consult Kenya and Data on the recommendation above before it goes to Peter, since the Trigger line is theirs.
+
+*Signed: Lina, 2026-11-27.*
