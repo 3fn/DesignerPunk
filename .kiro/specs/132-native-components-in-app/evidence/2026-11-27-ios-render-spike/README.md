@@ -77,7 +77,7 @@ All VERIFIED, and the same set in both runs.
 **Finding 3.** The audit runs on the simulator with no device. It reports nothing on a clean screen in either scheme, and reports each planted defect. Its issue handler lets a test record issues and decide for itself, so a known-bad case can be asserted.
 
 **Finding 4, a cost for 132's D5, not a defect filed here.** The audit flags a fixed point size: `.font(.system(size: DesignTokens.fontSize100))`.
-- The shipped iOS components hold **26 `.system(size:)` lines in 14 files**, and **0** uses of `relativeTo:`, `@ScaledMetric` or `dynamicTypeSize`. VERIFIED by grep over `src/components/core/*/platforms/ios/*.swift` at `8553499b1`, test files excluded and preview code included.
+- The shipped iOS components hold **30 `.system(size:)` calls in 18 files**, and **0** uses of `relativeTo:`, `@ScaledMetric` or `dynamicTypeSize`. The 18 files include **Chip-Base, Chip-Filter and Chip-Input, one call each**, so the first family carries this cost. VERIFIED by a multi-line count (`perl -0777`, pattern `\.system\(\s*size:`) over `src/components/core/*/platforms/ios/*.swift` at `8553499b1`, `*Tests.swift` excluded, preview code included. *(Corrected 2026-11-27, Kenya: this line first read "26 `.system(size:)` lines in 14 files". That count came from a single-line grep, which missed calls written as `.font(.system(` with `size:` on the next line, Chip-Base's among them; prior text at `cabf37ada`.)*
 - So a blanket `.all` audit on D4's catalog screen will report Dynamic Type issues wherever those lines render.
 - Whether that is a defect or an accepted exclusion is a typography decision: Ada for the tokens, Lina for the components, Leonardo for the product view. It belongs in 132's outline round, not in this file.
 
