@@ -18,7 +18,7 @@
 - **Your goal, in your words** (§ 1): adopters use DesignerPunk's native components as a package dependency, build more with DesignerPunk, and "the components are functional, and will successfully render, in the app as described."
 - **Where we are at `8553499b1`**: Spec 129 closed. The generated token files compile on iOS and Android, and our component source compiles against them except for pinned errors (49 iOS, 93 Android, VERIFIED Thurgood by counting `harness/expected/*.tsv`). No app is built, nothing is linked, no component is rendered and no native contract is tested. "Do not start a native product" is still printed.
 - **What this spec does**: takes the components from "compiles in our checks" to "builds, links, renders and behaves as described in an adopter's own app", one family at a time. The first family is the Chip family plus Icon-Base plus one adopter-built component.
-- **What this round asks of you** (§ 5.1): the definition of done for 132 (D4–D10), four plan decisions (8–11), the iOS minimum again, and when the support claim ships. Each has options and no pick. Two probes run during this round (§ 6) so the iOS minimum and the render tools are decided on measured facts.
+- **What this round asks of you** (§ 5.1): the definition of done for 132 (D4–D10), four plan decisions (8–11), the iOS minimum again, and when the support claim ships. Each has options and no pick. Two probes run during this round (§ 6) so the iOS minimum and the render tools are decided on measured facts. Kenya's local iOS spike has run (the tools work on iOS 26.0; iOS 17 was not run). Data's Android probe waits on its grant, #878, which activates when you merge it.
 - **What must be fixed first** (§ 4): two P1 defects in the token emitters (#870, #873). Until they are fixed, an adopter-built component's own tokens can break the native build silently.
 - **What this PR's merge does** (§ 7): it carries out your 2026-11-27 answer, "Spec with (a)": the distribution charter, the goal's home since 2026-11-05, closes into this spec.
 
@@ -106,7 +106,7 @@ E2's grep for `132` / `132-native-components-in-app`, plus the records added by 
 
 | Record | Owner | Trigger at `8553499b1` (or PR head) | Proposed disposition |
 |---|---|---|---|
-| `.kiro/issues/2026-09-26-native-component-distribution.md` | Kenya, Data (Lina, Ada) | `path:…/129…/completion/claims-pass.md` (fired at `693b39b54`) | **intake, closing at this PR's merge**: Peter's "Spec with (a)" (§ 7) |
+| `.kiro/issues/2026-09-26-native-component-distribution.md` | Kenya, Data (Lina, Ada) | on `main`: `path:…/129…/completion/claims-pass.md` (fired at `693b39b54`); on #868 at `1e81dfeb8`: `release:next:phase-1`, which its owners re-token to `merge:#880` (this PR) | **intake, closing in this PR**: Peter's "Spec with (a)" (§ 7). Its § "iOS obligations filed here under rule 10" (on #868) passes three iOS obligations to this outline: the iOS minimum (P-6), the iOS 17 runtime probe (§ 6) and the wording rule (§ 4.3) |
 | `.kiro/issues/2026-10-18-drawn-control-drift-ios-android-web.md` | Lina | `path:.kiro/specs/132-native-components-in-app/requirements.md` | intake: its native items (A3, I1–I3, A1, A2, A4, A6's non-ripple parts) go to D5 and D6 (Spec 129 Req 8.4) |
 | `.kiro/issues/2026-11-07-native-component-repair-from-first-harness-run.md` | Lina (Kenya, Data verify) | `path:.kiro/specs/132-native-components-in-app/completion/claims-pass.md` | intake: D3 to zero, per family |
 | `.kiro/issues/2026-11-06-theme-family-persisted-form-for-132-d5.md` | Kenya, Data | `path:.kiro/specs/132-*/design.md` | intake: decided with runtime switching at D5, in 132's design round |
@@ -122,6 +122,7 @@ E2's grep for `132` / `132-native-components-in-app`, plus the records added by 
 | `.kiro/issues/2026-11-27-native-access-level-ballot-owed.md` (#877, hand-added) | Lina | `path:.kiro/specs/132-*/requirements.md` | intake: the ballot lands before 132's packaging unit |
 | `.kiro/issues/2026-11-27-per-platform-contract-validation-ballot-owed.md` (#877, hand-added) | Lina | `path:.kiro/specs/132-*/requirements.md` | intake: ratified before D6's static half is built |
 | `.kiro/issues/2026-11-27-rendering-field-record.md` (#877, hand-added) | Lina (Leonardo consulted) | `path:.kiro/specs/132-*/requirements.md` | intake: the shape fork is this round's (§ 5.2); the field lands before 132's render lanes |
+| `.kiro/issues/2026-11-27-android-render-probe-workflow-grant.md` (#878, hand-added) | Data | `path:.github/workflows/android-render-probe.yml` | leave: the probe's grant (rule 8); it closes at its fixing PR, with the probe's result (§ 6) |
 
 **Five records fire when 132's `requirements.md` is first committed** (the drawn-control and readiness-tables records on `main`, and #877's three once it merges); **one fires at `design.md`** (theme family); **one at `tasks.md`** (instruments parser); **one at `completion/claims-pass.md`** (component repair); and 131's park re-asks at `completion/first-family-measured-cost.md`. A record whose obligation is met earlier is re-ruled by its owner before its event.
 
@@ -131,7 +132,7 @@ E2's grep for `132` / `132-native-components-in-app`, plus the records added by 
 
 - **Kenya** (`.kiro/specs/129-consumer-generation-completeness/inbound-from-kenya-design-2026-11-05.md` § 5):
   - **The iOS minimum is asked again at this outline, before any native support claim** (**RULED** as a re-ask, Peter's "4 (a)", received 2026-11-05T13:05:54Z; Spec 129 `design.md` § 0). Option (c), raising the minimum to 18, is a live candidate. § 5.1 puts it to Peter.
-  - **The iOS 17 runtime probe**: measure the size and time of an iOS 17 simulator runtime, and whether the current Xcode runs it. Her inbound names a local probe (about one hour) or a one-off CI run on `macos-15`; "both need your go". The brief for this round names the local spike (§ 6).
+  - **The iOS 17 runtime probe**: measure the size and time of an iOS 17 simulator runtime, and whether the current Xcode runs it. Her inbound names a local probe (about one hour) or a one-off CI run on `macos-15`; "both need your go". Her local spike ran on 2026-11-27 without it (§ 6), so the iOS 17 part is still owed (P-10).
   - **The wording rule until something runs on iOS 17**: "built for iOS 17.0, not run on 17"; from D5, what ran, for example "built for iOS 17.0; renders on iOS 26.x; not run on 17 or 18" (Spec 129 `design.md` § 0).
   - Swift 6 language mode for the components, set in the root manifest, belongs to 132's packaging (her inbound § 1, L67).
 - **Data** (`.kiro/specs/129-consumer-generation-completeness/inbound-from-data-design-2026-11-05.md` §§ 3, 5 and 6; ballot `2026-11-05-core-goals-android-minimum` F-1 (iii)):
@@ -156,11 +157,11 @@ Each comes from plan-r2 § 7 or a later ruling record, and the team's recommenda
 | **P-3** | **Plan decision 9**: device reads, who and whether part of done | (a) a named human does one read per component per platform at the first support release, as dated evidence, not a gate; (b) no human read, speech labelled "not device-read". An agent's simulator read is never a device read | semantics tests and audits inside done, speech outside; (a) at the first support claim. Who the human is, is yours | none |
 | **P-4** | **Plan decision 10**: who may exclude a contract or remove a platform from it | keep each one yourself (slow); approve a closed list of reason classes once (the team excludes within it, the checker counts each); leave it to the team (lets D6 be diluted) | the closed list; a web-worded contract gets native wording, not an exclusion | the list's content comes with the contract-validation ballot (#877) |
 | **P-5** | **Plan decision 11**: do adopter-built components meet the same bar | same bar, available (our scaffold and checks hold them to D3–D6 when they run them); same bar, required for anything we serve as conformant (128's lane 3); a lower bar ("builds") | same bar, available; D10 proves the path | none |
-| **P-6** | **The iOS minimum, asked again** ("4 (a)") | keep 17.0, compile-proven, with runtime evidence labelled by the version it ran on; keep 17.0 and pay for an iOS 17 runtime run at releases; raise the minimum to 18 (`macos-15`'s 18.5 simulator gives free evidence near the floor; drops iOS 17 devices) | Kenya's lean in 129: keep 17.0, then re-ask here "with the probe below measured" | **Kenya's iOS 17 runtime probe** (§ 6). The question is not put until it is recorded |
+| **P-6** | **The iOS minimum, asked again** ("4 (a)") | keep 17.0, compile-proven, with runtime evidence labelled by the version it ran on; keep 17.0 and pay for an iOS 17 runtime run at releases; raise the minimum to 18 (`macos-15`'s 18.5 simulator gives free evidence near the floor; drops iOS 17 devices) | Kenya's lean in 129: keep 17.0, then re-ask here "with the probe below measured" | **The iOS 17 runtime part of Kenya's probe** (§ 6), which her spike did not run: it needs P-10. The question is not put until that is recorded, or until Peter says "not now" to P-10 (then it is put on the evidence there is) |
 | **P-7** | **Which release carries the support claim** | the seats' joint position is that 17.0.0 marks it (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-09-peter-rulings-release-16-3-0.md`, the orchestrator's note: "Peter did not rule it"); or a minor, under "7 (a)", which lets pre-claim native changes ship in minors but does not say where the claim itself ships | none ruled | composes with P-2: under "per family", the first claim is the first family's |
 | **P-8** | **A billed larger runner**, only if Data's probe finds no usable KVM on `ubuntu-24.04` (plan decision 6's conditional) | a billed larger runner for the emulator lane; Robolectric only, as a lower, labelled evidence kind; another runner class | the plan: billed only if the probe shows no KVM | **Data's probe** (§ 6). Not asked unless it fails |
 | **P-9** | **The Android toolchain range numbers** (AGP, Kotlin, Compose) | the numbers D4's bottom and top builds pass | the team proposes them after D4 builds, and you approve them together (Spec 129 `design.md` § 0) | D4's builds; **asked at the tasks round or later, not now**. Listed so it is not lost |
-| **P-10** | **The goes for this round's probes** (§ 6) | Kenya's local iOS 17 runtime download on this Mac (several gigabytes, size UNVERIFIED), or a one-off `macos-15` CI run instead; Data's dispatched job, through an issue-row grant for `.github/**` | Kenya's inbound recommended the CI form; this round's brief names the local spike | none: this is the first sitting's ask |
+| **P-10** | **The goes for this round's probes** (§ 6) | **Android**: merge Data's grant record, #878 (it activates at the merge). **iOS 17 runtime**: a local download on this Mac (`xcodebuild -downloadPlatform`, several gigabytes, size UNVERIFIED; whether Xcode 27.2 runs an iOS 17 runtime at all is UNVERIFIED), or a one-off CI run on an older image (a second issue-row grant), or "not now" | Kenya's 129 inbound recommended the CI form, because it measures the runner a lane would use | none: this is the first sitting's ask |
 
 **Not re-asked here** (already ruled, carried): the two-spec structure ("A yes"); 129's narrowed sentence and this spec's acceptance ("B (a)"); D1–D3 ("C yes"); order (x′); the Android minimum, API 26 ("Re: 5, 26"; Core Goals amended by ballot `2026-11-05-core-goals-android-minimum`); native changes before the claim ship in minors, with deprecated aliases and D9's diff landing before the claim ("7 (a)"); required-check promotion by measured stability (129 `tasks.md` § "Decision 6"); the consumer overlays flip at the support claim, which Peter merges as a cost, not a ruling (plan-r2 § 7's closing list).
 
@@ -178,7 +179,9 @@ Each comes from plan-r2 § 7 or a later ruling record, and the team's recommenda
 | T-8 | **The readiness tables**: generate them from `packageReadiness.generated.ts`, or guard them against it | Lina; Thurgood consulted | requirements round (its record's event) |
 | T-9 | **The access-level and contract-validation ballots**: drafted and put to Peter record-first, in time for the packaging unit and the D6 static half | Lina (Kenya, Data, Thurgood, Stacy as each record names) | before the units that need them (#877's records) |
 | T-10 | **D9's tools**: the Swift API digester and the Kotlin binary-compatibility validator (UNVERIFIED) | Kenya, Data; Leonardo | design round |
-| T-11 | **The "Native status" passage** at this PR's merge (§ 7, item 3) | Kenya, Data; Thurgood derives INSTALL | this PR, or a sibling merged with it |
+| T-11 | **The "Native status" passage** at this PR's merge (§ 7, item 4) | Kenya, Data; Thurgood derives INSTALL | this PR, or a sibling merged with it |
+| T-12 | **Fixed font sizes and Dynamic Type**: `performAccessibilityAudit` flags `.font(.system(size:))`, and the shipped iOS components hold 26 such lines in 14 files with no `relativeTo:`, `@ScaledMetric` or `dynamicTypeSize` (Kenya's spike, finding 4, VERIFIED by grep at `8553499b1`). So D5's blanket audit and its largest-Dynamic-Type variant will flag them. Fix them (scaled type through the tokens), or exclude the audit type with a reason. An exclusion is a P-4 case | Ada (type tokens), Lina (components), Leonardo (product view); Kenya | design round; it sizes D5's iOS repair |
+| T-13 | **How a "hidden from VoiceOver" contract is checked on iOS**: XCUITest finds a `.accessibilityHidden(true)` view that carries an identifier, in either modifier order, on iOS 26.0 (Kenya's spike, finding 1, VERIFIED; it corrects `kenya-plan-r2.md` L13). So plan-r2's D5 detail "absent where `accessibility_decorative` applies" cannot be an `exists` check. Candidates: the audit, an in-app `isAccessibilityElement` read, the fixture-only wrapper, or a labelled device read. Android's semantics tests are the twin question | Kenya, Lina; Data for Android; Stacy reads | design round |
 
 ### 5.3 Scope questions the round should answer before requirements
 
@@ -189,12 +192,20 @@ Each comes from plan-r2 § 7 or a later ruling record, and the team's recommenda
 
 ## 6. Probes owed during this round
 
-Both probes are owed before the iOS minimum (P-6) and the render tools (T-3) can be decided, and before this PR merges, because they are the goal record's obligation (1) ("record the render-probe result … in this charter first, so Spec 132's outline opens on measured render-tool numbers"). Neither is a spec task and neither is a gate on anything else (plan-r2 § 2, "Probes").
+Both probes are owed before the iOS minimum (P-6) and the render tools (T-3) are decided, so before § 5.1 goes to Peter. They are the goal record's obligation (1) ("record the render-probe result … so Spec 132's outline opens on measured render-tool numbers"). The record's re-ruled Trigger on #868 says obligation (1) "is not a condition of the close", so the probes do not hold the record's close; they hold the decision sitting. Neither is a spec task and neither is a gate on anything else (plan-r2 § 2, "Probes").
 
-| Probe | What it measures | Who | How it is authorized | Where the result is recorded |
-|---|---|---|---|---|
-| **Data's Android render probe, in CI** | On `ubuntu-24.04`: whether `/dev/kvm` is usable; how long a system image takes to download and boot; one instrumented smoke test; one Robolectric Compose test | Data | **an issue-row grant for `.github/**`**, which Data files (`.kiro/issues/README.md` rule 8; a tasks row never grants a `.github/**` path); its activation read is Stacy's | the goal record, by run URL and numbers, before this PR merges |
-| **Kenya's local iOS spike** | An XCUITest fixture in a committed `.xcodeproj` with `performAccessibilityAudit`; the element-screenshot ink check; one iOS 17 simulator runtime download (size, time, and whether the current Xcode runs it) | Kenya | Peter's go for the runtime download (P-10). The spike runs in a scratch worktree, never in Peter's main checkout | the goal record, before this PR merges |
+| Probe | What it measures | Who | How it is authorized | State at this draft | Where the result is recorded |
+|---|---|---|---|---|---|
+| **Data's Android render probe, in CI** | On `ubuntu-24.04`: whether `/dev/kvm` is usable; how long a system image takes to download and boot; one instrumented smoke test; one Robolectric Compose test | Data | **an issue-row grant for `.github/**`** (`.kiro/issues/README.md` rule 8; a tasks row never grants a `.github/**` path): `.kiro/issues/2026-11-27-android-render-probe-workflow-grant.md` on #878 at `0ea9eda`, which activates when Peter merges it; its activation read is Stacy's | **not run**; the grant is filed | the grant record's fixing PR (its Trigger is the workflow file), with a pointer in the goal record |
+| **Kenya's local iOS spike** | An XCUITest fixture in a committed `.xcodeproj` with `performAccessibilityAudit`; the element-screenshot ink check; one iOS 17 simulator runtime download (size, time, and whether the current Xcode runs it) | Kenya | none for the local tools; Peter's go for the iOS 17 runtime (P-10) | **ran 2026-11-27, except the iOS 17 runtime** | `.kiro/specs/132-native-components-in-app/evidence/2026-11-27-ios-render-spike/README.md`, on draft PR #879 at `cabf37ada`, with a pointer in the goal record |
+
+**What Kenya's spike found** (her README; VERIFIED by her on this Mac, Xcode 27.2, iOS 26.0 simulator, deployment target 17.0; not on a CI runner; no DesignerPunk component rendered, because they do not yet compile at zero in an adopter's module):
+- **XCUITest works for D5's per-component checks**: elements found by identifier, frames non-zero, tap-then-read works for interaction contracts. 9 tests, 0 failures, about 48 s of test time.
+- **XCUITest finds hidden views.** A `.accessibilityHidden(true)` view with an identifier is found in either modifier order. That contradicts `kenya-plan-r2.md` L13, so an `exists` check cannot prove a view is hidden from VoiceOver (T-13).
+- **The ink check discriminates**: across base and wcag, light and dark, including UIKit-backed `TextField` and `Toggle`, with a `Color.clear` known-bad reading exactly 0. Its threshold and floor are tuned on one fixture, and a light text field reads near the floor, so the lane picks the floor per element class.
+- **`performAccessibilityAudit` caught 3 of 3 planted defects** (hit area, missing description, contrast) and reported 0 on clean screens in both schemes.
+- **A D5 cost**: the audit flags fixed `.system(size:)` fonts, and the shipped iOS components have 26 such lines in 14 files (T-12).
+- **Not run**: the iOS 17 runtime (P-10); CI; VoiceOver speech, the largest Dynamic Type size and reduce motion.
 
 **What the probes cannot settle** (REASONING): a local spike is a report the claims pass cannot re-run; it informs P-6 and T-3, and the CI lanes in 132's units are what count toward done. Xcode's MCP bridge (plan-r2 § 1 instruments table) is a candidate tool for the spike and never an oracle.
 
@@ -202,12 +213,12 @@ Both probes are owed before the iOS minimum (P-6) and the render tools (T-3) can
 
 ## 7. What this PR's merge carries out
 
-**Peter, received 2026-11-27T16:44:48Z** (the orchestrator's receipt time, relayed; recorded in `.kiro/issues/2026-09-26-native-component-distribution.md` § "Peter's answer (2026-11-27)", on PR #868 at `f917c1e`), verbatim: "Spec with (a), and start 132's outline round now". He was answering the record's escalation: (a) is "the merge of Spec 132's **seeded** outline carries out the answer".
+**Peter, received 2026-11-27T16:44:48Z** (the orchestrator's receipt time, relayed; recorded in `.kiro/issues/2026-09-26-native-component-distribution.md` § "Peter's answer (2026-11-27)", on PR #868 at `1e81dfeb8`), verbatim: "Spec with (a), and start 132's outline round now". He was answering the record's escalation: (a) is "the merge of Spec 132's **seeded** outline carries out the answer".
 
 So **this PR is the carrying event** (`.kiro/issues/README.md` rule 11: a spec answer is carried out when the spec's design outline merges and names the record). This file names the record (§ 4.2, row 1) and no longer carries the placeholder's Status string, which the record reads as its close event. **Merge preconditions** (for the orchestrator and the owners; none is this file's to do):
-1. **#868 merges first**, so Peter's answer is on `main` before the act it authorizes.
-2. **The probe results are in the goal record** (§ 6), the record's obligation (1).
-3. **The record's close** is its owners' act (Kenya and Data, rule 5: a dated outcome line, then the archive move), in this PR or a sibling merged with it. Data's Trigger rewrite on #868 (Lina's record, "Still owed") composes with it.
+1. **#868 merges first**, so Peter's answer is on `main` before the act it authorizes. Its owners re-token the record's Trigger to `merge:#880` (this PR), as the Trigger on #868 says they will.
+2. **The probes are recorded before § 5.1 goes to Peter** (§ 6). They do not hold the record's close (its Trigger on #868: obligation (1) "is not a condition of the close").
+3. **The record's close is in this PR.** Once its token is `merge:#880`, this merge fires it, and under rule 11 it lapses at this merge unless an ancestor of the merge commit closes it, which in practice means this PR's own diff. The close is its owners' act (Kenya and Data, rule 5: a dated outcome line, then the archive move), committed on this branch. Kenya's § "iOS obligations filed here under rule 10" asks the close to check that this outline names her three iOS obligations; it does (§ 4.2, row 1).
 4. **The "Native status" passage**: no limitation marker in the guide or INSTALL names the goal record at `8553499b1` (VERIFIED, Thurgood: `git grep -c 'limitation:'` finds none in `governance/DesignerPunk-Integration-Guide.md` or `docs/consumer/INSTALL.md`). So the archive move will **not** force the passage to change, although plan-r2 § 6 item 8 expected it to. The passage names "Spec 132" and stays true at this merge; whether it should point at this spec's directory or the archived record instead is T-11, Kenya's and Data's.
 5. **This PR is draft** until the round folds and Peter answers § 5.1.
 
@@ -223,16 +234,16 @@ Sessions are seat-sessions. **Confidence: low.** It assumes one review round and
 |---|---|---|
 | This draft | Thurgood | 1 |
 | R1 entries, self-written | Kenya 1, Data 1, Lina 1, Ada 0.5–1, Leonardo 0.5–1, Stacy 0.5–1, Sparky 0.25 (S-1 only) | 4.75–6.25 |
-| Data's probe: grant record, workflow, dispatched run, result | Data; Stacy's activation read | 1–1.75 |
-| Kenya's spike: `.xcodeproj` fixture, audit, ink check, runtime download | Kenya | 1–2 |
+| Data's probe: grant record (filed, #878), workflow, dispatched run, result | Data; Stacy's activation read | 1–1.75 |
+| Kenya's spike: `.xcodeproj` fixture, audit, ink check (**spent**, #879); the iOS 17 runtime if P-10 says go | Kenya | 1 spent, plus 0.5–1 |
 | R2 cross-read | the six seats above, Sparky only if S-1 is contested | 1.5–3 |
 | Incorporation, and the decision brief for § 5.1 | Thurgood | 1–2 |
 | The goal record's close and the passage (§ 7) | Kenya, Data | 0.25–0.5 |
-| **Total** | | **about 10–16** |
+| **Total** | | **about 10–16** (about 2 already spent: this draft and Kenya's spike) |
 
 **Peter's sittings: 2–3.**
-1. **The probe goes** (P-10): the iOS 17 runtime download, and the merge of Data's `.github/**` grant record. These can ride the orchestrator's next batch.
-2. **The decision sitting** after R2: P-1 to P-7, and P-8 only if the probe fails. P-6 waits for Kenya's spike. This is the large one: about seven questions, batched.
+1. **The probe goes** (P-10): the merge of Data's grant record (#878), and the iOS 17 runtime (a local download, a second grant, or "not now"). These can ride the orchestrator's next batch.
+2. **The decision sitting** after R2: P-1 to P-7, and P-8 only if Data's probe finds no KVM. P-6 waits for the iOS 17 part of P-10. This is the large one: about seven questions, batched.
 3. **The merges**: #868, then this PR. A merge, not a ruling; it can share sitting 2.
 
 **What would push it up**: a probe that fails (a billed runner question, or a second spike); a seat contesting plan-r2 § 3's module resolution (T-4); S-1 turning into a scope change that goes to Peter.
@@ -242,7 +253,7 @@ Sessions are seat-sessions. **Confidence: low.** It assumes one review round and
 ## 9. Fold-back, and what survives
 
 - **Counter-argument**: this outline is seeded before the probes have run, so its D5 tools and P-6 rest on unmeasured runtimes, which is the gate inversion plan-r2 warned about ("criteria written before the numbers get diluted when the numbers arrive", Stacy).
-- **What it changed**: the probes run inside this round and must be recorded before this PR merges (§ 6); P-6 is not put until Kenya's numbers are in; P-8 is conditional on Data's; D5's tool rows stay labelled UNVERIFIED; no requirement is written before the round folds.
+- **What it changed**: the probes run inside this round and are recorded before § 5.1 goes to Peter (§ 6); Kenya's spike has already changed two things (T-12, T-13); P-6 is not put until Kenya's numbers are in; P-8 is conditional on Data's; D5's tool rows stay labelled UNVERIFIED; no requirement is written before the round folds.
 - **What survives**:
   - Peter is asked about D4–D10 with the linked app unbuilt on both platforms. A D row may need changing after the first family, and that change is his again.
   - The first family is a cheap family to repair, so the measured-cost record may under-state the remaining families' repair cost (§ 2). Naming the bias in the record is the mitigation, not a fix.

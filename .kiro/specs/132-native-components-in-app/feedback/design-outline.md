@@ -28,13 +28,13 @@
 
 **Out of scope for this round**: requirements, design or task text; the colour fork in #870 (Peter's, in that record); row 7's re-answer (#864, Peter's); 131's content.
 
-**Dependencies**: PR #868 (Peter's answer in the goal record) merges before this PR. #870 and #873 are P1 preconditions for adopter component tokens (outline § 4.1), not merge preconditions for this PR.
+**Dependencies**: PR #868 (Peter's answer in the goal record) merges before this PR, and its owners re-token the record to `merge:#880`, so the record's close is in this PR (outline § 7). Kenya's spike evidence is on draft PR #879; Data's probe grant is #878. #870 and #873 are P1 preconditions for adopter component tokens (outline § 4.1), not merge preconditions for this PR.
 
 **Reviewers, and why each** (Spec-Feedback-Protocol § "Stakeholder Identification"):
 
 | Reviewer | Why | Entry scope |
 |---|---|---|
-| **Kenya** | Owns the iOS half: packaging, the D4 iOS app, the iOS render lane. Co-owns the goal record and the theme-family record. Her inbound carries two obligations that live nowhere else: the iOS minimum re-ask (P-6) and the iOS 17 runtime probe (§ 6) | full outline; § 6 probe |
+| **Kenya** | Owns the iOS half: packaging, the D4 iOS app, the iOS render lane. Co-owns the goal record and the theme-family record. Her inbound and her rule-10 section on #868 carry three iOS obligations: the iOS minimum re-ask (P-6), the iOS 17 runtime probe (§ 6) and the wording rule. Her spike (#879) is § 6's iOS evidence | full outline; § 6; T-12, T-13 |
 | **Data** | Owns the Android half: the Gradle module, the D4 Android app, the render lane. Co-owns the goal record and holds its Trigger line. His inbound carries the toolchain range numbers (P-9) and the API-26 floor test in 132's module. Files the `.github/**` grant for his CI probe | full outline; § 6 probe |
 | **Lina** | Owns the component content, the public-API pass, the contract tests (most of the plan's size), the three #877 records and the repair, drawn-control and readiness-tables records. T-1 is hers with Leonardo | full outline |
 | **Ada** | Owns `generate`, which writes our module's manifest, the deprecated aliases, and the two P1 preconditions (#870, #873). Q12, Q13 and the type table are hers and provisional until D4 builds. T-4's token placement | full outline; § 4.1 |
@@ -54,9 +54,11 @@
 - Every deferred decision is an open question with options and no pick. → design-outline.md § 5.1
 - Wrote the `open` outcome line for Peter's 2026-11-27 answer, as the formalizer (RELEASE-FLOW 3a). → design-outline.md, last line
 - Facts committed as unedited stdout. → `evidence/facts-at-8553499b1.md`
-- [@KENYA] Is P-6 framed so your probe's numbers decide between its three options? Is the local spike enough, or should the `macos-15` CI form your inbound recommended run instead (P-10)? → design-outline.md § 5.1, § 6 -- [THURGOOD R1]
-- [@KENYA] [@DATA] Do you accept merge preconditions 2 and 3 in § 7 (probe results in the goal record, and its close in this PR or a sibling)? And T-11: should the "Native status" passage change at this merge, given that no limitation marker names the goal record? → design-outline.md § 7 -- [THURGOOD R1]
-- [@DATA] Is the probe's grant one issue-row grant with one dispatched workflow, and does it need anything from Peter beyond the grant record's merge? → design-outline.md § 6 -- [THURGOOD R1]
+- [@KENYA] Is P-6 framed so the iOS 17 numbers decide between its three options, and is P-10's iOS half (local download, a CI grant, or "not now") the right ask? Is § 6's summary of #879 faithful? → design-outline.md § 5.1, § 6 -- [THURGOOD R1]
+- [@KENYA] [@LINA] T-13: which check proves "hidden from VoiceOver" now that XCUITest finds hidden views? [@DATA] the Android twin? → design-outline.md § 5.2 -- [THURGOOD R1]
+- [@ADA] [@LINA] [@LEONARDO] T-12: fix the 26 fixed `.system(size:)` lines through scaled type, or exclude the Dynamic Type audit with a reason? → design-outline.md § 5.2 -- [THURGOOD R1]
+- [@KENYA] [@DATA] Do you accept merge preconditions 1–3 in § 7 (the `merge:#880` re-token, probes before the decision sitting, and the record's close committed on this branch)? And T-11: should the "Native status" passage change at this merge, given that no limitation marker names the goal record? → design-outline.md § 7 -- [THURGOOD R1]
+- [@DATA] Does #878 need anything from Peter beyond its merge, and is its result recorded in its fixing PR with a pointer in the goal record, as § 6 says? → design-outline.md § 6 -- [THURGOOD R1]
 - [@LINA] [@LEONARDO] T-1: one `rendering:` field, or one plus `platformParts:`? This round closes it. → design-outline.md § 5.2 -- [THURGOOD R1]
 - [@LINA] Is § 2's reading right that the first family is cheap to repair (no pinned entry on Chip-*, two on Icon-Base Android), so its measured cost under-states the repair share? → design-outline.md § 2, § 3 -- [THURGOOD R1]
 - [@ADA] Does § 4.1's interim rule (D10 uses only the families that compile, until #870 lands) hold, and is the harness-consumer fixture the right guard to name? → design-outline.md § 4.1 -- [THURGOOD R1]
