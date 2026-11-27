@@ -90,9 +90,3 @@ Android has no twin of this list: all 34 main component composables are public (
 - The same holds for the harness charter's dated 2026-10-20 evaluation entry (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` L180): its "Core Goals says 'Android: Not yet constrained'" and its provisional host `minSdk = 24` are a ledger, kept inline. The harness pin is now 26 (Spec 129 `design.md` § 0 and § 2).
 
 Signed Data, 2026-11-05.
-
-## Lapse (2026-11-27)
-
-Two more lapses, by two distinct SHAs (the heading of 2026-11-05 names a third, `d7385b4c2`). The first is at `693b39b54` (#791, 2026-11-08), Spec 129's CLOSEOUT claims pass, which adds `completion/claims-pass.md` and so fires this record's `path:` token: no ancestor of it closed or re-ruled this record. The claims pass names the owed act in its table "This file fires": "The switch to `release:next:phase-1` at 129's close (#684)". The second is at `6f507c039`, release 16.3.0's S, at which the record was still open. This is a P2 `(record)` record past its second lapse, so it goes to Peter with three options, spec, drop or fix-now; this walk sends it in its escalation batch (`.kiro/docs/civitas-health-checks/2026-11-27.md` § "Escalations to Peter"). The re-rule is the owners' act (rule 9).
-
-*Signed: Thurgood (the walker, README rules 9 and 11), 2026-11-27.*
