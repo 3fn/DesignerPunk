@@ -7,7 +7,10 @@ plugins {
 
 android {
     namespace = "dpprobe"
-    compileSdk = libs.versions.compile.sdk.get().toInt()
+    // 37, not the harness pin (36): the first probe run (46039771588) failed checkDebugUnitTestAarMetadata, because
+    // Compose 1.12.1 (BOM 2026.09.00) requires compileSdk 37 or later. The compile harness does not see this: it runs
+    // compileDebugKotlin only, never the AAR metadata check a build of an app or test APK runs.
+    compileSdk = 37
     defaultConfig {
         minSdk = libs.versions.min.sdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -14,6 +14,10 @@ serial="emulator-5554"
 adb="$ANDROID_HOME/platform-tools/adb"
 emu="$ANDROID_HOME/emulator/emulator"
 avdm="$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager"
+# One AVD home for avdmanager and the emulator. The first run (46039771588) created the AVD where the emulator did
+# not look ("no file probe26.ini in $HOME/.android/avd").
+export ANDROID_AVD_HOME="$OUT/avd"
+mkdir -p "$ANDROID_AVD_HOME"
 
 if [ ! -d "$ANDROID_HOME/system-images/android-${api}/default/x86_64" ] || [ ! -x "$emu" ]; then
   echo "render-probe: boot-api${api}=SKIP (system image or emulator not installed)" >> "$s"
