@@ -574,7 +574,7 @@ units:
         text: "Use your platform's references. Don't assume patterns from sibling platforms apply to yours."
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#platform-reference-pointers
   "#ios-specific-guidance":
-    canonicalHash: sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
+    canonicalHash: sha256:0fa41e91a8e4ede4faefbbd69826e19f4b4272ca00847606ef3913a22463a6d7
     items:
       - id: native-1
         kind: member
