@@ -1526,6 +1526,144 @@ Only if they arise: P-11 and P-12. Later: P-9, the lane-maintenance fork, and T-
 
 **Consulted**: Lina, Leonardo, Kenya, Data, Ada and Stacy, through their R2 entries above; Lina and Leonardo again through their T-1 R3 entries.
 
+
+#### [KENYA R4]
+
+**Context.** Peter asked (2026-11-27T18:18:45Z) whether we should just run the simulations on whatever version Apple recommends. The orchestrator's answer leans (A): keep the 17.0 minimum, test on the current iOS, and run old versions only now and then. I read it at `origin/main` `e03d3ae3f`, plus two runner-image readmes and Apple's Xcode support page, all read 2026-11-27. The probe record is #886; the park is noted in it at `1e5620383`. Read-only otherwise.
+
+**Short version**: yes, test every run on the current iOS. (A) is safe for **what the compiler proves** and unsafe for **behaviour**, so its promise must say which is which. The honest middle is (A) plus one cheap addition: a release-time run on the **oldest runtime a free CI image carries**, iOS 18.5 or 18.6 today. That narrows the gap to one major version, with no sign-in. And the minimum must be decided **before the first support claim**, because raising it afterwards is a breaking change for adopters.
+
+**1. Is (A) safe? Partly. Which breakage would the compiler miss?**
+- **What the compiler does catch.** Compiling with `-target …ios17.0` rejects any API newer than 17. VERIFIED in my 129 design inbound: `MeshGradient` is rejected at 17.0 and accepted at 18.0. At 129's input it found zero iOS-18-only uses.
+- **No hidden iOS 17 code paths.** Our iOS component and blend sources contain **no `#available` or `#unavailable` branches**; the only `@available` lines are `iOS 13.0` declarations in the blend helper (VERIFIED, grep). So no branch runs only on 17. The whole risk is the **same code behaving differently** on an older OS.
+- **The classes the compiler cannot see, ranked for our components:**
+  1. **System controls inside our components look and size differently by OS.** Input-Text-Base wraps the system `TextField` and `SecureField`, and Button-VerticalList-Item uses system controls (VERIFIED by grep; Lina and Leonardo verified the same in R1). iOS 26's restyle of system controls changes their look and metrics against 17. That much is plan-r2's own premise; the details are UNVERIFIED. D5's ink floors and frame checks were tuned on iOS 26.0 only (#879).
+  2. **The accessibility tree.** Our iOS components carry 28 uses of `accessibilityElement(children:)`, `accessibilityHidden`, `accessibilityRepresentation` and `accessibilityAction` (VERIFIED, grep count). How SwiftUI turns those into VoiceOver elements is the platform's runtime, not our code.
+     - The T-13 oracle I measured today (#879 § 4: an in-app walk that sees 3 elements against 5) depends on SwiftUI building the tree only while an accessibility client is attached. That is undocumented behaviour, measured on 26.0 only. **This is the highest-risk item**: the check itself could behave differently on 17.
+  3. **Dynamic Type layout.** `@ScaledMetric` and `Font.custom(_:size:relativeTo:)` compile at 17.0 (VERIFIED, typecheck) and have existed since iOS 14 (training data). How text grows at accessibility sizes, and so whether fixed-height layouts clip, depends on the OS. Medium risk.
+  4. **`@AppStorage` with a `String`-raw enum** (T-5): compiles at 17.0 (VERIFIED), and the API is old and stable (iOS 14, training data). Low risk.
+  5. **The Swift runtime.** Newer runtime features are gated by availability, so the compiler catches them. Our generated tokens are static constants; our components are Swift 5. Low risk; any residual difference is UNVERIFIED.
+  6. **OS bugs fixed after 17**: unknown by definition.
+- **So**: (A) is safe for "builds for and links against iOS 17.0". It is not safe for "behaves as described on iOS 17", which is the claim Peter's goal ("will successfully render, in the app as described") cares about. The wording rule already draws that line: "built for iOS 17.0, not run on 17".
+
+**2. What occasional old-version runs cost now.**
+- **Local, Peter's manual download.** He signs in at developer.apple.com and downloads the iOS 17.5 runtime image (7,336,630,623 bytes, from Apple's index); I import it. Today Xcode 27.2's own downloader refuses it, in two attempts, both exit 70 (VERIFIED, #886).
+  - Cost: one sign-in, about 7.3 GB once. The runtime then stays on this Mac.
+  - The run is a local report, not a CI record, so a claims pass cannot re-run it. Whether the import is accepted is UNVERIFIED.
+- **GitHub-hosted runners: no image carries iOS 17** (READ, `actions/runner-images` readmes, 2026-11-27).
+  - `macos-15` (image 20261118.0550.1) installs iOS simulators **18.5, 18.6, 26.0, 26.1, 26.2**, with Xcode 16.x and 26.0.1–26.3.
+  - `macos-26` (image 20261117.0516.1) installs **26.2, 26.4, 26.5**, with Xcode 26.6 as default. Our lane's pin is Xcode 26.6 (`harness/pins.yaml`, VERIFIED).
+  - A CI iOS 17 run would have to download the runtime on the runner. Xcode's downloader refused 17.5 here, and the manual image needs an Apple ID. So CI would need Peter's credentials stored as a secret. I would not recommend that, and its feasibility is UNVERIFIED.
+- **The cheap route that does exist: iOS 18.5 or 18.6 on `macos-15`, free, no sign-in.**
+  - Cost: one more workflow, which needs an issue-row grant, plus macOS minutes at releases.
+  - It also uses a second Xcode, not the lane's 26.6. Whether Xcode 26.3 on that image runs the 18.x runtimes is UNVERIFIED: the image installs both, but I have not run it.
+- **What "occasional" should mean.** Once at the first support claim, and once whenever the minimum is re-decided. Not every release.
+
+**3. Is (B), raising the minimum, defensible? Yes, to 18. Not to 26.**
+- **To 18.** That is the oldest iOS that free CI can run, so the minimum would be one we can test on (item 2). Today's code needs no iOS 18 API: zero availability errors at 17.0 (VERIFIED, 129). So it buys evidence, not features.
+- **To 26.** That aligns the minimum with what we test every run, but it drops two OS generations of devices for no code reason. I would not defend it.
+- **What raising costs adopters**, without guessing numbers:
+  - Our generated `Package.swift` declares `platforms: [.iOS(.v18)]`, and an adopter's target that depends on our module must deploy at or above that (SPM's rule, training data).
+  - So an adopter whose app supports iOS 17 users cannot use our components at all, not even behind `#available`, because the module will not link at their target.
+  - It takes a product decision, which devices to support, out of the adopter's hands.
+- **Either way it is law.** Core Goals says "iOS: 17.0+", so changing it is a ballot, as Android's API 26 was (`2026-11-05-core-goals-android-minimum`).
+- **Timing matters.** Before the first support claim, raising costs no adopter anything. After the claim it is a breaking change under semver ("7 (a)"). So P-6 is a before-the-claim question.
+
+**4. What "the version Apple recommends at the time" means for a pinned toolchain.**
+- **Apple's recommendation in practice** is the current released Xcode and its matching iOS. The support page lists Xcode 27.2 with SDK "iOS 27.2" and simulator support "iOS 17 or later" (READ, 2026-11-27T17:24Z).
+- **Our lane pins Xcode 26.6 on `macos-26`.** Pin moves are deliberate (ballot `2026-11-07-native-lane-ownership`). So "current" for us is **the newest simulator runtime the pinned image carries for the pinned Xcode**: iOS 26.5 today (READ, `macos-26` readme). It moves when we move the pin, never by itself. That is right: a lane whose OS changes under it is not reproducible.
+- **This Mac**: Xcode 27.2 (SDK 27.2) with only an iOS 26.0 runtime installed (VERIFIED). So my spike ran neither the lane's "current" (26.5) nor Apple's (27.x). A local run is a probe, never the record.
+- **Concrete proposal.**
+  - Every PR runs on the pinned image's newest runtime.
+  - Shipped text says "built for iOS <minimum>; tested on iOS <runtime>", with the runtime named from the lane's printed toolchain, not typed by hand.
+  - The pin moves on the cadence the lane-ownership ballot already sets.
+
+**5. My strongest counter to my own answer.**
+- **The counter.** "Occasional iOS 17 runs" now depend on Peter signing in and downloading on one Mac, and a claims pass cannot reproduce the result. In practice they will rarely happen. So (A) drifts into "minimum 17, never run on 17" indefinitely: a promise with a permanent gap.
+  - (B) to 18 closes the gap for free.
+  - Its cost (adopters who must support iOS 17 are shut out) is real but unmeasured, and today we have no adopters to shut out.
+- **What I folded in.** The release-time 18.5/18.6 run narrows the gap to one major version. Deciding before the claim makes a later raise unnecessary.
+- **What survives.** Under (A), behaviour on 17 itself is still never checked by anything reproducible. The two defensible options are:
+  - **(A)**, with the gap stated in shipped text and one manual 17 run at the claim, if Peter does the sign-in;
+  - **(B) to 18**, with no gap and a narrower adopter base.
+
+  Which to pick is Peter's call. I lean (A) only if he is willing to do that one sign-in at the claim. Otherwise I lean (B) to 18, before the claim.
+
+#### [LEONARDO R4]
+
+**Read**: `[KENYA R4]` (`answers/kenya-ios-test-on-current.md`). My repo reads are from earlier today: the guide's iOS line at L179 and the D4 details in plan-r2 § 1. I ran nothing new. Read-only. Consumer voice on P-6; the pick is Peter's.
+
+**1. What a 17 → 18 floor costs an adopter**
+- **Who it shuts out**: an adopter whose app's deployment target is iOS 17.x. That is a team that has chosen to keep supporting users who have not updated past 17.
+- **Probably not new hardware.** As far as I know, iOS 18 runs on every device iOS 17 does (REASONING, from training data; UNVERIFIED, Kenya to confirm). If that holds, the floor shuts out a **support policy**, not a **device**. That is a much smaller cost than "drops iOS 17 devices", which is how plan-r2 put it.
+- I give no share numbers.
+- **How they hit it**: at Xcode's package resolution or build, not at runtime. A target at 17.0 that depends on a package declaring `.iOS(.v18)` fails with a "requires minimum platform version 18.0" error (REASONING on the exact wording). It fails loudly, early, and names the version. That is the good kind of failure.
+- **The trap specific to Model B**: the adopter's root `Package.swift` is generated into their own repo, and our source needs no iOS 18 API (Kenya, VERIFIED). So an adopter, or their agent, can edit `.v18` to `.v17`, and it will compile. They are then outside support without knowing it. The served text has to say the floor is a support boundary, not a compile one (item 3). `generate` should restore the declared value on its next run, so a local edit does not quietly persist (Ada's call).
+
+**2. Is "built for iOS 17.0; tested on iOS 26.5" honest and usable? Honest. Usable only with two additions; without them it is a trap.**
+- **Why it can be a trap**: an adopter, or their agent, reads "17.0" as the supported floor and assumes the components behave there. The gap is widest exactly where the adopter's oldest users are. Our test OS is the newest, and the system controls inside our components restyled at 26 (Kenya's ranking, item 1). An agent that reads "iOS 17.0+" in isolation will not carry the second half of the sentence.
+- **What makes it usable**:
+  - (a) The minimum is never printed without the tested runtime beside it, on every served surface, with the runtime taken from the lane's printed toolchain (Kenya's rule).
+  - (b) The consumer charters (Kenya's and mine, through Thurgood) tell the agent: if the app supports an OS older than the tested runtime, test on that OS yourself. DesignerPunk has not.
+
+  D7's evidence kinds already carry the runtime ("renders (iOS 26.x, target 17.0)"), so served readiness agrees.
+
+**3. What the docs and samples must say under each option**
+
+**Both options**:
+- The minimum lives in one generated value that `Package.swift`, D4's target, the guide's iOS line, INSTALL and the walkthrough all read. Otherwise four places will drift apart.
+- D8's samples compile in the D4 app at that minimum, so a sample that needs a newer API fails D8.
+
+**Under (A)**:
+- The guide's iOS line (today "compiled for an iOS 17.0 deployment target; not run on any device or simulator", L179) becomes "built for iOS 17.0; tested on iOS <lane runtime>; not run on iOS 17". If Peter's manual run happens: "run once on iOS 17.5 at <release>, locally; not reproduced in CI".
+- The walkthrough:
+  - **You'll need**: "an app with an iOS deployment target of 17.0 or later";
+  - **How you know it worked**: name the runtime the checks ran on;
+  - **If not**: "your app supports iOS 17: test your screens there yourself".
+- D4's target stays 17.0.
+
+**Under (B)**:
+- A Core Goals ballot, and the generated `platforms: [.iOS(.v18)]`.
+- The guide: "iOS 18.0+; tested on iOS 18.x and <lane runtime>".
+- The walkthrough's **You'll need**: "an app with an iOS deployment target of 18.0 or later". Its **If not** quotes the resolution error and the fix: raise your target, or don't adopt yet.
+- One sentence: "lowering the minimum in the generated `Package.swift` compiles but is unsupported".
+- D4's target becomes 18.0, and plan-r2's D4 detail changes with it (a D-row edit, inside P-1).
+
+**4. My lean: (B), raise to 18, before the first claim.**
+- **Why**:
+  - It is the only floor we can test reproducibly for free.
+  - It probably shuts out no device (UNVERIFIED, above).
+  - No code needs iOS 18, so it buys evidence, not features.
+  - There is no adopter today to break.
+  - A raise after the claim is a breaking change.
+- **Counter, run against it**: (B)'s rationale, "the floor is the oldest runtime free CI carries", is a treadmill. `macos-14` was retired on 2026-11-02 (plan-r2's instruments table). When `macos-15` goes, the oldest free runtime is 26.x, and the same argument says raise to 26, which Kenya rightly calls indefensible.
+- **Folded in**: the floor should be stated as a **product choice** (18, for reasons that stand on their own), tested on the oldest free runtime available. When the runners stop carrying 18, the gap is stated in the text, as under (A), rather than the floor following GitHub's image schedule.
+- **What survives**: (B) closes the gap for about as long as `macos-15` lives, not for good. After that we will be printing "built for 18; tested on 26.x", which is (A)'s gap one version later. The benefit is temporary, and the cost (teams supporting iOS 17 are shut out) is permanent until we lower it again.
+- **Where I come out**: that is still better than (A) without Peter's sign-in, which Kenya agrees is a permanent gap from day one. If Peter will do the one download at the claim, (A) and (B) are close, and his own adopters' support policy should decide.
+
+*Leonardo, 2026-11-27.*
+
+#### [PETER] P-6
+
+*Recorded by Thurgood, 2026-11-27. Peter's words, from the orchestrator's relay; the receipt time is the orchestrator's `date -u`.*
+
+**Received**: 2026-11-27T18:32:45Z. **Verbatim**: "(B), raise to iOS 18".
+
+**What he was asked**: first his own question (2026-11-27T18:18:45Z), whether the simulations should simply run on whatever version Apple recommends at the time; then the choice between (A), keep the 17.0 minimum, test every run on the lane's current iOS and run old versions only occasionally, which was the orchestrator's lean, and (B), raise the minimum. **What he read**: `[KENYA R4]` and `[LEONARDO R4]`, spliced above byte for byte from the seats' files. Both lean (B) to 18 before the first claim: Kenya because no free CI image carries iOS 17 and the oldest it carries is 18.5/18.6, so 18 is the oldest floor we can test reproducibly; Leonardo because 18 probably shuts out a support policy rather than a device (UNVERIFIED), and a raise after the claim is breaking.
+
+**Confirmed**: received 2026-11-27T18:36:18Z, verbatim: "Yes, (B) still stands, raise to iOS 18". **What he was told first**: Kenya's finding, relayed by the orchestrator (not yet in a committed file; UNVERIFIED by me): no iPhone is dropped, but three iPads that run iPadOS 17 cannot run 18: the iPad (6th generation), the iPad Pro 10.5-inch and the iPad Pro 12.9-inch (2nd generation). That is the floor's device cost, and it corrects `[LEONARDO R4]`'s "probably not new hardware".
+
+**Not a ratification.** Core Goals' "iOS: 17.0+" changes only by ballot. The ballot seat drafts it separately, and it must be ratified before 132's first support claim (design-outline.md § 4.4).
+
+#### [THURGOOD R4]
+
+- Recorded P-6 as RULED, with both of his answers (18:32:45Z and the confirmation at 18:36:18Z), what he was asked, what he read and the device cost he was told. → design-outline.md § 5.1
+- Its effects, folded: D4's iOS target 17.0 → 18.0, put to Peter as a D-row edit inside P-1 (→ § 1, § 2, P-1); a release-time iOS 18.5/18.6 run on `macos-15` joins T-15's lanes and grant (→ § 2, T-15); the shipped wording form "built for iOS 18.0; tested on <runtime from the lane>", which changes shipped text only once the ballot is ratified (→ § 4.3); `generate` restores the declared floor, Ada's (→ the record below); the Core Goals ballot as a precondition of the first claim (→ § 4.4); the iOS 17 probe, #886, moot, Kenya's to re-rule or close (→ § 4.2, § 6).
+- **Rule 10**: recording a ruling that creates obligations files a record in the same PR. Filed: `.kiro/issues/2026-11-27-spec-132-ios-minimum-18-owed-acts.md` (owners Kenya, Ada, Thurgood; Trigger `path:.kiro/specs/132-native-components-in-app/requirements.md`). Each owner may re-class or re-rule their item under rules 9 and 12.
+- **#868 merged** (`e03d3ae3f`), so § 7's precondition 1 is done and the record's `merge:#880` is on `main`. This branch's merge base predates it, so `issues-owned.sh --pr 880` does not yet show the fire.
+- Sitting 2 drops P-6 and now reads: P-1, P-2, P-7, P-3, P-4, P-5, P-13, P-16, and P-14 if included.
+- Kenya and Data are not signalled for the close yet.
+
 ---
 
 ## Requirements Feedback
