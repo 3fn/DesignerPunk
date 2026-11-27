@@ -6,7 +6,7 @@
 **Owner**: Ada (the component-token generator, `src/generators/TokenFileGenerator.ts`, and `defineComponentTokens`)
 **Consulted**:
 - Kenya (iOS): **answered** in `[KENYA R1]`, 2026-11-27, read-only. She reproduced the colour failure independently and found that the class is wider than colour; her results are in the table below.
-- Lina (component tokens; the consumer of the colour fork): **pending**.
+- Lina (component tokens; the consumer of the colour fork): **answered** in `[LINA R1]`, 2026-11-27, read-only, at `0fc55e907`. Her answer to the fork is in Fix shape item 4. Her two side findings are taken up there and in `.kiro/issues/2026-11-27-product-token-swift-emitter-colour-types.md` (#873). *(Line updated 2026-11-27, Ada.)*
 - Data (Android): **answered** in `[DATA R1]` part (B), 2026-11-27, read-only. He emitted the six families on both paths in his own consumer and read the Kotlin. He could not compile it, because the machine has no JDK. His results are in § "Android" below. *(Line updated 2026-11-27, Ada.)*
 **Class**: P1 consumer-blocking · defect *(set 2026-11-27, Ada, rule 12; Kenya leans the same way. Re-read 2026-11-27 after Data's R1: the class is unchanged. The Android findings widen the reach and do not change the reading. A reference-path duration, easing or scale token fails the Kotlin compile of the consumer's tokens module, which is the same "one token fails the module" consequence as on iOS, and so it is now on both native targets.)*
 - **The input is accepted.** `defineComponentTokens` is a public API (`@3fn/core/build`), its `family` is a `string`, and the generator handles colour explicitly with `case 'color'`.
@@ -121,15 +121,32 @@ Kenya's class-level shape, which she hand-tested on the iOS reference path with 
      - Listing the failures in `harness/expected/**` needs Thurgood, with Data and Kenya reviewing (UNVERIFIED as to who owns `harness/expected/**`; item 5 names it only as unchanged).
    - **Surviving counter (Data)**: a fixture tests only the families someone listed. Two checks would catch an unlisted family. One is a refusal at `defineComponentTokens` for any family with no emission rule. The other is a compile of the generated files at `generate`. Neither check exists today.
    - **This closes the instrument gap above.**
-4. **A fork, which is a policy question and not part of the fix. Peter decides, with Ada's lean and Lina as the consumer.** Should static colour component tokens be allowed, or refused?
-   - **Allow**: emit `Color` and say plainly that it is static.
-   - **Refuse**: send every component colour through semantic tokens on the theme, which is DesignerPunk's practice (`governance/Token-Governance.md` § "Component Token Usage" and its Best Practice note).
-   - **What decides it**: a colour component token can reference only a primitive, so it pins one static colour and bypasses `\.dpTheme` (on Android, `LocalDPTheme.current`; Data: it reads the same there), and it will not follow dark or WCAG. On iOS each primitive is emitted as one constant, even though 22 of the 54 colour primitives vary by mode or theme in source (Kenya, counted by script). How the generator chooses that single value is Ada's to confirm (UNVERIFIED).
+4. **A fork, which is a policy question and not part of the fix. Peter decides, with Ada's lean and Lina as the consumer.** Should colour component tokens be allowed, or refused?
+   - **(i) Refuse, staged** (Lina's lean, `[LINA R1]`):
+     - **Now**: `generate` warns, naming every colour component token and the two governed alternatives. The reference path emits a correctly typed `Color`, so no build breaks. The value path is not emitted natively.
+     - **At the next major**: `defineComponentTokens` refuses `family: 'color'`.
+     - **Why staged, by her reading of Req 13.2**: a colour `value` is a non-conforming custom value, so 13.2's letter binds it (warn, never fail). A colour `reference` is not a custom value, but 13.2's stated reason ("failing would break supported web consumers") still reaches it. A web consumer's by-reference colour token builds today. A hard refusal sooner goes to Peter under Q7.
+     - **Refusing removes no capability.** Product tokens that reference a semantic colour are emitted as theme reads that follow mode. Static product colours sit behind Product-Token-Governance's two gates. `SemanticOverrides` handles brand colour.
+   - **(ii) Allow, mode-aware only, as a new spec** (her alternative):
+     - A component colour token would reference a **semantic** colour and emit a theme read, the shape product tokens already use. That needs a new reference kind (`reference` takes primitives only), theme-read emission in `ComponentTokens.*` on three platforms, and governance text.
+     - In her reading it is neither #870's scope nor Spec 132's. It is a Rosetta and Stemma extension, Ada's with Lina consulted (UNVERIFIED whether Peter would rather fold it into 132's component-authoring story).
+     - She does not recommend **static allowed** (Kenya's "emit `Color` and say plainly that it is static") as an end state, only as the interim emission inside (i).
+   - **Surviving counter to (i)** (Lina's): a consumer-built component's colour is the one property that cannot live beside its other tokens. It has to go to `product/tokens/*.yaml`, which is the very "semantic layer was not enough for this component" case component tokens exist for.
+   - **Ada's lean**: (i), for Lina's reasons. Static colour is wrong for a component on every platform (below), and (ii) is a new spec, not a defect fix.
+     - **My counter**: (i)'s warning will send consumer authors to product tokens, and #873 shows that product tokens' own static colour forms are broken on iOS today. So (i) is only as good as #873's fix. #873 should land first, or with it.
+   - **What decides it**: a colour component token can reference only a primitive, so it pins one static colour. It bypasses `\.dpTheme` (on Android, `LocalDPTheme.current`), and it will not follow dark or WCAG.
+     - **This holds on web too**, not on iOS alone (Lina). Every platform's primitive formatter emits a colour primitive's `light.base` value and nothing else:
+       - `src/providers/WebFormatGenerator.ts` L147–L152 and L196–L199;
+       - `src/providers/iOSFormatGenerator.ts` L316–L318;
+       - `src/providers/AndroidFormatGenerator.ts` L305–L306.
+       That answers Kenya's question of how the generator picks the single value (VERIFIED by Ada, reading the source at `3a3bd072b`). For example, a scratch consumer's `DesignTokens.web.css` carries one `--yellow-300` value. So a by-reference colour component token is static on all three platforms. Android is confirmed by reading only; Lina did not check it, and Data reads it the same.
+     - **An open question that is mine, not this defect** (Lina's side finding 2): 22 of the 54 colour primitives carry per-mode values in source (Kenya, counted by script), and no primitive formatter emits them. Mode and theme reach the platforms through the semantic layer's overrides instead. Either that per-mode primitive data is dead, or mode-aware primitives are a missing feature. I have not ruled which. It is why fixing primitive emission is not a cheap route to allowing static component colours. I will file it as its own record if it is not already known.
    - This is the question `059-component-color-token-investigation` asked. Its closure is named for re-reading in #872's record.
 5. **When this record closes**, the clause the CORRECTION in #872 adds to `governance/Token-Governance.md` L160 and L556 and to `governance/Token-Quick-Reference.md` L224 becomes false. The fix PR removes it, as a CORRECTION that cites this record.
 
 ## Related
 
+- `.kiro/issues/2026-11-27-product-token-swift-emitter-colour-types.md` (#873; Ada), the product-token Swift emitter. It is the same class, a second, lossy type map: a hard product colour emits a `UIColor(hex:)` that does not exist, and a ref to a colour primitive is typed `CGFloat`. It is filed separately because its input (product-token YAML, documented and gated) is not reached by this record's fork. Lina's side finding 1.
 - `.kiro/issues/2026-11-08-generate-component-token-warning-spacing-sizing-only.md` (Ada). Lapse-batch row 7 is going back to Peter, because its "drop" rests on the false reason "`defineComponentTokens` cannot declare radius, fontSize or colour". This record neither re-rules nor corrects it. Its owner does that after Peter re-rules.
 - `.kiro/issues/2026-11-27-served-docs-say-component-tokens-take-numeric-families-only.md` (Ada; PR #872), the CORRECTION of the false API statement in the served docs.
 
