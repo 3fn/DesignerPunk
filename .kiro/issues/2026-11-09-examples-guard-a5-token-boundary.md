@@ -37,3 +37,9 @@ Firing commit `6f507c039` (#852, the squash of Release 16.3.0: release 16.3.0's 
 The A-5 erratum is drafted as `.kiro/docs/ballots/2026-11-27-governance-examples-guard-a5-token-boundary-erratum.md` (DRAFT; Thurgood's consult owed before Peter). The Trigger is unchanged. The close event is still the merge of the application PR, which must land before 16.4.0's S; ratification alone does not close this record.
 
 *Signed: Lina, 2026-11-27.*
+
+## Trigger kept on the release token (2026-11-27, Lina, owner, rules 1 and 9)
+
+The Trigger line's "`merge:#<N>` once that PR opens", and the Disposition's "it becomes `merge:#<N>` once the fixing PR opens", are **withdrawn**. This record keeps `release:16.4.0:phase-1` until the application PR closes it in its own diff, with rule 5's outcome line and the archive move. **Reason**: Thurgood, [THURGOOD R1] on the A-5 erratum ballot, "On the two points", (i): a re-token to `merge:#<N>` is a re-rule, and after it nothing fires at S, so the 16.4.0 deadline would survive only in prose. The Trigger line itself is not edited here. A Trigger-line change before S is the very case B2's ballot has still to rule on (whether it is a re-rule), and the token does not change.
+
+*Signed: Lina, 2026-11-27.*
