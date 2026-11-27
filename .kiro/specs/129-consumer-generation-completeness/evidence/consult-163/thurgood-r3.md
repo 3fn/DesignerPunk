@@ -1,0 +1,9 @@
+# Thurgood R3 (final)
+
+**1. Q1 — final: option (b), all five sites in one ballot (converging with Stacy).** A ballot that names an end does not answer her. The only end it can name is the switch PR, and that waits on 131's owners file, which has no date while 131 sits behind 132. Peter chose (ii) to end exactly that open-endedness. The `stub` row does not touch the interim home as it stands: `123-consumer-distribution` has a `tasks.md`, so `owed-set.sh` never classes it `stub`. Under (b) the home is `.kiro/docs/releases/`, which the script does not scan, so no `stub` row appears either.
+
+**2. Q3 — final: no question to Peter. Stacy records the walk, I read the instrument, and Peter is told, not asked.** § 5.4 reads: "**A `FAIL`, an `anomaly`, a meta `spawnDepth` ≠ 1, or a meta `model` unlike the seat's plan sends every act by that seat in that PR into J.** This is all that survives of the step-up layer." J's widening is not the whole consequence. § 8 adds trigger (a): "Thurgood charters an issue … when … one walked mismatch that a recording slip does not explain", and "Peter decides whether the issue becomes a spec." The link7 instrument defect explains the 19. If my per-act read finds no slip behind the 3 rendered-line FAILs, trigger (a) fires, and that charter reaches Peter. Decisive reason: the ballot names no "stands" ruling for acts other than Stacy's, so asking Peter for one creates a decision the law never assigns.
+
+**3. Q4 — final: Lina's separate one-item ballot, "header 72 → 75", with Peter's words in its Status line.** Decisive reason: a false baseline header should not wait on A-5's census and version bump. I execute it in my instrument.
+
+**4. github-grant — final: the contest is closed. It goes in the batch as fix-now, uncontested.** Stacy and I now both read it on B2: the commit that set the token is not a re-rule. Its batch line cites `9d89982f8` (no rule-1 token) and #851 (the commit that set it).
