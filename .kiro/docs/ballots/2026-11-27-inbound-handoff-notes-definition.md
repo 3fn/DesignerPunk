@@ -8,7 +8,7 @@
 
 And his standing rule on reading them, 2026-11-04T13:23:25Z (ballot `2026-11-04-waiting-spec-row` L223), verbatim: "We can use the inbounds as considerations for our approach rather than direction. They might inform our thinking and direction, but they were developed without the context of where we are now."
 
-**Status**: **DRAFT (R5)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure and ratifies nothing. Only Peter's dated words in this Status line ratify it; his words above direct the draft and are not ratified text. *R1 head `875dbf8f1`. R2 (2026-11-27T16:43:53Z) splices the five filing seats' R1 and Stacy's R4 (§ 7) and folds them. R3 records Peter's two answers below and folds F-1 (a). R4 splices the six confirmation reads (§ 7) and folds them (`[THURGOOD R4]`). R5 drafts text (b′) beside (a), on Peter's 2026-11-27T17:35:46Z idea; F-1 reopens for his re-answer between them.*
+**Status**: **DRAFT (R6)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure and ratifies nothing. Only Peter's dated words in this Status line ratify it; his words above direct the draft and are not ratified text. *R1 head `875dbf8f1`. R2 (2026-11-27T16:43:53Z) splices the five filing seats' R1 and Stacy's R4 (§ 7) and folds them. R3 records Peter's two answers below and folds F-1 (a). R4 splices the six confirmation reads (§ 7) and folds them (`[THURGOOD R4]`). R5 drafts text (b′) beside (a), on Peter's 2026-11-27T17:35:46Z idea; F-1 reopens for his re-answer between them. R6 splices `[STACY R5]`, her fidelity read of (b′), and folds her fixes.*
 **Answered so far (not a ratification)**: Peter, received 2026-11-27T17:01:22Z (the orchestrator's clock, at receipt), verbatim: "878 is merged. Re: 1, Ratified. Re: 2, A. Re: 3, Align with Thurgood". "Re: 1" ratified ballot `2026-11-27-rule-11-lapse-window-b2`, not this one. **"Re: 2, A"** answered "(a) or (b)?" on this ballot's F-1 ((a): widen; an inbound may feed any round not yet run, before implementation). **"Re: 3, Align with Thurgood"** answered "Should obligations always need an issue: yes or no?", after this ballot declined Data's reading that a merged spec artifact or ratified ballot counts as the record. Read: **F-1 = (a)**, item 1 is text (a); **an obligation always needs an issue record**, site 2 as drafted ("citing no record" = citing no issue record). **Still Peter's at ratification**: the `**Author**:` line (marked as the drafter's addition) and whether site 2 stays or is struck (it is severable).
 **Peter's idea, and two answers on it (not a ratification)**: received 2026-11-27T17:35:46Z, verbatim: "I think the one change we might consider (with the feedback of the relevant agents) is allowing inbounds at any time during the design outline phase – and only during that phase. Honest thoughts?" All seven seats consulted support it with conditions (`consults-2026-11-27/answers/<seat>-876-outline-only.md`, R3, and the cross-reads, R4). Then, received 2026-11-27T17:40:12Z, verbatim: to "When exactly does the outline phase start? For example, does a placeholder outline count?": **"Once the outline's file is created. A placeholder counts."**; to "Does an inbound need an outline file to exist first? B2's handoff guard already requires one.": **"Yes, because every spec directory should always have at least a design-outline placeholder."** Read: the phase starts at the commit that creates `design-outline.md`; an inbound needs that file at the commit that adds the inbound (a same-commit outline counts, as the seven charter commits of 119, 128 and 130 had it; his stated reason, that every directory always has an outline, is met by them). These shape text (b′). **F-1 is reopened**: Peter re-answers between (a) and (b′).
 **Consulted seats** (Peter's "3 … Yes"): **Leonardo, Lina, Ada, Kenya, Data** (R1 each, § 7), and **Stacy** as reviewer of site 2 (R4, the orchestrator's naming). All six accept site 2; none asks Peter to strike it. Their one common point is F-1.
@@ -87,7 +87,7 @@ Precedents in the spec record: 118, 119, 122 to 125, and 128 to 131 carry inboun
 .kiro/specs/[receiving-spec]/inbound-from-[source].md
 ```
 
-- **When one may be filed**: at the commit on `main` that adds it, the spec's `design-outline.md` exists, and its `requirements.md` does not exist at that commit's first parent (exact paths; `feedback/requirements.md` does not count). Every spec directory has at least a placeholder `design-outline.md` from its first commit. An inbound added outside this window is a Low finding on the PR that adds it and on its `**Author**:` seat (or, where it names none, the PR's `Agent:` seat); its content is read as that round's feedback entry, and it carries out no spec answer (`.kiro/issues/README.md` rule 11). A later context append to an existing inbound is counted, not flagged.
+- **When one may be filed**: at the commit on `main` that adds it, the spec's `design-outline.md` exists, and its `requirements.md` does not exist at that commit's first parent (exact paths; `feedback/requirements.md` does not count). Every spec directory created after <application date> has at least a placeholder `design-outline.md` from its first commit. This filing test differs on purpose from rule 11's carrying test, which reads `design-outline.md` at the inbound's merge base: an inbound added with its spec's first outline may be filed, and cannot carry out a spec answer. An inbound added outside this window is a Low finding on the PR that adds it and on its `**Author**:` seat (or, where it names none, the PR's `Agent:` seat); its content is read as that round's feedback entry, and it carries out no spec answer (`.kiro/issues/README.md` rule 11; after requirements, a spec answer is carried out by the outline route). A later context append to an existing inbound is counted, not flagged.
 - The source may be a spec number (`inbound-from-118.md`), a seat, a date and a slug (`inbound-from-leonardo-2026-11-08-theme-scope.md`), or a named analysis (`inbound-from-wordpress-thesis.md`).
 - The file names its author on an `**Author**:` line, that exact key, with the seat's name (a role in parentheses is optional). A file added before <application date> that names its author on a `**From**:` line is read as having one. Ballot `2026-11-27-rule-11-lapse-window-b2` item 2's carrying case reads `**Author**:` only.
 - **An obligation lives in an issue record, never only in an inbound.** An obligation is an act a named seat owes by a named event. An issue record holds one: a defect, an owed act, a charter or a grant (`.kiro/issues/README.md` rules 10 and 12). A `[@SEAT]` question to the receiving spec's round is context, not an obligation: it is answered in that round.
@@ -100,11 +100,11 @@ Precedents in the spec record: 118, 119, 122 to 125, and 128 to 131 carry inboun
 ````
 
 **What (b′) changes against (a)**:
-- **The edge** is one test read from the tree, not "before the phase or round it informs has run": `design-outline.md` at the adding commit `<A>`, and no `requirements.md` at `<A>^` (the orchestrator's settlement; Stacy and Lina converged on it at R4). VERIFIED by the orchestrator at `origin/main`: 42 inbounds landed with an outline already there and no requirements; 7 landed in the same commit as their spec's outline (119 ×4, 128's react-rn-sitting, 130 ×2), which the test allows; 10 landed after requirements existed, which stay as they are (no retroactivity).
+- **The edge** is one test read from the tree, not "before the phase or round it informs has run": `design-outline.md` at the adding commit `<A>`, and no `requirements.md` at `<A>^` (the orchestrator's settlement; Stacy and Lina converged on it at R4). **The command, named once** (Stacy R5): `A=$(git log --first-parent --diff-filter=A --no-renames --format=%H -- <file> | tail -1)`, then `git cat-file -e $A:<dir>/design-outline.md` succeeds and `git cat-file -e $A^:<dir>/requirements.md` fails, on exact paths. `--no-renames` makes a file renamed into an `inbound-from-*` path count as added. Squash-only merges make `$A^` the state of `main` before the inbound landed (Ada R3). VERIFIED by the orchestrator at `origin/main`: 42 inbounds landed with an outline already there and no requirements; 7 landed in the same commit as their spec's outline (119 ×4, 128's react-rn-sitting, 130 ×2), which the test allows; 10 landed after requirements existed, which stay as they are (no retroactivity).
 - **An out-of-window inbound has a stated consequence**: a Low finding, read as that round's feedback entry, carrying out nothing (Stacy R3–R4, Data).
-- **Round input after the outline phase** goes in the round's feedback doc, with a long body in `evidence/round-input-<seat>-<round>-<date>.md` (the majority: Lina, Kenya, Leonardo, Thurgood, Data; no current file matches the prefix, VERIFIED by Lina, 111 files under `evidence/`). **Stacy's dissent**: `feedback/<phase>-input-<seat>-<date>.md`, because Spec-Feedback-Protocol names the feedback docs "the location for all agent feedback", so the entry and its body would sit side by side. That is its surviving counter; it does not go to Peter as a fork.
+- **Round input after the outline phase** goes in the round's feedback doc, with a long body in `evidence/round-input-<seat>-<round>-<date>.md` (the majority: Lina, Kenya, Leonardo, Thurgood, Data; no current file matches the prefix, VERIFIED by Lina, 111 files under `evidence/`). Stacy and Lina crossed at R4; Stacy withdrew her `feedback/` form at R5 (the two names are equally decidable by path, and the majority's starts clean). **The name is unanimous.**
 - **The owner-decisions bullet and (a)'s "in the informed round's feedback doc otherwise" clause drop**: every inbound now precedes the gate, so the gate's hand-add (ratified B2 site 6) reaches every inbound.
-- **The placeholder rule** ("every spec directory has at least a placeholder `design-outline.md` from its first commit") is Peter's standing rule from 17:40:12Z. It is not true of today's tree: **59 of 183 spec directories have no `design-outline.md`**, the newest of them created 2026-08-01 (VERIFIED at `e03d3ae3f`). So it binds directories created after the application; the 59 are not retroactively affected. F-3 asks whether a check goes with it.
+- **The placeholder rule** ("every spec directory created after <application date> has at least a placeholder `design-outline.md` from its first commit") is Peter's standing rule from 17:40:12Z, dated so it is true where its reader meets it (Stacy R5, fix 1). Undated, it would be false of today's tree: **59 of 183 spec directories have no `design-outline.md`**, the newest of them created 2026-08-01 (VERIFIED at `e03d3ae3f`). So it binds directories created after the application; the 59 are not retroactively affected. F-3 asks whether a check goes with it.
 
 **After, text (b)** (F-1 (b), **not taken**; kept as it was put to Peter):
 
@@ -146,6 +146,7 @@ The two texts differ in the opening paragraph's first and third sentences, in on
 - **Before** (at `8553499b1`): "An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it."
 - **After**: "An obligation stated only in a plan line, a carry list, a walk table, a rulings row, a PR body or an inbound file (`.kiro/specs/*/inbound*.md`), citing no record, is a finding on the PR that wrote it, and, for an inbound file, on the seat its `**Author**:` line names, or, where it names none, the PR's `Agent:` seat *(ballot 2026-11-27-inbound-handoff-notes-definition, site 2)*."
 - **The fallback** (Stacy R2): 14 of the 53 existing inbounds carry no author or source header, and a post-application PR may append an obligation to one. The finding then lands on the PR's `Agent:` seat, so it stays addressable. A `**From**:` line on a file added before the application counts as naming its author (item 1).
+- **After, under (b′)** (Stacy R5, fix 2, byte for byte): "An obligation stated only in a plan line, a carry list, a walk table, a rulings row, a PR body, an inbound file (`.kiro/specs/*/inbound*.md`) or a round-input file (`.kiro/specs/*/evidence/round-input-*.md`), citing no record, is a finding on the PR that wrote it, and, for an inbound or round-input file, on the seat its `**Author**:` line names, or, where it names none, the PR's `Agent:` seat *(ballot 2026-11-27-inbound-handoff-notes-definition, site 2)*." The After above is (a)'s form.
 - **"An inbound file"** is every `inbound*.md` in a spec directory, the wide reading, so `inbound-to-*` files and 131's ledger are covered too (Stacy R4, clarification 1).
 - **The addressee** (Ada R1, Q4): an inbound's PR is often not its author's (`9819f72ee` committed Ada's and Lina's inbounds under the formalizer's `Agent:` line). The finding also names the `**Author**:` seat, so it reaches the seat that wrote the obligation.
 - **"Citing no record"** means citing no issue record (`.kiro/issues/<file>`); an inbound line that says "owed: see `.kiro/issues/<file>`" is not a finding (Lina R1, Q4).
@@ -154,10 +155,10 @@ The two texts differ in the opening paragraph's first and third sentences, in on
 ### Site 4 — under (b′) only: `.kiro/issues/README.md` rule 11, item 2's guard sentence (amends ratified ballot `2026-11-27-rule-11-lapse-window-b2`)
 
 - **Before** (as ratified, B2 item 2's second sentence): "An inbound file carries it out only if `design-outline.md` exists in the spec's directory at that file's merge base and the file names its author on an `**Author**:` line."
-- **After**: "An inbound file carries it out only if `design-outline.md` exists in the spec's directory at that file's merge base, `requirements.md` does not exist there at the first parent of the commit that adds it, and the file names its author on an `**Author**:` line *(amended by ballot 2026-11-27-inbound-handoff-notes-definition, site 4)*."
+- **After** (Stacy R5's sentence; it replaces the sentence **and** B2's inline citation, so the README keeps one citation, and it says which commit the absence is read at): "An inbound file carries it out only if `design-outline.md` exists in the spec's directory at that file's merge base, `requirements.md` does not exist in that directory at the first parent of the commit on `main` that adds it, and the file names its author on an `**Author**:` line *(ballot 2026-11-27-rule-11-lapse-window-b2, item 2; amended by ballot 2026-11-27-inbound-handoff-notes-definition, site 4)*."
 - **Why**: under (b′), an out-of-window inbound is a finding after merge, not a refused merge, so it can still merge. B2's three guards do not check requirements, so such a file would carry out a spec answer whose record never reaches the gate, which runs once. Converged at R4 (Thurgood; Stacy moved to it; Data). The base is the adding commit's first parent, the same as (b′)'s window and for the same race (Stacy R4).
 - **If ratified B2 is not yet applied when this applies** (#882), this site applies after #882 and rebases over it.
-- **Under (b′), site 2's list also gains the round-input file**: "… a PR body, an inbound file (`.kiro/specs/*/inbound*.md`) or a round-input file (`.kiro/specs/*/evidence/round-input-*.md`), citing no record, …", with the same addressee.
+- **Site 2 under (b′)**: written out in site 2 (its "After, under (b′)").
 
 ### Site 3 — `governance/classification-map.md` row `issues-obligation-lapse`
 
@@ -210,7 +211,7 @@ The orchestrator dispatched five identical questions (`consults-2026-11-27/inbou
 
 - **F-1, re-answered: text (a), or text (b′)?**
   - **(a)**, as Peter answered at 17:01:22Z: an inbound may be filed before the phase or round it informs has run, and before implementation; an owner's round decisions go in the feedback doc.
-  - **(b′)**, on his 17:35:46Z idea: inbounds only in the design-outline phase, by one tree test; later round input is a feedback entry, with long bodies in `evidence/round-input-*`; an out-of-window inbound is a Low finding; site 4 adds B2's fourth guard and site 2 gains the round-input file.
+  - **(b′)**, on his 17:35:46Z idea: inbounds only in the design-outline phase, by one tree test. **It reads his 17:40:12Z "first" as "the outline exists at the commit that adds the inbound; the same commit counts"** (Ada's form; the charter commits of 119, 128 and 130 added outline and inbounds together). The stricter reading is Kenya's: the outline at the adding commit's first parent, strictly before the inbound; choosing (b′) with that reading changes `$A:` to `$A^:` in the outline half of the test. Under (b′): later round input is a feedback entry, with long bodies in `evidence/round-input-*`; an out-of-window inbound is a Low finding; site 4 adds B2's fourth guard and site 2 gains the round-input file.
   - **All seven seats lean (b′)**, with the conditions now in its text. The drafter leans (b′): its edge is decided from the tree, where (a)'s is a read of what a note informs; and it removes (a)'s two-places counter.
   - **Surviving counter to (b′)**: it mostly renames a practice. A seat that writes a long design-round note still writes it, now as a round-input file with a feedback entry pointing to it (Stacy R3). It adds a new kind of file and amends B2, ratified today. Within an open outline round, a reviewer's inbound and a reviewer's entry can still both exist (Lina R3).
   - **Surviving counter to (a)**: one round's input lives in two places, and "before the phase or round it informs has run" can be read as "before it starts" or "before it finishes" (Lina R2).
@@ -227,6 +228,8 @@ The orchestrator dispatched five identical questions (`consults-2026-11-27/inbou
   - **(ii) Words plus a check** (class option, not drafted): a spec directory created after the application whose first commit adds no `design-outline.md` is a finding, read by a script over the release delta. Cheap (one path test per new directory), and decidable.
   - **The drafter leans (i) now, with (ii) filed under rule 10 as a class-option record of mine at the application**, so it is built when it is wanted, not in this ballot.
   - **Surviving counter to (i)**: an unenforced rule, which is how 59 directories came to have no outline. **To (ii)**: an instrument for a rule nobody has broken since August.
+
+**A seat fork, not Peter's: widening the gate's grep (ratified B2 site 6) to every `inbound*.md`.** Ada asked for it (R3). Stacy declines it (R5): 125's directory holds two `inbound-to-125-B-*` notes addressed to another spec, so a wide gate grep in 125 would list records meant for 125-B; the gate reads the receiving spec's own `inbound-from-*` notes, and the wide catch is site 2's job, for obligations alone. **The drafter's decision, provisional: keep the gate at `inbound-from-*`**, for Stacy's reason. Ada is asked once (`consults-2026-11-27/ada-876-gate-grep-question.md`); her answer is recorded here, and if she holds her ask, both positions are recorded and the drafter's decision stands.
 
 **Not reopened**: Leonardo's rule-10 inversion is a separate ballot, leaning Spec 131 (Stacy R4, Thurgood R4); #876 under (b′) adds only the round-input pattern to site 2.
 
@@ -733,3 +736,80 @@ One wording nit, not blocking: **"before the phase or round it informs has run"*
 #### [THURGOOD R5]
 
 *2026-11-27T17:42:08Z (`date -u`).* Text (b′) drafted beside (a) on Peter's 17:35:46Z idea, with his 17:40:12Z answers recorded. The seven seats' R3 answers and R4 cross-reads are in `consults-2026-11-27/answers/<seat>-876-outline-only.md` and `<seat>-876-outline-crossread.md` (Thurgood, Stacy, Lina; the others' R3 only). Converged at R4: the tree test (outline at `<A>`, no requirements at `<A>^`); site 4, B2's fourth guard (Stacy moved to it); the out-of-window consequence; the inversion to its own ballot. Point 2's name: the majority's `evidence/round-input-*`, with Stacy's `feedback/` dissent as its counter. I withdraw my R3 claim that seven inbounds came before any outline: they came in the same commit as it. To Peter: F-1 ((a) or (b′)), F-2 (between rounds, under (b′)), F-3 (the placeholder rule's reach), and at ratification the `**Author**:` line and site 2.
+
+#### [STACY R5]
+
+*I read #876 at `c4b6e33e3` (`ballot/inbound-handoff-notes-definition`), the seven `answers/<seat>-876-outline-only.md` files and the three R4 cross-reads, in a detached worktree of my own, on 2026-11-27. I checked ratified B2 at its Status commit `658e71ae9` and at #882's branch head. This is read-only and I committed nothing. VERIFIED means I checked it with the command named.*
+
+**Verdict: (b′) is faithful in substance, with three fixes the application would otherwise trip on and two points to put plainly.**
+- **Fixes**:
+  1. one operative sentence is false about today's tree;
+  2. site 2's (b′) wording exists only as an aside;
+  3. site 4's citation needs to replace B2's existing one rather than add a second beside it.
+- **Points to put plainly**: one reading of Peter's "first", and one condition of Ada's that is not carried. Each is quoted below.
+- **The tree test is decidable**, and site 4's Before is byte-correct.
+
+**1. The seats' conditions and Peter's 17:40:12Z answers**
+- **Carried** (VERIFIED, § 2 (b′) at `c4b6e33e3`):
+  - the boundary at `requirements.md`, not the outline's merge (Leonardo; all seven);
+  - the absence test read at the adding commit's first parent, not the merge base (Kenya, Ada, Data, Stacy);
+  - the out-of-window consequence: a Low finding on the PR and its `**Author**:` seat, with the `Agent:` fallback, read as the round's entry, carrying out nothing, and context appends counted, not flagged (Data, Stacy);
+  - the round-input file with an `**Author**:` line, its entry stating the seat's decisions, asks and named records (Lina, Thurgood, Ada);
+  - text (a)'s "otherwise" clause dropped (Leonardo, Kenya, Ada);
+  - the inversion left out, to its own ballot (Thurgood, Stacy);
+  - Peter's "Once the outline's file is created. A placeholder counts."
+- **Fix 1: one operative sentence is false at its reader.**
+  - "Every spec directory has at least a placeholder `design-outline.md` from its first commit."
+  - The ballot's own note says 59 of 183 directories have none (VERIFIED by Thurgood at `e03d3ae3f`), and F-3 calls the rule forward-only. But the shipped sentence is in the present tense with no date.
+  - **Change**: "Every spec directory created after <application date> has at least a placeholder `design-outline.md` from its first commit."
+- **Fix 2 (Lina's hardest condition): site 2's (b′) sentence must be written out as site 2's After, not as an aside under site 4.**
+  - As drafted, site 2's After carries the `Agent:` fallback but not the round-input file. The round-input pattern appears only in site 4's last bullet, as "… or a round-input file …".
+  - The application would then have to splice two drafts into one sentence. **Change**, a (b′) form of site 2's After, byte for byte:
+    > "An obligation stated only in a plan line, a carry list, a walk table, a rulings row, a PR body, an inbound file (`.kiro/specs/*/inbound*.md`) or a round-input file (`.kiro/specs/*/evidence/round-input-*.md`), citing no record, is a finding on the PR that wrote it, and, for an inbound or round-input file, on the seat its `**Author**:` line names, or, where it names none, the PR's `Agent:` seat *(ballot 2026-11-27-inbound-handoff-notes-definition, site 2)*."
+- **Point to put plainly: Peter's "first".**
+  - He was asked "Does an inbound need an outline file to exist first?" and answered "Yes, because every spec directory should always have at least a design-outline placeholder."
+  - (b′) reads that as allowing an outline added in the same commit (Ada's form: outline at `<A>`).
+  - Kenya's condition is the literal one: outline at `<M>^1`, before the inbound.
+  - The ballot's reading is defensible, because his stated reason is about existence and the same-commit charter shape (128, 130) meets it. But it is a reading of his word "first", so § 6 should say it in one line, with Kenya's stricter test as the alternative, rather than settle it in the header's "Read:".
+- **Ada's condition, not carried: say that the two outline tests differ on purpose.**
+  - Filing reads the outline at `<A>`; B2's carrying guard reads it at the merge base.
+  - Ada asked for one sentence "so nobody later 'harmonizes' them".
+  - **Change**, appended to (b′)'s "When one may be filed" bullet: "This filing test differs on purpose from rule 11's carrying test, which reads `design-outline.md` at the inbound's merge base: an inbound added with its spec's first outline may be filed, and cannot carry out a spec answer."
+- **Ada's other ask, widening site 6's grep to `inbound*.md`: I would not carry it.**
+  - VERIFIED: two `inbound-to-125-B-*` files sit in 125's directory, addressed to another spec. A wide gate grep in 125 would list records meant for 125-B.
+  - (b′) already says notes are "written into the receiving spec's directory" as `inbound-from-*.md`. So the gate stays `inbound-from-*`, and site 2 keeps its wide reach for obligations alone.
+  - **This is a fork between Ada and me, not for Peter**: the gate reads the receiving spec's notes, and the catch-all is site 2's job.
+
+**2. The file name: I withdraw my `feedback/` dissent.**
+- At R4, Lina and I crossed. She moved to `evidence/round-input-*`, after I corrected her `evidence/` premise, and I moved to her `feedback/` form.
+- The two names are equally decidable by path. The majority's name starts clean (no file matches it, VERIFIED by Lina), and Lina now holds it.
+- **Change** in "What (b′) changes against (a)": replace "**Stacy's dissent** … does not go to Peter as a fork" with "Stacy and Lina crossed at R4; Stacy withdrew her `feedback/` form at R5. The name is unanimous."
+
+**3. Is the tree test decidable as written? Yes, with one command to pin.**
+- "The commit on `main` that adds it" is `A=$(git log --first-parent --diff-filter=A --no-renames --format=%H -- <file> | tail -1)`.
+  - Without `--no-renames`, a file renamed into an `inbound-from-*` path shows as `R`, not `A`, and has no adding commit.
+  - The test is then `git cat-file -e $A:<dir>/design-outline.md` succeeds and `git cat-file -e $A^:<dir>/requirements.md` fails, on exact paths.
+  - **Change**: name that command once in the bullet, or in the reading notes, so the claims pass and a script read the same commit.
+- Squash-only merges make `$A^` the state of `main` before the inbound landed (Ada R3).
+
+**4. Is site 4 byte-correct against ratified B2? The Before is. The After needs its citation merged.**
+- **Before**: VERIFIED, `grep -cF` returns 1 for "An inbound file carries it out only if `design-outline.md` exists in the spec's directory at that file's merge base and the file names its author on an `**Author**:` line." in B2 at `658e71ae9` and in #882's applied `.kiro/issues/README.md`.
+- **The citation.** In #882's README the sentence is followed by B2's own inline citation, `*(ballot 2026-11-27-rule-11-lapse-window-b2, item 2)*` (VERIFIED). Site 4's After ends "`**Author**:` line *(amended by ballot 2026-11-27-inbound-handoff-notes-definition, site 4)*.", which would leave two citations, out of order, around the period.
+- **"there"** can be read as "at that file's merge base", which is the opposite of the intended base.
+- **Change**, site 4's After, replacing the sentence and B2's citation:
+  > "An inbound file carries it out only if `design-outline.md` exists in the spec's directory at that file's merge base, `requirements.md` does not exist in that directory at the first parent of the commit on `main` that adds it, and the file names its author on an `**Author**:` line *(ballot 2026-11-27-rule-11-lapse-window-b2, item 2; amended by ballot 2026-11-27-inbound-handoff-notes-definition, site 4)*."
+- **Kenya's Q4 clause** (that the inbound route closes at requirements and the outline route remains) is implied by "carries out no spec answer". One clause would make it explicit, at Thurgood's choice.
+
+**Points for Peter**: none new. The "first" reading should be stated in F-1's (b′) option, with Kenya's stricter test named, so his re-answer covers it.
+
+#### [THURGOOD R6]
+
+*2026-11-27 (`date -u` at R6).* `[STACY R5]` spliced byte for byte. Folded, each as she quoted it:
+1. The placeholder sentence is dated, "created after <application date>".
+2. Site 2's (b′) After is written out in full, with the round-input pattern and the `**Author**:` / `Agent:` addressee.
+3. Site 4's After is her one sentence, which replaces B2's citation rather than adding a second, and names the commit for the absence test.
+4. Ada's sentence that the filing test and the carrying test read the outline at different commits on purpose is in (b′)'s filing bullet. Kenya's clause (after requirements, the outline route carries a spec answer) is added there.
+5. The tree-test command is named once, with `--no-renames`, in the reading notes.
+6. Stacy withdrew her `feedback/` dissent, so the name is unanimous.
+7. F-1's (b′) option states that it reads "first" as the same commit counting, with Kenya's stricter reading as the alternative.
+- **Ada's gate-grep widening** is a seat fork: provisionally declined for Stacy's reason; Ada is asked once.
