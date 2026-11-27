@@ -96,3 +96,24 @@ A failure is a result, recorded the same way. In the same PR, this record gains 
 **What survives:**
 - One run is a sample of one. Boot time on a shared free runner varies, and KVM availability depends on GitHub's runner fleet, which can change without notice, as image 20261122.23's JDK change did on 2026-11-27.
 - The probe shows that a run can work, not that it works steadily. Steadiness is a D5 lane question for 132, read over many runs, the way the compile harness's tiers are promoted on measured stability.
+
+---
+
+## Outcome (rule 5)
+
+**Outcome 2026-11-27** (Data): closed by its fixing PR, #884. The fixing PR's `.github/**` diff is one new file, `.github/workflows/android-render-probe.yml`, with 0 lines deleted against `main`, so no `**Deleted lines**:` block was owed.
+- **Admitted acts only**:
+  - the `workflow_dispatch` and path-filtered `pull_request` triggers;
+  - the KVM udev rule;
+  - the nine steps in order, with steps 6 and 7 run per API level by `harness/android/render-probe/boot-and-test.sh`.
+  - Step 5 also installs the SDK `emulator` package, named in #884's body: the image carries none, and step 6 needs it.
+  - The last commit removes the `pull_request` trigger, so the file stays on `main` as `workflow_dispatch` only, as this record says.
+- **No licence was answered**, and none was asked for.
+- **Runs**:
+  - 46039652149 rejected the file: zero jobs, because `runner.temp` was in a job-level `env`.
+  - 46039771588 measured KVM and the downloads, and failed on two setup faults of mine.
+  - The measured run is https://github.com/3fn/DesignerPunk/actions/runs/46040355947 at `18d74ba29`, `success`.
+  - No infra re-run was needed.
+- **Where the result is**: § "Android render probe result (2026-11-27, Data)" of `.kiro/issues/2026-09-26-native-component-distribution.md`.
+- The grant expires at #884's merge. This record archives in the same PR.
+

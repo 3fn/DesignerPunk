@@ -138,7 +138,7 @@ In the requirements feedback round's Context for Reviewers, write one line per m
 - **re-rule**: its owner names another event.
 - **leave**: no change.
 
-A record the outline cites but the grep misses is added by hand.
+A record that the outline or an `inbound-from-*.md` file in the spec's directory names, but the grep misses, is added by hand: `grep -ohE '[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9.-]+\.md' .kiro/specs/<dir>/design-outline.md .kiro/specs/<dir>/inbound-from-*.md | sort -u`, each hit kept if `.kiro/issues/<hit>` exists at the root. *(amended 2026-11-27 by ballot 2026-11-27-rule-11-lapse-window-b2 site 6; prior text at `3a3bd072b`)*
 
 ---
 
