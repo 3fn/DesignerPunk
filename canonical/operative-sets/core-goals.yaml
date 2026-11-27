@@ -14,7 +14,7 @@ units:
     items: []
     confirmation: canonical/profiles/consumer/confirmations/core-goals.md#core-goals:preamble
   "#core-project-context":
-    canonicalHash: sha256:b7713a75c7bfc484497364b8caf439b82846812d30c39474c44cf2c2aabedf7c
+    canonicalHash: sha256:e5ef0fa0ad159c39602764640e25cbd78648498d5b232a9fcb701940fac19d98
     items:
       - id: principle-1
         kind: obligation
