@@ -117,3 +117,23 @@ Firing commit `6f507c039ed4140eee4578aa6b75d713a5d4ad9d` (`6f507c039`, #852, Rel
 **Still owed, separately** (Kenya and Data, this record's Trigger obligations): (1) the render-probe result recorded here; (3) the ask to Peter for his go on Spec 132's outline round, which is his under the sequential gates. The orchestrator should consult Kenya and Data on the recommendation above before it goes to Peter, since the Trigger line is theirs.
 
 *Signed: Lina, 2026-11-27.*
+
+## Peter's answer (2026-11-27)
+
+**Received**: 2026-11-27T16:44:48Z (the orchestrator's receipt time, relayed to Lina). Peter, verbatim: "Spec with (a), and start 132's outline round now".
+
+**What he was asked** (the orchestrator's two questions, from § "Escalation (2026-11-27 …)" above):
+- **Question 1**: "Spec, drop or fix-now? If spec, (a) or (b)?"
+  - (a): the merge of Spec 132's **seeded** outline carries out the answer, so further lapses come back to Peter until then.
+  - (b): the 2026-11-07 placeholder already carried it out.
+- **Question 2**: "Start 132's outline round now, or after 16.4.0?"
+
+**What was ruled**:
+- **Spec, Spec 132, with (a).** Rule 11's spec answer is carried out when Spec 132's seeded outline merges and names this record, not at the placeholder. Until that merge, each later lapse returns this record to Peter with this answer quoted (rule 11).
+- **Spec 132's outline round starts now.** This also answers this record's Trigger obligation (3), the ask to Peter for his go on the round.
+
+**Still owed, and not edited here**:
+- the Trigger line, which Data rewrites next on this branch, with Kenya co-signing;
+- obligation (1), the render-probe result (Kenya and Data).
+
+*Recorded by Lina, 2026-11-27.*
