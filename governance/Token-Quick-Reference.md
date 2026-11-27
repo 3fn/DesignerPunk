@@ -221,7 +221,7 @@ Color tokens follow the **Nathan Curtis concept-first naming model**. Use this t
 
 ### Component Tokens
 
-Component tokens are keyed `<component>.<property>…`, with no family segment: `avatar.size.md`, `buttonicon.inset.medium`, `progress.node.gap.sm`. They are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth), so there is no `color.{component}…` component-token shape. A component's colors reference the semantic color tokens directly:
+Component tokens are keyed `<component>.<property>…`, with no family segment: `avatar.size.md`, `buttonicon.inset.medium`, `progress.node.gap.sm`. They are declared with `defineComponentTokens`. Its `family` is a string, and the call accepts any family; DesignerPunk's own component tokens use spacing, sizing and borderWidth, and none uses color. A component token in the color, fontWeight, fontFamily, duration, easing or scale family is not supported on iOS today: its generated Swift does not compile or has the wrong type. With no family segment in the key, there is no `color.{component}…` component-token shape. *(corrected 2026-11-27: the call was said to take numeric families only, with no color family; DesignerPunk record `2026-11-27-served-docs-say-component-tokens-take-numeric-families-only`; prior text at `3a3bd072b`)* A component's colors reference the semantic color tokens directly:
 
 | Component | Color tokens | References |
 |-----------|--------------|------------|

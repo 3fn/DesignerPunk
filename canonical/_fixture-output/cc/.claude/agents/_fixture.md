@@ -114,7 +114,7 @@ Awaiting your decision before proceeding."
 ```
 
 **Component Token Pattern**: `<component>.<property>…`, with no family segment (component names are lowercased in the index)
-- Component tokens are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth); there is no color family
+- Component tokens are declared with `defineComponentTokens`. Its `family` is a string, and the call accepts any family; DesignerPunk's own component tokens use spacing, sizing and borderWidth, and none uses color. A component token in the color, fontWeight, fontFamily, duration, easing or scale family is not supported on iOS today: its generated Swift does not compile or has the wrong type *(corrected 2026-11-27: the call was said to take numeric families only, with no color family; DesignerPunk record `2026-11-27-served-docs-say-component-tokens-take-numeric-families-only`; prior text at `3a3bd072b`)*
 - Component tokens should reference primitives or the family's pattern, e.g. `buttonicon.inset.medium` references `space125`
 - Example: `avatar.size.md` references `size500`
 - A component's colors reference semantic tokens directly (Avatar's human background uses `color.identity.human`, its icon `color.contrast.onDark`) and are not component tokens in the index
