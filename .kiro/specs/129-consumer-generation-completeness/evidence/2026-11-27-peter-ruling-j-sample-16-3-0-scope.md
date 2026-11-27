@@ -21,6 +21,8 @@
 
 They live outside the repository, at `/Users/3fn/Documents/Work Projects/Kiro/j-blind-16.3.0/` (see its `RECOVERY.md`). They were first built in the orchestrator's session scratchpad on 2026-11-13. A machine restart between 2026-11-13 and 2026-11-27 cleared it, and they were rebuilt from the session transcripts. P1, P3 and P5–P8 are exact. **P2 and P4 are short of their originals and are rebuilt before Peter reads them.** The agents' blind answers (a fresh Stacy and a fresh Leonardo per packet, run on Peter's 2026-11-13 request) stay sealed until Peter has answered. They are not part of § 5.3's count.
 
+**Pinned in git** (added on Stacy's consult, 2026-11-27): `2026-11-27-j-sample-16-3-0-blind-set-hashes.txt`, beside this record, holds the sha256 of every recovered file, so what Peter and the scorer read can be matched to what existed at recovery without unsealing anything. "Exact" means each rebuilt packet's byte size equals the original's size as the 2026-11-13 directory listing showed it (in the session transcript), plus one final newline. It is not a hash match, because no hash of the originals was taken. P2 and P4's rebuilt versions will be hashed into this file when they are rebuilt.
+
 ## Also owed, not ruled here
 
 The blind fresh-seat re-judgment (§ 5.2) of the 24 flagged acts by seats other than Stacy (see the Correction in `2026-11-12-peter-ruling-857-856-settled.md`).
