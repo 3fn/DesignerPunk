@@ -31,3 +31,9 @@ Firing commit `6f507c039` (#852, the squash of Release 16.3.0: release 16.3.0's 
 **If the erratum is not ratified by 16.4.0's S, this record lapses again and fix-now is gone** (rule 11: a lapsed fix-now returns without that option). The later answer is then spec or drop only.
 
 *Signed: Lina, 2026-11-12.*
+
+## Ballot drafted (2026-11-27, Lina, owner, rule 9)
+
+The A-5 erratum is drafted as `.kiro/docs/ballots/2026-11-27-governance-examples-guard-a5-token-boundary-erratum.md` (DRAFT; Thurgood's consult owed before Peter). The Trigger is unchanged. The close event is still the merge of the application PR, which must land before 16.4.0's S; ratification alone does not close this record.
+
+*Signed: Lina, 2026-11-27.*
