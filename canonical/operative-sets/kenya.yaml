@@ -574,7 +574,7 @@ units:
         text: "Use your platform's references. Don't assume patterns from sibling platforms apply to yours."
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#platform-reference-pointers
   "#ios-specific-guidance":
-    canonicalHash: sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
+    canonicalHash: sha256:0fa41e91a8e4ede4faefbbd69826e19f4b4272ca00847606ef3913a22463a6d7
     items:
       - id: native-1
         kind: member
@@ -601,9 +601,9 @@ units:
         label: "Animation via SwiftUI .animation() and withAnimation()"
         text: "Animation via SwiftUI `.animation()` and `withAnimation()`"
       - id: native-7
-        kind: member
-        label: "iOS 17.0+ minimum (per Core Goals)"
-        text: "iOS 17.0+ minimum (per Core Goals)"
+        kind: obligation
+        label: "iOS minimum version per Core Goals"
+        text: "iOS minimum version per Core Goals"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#ios-specific-guidance
   "#mcp-practice-notes":
     canonicalHash: sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82

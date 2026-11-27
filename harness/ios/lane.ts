@@ -155,7 +155,7 @@ export type Stage = 'T' | 'P' | 'C' | 'T5';
 
 export const STAGE_COMPILE_ID: Readonly<Record<Stage, SwiftCompileId>> = { T: 'ios.T', P: 'ios.P', C: 'ios.C', T5: 'ios.T5' };
 
-/** `arm64-apple-ios17.0-simulator`. */
+/** `arm64-apple-ios18.0-simulator`. */
 export function targetTriple(pins: IosPins): string {
   return `${pins.compile.arch}-apple-ios${pins.deploymentTarget}-simulator`;
 }
