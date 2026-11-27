@@ -295,7 +295,7 @@ units:
       - id: open-records-fired
         kind: member
         label: "FIRED: the event happened"
-        text: "`FIRED@<sha>`: the event happened. A fired record that no ancestor of the firing commit closed or re-ruled has lapsed (README rule 11)."
+        text: "`FIRED@<sha>`: the event happened. A fired record has lapsed unless it was closed, or re-ruled after its previous firing and after the commit that set its token (README rule 11)."
       - id: open-records-lapse
         kind: obligation
         label: "Append the Lapse heading and dispose this session"
