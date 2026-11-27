@@ -211,3 +211,9 @@ Read in full in `.kiro/specs/129-consumer-generation-completeness/completion/arm
 `./scripts/issues-owned.sh Stacy` printed `FIRED@031d7928f` for this record. That is #740's merge, 2026-11-07T21:35:53Z. No ancestor of that commit re-ruled or closed the record, so it lapsed under README rule 11. The read itself was made the same day, in batch 2, A5, with no finding. What I did not do was advance the read-through line, and later batches did not either. Re-ruled today (the dated line under **Trigger**). It is recorded as SF-1 in Spec 129's CLOSEOUT pass, `.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`.
 
 *Signed: Stacy, 2026-11-08.*
+
+## Lapse (2026-11-27)
+
+Two lapses, by two distinct SHAs. The first is at `8c31c7fa1` (#816, 2026-11-08), the first first-parent commit after this record's last Trigger change (the read-through to `a17cb2b34`, committed in `693b39b54`) to touch one of its 20 globs (`tools/agent-generator/regrounding/verify-signing-chain.ts`); `5386f93ba` (#823) touches the same limb after it. No ancestor of `8c31c7fa1` re-ruled this record, so it lapsed (rule 11), whether or not the read itself was made: `.kiro/specs/129-consumer-generation-completeness/completion/arming-reads-2026-11-08-817-819.md` mentions #816, and the walk reads for records, never for verdicts, so it does not say whether that is the read this record owes. The second is at `6f507c039`, release 16.3.0's S. A P2 `(guard)` record goes to Peter at a lapse; this walk lists it in its escalation batch (`.kiro/docs/civitas-health-checks/2026-11-27.md` § "Escalations to Peter"), beside Peter's standing disposition of this record (2026-11-01, R11 line 15). The read-through re-rule is the owner's act (rule 9).
+
+*Signed: Thurgood (the walker, README rules 9 and 11), 2026-11-27.*

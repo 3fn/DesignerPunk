@@ -71,3 +71,9 @@ Complete the OKLCH migration for the shadow family as a **Spec 112 follow-on** (
 - **The channel half** (building the four colours from shadow channel tokens, which creates tokens Peter reviews, and whether shadow hues share the brand hue channels) is the color-track spec's intake: `.kiro/specs/133-color-track/design-outline.md` § 2 (#669), on Peter's "yes" to `[ADA P-2]` (iv), received 2026-11-05T13:05:54Z.
 - **The owed act at this Trigger** (129's claims pass): if the value half shipped, I do not close the record. I re-rule it to `path:.kiro/specs/133-color-track/requirements.md` with a dated reason, so the channel half carries on as one record. If the value half did not ship, the record stays 129's.
 - **Why stay, not move or split now**: moving it today would take Requirement 7.4's carrier away from 129 (dispositions row 8). Splitting it would add a root record for what is one migration in two steps. Staying keeps one record with one owner, whose next event is already git-visible.
+
+## Lapse (2026-11-27)
+
+Two lapses, by two distinct SHAs. The first is at `693b39b54` (#791, 2026-11-08), Spec 129's CLOSEOUT claims pass, which adds `completion/claims-pass.md` and so fires this record's `path:` token: no ancestor of it closed or re-ruled this record. The claims pass names the owed act in its table "This file fires": the re-rule of the surviving channel migration to Spec 133 (design § 8). The second is at `6f507c039`, release 16.3.0's S, at which the record was still open. Class P3, so no escalation is owed; the act is the owner's (close, or re-rule with a dated reason). Found by the monthly walk, `.kiro/docs/civitas-health-checks/2026-11-27.md`.
+
+*Signed: Thurgood (the walker, README rules 9 and 11), 2026-11-27.*
