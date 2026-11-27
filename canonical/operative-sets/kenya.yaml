@@ -601,9 +601,9 @@ units:
         label: "Animation via SwiftUI .animation() and withAnimation()"
         text: "Animation via SwiftUI `.animation()` and `withAnimation()`"
       - id: native-7
-        kind: member
-        label: "iOS 17.0+ minimum (per Core Goals)"
-        text: "iOS 17.0+ minimum (per Core Goals)"
+        kind: obligation
+        label: "iOS minimum version per Core Goals"
+        text: "iOS minimum version per Core Goals"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#ios-specific-guidance
   "#mcp-practice-notes":
     canonicalHash: sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82

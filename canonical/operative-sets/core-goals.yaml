@@ -38,8 +38,8 @@ units:
         text: "Human-AI partnership as foundational value"
       - id: principle-6
         kind: obligation
-        label: "iOS: 17.0+"
-        text: "iOS: 17.0+"
+        label: "iOS: 18.0+"
+        text: "iOS: 18.0+"
       - id: platform-android
         kind: obligation
         label: "Android: API 26 (Android 8.0)+"
