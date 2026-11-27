@@ -29,7 +29,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
-      OUT: ${{ runner.temp }}/render-probe
       PROBE: harness/android/render-probe
     steps:
       # 1.
@@ -39,6 +38,9 @@ jobs:
       # 2.
       - name: Record /dev/kvm (before the udev rule)
         run: |
+          # OUT is set here: the runner context is not available in a job-level env.
+          OUT="$RUNNER_TEMP/render-probe"
+          echo "OUT=$OUT" >> "$GITHUB_ENV"
           mkdir -p "$OUT/logs"
           s="$OUT/summary.txt"
           echo "render-probe: runner-image=${ImageOS:-?} ${ImageVersion:-?}" >> "$s"
