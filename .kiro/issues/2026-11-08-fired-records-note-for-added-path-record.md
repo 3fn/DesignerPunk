@@ -23,3 +23,5 @@ Add a note to the PR mode of `scripts/issues-owned.sh` (my standing scope), with
 - **The walk** that closes item 3 (d)'s cycle counts these notes apart from the listed, mismatch, disputed and unavailable counts.
 
 **Not in this act**: any change to what fires, to the seat mode, or to `compare.ts`.
+
+*Dated line, 2026-11-27 (Thurgood, owner, rule 9), from the monthly walk's first-cycle count (`.kiro/docs/civitas-health-checks/2026-11-27.md` § 6a)*: a second gap of the same PR-mode change, found by replaying `--pr` over the 57 squashes since #803. When a PR re-rules a record to `merge:#<its own number>`, PR mode prints `re-ruled-here` and reads the base token, so the record is not listed. Seat mode prints `FIRED@<squash>`, and README rule 11 says an owner who writes `merge:#<N>` in the adding PR means that merge to be the event. Instance: #855 (`c640e1adf`), `2026-10-15-123-onboarding-trio-recurring.md`, which PR mode prints as `re-ruled-here … merge:#855`. The fixing PR covers both gaps: a `re-ruled-here` line whose new token is `merge:#<N>` with `<N>` the PR's own number is also listed as `fires-here`.
