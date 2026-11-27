@@ -12,3 +12,4 @@ export * from './Section';
 export * from './CrossReference';
 export * from './MetadataValidation';
 export * from './IndexHealth';
+export * from './BuildProvenance';
