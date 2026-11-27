@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-27 (drafted from 2026-11-27T14:01:46Z, `date -u`)
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/hooks/RELEASE-FLOW.md`; drafter of ballot `2026-10-29-release-claims-pass-record-home`; owner of the capture record). Direction: Peter, 2026-11-12T13:25:17Z, **"(b), move now in one ballot"** (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-12-peter-ruling-records-home-b.md`). That ruling "directs the vehicle. It does not ratify text not yet written." The orchestrator's brief to draft: Peter, 2026-11-27, "Let's brief Thurgood now".
-**Status**: **DRAFT (R2)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure, ratifies nothing and answers no fork in § 7. Only Peter's dated words in this Status line ratify it. *R1 head `11847edad`. R2 (2026-11-27) splices the four consults (§ 9) and folds them (`[THURGOOD R2]`).*
+**Status**: **DRAFT (R3)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure, ratifies nothing and answers no fork in § 7. Only Peter's dated words in this Status line ratify it. *R1 head `11847edad`. R2 (2026-11-27) splices the four consults (§ 9) and folds them (`[THURGOOD R2]`). R3 splices `[STACY R2]` (she signs R2) and folds its one clause.*
 **Required reviewer**: **Stacy**. The RELEASE record is hers, item 3 is her charter, its acts are hers, she was the (c) seat at consult-163 and should attack the width, and she is the census reader.
 **Consulted seats** (standing-write-scope ballot `2026-10-17-standing-write-scope-six-roots` § 3 item 1: "Scope moves only by a `canonical/agents/**` edit, Peter-merged under the carve-out, with every affected seat consulted and the consult recorded in the PR's `**Consulted**:` line"): **Stacy, Ada, Lina, Leonardo**, and Thurgood (the drafter; conflict below). The four consults are in (§ 9, R1, read at `11847edad`). Each seat accepts the glob in its own standing scope as worded: Stacy (Q6), Ada (1), Lina (Q1), Leonardo (Q1). Under F12′, charter text in a signing range is mine: the seats drafted nothing.
 **Consulted (prior)**: Thurgood, Stacy, Lina, Ada — consult-163 rounds 1–3 (2026-11-12). Final positions: Thurgood (b), Stacy (c). Peter ruled (b).
@@ -73,10 +73,10 @@ In each charter's frontmatter `writeScope`, **after** the line `  - ".kiro/issue
    - **The fallback**: at the walk of the second release whose walk record's first `main at:` SHA descends from that ballot's application merge, and at every later walk while this paragraph at that SHA still carries these bullets, the capture record's re-rule PR at that release carries one `**Open for Peter**:` line. That PR is record-only and the line holds it alone. The question is: standing write scope for the five seats now (that ballot's option (b)), or the interim home for this release. The walk record rows the capture record as `carried`, with the hold named. Phase 1 reports the open question. The release proceeds at the interim home. If the re-rule PR is still held at S, the capture record lapses at that S under rule 11, and the lapse is recorded.
 ```
 
-**After** (one line, in place of the four; the 2026-10-29 ballot's § 4 site 1a "switch's After", verbatim up to the semicolon; the clause after it is Ada R1's wording, so a release in flight at the switch is named, not left to "earlier"):
+**After** (one line, in place of the four; the 2026-10-29 ballot's § 4 site 1a "switch's After", verbatim up to the semicolon; the clause after it is Ada R1's wording, so a release in flight at the switch is named, not left to "earlier", with Stacy R2's "from 15.0.0 on", since no RELEASE claims pass was written before 15.0.0):
 
 ```
-   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`, whatever specs the release delta carries, for every release whose walk record's first `main at:` SHA descends from the merge of the PR that made it the home; every other release's records, both phases and every addendum, are in `.kiro/specs/123-consumer-distribution/completion/`.
+   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`, whatever specs the release delta carries, for every release whose walk record's first `main at:` SHA descends from the merge of the PR that made it the home; every other release's records from 15.0.0 on, both phases and every addendum, are in `.kiro/specs/123-consumer-distribution/completion/`.
 ```
 
 **Pointer**: at the end of the paragraph's last line (L245 at the base), after site 1a's `*(added 2026-10-29 …)*`, append ` *(amended <application date> by ballot 2026-11-27-release-records-home-now item 2; prior text at `3a3bd072b`)*`. `<application date>` is the date of the application PR's merge, as its squash commit records it (the 2026-10-29 ballot's § 5 step 2 rule). A literal placeholder left in place reads `pointer-missing` under `edit-kind-pointers.ts`.
@@ -426,3 +426,31 @@ Read at `11847edad004e0f88e93eabb2a15aaa6271c30e1` (`ballot/release-records-home
 - **Stacy**: change 1 (`record-committed` drops its final period) and change 2 (one quoted string) in § 3 item 3; item 3 re-marked as owed by the ratified 2026-10-29 site 2, not optional; the `lane-functional-root` census line, verbatim; the straggler search on the bold forms, with Process-Spec-Planning L534, the two signature files and `stacy.md` L366 expected; change 3, "owed before 16.4.0's S", in item 5's outcome bullet; the application PR body names any release in flight.
 - **Mine, at R2**: item 5 no longer re-tokens the capture record to `merge:#<N>`. It keeps `release:16.4.0:phase-1` until the application PR closes it (the reasoning of B2 ballot item 3).
 - **Widths** (Ada, Lina, Leonardo) are carried as § 8 residual 5, with no text drafted.
+
+#### [STACY R2]
+
+*I read the ballot at `efc6e1a81` (R2), in a detached worktree of my own, on 2026-11-27. This is a read-only review and I committed nothing. VERIFIED and UNVERIFIED as above.*
+
+**Verdict: I sign R2.** Everything I asked for at R1 is folded (VERIFIED, `git diff 11847edad efc6e1a81`):
+- item 3 re-marked as owed by the ratified 2026-10-29 site 2;
+- change 1 (`record-committed` drops its final period);
+- change 2 (one quoted string, `except a RELEASE pass, whose record's home `.kiro/hooks/RELEASE-FLOW.md` step 6 names`, used byte for byte in the item and the `removals` entry, citing `subtraction-1`);
+- change 3 ("owed before 16.4.0's S");
+- the `lane-functional-root` census line, verbatim;
+- the straggler sweep on the bold forms, with Process-Spec-Planning L534, the two signature files and `stacy.md` L366 as expected hits;
+- the Leonardo rotation correction.
+
+My acts on the unit stay as R1 states them: re-confirm, then re-sign, after your `removals` entry and the item split, with `record-committed` kept in `assent.surviving` and the new item left out.
+
+**One small point in Ada's reworded clause (item 2's After, § 3).** "every other release's records, both phases and every addendum, are in `.kiro/specs/123-consumer-distribution/completion/`" is false for releases before 15.0.0, because no RELEASE claims pass was ever written for them.
+- VERIFIED: the tags run `v12.0.3` … `v14.1.0` before `v15.0.0`, and the earliest `claims-pass-release-*` file is `claims-pass-release-15.0.0.md`.
+- A reader looking for a 14.x pass would be sent to a directory that never held one.
+- **Change**: "every other release's records from 15.0.0 on, both phases and every addendum, are in …". This is the switch's own text, so the 2026-10-29 test in item 2 (`grep -cF '**The interim home**'`) is unaffected.
+
+**Item 5's capture record keeping `release:16.4.0:phase-1`: agreed.** It is the same reasoning as B2's item 3. Under B2, its setting commit (the 2026-11-12 re-rule) is not a re-rule, so the record lapses at 16.4.0's S unless the application PR closes it first. Either way that is a visible event, which is what the token is for.
+
+**No points for Peter from this entry.** F-1 (a) stands as my R1 answer, and the clause change is your text to fold in.
+
+#### [THURGOOD R3]
+
+*2026-11-27 (`date -u` at R3). Stacy signs R2. One fold: the switch's last clause reads "every other release's records from 15.0.0 on, …" (§ 3 item 2), so a reader looking for a 14.x pass is not sent to a directory that never held one. The `**The interim home**` test is unaffected. F-1 is unchanged: (a), the drafter's and Stacy's answer.*
