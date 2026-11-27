@@ -137,3 +137,19 @@ Firing commit `6f507c039ed4140eee4578aa6b75d713a5d4ad9d` (`6f507c039`, #852, Rel
 - obligation (1), the render-probe result (Kenya and Data).
 
 *Recorded by Lina, 2026-11-27.*
+
+## Reading of the Lapse headings under B2 F-2 (A) (2026-11-27, Lina; pending B2's ratification)
+
+Peter picked B2 F-2 = (A) at 2026-11-27T16:38:05Z ("Let's go A"): a prose-only Trigger-line change that carries a dated reason and authority is a re-rule (ballot `.kiro/docs/ballots/2026-11-27-rule-11-lapse-window-b2.md`, #862, item 1). **B2 is not yet ratified**, so this reading holds from B2's ratification and is pending until then. The headings above are append-only and stay as written; this section says how they read.
+
+- **`d7385b4c2`** (Kenya's, 2026-11-05): a lapse. B2 does not re-decide it.
+- **`4d10202b2`** (16.2.0's S): a lapse. Its window, from `d7385b4c2` to `4d10202b2`, holds no change to this file.
+- **`693b39b54`** (Spec 129's CLOSEOUT): **not a lapse under (A).** `a953ac70d` (#723, 2026-11-07) changed the Trigger line's prose, with the token unchanged, a dated reason and Peter's words as authority. It falls in the window between the setting commit `19c1dea43` and `693b39b54`, so it re-rules the record. The record still **fired** at `693b39b54` under rule 1.
+- **`6f507c039`** (16.3.0's S): a lapse. Its window starts at the previous firing event, `693b39b54`, and holds no change to this file.
+- **Count**: **3 distinct lapses** (`d7385b4c2`, `4d10202b2`, `6f507c039`), not the 4 the Escalation section counts. The record is P2 (record), so the escalation to Peter was owed either way. His 2026-11-27 answer above stands under both counts.
+
+**Correction of my own sentence** in the `693b39b54` heading. It read: "if B2 rules that it does, this heading is wrong and the next one moves with it." The second half is wrong. Under (A), the `693b39b54` heading falls and the `6f507c039` heading **stands**, because the window for `6f507c039` starts at the `693b39b54` firing, after `a953ac70d`. (Thurgood found this in B2 R2 § 5; my `[LINA R2]` agreed.)
+
+**`5df204e2e` (#833) is not a firing.** It re-touched `.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md` after `693b39b54`. Under B2 item 1, a `path:` token fires once, at the first touch after its setting commit, so a later touch is not a firing, and #833 adds no lapse. Kenya's and Data's count of it is defensible on rule 1's current text, and B2 is what removes it.
+
+*Signed: Lina, 2026-11-27.*
