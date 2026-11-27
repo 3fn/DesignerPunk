@@ -8,11 +8,12 @@
 
 And his standing rule on reading them, 2026-11-04T13:23:25Z (ballot `2026-11-04-waiting-spec-row` L223), verbatim: "We can use the inbounds as considerations for our approach rather than direction. They might inform our thinking and direction, but they were developed without the context of where we are now."
 
-**Status**: **DRAFT (R2)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure and ratifies nothing. Only Peter's dated words in this Status line ratify it. Peter ratifies the wording, and picks F-1; his words above direct the draft and are not ratified text. *R1 head `875dbf8f1`. R2 (2026-11-27T16:43:53Z) splices the five filing seats' R1 and Stacy's R4 (§ 7) and folds them (`[THURGOOD R2]`).*
+**Status**: **DRAFT (R3)**, not ratified. No edit site below is applied. A merge of this file while this line reads DRAFT records the measure and ratifies nothing. Only Peter's dated words in this Status line ratify it; his words above direct the draft and are not ratified text. *R1 head `875dbf8f1`. R2 (2026-11-27T16:43:53Z) splices the five filing seats' R1 and Stacy's R4 (§ 7) and folds them. R3 records Peter's two answers below and folds F-1 (a).*
+**Answered so far (not a ratification)**: Peter, received 2026-11-27T17:01:22Z (the orchestrator's clock, at receipt), verbatim: "878 is merged. Re: 1, Ratified. Re: 2, A. Re: 3, Align with Thurgood". "Re: 1" ratified ballot `2026-11-27-rule-11-lapse-window-b2`, not this one. **"Re: 2, A"** answered "(a) or (b)?" on this ballot's F-1 ((a): widen; an inbound may feed any round not yet run, before implementation). **"Re: 3, Align with Thurgood"** answered "Should obligations always need an issue: yes or no?", after this ballot declined Data's reading that a merged spec artifact or ratified ballot counts as the record. Read: **F-1 = (a)**, item 1 is text (a); **an obligation always needs an issue record**, site 2 as drafted ("citing no record" = citing no issue record). **Still Peter's at ratification**: the `**Author**:` line (marked as the drafter's addition) and whether site 2 stays or is struck (it is severable).
 **Consulted seats** (Peter's "3 … Yes"): **Leonardo, Lina, Ada, Kenya, Data** (R1 each, § 7), and **Stacy** as reviewer of site 2 (R4, the orchestrator's naming). All six accept site 2; none asks Peter to strike it. Their one common point is F-1.
 **Class**: LAW. It changes what a filer must do: an obligation written only in an inbound becomes a finding (site 2).
 **Amends**:
-- `governance/Process-Spec-Planning.md` § "Handoff Notes (`inbound-from-*.md`)", L2823–L2835 at `8553499b1`, rewritten in place (item 1; its opening and one bullet depend on F-1).
+- `governance/Process-Spec-Planning.md` § "Handoff Notes (`inbound-from-*.md`)", L2823–L2835 at `8553499b1`, rewritten in place (item 1, text (a), F-1 answered).
 - `.kiro/issues/README.md` rule 10, one list gains "an inbound file" (site 2).
 - `governance/classification-map.md` row `issues-obligation-lapse`: one history line (site 3).
 
@@ -52,7 +53,7 @@ Process-Spec-Planning § "Handoff Notes" (VERIFIED at `8553499b1`) defines an in
 Precedents in the spec record: 118, 119, 122, 123, 124, and 125 all carry inbound handoff notes.
 ````
 
-**After, text (a)** (F-1 (a): a note before the phase or round it informs, and before implementation):
+**After, text (a)** (F-1 (a), **answered: Peter, 2026-11-27T17:01:22Z, "Re: 2, A". This is the text.**):
 
 ````
 #### Handoff Notes (`inbound-from-*.md`)
@@ -73,7 +74,7 @@ Precedents in the spec record: 118, 119, 122, 123, 124, and 125 all carry inboun
 Precedents in the spec record: 118, 119, 122 to 125, and 128 to 131 carry inbound notes. *(amended <application date> by ballot 2026-11-27-inbound-handoff-notes-definition item 1; prior text at `8553499b1`)*
 ````
 
-**After, text (b)** (F-1 (b): a note before formalization; round input goes to the round's feedback doc):
+**After, text (b)** (F-1 (b), **not taken**; kept as it was put to Peter):
 
 ````
 #### Handoff Notes (`inbound-from-*.md`)
@@ -106,7 +107,7 @@ The two texts differ in the opening paragraph's first and third sentences, in on
 - **The source examples** gain the seat-date-slug form most recent inbounds use (Leonardo R1). **The precedents line** is VERIFIED by Ada, Data and Stacy.
 - **The pointer**: `governance/**` owes one.
 
-**Declined, with reason: a merged spec artifact or a ratified ballot does not count as the "record"** (Data R1, Q4, who leans that it should). Lina's § 7.3 is the evidence against: it was held by a merged `design.md` and 132's placeholder outline, and missed for three weeks, because no walk reads a spec artifact as owed and nothing lapses there. Only an issue record has an owner, a Trigger and a lapse. A spec line or ballot line may also carry the obligation; it then points to the record, which is one home with pointers, not a second copy. So Data's two 132 obligations (the Android toolchain range, the API-26 floor test) take one rule-10 record of his, as he offered, with `path:.kiro/specs/132-*/requirements.md`. If Peter prefers Data's reading, it is a one-clause change to site 2 ("citing no record, merged spec artifact or ratified ballot"), and the § 7.3 failure is its surviving counter.
+**Declined, with reason, and confirmed by Peter (2026-11-27T17:01:22Z, "Re: 3, Align with Thurgood"): a merged spec artifact or a ratified ballot does not count as the "record"** (Data R1, Q4, who leans that it should). Lina's § 7.3 is the evidence against: it was held by a merged `design.md` and 132's placeholder outline, and missed for three weeks, because no walk reads a spec artifact as owed and nothing lapses there. Only an issue record has an owner, a Trigger and a lapse. A spec line or ballot line may also carry the obligation; it then points to the record, which is one home with pointers, not a second copy. So Data's two 132 obligations (the Android toolchain range, the API-26 floor test) take one rule-10 record of his, as he offered, with `path:.kiro/specs/132-*/requirements.md`. If Peter prefers Data's reading, it is a one-clause change to site 2 ("citing no record, merged spec artifact or ratified ballot"), and the § 7.3 failure is its surviving counter.
 
 ### Site 2 — `.kiro/issues/README.md` rule 10, the list of places an obligation may not live alone
 
@@ -139,7 +140,7 @@ One history line: "README rule 10's list gains 'an inbound file', with the findi
 
 ## 4. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: item 1 as text (a) (F-1, lean), sites 2 and 3 as written.
+**Recommendation**: item 1 as text (a) (F-1 answered (a)), sites 2 and 3 as written. At ratification, Peter rules the `**Author**:` line and site 2's severability (§ 6).
 
 **Counter-arguments**:
 - **(i) It adds a duty to five seats' filing habits.**
@@ -162,7 +163,14 @@ One history line: "README rule 10's list gains 'an inbound file', with the findi
 
 The orchestrator dispatched five identical questions (`consults-2026-11-27/inbound-definition-<seat>.md`) to Leonardo, Lina, Ada, Kenya and Data, and asked Stacy to review site 2. The answers are in § 7.
 
-## 6. Forks for Peter (none is picked here)
+## 6. Forks for Peter
+
+**Answered**: F-1 = (a) (Peter, 2026-11-27T17:01:22Z, "Re: 2, A"); an obligation always needs an issue record ("Re: 3, Align with Thurgood"). The F-1 text below is kept as it was put.
+
+**Still Peter's, at ratification** (no new fork; each is a ratify-or-strike on drafted text):
+1. **The `**Author**:` line** (item 1's second bullet), marked **[author's addition — Peter rules]**: every new inbound names its author on an `**Author**:` line; old `**From**:` files are read as having one. All six reviewers accept it. Counter if kept: a header a filer can write with any name, which records a claim, not proof. Counter if struck: B2 item 2's carrying case already requires it, so it would bind one case and no other, and git cannot say who filed 49 of 53 inbounds.
+2. **Site 2's severability**: keep it (an obligation written only in a new inbound is a finding on its PR and its `**Author**:` seat), or strike it and keep item 1's sentence as guidance. All six reviewers accept it, none asks to strike, and "Re: 3" (obligations always need an issue) is the rule site 2 enforces. Counter if kept: the obligation test is partly a read, so some findings will be disputed (Kenya's wording rule). Counter if struck: "never only in an inbound" has no consequence, the state Lina's § 7.3 obligation sat in for three weeks.
+
 
 - **F-1: what timing makes a note an inbound?** Peter's own words give two edges: "'sticky notes' for specs that have not yet started" and "notes that surface context before implemenetation". 8 of the 53 `inbound-from-*` files were added after their spec's `requirements.md` (Data R1, VERIFIED): 118's `inbound-from-117`, three of 122's, and 129's four design-round inbounds (Ada, Data, Kenya, Lina).
   - **(a) Widen**: a note before the phase or round it informs, and before implementation. "Considerations, not direction" is limited to Peter's 2026-11-04 reason (the note was developed without the context of where the spec now is). An owner's decisions for a round go in that round's feedback doc as a stamped entry, which may point to the inbound for the reasoning. Text (a) in § 2.
@@ -526,3 +534,12 @@ Other inbounds mention me but are authored by other seats: the 128 identity-sitt
 - **Data**: a merged spec artifact or ratified ballot as the "record", **declined** with Lina's § 7.3 as the reason (§ 2); his two 132 obligations take one record of his. If Peter wants Data's reading, it is one clause.
 - **Leonardo**: the seat-date-slug example, taken; his drift evidence is in § 1 and residual 2.
 - **Stacy**: "an inbound file" = `.kiro/specs/*/inbound*.md`, taken; Retroactivity binds obligations written by any PR after application, taken; the issue-record description no longer says "problems in completed work", taken; the obligation test in the text, taken; the `**Author**:` rule matches B2's grep ("near its head" dropped), taken. Her flag 2 (inbounds to started specs) is F-1.
+
+#### [PETER] F-1 and the record question (2026-11-27; recorded by Thurgood)
+- **His words**, verbatim, received 2026-11-27T17:01:22Z (the orchestrator's `date -u` at receipt; relayed by the orchestrator): **"878 is merged. Re: 1, Ratified. Re: 2, A. Re: 3, Align with Thurgood"**.
+- **What he had been asked**: 1, "Ratify B2: yes or no?" (ballot `2026-11-27-rule-11-lapse-window-b2`, not this one); 2, "(a) or (b)?" on this ballot's F-1 ((a): widen, an inbound may feed any round not yet run, before implementation); 3, "Should obligations always need an issue: yes or no?", after this ballot declined Data's reading.
+- **What it decides here**: item 1 is text (a); site 2's "citing no record" means citing no issue record.
+- **What it does not decide**: ratification of this ballot, the `**Author**:` line, or site 2's severability (§ 6).
+
+#### [THURGOOD R3]
+*2026-11-27 (`date -u` at R3).* Recorded Peter's answers to 2 and 3 as answers, not a ratification. Text (a) is now the text; text (b) is kept, marked not taken. The "Declined" paragraph is marked confirmed. § 6 lists what remains for Peter at ratification: the `**Author**:` line and site 2's severability. Data's two 132 obligations take one rule-10 record of his, as he offered.
