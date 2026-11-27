@@ -161,11 +161,13 @@ Three iOS obligations that no issue record held. Until today they lived only in 
 1. **The iOS minimum, asked again at Spec 132's outline, before any native support claim.** This is Peter's "4 (a)", received 2026-11-05T13:05:54Z.
    - Sources: `.kiro/specs/129-consumer-generation-completeness/inbound-from-kenya-design-2026-11-05.md` § "5. For Peter: decision 4, the iOS minimum" (his answer is recorded there); `.kiro/specs/129-consumer-generation-completeness/design.md` § "0. Peter's rulings in this round"; `.kiro/specs/132-native-components-in-app/design-outline.md` § 3.
    - Done when the seeded outline puts the question to Peter, or Peter answers it.
-2. **The iOS 17 runtime probe.** It needs Peter's go and an issue-row grant for its `.github/workflows/` change (Task Completion Protocol § "Coherent Units", the write-scope bullet), or Peter's go for a local runtime download. Neither has been asked for.
+2. **The iOS 17 runtime probe.** It needs Peter's go and an issue-row grant for its `.github/workflows/` change (Task Completion Protocol § "Coherent Units (the merge granularity)", the write-scope bullet), or Peter's go for a local runtime download. Neither has been asked for.
    - Sources: the same inbound § 5, "The evidence the runtime half needs, and what it costs"; `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-05-native-plan/plan-r2.md` § 2, the "Probes, before 132's outline" row; the 132 placeholder § 3, the iOS row.
    - Done when the probe's result, or Peter's "not now", is recorded with the outline round.
 3. **The "Native status" wording rule.** I judge this one an obligation, not context, because 129 assigned the passage to Kenya and Data (Req 15.5), and 129 has closed while the rule still binds shipped text.
    - Source: `.kiro/specs/129-consumer-generation-completeness/design.md` § "0. Peter's rulings in this round", the paragraph "The wording rule that follows 4 (a)".
    - Standing until something runs on iOS 17, or item 1's answer moves the floor. The seeded outline inherits it.
+
+**Obligation (1), the iOS half: recorded by pointer.** The local iOS render spike ran on 2026-11-27: XCUITest queries, the element-screenshot ink check and `performAccessibilityAudit`, on Xcode 27.2 with the iOS 26.0 simulator. Its result and fixture are `.kiro/specs/132-native-components-in-app/evidence/2026-11-27-ios-render-spike/README.md`, in draft PR #879; the evidence lives there, not here. The iOS 17 part was not run (item 2 above). The Android half, Data's probe, is still owed.
 
 *Signed: Kenya, 2026-11-27.*
