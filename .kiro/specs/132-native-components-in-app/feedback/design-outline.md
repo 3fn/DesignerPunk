@@ -1665,6 +1665,258 @@ Only if they arise: P-11 and P-12. Later: P-9, the lane-maintenance fork, and T-
 - Sitting 2 drops P-6 and now reads: P-1, P-2, P-7, P-3, P-4, P-5, P-13, P-16, and P-14 if included.
 - Kenya and Data are not signalled for the close yet.
 
+#### [ADA R3]
+
+# Ada: the P-13 list (typography scale roles, the 20 calls, new tokens)
+
+Read at `origin/main` `b58c73da7` (components extracted with `git archive` into my scratchpad). Outline read at `origin/spec/132-design-outline` `8bc0f3569`. Nothing created, edited or committed in any repository. VERIFIED = I ran or read it; REASONING = inference; UNVERIFIED = not checked by me.
+
+## In designer terms (read this first)
+
+1. Each of the 24 text styles in our type ramp gets one tag saying **which Apple text-size curve it follows** when a user turns text size up. At the default text size nothing changes: every style stays exactly its current size (VERIFIED, factor 1.00 at "Large").
+2. For body-sized text (13–18pt) the choice of curve barely matters. Apple's curves for small text all grow about 2.8–2.9× at the largest setting, so those 17 styles can be tagged by a rule ("nearest Apple size"), not by taste (VERIFIED, measured below).
+3. **Headings are the taste call.** Apple's curves shrink the gap between headings and body as text grows: at the largest setting, Apple's largest title is only 7pt above body. With the tags I propose, our seven heading levels end up between 52 and 72pt there, and **two adjacent pairs swap places by 2pt** (h4 is smaller than h5; h2 is smaller than h3). Keeping strict order costs a lot: the display style would reach about 99pt. Peter and Leonardo choose between these, using one real screen at the largest setting.
+4. **One correction to the outline.** The tag cannot be the style's job ("body", "label", "title" with one curve each). I measured that version and found 8 places where a heading drops below body text. The tag has to be a **size band**.
+5. **20 places in the iOS components use a raw size instead of a ramp style.** 18 of them have a ramp style already: the component's own spec or its web version names it. One is an icon in preview code and needs no text style.
+6. **Only one place has no ramp style**: Nav-SegmentedChoice's labels, which are bold at 18 and 16pt. Our ramp has no bold label style. So the number of new ramp styles is **0 or 2**, depending on a choice put to Peter (§ 3).
+7. Moving 6 iOS helper, error and "Required" texts onto the ramp makes them **lighter** (regular or medium becomes the caption style's light weight). That matches web. Lina and Leonardo should see this before it lands.
+
+## 1. The mapping table: token → scale role → `Font.TextStyle`
+
+**Measured Apple curves** (VERIFIED: `UIFontMetrics(forTextStyle:).scaledValue(for: 100, compatibleWith:)` on the iOS 26.0 simulator (iPhone 16e), with a probe built for an iOS 17.0 target. Factor ×100 by content size):
+
+| Style | L | xxxL | AX1 | AX3 | AX5 |
+|---|---|---|---|---|---|
+| largeTitle (34) | 100 | 117 | 127 | 149 | 171 |
+| title (28) | 100 | 121 | 135 | 168 | 200 |
+| title2 (22) | 100 | 121 | 146 | 186 | 236 |
+| title3 (20) | 100 | 128 | 152 | 204 | 260 |
+| body / headline (17) | 100 | 132 | 155 | 218 | 282 |
+| callout (16) | 100 | 133 | 152 | 219 | 286 |
+| subheadline (15) | 100 | 130 | 155 | 215 | 290 |
+| footnote (13) | 100 | 133 | 161 | 222 | 289 |
+| caption (12) | 100 | 144 | 169 | 244 | 319 |
+| caption2 (11) | 100 | 169 | 192 | 269 | 369 |
+
+The claim that `@ScaledMetric(relativeTo:)` and `Font.custom(_:size:relativeTo:)` follow these `UIFontMetrics` curves is REASONING from Apple's documentation. Kenya can confirm it in one assertion.
+
+**Proposed roles** (8 neutral bands; the rule is the nearest Apple default size). The scaled pt values are VERIFIED arithmetic on the measured factors:
+
+| Role | → TextStyle | Tokens | pt at L / xxxL / AX3 / AX5 | Pick |
+|---|---|---|---|---|
+| `fine` | `.footnote` | caption, legal, labelXs (13) | 13 / 17 / 29 / 38 | derivable |
+| `compact` | `.subheadline` | bodySm, buttonSm, labelSm, codeSm (14) | 14 / 18 / 30 / 41 | derivable (tie with footnote; curves within 1%) |
+| `body` | `.callout` | bodyMd, buttonMd, input, labelMd, codeMd (16); **labelMdFloat (14)** | 16 / 21 / 35 / 46 | derivable. **labelMdFloat takes labelMd's role, not its size band**, so the float ratio (×0.88) holds exactly at every size (REASONING: same curve gives the same factor) |
+| `bodyLarge` | `.body` | bodyLg, buttonLg, labelLg, codeLg (18) | 18 / 24 / 39 / 51 | derivable |
+| `headingSm` | `.title3` | h6 (20) | 20 / 26 / 41 / 52 | **taste** |
+| `headingMd` | `.title2` | h5 (23) | 23 / 28 / 43 / 54 | **taste** |
+| `headingLg` | `.title` | h4 (26), h3 (29) | 26 / 31 / 44 / 52; 29 / 35 / 49 / 58 | **taste** |
+| `display` | `.largeTitle` | h2 (33), h1 (37), display (42) | 33 / 39 / 49 / 56; 37 / 43 / 55 / 63; 42 / 49 / 62 / 72 | **taste** |
+
+**The heading fork, measured** (VERIFIED, by script over all 24 tokens and five categories):
+- **(H1) This table**: Apple-faithful. Order holds at every category up to AX3. At AX5 there are 2 inversions of about 2pt: h4 52 < h5 54, and h2 56 < h3 58. Weight still separates the levels; h2 is 700 and h3 600.
+- **(H2) Strict order**: all 29 heading mappings with no inversion put display at **99pt** at AX5, and h1 at about 96 (the search over the five largest styles). These are layout-breaking sizes.
+- **(H3) One curve per job** ("heading" → `.title`, everything else → `.body`): **8 inversions**. h6 and h5 fall below bodyLg from AX1 up. This is why the role must be a band (summary point 4).
+- **Not proposed**: capping heading growth with `dynamicTypeSize(...)`. It is a per-screen product lever, and Apple discourages it (REASONING).
+
+## 2. The 20 calls that read no typography semantic
+
+**Count VERIFIED.** A `perl -0777` scan for `.system(size:` over the 38 non-test `.swift` files under `src/components/core/*/platforms/ios/` found 30 calls in 18 files: 10 semantic, 9 primitive, 9 computed, 2 literal. This matches Lina's split. The web and contract readings below are VERIFIED (read).
+
+| # | file:line | Reads today | Moves onto | Basis |
+|---|---|---|---|---|
+| 1–3 | `ChipBase.ios.swift:237`, `ChipFilter.ios.swift:262`, `ChipInput.ios.swift:231` | `fontSize075`, `.medium` | **`typography.buttonSm`** | `Chip-Base.schema.yaml` L105 and `contracts.yaml` L11 name `buttonSm`, and web uses it. The values are the same, so there is no visual change. This settles Lina's UNVERIFIED "`labelSm` or another". Filter and Input following Base is REASONING |
+| 4–5 | `InputCheckboxBase.ios.swift:320` (helper), `:328` (error) | `fontSize050`, `.regular` | **`typography.caption`** | web `.checkbox__helper` and the error rule use caption. **Weight 400 → 300** |
+| 6 | `InputCheckboxLegal.ios.swift:208` ("Required") | `fontSize050`, `.medium` | **`typography.caption`** (alternative: `labelXs`) | web `.checkbox__required` uses caption. **Weight 500 → 300.** `labelXs` keeps iOS's weight but breaks web parity. Lina's call |
+| 7–8 | `InputRadioBase.ios.swift:286` (helper), `:294` (error) | `fontSize050`, `.regular` | **`typography.caption`** | web `.radio__helper` and the error rule use caption. Weight 400 → 300 |
+| 9 | `InputRadioSet.ios.swift:201` (error) | `fontSize050`, `.regular` | **`typography.caption`** | web uses caption. Weight 400 → 300 |
+| 10–13 | `BadgeCountBase.ios.swift:308`, `BadgeCountNotification.ios.swift:363`, `BadgeLabelBase.ios.swift:307`, `:314` | `size.fontSize` (050/075/100), `.medium` | **`labelXs` / `labelSm` / `labelMd`** by size | each file's own `typographyTokenReference` table (L119–123 or L113–117) |
+| 14 | `InputCheckboxBase.ios.swift:387` | `effectiveLabelFontSize` (075/100/125, or the `labelTypography` override) | **`labelSm` / `labelMd` / `labelLg`** | L93–97 and L144–149 comments, and the web CSS |
+| 15 | `InputRadioBase.ios.swift:346` | `size.labelFontSize` (075/100/125) | **`labelSm` / `labelMd` / `labelLg`** | L88–92, web |
+| 16 | `NavSegmentedChoiceBase.ios.swift:246` | `size.fontSize` 125 / 100, `.bold` | **none fits** | `contracts.yaml` L79–89: `fontSize125/100`, `lineHeight125/100`, **`fontWeight700`** on all three platforms. `labelLg` and `labelMd` match on size and line height but are weight 500 → § 3 |
+| 17–18 | `ProgressIndicatorLabelBase.ios.swift:82`, `:91` | `labelFontSize`, which is `DesignTokens.typographyLabelSm.fontSize` (L30) | **`typography.labelSm`** | already a semantic through a constant. Lina's "computed" class holds it, but it moves trivially. The helper text (L91) also uses labelSm; caption would be a design change, not made here |
+| 19 | `ButtonVerticalListSet.ios.swift:546` (Lina wrote L545; the `.font(.system(size: 14…` is on L546, VERIFIED) | literal `14`, `.regular` | **`typography.bodySm`** | web `--_vls-error-font-size: var(--typography-body-sm-font-size)` (CSS L46–49). The values are the same. This closes #885's literal |
+| 20 | `RoundedPointyTopHexagon.swift:348` | literal `40` on `Image(systemName: "sparkles")` | **none, and none needed** | it is inside `RoundedPointyTopHexagon_Previews: PreviewProvider` (L277): an SF Symbol in preview code, not text. A typography token is the wrong family. Leave it, or use an icon-size token; it is not a P-13 token |
+
+**Result**: 18 move onto existing tokens, 1 is out of scope, and 1 (Nav-SegmentedChoice, one call site with two variants) has no fit.
+
+## 3. Proposed new typography semantic tokens (a proposal only; nothing created)
+
+**One need: Nav-SegmentedChoice's bold labels.** The fork is put to Peter, because an earlier spec's decision bears on it. `.kiro/specs/typography-token-expansion/design.md` "Decision 3: No Emphasis Typography Tokens" rejects `bodyMdBold`-style tokens. It treats emphasis as a platform modifier, not as structure (VERIFIED, read).
+
+- **(T1) Two new function-named semantics**, in the same naming family as `button*` and `input`, not as emphasis variants:
+  - `typography.segmentLg`: fontSize125 · lineHeight125 · fontFamilyBody · fontWeight700. Role `bodyLarge` (`.body`).
+  - `typography.segmentMd`: fontSize100 · lineHeight100 · fontFamilyBody · fontWeight700. Role `body` (`.callout`).
+  - Used by `NavSegmentedChoiceBase` on all three platforms (web and Android read the primitives today, VERIFIED).
+  - **Why no existing token fits**: none at 18 or 16 has weight 700 (`labelLg/Md` and `buttonLg/Md` are 500, VERIFIED). h6 is 20pt and the display family.
+  - The names are taste; `tabLg/Md` is an alternative if a tab bar ever takes text.
+- **(T2) No new token**: the generated modifier takes an optional `fontWeight` token, used as `.dpFont(typographyLabelLg, weight: fontWeight700)`. The role comes from `labelLg` and `labelMd`. The primitive weight is spec-named (`contracts.yaml` L89), so primitive governance allows it. This matches Decision 3's "weight is a modifier".
+  - Cost: every component gets a weight override, which reopens the drift the token closes.
+- **(T3) Design change**: the segments take weight 500 and move onto `labelLg/Md`. That is a visual ruling for Leonardo and Lina, not a token decision.
+
+**A defect found on the way (mine; filed as a record after this round, rule 10):** `src/tokens/semantic/index.ts` L569 recommends `'typography.label'`, a token that does not exist (VERIFIED, read).
+
+## 4. Recommendation for P-13
+
+**(a), with two amendments:**
+1. The role is a **size band** (§ 1's 8 roles), not a job name.
+2. The heading rows and § 3's fork are ruled by Peter with Leonardo, against one product screen at AX5.
+
+The 17 derivable rows and the 18 call moves can be approved now. I lean **T2** for the segmented labels, because it creates no token and keeps Decision 3. T1 is defensible.
+
+- **Counter-argument I ran**: "if 17 of 24 rows follow from a nearest-size rule, the role field is ceremony. The Swift generator could derive the style from `fontSize` and keep Rosetta untouched."
+- **What it changed**:
+  - The table now marks which rows are rule-derived and which are taste.
+  - labelMdFloat follows labelMd's role, not its size, which a size rule would get wrong. That case proves the field earns its place.
+  - I dropped the outline's job-name vocabulary after measuring it (H3).
+- **What survives**:
+  - The field adds a schema concept to all 24 tokens, and to any product typography token (whether product tokens can be typography is UNVERIFIED), to settle 7 taste rows and one ratio.
+  - **H1's two 2pt inversions at AX5 are real and stay.** No mapping both keeps order and keeps headings near Apple's sizes (H2: 99pt).
+  - Scaled sizes also break layouts that compute frames from `fontSize × lineHeight`: Badge min-width, and `NavSegmentedChoiceBase` L367 (VERIFIED, read). The modifier scales the font; those frames need `@ScaledMetric` too. That is component repair in each family's unit.
+  - Six texts get lighter (§ 2).
+- **Leonardo's condition** holds as he wrote it, and the measured AX5 column is what he reviews. At AX5, h6 52 sits 1pt above bodyLg 51: weight, not size, carries that level.
+
+*Signed: Ada, 2026-11-27.*
+
+#### [LINA R4]
+
+# Lina: read of Ada's P-13 list (component side)
+
+Read at `b58c73da7`. `origin/main` is now `35456bdbc`, and `src/components` and `src/tokens` are unchanged between the two (VERIFIED, empty diff). Sources were extracted with `git archive` into my scratchpad. Outline read at `origin/spec/132-design-outline` `8bc0f3569`. Nothing created, edited or committed in any repository. VERIFIED = I ran or read it; REASONING = inference; UNVERIFIED = not checked by me.
+
+**One line:** I accept all 18 moves. The six lighter texts are a parity fix, but it has to land on Android too. On Nav-SegmentedChoice I lean T1, not Ada's T2: Decision 3 covers inline emphasis, and it rejected weight overrides. I agree the frame repair is per family, and I add one present-day Android defect. I can live with (a), with these amendments.
+
+---
+
+## 1. The 18 call-site moves: I accept all 18
+
+- **Chips → `buttonSm` (1–3)**: accept. `Chip-Base.schema.yaml` L105 and `contracts.yaml` L11/L17 name `typography.buttonSm` (VERIFIED). This closes my R2 UNVERIFIED. The values are the same, so nothing changes visually.
+- **Badge (10–13), the checkbox and radio labels (14–15), Progress (17–18)**: accept. These are the size-variant tables I called "computed": each row names a token instead of a bare size. I spot-checked `BadgeCountNotification.ios.swift` L61–63 (labelXs/Sm/Md by size) (VERIFIED).
+- **Button-VerticalList-Set → `bodySm` (19)**: accept. The call is on L546, not L545; Ada is right (VERIFIED). Record (b) in my R2 should cite L546.
+- **Hexagon preview (20)**: accept that it is out of scope. It is an SF Symbol in a preview, not text.
+- **The six helper, error and "Required" texts → `caption` (4–9): a parity fix, not a design change. Three things make it a fix:**
+  1. Every schema and README names `typography.caption` for helper and error text: Checkbox-Base `schema.yaml` L154 and README L223; Checkbox-Legal L74 and L364; Radio-Base L106 and L257; Radio-Set L95 (VERIFIED). Web follows them (VERIFIED).
+  2. **The same family already renders caption at weight 300 on both natives.** Input-Text-Base reads `typographyCaption.fontWeight` on iOS (L363–373) and the caption weight on Android (L403–419) (VERIFIED). So today, one iOS form shows a text field's helper in light weight and a checkbox's helper in regular weight. The move removes an inconsistency inside the family on one screen.
+  3. **Android has the same defect.** It uses `font_size_050` with `FontWeight.Normal` or `Medium`: Checkbox-Base L534–535, Legal L269–270, Radio-Base L478–479, Radio-Set L224 (VERIFIED). If only iOS moves, iOS drifts away from Android. **Condition: the move lands on both natives in the Form-Inputs family's unit.**
+- **"Required" (6): `caption`, not `labelXs`.** Web uses caption (L70–77, VERIFIED). It is error-coloured status text like the error message, and the web already bolds it under `prefers-contrast: more` (L98–100, VERIFIED). This is my call as owner. It rests on the least evidence of the six: the READMEs say "helper text and error messages" and do not name the indicator.
+- **Counter-argument I ran**: "A schema line written web-first should not overrule two native platforms that agree. The native authors may have chosen 400 because a light weight at 13pt in error red reads poorly."
+  - **What it changed**: I looked for a recorded native decision and found none in specs 046 and 047 (VERIFIED, grep). Input-Text-Base's natives already use 300 for the same job, so this argument would indict Input-Text-Base too.
+  - **What survives**: whether light weight at 13pt suits **error** text is a fair legibility question. But it is a question about `typography.caption` for error text across the system: Ada's token, and Leonardo's visual call. Answering it would change caption, or add an error-text token for every input. It would not make an exception for these six sites. Leonardo still sees the change before it lands, as Ada says.
+
+## 2. Nav-SegmentedChoice: I lean T1. T3 stays open as Leonardo's call. T2 is my third choice.
+
+- **Decision 3, checked** (`typography-token-expansion/design.md` L446–480, VERIFIED). It rules on **inline emphasis**, "contextual styling within text, not structural typography" (L457). Its examples are `bodyMdBold` and `<strong>`.
+  - The segment weight is **structural**. Contract `visual_size_variants` (`contracts.yaml` L75–89) fixes 700 on every segment, in both sizes, on all three platforms. It is not a selected-state emphasis (VERIFIED).
+  - So Decision 3 does not bar T1. T1 sits in the same naming family as `buttonSm/Md/Lg` and `input`, the existing function-named structural styles.
+- **Decision 3 cuts against T2, not for it.** It **rejected** option 3, "weight modifier tokens … for inline styling" (L451). The risk it named is "developers might use fontWeight700 directly" (L473, L479). T2's `weight:` argument on the generated modifier is that risk, built into the API for every component. Ada's own cost line says the same thing.
+- **T3 is not just taste.** Decision 4 (L482–) set 500 for interactive text because heavier weights "overwhelm the UI". At 700, Nav-SegmentedChoice is the outlier among interactive controls. Moving it to 500 is a visual ruling for Leonardo and Peter, and I do not absorb it here. If they pick T3, it becomes a change to the `visual_size_variants` contract and lands in that family's unit.
+- **Counter-argument I ran**: "two semantic tokens with one consumer are component tokens in disguise. They are the start of the explosion Decision 3 feared."
+  - **What it changed**: I looked at a component-level typography token instead. Every `.tokens.ts` today declares only the `sizing` or `spacing` family (VERIFIED, grep). A typography component token would be a new capability, and I do not know whether the generator's role mapping would reach it (UNVERIFIED). So I do not offer it as a cheap fourth option.
+  - **What survives**: if no second consumer (a tab bar, for example) ever appears, `segmentLg/Md` are semantics named after one component.
+- **The fork for Peter**: T1 (two tokens) or T3 (no tokens, a visual change). I put T2 last because it reopens drift in every component.
+
+## 3. Frame-scaling repair: agreed, it is per-family component repair. Two amendments.
+
+- **Severity differs by site.**
+  - **Badge** uses minimums: `.frame(minWidth:…, minHeight: size.minWidth)` (`BadgeCountNotification.ios.swift` L368, VERIFIED). Larger text still fits. A single digit loses its circle, but nothing clips (REASONING).
+  - **Nav-SegmentedChoice iOS** uses a **fixed** height: `.frame(height: intrinsicHeight)` (L184), built from `segmentHeight` (L366–371) (VERIFIED). Its `.lineSpacing` (L247) does not scale either. Scaled text clips here (REASONING).
+- **Android has this defect today, before any 132 work.** `NavSegmentedChoiceBase.android.kt` L283 and L289 set `.height(segmentHeightDp)` in fixed `dp`, while the text is in `sp` (VERIFIED). The `sp` text grows with the system font scale and the `dp` height does not, so large font scales probably clip the segments now (REASONING; not run).
+  - **It is a present-day defect, so it gets a record now** instead of waiting for its family unit. I file it as a rule-10 record after this round, with the Android helper weights (§ 1) if they are not already in scope.
+
+## 4. Can I live with Ada's lean? Yes: (a), with her two amendments and three of mine.
+
+- **Hers, accepted**: the roles are size bands. Peter and Leonardo rule the heading rows against one screen at AX5. On the component side, labelMdFloat taking labelMd's role is the property Input-Text-Base's float needs (REASONING).
+- **Mine:**
+  1. **The segmented fork goes to Peter as T1 versus T3**, with T2 named last (§ 2). That is the opposite of Ada's T2 lean. Both readings of Decision 3 are on the table. The text supports mine, and I would ask Ada to check L451 and L473.
+  2. **The six weight moves are approved as parity fixes inside the 18**, on the condition that Android moves in the same Form-Inputs unit (§ 1).
+  3. **The frame repair is priced per family, and the Android fixed height is recorded now** (§ 3).
+- **Surviving counter to the whole package**: approving the 18 now commits component work in five families (Chip, Form-Inputs, Badge, Progress, Button) before the chip slice has priced the scaled-layout repair even once. A later family may find that a token move alone does not hold its layout. The moves are still right, because the token reads are correct at every text size. The cost estimate is what the slice could change, and that is the outline's current posture.
+
+*Signed: Lina, 2026-11-27.*
+
+#### [LEONARDO R5]
+
+# Leonardo: reading Ada's P-13 list (consumer and product view)
+
+Read: `answers-132/ada-p13-list.md`, my `leonardo-r1.md` and `leonardo-r2.md`, the outline's P-13 and T-12 at `origin/spec/132-design-outline`, and `origin/main` `src/tokens/semantic/TypographyTokens.ts` and `Nav-SegmentedChoice-Base/contracts.yaml`. Nothing created, edited or committed in any repository. Labels: VERIFIED (I read or computed it), REASONING (inference), UNVERIFIED (not checked).
+
+## One fact Ada's list does not state
+
+**h4 and h5 are both weight 600** (VERIFIED, `TypographyTokens.ts` L126, L140). Ada's "weight still separates the levels" is true for h2/h3 (700 vs 600) but not for h4/h5. So at AX5 nothing separates h4 (52) from h5 (54). h6 is 700 at 52 (VERIFIED arithmetic: 20 × 2.60). The three smallest headings end up as **one visual level, 52–54pt, with h6 the heaviest**. Peter should see this sentence along with Ada's two inversions.
+
+## 1. The heading trade-off: lean H1 (Apple-faithful, accept the two inversions at AX5)
+
+- **Why, on an adopter's screen**:
+  - At AX5 the display style at 99pt (H2) fits about four or five characters per line on a 390pt-wide phone (REASONING). The page title becomes the screen. That breaks the layout for every user at that setting, on every screen with a title.
+  - The H1 inversions are a 2pt difference at 52–58pt, about 4%. A reader at AX5 cannot rank that by size anyway (REASONING).
+  - **Apple's own ramp flattens the same way**, from Ada's measured factors (VERIFIED arithmetic): at AX5, title2 is 22 × 2.36 = 51.9 and title3 is 20 × 2.60 = 52.0, so they tie. Title is 56 and largeTitle is 58. H1 inherits the platform's intent: at accessibility sizes, size stops carrying heading rank, and weight, position and spacing carry it. That is the True Native reading.
+  - A phone screen rarely shows h4 and h5, or h2 and h3, next to each other (REASONING). The inversion matters only where both levels of a pair are on screen.
+- **A third option, tried and rejected: capping heading growth at the token level** (each heading stops at its AX3 size, where order still holds). From Ada's table (VERIFIED arithmetic), at AX5 a capped h6 is 41 and a capped h5 is 43, against bodyMd 46 and bodyLg 51. **Headings fall below body text**, which is H3's failure, the worse one. Ada's per-screen `dynamicTypeSize` cap is a product lever, not a token setting. **No third size option survives.** The real third lever is weight (h4 and h5 are both 600), and that is a type redesign outside P-13. I name it and do not propose it.
+- **Counter-argument I ran against H1**: "a design system that ships an inverted hierarchy, even at one setting, has shipped a defect, and adopters inherit it on every screen."
+  - It changed one thing: H1 should go to Peter with a usage line in the served typography guidance: "at accessibility sizes, h2/h3 and h4–h6 converge; do not rely on size alone to separate adjacent levels."
+  - **What survives**: the inversion is real and ships. An adopter who puts h4 over h5 sees the subheading larger at AX5, with the same weight. No curve mapping removes this, only a weight change does.
+
+## 2. The review screen, and when Peter reviews it
+
+- **Screen**: **the filter-and-tags product screen** from my R1. It is built only from the first family (Chip-Filter row, applied filters as Chip-Input, Chip-Base categories, Icon-Base inside them, the `FilterBar` adopter component), and specced in the fixture adopter's `product/`. Give it the headings a real version would have: a screen title, a section heading per group ("Categories", "Applied filters"), one body or caption line (the empty state), and the chip labels.
+- **What Peter looks at, on iOS at AX5 and at default, on the smallest current iPhone width**:
+  1. Does each section heading still read above the content under it? Chip labels are in the `compact` band, 41pt at AX5. The headings are 52pt or more.
+  2. Does the title wrap acceptably? h2 is 56, h1 63, display 72.
+  3. What happens to the chip rows? At 41pt, one chip per line is likely (REASONING). This is the layout-repair cost P-13 names.
+  4. Does our in-content heading clash with the system navigation title? On iOS the title is often `.navigationTitle`, which is system-styled and not our token (REASONING).
+- **What the screen does not test**: it will probably use one or two heading levels, so it cannot show the h2/h3 or h4/h5 pairs. **A type specimen** covers the whole ramp: all 24 styles stacked at L, AX3 and AX5, rendered once by Kenya, about 0.25 session (my estimate, UNVERIFIED). I offer it as an optional aid if Peter wants to see the ramp before ruling, not as a condition.
+- **When**: **rule now, with the screen check as a condition at the first family**, before that family's support claim. The screen does not exist until D4. T-12 has to be decided before the slice's D5 lane (my R1), so requiring the screen first would block the slice. Changing a heading's role later changes only large-size rendering. Before the claim no native adopter depends on it, and changes before the claim ship in minors ("7 (a)"). So the provisional ruling can be undone at low cost (REASONING).
+- **Surviving counter**: a condition that falls due later is one more thing to carry. It needs a named owner (me, at the first family's claims pass) and a row in that unit's tasks, or it lapses.
+
+## 3. The six iOS texts that get lighter (400/500 → 300): fine for helper text, a small product concern for error and "Required", and not iOS-specific
+
+- **Helper text → caption (300)**: fine. It is secondary text, and it now matches web.
+- **Error text (×4) and the legal "Required" (500 → 300)**: these carry critical status. Light weight at 13pt in the error colour reads weaker at default size. WCAG 1.4.3 does not change with weight for normal-size text, so this is a legibility and hierarchy concern, **not an accessibility violation**, if the colour pair passes (REASONING; the error-colour contrast is UNVERIFIED).
+- **Position**: land the move onto `caption` now, for parity and scaling. Do not let iOS diverge alone. The weight question belongs to **all three platforms**, because web already ships caption at 300 for these texts (VERIFIED by Ada). I would put one record to Lina: should error and "Required" text use `labelXs` (13pt, weight 500) on every platform? That is my lean for status text.
+- **Surviving counter**: iOS users get a visibly lighter error text in this spec, and the fix may come later or never. That is a regression in their terms, accepted for parity.
+
+## 4. Nav-SegmentedChoice: the fork is Peter's taste question. My lean: T3 if he dislikes the bold, T2 if he wants to keep it, never T1
+
+- **Facts**: weight 700 applies to **every** segment, active and inactive. The active segment is marked by a separate indicator (canvas background, shadow), and its text is the same colour as the others (VERIFIED, `contracts.yaml` `visual_state_colors`, `visual_size_variants`). So the bold is the control's resting label style, and it does not signal selection. At 18pt it is heavier than `buttonLg`, chips and every label (500, VERIFIED). A navigation control outweighs the primary button.
+- **The question to Peter, in designer terms**: "Is bold on every segment the look you want?"
+  - **No → T3**: segments use labelLg and labelMd (500), with no token and no API. This brings the control onto the system's weight for interactive labels. Lina owns the change.
+  - **Yes → T2**, built on SwiftUI's own `.fontWeight(_:)` modifier, so `.dpFont` does not need a new `weight:` parameter, if Kenya confirms that `.fontWeight` composes with `Font.custom(_:size:relativeTo:)` (UNVERIFIED). From the consumer side, `.dpFont` is the adopter's API too. A `weight:` parameter on it invites adopters and their agents to bold anything instead of picking a token. That is the drift at product level that Ada's T2 cost names.
+  - **Not T1**: two semantic tokens named after one component would be the first emphasis-weighted text tokens. That is Decision 3 broken under another name.
+- **Counter-argument I ran against T3**: "a token gap on iOS is not a reason to redesign a shipped control on web and Android." **What survives**: T3 is right only if Peter dislikes the bold on its own merits. If he has no view on the look, T2 holds, and Ada's lean stands.
+
+## 5. Can I live with Ada's overall lean, P-13 (a) with size bands? Yes
+
+- The labelMdFloat case shows the role field earns its place: a rule based only on size would assign it the wrong curve. Ada's H3 measurement retires the job-name vocabulary, and I withdraw my R1/R2 example anchors (`h1` → `.largeTitle`, `bodyMd` → `.body`).
+- **Two consumer conditions**:
+  1. **Default the role**: a typography token with no role gets the nearest-size rule, so an adopter's own typography token never ships unscaled by omission. Whether product tokens can be typography is UNVERIFIED (Ada flags it too). If they can, this condition is load-bearing.
+  2. **The band names**: `body`, `bodyLarge` and `headingSm` read as job names. An adopter tagging a bold 20pt label may avoid `headingSm` because "it isn't a heading". The cost is small at body sizes (curves within about 5%) and larger at heading sizes. A naming note for Ada, not a blocker.
+- **My condition from R1/R2** holds in the form of § 2: the ramp ruled as a set, provisionally, with the product-screen check as a condition at the first family.
+- **Surviving counter**: the role field adds a concept to every typography token in order to settle seven taste rows. A designer reviewing tokens later will see a field whose value, for 17 of 24 rows, could have been computed.
+
+## One-line position
+
+Approve P-13 (a) with size bands now: lean H1 at AX5 (no third size option survives, and the h4/h5 pair has no weight cue), with the filter-and-tags screen check as a condition at the first family. Move the six texts onto caption now and raise error/"Required" weight as an all-platform record. For Nav-SegmentedChoice, put "is bold the look you want?" to Peter: T3 if no, T2 through SwiftUI's own weight modifier if yes, never T1.
+
+*Signed: Leonardo, 2026-11-27.*
+
+#### [THURGOOD R5]
+
+*2026-11-27. The three P-13 reads above (Ada's list, then Lina's and Leonardo's reads of it) are spliced byte for byte from the seats' files in `consults-2026-11-27/answers-132/`: `ada-p13-list.md`, `lina-p13-read.md`, `leonardo-p13-read.md`, in that order. Unlike earlier splices, those files carry their own `#` and `##` headings, kept as written; each entry runs from its stamp heading to the next stamp heading. Design-outline.md § 5.1's P-13 row is not edited: it waits for Peter's answer.*
+
+**Where the three agree**: P-13 (a), with the role as a **size band** (Ada's 8 roles), not a job name; the 18 call-site moves onto existing tokens; the Hexagon preview call out of scope; the frame-scaling repair priced per family, in that family's unit.
+
+**The Nav-SegmentedChoice fork is three-way.** It stopped after one split, per the orchestrator's practice; no cross-read round was run on it.
+- **Ada**: leans T2 (no new token; a weight argument on the generated modifier), with T1 defensible.
+- **Lina**: T1 > T3 > T2. She reads Decision 3 of `.kiro/specs/typography-token-expansion/design.md` as covering inline emphasis only, so it does not bar T1, and as rejecting weight modifiers, so it cuts against T2.
+- **Leonardo**: ask Peter whether bold on every segment is the look he wants. If not, T3; if so, T2 through SwiftUI's own `.fontWeight`, not a new `weight:` parameter on `.dpFont` (that `.fontWeight` composes with `Font.custom(_:size:relativeTo:)` is UNVERIFIED, Kenya's to confirm). Never T1.
+
+**Other points that go to Peter with P-13**: the heading rows (Ada's H1 or H2; Leonardo leans H1 and adds that h4 and h5 are both weight 600, so nothing separates them at AX5); Leonardo's review screen (the filter-and-tags screen, as a condition at the first family, owner Leonardo); the six helper, error and "Required" texts that get lighter (Lina: a parity fix, on the condition that Android moves in the same Form-Inputs unit; Leonardo: move now, and raise the weight of error text as an all-platform question).
+
+**Defects the reads surfaced, recorded as each seat's stated intent.** I file nothing.
+- **Ada**: `src/tokens/semantic/index.ts` L569 names `typography.label`, which does not exist. She files a rule-10 record after this round.
+- **Lina**: Android helper and error text has the same `fontSize050` defect as iOS (Checkbox-Base, Checkbox-Legal, Radio-Base, Radio-Set). Android Nav-SegmentedChoice sets a fixed `dp` height on `sp` text, a present-day defect. She files a rule-10 record for it after this round, with the Android helper weights if they are not already in scope. She also says her R2 record (b) should cite `ButtonVerticalListSet.ios.swift` L546, not L545.
+- **Leonardo**: a question to Lina, whether error and "Required" text should use `labelXs` on every platform. He puts it to her as a record.
+
 ---
 
 ## Requirements Feedback
