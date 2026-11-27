@@ -10,6 +10,7 @@ import { extractCrossReferences, CrossReference as ParsedCrossReference } from '
 import { estimateTokenCount } from '../utils/token-estimator';
 import { determineIndexHealth } from './index-health';
 import { seedLegacyPathsFromFrozenManifest } from '../legacy-path';
+import { applyBuildProvenance } from '../build-provenance/BuildProvenance';
 import {
   DocumentationMap,
   DocumentMetadata,
@@ -20,7 +21,8 @@ import {
   MetadataValidation,
   ValidationIssue,
   IndexHealth,
-  LegacyPathManifest
+  LegacyPathManifest,
+  BuildProvenanceReport
 } from '../models';
 
 /**
@@ -98,6 +100,17 @@ export class DocumentIndexer {
    */
   constructor(logsDirectory: string = resolveLogsDir()) {
     this.logsDirectory = logsDirectory;
+  }
+
+  /**
+   * Build-provenance probe (contract: .kiro/issues/2026-11-27-mcp-build-provenance-contract.md).
+   * When set, every health result carries `build` and, for a stale or unrecorded
+   * build, a warning that degrades the status. Set by the server entry point only.
+   */
+  private buildProvenanceProbe?: () => BuildProvenanceReport;
+
+  setBuildProvenanceProbe(probe: (() => BuildProvenanceReport) | undefined): void {
+    this.buildProvenanceProbe = probe;
   }
 
   /**
@@ -793,6 +806,18 @@ export class DocumentIndexer {
    * Requirements: 9.1, 9.2, 9.5
    */
   validateIndexOnStartup(): IndexHealth {
+    const health = this.validateIndexContent();
+    if (!this.buildProvenanceProbe) return health;
+    const report = this.buildProvenanceProbe();
+    applyBuildProvenance(health, report);
+    if (report.state === 'stale' || report.state === 'unrecorded') {
+      this.logIndexStateChange('build_provenance', { state: report.state, reason: report.reason });
+    }
+    return health;
+  }
+
+  /** The index-content half of {@link validateIndexOnStartup}: docs against index. */
+  private validateIndexContent(): IndexHealth {
     this.logIndexStateChange('validation_started', {});
 
     // If no directory path set, index is empty/not initialized
