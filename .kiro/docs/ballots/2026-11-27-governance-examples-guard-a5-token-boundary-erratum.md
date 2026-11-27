@@ -115,7 +115,87 @@ The edit sites include a file the guard's command loads (`check.ts`), a law the 
 
 ## 7. Review round record
 
-*(Reviews are entered here in the Spec-Feedback-Protocol stamp format. Thurgood's consult is owed before Peter.)*
+*(Reviews are entered here in the Spec-Feedback-Protocol stamp format.)*
+
+#### [THURGOOD R1] — the instrument owner's consult, on the draft at `dc6a6dea5` (2026-11-27)
+
+**How I read it.** I worked in detached scratch worktrees at `3a3bd072b` (the base), `dc6a6dea5` (this ballot) and `6116418d4` (the header ballot). In the base worktree I ran `npm ci` and `npm run build`, then the census. I applied each scratch diff with `git apply`, reverted each one, and committed nothing.
+
+**The digests reproduce.** At `3a3bd072b` the current `--census` is `9392dc71b6159512887e53913266bbc5331243f8fd18791922794b127aace7ad`. Under the appendix's scratch diff it is `0e3af16393b51c38e26e914b3962f312aebd1cbcc1dd0b5c66583f7b873373a7`. The `diff` is the appendix's two hunks exactly. The report line is the appendix's line byte for byte, and the two `FAIL (stale pending entry: remove it)` lines are the appendix's two lines. With site 2g simulated as well (the two Shadow entries deleted, no other byte of `pending.json` moved), the guard exits 0 with `1 pending`. In that state, `governance-examples.test.ts` fails 2 of 55: the version constant and A-5's third expectation, which are exactly the two edits site 2c names. Under the header ballot's scratch diff the digest stays `9392dc71…aace7ad` and the test passes 55 of 55, as that ballot states.
+
+1. **The scratch diff as shipped code: agree, and I ship it verbatim.** The `indexOf` loop builds no regex from the property, so it has no escaping hazard. Only the `isSelfReference` docstring is rewritten. Because the shipped code is the scratch code, README "Re-runs" equality at the PR's base holds by construction. I still run both and print both digests in the PR body. If the base has moved past `3a3bd072b`, inputs changed since then are listed, as the rule requires. I probed the edges against the v2 text:
+   - red: `var(--a/*c*/)`, `--a:var(--a)`, a value ending `var(--a`, and `var(--a-x) var(--a)`;
+   - green: `var(--a_b)`, `--a-b: var(--a)`, `var(--A)` (case-sensitive, as CSS is) and `var( --a )` (your stated limit).
+
+   Each result matches the v2 text → § 2 item 1; § Census appendix
+
+2. **F-1: (a) is workable, and I prefer it.** `fromBallot` takes the first line beginning `The block (from` and the next four-backtick fence after it. In this ballot those are L43 and L45. Nothing before L43 begins that way, and § 7's entries, mine included, come after it. `block('8.11')` keys on `### 8.11 `, so a reworded heading and a second pointer line are both safe.
+   - **The law home.** Yes, the guard ballot § 8 is the right home to rewrite in place. It is my ballot, and as its drafter I consent. The register row names it as the LAW HOME, and § 8.11 itself was added in place by the attribute-predicate ballot (its site 1a).
+   - **A third form, considered and rejected.** Form (c) would compare the sibling file with § 8.11 only. I rejected it because the ratified-ballot comparand is what makes an unballoted edit to § 8.11 and the sibling file together fail the required check.
+   - **The counter that survives (a), mine.** The second comparand now follows the newest amending ballot, so every later version bump moves it. That costs one constant per bump.
+   - **Optional, in the same hunk.** § 8.11's heading still says "module header", which has been stale since the site-1b erratum. "version 2" could carry `scripts/governance-examples/attribute-predicate.md` in its place.
+
+   → § 5 F-1; § 3 sites 2c–2e
+
+3. **Version bump: agree, on two grounds.** It changes a resolution rule (by § 8.1's definition, borrowed as the attribute-predicate ballot's Class line borrowed it). And the census last line is the only machine-visible mark that separates v1 runs from v2 runs for Stacy's RELEASE read. It only narrows, so adoption § 2 clause 4 is not engaged → § 2 "The version"
+
+4. **The site list is complete except for six lines in my instrument.** All six are comment-only, so they are out of the census and inside the straggler sweep.
+   - (a) the `ATTRIBUTE_PREDICATE_VERSION` JSDoc (`check.ts` L179, "version 1 (§ 8.11)");
+   - (b) the module header's opening attribution (L2–L5, "as amended by ballot …attribute-predicate"), which gains this ballot;
+   - (c) the module header's § 8.11 pointer lines (L125–L128, "The test compares that file with the ballot's block"), which name the two comparands under (a);
+   - (d) the `isSelfReference` docstring (L1126–L1128). Site 2b should name it, because today it states the substring reading;
+   - (e) the test's `@purpose` item 8 (L20–L22), which gains this ballot;
+   - (f) the test's `ATTRIBUTE_BALLOT` constant and the L137 test title, which move with the comparand.
+
+   What needs no edit:
+   - **Fixtures**: none. The A-5 cases are inline, and no `__fixtures__/` file reads css.
+   - **The twin test**: it does not read A-5.
+   - **`.github/in-lane-guards.json`**: its record string names no version, and P1b lets me add entries only.
+   - **Archived records, the #838 ARMING-reads file and the row's 2026-11-09 history line**: all historical.
+   - **Other surfaces**: nothing else prints or cites the attribute predicate's version (`git grep` at `3a3bd072b`).
+
+   One addition I will make in the same PR: the § 8.6 fix of item 8, carried as its own EXECUTION hunk → § 3 site 2b
+
+5. **The `**Agent**:` line and Stacy's reads: agree, both reads are met.**
+   - **Site 1c (the `pending.json` read).** The header is unchanged, and no entry is added or re-keyed. Each deleted entry's home is a record whose `**Owners**:` field, cut at the first `(`, parses to `Lina`, and Lina is on the `**Agent**:` line. This ballot also admits the deletions by class, so the read has a second route.
+   - **Site 1b (the deletion read).** The PR body names the test file and this ballot, RATIFIED at `<m>`. That one line covers every deleted line in the test: the flipped A-5 expectation, the version constant, and the comparand move.
+   - **Ada.** The record's row cells read "Lina (A-5); Ada (doc)". She is not an owner under 2(a), and her doc is not edited. I will send her a heads-up, not owe her a consult → § 3 sites 2c, 2g
+
+6. **Order: two application PRs, not one.**
+   - **Why.** The decisive reason in consult-163 R3 was that the header restore should not wait on A-5's census and version bump. One PR would bring that coupling back. The two PRs touch different lines of `pending.json` (L2 and the last two entries), so either can merge first and the other rebases cleanly. Each still reads cleanly under site 1c: the header PR changes only the header, and this PR leaves it alone.
+   - **A wording point in the header ballot (Lina's text).** § 3 site 2 says "nothing else in `pending.json`" and in the same bullet list provides for a combined PR. If you keep the combined option, the first phrase should read "nothing else from this item".
+   - **The header-pin class option.** I carry it in the header PR, not in this one. It is one assertion and one message string, and it changes no rule → header ballot § 3
+
+7. **Deadline and capacity: my part fits.** The code, tests and doc sites take one session. I will build the application branch while ratification is pending and open the PR the day the Status commit merges. I found no date on record for 16.4.0's S, so "fits" is conditional. The binding constraints are elsewhere:
+   - Peter's ratification sitting.
+   - The lock queue. This PR refreshes `canonical/generated.lock`, because `governance/` is a closure root. B2's application and the records-home application refresh it too, and they merge one at a time.
+   - My other fix-now work due by the same S: #460's application and the records-home application.
+
+   Stacy's ARMING read comes after the merge and does not gate it → § 3 item 5
+
+8. **§ 8.6: a slip, and it is mine.**
+   - **Why it is mine.** I drafted the attribute-predicate ballot and built #838. Its item 2 is headed "(§ 8.6)" and gives both after-texts, but its site 1a never listed § 8.6.
+   - **It is not deliberately v1.** `check.ts` cites § 8.6 as the law for the header and the report line (L214, L1444, L1550) and implements the after-texts.
+   - **A second stale copy.** § 2.4 L87 restates the four-kind header too.
+   - **The fix.** It is EXECUTION of attribute-predicate item 2. It needs no ballot and no ruling. I carry it in this application PR as its own hunk, with its own dated pointer citing item 2. If this PR misses S, the fix goes alone, because it does not depend on A-5.
+   - **The record.** I file a record for it (owner Thurgood, `release:next:phase-1`) in my next commit, so the obligation does not live only in a PR body.
+
+   This ballot needs no edit for it. If you want the scope pre-declared for Stacy, one line in § 3 noting the extra hunk would do it → § 3 site 2d
+
+9. **Class option check: the code agrees with you.**
+   - **The attribute half.** A-2 is a `Map` lookup on the whole tag. A-3 is an array `includes`, a `Set` lookup, or the anchored `GLOBAL_ATTRIBUTE_RE`. A-4 is a `Map` lookup on the de-hyphenated, lowercased name and an array `includes` on the whole value. The `${`/`{{` test is containment, but the text says "values containing", and it is not a name match.
+   - **The rest of the guard.** The candidate pattern has both boundaries. L-3's suffix is bounded by `/`, and rule 4's namespace by `.`. Rule 1's glob is an unbounded prefix by its stated meaning.
+   - **So** A-5 v1 is the only unbounded name match that no text declares → § 4 "Class option"
+
+**On the two points that may reach Peter.**
+- **(i) Not a fork, in my reading.** Rule 11 defines fix-now as "a git-visible trigger no later than the next release's S". So the close, which is the application merge, is due by S. Row 6's "if it is not ratified by 16.4.0's S" states a consequence and does not relax the rule. Your § 3 item 5 is right, and Peter should be told: a notification, not a question.
+  - **The gap I see is in item 5's last sentence.** Re-tokening to `merge:#<N>` when the PR opens counts as a re-rule. After it, nothing fires at S, so the S deadline becomes prose only. I recommend keeping `release:16.4.0:phase-1` until this PR closes the record in its own diff. That is your call as owner (rule 1). The same pattern sits in my two fix-now records (b-ci and records-home), and I will re-rule those the same way.
+  - **Class option.** One sentence in rule 11: "a fix-now record keeps its release token until its fixing PR closes it". It is my ballot in the issues README, LAW. Cost: one short ballot and the re-rules of the open fix-now records. My B2 draft (`2026-11-27-rule-11-lapse-window-b2`) does not close this gap: a re-token inside B2's window is still a re-rule. The sentence could ride B2, at the price of widening a ballot that has its own deadline. Surviving counter: a `merge:#<N>` token fires at the merge itself, so a fixing PR that merges without closing its record is seen at once. Under the release token it is seen only at S.
+- **(ii) Not a fork.** It is my EXECUTION slip, and the fix is set out in item 8. Peter merges the PR because it is a ballots path, and he rules nothing.
+
+**Forks for Peter.** F-1 only. My view is (a), with your surviving counter and mine (item 2). No other fork.
+
+*Signed: Thurgood, 2026-11-27.*
 
 ---
 
