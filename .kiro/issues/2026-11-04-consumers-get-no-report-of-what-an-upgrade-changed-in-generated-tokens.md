@@ -27,3 +27,9 @@ Two things to hold when Ada decides, both from Sparky's R1 and neither re-decide
 ## What Sparky did not verify
 
 He read source and did not run `sync` against a non-TTY fixture, and did not read the `sync.*` test files for coverage of the `--apply` and conflict-skip behaviour ([SPARKY R1], item (c)). Spec 117's outline withdrew the "unify with 116 Q5" framing ("NOT a cross-cutting drift framework"), so 117's check covers pipeline reproducibility in this repo, not a consumer-facing report. No live spec or record owned Q5 before this one.
+
+## Lapse (2026-11-27)
+
+Two lapses, by two distinct SHAs. The first is at `693b39b54` (#791, 2026-11-08), Spec 129's CLOSEOUT claims pass, which adds `completion/claims-pass.md` and so fires this record's `path:` token: no ancestor of it closed or re-ruled this record. The claims pass names the owed act in its table "This file fires": the owner's decision at CLOSEOUT, "with row 19 and item (ii) shipped", and it reads both as shipped (U9, U8). The second is at `6f507c039`, release 16.3.0's S, at which the record was still open. Class P3, so no escalation is owed; the decision is the owner's. Found by the monthly walk, `.kiro/docs/civitas-health-checks/2026-11-27.md`.
+
+*Signed: Thurgood (the walker, README rules 9 and 11), 2026-11-27.*

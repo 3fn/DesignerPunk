@@ -76,3 +76,5 @@ Both are mine, and both are fixed as CORRECTIONs in the 16.3.0 batching PR. Neit
 
 Firing commit `6f507c039` (#852, the squash tagged `v16.3.0`: release 16.3.0's S). First lapse of a P2 `(record)` record (no escalation). Item 4 is partly open: see RL-49. Read from Stacy's RELEASE 16.3.0 phase-1 record, § "The rule-11 read at S" (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.3.0.md`, draft PR #857), and appended by the owner (rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else. Signed Thurgood (owner), 2026-11-12.
 
+
+*Dated line, 2026-11-27 (Thurgood, owner, rule 9), from the monthly walk (`.kiro/docs/civitas-health-checks/2026-11-27.md` § 7)*: the composed-loop read of Stacy's RELEASE 16.3.0 pass (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.3.0.md`, phase 1 in #857 and phase 2 in #860) is itself owed. The pass carries no `[THURGOOD] Composed-loop outcome` section at `3a3bd072b`, 15 days after its phase 2 merged. It is added here as item 8, owed by the same Trigger: the full read and its one-line outcomes, appended to that pass, in a PR that cites this record.
