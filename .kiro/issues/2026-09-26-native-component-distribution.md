@@ -220,3 +220,50 @@ render-probe: robolectric=PASS seconds=53
 - That run's other failure, an AVD created outside the emulator's search path, was my setup's, and it is fixed.
 
 *Signed: Data, 2026-11-27.*
+
+## iOS obligations: dated pointer and close check (2026-11-28, Kenya)
+
+**Pointer for the "§ 3" cites in § "iOS obligations filed here under rule 10 (2026-11-27, Kenya)".**
+- Item 1 cites `.kiro/specs/132-native-components-in-app/design-outline.md` § 3, and item 2 cites "the 132 placeholder § 3, the iOS row". Both meant the placeholder's § 3, at `a953ac70d`.
+- In the seeded and reshaped outline, § 3 is "Order, and the measured-cost record". The iOS minimum is now in § 5.1, "P-6, the iOS minimum: RULED", and in § 4.3, "Kenya". Those cites should be read as pointing there. The item text above is unchanged (rule 9).
+
+**Close check: the outline names all three iOS obligations.** VERIFIED by reading `design-outline.md` at `12f82afed`:
+1. **The iOS minimum.** § 5.1 records P-6 as RULED: Peter, received 2026-11-27T18:32:45Z, "(B), raise to iOS 18"; confirmed 18:36:18Z. § 4.3 points to `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md`, items A–E. Done: the outline put the question to Peter, and he answered it.
+2. **The iOS 17 runtime probe.** § 4.2 and § 4.3 name it as moot under P-6, with `.kiro/issues/archive/2026-11-27-ios-17-runtime-probe-owed.md`.
+3. **The "Native status" wording rule.** § 4.3 names the claim-time form ("built for iOS 18.0; tested on <runtime>") as item C of the floor record, and § 5.2 has T-11 ("no change at this merge"). The window between the Core Goals raise and the first claim is held by `.kiro/issues/2026-11-28-ios-pre-claim-minimum-wording.md`. The rule's 17.0 condition ("Standing until something runs on iOS 17, or item 1's answer moves the floor") was met when item 1's answer moved the floor to 18.0.
+
+**Superseded: the iOS 17 probe.** Item 2 above, "The iOS 17 runtime probe", is superseded. P-6 raised the floor to iOS 18, so the probe is moot. Its record, `.kiro/issues/archive/2026-11-27-ios-17-runtime-probe-owed.md`, closed under rule 5 at `db136d10d`, which recorded the outcome and moved it to the archive. Its rule-4 return to the root is `b98e6c8a5`.
+
+*Signed: Kenya, 2026-11-28T05:08:33Z (`date -u`).*
+
+## Outcome (2026-11-28, Kenya; Data's co-signature owed on this branch)
+
+**Outcome (2026-11-28, Kenya)**: closed — the whole record. Peter's spec answer, received 2026-11-27T16:44:48Z, verbatim: "Spec with (a), and start 132's outline round now". It is carried out by the merge of #880, Spec 132's seeded design outline. That outline names this record (§ 4.2) and no longer reads `**Status**: **PLACEHOLDER.**` (§ 7). Nothing is left owed here. Each remaining item lives in a record committed at this branch's head (`12f82afed`), as follows:
+- **The goal, the acceptance sentence and the definition of done**: `.kiro/specs/132-native-components-in-app/design-outline.md` § 1, word for word.
+  - D4–D10 were ruled at P-1, with D4's target at 18.0.
+  - D1–D3 are Spec 129's part, delivered.
+- **The order (x′)**: re-ordered by the pivot (Peter, received 2026-11-28T03:45:37Z). The order is in the outline's § 3. Its line in `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` is owed by Thurgood (outline § 5.1, "Owed acts").
+- **The distribution shape** (an SPM source package and a Gradle source module, no binary, the components as a package dependency): the outline's § 2, "Public API and packaging", together with:
+  - `.kiro/issues/2026-11-28-generate-native-manifest-conditions.md` (Ada);
+  - `.kiro/issues/2026-11-28-q12-q13-type-table-provisional-until-d4.md` (Ada);
+  - `.kiro/issues/2026-11-28-deprecated-aliases-and-public-api-diff-before-claim.md` (Ada).
+- **§ "Evaluation, when the trigger fires"**:
+  - item 1's precondition is closed at `.kiro/issues/archive/2026-09-26-native-component-theme-hardcoding.md`;
+  - items 2 and 3 were answered in Spec 129: its compile harness, its D1–D3 and its design;
+  - item 4 is Spec 132 itself.
+- **§ "Access-pass list"**: the obligation, an access pass for the 20 iOS views an app cannot construct, is in the outline's § 2, "Public API and packaging". That line cites this list, and it resolves here under rule 3. The rule itself is `.kiro/issues/2026-11-27-native-access-level-ballot-owed.md` (Lina).
+- **§ "iOS obligations filed here under rule 10"**:
+  - the iOS minimum → `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888);
+  - the iOS 17 probe → closed, `.kiro/issues/archive/2026-11-27-ios-17-runtime-probe-owed.md`;
+  - the wording rule → that floor record's items C and D, plus `.kiro/issues/2026-11-28-ios-pre-claim-minimum-wording.md`;
+  - Swift 6 language mode, passed through this record by the 129 inbound → `.kiro/issues/2026-11-28-ios-swift-6-language-mode-for-components.md`.
+- **Android**: the toolchain range and the API-26 floor test → `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md` (#881).
+- **Obligation (1), the render probes**:
+  - iOS → `.kiro/specs/132-native-components-in-app/evidence/2026-11-27-ios-render-spike/README.md` (#879);
+  - Android → § "Android render probe result (2026-11-27, Data)" above, which stays in this file when it is archived.
+- **P-1's addition (3)**: Peter, received 2026-11-28T02:26:04Z, "Yes, small means start small and grow; all three additions" → `.kiro/issues/2026-11-28-real-app-first-build-read.md` (Kenya and Data).
+- **The other acts from sitting 2**: the records listed in the outline's § 4.2 and in `[THURGOOD R22]` of `feedback/design-outline.md`.
+
+**The archive move is not in this commit.** Data reviews and co-signs first. The `git mv` to `archive/` follows in its own commit on this branch, before #880 merges, so an ancestor of the merge commit closes the record (Trigger line).
+
+*Signed: Kenya, 2026-11-28T05:08:33Z (`date -u`). Co-signature owed: Data.*
