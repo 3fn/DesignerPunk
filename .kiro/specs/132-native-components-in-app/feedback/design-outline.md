@@ -2607,6 +2607,202 @@ Read at `main` `35456bdbc`.
 - **Open for the requirements round**: the forecast's second reader, Stacy (Ada R7) or Lina (Thurgood R10).
 - **Not ruled, left open**: the web chip defect's handling; Leonardo's two ways to shorten a (B) wait.
 
+#### [KENYA R7]
+
+**1. Final position: keep the catalog plus the one product screen.** The upgrade rehearsal decides it.
+- The catalog is generated from the committed component list (VERIFIED, plan-r2 "D4 details"). Each release regenerates it against the new API, so it never holds code written against the previous release. D9 needs exactly that code, left unchanged, to see a source break. The product screen is hand-written, so it is that code (REASONING).
+- **XCUITest**: catalog tests check components one at a time. VoiceOver order across composed elements only shows up when components sit together: chips inside a scrolling `FilterBar`, then a list. So does a tap target that overlaps a neighbour (REASONING).
+
+**2. If the product screen goes**
+- **What iOS saves**: about 0.5 session, out of my "fixture screens, about 1" (VERIFIED, plan-r2 § 8), and one UI flow that can be flaky.
+- **What iOS loses**:
+  - the D9 target;
+  - the only check of composition;
+  - the natural home for the D10 `FilterBar`. It could move to the catalog.
+
+**3. P-3, Peter's VoiceOver reads on his iPhone**
+- **Simplest install: straight from Xcode.**
+  - Turn on Developer Mode on the iPhone (VERIFIED: iOS 16 and later require it).
+  - Sign with a free Apple ID personal team. The catch is that the app stops opening after 7 days, so he reinstalls before each read session (UNVERIFIED for current Xcode).
+- **TestFlight needs a paid Apple Developer Program membership** and an App Store Connect setup. Whether he has a membership is UNVERIFIED.
+- **Things he may not have**:
+  - an Xcode that can deploy to his iPhone's iOS version. The Mac's Xcode version is UNVERIFIED: 26.0.1 on 2026-11-05, and 27.2 is named in the outline. A newer iPhone OS than the Xcode supports blocks installing;
+  - an iPhone on iOS 18 or later, because of the floor.
+- **To make each read quick**:
+  - a "read mode" in the catalog that shows one component per page with a fixed swipe order;
+  - VoiceOver on the triple-click shortcut;
+  - a record template with device, OS version, what he heard and his name (VERIFIED: D6 details require the device, the OS version and the reader);
+  - the reads done on a Release build.
+
+#### [KENYA R8]
+
+**1. Final position**: unchanged. Keep the catalog plus one patterns screen, and I take Leonardo's framing and D4 line. I have narrowed my reason (see 3).
+
+**2. Can I live with the others?**
+- **Leonardo: yes.** It is my position, framed better.
+- **Data: yes.** Same position.
+- **Stacy, catalog only: yes, on her own condition.** `FilterBar`, with live selection state written by hand and left unchanged across releases, is a small composition screen. Her version only works if that code is not regenerated.
+
+**3. Factual points**
+- **I overstated, and so did Data** (REASONING). If D9 takes the *previous release's* generated catalog and does not regenerate it, it does catch removed or renamed symbols. The API diff already catches those. What a catalog misses is usage written the way an adopter writes it: bindings, nesting and composition. So Leonardo's "any screen works" holds for compile breaks, but not for that coverage.
+- **Stacy**: the repo's git user is Peter (VERIFIED, session git status).
+
+#### [DATA R7]
+
+**1. Keep the catalog plus the one product screen.** What decides it: the catalog is generated from the committed component catalog (VERIFIED, plan-r2 "D4 details"). An upgrade regenerates it against the new API. So as an upgrade test it passes almost by construction. The product screen is code written by hand and frozen, which is exactly what an adopter has. It is the only part of the app that can break the way an adopter's app breaks (REASONING). A design-system team's demo app also usually has example screens, not only a list of components.
+
+**2. If the product screen goes, on Android:**
+- **Cost saved**: about 0.5 of my roughly 2.5 WP4 rounds (estimate, UNVERIFIED), plus keeping that screen's tests up to date.
+- **What we would lose**:
+  - TalkBack focus order across several chips in a row;
+  - how semantics merge when components sit side by side;
+  - state shared between chips;
+  - scrolling, and insets under the keyboard with Chip-Input;
+  - the most natural home for D10's `FilterBar`;
+  - D9's strongest check.
+
+**3. P-3 on the emulator.** This Mac has no Android SDK. There is no `~/Library/Android/sdk`, no `sdkmanager`, `adb` or `emulator` on the path, and no AVDs (VERIFIED). So everything below is UNVERIFIED here.
+- **Is TalkBack there?** Google Play images can install it from the Play Store. Google APIs and AOSP images need the APK installed by hand. Whether any image has it preinstalled is UNVERIFIED.
+- **Does it speak through the Mac?** The emulator plays sound through the host by default. That should include TalkBack's speech.
+- **Can Peter drive it?** Dragging with the mouse acts as a one-finger swipe, and a double-click acts as a double-tap. Gestures with more than one finger are awkward. TalkBack also has keyboard shortcuts when a hardware keyboard is attached.
+- **One short check**:
+  1. Install Android Studio.
+  2. Boot an arm64 Google Play image at API 35.
+  3. Run `adb shell pm list packages | grep talkback`.
+  4. Turn TalkBack on, swipe once, and listen.
+
+  This needs about 2 GB of downloads, which I did not do.
+
+**What an emulator read misses, compared with a real device:**
+- the TalkBack versions phone makers ship (Samsung ships its own);
+- the phone's own speech engine and speaking rate;
+- real touch timing and vibration feedback;
+- real density and font-scale settings;
+- lag on a slower phone.
+
+What gets spoken (labels, roles, states) should match a device, and that is what the read checks. The label "emulator read" is honest.
+
+#### [DATA R8]
+
+**1. My final position**: unchanged. Keep the catalog plus one screen. I take Leonardo's framing and name, "Patterns: Filter and tags".
+
+**2. Can I live with the others?**
+- **Kenya: yes.** We land in the same place for the same reason.
+- **Leonardo: yes.** This is now my position.
+- **Stacy, catalog only with her three conditions: yes.** What decides it: her `FilterBar`, with live selection state, is hand-written adopter code that stays frozen across releases. It keeps D9's target. It loses chips placed beside a tag list.
+
+**3. Factual points**
+- **My own R7 claimed too much, and Kenya's R7 claims the same.** We said the catalog "passes almost by construction" in an upgrade. That holds only if the rehearsal regenerates the catalog with the new release. If it keeps the previous release's generated source, the catalog is also frozen code, and Leonardo's "any screen works" holds. Which of the two D9 does is UNVERIFIED, and the requirements round should decide it.
+- **Stacy is right that the git user is Peter** (VERIFIED: the session's git status shows "Peter Michaels Allen").
+
+#### [LEONARDO R10]
+
+Read at 132 outline `8d5f44c48`; 131 outline at `main` `35456bdbc`.
+
+**1. My position: a catalog plus one composition screen, framed the way a design-system team would frame it.** What decides it is that only that screen tests components working together. The catalog shows each component on its own, built from the served samples. Nothing else here renders a filter chip driving a tag list, a row of chips wrapping, Chip-Input being removed, the focus order across components, or D10's adopter component sitting next to ours.
+
+**2. If the screen goes.**
+- **D9 can move to the catalog** (REASONING, UNVERIFIED). D9 compiles the previous release's app against the new one, so any screen works.
+- **131's native rehearsal leg can move too.** It needs a standing consumer to upgrade, not a product screen (131 outline L107).
+- **What we lose:** source breaks that only show up in adopter-style code, such as state bindings, nesting inside platform containers, and composition. The samples are minimal, so upgrades that break real usage would get through.
+- **Nothing else covers it.** `validate_assembly` checks the tree before anything renders, never the rendered result. The clean-room build (T-3) tests the guide. So the gap stays open until Peter's real app arrives.
+
+**3. If it stays: call it "Patterns: Filter and tags".** It is a composition example inside the demo app, the kind a design-system team ships to show components together, not a product. I still spec it in the fixture's `product/`, because that exercises the selection and assembly path adopters use. No filter-and-tags experience pattern exists yet (VERIFIED, `list_experience_patterns`), so it could feed one later.
+
+**4. Proposed D4 "What it is" line:**
+
+"**What it is**: a component demo app that we build and keep in this repository, and run in our CI (iOS: Kenya; Android: Data; content: Leonardo). It has two screens: a catalog, and one patterns screen that composes the claimed families the way a product would (filter and tags first). It grows by one family per unit. Its component list comes from the committed catalog (below), so small never means a hand-picked set of components. It stands in for an adopter's app and is not one. Peter's own app is read through the real-app record."
+
+#### [LEONARDO R11]
+
+**1. Final position: unchanged.** The catalog plus one patterns screen.
+
+**2. Can I live with theirs?**
+- **Kenya and Data: yes.** Same position as mine.
+- **Stacy, catalog only with three conditions: yes, narrowly.** Her `FilterBar`, with live selection state, is a frozen hand-written target, so it keeps D9. It does lose screen-reader order and shared state across families (chips beside a list). Her third condition records that gap rather than covering it.
+
+**3. Facts.**
+- **My own R10 was wrong.** I said D9 "can move to the catalog; any screen works". Kenya and Data point out that the catalog is regenerated each release, so as an upgrade test it may pass by construction. Whether D9 compiles the committed previous-release catalog or regenerates it is UNVERIFIED.
+- **Stacy's "the git user is Peter"**: VERIFIED, this session's git user is Peter Michaels Allen.
+- Kenya's Developer Mode and 7-day signing points, and Data's "demo apps usually have example screens", are UNVERIFIED. I found nothing in them I can show to be wrong.
+
+#### [STACY R7]
+
+**1. A catalog-only app**
+- **Rows not weakened**: D4, D5 and D8. Their oracles check each component on its own, and they already run on the catalog (plan-r2 "D4 details", "D5 details"; VERIFIED).
+- **D9**: its oracle is "the previous release's D4 app and samples compiled against the new release" (outline § 2, VERIFIED). A catalog still catches breaks in how components are built. It misses breaks in how components are put together. That is UNVERIFIED reasoning.
+- **D10**: survives, because `FilterBar` composing Chip-Filter is itself a composition.
+- **What no D row names**: a screen where state flows across components. Dropping the product screen weakens no oracle as written. It removes the only composition check we have. That is acceptable, provided three things survive:
+  - `FilterBar` sits in the app, with live selection state, as D9's composition target;
+  - 131's rehearsal leg is moved to a new target by its own owner;
+  - the composition gap is added to the real-app record Peter has ruled.
+- Removing "two screens" from the PROPOSED D4 text is a D-row change. It is Peter's, and it goes on the change list.
+
+**Final position**: catalog only, with those three things kept.
+
+**2. P-3**
+- **Readiness**: two separate evidence kinds, `device-read (human, <device>, iOS <x>)` and `emulator-read (human, API <n>, TalkBack <v>)`. D7's derivation maps each kind to its own label from a closed list. One never counts as the other. The claim text for a platform names whichever kind it has.
+- **My earlier point still holds.** VERIFIED: the repo's git user is Peter, the same identity agents commit under. A record cannot show that a human made the read.
+- **Each read record should carry**:
+  - the component;
+  - the platform and the kind of read;
+  - the reader;
+  - the time, in UTC;
+  - the device or emulator image;
+  - the screen-reader version;
+  - the app build's commit SHA, shown in the app;
+  - what was spoken, word for word, against each contract;
+  - a hash of the screen recording.
+
+  CLOSEOUT can check that a record exists for each component and platform, that its fields are well formed, and that its build SHA is the release candidate's. It can never check that a human made the read.
+
+#### [STACY R8]
+
+**1. Final position, moved: keep the catalog plus one patterns screen, as Leonardo frames it.** What moved me is the point Kenya and Data both make. The screen is the only code written by hand and then left unchanged, which is what an adopter actually has. My R7 survival conditions were weaker than keeping it.
+
+**2. Can I live with theirs?**
+- **Kenya: yes.** Composition only shows up when components sit together.
+- **Data: yes.** It is the same position, and the emulator check he describes comes first.
+- **Leonardo: yes.** His "stands in for an adopter's app and is not one" keeps the claim honest.
+
+**3. Facts**
+- **Kenya and Data**: "the catalog passes D9 almost by construction" holds only if D9 regenerates the catalog. If D9 compiles the previous tag's committed catalog as it stands, that catalog is unchanged code too. Which one D9 does is UNVERIFIED, because D9's details do not say. That needs a tasks-round row.
+- **Leonardo's 131 L107 citation**: UNVERIFIED. I did not read it.
+
+#### [PETER] P-1 confirmed: the D4 shape
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`.*
+
+- **Context he gave**, received 2026-11-28T03:27:07Z, verbatim: "Side note: this is making me wonder if the demo app we need just really needs to be a component demo app we'd build within a Design System team rather than something more consumer facing."
+- Received 2026-11-28T03:28:09Z, verbatim: "Yes, put it to all four and ask Data. I'd lean (ii), too". The four seats answered and cross-read (`[KENYA R7]`/`[KENYA R8]`, `[DATA R7]`/`[DATA R8]`, `[LEONARDO R10]`/`[LEONARDO R11]`, `[STACY R7]`/`[STACY R8]`, spliced above). All four end on the catalog plus one patterns screen; Stacy moved there in R8.
+- **Item 1, as put to him**: the D4 app is a component demo app with two screens, the catalog and a "Patterns: Filter and tags" composition screen. Leonardo R10's D4 "What it is" line replaces the PROPOSED TEXT's line. The rest of the PROPOSED D4/D10 text stays as drafted: the relabel, iOS 18.0, release builds on both platforms (Release plus Swift 6 on iOS, R8 on Android), and D10 in the demo app's own module.
+- **Received**: 2026-11-28T03:32:51Z. **Verbatim**: "Yes to 1 and 2. Re: 3, This feels like band-aiding the problem that could be spent properly fixing it. What's the proper fix?"
+- **What it confirms**: the D4/D10 text (design-outline.md § 1, now RULED). **Open, for the requirements round**: whether D9 compiles the previous release's committed catalog or regenerates it (design-outline.md § 5.2, T-21).
+- **"Re: 3" is not recorded here**: it re-opens the web-blend defect, which is not ruled.
+
+#### [PETER] P-3
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`.*
+
+- **What he was asked**: P-3 as in design-outline.md § 5.1: (a) a named human does one read per component per platform at the first support release, as dated evidence, not a gate; or (b) no human read, speech labelled "not device-read".
+- **Received**: 2026-11-28T03:27:07Z. **Verbatim**: "I can do (a) for iOS since I have an iOS device, but no Android device."
+- **Item 2, as then put to him**:
+  - iOS: Peter does one device read per component on his own iPhone, at the first support release, as dated evidence and not a gate;
+  - Android: Peter does the TalkBack reads on the emulator, labelled "emulator read";
+  - readiness shows `device-read (human, …)` and `emulator-read (human, …)` as separate kinds, and each read record carries the fields in Stacy R7; Kenya R7's "read mode" and install notes are inputs to the requirements round;
+  - the 2 GB Android SDK and emulator install is Peter's to do when the reads come due;
+  - what survives: the reads are self-attested, because the git identity is Peter (Stacy R7, VERIFIED).
+- **Received**: 2026-11-28T03:32:51Z. **Verbatim**: "Yes to 1 and 2. Re: 3, This feels like band-aiding the problem that could be spent properly fixing it. What's the proper fix?"
+
+#### [THURGOOD R12]
+
+*2026-11-28. The four D4-shape files above are spliced byte for byte from `consults-2026-11-27/answers-132/`, in the orchestrator's order: `kenya-d4-shape.md` (R7, R8), `data-d4-shape.md` (R7, R8), `leonardo-d4-shape.md` (R10, R11), `stacy-d4-shape.md` (R7, R8).*
+
+- Recorded the D4-shape confirmation and P-3 as RULED. → design-outline.md § 1, § 2, § 5.1
+- **Folded**: the PROPOSED TEXT marker becomes RULED, with Peter's words. Its "What it is" line is replaced by Leonardo R10's, copied verbatim from his item 4 (the brief said item 3, which names the screen; the line itself is item 4's "Proposed D4 'What it is' line"). § 2's content line names the "Patterns: Filter and tags" composition screen. D7's two read kinds join the D-row change list. P-3's iOS and emulator reads, Stacy R7's record fields and Kenya R7's inputs are in § 5.1.
+- **Open, for the requirements round**: T-21, whether D9 compiles the previous release's committed catalog or regenerates it (Kenya R8, Data R8, Stacy R8, Leonardo R11).
+- **Not recorded**: Peter's "Re: 3", the web-blend defect he re-opened. It is not ruled.
+
 ---
 
 ## Requirements Feedback

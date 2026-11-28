@@ -88,18 +88,19 @@ So the table is two fixed texts at two SHAs. It is cited, not copied, so there i
 - **The D-row change list** (Stacy R1): 132's requirements round carries, in its Context for Reviewers, a list headed "D-row changes since `b89163c41`", even when it reads `none`. Stacy's LENS and CLOSEOUT reads check it. Changes this round surfaced, each Peter's:
   - D8's population (P-1, **RULED**);
   - **D4's iOS deployment target, 17.0 → 18.0** (plan-r2 § 1, "D4 details", "iOS: deployment target 17.0"; it follows from P-6's ruling, and is put to Peter inside P-1 as a D-row edit; P-1, **RULED**);
-  - **D4 and D10 relabelled as our fixture app** (P-1, **RULED**, addition (1); the text is PROPOSED below);
-  - **D4's release builds** (P-1, **RULED**, addition (2); the text is PROPOSED below);
+  - **D4 and D10 relabelled as our fixture app** (P-1, **RULED**, addition (1); the text, **RULED** below);
+  - **D4's release builds** (P-1, **RULED**, addition (2); the text, **RULED** below);
   - **not a D row: the real-app record** (P-1, **RULED**, addition (3)): an owed act under `.kiro/issues/README.md` rule 10, owned by Kenya and Data, with Stacy reading it at its first build as a SYMPTOM-class claims audit against what D4 claims (Stacy R3).
     - When Peter's own app first builds against a release, it gets a dated read. It is evidence, not a gate: it holds no claim and no merge.
     - Its event is one only Peter can see, so its Trigger is `manual`.
     - **Kenya and Data file it in their close commit on this branch** (§ 7, precondition 3). This outline does not file it.
     - **Surviving counter-argument** (Data R5, Stacy R3): it has no forcing date. A `manual` trigger can lapse without anyone noticing, and if Peter's app never becomes ready, the gap between our fixture and an adopter's app stays open while nothing in D4–D10 turns red.
+  - **D7's evidence kinds**: `device-read (human, <device>, iOS <x>)` and `emulator-read (human, API <n>, TalkBack <v>)`, two separate kinds, one never counting as the other (P-3, **RULED**; Stacy R7);
   - and, only if they arise, T-12's audit exclusion (P-11) or a static-only iOS evidence kind for D7 (P-12).
 
-**PROPOSED TEXT — awaiting Peter's confirmation** (P-1's additions (1) and (2), with the 18.0 edit; Thurgood's draft, with Stacy R3's D4 sentence as the base). Until he confirms it, plan-r2's rows at `b89163c41` stand, with only the D8 and iOS 18.0 edits above. Every other D4 details line, and D4's oracle, is unchanged.
+**RULED TEXT** (P-1's additions (1) and (2), with the 18.0 edit; Thurgood's draft, with Stacy R3's D4 sentence as the base, and Leonardo R10's "What it is" line). Peter confirmed it, received 2026-11-28T03:32:51Z, verbatim: "Yes to 1 and 2. Re: 3, This feels like band-aiding the problem that could be spent properly fixing it. What's the proper fix?" His "1" is this text and the demo-app shape: a component demo app with two screens, the catalog and a "Patterns: Filter and tags" composition screen (`feedback/design-outline.md` § "[PETER] P-1 confirmed: the D4 shape"). It was drafted as PROPOSED TEXT and counted only from his confirmation. Every other D4 details line, and D4's oracle, is unchanged.
 - **D4, "Done means"**: "Our fixture adopter app, built in the adopter layout from a packed install, builds and links with the components as a dependency. It proves the path; it does not prove any particular adopter's app."
-- **D4 details, a new first line**: "**What it is**: a fixture adopter app that we build and keep in this repository, and run in our CI (iOS: Kenya; Android: Data; content: Leonardo). It starts small and grows: it begins with the first family's two screens, a catalog and one filter-and-tags product screen, and takes in one family per unit. Its component list still comes from the committed catalog (below), so small never means a hand-picked set of components. A real adopter's app is not a D row: Peter's own app is read through the real-app record."
+- **D4 details, a new first line** (Leonardo R10, verbatim): "**What it is**: a component demo app that we build and keep in this repository, and run in our CI (iOS: Kenya; Android: Data; content: Leonardo). It has two screens: a catalog, and one patterns screen that composes the claimed families the way a product would (filter and tags first). It grows by one family per unit. Its component list comes from the committed catalog (below), so small never means a hand-picked set of components. It stands in for an adopter's app and is not one. Peter's own app is read through the real-app record."
 - **D4 details, "iOS"**: "**iOS**: deployment target 18.0, in a committed `.xcodeproj` (Kenya; P-6)."
 - **D4 details, a new last line**: "**Release builds**: the app is also built the way a shipped app is built. iOS: a Release build as well as Debug, and the app built in Swift 6 language mode as well as Swift 5 (Kenya). Android: a release build with R8 on, as well as debug (Data)."
 - **D10, "Done means"**: unchanged, "An adopter can build more".
@@ -109,7 +110,7 @@ So the table is two fixed texts at two SHAs. It is cited, not copied, so there i
 - **Stacy R3**: the D4 sentence, word for word; "small" never a hand-picked set of components; D10's "the D4 fixture app's own module".
 - **Kenya R5**: "that we build and keep in this repository"; D10's second phrase, "in the D4 app" → "in the D4 fixture app"; Release as well as Debug, and Swift 6 as well as Swift 5 language mode.
 - **Data R5**: R8 on for the Android release build.
-- **Leonardo R6**: a new "What it is" first line in D4's details, with its owners, and "two screens".
+- **Leonardo R6**: a new "What it is" first line in D4's details, with its owners, and "two screens". Peter's "1" replaced the drafted line with Leonardo R10's.
 - **Peter**: "start small and grow".
 
 **Not carried** (each would change substance Peter has not been asked; each can go to the requirements round):
@@ -148,7 +149,7 @@ So the table is two fixed texts at two SHAs. It is cited, not copied, so there i
   - **What it means here**: An adopter-layout app on each platform, built from a packed install, with plain `import` only, the anti-copy check, a non-`DP` abbreviation and one adopter theme (plan-r2 § 1, "D4 details"). It builds the adopter's **default** manifest, not the full set (Leonardo R2).
     - iOS: deployment target **18.0** (P-6, RULED; a D-row edit inside P-1); a hand-written `.xcodeproj` with synchronized folders (T-3), and the package referenced as `.package(name: "DesignerPunk", path: …)` (T-4).
     - Android: `compileSdk` 37 at the pinned Compose BOM (§ 6), against the harness's 36.
-    - Content: Leonardo's catalog screen built from the served samples, and a filter-and-tags product screen written as a real screen spec in the fixture adopter's own `product/`
+    - Content: Leonardo's catalog screen built from the served samples, and a "Patterns: Filter and tags" composition screen (P-1, **RULED**; Leonardo R10), written as a real screen spec in the fixture adopter's own `product/`
   - **Owners**: Kenya, Data; Leonardo (content)
 - **Render and behaviour** (D5–D7)
   - **What it means here**: The `rendering:` field (P-16); the per-platform contract validation format (a ballot); render lanes; contract tests with known-bad cases; the D6 checker and its committed per-unit summary (T-16); readiness derived at publish from committed results (T-7)
@@ -354,7 +355,14 @@ Each lands before the release that first claims native support, which is **17.0.
 
 - **P-1, the definition of done: RULED** (b), with three additions. Peter, received 2026-11-28T02:23:27Z, verbatim: "I lean toward (b) with a proposal that I'd want feedback on before we commit it. Re: D4, We'd need an adopter app — which I have an idea for, but isn't ready. Perhaps a more appropriate bar for this would be a small scale demo app that we prepare with Kenya and/or Data? Re: D10, similar concerns as D4, but I agree with need some kind of similar test. Perhaps it can be part of the same small scale demo I mentioned earlier? Honest thoughts?"; then, received 2026-11-28T02:26:04Z, verbatim: "Yes, small means start small and grow; all three additions".
   - The additions: (1) D4 and D10 relabelled as our fixture app; (2) release builds; (3) his real app as a record, not a D row. Asks, answers and the four consults: `feedback/design-outline.md` § "[PETER] P-1".
-  - **The final D4 and D10 text is PROPOSED, awaiting his confirmation** (§ 1, "The D-row change list").
+  - **The final D4 and D10 text is RULED**: Peter confirmed it, received 2026-11-28T03:32:51Z, verbatim: "Yes to 1 and 2. Re: 3, This feels like band-aiding the problem that could be spent properly fixing it. What's the proper fix?" (§ 1, "The D-row change list"; his "Re: 3" is not part of P-1 and is not recorded here).
+- **P-3, device reads: RULED**, as put to him. Peter, received 2026-11-28T03:27:07Z, verbatim: "I can do (a) for iOS since I have an iOS device, but no Android device." Confirmed, received 2026-11-28T03:32:51Z, verbatim: "Yes to 1 and 2. Re: 3, This feels like band-aiding the problem that could be spent properly fixing it. What's the proper fix?" Record: `feedback/design-outline.md` § "[PETER] P-3".
+  - **iOS**: Peter does one VoiceOver read per component on his own iPhone, at the first support release, as dated evidence, not a gate.
+  - **Android**: Peter does the TalkBack reads on the emulator, labelled "emulator read".
+  - **Readiness** shows `device-read (human, …)` and `emulator-read (human, …)` as separate kinds (§ 1, "The D-row change list"). Each read record carries Stacy R7's fields: the component; the platform and the kind of read; the reader; the time, in UTC; the device or emulator image; the screen-reader version; the app build's commit SHA, shown in the app; what was spoken, word for word, against each contract; a hash of the screen recording.
+  - **Inputs to the requirements round**: Kenya R7's "read mode" in the catalog and her install notes (Developer Mode; free-team signing and its 7-day limit, UNVERIFIED; the Xcode and iOS versions).
+  - **Peter's to do when the reads come due**: the Android SDK and emulator install, about 2 GB.
+  - **What survives**: the reads are self-attested, because the git identity agents commit under is Peter's (Stacy R7, VERIFIED).
 - **P-7, which release carries the first claim: RULED** — the collective team's lean. Peter, received 2026-11-28T03:19:49Z, verbatim: "This is getting a little complicated for me, so let's go with the collective relevant team's lean on the optimal path forward. My preference would be to avoid too many changing messages we have to update, track, and communicate to potential adopters. Honest thoughts?" The exchange before it, and the seven items of the lean: `feedback/design-outline.md` § "[PETER] P-7".
   - **What it settles**: 17.0.0 carries 132's first family alone, the ruled order unchanged, waiting on the first family plus the blend API's shape (§ 4.4); `main` stays releasable as 16.x (§ 4.4); T-14's threshold stays in the design round (§ 5.2); the pressed colour, option (a) (§ 4.4); (B), 133's token half, re-decided at the first-family measured-cost record, with Ada's forecast column (§ 3).
   - **Owed, with owners, none filed in this outline**: 133's park line, `park — re-ask: path:.kiro/specs/132-*/completion/first-family-measured-cost.md` (Thurgood, 133's author); the priorities record's § 7 rows for (B)'s re-decision and the 16.x rule (Thurgood, its steward); the 16.x rule's owner (not yet named); Ada's blend API decision record and her forecast column (Ada); D9's baseline (T-10's owners); the contract's ΔL range (Lina); the claim's colour line (Leonardo).
@@ -443,6 +451,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-3 (order 4)
 
+- **RULED** 2026-11-28: (a) on iOS on his iPhone, and emulator reads on Android ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **Plan decision 9: device reads**
 - **Options**:
   - (a) a named human does one read per component per platform at the first support release, as dated evidence, not a gate;
@@ -709,6 +718,12 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 - **State after the cross-read**: Data R5 proposes that the fixture's `android/` folder carry its own Material3 theme and version catalog, so the app meets a theme and version pins as a real Android app would. Not put to Peter with P-1, and not ruled
 - **Owner**: Data
+- **Closes at**: requirements round
+
+#### T-21: What D9 compiles: the previous release's committed catalog, or a regenerated one
+
+- **State after the cross-read**: open. The catalog is regenerated from the committed component list each release, so as an upgrade test a regenerated catalog may pass by construction; a committed previous-release catalog, compiled unchanged, catches removed or renamed symbols but not adopter-style usage (Kenya R8, Data R8, Stacy R8, Leonardo R11). D9's details do not say which (Stacy R8, UNVERIFIED)
+- **Owner**: Kenya, Data (D9's tools, T-10); Leonardo; Stacy reads
 - **Closes at**: requirements round
 
 ### 5.3 Scope questions
