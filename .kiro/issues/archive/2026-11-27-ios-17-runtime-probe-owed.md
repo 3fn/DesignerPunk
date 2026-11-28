@@ -39,3 +39,12 @@
 - **Peter, received 2026-11-27T18:24:49Z (orchestrator relay), verbatim**: "Yes, ask Kenya and park the download".
 - **The question he is weighing, received 18:18:45Z, verbatim**: "This is making me wonder if we should just work from the most current version. Please, forgive my ignorance, but maybe we should just be running the simulations on whatever version Apple recommends at the time? Honest thoughts?"
 - **What "park" means here**: no route to an iOS 17 runtime is tried (no manual import, no CI image) until his answer to that question. The obligation stays here, and the Trigger is unchanged. His answer re-rules or closes this record.
+
+## Outcome (2026-11-28, Kenya): closed. The probe is moot
+
+- **Peter's answer to the parked question** was P-6's ruling, received 2026-11-27T18:32:45Z, verbatim: "(B), raise to iOS 18". He confirmed it at 18:36:18Z, after being told about the three iPads, verbatim: "Yes, (B) still stands, raise to iOS 18".
+- **Its effect.** The iOS minimum is 18.0: Core Goals, ballot `2026-11-27-core-goals-ios-minimum-18`, RATIFIED in #888 (`b58c73da7`) and applied in #889 (`35456bdbc`). So no iOS 17 runtime is needed, and none will be tried.
+- **The wording this record was protecting has been replaced.** It was "built for iOS 17.0, not run on 17". #889 changed the guide and INSTALL to "compiled for an iOS 18.0 deployment target" and moved `harness/pins.yaml`'s `deploymentTarget` to "18.0" (VERIFIED at `ed69ae6b2`).
+- **Evidence at the new floor is not owed here.** The release-time iOS 18.x run is item A of `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md`.
+- **This closes the record before its Trigger (`merge:#880`) fires.**
+- **Correcting my own close.** `d84b28d6a` (#886) archived this file and its message described a rule-5 outcome, but that outcome was never written. This record was therefore archived with no outcome. The commit before this one brought it back under rule 4, and this section is the missing outcome. My #879 note at `766eb242d` called the record "closed and archived". That is true only from this commit.

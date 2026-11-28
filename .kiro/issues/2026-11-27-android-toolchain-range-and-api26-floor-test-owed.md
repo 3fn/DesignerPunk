@@ -5,7 +5,7 @@
 **Class**: P2 obligation (record) · owed-act *(set 2026-11-27, Data, rule 12. Both items are promises to adopters once 132 ships a Gradle module: the range is what they may build with, and the floor is what they may target. Until this record existed, no record held either, but no reader was told anything false, so `(record)`. Not P1: nothing ships a module yet.)*
 **Trigger**: `path:.kiro/specs/132-native-components-in-app/requirements.md`. The event is Spec 132's requirements document being committed: that is where both items get the acceptance criteria that later units build to.
 - The record does **not** close there. At that event the owner re-rules this Trigger to the event that owes the close: the unit that builds D4's Android app at both range ends and adds the floor test, by its completion doc's path or `merge:#<N>` once that PR exists.
-- The record closes under rule 5 when both items below are met.
+- The record closes under rule 5 when all three items below are met.
 - **This token does not fire at the outline's merge (#880)**: the outline PR adds no `requirements.md`. Spec 132's feedback doc says the later phase files are created only when their phase opens (`.kiro/specs/132-native-components-in-app/feedback/design-outline.md` L5, at `22e21990a`).
 
 **Sources** (by path; this record is now the obligations' home, and these lines point to it):
@@ -36,12 +36,19 @@
   - The emulator run depends on the render probe's answer (`.kiro/issues/2026-11-27-android-render-probe-workflow-grant.md`) and on Spec 132 P-8.
 - **An engineering note** where the pin lives, in the module's documentation or `governance/platform-implementation-guidelines.md` (Lina's). Ballot `2026-11-05-core-goals-android-minimum` F-1 (iii) names both places.
 
+### 3. Whether raising a toolchain floor counts as a major *(appended 2026-11-28, Data, per `[THURGOOD R22]`)*
+
+- **What**: a rule, decided with item 1's numbers and approved by Peter together with them (Spec 132 P-9). It says whether raising the bottom of the supported range (AGP, Kotlin with its Compose compiler plugin, the Compose BOM, or `compileSdk`) is a breaking change that needs a major, or may ship in a minor. A `minSdk` raise is outside this rule: it moves Core Goals' number, which is a ballot.
+- **Why it is owed**: androidx raises its floors over time. The `compileSdk` 37 finding at the end of this record is one case: at BOM 2026.09.00 an app build needs `compileSdk` 37, not 36. If every raise is a major, every Compose BOM bump forces one. If no raise is, `.kiro/issues/2026-11-28-main-releasable-as-16x-until-17-0-0.md` item A has a hole: a minor can stop an adopter on the old floor from building, with no deprecation step possible.
+- **Sources**: `[DATA R6]` § 4 and `[DATA R10]` § 1, and `[THURGOOD R22]` ("append item 3 … whether raising a toolchain floor counts as a major, decided with P-9 (Data R10). The record's existing trigger stands."), all in `.kiro/specs/132-native-components-in-app/feedback/design-outline.md` on `spec/132-design-outline`.
+- **Closes with**: the rule's text, with Peter's approval quoted and dated, in the same rule-5 outcome line as item 1. The trigger above stands.
+
 ---
 
 ## What closes it
 
-Both items, recorded here with a dated rule-5 outcome line:
-1. the range numbers, with Peter's approval quoted and dated, and the two builds' run URLs;
+All three items, recorded here with a dated rule-5 outcome line:
+1. the range numbers, with Peter's approval quoted and dated, and the two builds' run URLs, together with item 3's rule and Peter's approval of it, quoted and dated;
 2. the floor test's path and a run of it, the lint setting's path, and the API-26 emulator run's URL. If P-8 leaves Android without an emulator, the outcome line records the evidence kind used instead, labelled as such.
 
 Then the record archives under rule 5.
