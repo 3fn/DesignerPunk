@@ -23,6 +23,8 @@
 - `src/generators/TokenFileGenerator.ts` L607–L621 types radius, fontSize, tapArea and borderWidth as `CGFloat` and color as `UIColor`. L666–L674 gives radius `.dp` and fontSize `.sp`.
 - **Observed (VERIFIED, 2026-11-27)**: a scratch consumer installed from `@3fn/core` 16.3.0, packed at `3a3bd072b`, declared component tokens with `family` `'radius'`, `'fontSize'`, `'color'` and `'borderWidth'`. `generate` exited 0 and wrote every one to web, iOS, Android and `token-index/components.yaml`.
 - **Observed (VERIFIED, 2026-11-27, Ada and Kenya)**: on iOS, a component token in the color, fontWeight, fontFamily, duration, easing or scale family emits Swift that `swiftc -typecheck` rejects, or that has the wrong type or unit. Color fails on both paths. This is `.kiro/issues/2026-11-27-ios-component-token-type-map-breaks-six-families.md`, PR #870, with the table and the repro.
+- **Observed on Android (VERIFIED as emitted, not compiled, 2026-11-27, Data; `[DATA R1]` in that record's § "Android")**: a duration, easing or scale token by reference emits a flat `DesignTokens.<name>` that does not exist, because those primitives are nested. By value, every one of the six families but duration emits the wrong type (an `Int`, or a `Double` for scale where the primitive is a `Float`). Color, fontWeight and fontFamily by reference compile, because Kotlin infers the type. No JDK was on the machine, so nothing was compiled.
+- **Observed on web (VERIFIED, 2026-11-27, that record's § "Not checked")**: a color or duration token by value is written as a bare number (`--probecolor-odd: 7;`, a raw `150`). It breaks no build, and it is wrong wherever it is used as a colour or a time.
 - **What was true in the old lines**: DesignerPunk's own component tokens use spacing, sizing and borderWidth only. The non-test `family:` declarations are 7 spacing, 5 sizing and 1 borderWidth (`.kiro/issues/archive/2026-10-23-served-docs-teach-non-key-token-names.md` L67, and re-counted at `3a3bd072b`). The lines turned that usage into a claim about the API. A component's colours referencing semantic tokens directly is also true, and stays.
 
 ## The fix (this PR, a CORRECTION)
@@ -30,10 +32,10 @@
 - Each of the three lines now says:
   - what the API takes (`family` is a string, and the call accepts any family);
   - what DesignerPunk uses (spacing, sizing and borderWidth; no color);
-  - the observed state on iOS ("a component token in the color, fontWeight, fontFamily, duration, easing or scale family is not supported on iOS today: its generated Swift does not compile or has the wrong type").
+  - the observed state on iOS, Android and web ("A component token in the color, fontWeight, fontFamily, duration, easing or scale family is not supported on iOS or Android today. On iOS, a token in any of these families fails to compile by reference, and by value a color token fails to compile and a fontWeight or duration token has the wrong type. On Android, a duration, easing or scale token by reference names a member that does not exist, and a token by value has the wrong type in every one of these families but duration. On web, a color or duration token by value is written as a bare number"). *(Widened 2026-11-28, Ada, from "not supported on iOS today", which understated it: #870's record was widened to Android after `[DATA R1]`, and the web value path was already in its § "Not checked".)*
 - Each line carries the `corrected` pointer (`.kiro/docs/ballots/README.md` L31).
 - The rendered charter files re-render from Token Governance's embed (Ada's, her consumer copy, and the generator fixture), and the lock refreshes.
-- The iOS clause describes a defect. When #870's record closes, its fix PR removes the clause as a CORRECTION citing that record (its Fix shape, item 4).
+- The platform clause describes a defect. When #870's record closes, its fix PR removes the clause as a CORRECTION citing that record (its Fix shape, item 5).
 - No requirement is added or changed. "A component's colors reference semantic tokens directly" was already at L162 and L580 as practice, and it is unchanged.
 
 ## The Spec 059 closure that cited L160: it needs re-reading; nothing is reopened
@@ -41,12 +43,12 @@
 Ballot `.kiro/docs/ballots/2026-11-04-waiting-spec-row.md`, row 4 (L441, L454, L658), closed `059-component-color-token-investigation`. In its words, the spec was "answered by `governance/Token-Governance.md` L160 and L556 (Lina adds L580)", which "already state it as law: `defineComponentTokens` takes numeric families only, 'there is no color family', and a component's colours reference semantic tokens directly".
 
 The closure has two grounds:
-- **The API ground is false** (above). Colour component tokens can be declared, and on iOS they are broken.
+- **The API ground is false** (above). Colour component tokens can be declared. On iOS they are broken on both paths, and on Android and web a colour by value has the wrong type.
 - **The practice ground holds.** A component's colours reference semantic tokens directly, as Avatar's do. So does 059's own Next Steps: close as "Not Needed" if no use case emerges, and none has.
 
 **My read**: the closure needs re-reading by its two seats, Ada (token API) and Lina (component tokens; she decides the component half).
 - The reason it was closed is gone.
-- The question 059 asked, whether a component should have colour component tokens, is now live in #870's record as its Fix shape item 4, a fork: allow static colour component tokens, or refuse them?
+- The question 059 asked, whether a component should have colour component tokens, is now live in #870's record as its Fix shape item 4, a fork: refuse colour component tokens (staged, a warning now and a refusal at the next major), or allow ones that follow the theme, as a new spec?
 - My lean is that the closure stands on its practice ground, and the policy question is answered where the fix is decided, not by reopening 059. That is a lean, not a ruling.
 - The ballot's text is a ledger and is not edited. I reopen nothing, and I re-rule nothing here.
 
