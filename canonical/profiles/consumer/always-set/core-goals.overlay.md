@@ -1,4 +1,4 @@
-## @unit #core-project-context @ sha256:b7713a75c7bfc484497364b8caf439b82846812d30c39474c44cf2c2aabedf7c
+## @unit #core-project-context @ sha256:e5ef0fa0ad159c39602764640e25cbd78648498d5b232a9fcb701940fac19d98
 ## Core Project Context
 
 This design system is built on DesignerPunk — a True Native cross-platform design system with mathematical foundations, built for Human-AI collaboration — and carries its principles.
@@ -11,7 +11,7 @@ This design system is built on DesignerPunk — a True Native cross-platform des
 - Human-AI partnership as foundational value
 
 **Platform Minimum Versions:**
-- iOS: 17.0+
+- iOS: 18.0+
 - Android: API 26 (Android 8.0)+
 - Web: Not yet constrained
 

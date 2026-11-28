@@ -20,7 +20,7 @@ This design system is built on DesignerPunk — a True Native cross-platform des
 - Human-AI partnership as foundational value
 
 **Platform Minimum Versions:**
-- iOS: 17.0+
+- iOS: 18.0+
 - Android: API 26 (Android 8.0)+
 - Web: Not yet constrained
 

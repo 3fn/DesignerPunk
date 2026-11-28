@@ -6,6 +6,8 @@
  * errors, warnings, and metrics.
  */
 
+import { BuildProvenanceReport } from './BuildProvenance';
+
 /**
  * Index health status
  */
@@ -41,4 +43,11 @@ export interface IndexHealth {
   warnings: string[];
   /** Index metrics */
   metrics: IndexHealthMetrics;
+  /**
+   * Whether the running build matches its source (build provenance). Present
+   * whenever the server was started as a process entry point; absent when the
+   * server is constructed in-process without a dist directory (tests).
+   * Contract: .kiro/issues/2026-11-27-mcp-build-provenance-contract.md
+   */
+  build?: BuildProvenanceReport;
 }
