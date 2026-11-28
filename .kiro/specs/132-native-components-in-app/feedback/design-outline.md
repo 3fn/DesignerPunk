@@ -2803,6 +2803,383 @@ Read at 132 outline `8d5f44c48`; 131 outline at `main` `35456bdbc`.
 - **Open, for the requirements round**: T-21, whether D9 compiles the previous release's committed catalog or regenerates it (Kenya R8, Data R8, Stacy R8, Leonardo R11).
 - **Not recorded**: Peter's "Re: 3", the web-blend defect he re-opened. It is not ruled.
 
+#### [ADA R9]
+
+**1. The proper fix: state colours become tokens, computed at build time.**
+- **What it means for a designer.** A pressed chip's colour becomes a swatch in the palette, not a sum the app does while it runs: `color.structure.surface.pressed` sits beside `color.structure.surface`.
+- **How it is computed.**
+  - The token pipeline makes each swatch from its base swatch with a written rule. For example: "pressed = 0.07 darker in OKLCH lightness, lighter on dark surfaces".
+  - It does this once per theme, after the dark, WCAG and product overrides. A product theme that changes `surface` therefore gets a correct pressed colour for free.
+- **How each platform reads them.** As every colour: a CSS variable, or a theme member. There is no blending at runtime, no parsing of CSS text, no second dark-mode switch and no `BlendTokenValues`.
+- **How contracts and tests hold them.**
+  - A contract names the state token.
+  - A pure-TypeScript test checks every state token, in every theme, against the contract's ΔL range.
+
+**2. What it settles from 133.** OKLCH over sRGB for blend; generated over hand-written; the dormant generator (deleted); the native helpers (removed; they never compiled); the `./blend` web export (deprecated in 16.x, removed at a major). **What it leaves to 133**: the `ColorTokens.ts` deletion, rgba, shadow channels and enforcement.
+
+**3. Tokens.**
+- **Kind**: semantic colour tokens of a new derived kind. Each references a semantic colour and a rule, not a primitive. The theme-varying computation must become transitive.
+- **Count**: roughly 12–16, the base and state pairs in Lina's table (UNVERIFIED). Peter reviews the names and the rule. The names are owed before the claim.
+
+**4. Size (estimates).** Pipeline 4–6 sessions (mine); components 4–6 (Lina); tests 2; 2–3 of Peter's sittings, and it needs a spec.
+- **Where it fits**: 133's blend half pulled forward, as its own unit, landing before 132's first family finalises.
+- **Web meanwhile**: the fork is Peter's.
+  - Ship C now. It is CSS-only, and the same lines later read the token.
+  - Or leave web broken until the tokens land.
+
+**5. Counter-argument I could not fold away.** Build time cannot know a colour supplied at runtime: Icon-Base's hex `color` prop, or an adopter's own colours. One small runtime OKLCH function per platform survives, and with it a small drift surface.
+
+#### [LINA R8]
+
+Read at `main` `35456bdbc`.
+
+**1. The proper fix: state colours become colours the token pipeline has already worked out, and components stop computing them.**
+- **How components get them.** `generate` works out every hover, pressed and focus colour once, per theme (light, dark, wcag and the adopter's own), in one colour space. It writes them out like any other theme colour. A chip then reads "surface, pressed" exactly as it reads "surface". No platform blends at runtime and nothing parses CSS text, so there is no missing native function and no P3/sRGB mix-up, and switching theme needs nothing extra. Of the four causes, this removes three: the parse on web, the missing function on native and the colour-space mix-up. The fourth, untested output, is item 3 below.
+- **The one exception.** A colour that is passed in, such as Icon-Base's `color` prop, still needs a runtime function. That function is generated from the same maths and is the only blend API left public.
+- **The tests.**
+  - The token level carries the main proof, written once. For every state colour in every theme, ΔL is inside the contract's range, and a known-bad twin (an unchanged colour) fails.
+  - Each platform then proves only the wiring:
+    - web: jsdom with the real emitted token CSS loaded;
+    - iOS and Android: compile at zero, then 132's D5 and D6 render tests.
+  - `InteractionStateAudit` is retired. That is Thurgood's.
+
+**2. Contract changes**
+- **One colour space.** Ranges are stated once, in OKLCH, and the "12%" and maths wording is removed. A different maths that stays inside the range is then not a break.
+- **Dark surfaces.** One rule for every contract: lighten on dark surfaces. The measured darkening there is −0.034, which is barely visible. It is a design fork, so it is Peter's.
+- **Icon-Base.** Its range is impossible on white. Restate it as "lighter by 0.02–0.04 where there is room; unchanged at L ≥ 0.96".
+- **Chip-Filter.** Its selected-and-pressed state is held to the inherited pressed range.
+
+**3. Size** (ESTIMATE)
+- **Web**: 1 session for the contracts and 2–3 to rewire and test all 12 components.
+- **Native**: 2–3 sessions for the 9 that call blend, on both platforms. They are Button-CTA, Chip-Base, Chip-Filter, Chip-Input, Container-Base, Container-Card-Base, Icon-Base, Input-Text-Base and Nav-TabBar-Base (VERIFIED by grep).
+- **Total**: about 6–8 sessions, plus Ada's generator work and a sitting for Peter's token review.
+
+**4. Counter-argument I could not fold away.** This fix is 133's blend half brought forward. It creates about 15–20 state tokens per theme and has to decide OKLCH or sRGB now. So it cannot be quick, and web has already been broken for five months. Either web stays broken until it lands, or C ships first as the band-aid Peter wants to avoid. That fork is Peter's.
+
+#### [KENYA R9]
+
+**1. The proper fix on iOS: state colours become generated theme values, not maths run on the device.**
+- **Where they come from**: the generator works out each pressed or hover colour once per theme, at build time, by a rule written down in the contract's ΔL ranges. That includes adopters' own themes. Each one is emitted as a member of `DesignerPunkTheme`, for example `theme.colorStructureSurfacePressed`. These are new system tokens, so Peter reviews them.
+- **How SwiftUI applies them**: Chip-Base already uses a `ButtonStyle` with `configuration.isPressed` (VERIFIED, `ChipBase.ios.swift` L271–292). It would choose `theme.…Pressed` instead of calling `.pressedBlend()`.
+- **Hover on iOS**: only an iPad with a pointer has hover, through `.onHover`. An iPhone has none.
+- **Dark mode and `\.dpTheme`**: `\.dpTheme` is the only switch. Each theme carries its own state colours, so a dark theme can lighten where its contract says so.
+- **How a test proves them**:
+  - A Jest test asserts each emitted pair's ΔL against the contract range, per theme.
+  - For D5, a fixture-only override forces the pressed state, and the element screenshot is sampled against the token. Capturing a screenshot in the middle of an XCUITest press is UNVERIFIED.
+
+**2. What breaks or gets simpler**
+- **It gets simpler.** The iOS blend file is deleted, and with it:
+  - `ThemeMode` and `themeMode`;
+  - `BlendTokenValues`;
+  - the provider;
+  - the `Color` and `View` extensions;
+  - the 10 pinned `darkerBlend` errors (VERIFIED).
+- **The `@_spi` question disappears**, and the new public surface is generated theme members that the API diff already reads.
+- **No adopter breaks**, because the file has never compiled (VERIFIED).
+- **Seven iOS component files call the blend helpers** (VERIFIED by grep), not only the chips.
+
+**3. Size (estimate, low confidence)**: about 1.5–2.5 iOS sessions, for the 7 files, the forced-state fixture and D5's pressed sampling. Ada's generator and token work is not included.
+
+**4. Counter-argument I could not fold away**: runtime blending goes away. An adopter's own component on an arbitrary brand colour gets no pressed colour unless it declares a state token. "Build more" becomes harder.
+
+#### [DATA R9]
+
+**1. The proper fix on Android: no blending while the app runs.**
+- **Where the colours come from.** Each pressed or hover colour becomes a theme-varying semantic token, computed at build time by the pipeline, in whichever colour space 133 picks. It is emitted on `DesignerPunkTheme` like every other colour. Each theme computes its own value, so `BaseDark` can lighten where its contract says lighten.
+- **How Compose applies them.**
+  - `val pressed by interactionSource.collectIsPressedAsState()`, and the same for hover.
+  - Then `background(if (pressed) theme.<x>_pressed else theme.<x>)`, optionally through `animateColorAsState` with a motion token.
+  - `indication = null`, or our own `IndicationNodeFactory`, so Material's ripple doesn't add a second state layer on top.
+- **Dark mode.** The `<Name>Theme` provider picks the instance. That is the only dark-mode switch.
+- **P3 and sRGB.** Each state colour is emitted as Display P3, like the rest of the colour tokens, so nothing converts colour spaces while the app runs. Whether today's emitted values are read correctly on a device is UNVERIFIED.
+- **How a test proves it.**
+  - A JVM test checks that each theme's rest and pressed pair falls inside the contract's ΔL range. The expected values are computed from token source, not from Kotlin.
+  - An emulator test presses the component (`performTouchInput { down(center) }`) and samples `captureToImage()` against the token's value.
+  - Each test has a known-bad case: pressed equal to rest must fail.
+
+**2. What changes compared with today's blend file.** The hand-written Android blend file is deleted. That removes the second dark-mode switch, the package collision, the public `BlendTokenValues`, and the visibility question for 17.0.0. Removing it breaks nothing that works, because `pressedBlend` does not compile today (REASONING, from the brief). It adds tokens, and each one needs Peter's creation review.
+
+**3. Size on Android: about 2–3 sessions for the first family**, plus about 0.2 per later component (estimate). The generator work is Ada's and is not counted here.
+
+**4. The counter-argument I could not fold away.** Build-time tokens cover only colours we know at build time. An adopter's component with its own colour, or a colour chosen while the app runs, still needs either a runtime blend or its own state tokens. So the runtime helper does not disappear for D10.
+
+#### [THURGOOD R13]
+
+Read at `main` `35456bdbc` and 132 outline `88a7da010`.
+
+**1. The vehicle**
+
+All three run the full gates.
+- **133, split into a blend unit**: the most expensive. 133 is a placeholder with no round, and a unit exists only once tasks declare it. All of 133's outline round runs now, deferring the rest explicitly.
+- **A new, small spec**: one directory and outline, a priorities walk-log line, a pointer on 133's outline, and Ada re-ruling the blend/OKLCH charter record to it. Short rounds; it can ship the web fix in a 16.x, apart from 132.
+- **A unit inside 132**: no extra rounds, but it reopens S-1 (no web work in 132, CLOSED) and ties a live web defect to 132's first family.
+- **My pick is a new spec.** Choosing between that and the 132 unit is a fork for Peter.
+
+**2. What it changes**
+- **P-7's "blend API shape" condition** becomes the state-token names plus the ΔL test; D9 already covers generated tokens (T-10), and Ada's decision record becomes the new spec's design. It was ruled, so the change is Peter's.
+- **Priorities**: the new spec runs alongside 132's requirements round, ahead of 131. A record, not law.
+- **133**: keeps the deletion, rgba, shadows and enforcement.
+- **The forecast column** gets smaller: blend drops out of it, and the blend repair leaves 132's shared-costs row.
+
+**3. Order**
+- The new spec's outline, including Peter's token-creation review → its requirements, design and tasks → its token units, which merge before 132's first family reaches D5.
+- 132's requirements round can run in parallel if it names the state tokens as an input.
+- 132's design waits only on the new spec's token names.
+
+**4. Counter-argument I could not fold away**
+
+Build time cannot know a colour chosen while the app runs, such as Icon-Base's hex prop or an adopter's brand colour (Ada, Kenya, Data). One runtime function per platform survives, so "delete the native blend files" overstates it.
+
+#### [LINA R7]
+
+This is an investigation only. Nothing in the repo was edited, committed or pushed: `git status --porcelain` on Peter's checkout prints 0 lines. Read at `main` `35456bdbc`. The scripts are in `/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/2b12756f-4507-4804-a670-8900c65ec7d2/scratchpad/web-blend-lina/`:
+- `__tests__/web-blend-repro.test.ts`, run with `jest.scratch.config.js`. All 8 tests pass.
+- `delta.js`, for the ΔL figures.
+
+**1. Root cause, confirmed (VERIFIED, reproduced)**
+
+**Where the value comes from.** Since Spec 112 (`71120a5d9`, v12.0.0, 2026-06-10), the web generator writes colours as `oklch(l c h)` (`src/providers/WebFormatGenerator.ts` L602–604). Before that commit the source values were `rgba(…)`, which the parser handled. The surface token is `--color-structure-surface: oklch(0.95 0.006 260)` (`dist/DesignTokens.web.css` L563). Canvas is `light-dark(oklch(1 0 260), oklch(0.42 0.018 260))` (L562).
+
+**Where it fails.**
+1. Chip-Base reads the token as raw text (`ChipBase.web.ts` L183) and passes it to `hoverColor`/`pressedColor` (L190–191).
+2. Those call `darkerBlend`, which calls `hexToRgb` (`ThemeAwareBlendUtilities.web.ts` L150–152).
+3. `hexToRgb` accepts only `rgb(a)` or hex. For anything else it throws `Invalid hex color` (`ColorSpaceUtils.ts` L141–151).
+4. `darkerBlend` catches the error and **returns the input unchanged** (L153–157).
+
+**The repro.**
+- In a real `chip-base` element in jsdom, both `--_chip-pressed-bg` and `--_chip-hover-bg` come out as `oklch(0.95 0.006 260)`, exactly the rest surface.
+- All six token inputs that the components use come back unchanged from hover, pressed, focus and icon.
+- A hex control (`#EDEEF1`) does blend, to `#D1D1D4`.
+- Nothing warns in a browser: the parse error is swallowed silently.
+
+**2. Blast radius (VERIFIED by grep; every one is served web `production-ready`)**
+
+13 web components import `getBlendUtilities`. 12 of them feed it `oklch()` or `light-dark()` text:
+
+| Component | Input | What shows today |
+|---|---|---|
+| Chip-Base, Chip-Filter, Chip-Input | surface | No background change on hover or press. Only the border changes to primary |
+| Button-CTA | action.primary, contrast.on-action | No hover or pressed background change, and no icon optical balance |
+| Button-Icon | action.primary | Primary: no background change. Secondary and tertiary: the hover/pressed border and text keep the rest colour |
+| Button-VerticalList-Item | canvas (`light-dark`) | No hover or pressed background change |
+| Container-Base, Container-Card-Base | surface, surface.primary, canvas | No hover or pressed change when interactive |
+| Input-Checkbox-Base, Input-Radio-Base | select.border.default | The hover border equals the default border |
+| Input-Text-Base | action.primary | The focus colour is not saturated. That is minor: the focus border is still visible |
+| Input-Text-Password | canvas | No hover on the toggle |
+
+- **Inherited through these**: Input-Checkbox-Legal, Input-Text-Email, Input-Text-PhoneNumber, Input-Radio-Set and Button-VerticalList-Set.
+- **Not affected**: Icon-Base's own optical balance blends only hex input (`IconBase.web.ts` L190), and that case works. No component outside the 13 uses this path.
+- **The contracts promise more than this path could deliver.** Button-CTA, Button-Icon, Button-VerticalList-Item, Container-*, Input-Checkbox-Base, Chip-Base and Icon-Base all state OKLCH ΔL ranges. Several also state a "surface-aware direction", meaning the colour lightens on dark surfaces.
+- **Not this path, but adjacent**: Chip-Filter's selected chip shows the same background on hover and press as at rest (`ChipFilter.styles.css` L44–57).
+
+**3. Fix options**
+
+All three use existing tokens only. `--blend-hover-darker` and `--blend-pressed-darker` are already emitted (`dist/DesignTokens.web.css` L803–805).
+
+**A. Parse `oklch()` and `light-dark()` in the helper.** Convert to sRGB, then run the existing RGB maths.
+- **Size**: about 1 session for Ada, plus about 0.5 for my component tests.
+- **Touches**: `src/blend` (Ada's).
+- **Browsers**: no new requirement.
+- **Public export**: `hexToRgb` is exported from `@3fn/core/blend`. A accepts more input than before, which is additive, so 16.x stays releasable.
+- **Later redo**: if 133 picks OKLCH, the maths is redone. It matches native's algorithm, so it doesn't conflict with how 132 settles the API shape.
+- **Leaves behind**: JS still parses CSS text, which is the class of failure that just happened. Colours are still computed once, so a live switch to dark mode leaves them stale (that was already true).
+
+**B. Use the existing, unwired `OklchBlendCalculator`** (`src/blend/OklchBlendCalculator.ts`). It is surface-aware and meets the contract ranges by construction.
+- **Size**: 2–4 sessions, led by Ada. It needs an API decision, because the helper today receives no surface colour.
+- **Touches**: `src/blend`.
+- **Public export**: the exported `hoverColor`/`pressedColor` would change their output.
+- **Later redo**: this **decides 133's OKLCH question for web ahead of 133**, and splits web's maths from native's.
+
+**C. Blend in CSS.** For example `--_chip-pressed-bg: color-mix(in srgb, var(--color-structure-surface), black calc(var(--blend-pressed-darker) * 100%))`, with the JS colour calculation removed from the components.
+- **Size**: 2–3 sessions.
+- **Touches**: my 12 components only.
+- **Public export**: no change.
+- **Theme changes**: it follows theme and dark-mode switches live.
+- **Maths**: the same as A and the same as native.
+- **Later redo**: if 133 picks OKLCH, the change is the `in srgb` keyword in each rule.
+- **Browsers**: `color-mix()` already ships in Avatar (`Avatar.styles.css` L291). The token CSS already requires `light-dark()` (11 uses, VERIFIED), whose browser floor is above `color-mix()`'s, so C adds no new requirement. Those browser floors are UNVERIFIED; I am stating them from memory.
+
+**A and C do not fully meet the contracts' ranges** (`delta.js`):
+- **Out of range**:
+  - hover on surface −0.058 and on light canvas −0.060, against 0.02–0.05;
+  - pressed on dark canvas −0.034, which also darkens where the contracts say "surface-aware";
+  - pressed on wcag primary −0.045.
+- **In range**: chip pressed −0.088, the base primary at −0.046 hover and −0.069 pressed, and the select border.
+
+**4. Why no test caught it (VERIFIED)**
+- **The helper tests use only hex.** They also assert that an invalid input is returned unchanged, as if that were the intended behaviour (`ThemeAwareBlendUtilities.test.ts` L186–190).
+- **The component tests never load the token CSS.** The resulting warning is silenced as "environmental" (`ChipBase.test.ts` L43–53).
+- **`InteractionStateAudit.test.ts` names these components** in its header, but it tests `OklchBlendCalculator`, which none of them uses. That is false assurance, and it belongs to Thurgood (and Stacy, for the claim).
+- **The blend record is wrong.** Its line "interaction states still render correctly" is false (`.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` L65). That record is Ada's.
+
+**Tests that would catch it.**
+- A jsdom test that takes the colour strings `WebFormatGenerator` actually emits, feeds them through each component, and asserts the hover and pressed values differ from rest, with ΔL inside the contract range. It would fail today. This works for A and C, but under C, jsdom cannot evaluate `color-mix()`, so the test would compute the mix itself.
+- A real-browser ΔL check is the only true render proof. The repo has no browser tooling, so that is new infrastructure (Thurgood, Sparky, and a grant).
+
+**5. Recommendation: fix first, leave the text unchanged.** I lean C. A is the fork, and the pick is Peter's.
+- **Size**: about 3 sessions including tests. The quick route is A, at 1–1.5 sessions.
+- **Why fixing first**: correcting the served text first means editing 13 production-ready components' served text now, then editing it again after the fix. That is the stream of messages Peter wants to avoid.
+- **Counter-argument I could not fold away**: neither quick fix makes the served contract text true. Hover runs about 0.01 past its range on light surfaces, and dark surfaces darken where the contracts promise surface-aware lightening. "Text unchanged" therefore knowingly leaves those ranges unmet until 133, unless we take B, which decides 133's question early in Ada's surface.
+
+**Consulted**: Ada — owed, if A or B is chosen. C does not touch `src/blend`, but she should still read it, because it moves the web blend out of her helper.
+
+#### [ADA R8]
+
+**1. My pick: C.**
+- **Why it beats A**: A has to pick a branch of `light-dark()` text in JS, and the computed value doesn't say which scheme applies. It also keeps the failure class: JS parsing CSS text once, stale after a theme switch.
+- **Why it beats B**: B decides 133's OKLCH question early, and only for web.
+- **Same maths**: `color-mix(in srgb, …, black 12%)` mixes in gamma-encoded sRGB, the same maths as the native generator's.
+- **16.x stays releasable**: no export changes.
+- **What 132's shape undoes**: nothing, because the shape is native.
+- **What 133 undoes**: one keyword per rule, plus `light-dark()` if it adopts lightening on dark surfaces.
+- **Size**: Lina's estimate, 2–3 sessions. Mine is about 0.
+
+**2. Her ΔL figures are right.** They match my R6 run (−0.087 pressed, about −0.058 hover, on L 0.95). The ranges came from the orphaned OKLCH calculator, so they describe a design that was never delivered. Leave the wording for 133: changing it now means changing served text twice. Carry the misses as known-bad in her test and the new defect record, so the gap is written down.
+
+**3. I correct my blend record.** It goes in a record-only PR opened alongside her fix, citing [LINA R7] and the new defect record. I re-read its Class too: its "render correctly, not P1" reason has fallen.
+
+**4. Counter-argument I couldn't fold away.** C fixes our components, not the public `@3fn/core/blend` web export. An adopter who calls `getBlendUtilities` with our token text still gets the colour back unchanged, with no error. The fork: add A's `oklch()` parse (about 1 session), or deprecate the export toward 133.
+
+#### [THURGOOD R14]
+
+Read at `main` `35456bdbc` and 132 outline `88a7da010`.
+
+**1. As stated: no. With both adjustments: yes.** What decides it is enforcement. "Complete 133" includes the slowest part, which saves adopters nothing (Ada R4) and arms better once native families settle (Lina).
+
+**2. What it changes**
+- **P-7 needs re-ruling.**
+  - Item 1 stands, but its blend condition becomes the state tokens, which 133 delivers first.
+  - Items 5 and 6 become moot: the re-decision, Ada's forecast, and that "Decisions this record reopens" row.
+- **The vehicle**: R13's new small spec is superseded, and 133 carries the fix. Its whole outline round runs now.
+- **131's park** still re-asks at the measured-cost record, so 131 now waits behind 133's token half as well. Keeping or re-placing it is Peter's call, on the record.
+- **Priorities**: 129 → 133's token half → 132's first family → re-placement against 131 → 131 → 128 → 130, then 133's enforcement. A walk-log line.
+- **What #880 still carries**:
+  - Kenya and Data's close, with the real-app record;
+  - the § 7 row for the 16.x rule;
+  - 132's own park line, re-asking at the path of 133's token-half completion doc;
+  - 133's `open` outcome line, which is mine to write.
+
+  The P-7 (B) record drops out.
+
+**3. Adjustment 2**: agreed. Enforcement becomes 133's last declared unit, with a cross-spec dependency on 132's first family. Cost: 133 stays open across 132.
+
+**4. Order to 133's requirements** (estimate, low confidence)
+1. Finish sitting 2.
+2. Reshape 132's outline.
+3. The close commit.
+4. #880 merges.
+5. 133's outline round: Step 0 over its seven records, R1, a cross-read, then Peter's approval.
+6. 133's requirements.
+
+That is about 3–5 of Peter's sittings.
+
+**5. Counter-argument I could not fold away**: 132's outline rests on measurements that move: Kenya's iOS 26.0 spike, the `macos-15` 18.x image and the toolchain pins. Parked through 133, it needs a refresh pass, and some of tonight's answers get re-read.
+
+#### [ADA R10]
+
+**1. As stated: no.** The direction is sound, but "complete 133" includes enforcement. That holds 132 for months, gives adopters nothing, and arms better once native files settle.
+
+**2. Units, in order** (all sizes are estimates):
+
+| Unit | What it does | Sessions | Peter's sittings |
+|---|---|---|---|
+| 0. Outline round | Formalising 133 | 3–5 | 1–2 |
+| U1. State tokens | A derived semantic kind; transitive theme-varying; web rewired, which ships the fix in a 16.x; native call sites; one generated runtime function per platform for caller colours; `./blend` deprecated; the dormant generator deleted | 13–17 (Ada 4–6, Lina 3–4, Kenya and Data 4–5, tests 2) | 2: the names, the rule, dark lightening |
+| U2. `ColorTokens.ts` deletion and rgba cleanup | Deprecate in 16.x, delete in 17.0.0 | 6–10 | 1 |
+| U3. Shadow channels | — | 2–3 | 1: token creation |
+| U4. Enforcement | — | 10–18 | 2–3 |
+
+U2 and U3 can run in parallel after U1.
+
+**3. The handoff**
+- **132 → 133**:
+  - the native theme surface: theme members, access level, the fixed binding names;
+  - T-14's family filter for state-token groups;
+  - D9 reading the new members.
+- **133 → 132**:
+  - the state-token names and their per-theme emission, which replace P-7's "blend API shape";
+  - the public name of the runtime function, for D10;
+  - the blend files gone, so their pinned harness entries are dropped in 132's act;
+  - the ΔL contract wording (Lina's).
+
+**4. Adjustment 2: agree.** State tokens leave no literal to allow. One caution: until enforcement is armed, review 132's native code by hand for hard-coded colours.
+
+**5. Counter-argument I couldn't fold away.** Even trimmed, the native goal waits 25–35 sessions behind colour work. U2 adds nothing adopters see before 132; it only buys "colour settled once, in 17.0.0". Whether that's worth the wait is Peter's fork: U2 before 132, or after.
+
+#### [LINA R9]
+
+**1. Gut-check: yes, sound, with one change.** What decides it for me: the proper fix (state colours as tokens, plus one colour space) is 133's blend half. If we do it first, the first family is built once, against final colours. Contracts are restated once, no blend aliases are needed, and adopters get one message. The change is to enforcement, below.
+
+**2. Enforcement armed before any native family exists.** What it would cost:
+- **Native detectors gate code that does not compile yet**: 45 iOS and 89 Android pinned entries. 132 then rewrites that code, family by family.
+- **The false-positive policy gets set too early.** It would cover platform colours and previews (73 hits in 15 native files, unclassified) before 132's WP4 decides which previews stay. So it is decided twice.
+- **Each family unit gets extra work**: it fights allowlists while it repairs.
+
+What holds up:
+- **Web armed in 133**: component CSS, `.web.ts` and demos.
+- **Native detectors wired in 133 as report-only**: they report, they block nothing.
+- **Native armed per family in 132**, in the unit where that family's compile reaches zero (T-14 (ii)).
+
+That keeps enforcement inside 133, which Peter asked for. The register row has to say plainly that native is report-only until each family's unit.
+
+**3. Component work**
+
+**In 133:**
+- **Contracts**: the ranges in OKLCH only, the dark-surface rule and Icon-Base's range. These are platform-neutral, so this is done once.
+- **Web**: all 12 call sites rewired to the state tokens and tested against the real token CSS, including Chip-Filter's selected-and-pressed state.
+- **Native**: all 9 call sites swapped mechanically to the theme's state tokens, with Chip-Filter's selected-and-pressed state on both platforms. The 129 harness proves the compile.
+  - This deletes the blend repair and most of the hand-written blend API. P-7's "blend shape" condition then shrinks to Icon-Base's runtime function.
+
+**Stays in 132:** native render and contract proof (D5, D6), access levels, and the remaining D3 repair per family.
+
+**4. Counter-argument I could not fold away.** 133 chooses the native state colours with no native render proof; that proof is 132's D5. If D5 shows a problem on a device, for example in how P3 colours render, the tokens reopen after adopters were told colour is settled. Meanwhile the native goal waits through 133's round from zero, weeks to months.
+
+#### [PETER] pivot
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`.*
+
+**The question that opened it**: Peter's "Re: 3" (received 2026-11-28T03:32:51Z, verbatim: "Re: 3, This feels like band-aiding the problem that could be spent properly fixing it. What's the proper fix?"). The seats answered with one proper fix (`[ADA R9]`, `[LINA R8]`, `[KENYA R9]`, `[DATA R9]`), and Thurgood priced its vehicle (`[THURGOOD R13]`). `[LINA R7]` and `[ADA R8]` are the web-blend investigation behind it.
+
+**His proposal**:
+- Received 2026-11-28T03:38, approximately (the turn before), verbatim: "I'm half tempted to pivot to 133 and following-up with 132. Honest thoughts?"
+- Received 2026-11-28T03:40:05Z, verbatim: "My proposal is the settle 132's design outline with the understanding we'll complete 133 before proceeding with 132. Let's gut-check that with Thurgood, Ada and Lina first, please". The gut-checks: `[THURGOOD R14]`, `[ADA R10]`, `[LINA R9]`.
+
+**What he was asked, as put to him after those three**:
+1. Adopt the revised plan, in this order: (i) finish 132's outline: the remaining questions, the reshape, Kenya and Data's close commit, and #880's merge; (ii) 133's outline round; (iii) 133 U1, state colours as tokens (the proper blend fix), which also ships the web fix in a 16.x; (iv) 133 U2 (the `ColorTokens.ts` deletion and the rgba cleanup) and U3 (shadow channels); (v) then 132, built against final colours; (vi) 133's enforcement last, after 132's first family. Lina's web-first and native-per-family arming is detail for 133's outline round. He was also told what changes:
+   - P-7 is re-ruled. 17.0.0 still carries 132's first family, and its blend condition becomes "133's state tokens". The (B) re-decision, Ada's forecast column and the "Decisions this record reopens" row drop out.
+   - Thurgood R13's small spec is superseded, because 133 carries the fix.
+   - The order becomes: 129 → 133's token half → 132's first family → re-placement → 131 → 128 → 130 → 133's enforcement.
+   - #880 still carries the close commit, the real-app record, the § 7 "16.x stays releasable" row, and park lines pointing 132 at 133.
+2. U2 before or after 132.
+3. 131 stays where it is, re-asking at the measured-cost record, or not.
+4. Ship Lina's CSS web fix now, as U1's first step, or wait.
+
+**Received**: 2026-11-28T03:45:37Z. **Verbatim**: "Yes to 1, U2 before 132, keep 131. Re: 4, rejected. I don't think U1 will take "weeks" as projected."
+
+**What is ruled**:
+- Item 1, the plan, adopted. It trims his 03:40:05Z proposal: 133 is not completed before 132, because enforcement comes after 132's first family.
+- The proper fix, state colours as derived semantic tokens computed at build time in OKLCH, adopted as 133 U1. Creating those tokens still needs his review at 133's token-review sitting, and so does dark-surface lightening.
+- Item 2: U2 before 132. Item 3: keep 131 where it is.
+- Item 4: rejected. The web fix waits for 133 U1. His reason is the verbatim sentence above; the "weeks" estimate was the orchestrator's, not a seat's.
+
+#### [THURGOOD R15]
+
+*2026-11-28. The ten files above are spliced byte for byte from `consults-2026-11-27/answers-132/`, in the orchestrator's order: `ada-blend-proper-fix.md`, `lina-blend-proper-fix.md`, `kenya-blend-proper-fix.md`, `data-blend-proper-fix.md`, `thurgood-blend-vehicle.md`, `lina-web-blend-investigation.md`, `ada-web-blend-fix.md`, `thurgood-pivot-133.md`, `ada-pivot-133.md`, `lina-pivot-133.md`. The order puts `[LINA R7]` after `[LINA R8]` and `[ADA R8]` after `[ADA R9]`; the stamps are the seats'.*
+
+- Recorded the pivot as RULED. → design-outline.md § 3, § 4.4, § 5.1
+- **Folded**:
+  - § 3: the order, with (x′)'s text kept as what it replaces;
+  - § 3: the measured-cost record's form loses its 133 forecast column and its "Decisions this record reopens" row;
+  - § 4.4: "the native blend API's shape" becomes 133's state tokens;
+  - § 5.1: P-7 is marked re-ruled, and the pivot is added with its owed acts.
+- **Owed, none filed here** (each in design-outline.md § 5.1, "The pivot"):
+  - the priorities walk-log line and § 7 row, and 133's `open` outcome line (mine);
+  - 132's park line, re-asking at `path:.kiro/specs/133-color-track/completion/token-half-complete.md` (mine, in its own commit after the reshape and the close, because an outcome line changes no other line of the outline);
+  - Lina's web pressed and hover defect record;
+  - Ada's correction to the blend record;
+  - `InteractionStateAudit.test.ts`'s false assurance (mine as test-governance owner; Stacy on the claim side).
+- **Left for the reshape**: § 2 still books the blend repair as the first family's shared cost (the 4 pinned entries per platform, the measured-cost record's shared-costs row). Under U1 those blend files are deleted in 133, and their pinned entries are dropped in 132's act (Ada R10's handoff).
+
 ---
 
 ## Requirements Feedback
