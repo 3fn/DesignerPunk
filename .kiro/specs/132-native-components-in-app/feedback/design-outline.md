@@ -3334,6 +3334,50 @@ I would change nothing in her names or definitions.
   - Stacy: Spec 005's Dynamic Type claim, as a false-claim finding.
 - **Left for the reshape**: P-13's question still says "Ada lists them before this sitting". Her list is in `[ADA R3]`.
 
+#### [LINA R12]
+
+**1. My decision as owner: (A), one field. This reverses my R3.**
+- **The pivot decides it.** With 133 first, the caret and selection fix (#885) can ride 133's state-colour unit. In that unit the selection highlight becomes one more state colour, on all three platforms, before any 132 render lane exists.
+- **What (B) was for.** Its one real job was to tell an adopter's agent which pixels the theme doesn't reach. Once #885 lands, there are none.
+- **What is left.** A list field with no entries. The render tests also stop needing a region to skip, because the text field's colours become ours.
+
+**2. Leonardo's strongest point, and my answer.** His point: fixing the gap is better for adopters than describing it. I take it in full. I fix the gap rather than describe it.
+
+**3. The shape I'd ship**, per platform (web, iOS, Android):
+```yaml
+rendering:
+  ios:
+    kind: drawn        # drawn | platform
+    reason: "Drawn container around the system text field; the system draws text, caret and selection in the theme's colours."
+```
+Two conditions:
+- Until #885 merges, the iOS reason says plainly that the caret and selection follow the app's tint.
+- When a second component wraps a system control, structure is revisited (Leonardo's trigger).
+
+**4. The over-claiming guard.** The risk is a component claiming "the system draws it" to escape a colour check.
+- I make the schema validator reject a missing reason.
+- The render lanes sample every `drawn` component whole, with no skipped regions. Those lanes are Kenya's and Data's.
+- Stacy reads every `platform` value and every reason at the claims pass.
+
+**5. Counter-argument I couldn't fold away.** Everything above rests on iOS `.tint` reaching the text selection as well as the caret, and that is UNVERIFIED until Kenya checks it. If it doesn't, iOS keeps a part our theme can't reach, and (B) was right. The fork then reopens before Input-Text-Base's family claims.
+
+#### [PETER] P-16
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`.*
+
+- **What he was asked**: options (A), (B) and (C) as in design-outline.md § 5.1. The orchestrator recommended (C), Lina deciding as schema owner with Leonardo's counter recorded. What survives, as he was told: against (A), prose is not machine-read; against (B), a field with one use, whose guard is a read and not a test.
+- **Received**: 2026-11-28T04:24:26Z. **Verbatim**: "I'm leaning (C), but I'd like to review the decision with Lina before committing to it fully."
+- **Lina's review** (`[LINA R12]`, spliced above): she picks (A), reversing her R3, because the pivot lets #885's caret and selection fix ride 133 U1 before 132's render lanes. The shape she would ship is per platform, `rendering: { kind: drawn | platform, reason }`. Until #885 merges, the iOS reason for Input-Text-Base says the caret and selection follow the app's tint. Structure is revisited if a second component wraps a system control (Leonardo's trigger). Her guards: the schema validator rejects a missing reason (Lina); Kenya's and Data's render lanes check every `drawn` component whole, with no skipped regions; Stacy reads every `platform` value and its reason at the claims pass. What survives: whether SwiftUI `.tint` colours the text selection as well as the caret is UNVERIFIED until Kenya checks it; if it does not, (B) was right, and the choice reopens before Input-Text-Base's family is claimed.
+- **Received**: 2026-11-28T04:39:39Z. **Verbatim**: "Confirm (C), with Lina's (A) and the guards".
+
+#### [THURGOOD R18]
+
+- `[LINA R12]` (`lina-p16-review.md`) is spliced above, byte for byte.
+- Recorded P-16 as RULED: (C), with Lina's (A) and the guards. T-1 is CLOSED. → design-outline.md § 5.1, § 5.2
+- **Owed, none filed here** (design-outline.md § 5.1, P-16): the `.tint` selection check (Kenya); moving #885 into 133 U1, for 133's outline round (Ada and Lina); the schema validator change (Lina).
+- **Receipt time**: the orchestrator's brief first gave a placeholder for Peter's confirmation, then corrected it to 2026-11-28T04:39:39Z, the `date -u` stamp taken on receipt. That time is used here and in the outline.
+- **Left for the reshape**: T-1's fact "the component needs one new identifier on the field under either shape" was written for (B)'s part exclusion. Under (A), with render lanes that skip no region, Lina should say whether the identifier is still owed.
+
 ---
 
 ## Requirements Feedback

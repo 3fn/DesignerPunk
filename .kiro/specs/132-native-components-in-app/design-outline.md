@@ -352,6 +352,12 @@ Each lands before the release that first claims native support, which is **17.0.
 
 #### Answered so far in this round
 
+- **P-16, the `rendering:` schema shape: RULED** (C), Lina deciding as schema owner, and she decides (A). Peter, received 2026-11-28T04:24:26Z, verbatim: "I'm leaning (C), but I'd like to review the decision with Lina before committing to it fully." Then, after Lina's R12, received 2026-11-28T04:39:39Z, verbatim: "Confirm (C), with Lina's (A) and the guards". Record: `feedback/design-outline.md` § "[PETER] P-16".
+  - **The shape**: per platform, `rendering: { kind: drawn | platform, reason }`. Until #885 merges, the iOS reason for Input-Text-Base says the caret and selection follow the app's tint. Structure is revisited if a second component wraps a system control (Leonardo's trigger).
+  - **Why (A) now** (Lina R12, reversing her R3): the pivot lets #885's caret and selection fix ride 133 U1, before 132's render lanes exist.
+  - **The guards**: the schema validator rejects a missing reason (Lina); Kenya's and Data's render lanes check every `drawn` component whole, with no skipped regions; Stacy reads every `platform` value and its reason at the claims pass.
+  - **What survives**: whether SwiftUI `.tint` colours the text selection as well as the caret is UNVERIFIED until Kenya checks it. If it does not, (B) was right, and the choice reopens before Input-Text-Base's family is claimed.
+  - **Owed, with owners, none filed in this outline**: the `.tint` selection check (Kenya); the proposal to move #885 into 133 U1, for 133's outline round (Ada and Lina); the schema validator change (Lina).
 - **P-13, the token review: RULED**, in three parts. Record: `feedback/design-outline.md` § "[PETER] P-13".
   - **Part 1, the approach**, Peter, received 2026-11-28T03:57:33Z, verbatim: "Approve part 1".
     - Every typography semantic gets a size-band scale role, per Ada's § 1 table (`[ADA R3]`): fine, compact, body, bodyLarge, headingSm, headingMd, headingLg, display. A band, not a job name.
@@ -540,6 +546,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-16 *(new)* (order 8)
 
+- **RULED** 2026-11-28: (C), with Lina's (A) and the guards ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **The `rendering:` schema shape** (T-1).
   - The two seats exchanged positions three times; each says in its last entry that they converge, on different shapes.
   - Lina owns the schema (her record; Leonardo consulted), so under the owner rule the pick is hers; the orchestrator routes it to you because the exchange did not settle
@@ -593,14 +600,14 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 #### T-1: The `rendering:` shape
 
-- **State after the cross-read**: **To Peter as P-16.** Facts both seats agree on:
+- **State after the cross-read**: **CLOSED** by P-16 (**RULED**, 2026-11-28T04:39:39Z): (C), with Lina's (A), one field, and the guards (§ 5.1). It went to Peter as P-16. Facts both seats agree on:
   - Input-Text-Base on iOS is drawn chrome around a system text field, the only such case in the catalogue (VERIFIED, Leonardo and Lina by grep);
   - Android's caret is ours (`InputTextBase.android.kt` L328);
   - neither platform themes the selection, and iOS does not theme the caret (Lina's record, #885);
   - behaviour stays out of `rendering:`;
   - the component needs one new identifier on the field under either shape
 - **Owner**: Lina (Leonardo consulted)
-- **Closes at**: Peter's answer to P-16
+- **Closes at**: closed (P-16); the `.tint` selection check (Kenya) can reopen it before Input-Text-Base's family is claimed
 
 #### T-2: The first family and the adopter component
 
