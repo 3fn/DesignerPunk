@@ -352,6 +352,28 @@ Each lands before the release that first claims native support, which is **17.0.
 
 #### Answered so far in this round
 
+- **P-13, the token review: RULED**, in three parts. Record: `feedback/design-outline.md` § "[PETER] P-13".
+  - **Part 1, the approach**, Peter, received 2026-11-28T03:57:33Z, verbatim: "Approve part 1".
+    - Every typography semantic gets a size-band scale role, per Ada's § 1 table (`[ADA R3]`): fine, compact, body, bodyLarge, headingSm, headingMd, headingLg, display. A band, not a job name.
+    - The 18 call-site moves in Ada's § 2.
+    - Six iOS helper, error and "Required" texts move to caption and get lighter, to match web.
+    - Layout repair per family.
+    - Conditions: Leonardo checks the set on the patterns screen at AX5, before the first claim; Android's matching small-text fix lands in the same unit (Lina); a role-less typography token defaults to the nearest-size rule (Leonardo).
+    - Before he answered, Peter asked whether text resizing for iOS was already addressed. Ada R11: it was never designed at token level; Spec 005 claimed Dynamic Type but implemented only shrink-to-fit (`005` `requirements.md` L218, `task-4-5-completion.md` L22, verified by the orchestrator).
+  - **Part 2, the heading fork**, Peter, received 2026-11-28T03:59:04Z, verbatim: "(H1) with Leonardo's note". (H1) is Apple-faithful, with two 2pt inversions at AX5 (h4 52 < h5 54; h2 56 < h3 58). Leonardo's note: a served usage line saying h4/h5 and h2/h3 may swap at the largest sizes, so hierarchy must not rely on size alone.
+  - **Part 3, Nav-SegmentedChoice's bold labels**, Peter, received 2026-11-28T04:18:53Z, verbatim: "Approve (T1) with these names and Leonardo's usage line". (T3) was already off the table: bold stays.
+    - `typography.segmentLg`: fontSize125, lineHeight125, fontFamilyBody, fontWeight700, letterSpacing100; role bodyLarge.
+    - `typography.segmentMd`: fontSize100, lineHeight100, fontFamilyBody, fontWeight700, letterSpacing100; role body.
+    - Leonardo's served line, verbatim: "`segment*` are for the labels of segmented selection controls only, not a general bold 16/18pt style."
+    - Ada's future-needs rule: bold at label size gets a new job-named style through creation review, only where a contract fixes the weight on every platform; bold inside text stays a platform modifier.
+    - **This is Peter's token-creation review for these two names.** Ada creates them in 132's typography work; none is created now.
+    - **What survives**: one consumer each (Ada R13).
+  - **Owed, with owners, none filed in this outline**:
+    - Kenya: whether SwiftUI `.fontWeight` works with `Font.custom`, owed either way (Ada R13);
+    - Leonardo: the AX5 patterns-screen check, the H1 swap usage line, and the `segment*` usage line;
+    - Ada: a record for the `typography.label` reference to a nonexistent token at `src/tokens/semantic/index.ts` L569; after P-13 lands, a ballot adding a scale-role section to Token-Family-Typography;
+    - Lina: a rule-10 record for Android Nav-SegmentedChoice's fixed-`dp` height on `sp` text;
+    - Stacy: Spec 005's Dynamic Type completion claim, as a false-claim finding (Ada R11).
 - **P-4, who may exclude a contract or remove a platform from it: RULED** (b), as new work. Peter, received 2026-11-28T03:48:12Z, verbatim: "(b) – I think that's even already the practice; but you'd have to confirm that with Lina"; then, after Lina's check, received 2026-11-28T03:49:46Z, verbatim: "Yes, (b) stands as new work; P-5 is (a)". Record: `feedback/design-outline.md` § "[PETER] P-4".
   - **Not the practice today** (Lina R10): exclusions carry free-text reasons (40 entries across 25 `contracts.yaml` files); the 19 web-only contracts carry no reason at all; there is no closed list, nothing Peter has approved, and no checker.
   - **Owed, with owners, none filed in this outline**:
@@ -504,8 +526,9 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-13 (order 7)
 
+- **RULED** 2026-11-28, in three parts ("Answered so far", above). The options below are kept as they were asked, except the role example, replaced by the ruled size bands.
 - **Question**: **Token review: a scale role on typography semantic tokens** (T-12's fix, Ada R2).
-  - Each typography semantic gains a platform-neutral role (body, label, caption, title, …); the Swift generator maps role → `Font.TextStyle` and emits one view modifier, for example `.dpFont(DesignTokens.typographyBodyMd)`, built on `@ScaledMetric(relativeTo:)` and `Font.custom(_:size:relativeTo:)` (Kenya R2: a computed `Font` would not follow SwiftUI's Dynamic Type environment, and `.system(size:weight:relativeTo:)` does not exist).
+  - Each typography semantic gains a platform-neutral size-band role (fine, compact, body, bodyLarge, headingSm, headingMd, headingLg, display; a band, not a job name); the Swift generator maps role → `Font.TextStyle` and emits one view modifier, for example `.dpFont(DesignTokens.typographyBodyMd)`, built on `@ScaledMetric(relativeTo:)` and `Font.custom(_:size:relativeTo:)` (Kenya R2: a computed `Font` would not follow SwiftUI's Dynamic Type environment, and `.system(size:weight:relativeTo:)` does not exist).
   - Android and web ignore the role (`sp` and `rem` already scale).
   - **It may also need new typography semantic tokens** for the 20 calls that read a primitive, a component size or a literal: Ada lists them before this sitting
 - **Options**:
@@ -672,7 +695,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
   - **The settlement** (Ada, Lina, Kenya, Leonardo): the text style lives in the token as a scale role, and the 20 calls that read no semantic move onto typography semantics, with new tokens where none fits (P-13).
   - Kenya measured that the scaled forms clear `performAccessibilityAudit(for: .dynamicType)` on iOS 26.0
 - **Owner**: Ada (tokens), Lina (components), Leonardo; Kenya
-- **Closes at**: P-13; then design round
+- **Closes at**: P-13 (**RULED**); then design round
 
 #### T-13: How a "hidden from VoiceOver" contract is checked
 

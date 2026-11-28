@@ -3224,6 +3224,116 @@ That keeps enforcement inside 133, which Peter asked for. The register row has t
 - Recorded P-4 as RULED, (b) as new work, and P-5 as RULED, (a). → design-outline.md § 5.1
 - **P-4's new work, carried as owed acts** (design-outline.md § 5.1, P-4): the reason-class list and the platform-removal reasons (Lina); its ballot vehicle, `.kiro/issues/2026-11-27-per-platform-contract-validation-ballot-owed.md` (#877; Lina); the re-sort of the 40 exclusions and 19 web-only contracts (Lina); the checker (Thurgood, with Lina). None is filed here.
 
+#### [ADA R11]
+
+**1. Was it designed or built? No, not at the token level.** It was claimed once at the component level. Read at `origin/main`.
+- **The founding type spec** (`mathematical-token-system`): iOS font sizes are `baseValue × 1` pt (`design.md` L48). The stated reason is that points "automatically scale across different screen densities" (`completion/task-3-1-completion.md` L70). That is screen density, not the user's text size. Android got `sp`, which "respect user font size preferences" (L80, L96). iOS was assumed to scale like Android. It does not.
+- **`typography-token-expansion`**: guidance only, no requirement (`compositional-color-guide.md` L494; `strategic-flexibility-guide.md` L289).
+- **`governance/Token-Family-Typography.md`**: nothing (grep for dynamic, scale or sp is empty).
+- **The generator**: `TypographyToken` carries a bare `fontSize`, with no text style (`iOSFormatGenerator.ts` L131–150).
+- **The one claim**: Spec 005 (Button-CTA) required Dynamic Type (`requirements.md` L218). Task 4.5 "implemented" it with `.minimumScaleFactor(0.5)` and `.allowsTightening(true)` (`task-4-5-completion.md` L22–24, L98). Those only *shrink* text to fit, never grow it. Its own parent doc said "needs testing with actual iOS devices" (`task-4-parent-completion.md` L229). It was ticked anyway; probably what Peter remembers.
+
+**2. Why today's output doesn't scale.** The decision was points 1:1, on the belief that points behave like `sp`. A `.system(size:)` or `Font.custom(size:)` call without `relativeTo:` is a fixed size.
+
+**3. Effect on P-13.** The mechanism is unchanged, and the history strengthens the case for it. Two additions:
+- Spec 005's claim goes to Stacy as a false completion claim.
+- When P-13 lands, Token-Family-Typography gains a scale-role section, by ballot.
+
+#### [ADA R12]
+
+**1. Your read is confirmed. There is no bold text token at 16 or 18pt.**
+- **Semantic**: the application MCP's `search_tokens(family: typography)` lists all 24 typography semantics. At 16pt (`fontSize100`) and 18pt (`fontSize125`) the heaviest weight is 500 (`labelMd`/`labelLg`, `buttonMd`/`buttonLg`). Bold starts at `h6`, which is 20pt.
+- **Component**: component tokens are numeric only, so there are none.
+- **Product**: this repo has no `product/` directory.
+- **Other**: `fontWeight600` and `fontWeight700` appear only in `FontWeightTokens.ts` L96 and L109.
+
+**2. Peter probably means the weight primitives.** They exist, and they are exactly my T2: `labelLg`/`labelMd`, which supply size, line height and scale role, plus `fontWeight700`. That uses step 3 of the selection matrix, a primitive with prior context, because the contract names it (`Nav-SegmentedChoice-Base/contracts.yaml` L80–82, L89). It creates no new token. The heading styles don't fit: they use the display family, and the closest one is 20pt.
+
+#### [LINA R11]
+
+Read at `main` `35456bdbc`; all of this is VERIFIED by grep.
+
+1. **No, there is no bold token at 16 or 18pt, and nothing renders bold there through a token.**
+   - The bold typography semantics are `h1`, `h2`, `h6` and `display`, at 700, and their smallest size is `h6` at 20 (`fontSize150`) (`src/tokens/semantic/TypographyTokens.ts` L84, L98, L154, L197).
+   - Outside Nav-SegmentedChoice, the only other bold in components is preview code (`VerticalListButtonItem.android.kt` L520).
+2. **How Nav-SegmentedChoice gets its bold today**:
+   - Web uses the primitive `var(--font-weight-700)` (`NavSegmentedChoiceBase.styles.css` L96).
+   - Android hard-codes `FontWeight.Bold` (`.android.kt` L367).
+   - iOS declares `fontWeight700` (L34) but renders a literal `.bold` (L246).
+3. **My lean is unchanged: T1, two new structural tokens.** Peter's memory is close but not exact: the bold tokens are headings, and they sit at 20pt and up. T1 also removes those two hard-coded native weights.
+
+#### [ADA R13]
+
+**1. I recommend T1, and I'm changing my earlier T2 lean.** The deciding reason is that the bold is part of the control's resting look, which its contract fixes on all three platforms. It is not emphasis inside a sentence.
+- **Decision 3** (`typography-token-expansion/design.md` L446–480): Lina reads it correctly. It rules on inline emphasis and rejects weight-modifier tokens (option 3). It names "use fontWeight700 directly" as the risk.
+- **T2 builds that risk into `.dpFont`**, and `.dpFont` is adopters' API too. That is the drift. You told Peter T2 also removes today's hard-codes: that is right, but only by swapping each one for a primitive, read separately on each platform.
+- **Leonardo's "never T1"** treats these as emphasis tokens. They are structural, like `buttonLg`, and `h6` already shows that a structural style can be bold.
+
+**2. Names, for Peter's review.**
+- **`typography.segmentLg`**: `fontSize125` (18), `lineHeight125`, `fontFamilyBody`, `fontWeight700`, `letterSpacing100`, role `bodyLarge` (`.body`).
+- **`typography.segmentMd`**: the same at `fontSize100` (16), `lineHeight100`, role `body` (`.callout`).
+- **Why these names**: they name the job, as `button*` and `input` do.
+- **Rejected names**:
+  - `labelLgStrong` is option 1 of Decision 3, the emphasis pattern.
+  - `tabLg` points at a tab bar that has no text.
+- **Future bold at label size**: a new job-named style, by creation review, and only where a contract fixes the weight on every platform. Inline emphasis stays a platform modifier.
+
+**3. T2 is not taken.** For the record, it would have been `.dpFont(_, weight:)`, allowed only where a contract names the weight, and checked by nothing until enforcement exists.
+- **Kenya's check**: neither option avoids it. `.dpFont` must already render weights 500 and 700 from a custom family (`labelMd`, `h6`), so the "`.fontWeight` with `Font.custom`" answer is owed regardless.
+
+**4. The counter-argument I couldn't fold away.** Two tokens have one consumer. If no second control ever takes them, they are component styles under a semantic name. Component tokens cannot hold typography today, so there is no smaller home for them.
+
+#### [LEONARDO R12]
+
+Read: `[ADA R13]`, `[LINA R11]`, and my § 4 above.
+
+**1. Final position: (T1), with `typography.segmentLg` and `typography.segmentMd`.** I withdraw "never T1".
+
+**2. Can I live with Ada's (T1)? Yes.** My own § 4 fact decides it: the bold is on every segment, and a separate indicator marks the active one (VERIFIED, `contracts.yaml`). So the bold is the control's resting style, which makes it structural, not emphasis, as Ada says. T1 also keeps weight out of `.dpFont`, the adopters' API, which was my drift concern about T2 to begin with.
+
+**3. One change, to her "future needs" rule.** Add a served usage line to the typography guidance: "`segment*` are for the labels of segmented selection controls only. They are not a general bold 16/18pt style." Without that line, an adopter's agent searching for "bold 16" will find `segmentMd` and use it for emphasis. That is Decision 3's drift, entering by token selection instead of by API.
+
+I would change nothing in her names or definitions.
+
+#### [PETER] P-13
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`, and three messages carry no stamp, as marked.*
+
+**Part 1, the approach.**
+- **What he was asked**: every typography semantic gets a size-band scale role, per Ada's § 1 table: fine, compact, body, bodyLarge, headingSm, headingMd, headingLg, display (a band, not a job name); the 18 call-site moves in Ada's § 2; six iOS helper, error and "Required" texts move to caption and get lighter, to match web; layout repair per family. The conditions: Leonardo checks the set on the patterns screen at AX5, before the first claim; Android's matching small-text fix lands in the same unit (Lina); a role-less typography token defaults to the nearest-size rule (Leonardo).
+- **His history question first**, received 2026-11-28 in the turn before 03:57:33Z, with no stamp taken, verbatim: "I thought we addressed text resizing for iOS long ago. Ada would know better, but I thought this was considered in the spec when building the type tokens." Ada R11 (spliced above): it was never designed at token level. Spec 005 claimed Dynamic Type but implemented only shrink-to-fit. The orchestrator verified Spec 005's `requirements.md` L218 and `task-4-5-completion.md` L22.
+- **Received**: 2026-11-28T03:57:33Z. **Verbatim**: "Approve part 1".
+
+**Part 2, the heading fork.**
+- **What he was asked**: (H1), Apple-faithful, with two 2pt inversions at AX5 (h4 52 < h5 54; h2 56 < h3 58); or (H2), strict order, with display at about 99pt. Leonardo's condition: a served usage line saying h4/h5 and h2/h3 may swap at the largest sizes, so hierarchy must not rely on size alone.
+- **Received**: 2026-11-28T03:59:04Z. **Verbatim**: "(H1) with Leonardo's note".
+
+**Part 3, Nav-SegmentedChoice's bold labels.**
+- Received between 03:59:04Z and 04:09:57Z, with no stamp taken, verbatim: "You might want to check with Ada (and possibly Lina), but I think we have bold tokens". Ada R12 and Lina R11 (spliced above): no bold text style exists at 16 or 18pt.
+- Received in the same window, with no stamp taken, verbatim: "I'm thinking (T1) or (T2), but I'd want to settling the decision, and any necessary follow-up details (including naming), with Ada." This takes (T3) off the table: bold stays.
+- Received 2026-11-28T04:09:57Z, verbatim: "Now — put my questions to Ada". Ada R13 (spliced above) moves to T1.
+- Received 2026-11-28T04:17:56Z, verbatim: "Get Leonardo's response to Ada first". Leonardo R12 (spliced above) withdraws "never T1" and adds a served usage line.
+- **What he approved, as put to him**:
+  - `typography.segmentLg`: fontSize125, lineHeight125, fontFamilyBody, fontWeight700, letterSpacing100; role bodyLarge;
+  - `typography.segmentMd`: fontSize100, lineHeight100, fontFamilyBody, fontWeight700, letterSpacing100; role body;
+  - Leonardo's served line, verbatim: "`segment*` are for the labels of segmented selection controls only, not a general bold 16/18pt style.";
+  - Ada's future-needs rule: bold at label size gets a new job-named style through creation review, only where a contract fixes the weight on every platform; bold inside text stays a platform modifier.
+- **Received**: 2026-11-28T04:18:53Z. **Verbatim**: "Approve (T1) with these names and Leonardo's usage line".
+- **This is his token-creation review for these two names.** Ada creates them in 132's typography work; none is created now. What survives: one consumer each (Ada R13).
+
+#### [THURGOOD R17]
+
+- **Spliced byte for byte**, in the orchestrator's order: `ada-dynamic-type-history.md` (`[ADA R11]`), `ada-bold-tokens.md` (`[ADA R12]`), `lina-bold-tokens.md` (`[LINA R11]`), `ada-t1-t2-settle.md` (`[ADA R13]`), and the new `[LEONARDO R12]` section only, from `leonardo-p13-read.md`, its lines 64 to the end. That file's earlier part is unchanged: its first 10,169 bytes equal the `[LEONARDO R5]` span spliced at `606bb6cb1`, byte for byte.
+- Recorded P-13 as RULED, in three parts: part 1, the size-band approach with its conditions; part 2, (H1) with Leonardo's note; part 3, (T1) with `typography.segmentLg` and `typography.segmentMd` and Leonardo's usage line, as Peter's token-creation review for those two names. → design-outline.md § 5.1, and T-12 in § 5.2
+- In P-13's question, the stale role example "(body, label, caption, title, …)" is replaced by the ruled size bands. P-13's other question text, options and leans are kept as asked.
+- **Owed, none filed here** (design-outline.md § 5.1, P-13):
+  - Kenya: `.fontWeight` with `Font.custom`;
+  - Leonardo: the AX5 check, the H1 swap line, the `segment*` line;
+  - Ada: the `typography.label` record at `src/tokens/semantic/index.ts` L569, and the Token-Family-Typography scale-role ballot after P-13 lands;
+  - Lina: the rule-10 record for Android Nav-SegmentedChoice's fixed-`dp` height;
+  - Stacy: Spec 005's Dynamic Type claim, as a false-claim finding.
+- **Left for the reshape**: P-13's question still says "Ada lists them before this sitting". Her list is in `[ADA R3]`.
+
 ---
 
 ## Requirements Feedback
