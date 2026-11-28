@@ -1098,3 +1098,204 @@ Lina's `ContainerCardBase` L816 fix lands before the harness unit's first PR, no
 - **What**: `.kiro/specs/133-color-track/design-outline.md` § 4 records, as Ada's reading marked UNVERIFIED, what Requirements 9.2 and 7.4 leave behind for the colour-track spec: the removal of five of the six non-test `ColorTokens.ts` importers outside the token tier, and the barrel and its consumer copies remaining.
 - **Owed**: when the Requirement 9.2 parent (Ada; one of the parent splits in the requirements' parent list) lands, its completion doc states which importers it removed and what remains, and `133-color-track/design-outline.md` § 4 is corrected to match in the same unit. The tasks round names that step as a closing step of the 9.2 parent. This is a note and adds no acceptance criterion.
 - Source: `[ADA P-2]` § 1 and § 3, accepted by Peter at 2026-11-05T13:05:54Z ("yes, 4 (a), 7 (a)").
+
+---
+
+## Requirements amendment 1 (2026-11-27, post-closeout): Requirement 13.2 narrowed to the families with a grid rule (16.3.0 lapse batch, row 7)
+
+**Status**: **DRAFT, recast at R2 (2026-11-27)**. Ada R1 confirms F-0: the ruling's premise is false. This section is no longer an amendment for Peter to ratify as the vehicle for "drop". It is the vehicle for **Peter's re-ruling of row 7** with the corrected premise (§ "R2: row 7 back to Peter" below; its options are recast at R3, 2026-11-28, in § "R3: row 7's options recast after Spec 132's park", which supersedes R2's options). Nothing in `requirements.md` is edited; an in-place edit lands on this branch only if Peter answers "drop knowingly". *The R1 text below is kept as drafted, as the record of what was proposed.*
+**Authority to draft**: Peter, 2026-11-12T13:29:02Z, "As recommended", row 7 of the 16.3.0 lapse batch: "**drop**, after a Spec 129 requirements amendment narrowing Req 13.2 to 'spacing and sizing, and borderWidth if it has a grid rule'. `defineComponentTokens` cannot declare radius, fontSize or colour. Thurgood authors the amendment, Ada is consulted, and Peter ratifies" (`evidence/2026-11-12-peter-ruling-16-3-0-lapse-batch.md`). The orchestrator's brief: Peter, 2026-11-27, "Let's brief Thurgood now".
+**Author**: Thurgood (formalizer). **Consulted**: Ada (Requirement 13's owner; her question is below). **Ratifies**: Peter.
+**Vehicle**: this spec's convention for amending a merged requirements file: a numbered amendment recorded here, a dated line in place in `requirements.md`, and a header line naming it (see `requirements.md` L6–L9 and the in-place lines at L36, L90, L119). Spec 129 is closed (U12, #781; `completion/claims-pass.md` exists), so this is the first amendment after closeout and is numbered apart from the tasks amendments. No law names a different vehicle for a closed spec's requirements; `.kiro/specs/**` is not a governance path, so no ballot or `**Edit kind**:` line is owed. The PR still carries a `**Consulted**:` line (Agent-Directory § "Primary Agent (Orchestrator)", a spec's requirements is a trigger surface).
+
+### The text
+
+**Before** (`requirements.md` L342 at `3a3bd072b`, byte-exact):
+
+> 2. Row 21, under the rule the design rules: WHEN a consumer's component token has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+**After, text (a)** (Peter's words, made decidable):
+
+> 2. Row 21, under the rule the design rules: WHEN a consumer's component token in a family whose grid design § 12 (D-8) rules (today `spacing` and `sizing`; `borderWidth` once a grid rule for it is written there) has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+**After, text (b)** (flat, Ada's 2026-11-12 finding):
+
+> 2. Row 21, under the rule the design rules: WHEN a consumer's component token in the `spacing` or `sizing` family has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+**The dated line in place**, after the criterion: `*(Amended <ratification date>, requirements amendment 1 (post-closeout), lapse-batch row 7, Peter's "As recommended" of 2026-11-12T13:29:02Z and his ratification of <date>; prior text at `3a3bd072b`: "WHEN a consumer's component token has a non-conforming custom value THEN".)*`
+
+**The header line**, after L9: `**Amended after closeout (<date>)**: Requirement 13.2, requirements amendment 1 (`feedback/requirements.md`), with a dated line in place.`
+
+**Unchanged**: the criterion's second sentence (the lane fails on a non-conforming DesignerPunk token, under the coordinator's full rule set: spacing, sizing, radius, fontSize, colour); Requirement 13's user story; design § 12 (D-8), which already rules conformance for the families with a grid ("`BASE × k × step`"); `completion/task-10-completion.md` and `completion/claims-pass.md`, which are ledgers and keep their text (Task 10's C3 ⚠️ row stands as recorded).
+
+### The premise, checked: owed before ratification
+
+The ruling's reason is "`defineComponentTokens` cannot declare radius, fontSize or colour" (Ada R2: "takes numeric families only (spacing, sizing, borderWidth) and has no colour family"). **At the function, that is false at the base.**
+- `ComponentTokenConfig.family` is typed `string` (`src/build/tokens/defineComponentTokens.ts` L144–L145), and its doc comment gives `'fontSize'` and `'radius'` as examples.
+- **VERIFIED by a probe** (2026-11-27, `npx tsx`, at `3a3bd072b`): `defineComponentTokens({ component, family, tokens: { a: { value: 7 } } })` returns `{"a":7}` without throwing for `family` `'radius'`, `'fontSize'`, `'color'` and `'borderWidth'`. For each of the four, `checkGridConformance(family, 7)` returns `null`, so `generate`'s warning (`gridConformanceErrors`, imported at `src/cli/designerpunk.ts` L29) stays silent.
+- **UNVERIFIED**: whether `generate`'s harvest, emit or an earlier validation refuses such a token after the call returns. If nothing does, a consumer can declare an off-grid radius component token today and get no warning. The narrowing would then stop the requirement covering a case a consumer can reach, and "drop" would rest on a false ground.
+- **If Ada confirms that a consumer can reach it**, this amendment is not the vehicle Peter ruled. Row 7 goes back to him with its three options and the corrected premise; the record's other options were "rule the three definitions, then fix-now" (Ada R1's fork (a)) and spec. If she shows that a later step refuses it, the ruling's premise holds at the pipeline level, and the amendment proceeds with her evidence cited here.
+
+### Ada's question (the orchestrator dispatches it)
+
+The question file is outside the repository (the brief to Thurgood names the path); its text is reproduced here so a lost scratchpad loses nothing:
+1. **The premise**: run a consumer `generate` (a Consumer Guard-style fixture, or your own harness) with a component token declared `family: 'radius'`, value `7`. Does any step refuse it, and does `generate` warn? Paste the command and what it prints. Do the same for `'fontSize'` and `'color'`.
+2. **The text**: (a) or (b)? Is (a)'s "a family whose grid design § 12 (D-8) rules" decidable as you read D-8, and is your borderWidth finding (no grid rule written anywhere) still true at `3a3bd072b`?
+3. **The record**: your `2026-11-08-generate-component-token-warning-spacing-sizing-only.md` drops "when the amendment is ratified and merged". Its Trigger re-tokens to `merge:#<N>` with this PR's number. Do you take that act on this PR?
+4. **Anything else in Requirement 13, design § 12 or Task 10's docs** that the narrowing makes false and that this amendment should name.
+
+### Forks for Peter (none is picked here)
+
+- **F-0, which comes first: is the ruling's premise true?** If Ada's question 1 finds that a consumer can reach a radius, fontSize or colour component token, row 7's "drop" rests on a false premise, and the row returns to Peter with spec, drop or fix-now. That is his call, not an amendment. The drafter does not recommend proceeding on the premise as stated.
+- **F-1, the text, if the premise holds: (a) or (b)?**
+  - **(a)** keeps Peter's words and makes them decidable: the reach follows design § 12 (D-8), so a later grid rule for borderWidth brings its warning in without a second requirements amendment.
+  - **(b)** is flat. It matches the code and Ada's finding that no borderWidth grid rule exists.
+  - **The drafter leans (b).** A requirement whose reach moves with a design edit can change what `generate` owes without anyone editing the requirement. A design change that adds a borderWidth grid rule can amend 13.2 in the same PR.
+  - **Surviving counter to (b)**: it changes Peter's ruled words ("and borderWidth if it has a grid rule"), so it is put to him as a change to them. It also needs a second amendment whenever a grid rule is added.
+  - **Surviving counter to (a)**: the parenthesis is a cross-reference a reader must chase, and "once a grid rule for it is written there" moves the requirement with the design text. Design § 12 is Ada's to amend, and the requirement would follow her edit with no requirements-round review.
+
+*Signed: Thurgood, 2026-11-27.*
+
+#### [ADA R1]
+
+Read at `dc856be9a` (head of `ballot/129-req-13-2-narrowing`, draft PR #864). Its merge base with `main` is `3a3bd072b`, and its diff from `main` is only `feedback/requirements.md`, so every code claim below holds at `3a3bd072b`. Probes ran in my own scratchpad worktree and a scratch consumer, and nothing was committed. Each claim is marked VERIFIED (checked at that head) or UNVERIFIED.
+
+**The premise is false, and the error is mine.** A consumer can declare a radius, fontSize or colour component token today. `generate` accepts it, writes it to all three platforms and the token index, and does not warn. My 2026-11-12 reason ("`defineComponentTokens` takes numeric families only … so a consumer cannot declare the cases this record's gap names") is wrong. I recommend that row 7 goes back to Peter, and that this amendment does not go to him for ratification as the vehicle for "drop".
+
+- **1. The premise, by a faithful consumer run.** → feedback § "The premise, checked"
+  - **Setup** (VERIFIED). `npm ci` and `npm pack` in my worktree at `dc856be9a` produced `3fn-core-16.3.0.tgz`, with 1739 files. Then, in a new directory: `npm init -y`, `npm install <tgz>`, `npx designerpunk init --name Probe --abbreviation PR --skip-agents`, and a baseline `npx designerpunk generate`, which exited 0. This is the same path as the Task 10 `Consumer Guard` case (`tests/consumer-integration.test.ts` L3191).
+  - **Probe files** (VERIFIED). One file per family in `src/tokens/component/`, each of this form:
+    ```ts
+    import { defineComponentTokens } from '@3fn/core/build';
+    export const ProberadiusTokens = defineComponentTokens({
+      component: 'Proberadius',
+      family: 'radius',
+      tokens: { 'odd': { value: 7, reasoning: 'probe: a custom value of 7 in the radius family, no offGridReason' } },
+    });
+    ```
+    I wrote this for `radius`, `fontSize`, `color` and `borderWidth`, and added a control, `family: 'spacing'`, `value: 11`.
+  - **Command and result** (VERIFIED): `npx designerpunk generate` gave `generate exit=0`. The only component-token warning it printed is the control's:
+    `⚠️  Component token probespacing.odd has a custom value that does not conform to its family. Token "probespacing.odd" value 11 does not conform to spacing family pattern. Spacing value 11 is not derivable from SPACING_BASE_VALUE (8). …`
+    It printed nothing for `proberadius.odd`, `probefontsize.odd`, `probecolor.odd` or `probeborderwidth.odd`. The run ends `✅ System tokens generated`.
+  - **No step refuses them** (VERIFIED). All four are emitted:
+    - **Web**: `--proberadius-odd: 7;`, `--probefontsize-odd: 7;` and `--probecolor-odd: 7;` in `ComponentTokens.web.css`.
+    - **iOS**: `public static let odd: CGFloat = 7` for radius and fontSize, and `public static let odd: UIColor = 7` for colour.
+    - **Android**: `val odd = 7.dp` for radius, `val odd = 7.sp` for fontSize, and `val odd = 7` for colour.
+    - **Token index**: all four are keys in `token-index/components.yaml`.
+  - **Why, from the source** (VERIFIED):
+    - `ComponentTokenConfig.family` is `string` (`src/build/tokens/defineComponentTokens.ts` L145), and its doc comment gives `'fontSize'` and `'radius'` as examples.
+    - The function throws only on an empty component, an empty family, no tokens, or a reference whose `category` differs from `family` (L223–L233, L260–L275).
+    - `checkGridConformance` returns `null` for any family other than `spacing` and `sizing` (L363), so `generate`'s loop (`src/cli/designerpunk.ts` L263–L267) is silent for them.
+    - The generators handle these families on purpose: `getiOSComponentTokenType` maps radius and fontSize to `CGFloat` and color to `UIColor`, and the Android formatter gives radius `.dp` and fontSize `.sp` (`src/generators/TokenFileGenerator.ts` L607–L676).
+  - **A worse finding: a colour component token makes iOS output that does not compile, and `generate` says nothing.** (VERIFIED by `swiftc -typecheck` for `arm64-apple-ios17.0-simulator`)
+    - **Value path**: the emitted `public static let odd: UIColor = 7` fails with `error: cannot convert value of type 'Int' to specified type 'UIColor'`.
+    - **Reference path**: `family: 'color'` with `reference: purpleTokens.purple300` passes the family-mismatch guard and emits `public static let fill: UIColor = DesignTokens.purple300`. `generate` exits 0 with no warning. Typechecked against the emitted primitive (`public static let purple300 = Color(.displayP3, …)`), it fails with `error: cannot convert value of type 'Color' to specified type 'UIColor'`.
+    - So every colour component token, by value or by reference, breaks a consumer's iOS build at compile time. The Android colour value `val odd = 7` is an `Int`, not a `Color` (UNVERIFIED by compile; no `kotlinc` on this machine).
+    - This is a defect in the generator, which is my domain, separate from Req 13.2's warning. I will file it as my record, and Kenya should be consulted. It is not filed yet, because this consult commits nothing.
+  - **Where my 2026-11-12 reason came from.** `governance/Token-Governance.md` L160 reads "Component tokens are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth); there is no color family." Those are the families DesignerPunk's own component tokens use (VERIFIED: the non-test `family:` declarations are 7 spacing, 5 sizing and 1 borderWidth). It is not what the API accepts. I took the doc line as a fact about the API and did not check it against the code. The record's own class note said the true thing: "No component token of the other families has a custom value today." I turned "none exists" into "none can exist".
+
+- **2. The text, (a) or (b)?** → feedback § "Forks for Peter", F-1
+  - Neither one should go to Peter for ratification as the vehicle for "drop" while the premise is false. Under either text, Req 13.2 would stop covering cases a consumer can reach.
+  - **(a) cannot be decided from D-8 as written** (VERIFIED, design.md L712). D-8 says "a custom value conforms when it is on its family's grid, `BASE × k × step` … `sizing` is validated too". It never lists the families. The "spacing and sizing" list is in the code's comment ("the two families that have one", `defineComponentTokens.ts` L349–L350) and in Task 10's completion doc ("the D-8 families"). It is not in D-8's text.
+  - Radius has a grid by that general wording. The coordinator's radius rule is `RADIUS_BASE_VALUE × k × 0.25`, with a cap of 4 and with `0` and `9999` allowed (`src/integration/ValidationCoordinator.ts` L181–L230, VERIFIED). So (a)'s "a family whose grid design § 12 (D-8) rules" could include radius, and two readers could disagree.
+  - **(b) can be decided, but it is false as a scope statement.** It narrows the requirement and leaves cases a consumer can reach outside it.
+  - If Peter still picks a narrowing once he has the corrected premise, I lean (b), for Thurgood's reason (a requirement should not move with a design edit), with one change: (b) should name the families it leaves out, so the gap stays on the record.
+  - **The borderWidth finding is still true at `3a3bd072b`** (VERIFIED):
+    - `checkGridConformance` returns `null` for `borderWidth`.
+    - The coordinator has no `borderWidth` case. It falls to `default`, which is valid with the warning "does not have specific validation rules" (L282–L289).
+    - D-8 does not name it.
+    - The primitives are `BORDER_WIDTH_BASE_VALUE = 1` times k (`src/tokens/BorderWidthTokens.ts` L14).
+    - No borderWidth grid rule is written anywhere I found.
+  - **The draft's heading ("narrowed to the families with a grid rule") is inexact.** Radius has a grid rule and fontSize has a scale rule, both in the coordinator, which the lane runs.
+
+- **3. The record's Trigger: I do not re-token it on this PR now.** → `.kiro/issues/2026-11-08-generate-component-token-warning-spacing-sizing-only.md`
+  - The record's Disposition rests on the false reason, and the "drop" it carries is the answer this consult sends back to Peter. If I wrote `merge:#864`, the record would close at a merge that narrows the requirement on a premise I now know is false.
+  - The live token `release:16.4.0:phase-1` stays as the backstop.
+  - Owed by me, once committing is allowed (`.kiro/issues/**` is in my standing scope; rule 9):
+    - **(i) a dated Correction** under the record's Disposition (2026-11-12), saying its reason is false, with this probe as the evidence and the prior text left in place;
+    - **(ii) the re-token, after Peter re-rules row 7.** It is `merge:#864` if he still says drop through this amendment, or the fix-now PR or the spec outline's merge under rule 11 if he says something else;
+    - **(iii) a re-class read.** The colour iOS compile failure may make the colour part P1 consumer-blocking (rule 12). I will file it as its own record rather than re-class this one.
+
+- **4. Other text the narrowing would make false, or that is false already.** → requirements.md Req 13, design § 12, Task 10's docs, governance
+  - **Req 13's user story** says "component-token custom values to be checked without breaking my web build". Under (b), a consumer's radius, fontSize and colour custom values would not be checked by `generate`. The amendment should name that, or the story overstates.
+  - **Design § 12, "Consumer tokens warn; DesignerPunk's fail."** This is unqualified. Under a narrowed 13.2, it is true only for spacing and sizing, so the amendment should name the bullet.
+  - **The draft's "Unchanged" bullet** says D-8 "already rules conformance for the families with a grid". That is a reading, not D-8's text (see 2).
+  - **Task 10's completion doc and claims pass**: these are ledgers, and I agree they keep their text. Criterion 3's "Partial … radius, fontSize and color custom values are covered by the lane and not warned by `generate`" was true and stays true. It says nothing about reachability, so nothing in it becomes false.
+  - **`governance/Token-Governance.md` L160 is false about the API** (VERIFIED: the line against `defineComponentTokens.ts` L145 and the probe). It is also in my rendered charter's ambient embed (`.claude/agents/ada.md` L275) and the consumer output. Correcting it is a CORRECTION under the ballot model: I propose it, Peter decides, and it is not this PR's edit.
+  - **The waiting-spec-row ballot cites that line** (`.kiro/docs/ballots/2026-11-04-waiting-spec-row.md` L454 and L658, row 4). It closed `059-component-color-token-investigation` as "answered by `governance/Token-Governance.md` L160", citing "takes numeric families only" and "there is no color family". The working rule in that closure still holds in practice: a component's colours reference semantic tokens directly. Its premise about the API is false, though, and the API does not enforce the rule, as the iOS compile failure shows. I do not recommend re-opening 059 on this alone. Peter should know that the closure cited a false line.
+
+**Fold-back.**
+- My first lean was to keep my 2026-11-12 recommendation and answer only the wording. The probe ended that.
+- The counter-argument to "send row 7 back" is that no consumer is known to have declared such a token, so the gap is theoretical and the narrowing costs nothing today. I worked it through. It is true for warnings: nobody sees a missing warning until someone writes the token. It does not hold for colour, where the first consumer to write one gets an iOS build that fails, with no message from `generate`. That is a different and worse failure than a missing warning.
+- **What survives**: sending row 7 back costs Peter a second sitting on a row he already ruled, and every remedy except drop needs rulings of his (the radius cap, the fontSize scale, and whether a colour value or reference warns or refuses).
+
+**What Peter decides** (I pick none):
+- **Row 7, again, with the corrected premise.** Rule 11's three options apply. Each is weighed by what it adds or loses against today's behaviour, where `generate` warns for spacing and sizing only and a colour component token silently breaks the iOS build.
+  - **(fix-now)**: `generate` warns for radius, fontSize and colour, as in the record's Fix shape. Each family's base is read from the consumer's loaded token set, and there is one `Consumer Guard` case per family. I estimate about half a session, plus Peter's rulings on the radius cap and the fontSize scale. It is due by 16.4.0's S.
+  - **(spec)**: Spec 132 or a design amendment takes it.
+  - **(drop, knowingly)**: Req 13.2 is narrowed under (b), stating the cases it leaves out.
+- **Class option**: make what can be declared equal what is checked and what emits valid platform code, by giving `ComponentTokenConfig.family` a closed set.
+  - The set is a TypeScript union of the families the generators type, with a runtime refusal of colour on the value path.
+  - Cost: a public type narrows, which is a semver question (a consumer passing a `string` variable stops type-checking). A runtime refusal makes `generate` fail at load, which Req 13.2's "SHALL NOT fail" holds for a major or for Q7.
+  - It closes the class for consumers, not just this row. It does not fix the iOS colour emission, which needs its own fix whatever is ruled.
+- **Whether I file the iOS colour-emission defect** as a new record (my lean: yes, P1 consumer-blocking pending a read of rule 12, with Kenya consulted). Peter, or the orchestrator on his behalf, says whether it rides with row 7 or is separate.
+- **Whether I draft the Token-Governance L160 CORRECTION**, with the 059 closure's citation named in it.
+
+**Consulted**: none needed. This is a review entry. The seats named above (Kenya for the iOS emission) are the orchestrator's to consult.
+
+*Signed: Ada, 2026-11-27.*
+
+#### [THURGOOD R2] — the recast: row 7 back to Peter
+
+*2026-11-27 (`date -u` at R2). Ada's R1 above is spliced byte for byte.*
+
+**What changed.** Ada's consumer run (packed `3fn-core-16.3.0.tgz`, `init`, `generate`) shows that a consumer can declare a component token in any family: radius, fontSize, colour and borderWidth are accepted, emitted to web, iOS and Android, and indexed, and `generate` warns only for spacing and sizing. The reason Peter's "drop" rests on ("`defineComponentTokens` cannot declare radius, fontSize or colour") is false, and its source is `governance/Token-Governance.md` L160 ("takes numeric families only (spacing, sizing, borderWidth); there is no color family"), which Ada's #872 corrects (draft, held for Peter). Either text of R1 would narrow Requirement 13.2 away from cases a consumer can reach. So neither goes to Peter for ratification as drafted. Rule 11 applies instead: the record goes back to him with its three options and the corrected premise. The answer he gave rested on a false fact, so this is not a re-ask of a settled question (Ada R1, fold-back).
+
+**Linked, not settled here**: the iOS colour emission defect. A colour component token, by value or by reference, emits Swift that does not compile, silently (Ada R1, 1; `swiftc -typecheck`). It is Ada's record in #870, `.kiro/issues/2026-11-27-ios-component-token-type-map-breaks-six-families.md` (P1). Whatever Peter answers on row 7, #870 owns the emission fix. Row 7 is only about whether `generate` warns.
+
+### R2: row 7 back to Peter — three options, the corrected premise
+
+Each is weighed against today's behaviour: `generate` warns for spacing and sizing only; radius, fontSize, colour and borderWidth custom values are accepted and emitted without a word; a colour component token breaks the iOS build (#870).
+
+- **(fix-now)** `generate` warns for radius, fontSize and colour, as the record's Fix shape says: each family's base read from the consumer's loaded token set, one `Consumer Guard` case per family. **Needs three rulings of Peter's first**: the radius cap (the coordinator's is 4.0, with `0` and `9999` allowed, and the design never ruled it), whether fontSize's 1.125 modular scale is "conformance", and whether a colour custom value warns or is refused. Ada estimates about half a session after the rulings. Due by 16.4.0's S (`release:16.4.0:phase-1`). Requirement 13.2 stays as written.
+- **(spec)** Spec 132 or a design amendment takes it. Ada called Spec 132 "a thematically poor home" at consult-163 R1 (132 is native components in app). A design amendment would be to a closed spec (129), which is this file's convention but has no requirements round behind it. Under rule 11, the spec answer is carried out when the spec's outline merges and names the record.
+- **(drop, knowingly)** Requirement 13.2 is narrowed, naming what it leaves out. The text, if Peter picks it (R1's text (b), with Ada's change):
+  > 2. Row 21, under the rule the design rules: WHEN a consumer's component token in the `spacing` or `sizing` family has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). `generate` does not warn for a consumer's component token in any other family: a `radius`, `fontSize`, `color` or `borderWidth` custom value is accepted and emitted unchecked. WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+  Drop also amends, in the same PR, the two sentences the narrowing makes false (Ada R1, 4): Requirement 13's user story ("component-token custom values to be checked") gains "for spacing and sizing"; design § 12's "Consumer tokens warn; DesignerPunk's fail." gains "(a consumer's spacing and sizing tokens; other families are not checked by `generate`, Requirement 13.2)". Each with a dated line in place. The record then closes under rule 5 at that merge.
+
+**Class option** (Ada's): close `ComponentTokenConfig.family` to the families the generators type, a TypeScript union, with a runtime refusal of colour on the value path. It makes what can be declared equal what is checked and what emits valid platform code, for consumers, not only this row. **Cost**: a public type narrows, so it is a semver question (a consumer passing a `string` variable stops type-checking); a runtime refusal makes `generate` fail at load, which Requirement 13.2's "SHALL NOT fail" holds for a major or for Q7. It does not fix #870's emission. It is not drafted here; if Peter wants it, it is Ada's to scope (her domain) and goes with #870 or a major.
+
+**My lean: drop, knowingly**, with the class option routed to #870's owner as the place the reachable families get closed.
+- **Why**: the two cases that matter most are not warning cases. Colour produces code that does not compile, which is #870's emission defect, and a "non-conforming value" warning is the wrong remedy for it; a refusal or a type fix is. Radius and fontSize warnings each need a design ruling that no consumer case motivates today (Ada R1: none declared). Drop knowingly makes the requirement say what `generate` does, names the gap, and leaves the real fix where the defect is.
+- **Counter-argument, folded back**: fix-now is cheap (about half a session) and keeps a shipped requirement intact. Folded in: drop names the excluded families in the requirement itself, so nothing is narrowed silently, and the class option keeps the route to closing them. **What survives**: under drop, a consumer's off-grid radius or off-scale fontSize custom value ships with no word from `generate` until the class option or a later spec lands, and Requirement 13's promise to adopters shrinks. And Peter rules row 7 twice; the second sitting is caused by a premise that no seat checked against the code before it reached him (Ada R1 names the error as hers; this section's R1 found it only at drafting).
+- **Fork the lean does not absorb**: if Peter wants the requirement kept whole, fix-now is the only option that does it, and it costs him three rulings first.
+
+**The record**: Ada keeps `release:16.4.0:phase-1` on `.kiro/issues/2026-11-08-generate-component-token-warning-spacing-sizing-only.md` and adds her dated Correction (her R1, 3). It is re-tokened, or closed, by Peter's new answer: closed at this PR's merge if he says drop knowingly; the fix-now PR closes it in its own diff if he says fix-now; rule 11's spec clause if he says spec.
+
+*Signed: Thurgood, 2026-11-27.*
+
+### R3: row 7's options recast after Spec 132's park (2026-11-28)
+
+**Why it is recast.** Spec 132 is parked, and its outline re-asks at `path:.kiro/specs/133-color-track/completion/token-half-complete.md` (Peter's pivot, received 2026-11-28T03:45:37Z). The orchestrator then ran a fold check under Peter's "Proceed as you recommend" (received 2026-11-28T12:24:28Z): Ada, Lina and Thurgood each checked which parts of row 7, #870 and #872 Spec 133 already covers, then read each other's answers. Their answers are in the orchestrator's consult folder, outside the repository: `ada-fold-133.md`, `lina-fold-133.md` and `thurgood-fold-133.md`, each with a § "Cross-read". All three agreed on the following:
+- **"Spec 132" is struck from the spec option.** It is parked. Under rule 11 the spec answer is carried out when the spec's outline merges and names the record, so the record would close with no warning built.
+- **"Spec 133" is not offered in its place.** 133's scope is the palette, blend, `ColorTokens.ts`, rgba, shadow channels and `no-hardcoded-color` enforcement. Radius and fontSize conformance are not colour questions, so 133 would fit only a third of the row, and it would move the row's `release:16.4.0:phase-1` token.
+- **The design-amendment route is dropped too.** It would amend a closed spec with no requirements round behind it, and its content is exactly fix-now's two rulings, which are written into design § 12 whichever way they come.
+- **Colour leaves this row.** Whether a colour component token warns or is refused is the same question as #870's colour fork (`.kiro/issues/2026-11-27-ios-component-token-type-map-breaks-six-families.md` § "Fix shape", item 4). Peter rules on it once, there. Any interim warning is written in #870's fix PR. The end state (refuse at the next major, or colour component tokens that follow the theme) is Spec 133 intake item I (PR #892), left unpicked for Peter at that fork.
+
+**The two options now** (radius and fontSize only):
+- **(fix-now)** `generate` warns for radius and fontSize, as the record's Fix shape says: each family's base is read from the consumer's loaded token set, with one `Consumer Guard` case per family. **It needs two rulings of Peter's first**: the radius cap (the coordinator's is 4.0, with `0` and `9999` allowed, and the design never ruled it), and whether fontSize's 1.125 modular scale counts as "conformance". The rulings are written into design § 12 in the fix PR. It is due by 16.4.0's S (`release:16.4.0:phase-1`). Requirement 13.2 stays as written, except that colour is handed to #870, as below.
+- **(drop, knowingly)** Requirement 13.2 is narrowed, naming what it leaves out. The text, if Peter picks it (R2's text with colour handed to #870):
+  > 2. Row 21, under the rule the design rules: WHEN a consumer's component token in the `spacing` or `sizing` family has a non-conforming custom value THEN `generate` SHALL warn, naming the token, and SHALL NOT fail (failing would break supported web consumers; a failure is held for a major, or goes to Peter under Q7). `generate` does not warn for a consumer's component token in the `radius`, `fontSize` or `borderWidth` family: such a custom value is accepted and emitted unchecked. A `color` component token is not a conformance case here: what `generate` does with it is ruled at #870's colour fork. WHEN a DesignerPunk component token does not conform THEN the repository's lane SHALL fail, and the ruling's PR disposes of the two known cases (Badge-Label-Base, Button-VerticalList-Item) (Ada R1).
+
+  As at R2, drop also amends the two sentences the narrowing makes false, each with a dated line in place: Requirement 13's user story gains "for spacing and sizing", and design § 12's "Consumer tokens warn; DesignerPunk's fail." gains "(a consumer's spacing and sizing tokens; other families are not checked by `generate`, Requirement 13.2)". The record then closes under rule 5 at that merge.
+
+**Under either option**, Ada's class option (close `ComponentTokenConfig.family` to the families the generators type) stays with #870's owner, as at R2.
+
+**My lean is unchanged: drop, knowingly.** The park does not change why. With colour ruled at #870, what is left is two warnings that each need a design ruling, and no consumer case motivates either today.
+- **What survives**: under drop, a consumer's off-grid radius or off-scale fontSize custom value still ships with no word from `generate`. Requirement 13's promise to adopters shrinks, and Peter rules on row 7 for a second time.
+- **The fork my lean does not absorb**: if Peter wants the requirement kept whole for radius and fontSize, fix-now is the only option that keeps it, and it costs him two rulings first.
+
+**The record**: as at R2. Ada keeps `release:16.4.0:phase-1`. It closes at this PR's merge if Peter says drop knowingly, or in the fix-now PR's own diff if he says fix-now.
+
+*Signed: Thurgood, 2026-11-28.*
