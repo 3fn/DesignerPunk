@@ -43,7 +43,7 @@
   - D4's iOS target is 18.0,
   - a release-time run on iOS 18.5 or 18.6 joins the CI lanes,
   - shipped text will read "built for iOS 18.0; tested on <runtime>",
-  - and a Core Goals ballot must be ratified before 132's first claim.
+  - and the Core Goals ballot owed before 132's first claim is ratified and applied (#888, #889).
   - The iOS 17 run is no longer needed.
 - **What the team settled in review** (§ 5.2):
   - one module per platform that contains only the families that are ready (T-14), so the first family's app does not wait for every other family's repair, and a family that is not ready is not callable at all;
@@ -231,7 +231,7 @@ E2's grep for `132` / `132-native-components-in-app`, plus the records added by 
 
 The **disposition is a proposal**; each owner writes it, and the lines are written in the requirements feedback round's Context for Reviewers, as Step 0 requires. Owners confirmed their rows in R1.
 
-*(B2, ballot `2026-11-27-rule-11-lapse-window-b2`, is in its application PR, #882; its site 6 would make the hand-add rule explicit. The current text already says "A record the outline cites but the grep misses is added by hand", which is what this list does.)*
+*(B2, ballot `2026-11-27-rule-11-lapse-window-b2`, was applied by #882 (`8c22e7f58`); its site 6 made the hand-add rule explicit (`governance/Process-Spec-Planning.md` L141 at `35456bdbc`). The text before it already said "A record the outline cites but the grep misses is added by hand", which is what this list does.)*
 
 | Record | Owner | Trigger (at `017514064`, or the PR head named) | Proposed disposition |
 |---|---|---|---|
@@ -252,12 +252,12 @@ The **disposition is a proposal**; each owner writes it, and the lines are writt
 | `.kiro/issues/2026-11-27-per-platform-contract-validation-ballot-owed.md` (#877) | Lina | `path:.kiro/specs/132-*/requirements.md` | intake: as above; it also carries P-4's reason-class list and the per-platform oracle lines (T-13) |
 | `.kiro/issues/2026-11-27-rendering-field-record.md` (#877) | Lina (Leonardo consulted) | `path:.kiro/specs/132-*/requirements.md` | intake: its shape is P-16; the field lands before 132's render lanes |
 | `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md` (#881) | Data | `path:.kiro/specs/132-native-components-in-app/requirements.md` | intake: the range numbers (P-9, with the `compileSdk` 37 finding as its item 1, dated on #884) and the API-26 floor test get their acceptance criteria in requirements |
-| `.kiro/issues/2026-11-27-android-render-probe-workflow-grant.md` (#878) | Data | `path:.github/workflows/android-render-probe.yml` | leave: closes at its fixing PR, #884, which archives it with the result (§ 6). Stacy's activation read is on #883 |
-| `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888, hand-added; filed under rule 10 by the ballot seat in the Core Goals ballot's PR, for Peter's P-6 ruling) | Thurgood (items name their seats: A Kenya, B Ada, C and D 132's docs units) | `path:.kiro/specs/132-native-components-in-app/requirements.md` | intake: A, the release-time 18.x lane; B, `generate` restoring the floor; C, docs stating what is tested; D, the gap stated when free images stop carrying 18 |
-| `.kiro/issues/2026-11-27-ios-17-runtime-probe-owed.md` (#886, hand-added) | Kenya | as that record says | **moot** since P-6's ruling: Kenya re-rules or closes it, on its own PR |
-| Lina's theming record (#885: Input-Text-Base's caret and selection not themed; the Button-VerticalList-Set iOS literal) | Lina | as that record says | intake once it merges: the iOS caret and selection are a parity defect for the family that holds Input-Text-Base; the literal `14` is a token-compliance defect (T-12) |
+| `.kiro/issues/2026-11-27-android-render-probe-workflow-grant.md` (#878) | Data | `path:.github/workflows/android-render-probe.yml` | leave: closed at its fixing PR, #884 (`358ca187b`), which archived it with the result (§ 6). Stacy's activation read is on #883 |
+| `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888, hand-added; filed under rule 10 by the ballot seat in the Core Goals ballot's PR, for Peter's P-6 ruling; on `main` since `b58c73da7`) | Thurgood (items name their seats: A Kenya, B Ada, C and D 132's docs units) | `path:.kiro/specs/132-native-components-in-app/requirements.md` | intake: A, the release-time 18.x lane; B, `generate` restoring the floor; C, docs stating what is tested; D, the gap stated when free images stop carrying 18 |
+| `.kiro/issues/archive/2026-11-27-ios-17-runtime-probe-owed.md` (#886, hand-added; merged at `e85112d7a`, filed directly under `archive/`, its last section "Parked", with no outcome line) | Kenya | as that record says | **moot** since P-6's ruling: Kenya re-rules or closes it, on its own PR |
+| Lina's theming record (#885: Input-Text-Base's caret and selection not themed; the Button-VerticalList-Set iOS literal) | Lina | as that record says | intake (merged at `7ad5b0cbf`: `.kiro/issues/2026-11-27-input-text-base-caret-and-selection-not-themed.md` and `.kiro/issues/2026-11-27-button-verticallist-set-ios-literal-font-size.md`): the iOS caret and selection are a parity defect for the family that holds Input-Text-Base; the literal `14` is a token-compliance defect (T-12) |
 
-- **Seven records fire when 132's `requirements.md` is first committed**: the drawn-control, readiness-tables and toolchain-range records, #877's three, and #888's iOS-18-floor record once it merges.
+- **Seven records fire when 132's `requirements.md` is first committed**: the drawn-control, readiness-tables and toolchain-range records, #877's three, and #888's iOS-18-floor record (on `main` since `b58c73da7`).
 - **One fires at `design.md`** (theme family);
 - **one at `tasks.md`** (instruments parser);
 - **one at `completion/claims-pass.md`** (component repair);
@@ -274,7 +274,7 @@ A record whose obligation is met earlier is re-ruled by its owner before its eve
 - **Kenya** (`.kiro/specs/129-consumer-generation-completeness/inbound-from-kenya-design-2026-11-05.md` § 5; her rule-10 section on #868):
   - **The iOS minimum was asked again at this outline, before any native support claim** (Peter's "4 (a)", received 2026-11-05T13:05:54Z; Spec 129 `design.md` § 0).
     - **Answered: P-6, "(B), raise to iOS 18"** (§ 5.1).
-    - Its owed acts are in `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888, branch `ballot/core-goals-ios-minimum-18`, at `d85b09a18`); the Core Goals raise is ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md` on the same PR.
+    - Its owed acts are in `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888, merged at `b58c73da7`); the Core Goals raise is ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md`, ratified on the same PR and applied by #889 (`35456bdbc`).
   - **The iOS 17 runtime probe is moot.** Its record, #886, is Kenya's to re-rule or close.
   - **The wording rule**:
     - until the Core Goals ballot is ratified, Spec 129's rule stands, "built for iOS 17.0, not run on 17", because it is true of every release before 132's first claim.
@@ -304,7 +304,7 @@ A record whose obligation is met earlier is re-ruled by its owner before its eve
 ### 4.4 Preconditions for the first support claim
 
 Each lands before the release that first claims native support, whatever P-7 decides that release is:
-- **The Core Goals ballot raising the iOS minimum to 18.0, ratified** (P-6; ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md`, DRAFT on #888). After the claim, raising the minimum is a breaking change.
+- **The Core Goals ballot raising the iOS minimum to 18.0, ratified: DONE** (P-6; ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md`, RATIFIED on #888 at `b58c73da7`, applied by #889 at `35456bdbc`). After the claim, raising the minimum is a breaking change.
 - **Deprecated-alias emission for the whole shared token surface, and D9's public-API diff** (Peter's "7 (a)"; § 4.3, Ada).
 - **#870's and #873's fixes, and #872's CORRECTION** (Ada R1, P-7's token-side lean).
 - **D7's derivation**, if P-2's overlay text points at served readiness (Leonardo).
@@ -323,16 +323,16 @@ Each lands before the release that first claims native support, whatever P-7 dec
     - Kenya: (A) is safe for what the compiler proves and not for behaviour; no free CI image carries iOS 17, and the oldest it carries is 18.5/18.6 on `macos-15`; raise to 18, not 26; decide before the claim.
     - Leonardo: a floor of 18 probably shuts out a support policy rather than a device (UNVERIFIED); lean (B) before the first claim; stated as a product choice, not as GitHub's image schedule.
   - **Confirmed, with the device cost in front of him**: Peter, received 2026-11-27T18:36:18Z, verbatim: **"Yes, (B) still stands, raise to iOS 18"**.
-    - Before this second answer he was told Kenya's finding (relayed by the orchestrator; not yet in a committed file, and UNVERIFIED by Thurgood): **no iPhone is dropped, but three iPads that run iPadOS 17 cannot run 18**: the iPad (6th generation), the iPad Pro 10.5-inch and the iPad Pro 12.9-inch (2nd generation).
+    - Before this second answer he was told Kenya's finding (relayed by the orchestrator; now committed: `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md` L27 @ `b58c73da7` names all three models, VERIFIED (Thurgood) by reading that line): **no iPhone is dropped, but three iPads that run iPadOS 17 cannot run 18**: the iPad (6th generation), the iPad Pro 10.5-inch and the iPad Pro 12.9-inch (2nd generation).
     - That corrects Leonardo R4's "probably not new hardware": the floor shuts out a support policy on iPhone, and those three iPad models outright.
   - **Its effects**, each carried into this file:
     - D4's iOS deployment target becomes **18.0**, a D-row edit put to Peter inside P-1 (§ 1, § 2);
     - a release-time run on **iOS 18.5 or 18.6 on `macos-15`** joins T-15's lanes and their grant;
     - the shipped wording form becomes **"built for iOS 18.0; tested on <runtime from the lane>"** (§ 4.3);
     - **`generate` restores the declared floor** if an adopter edits it down, because a lowered value compiles (Ada's; Leonardo R4);
-    - **the Core Goals ballot must be ratified before 132's first claim** (§ 4.4);
+    - **the Core Goals ballot is ratified before 132's first claim** (§ 4.4): #888 at `b58c73da7`, applied by #889 at `35456bdbc`;
     - **the iOS 17 runtime probe (#886) is moot**: Kenya re-rules or closes it.
-    - Rule 10: these obligations are filed by the ballot seat in #888, in `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888, branch `ballot/core-goals-ios-minimum-18`, at `d85b09a18`), beside the Core Goals ballot. This PR files no record of its own for them.
+    - Rule 10: these obligations are filed by the ballot seat in #888, in `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888, merged at `b58c73da7`), beside the Core Goals ballot. This PR files no record of its own for them.
 - **P-10, Android**: answered by the merge of #878 (2026-11-27T16:57:03Z).
 - **P-10, iOS: superseded by P-6.** Peter had chosen a local iOS 17 runtime download (received 2026-11-27T17:20:36Z, as relayed to Kenya and cited in her R2). Xcode 27.2's own downloader refused it twice (Kenya R4, #886), and P-6's ruling removes the need for it.
 - **P-8 does not arise**: KVM is usable on the free `ubuntu-24.04` runner (§ 6).
@@ -685,10 +685,10 @@ Both probes are owed before the iOS minimum (P-6) and the render tools (T-3) are
       - the Robolectric Compose test passes in 53 s.
     - **One sample**: lane stability is a later read, and KVM can move with the runner image.
     - **A finding for D4 and P-9**: Compose 1.12.1 under the pinned BOM 2026.09.00 needs `compileSdk` 37 for an app or test build, while the harness pins 36. The harness never sees it, because it runs only `compileDebugKotlin`. Moving the harness pin is a choice under ballot `2026-11-07-native-lane-ownership` item 3, by grant or spec row
-  - **Where the result is recorded**: the goal record's § "Android render probe result (2026-11-27, Data)", written by #884, with the `render-probe:` lines; the `compileSdk` finding as a dated line on the toolchain-range record. **#884 merges before #880**, because #880 archives the goal record (Data R1)
+  - **Where the result is recorded**: the goal record's § "Android render probe result (2026-11-27, Data)", written by #884, with the `render-probe:` lines; the `compileSdk` finding as a dated line on the toolchain-range record. **#884 merged before #880** (`358ca187b`), because #880 archives the goal record (Data R1)
 - **Kenya's iOS spike**
   - **State at this draft**: **Ran 2026-11-27 on iOS 26.0.** The iOS 17 part is **moot** since P-6's ruling (its record, #886, is Kenya's to re-rule or close). iOS 18.x evidence comes from the release-time `macos-15` lane, not from a probe
-  - **Where the result is recorded**: `.kiro/specs/132-native-components-in-app/evidence/2026-11-27-ios-render-spike/README.md`, on draft PR #879 (head `ae1f9b74e`), with a pointer in the goal record. Kenya's R2 measurements (the T-13 walk, the T-4 adopter module, the T-12 scaled forms, `@_spi`) are owed to #879's evidence
+  - **Where the result is recorded**: `.kiro/specs/132-native-components-in-app/evidence/2026-11-27-ios-render-spike/README.md`, on draft PR #879 (head `19a1813e6`, read 2026-11-28T01:41:17Z), with a pointer in the goal record. Kenya's R2 measurements (the T-13 walk, the T-4 adopter module, the T-12 scaled forms, `@_spi`) are owed to #879's evidence
 
 **What Kenya's spike found** (her README as corrected, and her R2; VERIFIED by her on this Mac, Xcode 27.2, iOS 26.0 simulator, deployment target 17.0; not on a CI runner; no DesignerPunk component rendered, because the components do not yet compile at zero in an adopter's module):
 - XCUITest works on a plain SwiftUI fixture styled with generated tokens: elements found by identifier, frames non-zero, tap-then-read works. 9 tests, 0 failures, about 48 s.
@@ -710,7 +710,7 @@ So **this PR is the carrying event** (`.kiro/issues/README.md` rule 11: a spec a
 
 **Merge preconditions** (for the orchestrator and the owners; none is this file's to do):
 1. **#868 merges first: DONE** (`e03d3ae3f`). The record's Trigger on `main` is `merge:#880`, so this merge fires it. *(`issues-owned.sh --pr 880` still reports 0 fires, because it reads records at this branch's head, whose merge base predates #868.)*
-2. **#884 merges before #880**, so the Android probe's result lands in the record before the record is archived.
+2. **#884 merges before #880: DONE** (`358ca187b`), so the Android probe's result lands in the record before the record is archived.
 3. **The record's close is in this PR's own diff.** A close committed on this branch lands in the squash, which is its own ancestor, so the record does not lapse at the merge (Stacy R1; it also holds under B2 as answered).
    - It is Kenya's and Data's act (rule 5: a dated outcome line, then the archive move), committed on this branch at Thurgood's signal, **after Peter's sitting-2 batch** and before the PR leaves draft.
    - **The outcome line must close the whole record** (Stacy, under B2): it says so, and where each remaining item now lives: this outline's § 4.3 and § 6, the toolchain-range record (#881), #888's iOS-18-floor record, § 5.1 P-6, and the access-pass list in § 2.
@@ -754,7 +754,7 @@ Sessions are seat-sessions. **Confidence: low.**
 1. **Done**: the Android grant merged (#878); P-6 ruled.
 2. **The sitting-2 batch** (§ 5.1): P-1, P-2, P-7, P-3, P-4, P-5, P-16, and P-14 if included. About eight questions.
 3. **The token review** (P-13). It can share sitting 2 if Ada's token list is ready; a token review is usually its own read.
-4. **The merges**: #868, #884, #879, then this PR. Merges, not rulings; they can share sitting 2.
+4. **The merges**: #868 and #884 (done: `e03d3ae3f`, `358ca187b`), #879, then this PR. Merges, not rulings; they can share sitting 2.
 
 **What would push it up**:
 - the `macos-15` image's Xcode not running iOS 18.x (the release-time lane then needs another toolchain);
