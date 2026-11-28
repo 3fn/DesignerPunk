@@ -352,6 +352,9 @@ Each lands before the release that first claims native support, which is **17.0.
 
 #### Answered so far in this round
 
+- **P-14, web render evidence: RULED** (b). Peter, received 2026-11-28T04:40:39Z, verbatim: "(b)". A Sparky-owned record, placed later alongside 128; 132 keeps the contract-validation format keyed by platform. Record: `feedback/design-outline.md` § "[PETER] P-14".
+  - **What survives, as he was told**: he may read his goal as covering web now, and until 128 web's "renders" claim stays weaker than native's.
+  - **Owed, with owners, none filed in this outline**: Sparky's record, filed by Sparky under rule 10, with its trigger alongside 128 (Sparky); the platform-keyed format, already carried in T-13 and in `.kiro/issues/2026-11-27-per-platform-contract-validation-ballot-owed.md` (#877; Lina).
 - **P-16, the `rendering:` schema shape: RULED** (C), Lina deciding as schema owner, and she decides (A). Peter, received 2026-11-28T04:24:26Z, verbatim: "I'm leaning (C), but I'd like to review the decision with Lina before committing to it fully." Then, after Lina's R12, received 2026-11-28T04:39:39Z, verbatim: "Confirm (C), with Lina's (A) and the guards". Record: `feedback/design-outline.md` § "[PETER] P-16".
   - **The shape**: per platform, `rendering: { kind: drawn | platform, reason }`. Until #885 merges, the iOS reason for Input-Text-Base says the caret and selection follow the app's tint. Structure is revisited if a second component wraps a system control (Leonardo's trigger).
   - **Why (A) now** (Lina R12, reversing her R3): the pivot lets #885's caret and selection fix ride 133 U1, before 132's render lanes exist.
@@ -563,6 +566,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-14 *(the orchestrator decides whether it joins the batch)* (order 9)
 
+- **RULED** 2026-11-28: (b) ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **Web render evidence** (Sparky R1): your "will successfully render" names no platform, and web's evidence is a name check plus jsdom contract tests
 - **Options**:
   - (a) a web render lane in 132;

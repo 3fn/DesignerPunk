@@ -3378,6 +3378,20 @@ Two conditions:
 - **Receipt time**: the orchestrator's brief first gave a placeholder for Peter's confirmation, then corrected it to 2026-11-28T04:39:39Z, the `date -u` stamp taken on receipt. That time is used here and in the outline.
 - **Left for the reshape**: T-1's fact "the component needs one new identifier on the field under either shape" was written for (B)'s part exclusion. Under (A), with render lanes that skip no region, Lina should say whether the identifier is still owed.
 
+#### [PETER] P-14
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; the receipt time is the orchestrator's `date -u`.*
+
+- **What he was asked**: (a) a web render lane in 132; (b) a Sparky-owned record placed later, alongside 128, with 132 keeping the contract-validation format keyed by platform; (c) none.
+- **What he was told survives**: he may read his goal as covering web now, and until 128 web's "renders" claim stays weaker than native's.
+- **Received**: 2026-11-28T04:40:39Z. **Verbatim**: "(b)".
+
+#### [THURGOOD R19]
+
+- Recorded P-14 as RULED, (b). → design-outline.md § 5.1
+- **Owed, none filed here**: Sparky's record, filed by Sparky under rule 10, with its trigger alongside 128; the platform-keyed format, already carried in T-13 and in #877's per-platform contract-validation record.
+- **Sitting 2 is complete**: P-1, P-2, P-7 (re-ruled by the pivot), P-3, P-4, P-5, P-13, P-16 and P-14, plus the pivot and the D4 shape. The one reshape follows, in its own commit (Peter, 2026-11-28T02:08:13Z: "(1) — let's answer now and reshape after").
+
 ---
 
 ## Requirements Feedback
