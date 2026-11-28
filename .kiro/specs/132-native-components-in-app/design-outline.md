@@ -352,6 +352,15 @@ Each lands before the release that first claims native support, which is **17.0.
 
 #### Answered so far in this round
 
+- **P-4, who may exclude a contract or remove a platform from it: RULED** (b), as new work. Peter, received 2026-11-28T03:48:12Z, verbatim: "(b) – I think that's even already the practice; but you'd have to confirm that with Lina"; then, after Lina's check, received 2026-11-28T03:49:46Z, verbatim: "Yes, (b) stands as new work; P-5 is (a)". Record: `feedback/design-outline.md` § "[PETER] P-4".
+  - **Not the practice today** (Lina R10): exclusions carry free-text reasons (40 entries across 25 `contracts.yaml` files); the 19 web-only contracts carry no reason at all; there is no closed list, nothing Peter has approved, and no checker.
+  - **Owed, with owners, none filed in this outline**:
+    - the reason-class list, grounded in a classification of the slice's 46 contracts per platform, for Peter to approve once (Lina);
+    - its ballot vehicle: the per-platform contract-validation ballot, `.kiro/issues/2026-11-27-per-platform-contract-validation-ballot-owed.md` (#877; Lina), which fires at 132's requirements;
+    - a reason, class plus text, on every platform removal, not only on exclusions (Lina);
+    - the re-sort of the 40 exclusions and the 19 web-only contracts into those classes (Lina);
+    - a checker that rejects any reason off the list and counts each class (Thurgood, with Lina).
+- **P-5, do adopter-built components meet the same bar: RULED** (a), same bar, available. Peter, received 2026-11-28T03:49:46Z, verbatim: "Yes, (b) stands as new work; P-5 is (a)". Record: `feedback/design-outline.md` § "[PETER] P-5".
 - **The pivot: RULED.** Peter, received 2026-11-28T03:45:37Z, verbatim: "Yes to 1, U2 before 132, keep 131. Re: 4, rejected. I don't think U1 will take "weeks" as projected."
   - **Item 1, adopted, in this order**: (i) finish 132's outline: the remaining questions, the reshape, Kenya and Data's close commit, and #880's merge; (ii) 133's outline round; (iii) 133 U1, state colours as tokens (the proper blend fix), which also ships the web fix in a 16.x; (iv) 133 U2 (the `ColorTokens.ts` deletion and the rgba cleanup) and U3 (shadow channels); (v) then 132, built against final colours; (vi) 133's enforcement last, after 132's first family.
   - **What this trims from his proposal**: at 2026-11-28T03:40:05Z he proposed, verbatim, "My proposal is the settle 132's design outline with the understanding we'll complete 133 before proceeding with 132. Let's gut-check that with Thurgood, Ada and Lina first, please". The ruled plan does not complete 133 first: enforcement comes after 132's first family (Thurgood R14, Ada R10, Lina R9).
@@ -473,6 +482,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-4 (order 5)
 
+- **RULED** 2026-11-28: (b), as new work ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **Plan decision 10: who may exclude a contract or remove a platform from it**
 - **Options**:
   - (a) each one yourself;
@@ -483,6 +493,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-5 (order 6)
 
+- **RULED** 2026-11-28: (a) ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **Plan decision 11: do adopter-built components meet the same bar**
 - **Options**:
   - (a) same bar, available;

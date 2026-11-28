@@ -3180,6 +3180,50 @@ That keeps enforcement inside 133, which Peter asked for. The register row has t
   - `InteractionStateAudit.test.ts`'s false assurance (mine as test-governance owner; Stacy on the claim side).
 - **Left for the reshape**: § 2 still books the blend repair as the first family's shared cost (the 4 pinned entries per platform, the measured-cost record's shared-costs row). Under U1 those blend files are deleted in 133, and their pinned entries are dropped in 132's act (Ada R10's handoff).
 
+#### [LINA R10]
+
+**No, (b) is not the practice today.** It is half-built: exclusions carry a reason, but nothing limits which reasons count or counts them. Read at `main` `35456bdbc`.
+
+**1. How exclusions are recorded today**
+- **Contract exclusions.** 25 `contracts.yaml` files have an `excludes:` block, 40 entries in all, for example `Chip-Filter/contracts.yaml` L73–76. Each entry has three fields: `reason`, `category` and `reference` (contract-system-reference § "Exclusion Fields").
+- **Reasons are free text.** 15 are the same "does not support disabled states" sentence, 11 are "Badges are visual indicators…", and the rest are one-offs.
+- **Platform removals.** `platforms:` is `[web]` on 19 contracts and `[web, ios, android]` on 214. A removal carries **no reason field at all**.
+- There is no `not_applicable` field anywhere (grep).
+
+**2. Is there a closed list, and does anything count it?**
+- **No closed list.** The catalog and the reference define no reason classes, so Peter has approved nothing.
+- **No checker counts anything.** The application MCP's parser copies `reason` as a string (`application-mcp-server/src/indexer/parsers.ts` L163–169) and the inheritance code merges the exclusions (`InheritanceResolver.ts` L59–79). Neither counts or rejects anything.
+
+**3. What (b) still needs before 132's native contracts**
+- The list of reason classes, grounded in a classification of the slice's 46 contracts per platform. It rides the per-platform contract-validation ballot (`.kiro/issues/2026-11-27-per-platform-contract-validation-ballot-owed.md`, which fires at 132's requirements).
+- A `reason` (class plus text) on every platform removal, not only on exclusions.
+- Re-classing the existing 40 exclusions and the 19 web-only contracts.
+- A checker that rejects any reason outside the list and counts each class. That needs an owner (Thurgood, with me).
+
+#### [PETER] P-4
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`.*
+
+- **What he was asked**: P-4 as in design-outline.md § 5.1: who may exclude a contract or remove a platform from it: (a) each one himself; (b) a closed list of reason classes, approved once, the checker counting each; (c) the team.
+- **Received**: 2026-11-28T03:48:12Z. **Verbatim**: "(b) – I think that's even already the practice; but you'd have to confirm that with Lina".
+- **Lina checked** (`[LINA R10]`, spliced above): (b) is not the practice today. Exclusions carry free-text reasons, 40 entries across 25 `contracts.yaml` files. The 19 web-only contracts carry no reason at all; the orchestrator verified the 19. There is no closed list, nothing Peter has approved, and no checker.
+- **What he was then told (b) needs**: a reason-class list for him to approve once, which can ride the per-platform contract-validation ballot due at 132's requirements (#877's record); a reason on every platform removal; the 40 exclusions and the 19 web-only contracts re-sorted into those classes; a checker that rejects off-list reasons and counts each class, owned by Thurgood with Lina (Lina's suggestion). Asked: "Does your (b) stand on that basis?"
+- **Received**: 2026-11-28T03:49:46Z. **Verbatim**: "Yes, (b) stands as new work; P-5 is (a)".
+
+#### [PETER] P-5
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; the receipt time is the orchestrator's `date -u`.*
+
+- **What he was asked**: P-5 as in design-outline.md § 5.1: do adopter-built components meet the same bar: (a) same bar, available; (b) same bar, required for anything served as conformant (128's lane 3); (c) a lower bar ("builds").
+- **What he was told survives**: until 128 lands, agents see adopter components beside ours with no evidence of the bar (Lina).
+- **Received**: 2026-11-28T03:49:46Z, in the same message as his P-4 answer. **Verbatim**: "Yes, (b) stands as new work; P-5 is (a)".
+
+#### [THURGOOD R16]
+
+- `[LINA R10]` (`lina-p4-practice.md`) is spliced above, byte for byte.
+- Recorded P-4 as RULED, (b) as new work, and P-5 as RULED, (a). → design-outline.md § 5.1
+- **P-4's new work, carried as owed acts** (design-outline.md § 5.1, P-4): the reason-class list and the platform-removal reasons (Lina); its ballot vehicle, `.kiro/issues/2026-11-27-per-platform-contract-validation-ballot-owed.md` (#877; Lina); the re-sort of the 40 exclusions and 19 web-only contracts (Lina); the checker (Thurgood, with Lina). None is filed here.
+
 ---
 
 ## Requirements Feedback
