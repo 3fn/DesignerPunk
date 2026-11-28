@@ -1,5 +1,17 @@
 # iOS render spike: XCUITest queries, the element-screenshot ink check, `performAccessibilityAudit`
 
+> **Note, 2026-11-28 (Kenya), added after the outline's sitting 2. The measured results below are unchanged.**
+> - **The iOS minimum is now 18.0** (P-6, RULED, Peter, received 2026-11-27T18:32:45Z: "(B), raise to iOS 18"; Core Goals, #889 at `35456bdbc`).
+>   - This spike's deployment target of 17.0 is what was measured. It is not the floor 132 builds against.
+>   - The "What was not run" section's iOS 17 part is **moot**. Its record, `.kiro/issues/2026-11-27-ios-17-runtime-probe-owed.md`, is closed and archived (`.kiro/issues/archive/`, #886).
+>   - The sentence "built for iOS 17.0, not run on 17" below no longer states the shipped wording. The shipped wording is "built for iOS 18.0; tested on <runtime from the lane>" (132 outline § 5.1, P-6).
+>   - iOS 18.x evidence comes from 132's release-time `macos-15` lane, not from this spike.
+> - **The pivot** (RULED, Peter, received 2026-11-28T03:45:37Z; 132 outline § 3 and § 5.1).
+>   - 133's token half (U1, U2, U3) now comes before 132's first family.
+>   - The native blend files, including `src/blend/ThemeAwareBlendUtilities.ios.swift` and its pinned `darkerBlend` errors, are deleted in 133 U1, which replaces them with state colours as tokens.
+>   - So the compile repair named under "Not a gate" below is no longer Lina's record alone. Its blend part belongs to 133 U1.
+> - **Where the outline's owed R2 measurements are**: the T-13 walk is § 4, the T-12 scaled forms are § 5, the T-4 adopter module is § 6, and `@_spi` is § 8.
+
 **Date**: 2026-11-27 (runs 16:50–16:56 UTC, `date -u`)
 **Author**: Kenya (iOS)
 **Why**: plan-r2 § 2, the row "Probes, before 132's outline" (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-05-native-plan/plan-r2.md`), places Kenya's iOS render spike before Spec 132's outline. Peter's go for that outline round was received 2026-11-27T16:44:48Z ("Spec with (a), and start 132's outline round now"). This file holds the spike's measured result, for the outline's WP5 round. The goal record that points here is `.kiro/issues/2026-09-26-native-component-distribution.md`.
@@ -131,6 +143,16 @@ These four probes were run for `[KENYA R1]` and `[KENYA R2]` in `.kiro/specs/132
 ### 7. A file added to a synchronized folder needs no project edit
 
 `T12Screen.swift`, `T13Screens.swift`, `T12Tests.swift` and `T13Tests.swift` joined their targets with no change to `project.pbxproj`. That is evidence for T-3. VERIFIED: `git diff` shows `project.pbxproj` unchanged since `cabf37ada`.
+
+### 8. `@_spi`: a pointer, added 2026-11-28 (Kenya)
+
+**This measurement is not part of this fixture.** It was a scratch two-module `swiftc` typecheck, iOS 17.0 target, run during R2. Its source files were not committed, and it was not re-run for this note.
+- **The record is** `[KENYA R2]` item 11, in `.kiro/specs/132-native-components-in-app/feedback/design-outline.md` on `spec/132-design-outline`.
+- **What it says** (VERIFIED there):
+  - `@_spi(Preview) public struct NotReady` cannot be seen through a plain `import`: "cannot find 'NotReady' in scope";
+  - it can be seen through `@_spi(Preview) import`;
+  - the attribute is underscored, so it is not a stable public language feature.
+- Under T-14 (ii) neither `@_spi` nor a separate library product is needed on iOS.
 
 ## What was not run
 
