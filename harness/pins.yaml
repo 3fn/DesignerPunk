@@ -32,9 +32,11 @@ consumer:
 # HARNESS PINS, NOT PLATFORM MINIMUMS (Req 2.9). They name the toolchain the compile evidence is
 # cut under, so one run is comparable to the next. A green here says nothing about the oldest Xcode
 # or iOS an adopter may use. The one exception is `deploymentTarget`, which equals Core Goals' iOS
-# minimum (17.0): it is the compile target, so "uses nothing newer than 17.0" is compile evidence.
-# "Built for iOS 17.0, not run on 17" is the wording rule until something runs on iOS 17
-# (Peter, 2026-11-05T13:05:54Z, "yes, 4 (a), 7 (a)").
+# minimum (18.0): it is the compile target, so "uses nothing newer than 18.0" is compile evidence.
+# The minimum is a product choice, made in Core Goals and tested on the oldest iOS a free runner image
+# carries; it does not move when the runner images do. "Built for iOS 18.0, not run on 18" is the
+# wording rule until something runs on iOS 18 (ballot 2026-11-27-core-goals-ios-minimum-18;
+# Peter, 2026-11-27T18:32:45Z, "(B), raise to iOS 18").
 #
 # The Xcode pin is the newest stable Xcode 26 minor on the `macos-26` image at the unit's cut (K-7):
 # the U1 branch was cut 2026-11-06, so this section was set from the readme read that day, not from the
@@ -52,7 +54,7 @@ ios:
     cut: "2026-11-06"
   statement: "These pins are harness pins, not platform minimums; no green is read as 'runs on the minimum'. The deployment target is the one pin that equals Core Goals' iOS minimum."
   # The compile target. Equals Core Goals' iOS minimum (Req 2.9).
-  deploymentTarget: "17.0"
+  deploymentTarget: "18.0"
   # What each context reads from the running toolchain and compares, as quoted strings, with these
   # exact field names (Req 3.11; K-6). `xcode.app` is the app folder: the lane sets DEVELOPER_DIR to
   # `<xcode.app>/Contents/Developer`, and a missing folder fails the context as `toolchain missing`.

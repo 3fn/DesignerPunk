@@ -96,11 +96,13 @@ verdict: assent — surviving 3/6; not surviving: `starting-a-parent-ta-2`, `for
 ## `#item-your-open-records`
 
 signer: stacy
-date: 2026-11-08
+date: 2026-11-27
 row: `canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml` · body · `#item-your-open-records` (no-consumer-counterpart; first signature)
-canonicalHash: sha256:42a36743767fe2c303c410d9b9395f8e6ddade32f0934636ed079c11376b9d83
+canonicalHash: sha256:6a8c264ba4802043385afbabcbcb264ea53eb0cecc1166926d46d7d096716ca9
 renderedHash: sha256:c29e6217609a6ef54a0be554828d4d0d52e31c9bd10f5bb7cc08598f30132f43
 verdict: assent — surviving 0/9; not surviving: `open-records-run`, `open-records-manual`, `open-records-due`, `open-records-fired`, `open-records-lapse`, `open-records-resolve`, `open-records-broken-pointer`, `open-records-fail-soft`, `open-records-revisit`
+
+**Re-signed 2026-11-27, B2's application (ballot 2026-11-27-rule-11-lapse-window-b2, site 4)**. The canonical unit moved: site 4 rewrote the `FIRED@` line's lapse sentence (Thurgood `8e7a296a2`), and I re-confirmed the set at 9 items in `4a145f1a5`. The canonicalHash moves from `sha256:42a36743…76b9d83` to the value above. The row still renders nothing (0 pieces; print read at `4a145f1a5`, clean), and the renderedHash is unchanged, because it pins the disposition, which did not change. I re-judged the disposition against the new unit: no-consumer-counterpart and `subtraction-1` still hold, because the new sentence adds no referent a consumer has, and every item still hangs on `./scripts/issues-owned.sh` and this repo's `.kiro/issues/` records. Assent, surviving 0/9, as the verdict line reads.
 
 **Re-signed 2026-11-08, shape review PR 2 (ballot 2026-11-08-signing-act-shape-review, F-4 (a) pin)**. The row still renders nothing (0 pieces; print read at `bec8be6bd`, clean), and its canonical hash is unchanged. Under the pin, `renderedHash` is `hashEntry({disposition: no-consumer-counterpart})`, so it now pins the disposition I judged rather than the empty piece list (prior `renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`). I re-judged that disposition against the canonical value printed for this row and it holds; assent, surviving 0/9, as the verdict line reads.
 

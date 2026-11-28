@@ -24,3 +24,7 @@
   - the capture record's close.
 - The ballot is drafted by Thurgood (owner of RELEASE-FLOW and drafter of the 10-29 ballot) and ratified by Peter, record-first. **This ruling directs the vehicle. It does not ratify text not yet written.**
 - Records already written (15.0.0–16.3.0) stay where they are, per the 10-29 ballot § "Retroactivity", unless the new ballot says otherwise.
+
+## Correction (2026-11-27, the orchestrator)
+
+- **The consult round files are no longer in the orchestrator's scratchpad.** A machine restart cleared it. They were recovered from the seats' session transcripts (each file is the text of the seat's own write call), and are committed beside this record in `consult-163/`. Cite them there.
