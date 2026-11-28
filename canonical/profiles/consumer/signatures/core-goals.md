@@ -7,11 +7,22 @@
 ## `#core-project-context`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-27
 row: `canonical/profiles/consumer/always-set/core-goals.dispositions.yaml` · body · `#core-project-context` (re-pointed; ROUTED)
-canonicalHash: sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491
-renderedHash: sha256:565e95a14c1ad36cd9b5021573286ba03f044f4b0e679747639cb51327195f26
+canonicalHash: sha256:e5ef0fa0ad159c39602764640e25cbd78648498d5b232a9fcb701940fac19d98
+renderedHash: sha256:00e1a8154697af2933b8e9fe8e29c51e4f2d88d8f69f4f62486fa57bb52a876b
 verdict: assent — surviving 8/8
+
+**Re-signed 2026-11-27 (Core Goals iOS-minimum ballot, item 1, site 1): ASSENT, `surviving` 8 of 8 (`principle-1` to `principle-6`, `platform-android`, `platform-web`).** A new act, read fresh against the new rendering; nothing is carried from the signatures below. The field lines above carry the current values. Before this act they still read the 2026-09-29 values, and the 2026-11-05 values are in its paragraph below.
+- **The ballot**: `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md` (RATIFIED, Peter, 2026-11-27T19:12:17Z; Status commit `f1a677ae7`, #888).
+  - Site 1 and the profile lines were applied at `186fed18d` (Thurgood): `principle-6` re-quoted, the row's fourth removal (the new amendment parenthetical, `subtraction-2`), and the overlay unit pin re-grounded.
+  - I re-confirmed the set at 8 at `7b42fd678`.
+  - The rendering was regenerated at `7be5d0e90`.
+- **What I read, in this session, through tool results**: the row as `verify-signing-chain --print canonical/profiles/consumer/always-set/core-goals.dispositions.yaml#core-project-context` printed it on a clean tree at `7be5d0e90`. That is the canonical unit and its three rendered pieces (`_canonical/always-set/core-goals.md`, `cc/.claude/identity/designerpunk-core-goals.md`, `kiro/.kiro/steering/designerpunk-core-goals.md`), which are identical. Each reads `- iOS: 18.0+` and ends there, with no `Amended` in any copy.
+- **The removal**: the row differs from `origin/main` by exactly one added removal; every other field is identical (checked by script). Its `text`, leading space included, equals the end of the canonical L28 byte for byte, and the rendering shows it subtracted. The removals array is authoring, and I did not touch it.
+- **Credited**: all 8 item texts appear verbatim in each of the three rendered copies (checked by script, 8/8 each). `principle-6` now states the 18.0 minimum, still `obligation` (re-ruled at `7b42fd678`).
+- **Hashes**: `canonicalHash` moves from `b7713a75…` to the value above, equal to the overlay pin and to my confirmation. `renderedHash` moves from `02f213cc…` to the value above, as the print reported over the committed rendering.
+- **Not mine, flagged**: the consumer exposure the ballot names in § 1 and § 10. An adopter's agent will now read "iOS: 18.0+" as a minimum and push back on an adopter target below 18, which excludes the three iPads that cannot run 18. Peter confirmed (B) knowing that (2026-11-27T18:36:18Z), so it is not a refusal condition.
 
 All eight survive; the orientation line is re-grounded ("built on DesignerPunk … carries its principles"), and the further-reading pointers move to docs-MCP ids, which are not items.
 

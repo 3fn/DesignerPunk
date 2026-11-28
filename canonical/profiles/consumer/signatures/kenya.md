@@ -193,9 +193,18 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
-renderedHash: sha256:ae753b420debee69b6f6a9e650cc6e8f6413d3fbc732a007b1b9397306abc787
-date: 2026-11-08
+canonicalHash: sha256:0fa41e91a8e4ede4faefbbd69826e19f4b4272ca00847606ef3913a22463a6d7
+renderedHash: sha256:99c55ddeed3b4c85702030da318f597f5963d1df740dfc6efa077e76e9ce5c18
+date: 2026-11-27
+
+**Re-signed 2026-11-27 (ballot 2026-11-27-core-goals-ios-minimum-18, site 2): ASSENT, `surviving` 7 of 7 (`native-1` to `native-7`).** This is a new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65` and renderedHash `sha256:ae753b420debee69b6f6a9e650cc6e8f6413d3fbc732a007b1b9397306abc787`.
+- **Ruling**: the ballot is RATIFIED (Peter, 2026-11-27, #888). The profile author applied site 2 at `186fed18d`. I re-confirmed the unit at `11077e8a9`. Thurgood regenerated at `7be5d0e90`.
+- **What changed**: L472, the unit's last bullet, changed from *"iOS 17.0+ minimum (per Core Goals)"* to *"iOS minimum version per Core Goals"*. `native-7` was re-quoted to that text, with kind `obligation`. No other line changed.
+- **What I read, in this session, through tool results**: the print-mode output at `2bbcad96198d4fc019effa45b38a2704dec59457`, on a clean tree. That is the canonical unit and its three renderings (`_canonical`, `cc`, `kiro`), identical in the lines this row owns. Each ends `- iOS minimum version per Core Goals`.
+- **Credited**:
+  - `native-1` and `native-3` to `native-7` are verbatim in the rendering. `native-7` is the rendered line itself.
+  - `native-2` survives as at the 2026-11-08 act. *"DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP"* is verbatim, and *"not read from the generated files"* carries the prohibition.
+- **Hashes**: both are the print's values. `canonicalHash` moves from `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65` to `sha256:0fa41e91a8e4ede4faefbbd69826e19f4b4272ca00847606ef3913a22463a6d7` (`hashText` over the unit; it equals the overlay pin and the operative set's re-confirmed value). `renderedHash` moves from `sha256:ae753b420debee69b6f6a9e650cc6e8f6413d3fbc732a007b1b9397306abc787` to `sha256:99c55ddeed3b4c85702030da318f597f5963d1df740dfc6efa077e76e9ce5c18` (`renderedHashOf` over the committed rendering).
 
 **Re-signed 2026-11-08 (Spec 129 Task 18.5, the retired `dist/` names): ASSENT, `surviving` 7 of 7 (`native-1` to `native-7`).** A new act, read fresh against the committed rendering. Nothing is carried from the entries below. Their last hashes were canonicalHash `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65`, renderedHash `sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145`.
 - **Ruling**: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md` (Peter, 2026-11-08T14:47:50Z). Thurgood reworded the overlay in `3d479bd4b`; Lina regenerated at `7cfe548e7`.

@@ -107,7 +107,7 @@ Your knowledge of iOS, SwiftUI, and Swift is deep but has a training data cutoff
 
 ---
 
-## @unit #ios-specific-guidance @ sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
+## @unit #ios-specific-guidance @ sha256:0fa41e91a8e4ede4faefbbd69826e19f4b4272ca00847606ef3913a22463a6d7
 ## iOS-Specific Guidance
 
 - SwiftUI views with NavigationStack for navigation
@@ -116,7 +116,7 @@ Your knowledge of iOS, SwiftUI, and Swift is deep but has a training data cutoff
 - Haptic feedback via UIImpactFeedbackGenerator where specified
 - VoiceOver accessibility via SwiftUI accessibility modifiers
 - Animation via SwiftUI `.animation()` and `withAnimation()`
-- iOS 17.0+ minimum (per Core Goals)
+- iOS minimum version per Core Goals
 
 ---
 

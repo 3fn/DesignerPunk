@@ -20,6 +20,7 @@ import { FileWatcher } from './watcher/FileWatcher';
 import { DesignPhilosophyIndexer } from './indexer/DesignPhilosophyIndexer';
 import { CONSUMERS_SCOPE } from './indexer/TokenIndexer';
 import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
+import { checkBuildProvenance } from './build-provenance/BuildProvenance';
 
 const SERVER_NAME = 'mcp-component-server';
 const SERVER_VERSION = '0.1.0';
@@ -317,6 +318,15 @@ export interface TestableServer {
 export interface TestableServerOptions {
   /** Staleness-gate threshold; the live server uses the gate's default (30s). */
   stalenessThresholdMs?: number;
+  /**
+   * The directory the running build was loaded from (`__dirname` of the entry module). When
+   * set, every health result carries build provenance
+   * (.kiro/issues/2026-11-27-mcp-build-provenance-contract.md). The entry point always sets
+   * it; in-process construction (tests) may leave it unset.
+   */
+  distDir?: string;
+  /** The entry module's file (`__filename`); a `.ts` entry means ts-node, so there is no build. */
+  entryFile?: string;
 }
 
 /**
@@ -358,6 +368,16 @@ class ComponentMCPServer {
     this.indexer = new ComponentIndexer();
     this.queryEngine = new ComponentQueryEngine(this.indexer);
     this.assemblyValidator = new AssemblyValidator(this.indexer);
+
+    // Build provenance: every health read reports whether the running build matches its
+    // source (.kiro/issues/2026-11-27-mcp-build-provenance-contract.md). Re-decided at each
+    // read, so source changed mid-session is seen at the next one. stderr only: stdout is JSON-RPC.
+    if (options.distDir) {
+      const { distDir, entryFile } = options;
+      this.indexer.setBuildProvenanceProbe(() => checkBuildProvenance({ distDir, entryFile }));
+      const report = checkBuildProvenance({ distDir, entryFile });
+      console.error(`[${SERVER_NAME}] Build provenance: ${report.state} — ${report.reason}`);
+    }
 
     // Spec 123 C3: the watcher and the staleness gate watch the CONSUMER root; the package root
     // is exempt as immutable (it lives under node_modules in every consumer install).
@@ -872,7 +892,7 @@ if (require.main === module) {
     };
   }
 
-  const mainServer = new ComponentMCPServer(dataPaths);
+  const mainServer = new ComponentMCPServer(dataPaths, { distDir: __dirname, entryFile: __filename });
   mainServer.start().catch((err) => {
     console.error(`[${SERVER_NAME}] Fatal error:`, err);
     process.exit(1);
