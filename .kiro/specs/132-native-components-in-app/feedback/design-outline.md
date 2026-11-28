@@ -2101,6 +2101,512 @@ These are row-text edits, so they are Peter's and go on the "D-row changes since
 - **A correction to the context Peter was given, from the orchestrator**: in P-2's context the orchestrator told Peter "a family that isn't ready isn't in the adopter's package at all". That is Leonardo's side of T-14's open inclusion threshold (design-outline.md § 5.2, T-14), not settled. The orchestrator is telling Peter so inside P-7.
 - **The same overstatement is in the outline's own P-2 lean line**, which is my text: "Under T-14 (ii) a family that is not ready is not in the adopter's module at all, which makes per family true in the build". It is left unchanged here, because leans stay as asked; the reshape corrects it to name the open threshold.
 
+#### [THURGOOD R8]
+
+**P-7, the gate proposal: 17.0.0 ships when 132's first family, 131 and 133 are all done, and carries the first native claim.** Read at `35456bdbc`.
+
+**1. What it changes**
+- **131's park**: unchanged (re-ask at 132's measured-cost record). 131 must now *finish* before 17.0.0.
+- **The priorities record's order** (`.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 3): today it is 129 → 132's first family → re-placement → 131 → 128 → 130, with 133 after 130. The gate moves 133 ahead of 128 and 130. That is a walk-log line with his words: a record, not law.
+- **133**: still a placeholder with no round. It needs a full outline round first.
+- **RELEASE-FLOW**: no change needed. Peter already ratifies every version bump ("Deriving the delta", step 3), so a gate is simply his ruling not to ratify 17.0.0 early. To keep it visible, add a row to the priorities record's § 7 "Peter-gated deferrals", which RELEASE-FLOW item 3a reprints at every release. A record, not new law.
+
+**2. Sequence and size** (estimate, low confidence)
+- The order: 132's outline closes → 132's requirements, design and tasks → the first family's units → the measured-cost record, which fires 131's re-ask → 131 → 133's outline round and formalization → 133's work → the 17.0.0 release.
+- 132's first family: about 20–35 sessions (REASONING; all of 132 is 50–95 per plan-r2 § 8, and the slice carries the shared costs).
+- 131 and 133: both unsized. I owe 131's size before the first first-family unit merges (T-17). As a guess, 15–30 sessions each.
+- In total, about 50–95 sessions and 12–20 of Peter's sittings.
+
+**3. Releases in the meantime**
+- **16.4.0 must still happen**: 14 open records fire at `release:16.4.0:phase-1`.
+- 16.x minors can carry 132's work without a claim (Peter's "7 (a)").
+- **The catch is that releases are cut from `main`.** 133 includes the `ColorTokens.ts` deletion, which breaks adopters. Once that merges, no 16.x can ship without becoming a major. So 133 has to deprecate in a 16.x and delete only in 17.0.0's release PR, or every release waits for the gate.
+
+**4. My position**
+Accept (i) as a record, on two conditions:
+- (a) `main` stays releasable as 16.x: nothing that breaks adopters merges until the 17.0.0 release PR, so deletions are deprecated first;
+- (b) the gate goes in § 7 of the priorities record, not in RELEASE-FLOW.
+
+**Counter-argument I could not fold away**: the gate ties a promise to adopters to 131, which adopters never see. The slowest of three specs sets the date, and two of them are unsized. "Do not start a native product" stays printed the whole time, after the first family is ready.
+
+That leaves a fork, which is Peter's to pick: gate the *version number*, or gate the *claim*. If he gates only the number, the first family could be claimed in a 16.x minor.
+
+#### [THURGOOD R9]
+
+**Can RELEASE-FLOW publish `17.0.0-next.N` on `next`? Not as written.**
+- The script accepts a prerelease version: `VERSION_RE` allows `-next.N` (`scripts/release-publish.ts` L106). VERIFIED.
+- Both publish commands pass no `--tag` (L197, L201), and RELEASE-FLOW names no dist-tag. VERIFIED. So npm would put the prerelease on `latest`, or refuse it. Which of the two happens depends on the npm version. UNVERIFIED.
+- Making it work takes a `--tag next` change in the script (Ada's) and in RELEASE-FLOW's step text (mine, so a LAW ballot). Every `-next.N` would then be a full release cycle.
+
+**1. Final position**: unchanged. Accept the gate as a record, with `main` kept releasable as 16.x.
+
+**2. Can I live with the others?**
+- **Ada, gating 17.0.0 on 133's token half and shipping enforcement after**: yes. It keeps the one part that saves aliases, which is blend, and drops the part that saves nothing.
+- **Leonardo, 17.0.0 with the first family alone**: yes. It is the seats' earlier position and needs no new record.
+- **Leonardo's prerelease**: only with that ballot. It costs a law change and a release cycle per build.
+
+**3. Factual points**
+- **My own R8 was wrong.** I called the `ColorTokens.ts` deletion a certain break. `init` copies the whole token tree (`src/cli/init.ts` L275–281, VERIFIED), so local-mode adopters keep their copy. Whether the package's root export exposes the file is UNVERIFIED. Ada's point stands: blend is the API that reaches the claim.
+- **Leonardo**: moving 133 ahead of 128 and 130 is not reading (iii). Reading (iii) was ordering 130, 131 and 133 ahead of the first family. The move he describes is a different reorder, and it is implied by (i). VERIFIED against the brief's wording.
+
+#### [ADA R4]
+
+Read at origin/main `35456bdbc`, 132 outline at `da59d4067`.
+
+**1. Would 133 break adopters after the first claim?**
+- **Blend is the one that reaches the claim.** All three chips call `pressedBlend()` (VERIFIED: grep of Chip-Base/Filter/Input; outline L175), so the blend helper is in the first family's closure. Its native API is hand-written and public: 37 `public` lines in the Swift file, about 30 top-level declarations in the Kotlin one (VERIFIED, grep), including `ThemeMode`, `BlendThemeContext` and `BlendUtilitiesProvider`. 133 decides OKLCH or RGB/HSL, generated or hand-written. Keeping the names and changing the maths changes hover and pressed colours in a claimed family, with no compile break. Renaming or retiring helpers, and `ThemeMode` overlaps the new theme family, is a break (UNVERIFIED: not designed yet).
+- **ColorTokens deletion, rgba cleanup, shadow channels**: these are not on the native token surface. Shadow channels add tokens; the shadow names stay (UNVERIFIED). Deletion moves five generator readers (VERIFIED, grep). But `init` copies the whole `src/tokens` tree (VERIFIED, `init.ts` L275–281), so a local-mode adopter keeps their own `ColorTokens.ts` and barrel. If the new `generate` expects a different tree, every platform breaks, web included, whether or not native is claimed (UNVERIFIED).
+- **Web**: `@3fn/core/blend` already exports the RGB/HSL calculators (VERIFIED, `exports`). Retiring them is a web semver question today, so the native claim does not change it.
+- **Enforcement**: checks only.
+
+**2. Saving.** Nearly all of it is blend. Done before the claim: no aliases. Done after: 0 aliases if names are kept (but a visible colour change), and roughly 8–12 hand-written deprecated symbols per platform if the theme-mode helpers are retired (UNVERIFIED estimate). A further saving: 132 repairs the blend helper anyway (4 pinned entries per platform), and deciding blend first avoids repairing it twice. The rest of 133 saves no aliases.
+
+**3. Cost on my side.** A full round from zero: Step 0 over seven records. Blend's three entangled decisions. Shadow channel tokens for Peter's creation review. A replacement for the DTCG structural source. Five readers. About 200 test assertions (the record's estimate, UNVERIFIED now). Enforcement adds six design questions and an arming campaign, which Lina leads. I would expect four sittings at least before tasks.
+
+**4. Position.** I support 17.0.0 as the marker. I would not gate it on all of 133: enforcement is the slowest part and saves nothing. The fork for Peter: (A) his gate as stated; (B) gate on 133's token half, or at least blend's API shape, and ship enforcement after.
+**Counter-argument I could not fold away**: under (B), 17.0.0 does not mean "colour is settled". A later deletion can still force local-mode adopters to migrate their token tree, and that alone may cost an 18.0.0. (B) also splits a spec Peter ruled as one.
+
+#### [ADA R5]
+
+**1. Final position.** Unchanged, and I add Thurgood's condition (a). I want 17.0.0 as the marker, gated on 132's first family plus one part of 133: the native blend API's shape, settled before the claim. The rest of 133 and all of 131 go after. Nothing that breaks adopters merges to `main` before its own major.
+
+**2. Can I live with the others?**
+- **Thurgood (gate (i) with conditions (a) and (b)): yes.** Condition (a) keeps `main` releasable, so the gate costs time, not correctness. The cost is that the slowest unsized spec sets the date.
+- **Leonardo (first family alone in 17.0.0, 133 in 18.0.0): yes, but only if blend's native API is frozen before the claim.** All three chips call `pressedBlend()` (VERIFIED). Without that freeze, 133's blend decision lands on a claimed family as aliases or a break, which is the counter-argument he states himself.
+
+**3. Factual points**
+- **Leonardo**: "whether the package's public API exposes [`ColorTokens.ts`] is UNVERIFIED." I can close that. No `exports` entry reaches it: not `.` (the browser bundle), not `./build`, not `./types`, not `./config` (VERIFIED, `package.json` and `src/build/tokens/index.ts`). The exposure is a different one: `init` copies the file into the adopter's own tree (VERIFIED, `init.ts` L275–281).
+- **Thurgood**: "the `ColorTokens.ts` deletion, which breaks adopters" is overstated for the import surface (VERIFIED, above). What can break is local-mode `generate` against an adopter's copied tree (UNVERIFIED until 133 is designed). His condition (a) is still right.
+- **Leonardo**: "blend states in OKLCH" is not decided. 133 may instead ratify the RGB/HSL path (VERIFIED: the blend record leaves it as "wire or formally retire").
+- **Leonardo**: 133 sits after 130, so the gate means a reordering (VERIFIED, 133 outline § 5).
+
+#### [LEONARDO R7]
+
+**P-7, reading (i): 17.0.0 ships only when 132's first family, 131 and 133 are all done.** Read at 132 outline `da59d4067`, `main` at `35456bdbc`.
+
+**One fact first, VERIFIED.** The ruled order is 129 → 132's first family → re-placement → 131 → 128 → 130, then the colour track (133) after 130 (outline § 3; priorities record, 2026-11-05 lines). Peter dropped 130 because it is tied to 128, and 133 sits *behind* 130. So gate (i) either waits through 128 and 130 as well, or it moves 133 ahead of them. Moving 133 is reading (iii), a reordering, which has not been asked.
+
+**1. Gain and cost.**
+- **Gain.** Adopters, Peter first, start on settled ground. 133 changes colours adopters can see (blend states in OKLCH) and deletes `ColorTokens.ts`. That file is re-exported from `src/tokens/index.ts` (VERIFIED). Whether the package's public API exposes it is UNVERIFIED. If it does, 133 is a breaking change that belongs in a major anyway.
+- **Cost.** "Do not start a native product" stays up through 131 (paused before requirements, VERIFIED) and 133 (a placeholder with no round, VERIFIED). Nobody can size that wait. 131 is internal, so gating on it adds delay and nothing adopters see.
+- **After 17.0.0**, later families arrive as additions in minors under T-14 (ii). That part works either way.
+- **128 still forces a major.** If 17.0.0 waits until after 128 (the ordering problem above), the package split lands first and takes 17.0.0, or the split and native share it. If it doesn't wait, 18.0.0 follows soon after. That 128's split forces a major is the seats' estimate (UNVERIFIED).
+
+**2. Fit with P-2.** It is legal, but it pulls against the ruling. P-2 says to claim each family when its evidence lands. The gate holds a finished, tested family back for work that has nothing to do with it. Meanwhile its evidence goes stale, because the iOS 18.5/18.6 lane moves on. In practice, "per family" would mean "per family, after a batch".
+
+**3. A cheaper shape: a prerelease.** Publish the first family as `17.0.0-next.N` on npm's `next` tag, so only people who ask for it get it. Peter, as first adopter, opts in and starts. 17.0.0 final keeps the gate, and an adopter on `^16` sees nothing. It gives up:
+- one clean "native starts here" moment;
+- a support promise during the prerelease, which is weaker by nature;
+- part of the "do not start" text, which must be reworded for the `next` channel.
+
+Whether RELEASE-FLOW can publish a prerelease is UNVERIFIED (Thurgood's).
+
+**4. Final position.** I'd ship 17.0.0 with the first family alone, as the seats proposed, and not wait on 131 or 133. 133's breaking parts and 128's split can share 18.0.0. If Peter wants the gate, the prerelease is the version of it I'd accept. Peter's own app isn't ready yet (P-1), so the delay costs him less today than it costs other adopters.
+
+**The counter-argument I could not fold away.** If 133 changes colours adopters see, or removes public exports, then an app built on 17 gets a visible shift or a break at 18. Only waiting avoids that; my shape does not. And two majors close together read as churn.
+
+#### [LEONARDO R8]
+
+Cross-read of `[THURGOOD R8]` and `[ADA R4]`, at `main` `35456bdbc`.
+
+**1. Final position: moved, toward Ada's (B).** 17.0.0 carries the first family's claim, gated on one piece of 133: the blend API's shape. It is not gated on 131 or on the rest of 133. Ada's grep changed my mind. All three chips call `pressedBlend()`, and the blend helper is public native API (VERIFIED by me: chip sources on iOS and Android; 37 `public` lines in `ThemeAwareBlendUtilities.ios.swift`). So blend sits inside the first claim. Deciding it afterwards costs either aliases or a silent colour change in a claimed family. I also take Thurgood's condition (a) whatever Peter picks: `main` stays releasable as 16.x, and anything removed is deprecated first.
+
+**2. Can I live with theirs?**
+- **Thurgood, (i) with two conditions: yes.** His condition (a) means adopters on `^16` are never broken while they wait. What the gate costs is a delay, which is Peter's to accept, and nothing gets damaged.
+- **Ada, (B): yes.** This is now my position. What decides it is that blend is in the first family's closure.
+
+**3. Facts.**
+- Thurgood's "the `ColorTokens.ts` deletion breaks adopters" is too broad. Ada shows it is not on the native token surface. It breaks only local-mode adopters, and only if `generate` comes to expect a different tree (UNVERIFIED; Ada's reading, not tested). My own R7 line "deletes public exports" was too broad for the same reason.
+- Thurgood's "the gate moves 133 ahead of 128 and 130" is one reading. Gate (i) could instead wait through 128 and 130. Peter has not said which.
+- I checked the rest and found it correct (VERIFIED): the 14 records due at `release:16.4.0:phase-1`, § 7 of the priorities record, RELEASE-FLOW's "Deriving the delta" step 3, and the `./blend` export.
+
+#### [STACY R4]
+
+**1. Can I live with it? Yes.** Under (a), the claim and its evidence arrive together. Gating on 131 or 133 would hold back a claim already proven, for work that proves nothing about it.
+
+**2. Can each part be checked later?**
+- **(a)** A RELEASE phase-1 read at the release commit S can check two things. Does the set of families the CHANGELOG claims equal the set whose D4–D6 checks pass at S? Is D7's readiness derived from those results? Status: owed. None of the D rows is built yet (VERIFIED, plan-r2 § 1 "State" column).
+- **Condition 1** Uncheckable as written: "settled" names no record. It becomes checkable when two things exist. One is a committed decision record that names the blend helper's public API (Ada's). The other is that API inside D9's public-API diff baseline at the claim. Status: owed. The decision does not exist, and D9's tools are UNVERIFIED (plan-r2 D9 row). Even then, it settles **names, not values**. Changed maths behind kept names passes D9 (Ada R4).
+- **Condition 2** Today it is **a promise**. For our native module it becomes a rule once D9's diff runs on each 16.x release and fails on a removal with no prior deprecation. Status: owed. For the web exports, the CLI and the tree `init` copies, no check exists. A pass can only sample `git diff <last-tag>..S` by judgment. That is UNVERIFIED reasoning: I found no guard, but did not search exhaustively.
+
+**3. The 17.0.0 wording, in substance** (the text itself is Leonardo's):
+- name the four components and the platform floors;
+- give "supported" as D7's evidence kinds;
+- say other native families ship unsupported;
+- say "Hover and pressed colours of these components may change in a later release without an API change; the CHANGELOG will name it."
+
+**4. What the plan misses**
+- **The adopter component is not ours to claim.** D10 proves that an adopter can build one. It should not appear in the supported list.
+- **Nothing catches a colour shift.** D5's token check samples colours, but a pressed or hover sample is not named in it (plan-r2 "D5 details"). Without one, a colour change from 133 passes every row. Adding it changes a D-row detail, so it is Peter's call.
+- **Condition 2 has no owner or record.** Put it in § 7 of the priorities record, as Thurgood proposes.
+
+#### [LINA R5]
+
+Read at `main` `35456bdbc`, 132 outline at `da59d4067`.
+
+**1. Can I live with it? Yes.** What decides it: today the native components ship as "reference source, not a build input" (INSTALL L9, L156, L169; VERIFIED). So nothing I plan breaks a supported adopter before the claim. Blend is the one shared helper a later spec will change.
+
+**2. Condition 1, for the Chip family**
+- **Icon-Base calls blend too.** It calls `iconBlend()` on both platforms (VERIFIED). So blend reaches all four components in the slice, and every later family that composes an icon.
+- **"Shape" is too narrow for the chips.** Chip-Base's `state_styling` contract, on web, iOS and Android, sets pressed as OKLCH ΔL 0.05–0.10. The native helper darkens 12% in RGB/HSL (VERIFIED). The native contract test therefore pins the result of the maths, not only the names. Whether today's maths meets that range is UNVERIFIED. The fork is Peter's. Either (a) the test asserts the contract range, any later 133 change has to stay inside it, and 133 does not move, or (b) the maths is settled before the claim, which moves part of 133 forward.
+- **Also in the shape:** the public `BlendTokenValues` struct hard-codes the blend amounts, and `ThemeMode`/`themeMode` overlaps D5's theme design (VERIFIED). Both need settling in 132's design round.
+- **Nothing else is in the same position.** The other shared surface I found is the typography modifier from P-13, and it is settled inside 132 (UNVERIFIED that no later spec changes it).
+
+**3. Condition 2.** None of my planned component work breaks adopters: narrowing access, the blend repair and the T-12 font moves all touch reference source only (VERIFIED, as above). What adopters do read is the served `contracts.yaml` and schemas. I will reword contracts but not rename any while we are on 16.x. That no rename is needed is UNVERIFIED. Condition 2 should say outright that it doesn't cover unclaimed native source. Otherwise it reads as requiring deprecation there.
+
+**4. Misses.** The reason the plan gives counts three chips; it should count four components. The native chips use `duration150` and button-press motion, not the contract's `selectionTransition` (VERIFIED). That is contract work for the slice. On 133 enforcement, which I co-own: it adds checks and no adopter breaks, so it can come after 17.0.0 (UNVERIFIED until it is designed).
+
+#### [KENYA R6]
+
+Read at `main` `35456bdbc`.
+
+**1. Yes, I can live with the plan.** What decides it: on iOS the blend API has no adopters yet, so settling it before the claim costs nothing now. After the claim, every change to it costs a major or an alias.
+- The Swift blend file does not compile today. `Color` has no `darkerBlend`, `lighterBlend`, `saturate` or `desaturate` (VERIFIED: 10 pinned entries in `harness/expected/harness-ios-components.tsv`).
+- No `Package.swift` ships (VERIFIED: `git ls-files`). So no adopter can be calling blend on iOS (REASONING).
+
+**2. What settling the shape means on iOS**
+- **The surface is wide** (VERIFIED: it is all in `src/blend/ThemeAwareBlendUtilities.ios.swift`):
+  - six `public` extension methods on `Color`;
+  - `public` `ThemeMode`, `BlendThemeContext` and `BlendUtilitiesProvider`;
+  - `View.themeAwareBlend()` and `EnvironmentValues.themeMode`;
+  - `BlendTokenValues`, which hard-codes the blend token values as `public` constants.
+- **The chips need only `pressedBlend()`** (VERIFIED by grep). The chips and blend build as one module, so `internal` access is enough for them. If blend becomes a separate target in the same package, Swift's `package` level is enough. My lean is to ship it narrow. A public API added later is a minor; a removal after the claim is a major.
+- **`@_spi`**: I measured that it hides symbols from a plain `import`, but it is underscored, so I would not build the claim on it (outline L419).
+- **`themeMode` and `ThemeMode` overlap `\.dpTheme` and the system colour scheme**, so dark mode would have two sources of truth. They should be retired before the claim (REASONING).
+- **Icon-Base is in the same position.** It is `internal` today (VERIFIED, L73). Making it `public` is an addition, but its signature is frozen from the claim on.
+- **The fork is Peter's or Ada's to settle**: a public pressed-state helper lets an adopter's component match ours (D10); keeping it narrow keeps 133 free.
+
+**3. Condition 2**
+- Making the 17 internal views public adds API, so it breaks no one.
+- **The 18.0 floor has to stay in the manifest that `generate` owns.** Generated token Swift files compile in adopters' apps today (D1). If those files carry an iOS 18 `@available` or call an iOS 18 API, a 16.x adopter whose app targets iOS 17 breaks (REASONING; nothing like that is planned, VERIFIED only for what I read).
+
+**4. What the plan misses**
+- **Changes to the blend maths are silent.** D9's API diff cannot see them. Only D5's colour sampling can, and only if pressed states are sampled (UNVERIFIED: D5 does not list pressed states).
+- **Public extension members on `Color` and `View`** can clash with an adopter's own extension or another library's of the same name (UNVERIFIED on our toolchain).
+
+#### [DATA R6]
+
+Read at `main` `35456bdbc`.
+
+**1. Yes, I can live with the plan.** What decides it: on Android the blend API is in the first claim. All three chips import `com.designerpunk.tokens.pressedBlend` (VERIFIED, grep). Condition 1 covers it.
+
+**2. What settling the shape means on Android**
+- **Visibility.** Kotlin makes everything public unless marked otherwise. There are 14 top-level declarations, plus members inside `BlendTokenValues` and `BlendUtilitiesProvider` (VERIFIED). The chips need only `pressedBlend`. My lean: make the rest `internal`, and turn on explicit API mode for the module. That shape costs nothing to keep. (Lean, not VERIFIED.)
+- **The package.** Both the hand-written blend file and the generated helpers (`darkerBlend`, `toRGB`, …) declare `com.designerpunk.tokens`. That is the package the adopter's generated tokens use (VERIFIED). If a name is declared twice across the two modules, the build breaks. Moving the package after the claim breaks every import.
+- **A second dark-mode switch.** `LocalThemeMode` and `ThemeAwareBlendProvider` read `isSystemInDarkTheme()` and ignore the theme provider's `darkTheme` argument (VERIFIED). Retire them before the claim.
+- **`@RequiresOptIn`.** It is right only for what adopters may call but we have not settled. It is not needed for what is `internal`.
+- **D9's API-diff tool.** binary-compatibility-validator, or Kotlin 2.2's ABI validation. Either can skip opt-in symbols. Whether either works at our pinned AGP and KGP is UNVERIFIED.
+- **Icon-Base, in the same position.** Its 48 drawables have no prefix (`x.xml`, `search.xml`; VERIFIED). An adopter's drawable with the same name overrides ours without warning (Android's merge rule, UNVERIFIED here). Renaming them after the claim is a break. Add a prefix now.
+- **Previews.** The three chip previews are public (VERIFIED). Make them `internal`.
+
+**3. Condition 2.** I see no break for 16.x adopters. Today they use only the generated tokens. The Android module is new, and adopters opt in to it. Needing `compileSdk` 37 is a floor of the new range, not a break.
+- The one risk: if `generate` ever writes Gradle settings or emits blend helpers by default, token-only adopters are hit. Keep both opt-in (UNVERIFIED until it is designed).
+
+**4. What the plan misses: whether raising a toolchain floor is a major.** androidx raises its `compileSdk` and Kotlin floors over time. If each raise counts as a break, every Compose BOM bump forces a major. If no raise does, condition 2 has a hole. P-9 should decide this rule along with the range numbers.
+
+#### [ADA R6]
+
+Read at `35456bdbc` (Peter's checkout equals `origin/main`). Script: `/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/2b12756f-4507-4804-a670-8900c65ec7d2/scratchpad/blend-measure-ada/measure.ts`; output beside it in `output.txt`. The script imports the repo's own token source, theme maps, OKLCH converter (`src/color/OklchConverter.ts`), native channel formatter (`src/generators/oklch/NativeColorUtils.ts`) and the web blend helper, and runs them. It writes nothing in the repo. Its emitted P3 for `white200` (0.9275, 0.9351, 0.9496) matches the local `dist/DesignTokens.ios.swift` L791, which checks the input path.
+
+## 1. The measurement
+
+### Where the helper and the contract differ from the brief
+
+- **The contract matches Lina's description.** Chip-Base `contracts.yaml` L65 and L73 say pressed is "distinctly darker background (ΔL 0.05–0.10)". Chip-Filter and Chip-Input inherit it (`inherits: Chip-Base`, each file L4). Icon-Base's own range is different: `visual_optical_balance`, L57–73, says "ΔL 0.02–0.04, chroma preserved".
+- **The helper is not what the brief describes.**
+  - **Today's native code computes nothing.** `pressedBlend()` (iOS `ThemeAwareBlendUtilities.ios.swift` L130–131; Android `.android.kt` L115–116) calls `Color.darkerBlend`, which no shipped file defines. It is emitted only by the dormant `src/generators/BlendUtilityGenerator.ts` (VERIFIED, grep), so today the native pressed state does not compile. I measured the maths that generator would emit, as the closest thing to "today's native maths".
+  - **"Darkens by 12%" means a 12% black overlay in gamma-encoded sRGB**: each channel × 0.88, rounded. It is not HSL; HSL is used only by `saturate`/`desaturate`. Sources: generator L229–235 (Swift) and L376–383 (Kotlin); web `ColorSpaceUtils.ts` L207–221.
+- **Platform-specific details in that maths.**
+  - **iOS** reads the colour with `UIColor.getRed`, which gives extended-sRGB values (generator L701–707). It truncates each channel with `Int(x*255)`.
+  - **Android** reads `Color.red` (generator L563). On a `ColorSpaces.DisplayP3` colour that returns the P3 value. The code then rebuilds an sRGB `Color` from those numbers, so the P3 values are read as sRGB. That Compose behaviour is UNVERIFIED (not run on a device). It does not matter for the near-grey surface, but it moves cyan by a little.
+
+### Inputs (all VERIFIED by reading source)
+
+- **Base colour of every chip's pressed state**: `color.structure.surface`.
+  - Call sites: ChipBase.ios.swift L307, ChipBase.android.kt L196, ChipFilter.ios.swift L353, ChipFilter.android.kt L224, ChipInput.ios.swift L311, ChipInput.android.kt L190.
+  - The token is `white200` (`semantic/ColorTokens.ts` L511), at OKLCH L 0.95.
+  - **No theme overrides it.** The dark, wcag and dark-wcag maps contain no surface key (grep), so the value is the same in all four themes. The local dist agrees: iOS L791, L857, L923 and L989 are all the same value. In the dark themes, then, chips sit as a light surface (L 0.95) on the dark canvas (`gray400`, dark map L182). That may be intended, but I flag it.
+- **Chip-Filter, selected and pressed**: it does not use the blend helper. It uses `colorFeedbackSelectBackgroundRest.opacity(0.9)` (iOS L347; Android L217, `alpha = 0.9f`), where that token is `cyan100` (L227, L 0.96). Web uses `filter: brightness(0.9)` (`ChipFilter.styles.css` L56–59). For the native case I assumed the canvas is the backdrop (UNVERIFIED; a chip on a card sits on a different backdrop).
+- **Icon-Base `iconBlend()`** is an 8% white overlay (iOS helper L194; generator L254–260). Its input is whatever colour the caller passes (IconBase.ios.swift L126, .android.kt L63). The chips pass `color.text.default` (`gray300`, L401; `white100` in dark, dark map L177) and `color.feedback.select.text.rest` (`cyan400`, L211). **The chips never set `opticalBalance`**: their `IconBase(` calls pass only `color` (VERIFIED, grep). So `iconBlend()` is not exercised in the first family. I measured it anyway.
+- **Web pressed state**: `ChipBase.web.ts` L180–191 reads `getComputedStyle(document.documentElement).getPropertyValue('--color-structure-surface')`. The CSS value is `oklch(0.95 0.006 260)` (local dist L563; no `@property` registers it). The web helper's `hexToRgb` accepts only hex or `rgb()` (`ColorSpaceUtils.ts` L139–152). It throws on the OKLCH text, and the helper returns its input unchanged (`ThemeAwareBlendUtilities.web.ts` L150–157). I ran the repo's own `getBlendUtilities().pressedColor` on that text in the script, and it came back unchanged (VERIFIED). That a browser hands back the raw token text is per the CSS spec for unregistered custom properties (UNVERIFIED in a browser).
+
+### Results
+
+ΔL is the OKLCH lightness of the result minus the base. The pressed range is 0.05–0.10; the icon range is 0.02–0.04.
+
+| Case | Theme | Base (OKLCH L) | iOS ΔL | Android ΔL | Web ΔL |
+|---|---|---|---|---|---|
+| Chip-Base, Chip-Filter (unselected), Chip-Input pressed | base light / base dark / wcag light / wcag dark | `white200` 0.95 | −0.089 **IN** | −0.089 **IN** | **0.000 OUT** (the helper fails to parse; it would be −0.087 if fed hex) |
+| Chip-Filter selected + pressed | base light, wcag light (backdrop `white100`) | `cyan100` 0.96 | +0.003 **OUT** (lighter) | +0.003 **OUT** | −0.073 IN (`brightness`, computed in sRGB) |
+| Chip-Filter selected + pressed | base dark, wcag dark (backdrop `gray400`) | `cyan100` 0.96 | −0.049 **OUT** (just under) | −0.049 **OUT** | −0.073 IN |
+| `iconBlend`, `color.text.default` | light themes | `gray300` 0.52 | +0.041 **OUT** (by 0.001) | +0.040 **OUT** | +0.041 OUT |
+| `iconBlend`, `color.text.default` | dark themes | `white100` 1.00 | −0.003 OUT (white cannot lighten; truncation) | 0.000 OUT | 0.000 OUT |
+| `iconBlend`, `select.text.rest` | all four | `cyan400` 0.64 | +0.031 IN | +0.032 IN | +0.031 IN |
+
+### What the results mean
+
+- **Native**: today's maths, if it compiled, would satisfy the pressed contract for the shared chip state in every theme. The miss is Chip-Filter's hand-written `opacity(0.9)`, which is not the blend helper at all.
+- **Web**: chips get no pressed or hover darkening today, only the border change. This is a live web defect, and the web arm of the incomplete OKLCH blend migration. I would file it; it is not mine alone, since the call site is Lina's.
+- **OKLCH is not needed to meet the contract for the first family's pressed state.** It is needed for chroma preservation and for consistency.
+
+## 2. The scope
+
+### (A) Blend only
+
+**Work items:**
+1. Wire `OklchBlendCalculator` (already built, tested, thresholds set) or ratify the sRGB overlay.
+2. Generated or hand-written delivery, with a cross-platform guard.
+3. Dispose of the dormant generator.
+4. Native public shape: `ThemeMode`, `LocalThemeMode` and `BlendThemeContext` are a second dark-mode switch beside `dpTheme`. Fold them in or retire them before the claim.
+5. Fix Android's P3 read.
+6. Fix web's OKLCH parse, or move it to CSS relative colour.
+7. The meaning of the blend tokens if they become ΔL values (Peter reviews any token change).
+8. Re-point the interaction-state audit at the live engine.
+9. Decide what happens to the `./blend` RGB/HSL exports.
+
+**Size (estimate)**: 2–3 sittings to tasks, then 8–14 sessions.
+
+### (B) All of 133
+
+(A), plus:
+- **The `ColorTokens.ts` deletion together with the rgba cleanup.** They are one item: the same format generators, five readers, the barrel, `semantic/index.ts`, `AccessibilityTokens.ts`, `buildValidation.ts`, a replacement DTCG structural source, the public `ColorTokenValue` type, and a migration for local-mode copied trees. About 200 assertions by the record's figure (UNVERIFIED now). Estimate 6–10 sessions.
+- **Shadow channel tokens**: Peter's creation review. Estimate 2–3 sessions.
+- **Enforcement** (Lina leads): six design questions plus an arming campaign that needs calendar time. Estimate 8–15 sessions.
+
+**Size (estimate)**: 5–8 sittings, 25–40 sessions.
+
+### Entanglement and whether blend cuts out cleanly
+
+- **Blend cuts out cleanly.** `src/blend` does not read `ColorTokens` (VERIFIED, grep); its only token import is `BlendTokens`.
+- **The seams are thin.** The rgba record's "remove old `BlendCalculator` tests" depends on blend's choice. Enforcement needs a policy for computed state colours.
+
+### Is Peter right?
+
+Half right. The token half, deletion plus rgba plus shadows, is about blend's size and mostly mechanical now that 129 removed native rgba. Enforcement is the large part, and it gives adopters nothing before the claim. If 133 holds enforcement to wiring the detectors in classify mode, without arming, (B) comes to roughly 1.5× (A), and Peter is right.
+
+#### [LINA R6]
+
+Read at `main` `35456bdbc`. Script: `/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/2b12756f-4507-4804-a670-8900c65ec7d2/scratchpad/blend-measure-lina/measure.js` (plain Node; it reads nothing from the repo).
+
+**1. The measurement**
+
+**First, a correction to my R5.** Today's native helpers contain no maths. `pressedBlend()` and `iconBlend()` call `darkerBlend`/`lighterBlend`, and neither function exists on either platform. That is the pinned compile error (`harness/expected/harness-ios-components.tsv` L6, `harness-android-components.tsv` L6; VERIFIED). What I measured is the maths those helpers expect, taken from the dormant generator `src/generators/BlendUtilityGenerator.ts`:
+- darker: mix with black in 0–255 sRGB (L229–237 Swift, L375–383 Kotlin);
+- lighter: mix with white (L254–262);
+- iOS reads the colour through `UIColor.getRed` and truncates (L701–707);
+- Android reads `Color.red * 255` (L563–566) and rebuilds the colour as sRGB (L510–514). All of these are VERIFIED.
+
+**Inputs** (all VERIFIED):
+- Blend amounts: `pressedDarker` 0.12, `iconLighter` 0.08 (`ThemeAwareBlendUtilities.ios.swift` L22, L35; `.android.kt` L31, L44).
+- `color.structure.surface` → `white200` (`semantic/ColorTokens.ts` L509–511). No theme overrides it.
+- `color.text.default` → `gray300` (L399–401). In dark and dark-wcag it becomes `white100` (`themes/dark/SemanticOverrides.ts` L177).
+- `select.text.rest` → `cyan400`; `select.background.rest` → `cyan100` (L209, L225).
+- Channels:
+  - `white200` (0.95, 0.006), `gray300` (0.52, 0.020), `cyan400` (0.64, 0.125), `cyan100` (0.96, 0.048);
+  - hues 260 (neutral) and 202.5 (cyan) (`channels/lightness/*`, `chroma/*`, `hues.ts`).
+- The Display P3 values the script computes match `dist/DesignTokens.ios.swift` to four decimal places.
+- Themes: base, wcag, dark and dark-wcag. wcag overrides none of these inputs, so the wcag rows equal the base rows.
+
+**Contract ranges** (VERIFIED):
+- Chip-Base `state_styling`: "Pressed: distinctly darker background (ΔL 0.05–0.10)" (`Chip-Base/contracts.yaml` L65, L73).
+- Chip-Filter and Chip-Input state no range of their own. Each one `inherits: Chip-Base` (L4 of each).
+- Icon-Base `visual_optical_balance`: "OKLCH ΔL 0.02–0.04, chroma preserved" (`Icon-Base/contracts.yaml` L62, L68).
+
+| Case | Light / wcag-light | Dark / wcag-dark | Range | In range? |
+|---|---|---|---|---|
+| Chip-Base, Filter (unselected), Input pressed, on `white200` | −0.089 | −0.089 | −0.05 to −0.10 | **yes**, all themes, both platforms |
+| Icon-Base `iconBlend()` on `text.default` | +0.041 (`gray300`) | −0.003 (`white100`) | +0.02 to +0.04 | **no** in either theme |
+| Icon-Base `iconBlend()` on `select.text.rest` | iOS +0.027, Android +0.032 | same | +0.02 to +0.04 | yes for ΔL. Chroma falls 0.125 → 0.118 on iOS and → 0.092 on Android |
+| Chip-Filter **selected** + pressed (`.opacity(0.9)`, no blend) | +0.004 | −0.0499 | −0.05 to −0.10 | **no** |
+
+Notes on the table:
+- **Android chroma**: the chroma loss on Android comes from treating P3 values as sRGB. That is REASONING from the Compose API, not run.
+- **The opacity row**: the backdrop is assumed to be `color.structure.canvas`, which is UNVERIFIED. In light mode the pressed chip gets *lighter*.
+- **Icon-Base in the chips**: no chip passes `opticalBalance`, so in the slice `iconBlend()` is only compiled, never run (VERIFIED, grep).
+
+**What this means**:
+- The chips' blend pressed state already meets its contract on today's RGB maths. So the option in my R5 where the test checks the range is open, and 133 does not need to move for the chips.
+- The failures are not in the maths:
+  - Chip-Filter's selected-pressed state uses opacity instead of a blend. That is a defect the slice has to fix.
+  - Icon-Base's range cannot be met on white, and is overshot on gray. That is a contract-wording question.
+- Separately: dark mode uses the same light `white200` chip surface as light mode. The source says so; whether it is intended is Ada's question.
+
+**2. The scope**
+
+From the component and enforcement side, **Peter is not right**. The enforcement half is about as big as the blend half, possibly bigger. The measurement makes the blend work that must come before the claim *smaller*, so the gap between that and all of 133 gets wider.
+
+**What enforcement needs from me**, by its six questions (`.kiro/issues/2026-09-14-color-token-enforcement-spec-candidate.md`):
+1. **Which surfaces the check covers** (Peter rules): CSS, native source, demos, READMEs, prop values.
+2. **Detection**:
+   - point the web check at `.css` files;
+   - wire the iOS and Android detectors already in `src/validators/StemmaTokenUsageValidator.ts` L136. That file is outside my standing scope, so it needs a row grant;
+   - set a false-positive policy;
+   - cover `oklch()` and named colours.
+   - Today a rough grep finds 0 raw literals in 29 component CSS files, and 73 colour-literal hits in 15 native files, previews included. The classification of those hits is UNVERIFIED.
+3. **Arming**: a proof that the check bites, then Peter's flip, sequenced against any open measurement window.
+4. **The dormant register row**: revert it to `armed` the legitimate way.
+5. **Two gates that are documented but were never built**: build or decline `lint:stemma*` and CI wiring for the theme-drift audit.
+6. **What counts as theme drift**: mostly Ada's.
+
+**Rough size** (ESTIMATE): 10–18 sessions from me, plus Thurgood's formalization, and 2–3 of Peter's sittings: scope, false-positive policy, the two unbuilt gates, and the arming flip.
+
+**Dependency**: one-way. Enforcement waits on blend. Whether blend's output is generated or hand-written, and whether web moves to `color-mix(in oklch, …)`, decides what the detectors exclude and what they accept. Blend does not depend on enforcement at all. Enforcement also works better after 132's families settle, because arming native detection while 132 is still editing those files means churn.
+
+#### [STACY R5]
+
+**1. The measurement.** The two runs agree on every case they both measure (VERIFIED by comparing the two answers with `output.txt`). The one exception is the iOS icon blend on `cyan400`: Ada gets +0.031 and Lina +0.027. Its likely cause is how each script handles colours outside the sRGB range (Ada's clamps, Lina's does not). That is UNVERIFIED, and it does not matter here, because no chip passes `opticalBalance`.
+
+Ada's inputs are better grounded: she runs the repo's own converter, formatter and web helper. Lina's run is the independent check. Neither run is the shipped helper. `darkerBlend` does not exist, so both measure a dormant generator's maths standing in for it. A CLOSEOUT pass could confirm none of these:
+- that the stand-in maths is what ships;
+- that Android reads P3 values as sRGB;
+- that the backdrop under the opacity case is the canvas;
+- that a browser returns the raw OKLCH text;
+- how iOS handles colours outside the sRGB range.
+
+Only device runs of D5 that sample the pressed colours would confirm them.
+
+**2. The scope.** The two estimates fit together. Ada's figure for enforcement (8–15 sessions) matches Lina's (10–18), and Ada's total adds up from its parts. Peter is right about the token half and wrong if 133 arms enforcement. Neither estimate is firm. The fact that would firm them: how many of Lina's 73 native colour-literal hits are real violations.
+
+**3. The defects**
+- **Web chips never darken on hover or press.** This needs a new record, owned by Lina with Ada. It should scope the whole class, every web `getComputedStyle` blend call. I also read this as a **possible P0 for Peter**. Chip-Base web is served as `production-ready`, with "consistent state styling (default, hover, pressed)" (VERIFIED, `get_component_summary`), and the blend record's class reason says "interaction states render correctly". That sentence is now false.
+- **Chip-Filter's selected-and-pressed state** belongs in 132's slice rows (Lina). It needs a record only if the tasks round leaves it out.
+- **Icon-Base's ΔL range** is a contract-wording question and needs a record (Lina).
+- **The light chip surface in dark mode** needs a record (Ada, with Leonardo on whether it is intended).
+- **Android reading P3 values as sRGB** should go on the blend record (Ada).
+
+**4. Position.** 17.0.0 should wait on the first family and the blend API's names. It should not wait on enforcement. The web defect should not wait at all.
+
+#### [THURGOOD R10]
+
+**1. Yes.** (A) gates 17.0.0 only on what the claim depends on, and the re-decision rides an event that is already git-visible.
+
+**2. Mechanism. Both places, and neither is law.**
+- **The trigger** is a `**Spec outcome**` park line on 133's outline: `park — re-ask: path:.kiro/specs/132-*/completion/first-family-measured-cost.md`. The existing waiting-spec form (RELEASE-FLOW L54–56), as for 131.
+- **The notice**: a priorities § 7 row, reprinted each release.
+- **To make the class option a habit**:
+  - add a row to the record's form, "Decisions this record reopens" (131's re-ask, 133's (B), re-placing the remaining families);
+  - its creating PR carries one `**Open for Peter**:` line per decision, which merge-hold enforces.
+- All of this is 132 spec text plus records. A standing rule for every spec's gates would be law (a ballot).
+
+**3. Yes, in a column like T-17's.**
+- A "forecast" column for 133's token half (blend beyond 132's share, deletion with rgba cleanup, shadow channels).
+- **Owner**: Ada. Lina reads the method.
+- **Due**: under T-17's condition, before the first first-family unit PR merges, so it cannot be fitted to the measurement.
+- State the conflict: Ada also owns blend inside 132.
+
+**4. What the lean gets wrong**
+- **"Cost: none" is not quite true.** The class option costs a sitting at the record's PR plus this sizing.
+- **"The shape of the blend API" settles names, not values** (Stacy R4). It needs a committed decision record of Ada's plus D9's baseline, and neither exists yet.
+- **"Today's maths passes on iOS and Android" needs a label.** Native `pressedBlend()` calls the unresolved `darkerBlend` (outline § 2, 4 pinned entries per platform). So the ΔL figure is computed maths, not a native run (UNVERIFIED by me).
+
+#### [ADA R7]
+
+**1. Can I live with (A), with (B) re-decided at the record? Yes.** Every 133 item that touches adopters' API is the blend shape, which sits in (A). Deferring (B) costs time, not aliases.
+
+**2. Sizing (B) before the record fires.** I will owe a "133 token-half: forecast" column, on T-17's terms:
+- **When**: committed before the first first-family unit PR merges.
+- **Basis**: `git grep` counts at a named SHA. That covers the `ColorTokens` readers and importers, the rgba-asserting tests, the users of `ColorTokenValue`, and the number of shadow channel tokens.
+- **Labelled**: REASONING. I own both, so Stacy reads the method.
+- **Calibration**: the record prints the blend package's measured sessions beside my R6 forecast for (A), and the ratio rescales the column.
+- **Caveat**: that package measures the repair, not 133's choice between OKLCH and sRGB.
+
+**3. What "the shape" now includes:**
+- A public surface cut to what components call. The names stay state names (`pressedBlend`), never maths names (`darkerBlend`); the rest becomes `internal`.
+- Retiring `ThemeMode`, `LocalThemeMode`, `rememberThemeMode` and the modifier in favour of `dpTheme`.
+- `BlendTokenValues` either generated from the blend tokens or made `internal`.
+- The Android package: the chips import from `com.designerpunk.tokens` today.
+- Dropping the deprecated `disabled*` members before the claim, not carrying them into it.
+- The contract stating the ΔL range, not "12%". That way, a change of maths inside the range is not a break.
+
+Building it twice: the risk is small if (A) also picks generated or hand-written. A rewrite then touches only bodies.
+
+**4. What the lean gets wrong.** "Today's maths passes" is the dormant generator's maths. Native pressed does not compile, and web gives ΔL 0.000. The lean leaves web out.
+
+#### [STACY R6]
+
+**1. Yes.** (A) gates the claim only on work already inside 132. The re-decision falls on an event that git can see. A first family left waiting is a risk only if Peter later picks (B).
+
+**2. Checkable?** Not as written. Today, "re-decide at the record" is a plan line, and under rule 10 a plan line alone is a finding. Three things are owed:
+- **A record, in the PR that records Peter's ruling.** Its trigger is `path:.kiro/specs/132-*/completion/first-family-measured-cost.md`, which is the same event as 131's re-ask. Its owner is Peter's choice. It also needs a § 7 row in the priorities record, so RELEASE-FLOW 3a reprints it.
+- **A 133 column in the measured-cost record**, on the T-17 pattern. Ada sizes 133's token half: the deletion, the rgba cleanup and the shadow channels. It is committed before the first first-family unit merges, headed "forecast", and labelled REASONING. Blend's measured cost comes from the shared-costs row. Without this column, Peter re-decides on today's guesses, as the orchestrator says.
+- **The re-decision itself**, as a committed ruling dated after the record's commit and citing its SHA.
+
+With all three in place, the 17.0.0 RELEASE pass can check that each exists and is in the right order. That the column's numbers are true stays self-reported.
+
+**3. Conflicts with R4:** none. Option (a) gives D5 its pressed-colour sample. That fills the gap I raised in R4. A shift that stays inside 0.05–0.10 still passes, though, so the claim still needs the line saying colours may change. Condition 1 still needs Ada's API record and the D9 baseline. Condition 2 still needs an owner.
+
+**4. Wrong or missing:**
+- "Today's maths passes" is a dormant generator's maths. `darkerBlend` does not compile (R5).
+- "Cost: none" leaves out Ada's forecast.
+- The web pressed-state defect, my possible P0, is missing from the lean, and it does not wait on 17.0.0.
+
+#### [LEONARDO R9]
+
+Read at `main` `35456bdbc`.
+
+**1. Can I live with the lean? Yes.** It gates the claim on what the claim contains: blend's public shape, which the chips call (VERIFIED). The re-decision uses an event that already exists, so it adds no new law.
+
+**2. The wait under (B).** 133 has no round yet. Ada needs at least 4 of Peter's sittings before tasks, and Peter has not waived the sequential gates. The token half beyond blend is then about 8–13 sessions (Ada's estimate). Given Peter's pace, that is weeks to months (UNVERIFIED).
+- **What adopters would see:** "Do not start a native product" stays printed over a family we have proven. Worse, if D7's served readiness flips from passing D4–D6 results, the served readiness says ready while the printed text says do not start. That is a false sentence where an agent reads it. Holding the claim has to hold D7's flip with it.
+- **Two ways to shorten it without a prerelease:**
+  - Claim in a 16.x minor and give 17.0.0 to the colour work. This is Thurgood's "gate the number, not the claim". It gives up the "17 = native" marker.
+  - Or open 133's round now, in parallel with the first family. That keeps the marker, costs Peter sittings now, and reorders 133 ahead of 131.
+
+**3. Web chips that never darken: yes, a P0 by the definition.** The served text says "consistent state styling (default, hover, pressed)" under `production-ready`. That is a shipped sentence that is false where its reader meets it. The harm to users is small, since the border still changes. Tell adopters now: Lina corrects the served text to "hover and pressed darkening does not render on web; border change only", and the fix ships in a 16.x without waiting for 133.
+
+**4. What the lean gets wrong.**
+- "Today's maths passes" is not quite right. Today's native pressed state does not compile: `Color.darkerBlend` is not defined anywhere in `src` (VERIFIED, grep). What passes is the dormant generator's maths. Chip-Filter's selected-and-pressed state fails (Ada R6, Lina R6).
+- The record that fires the re-decision does not size 133's token half. Ada should owe a forecast column there, as T-17 does for 131.
+- Nothing catches a colour shift. D5 needs a pressed-colour sample (Stacy R4).
+
+#### [PETER] P-7
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`.*
+
+**What he was asked first**: P-7 as in design-outline.md § 5.1: which release carries the first claim, (a) 17.0.0 as a chosen marker or (b) a minor, and what it promises for families not yet claimed.
+
+**The exchange, in order**:
+- **2026-11-28T02:32:51Z**, verbatim: "I lean towards (a), but I was also thinking that we'd include specs 130, 131, and 133 as well. Honest thoughts?"
+- The orchestrator then put three readings to him: (i) a gate, where 17.0.0 ships only when all of them are done; (ii) a train, where 17.0.0 carries the first claim plus whatever has landed; (iii) reordering 130, 131 and 133 ahead of the first family.
+- **02:36:17Z**, verbatim: "I was thinking (i); but since 130 is tied to 128, I'm fine with not including it. Honest thoughts?" The seats answered on the gate (`[THURGOOD R8]`, `[ADA R4]`, `[LEONARDO R7]`) and cross-read it (`[THURGOOD R9]`, `[ADA R5]`, `[LEONARDO R8]`).
+- **02:40:07Z**, verbatim: "I forgot we had these specs sequenced. I'm fine with aligning to the previous sequence if we think that's more optimal."
+- **02:43:54Z**, answering "(a), both conditions, and part 2 left to the design round". As relayed: the same words as at 02:40:07Z, then, verbatim: "Let's get feedback from the relevant agents on this plan if we haven't already, please". The seats answered (`[STACY R4]`, `[LINA R5]`, `[KENYA R6]`, `[DATA R6]`).
+- **02:56:22Z**, verbatim: "Yes, get the measurement from Lina and Ada first. I actually don't think all of 133 is much more than the scope of 133 you're proposing, but I think that's also something Ada and Lina (possibly Stacy, too) could provide visibility into." The measurement: `[ADA R6]`, `[LINA R6]`, cross-read by `[STACY R5]`.
+- He was then shown (A), 17.0.0 waiting on 132's first family plus the native blend API's shape, and (B), also waiting on 133's token half. The orchestrator recommended (A) now, with (B) re-decided at the first family's measured-cost record, plus that as a class option.
+- **03:13:10Z**, verbatim: "I'm leaning toward your recommendation plus the class option. Honest thoughts from your and the relevant agents?" The seats answered (`[THURGOOD R10]`, `[ADA R7]`, `[STACY R6]`, `[LEONARDO R9]`), each able to live with it, with amendments. The amended plan was the last thing put to him.
+
+**The ruling**: **2026-11-28T03:19:49Z**, verbatim: "This is getting a little complicated for me, so let's go with the collective relevant team's lean on the optimal path forward. My preference would be to avoid too many changing messages we have to update, track, and communicate to potential adopters. Honest thoughts?"
+
+**What "the collective team's lean" is**: the amended P-7, as the orchestrator relayed it. Thurgood, Ada, Stacy and Leonardo can each live with it.
+1. **17.0.0 carries 132's first family alone.** The ruled order is unchanged. The release waits on the first family plus the blend API's shape. That shape, per Ada R7:
+   - a narrow public surface, named for the state;
+   - the second dark-mode switch retired in favour of `dpTheme`;
+   - `BlendTokenValues` either generated or made internal;
+   - a decision on the Android package;
+   - deprecated `disabled*` members dropped;
+   - generated versus hand-written decided;
+   - Ada's committed decision record, plus D9's baseline.
+   This settles names, not values; the contract range covers values.
+2. **`main` stays releasable as 16.x.** Breaking changes are deprecated first and removed only in their major. The rule does not cover unclaimed reference-only native source (Lina). It gets an owner and a row in the priorities record's § 7 (Stacy R4).
+3. **Part 2, the T-14 threshold, stays in the design round.**
+4. **Pressed colour, option (a).** The contract states the ΔL range instead of "12%", and the native test checks it. The claim keeps a line saying colours may change. The measured −0.0889 is labelled as the dormant generator's computed maths, not a native run.
+5. **(B), 133's token half, is re-decided at the first-family measured-cost record**: a park line on 133's outline, with its re-ask at that path; a § 7 row; a "Decisions this record reopens" row in the record's form, so its PR carries `**Open for Peter**:` lines. The re-decision itself is a committed ruling dated after the record's commit (Stacy R6).
+6. **Ada's forecast column for 133's token half**, on the T-17 pattern: due before the first first-family unit PR merges, its method read by a second seat.
+7. **Cost correction**: the class option costs one sitting at the record's PR, plus the forecast, not nothing.
+
+**Not ruled, left open**: the web chip defect's handling (the orchestrator is putting it to Peter); Leonardo's two ways to shorten a (B) wait (`[LEONARDO R9]` item 2).
+
+#### [THURGOOD R11]
+
+*2026-11-28. The fourteen P-7 consult files above are spliced byte for byte from `consults-2026-11-27/answers-132/`, in the orchestrator's order: `thurgood-p7-gate.md` (R8, R9), `ada-p7-gate.md` (R4, R5), `leonardo-p7-gate.md` (R7, R8), `stacy-p7-plan.md`, `lina-p7-plan.md`, `kenya-p7-plan.md`, `data-p7-plan.md`, `ada-blend-measure.md`, `lina-blend-measure.md`, `stacy-blend-crossread.md`, `thurgood-p7-lean.md`, `ada-p7-lean.md`, `stacy-p7-lean.md`, `leonardo-p7-lean.md`. Three files carry two stamps each; `ada-blend-measure.md` carries its own `##` and `###` headings, kept as written.*
+
+- Recorded P-7 as RULED, with the exchange in order and what "the collective team's lean" was. → design-outline.md § 5.1
+- **Folded**: 17.0.0 named as the first claim's release (§ 4.4); the blend API's shape, the ΔL contract range and the claim's colour line as first-claim preconditions (§ 4.4); `main` releasable as 16.x (§ 4.4); two rows in the measured-cost record's form, "A column for 133's token half" and "Decisions this record reopens" (§ 3); T-14's threshold kept in the design round (§ 5.2).
+- **Owed by other files, not filed in this commit** (each listed in design-outline.md § 5.1, P-7): 133's park line (me, as 133's author; kept out so this PR's diff stays in 132's two files); the § 7 rows (me, as the priorities record's steward); the 16.x rule's owner (unnamed); Ada's blend API decision record and her forecast column; D9's baseline (T-10's owners); the contract's ΔL range (Lina); the claim's colour line (Leonardo).
+- **Rule 10, open for the orchestrator**: Stacy R6 says the re-decision needs a record filed in the PR that records the ruling, which is this one; a plan line alone is a finding. This commit files none, by the brief's two-file limit. Either the record and the § 7 rows land on this branch before #880 leaves draft, or the finding stands.
+- **Open for the requirements round**: the forecast's second reader, Stacy (Ada R7) or Lina (Thurgood R10).
+- **Not ruled, left open**: the web chip defect's handling; Leonardo's two ways to shorten a (B) wait.
+
 ---
 
 ## Requirements Feedback

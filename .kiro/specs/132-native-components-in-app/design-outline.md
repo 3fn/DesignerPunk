@@ -218,6 +218,8 @@ T-14 (ii) keeps the cut the order was approved on: the first family is measured 
     - **The column's header says "forecast", beside a measured 132 family**, so the two are not read as the same kind.
     - If the estimate is not committed in time, the column is dropped and the comparison is labelled one-sided.
     - Stacy carries a calibration read to 131's CLOSEOUT
+  - **A column for 133's token half** (P-7, **RULED**, item 6): Ada sizes blend beyond 132's share, the `ColorTokens.ts` deletion with the rgba cleanup, and the shadow channels, on T-17's terms: **committed before the first first-family unit PR merges**, headed "forecast", labelled REASONING, its method read by a second seat before it is committed (Stacy per Ada R7, or Lina per Thurgood R10: open for the requirements round), and its conflict stated (Ada also owns blend inside 132). The record prints the blend package's measured sessions beside Ada's R6 forecast for (A), as its calibration (Ada R7)
+  - **Decisions this record reopens** (P-7, **RULED**, item 5): 131's re-ask, 133's token half (P-7's (B)), and the re-placement of the remaining families. The PR that creates the record carries one `**Open for Peter**:` line per decision. Each re-decision is a committed ruling dated after the record's commit (Stacy R6). This costs one sitting at that PR, plus the 133 forecast (P-7, item 7)
 - **132's size against 131's** (plan-r2 § 6 item 8 asks the outline to state it): 132's sized items are about **50–95 sessions**, low confidence, with several items unsized (plan-r2 § 8). The review added:
   - per-lane CI grants (about five or six, T-15),
   - the token-side type scaling (1–1.5 for the generator, plus 20 call sites moved and possibly new typography tokens, T-12),
@@ -332,11 +334,15 @@ A record whose obligation is met earlier is re-ruled by its owner before its eve
 
 ### 4.4 Preconditions for the first support claim
 
-Each lands before the release that first claims native support, whatever P-7 decides that release is:
+Each lands before the release that first claims native support, which is **17.0.0, carrying 132's first family alone** (P-7, **RULED**):
+- **The native blend API's shape** (P-7, **RULED**, item 1; Ada R7): a narrow public surface, named for the state; the second dark-mode switch retired in favour of `dpTheme`; `BlendTokenValues` either generated or made internal; a decision on the Android package; deprecated `disabled*` members dropped; generated versus hand-written decided. It rests on **Ada's committed decision record plus D9's baseline**. It settles names, not values; the contract range covers values.
+- **The pressed colour, option (a)** (P-7, **RULED**, item 4): the contract states the ΔL range instead of "12%", and the native test checks it; the claim keeps a line saying colours may change. The measured −0.0889 is the dormant generator's computed maths, not a native run.
 - **The Core Goals ballot raising the iOS minimum to 18.0, ratified: DONE** (P-6; ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md`, RATIFIED on #888 at `b58c73da7`, applied by #889 at `35456bdbc`). After the claim, raising the minimum is a breaking change.
 - **Deprecated-alias emission for the whole shared token surface, and D9's public-API diff** (Peter's "7 (a)"; § 4.3, Ada).
 - **#870's and #873's fixes, and #872's CORRECTION** (Ada R1, P-7's token-side lean).
 - **D7's derivation**, because P-2's overlay text points at served readiness (P-2, **RULED**, condition 2; Leonardo).
+
+**Until 17.0.0, `main` stays releasable as 16.x** (P-7, **RULED**, item 2): a breaking change is deprecated first and removed only in its major. The rule does not cover unclaimed reference-only native source (Lina). It gets an owner and a row in the priorities record's § 7 (Stacy R4).
 
 ---
 
@@ -349,6 +355,10 @@ Each lands before the release that first claims native support, whatever P-7 dec
 - **P-1, the definition of done: RULED** (b), with three additions. Peter, received 2026-11-28T02:23:27Z, verbatim: "I lean toward (b) with a proposal that I'd want feedback on before we commit it. Re: D4, We'd need an adopter app — which I have an idea for, but isn't ready. Perhaps a more appropriate bar for this would be a small scale demo app that we prepare with Kenya and/or Data? Re: D10, similar concerns as D4, but I agree with need some kind of similar test. Perhaps it can be part of the same small scale demo I mentioned earlier? Honest thoughts?"; then, received 2026-11-28T02:26:04Z, verbatim: "Yes, small means start small and grow; all three additions".
   - The additions: (1) D4 and D10 relabelled as our fixture app; (2) release builds; (3) his real app as a record, not a D row. Asks, answers and the four consults: `feedback/design-outline.md` § "[PETER] P-1".
   - **The final D4 and D10 text is PROPOSED, awaiting his confirmation** (§ 1, "The D-row change list").
+- **P-7, which release carries the first claim: RULED** — the collective team's lean. Peter, received 2026-11-28T03:19:49Z, verbatim: "This is getting a little complicated for me, so let's go with the collective relevant team's lean on the optimal path forward. My preference would be to avoid too many changing messages we have to update, track, and communicate to potential adopters. Honest thoughts?" The exchange before it, and the seven items of the lean: `feedback/design-outline.md` § "[PETER] P-7".
+  - **What it settles**: 17.0.0 carries 132's first family alone, the ruled order unchanged, waiting on the first family plus the blend API's shape (§ 4.4); `main` stays releasable as 16.x (§ 4.4); T-14's threshold stays in the design round (§ 5.2); the pressed colour, option (a) (§ 4.4); (B), 133's token half, re-decided at the first-family measured-cost record, with Ada's forecast column (§ 3).
+  - **Owed, with owners, none filed in this outline**: 133's park line, `park — re-ask: path:.kiro/specs/132-*/completion/first-family-measured-cost.md` (Thurgood, 133's author); the priorities record's § 7 rows for (B)'s re-decision and the 16.x rule (Thurgood, its steward); the 16.x rule's owner (not yet named); Ada's blend API decision record and her forecast column (Ada); D9's baseline (T-10's owners); the contract's ΔL range (Lina); the claim's colour line (Leonardo).
+  - **Not ruled, left open**: the web chip defect's handling; Leonardo's two ways to shorten a (B) wait (`[LEONARDO R9]`).
 - **P-2, when adopters are first told to start a native product: RULED** (b), per family, with all three of Leonardo's conditions. Peter, received 2026-11-28T02:28:20Z, verbatim: "(b) with all three conditions". Carried as owed acts: conditions 1 and 2 on the overlay flip ("Not re-asked here"), D7's derivation (§ 4.4), and condition 3 as T-18 (§ 5.2). Record: `feedback/design-outline.md` § "[PETER] P-2".
 - **P-6, the iOS minimum: RULED.** Peter, received 2026-11-27T18:32:45Z (the orchestrator's receipt time, relayed), verbatim: **"(B), raise to iOS 18"**.
   - **What he was asked**: whether to run the simulations on whatever version Apple recommends at the time (his own question, 2026-11-27T18:18:45Z), then the choice between (A), keep the 17.0 minimum, test every run on the lane's current iOS and run old versions only occasionally, and (B), raise the minimum.
@@ -406,6 +416,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-7 (order 3)
 
+- **RULED** 2026-11-28: the collective team's lean ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **Which release carries the first claim, and what it promises for families not yet claimed**
 - **Options**:
   - The release:
@@ -657,7 +668,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
     - Which one holds decides P-7's not-claimed question.
     - Data names a third shape, not picked: one module or target per family with declared dependencies
 - **Owner**: Ada, Kenya, Data; Leonardo
-- **Closes at**: the threshold in the design round, before P-7 is final
+- **Closes at**: the threshold in the design round (P-7, **RULED**: part 2 stays here)
 
 #### T-15: CI grants for 132's lanes
 
