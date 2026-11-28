@@ -32,7 +32,7 @@ These are listed as presented to Peter. **He did not reorder them**, and the let
 
 ## 3. The order
 
-*(Dated pointer, 2026-11-28, Thurgood: the order is now 129 → 133's token half (its outline round, then U1, U2 and U3) → 132's first family → Peter's re-placement of the remaining families against 131 → 131 → 128 → 130 → 133's enforcement, after 132's first family. The walk log's 2026-11-28 line carries Peter's words; the 2026-11-05 pointer above is kept as it was.)*
+*(Dated pointer, 2026-11-28, Thurgood: the order is now 129 → 133's token half (its outline round, then U1, U2 and U3) → 132's first family → Peter's re-placement of the remaining families against 131 → 131 → 128 → 130 → 133's enforcement, after 132's first family. The walk log's 2026-11-28 line carries Peter's words; the 2026-11-05 pointer below is kept as it was.)*
 
 *(Dated pointer, 2026-11-05, Thurgood: the order is now 129 → 132's first family → Peter's re-placement of the remaining families against 131 → 131 → 128 → 130, with the color-track spec after 130. The walk log's 2026-11-05 line carries Peter's words. The numbered entries below are each spec's own placement and are not rewritten; Spec 131's placement is the walk log's 2026-10-24 line, and Spec 132 is outcome (A), extended, placed by the 2026-11-05 line.)*
 
