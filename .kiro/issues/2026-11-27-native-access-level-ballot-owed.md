@@ -18,3 +18,7 @@ Draft the ballot whose shape is the source's § 7.1, put it to Peter record-firs
 The ballot is ratified, or rejected with Peter's words, and its edit sites are applied. Then this record gets rule 5's outcome line and moves to `archive/`. A rejection closes it too, with the outcome line.
 
 *Signed: Lina, 2026-11-27.*
+
+**Pointer (2026-11-28, Lina, owner, rule 9): the 20 iOS views an app cannot construct.** The census of the views this ballot's access rule must open is § "Access-pass list" (appended 2026-11-05, Kenya) in the native goal record. After the goal record's archive move, that list lives at `.kiro/issues/archive/2026-09-26-native-component-distribution.md` § "Access-pass list". At this line's commit the move has not landed: the file is still at `.kiro/issues/2026-09-26-native-component-distribution.md` (as of `650e78ef9`, Kenya's rule-5 close), and Data is moving it. Rule 3 resolves either path. The ballot's census reads that list, and Spec 132's outline § 2, "Public API and packaging", cites it.
+
+*Signed: Lina, 2026-11-28.*
