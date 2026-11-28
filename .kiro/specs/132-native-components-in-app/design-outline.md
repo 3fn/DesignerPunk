@@ -106,7 +106,8 @@ So the table is two fixed texts at two SHAs plus the change list. It is cited, n
     - iOS: the 20 views an app cannot construct (the goal record's "Access-pass list");
     - Android narrows helpers and previews;
     - `generate` owns our module's manifest (root `Package.swift`, the Android module folder), scoped to ready families (T-14) and under Ada's three conditions (§ 4.3);
-    - deprecated-alias emission before the claim (none exists today, VERIFIED Ada)
+    - deprecated-alias emission before the claim (none exists today, VERIFIED Ada);
+    - Icon-Base's 48 drawables carry no prefix, so renaming them after the claim is a break: they are named before it (Lina; Data verifies; Data R6, R10)
   - **Owners**: Lina (API); Kenya, Data (shapes); Ada (`generate`, aliases)
 - **The app** (D4)
   - **What it means here**: An adopter-layout app on each platform, built from a packed install, with plain `import` only, the anti-copy check, a non-`DP` abbreviation and one adopter theme (plan-r2 § 1, "D4 details"). It builds the adopter's **default** manifest, not the full set (Leonardo R2).
@@ -127,7 +128,7 @@ So the table is two fixed texts at two SHAs plus the change list. It is cited, n
     - Kenya built the adopter-module half on iOS (an adopter `FilterBar` reading our tokens and theme from its own module, `BUILD SUCCEEDED`, VERIFIED locally)
   - **Owners**: Lina, Kenya, Data, Ada (CLI), Leonardo (journey)
 - **CI for all of the above**
-  - **What it means here**: Each lane's workflow is written once, data-driven, under one issue-row grant (T-15), now including a release-time iOS 18.5 or 18.6 run on `macos-15` (P-6). Later family units edit no `.github/**` path
+  - **What it means here**: Each lane's workflow is written once, data-driven, under one issue-row grant (T-15), now including a release-time iOS 18.x run (P-6) on a free image that carries an 18.x runtime: `macos-15` with Xcode 26.3, or `macos-26` with the pinned 26.6 and a downloaded runtime, a choice item A of `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` leaves to 132's planning. Later family units edit no `.github/**` path
   - **Owners**: Kenya, Data; Stacy (ARMING)
 
 **How 132 is cut** (plan-r2 § 2, "How 132 is cut"): one vertical slice, then one unit per family.
@@ -146,7 +147,7 @@ So the table is two fixed texts at two SHAs plus the change list. It is cited, n
 - what `generate` emits for a stranger in general (129, closed);
 - the React and React Native platforms (128, which inherits the app lanes, the comparator, the D6 checker and the binding model, plan-r2 § 3);
 - served readiness for adopter components and `implements:` (128's lane 3, plan-r2 § 2 WP6).
-- Lina notes that until 128 lands, agents see adopter components in the application MCP next to ours with no evidence of the bar; that belongs in 128's inbound list.
+- Lina notes that until 128 lands, agents see adopter components in the application MCP next to ours with no evidence of the bar; that belongs to 128, as a rule-10 record Lina files (§ 5.1).
 - state colours, the `ColorTokens.ts` deletion, the rgba cleanup, shadow channels and colour enforcement (133, by the pivot).
 
 **Web**: 132 adds no build work on web (S-1, **CLOSED**, § 5.3). Web render evidence is a Sparky-owned record placed alongside 128 (P-14, **RULED** (b)); 132 keeps the contract-validation format keyed by platform.
@@ -269,7 +270,8 @@ Each lands before the release that first claims native support, which is **17.0.
 - **The pressed colour, option (a)** (P-7, **RULED**, item 4): the contract states the ΔL range instead of "12%", and the native test checks it; the claim keeps a line saying colours may change. The measured −0.0889 is the dormant generator's computed maths, not a native run.
 - **Deprecated-alias emission for the whole shared token surface, and D9's public-API diff** (Peter's "7 (a)"; § 4.3, Ada).
 - **#870's and #873's fixes, and #872's CORRECTION** (Ada R1, P-7's token-side lean).
-- **D7's derivation**, because P-2's overlay text points at served readiness (P-2, **RULED**, condition 2; Leonardo).
+- **D7's derivation**, because P-2's overlay text points at served readiness (P-2, **RULED**, condition 2). Ada owns D7 (§ 2); Leonardo raised the condition. Holding a claim also holds D7's served readiness flip, so served readiness never says ready while the printed text says do not start (Leonardo R9).
+- **The claim names only the claimed components.** D10's adopter component proves that an adopter can build one; it is not ours to claim and is not in the supported list (Stacy R4).
 - The Core Goals iOS 18.0 ballot is ratified and applied (#888 `b58c73da7`, #889 `35456bdbc`): done.
 
 **Until 17.0.0, `main` stays releasable as 16.x** (P-7, **RULED**, item 2): a breaking change is deprecated first and removed only in its major. The rule does not cover unclaimed reference-only native source (Lina). It gets an owner and a row in the priorities record's § 7 (Stacy R4).
@@ -297,6 +299,7 @@ Each lands before the release that first claims native support, which is **17.0.
 - **P-14, web render evidence: RULED** (b) (04:40:39Z). Effect: a Sparky-owned record placed alongside 128; 132 keeps the platform-keyed contract-validation format. What survives: web's "renders" claim stays weaker than native's until 128. → § "[PETER] P-14"
 - **P-16, the `rendering:` schema shape: RULED** (C), with Lina's (A) and the guards (04:24:26Z, 04:39:39Z). Effect: per platform, `rendering: { kind: drawn | platform, reason }`; the validator rejects a missing reason; render lanes check every `drawn` component whole; Stacy reads every `platform` value. What survives: whether `.tint` colours the selection is UNVERIFIED; if not, the choice reopens before Input-Text-Base's family is claimed. → § "[PETER] P-16"
 - **The pivot: RULED** (03:45:37Z). Effect: the order in § 3; the proper blend fix is 133 U1 (token creation and dark-surface lightening still go to Peter's review at 133's token sitting); U2 before 132; 131 kept; Lina's CSS web fix rejected, so the web fix waits for U1. It trims Peter's 03:40:05Z "complete 133": enforcement comes after 132's first family. → § "[PETER] pivot"
+- **The web P0: RULED** (a). Peter, received 2026-11-28T04:54:20Z, verbatim: "Agreed.", to the orchestrator's recommendation "(a). It's honest at release time, with no back-and-forth in what we serve." Effect: the 12 web components served as production-ready with "consistent state styling (default, hover, pressed)", which have not darkened on web since v12.0.0, are a **P0, confirmed and waived by Peter until 133 U1**; the served text is unchanged. If 16.4.0 ships before U1, its release notes carry one known-issue line, written by the RELEASE-FLOW walk owner at 16.4.0; U1's notes close it. Lina's web defect record carries the class, the waiver and the obligation. What survives: agents read the served text, not release notes, so until U1 an adopter's agent still assumes hover and pressed styling; Leonardo preferred correcting the text. → § "[PETER] web P0"
 - **Do not arise**: P-8 (KVM works on the free runner); P-10 (Android answered by #878's merge; iOS superseded by P-6); P-15 (every seat picked (a) for T-15).
 - **Only if they arise**: **P-11**, excluding the Dynamic Type audit (a D5 change; every seat leans fix); **P-12**, a D5 or D7 change from T-13: a labelled device read in place of a CI check, or, if the in-app walk fails on a runtime we test and only the static check is left, a new D7 evidence kind such as `static-checked` (Stacy R2).
 - **Later**: **P-9**, the Android range numbers, after D4 builds, now including `compileSdk`; **the lane-maintenance fork** (Data R2): once a render lane is a required check, either a per-lane ownership ballot or a grant per fix; **T-7's RELEASE-FLOW change**, a LAW edit, put to Peter as a ballot when its design is drafted.
@@ -307,21 +310,24 @@ Each lands before the release that first claims native support, which is **17.0.
 
 None is filed in this outline. Each is owed by the owner named, by the event named or, where none is named, before 132's requirements.
 
-- **Kenya**: with Data, the goal record's close and the real-app record, in the close commit on this branch (the PR body's merge preconditions), carrying her dated pointer for the "§ 3" cite; the `.tint` selection check (P-16); whether SwiftUI `.fontWeight` works with `Font.custom` (P-13); the re-rule or close of the archived iOS 17 probe record; committing her T-13 walk measurement to #879's evidence; the pre-claim wording window (§ 4.3); a rule-10 record, or a pointer, for Swift 6 language mode (§ 4.3).
-- **Data**: with Kenya, the goal record's close and the real-app record; T-20.
+- **Kenya**: with Data, the goal record's close and the real-app record, in the close commit on this branch (the PR body's merge preconditions), carrying her dated pointer for the "§ 3" cite; the `.tint` selection check (P-16); whether SwiftUI `.fontWeight` works with `Font.custom` (P-13); the re-rule or close of the archived iOS 17 probe record, which has no outcome line (Kenya R10); the pre-claim wording window (§ 4.3); a rule-10 record, or a pointer, for Swift 6 language mode (§ 4.3). Her T-13 walk is committed to #879's evidence (`b6c918828`, README § 4; Kenya R10).
+- **Data**: with Kenya, the goal record's close and the real-app record; T-20; appending the floor-raise rule to `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md` as its item 3 (whether raising a toolchain floor counts as a major), decided with P-9 (Data R10).
 - **Lina**:
   - dated pointers in the Source lines of #877's three records, which cite the placeholder's L7 and L33 (rule 9);
   - P-4: the reason-class list, grounded in a classification of the slice's 46 contracts per platform, through the per-platform contract-validation ballot (#877's record); a reason on every platform removal; the re-sort of the 40 exclusions and the 19 web-only contracts; the checker, with Thurgood;
   - P-16: the schema validator change;
   - P-13: Android's matching small-text fix in the same unit; a rule-10 record for Android Nav-SegmentedChoice's fixed-`dp` height on `sp` text;
-  - the web pressed and hover defect record (12 web components, the fix in 133 U1, the tests' known-bad gap);
-  - the contract's ΔL range (P-7, item 4);
+  - the web pressed and hover defect record (12 web components, the fix in 133 U1, the tests' known-bad gap), carrying Chip-Filter's selected-and-pressed state, which is wrong on every platform: native fades the chip (`.opacity(0.9)`), web keeps the rest colour (Lina R13). It also carries the P0 class and Peter's waiver ("The web P0", above);
+  - the contract's ΔL range (P-7, item 4), with Icon-Base's range, which cannot be met on white (Lina R13);
+  - the native chips' motion, which does not match their contract (`duration150` and button-press motion, where the contract names `selectionTransition`): the drift record takes it, or Lina files a record (Lina R13);
+  - a rule-10 record for 128: until 128 lands, agents see adopter components beside ours with no evidence of the bar (§ 2);
+  - her T-13 confirmation, in the design round;
   - with Ada, the proposal to move #885's fix into 133 U1, for 133's outline round;
   - T-9's two ballot drafts.
-- **Ada**: the `typography.label` record (`src/tokens/semantic/index.ts` L569 names a token that does not exist); after P-13 lands, a ballot adding a scale-role section to Token-Family-Typography; creating `typography.segmentLg` and `typography.segmentMd` in 132's typography work; the correction to the blend record; the confirmation of § 4.3's Ada items before the close commit; with Lina, #885 into 133 U1.
-- **Leonardo**: the AX5 patterns-screen check; the H1 swap usage line; the `segment*` usage line; the claim's colour line (P-7, item 4).
+- **Ada**: the `typography.label` record (`src/tokens/semantic/index.ts` L569 names a token that does not exist); after P-13 lands, a ballot adding a scale-role section to Token-Family-Typography; creating `typography.segmentLg` and `typography.segmentMd` in 132's typography work; the correction to the blend record; the confirmation of § 4.3's Ada items before the close commit; with Lina, #885 into 133 U1; a record for the chips' light `white200` surface on the dark canvas, with Leonardo judging whether it is intended (Stacy R5, Ada R14).
+- **Leonardo**: the AX5 patterns-screen check; the H1 swap usage line; the `segment*` usage line; the support-claim text as a whole, with its colour line (P-7, item 4) and only the claimed components (§ 4.4; Stacy R4: "the text itself is Leonardo's"); a clean-room build that follows only the guide, before the first per-family announcement (his R6; logged "open, not folded" and never put to Peter, so it is his proposal for the requirements round); and, only if T-14 picks the compile tier, the call between ERROR and WARNING for Kotlin `` (Leonardo R13).
 - **Sparky**: P-14's record, filed under rule 10, with its trigger alongside 128.
-- **Stacy**: Spec 005's Dynamic Type completion claim, as a false-claim finding (Ada R11); the claim side of `InteractionStateAudit.test.ts`'s false assurance.
+- **Stacy**: two SYMPTOM-class audit passes, each with a committed record, due by 132's requirements round: Spec 005's Dynamic Type completion claim, as a false-claim finding (Ada R11), and the claim side of `InteractionStateAudit.test.ts`'s false assurance (Stacy R9).
 - **Thurgood**: 132's park line and 133's `open` outcome line, each in its own commit, after the close (`[THURGOOD R20]`, "Next"); the priorities record's walk-log line for the pivot's order, its § 7 row for the 16.x rule, and the dated pointer for its stale 2026-11-05 line ("Spec 132's directory does not exist yet"); `InteractionStateAudit.test.ts`'s false assurance, as test-governance owner; P-4's checker, with Lina; T-17's 131 sizing; T-7's RELEASE-FLOW ballot.
 - **Not yet named**: the owner of the 16.x rule (P-7, item 2). **T-10's owners (Kenya, Data)**: D9's baseline.
 
@@ -330,13 +336,13 @@ None is filed in this outline. Each is owed by the owner named, by the event nam
 The full text of each item before the reshape is in `[THURGOOD R20]`, "From § 5.2".
 
 **Settled** (CLOSED):
-- **T-1, the `rendering:` shape**: closed by P-16 ((C), Lina's (A)). The `.tint` check can reopen it. Under (A), whether the field still needs its one new identifier is Lina's to say.
-- **T-3, tool choices**: a hand-written `.xcodeproj` with synchronized folders; the project created by doing the walkthrough's steps; a file-list test (Data); emulator and Robolectric both measured to run; ViewInspector optional.
+- **T-1, the `rendering:` shape**: closed by P-16 ((C), Lina's (A)). The `.tint` check can reopen it. Under (A) the field's one new identifier is not owed: the render lanes check every drawn component whole, so nothing is skipped. If D6's contract tests need to reach the field, they add it as test work in that family's unit; if (B) reopens, the identifier returns with it (Lina R13).
+- **T-3, tool choices**: a hand-written `.xcodeproj` with synchronized folders; the fixture states "Xcode 16 or later" (Kenya R10); the project created by doing the walkthrough's steps; a file-list test (Data); emulator and Robolectric both measured to run; ViewInspector optional.
 - **T-4, where adopter components and their tokens live**: (a), adopter source in its own module, all generated token groups in ours; the fixture guard (§ 4.1) lands before D10. Android's import is confirmed at D4.
 - **T-5, the theme family's persisted form**: the config name, as raw literals on iOS and a `key` with `fromKey` on Android; the scheme stored separately; a migration line for renamed themes. Runtime switching is D5's, at `design.md`.
 - **T-11, the "Native status" passage**: no change at this merge.
 - **T-14 (ii), one module, many families**: a family-scoped manifest; the closure list per family is data `generate` reads; a harness case compiles each included set alone. Its threshold is open (below).
-- **T-15, CI grants**: (a), each lane's workflow written once, data-driven from a family-list file; grants per lane (about six or seven), and per unit only where a unit edits a workflow; the release-time iOS 18.x lane joins them (whether `macos-15`'s Xcode 26.3 runs 18.x is UNVERIFIED).
+- **T-15, CI grants**: (a), each lane's workflow written once, data-driven from a family-list file; grants per lane (about six or seven), and per unit only where a unit edits a workflow; the release-time iOS 18.x lane joins them, its runner left to 132's planning by item A of #888's record (`macos-15` with Xcode 26.3, where whether it runs 18.x is UNVERIFIED, or `macos-26` with a downloaded runtime).
 
 **Open**:
 - **T-2, the first family and the adopter component**: Lina confirms Chip-Base, Chip-Filter, Chip-Input and Icon-Base; a `FilterBar` composing Chip-Filter is the common proposal. Lina, Leonardo; Kenya, Data. Closes at the tasks round.
@@ -346,7 +352,7 @@ The full text of each item before the reshape is in `[THURGOOD R20]`, "From § 5
 - **T-9, the access-level and contract-validation ballots**: Lina drafts both before 132's requirements (1–2 sessions); the contract ballot carries P-4's list and T-13's oracle lines; the access ballot names Q12's binding names public. Lina, with the seats each record names.
 - **T-10, D9's tools**: compiling the previous release's app and samples is the oracle; the dump tools are early warning, each shown to bite; the diff covers the generated token API and treats a family's arrival as an addition. Kenya, Data; Leonardo; Ada. Design round.
 - **T-12, fixed font sizes and Dynamic Type**: P-13 ruled the token fix; the layout repair per family and the call-site moves are design-round and unit work. Ada, Lina, Leonardo; Kenya.
-- **T-13, how a "hidden from VoiceOver" contract is checked**: iOS by the in-app walk under a UI-test session, with a known-bad twin (Kenya measured 3 hidden against 5 visible); Android by the merged semantics tree, with a non-null description as the twin. Kenya's measurement must be committed to #879's evidence first; Lina's confirmation is owed. Design round.
+- **T-13, how a "hidden from VoiceOver" contract is checked**: iOS by the in-app walk under a UI-test session, with a known-bad twin (Kenya measured 3 hidden against 5 visible); Android by the merged semantics tree, with a non-null description as the twin. Kenya's measurement is committed to #879's evidence (`b6c918828`, README § 4); Lina's confirmation is owed. Design round.
 - **T-14's threshold**: Ada's committed compile state, or Leonardo's claimed-families-only default with an opt-in compile tier; Data names a third shape. Design round.
 - **T-16, D6's committed evidence**: a per-platform summary at each unit merge, per contract (state, test ID, oracle, evidence kind, known-bad result, run ID); the 288-contract baseline with the checker's first PR. Thurgood. Tasks round.
 - **T-17, the measured-cost record's 131 column**: under Stacy's conditions (§ 3). Thurgood, one other seat reading the method; Stacy. Before the first first-family unit merges.
@@ -367,7 +373,7 @@ The full text of each item before the reshape is in `[THURGOOD R20]`, "From § 5
 
 Both probes ran. The full text this section held is in `[THURGOOD R20]`, "From § 6".
 - **Data's Android render probe, in CI: passed** (#884, `358ca187b`). The result is in the goal record's § "Android render probe result (2026-11-27, Data)"; the `compileSdk` 37 finding is on the toolchain-range record (#881). One sample: lane stability is a later read.
-- **Kenya's iOS spike: ran on iOS 26.0, locally.** The result is in `.kiro/specs/132-native-components-in-app/evidence/2026-11-27-ios-render-spike/README.md`, on draft PR #879 (head `19a1813e6`, read 2026-11-28T01:41:17Z). Its findings are folded into T-3, T-4, T-12 and T-13, and her R2 measurements are owed to #879's evidence.
+- **Kenya's iOS spike: ran on iOS 26.0, locally.** The result is in `.kiro/specs/132-native-components-in-app/evidence/2026-11-27-ios-render-spike/README.md`, on PR #879, ready for review at `766eb242d` (Kenya R10). Its findings are folded into T-3, T-4, T-12 and T-13. Her R2 probes (the T-13 walk, the T-12 scaled type, the T-4 local-path import) are committed there at `b6c918828`.
 - **What the probes cannot settle** (REASONING): a local spike is a report the claims pass cannot re-run, and the first CI run of each render lane is its own measurement.
 
 ---
@@ -394,7 +400,7 @@ The round's own fold-back is in `[THURGOOD R20]`, "From § 9". What survives, fo
 - T-14 (ii) makes `generate`'s output depend on release readiness, which is new behaviour: an adopter's module changes on upgrade without any change to their config.
 - P-6's floor of 18 holds evidence-wise only while a free image carries an 18.x runtime; after that the gap returns one version up (Leonardo R4).
 - 132 stays open across 133's token half and, under the ruled order, across 131's process-law change (plan-r2 § 10).
-- **Parked through 133, this outline's measurements move** (Thurgood R14): Kenya's iOS 26.0 spike, the `macos-15` 18.x image, the toolchain pins. 132's resumption starts with a refresh pass, and some of sitting 2's context will be re-read.
+- **Parked through 133, this outline's measurements move** (Thurgood R14): Kenya's iOS 26.0 spike, the free images that carry an 18.x runtime, the toolchain pins. 132's resumption starts with a refresh pass, and some of sitting 2's context will be re-read.
 
 ---
 

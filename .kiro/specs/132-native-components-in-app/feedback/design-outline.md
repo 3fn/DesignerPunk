@@ -4204,6 +4204,137 @@ So **this PR is the carrying event** (`.kiro/issues/README.md` rule 11: a spec a
   - P-6's floor of 18 holds evidence-wise only while a free image carries an 18.x runtime; after that the gap returns one version up (Leonardo R4).
   - Under (x′), 132 stays open across 131's process-law change, which this project has not done before (plan-r2 § 10).
 
+#### [KENYA R10]
+
+Read at `683188c44`; records at `origin/main`.
+
+**1. Yes, apart from three gaps.**
+- **Only in R20**: "The fixture states 'Xcode 16 or later'" (feedback L3969). It belongs in T-3, because it is a requirements input.
+- **Stale**:
+  - The T-13 walk is already committed to #879 (`b6c918828`, README § 4).
+  - #879 is now ready for review at `766eb242d`, not a draft at `19a1813e6`.
+  - So the T-13 lines at L310, L349 and L370 need updating (VERIFIED).
+- **A conflict**: L130 fixes the iOS 18 run on `macos-15`. Item A of the iOS 18 floor record leaves the runner open: `macos-15`, or `macos-26` with a downloaded runtime (VERIFIED).
+
+**2. Correct and complete.** One correction of my own: my `766eb242d` note on #879 calls the iOS 17 record "closed". It is archived but has no outcome line (VERIFIED), so the close is still owed, as L241 says.
+
+**3. Rule-10 records to file (proposed, not filed)**
+- **`.kiro/issues/2026-11-28-ios-swift-6-language-mode-for-components.md`**
+  - **Trigger**: `path:.kiro/specs/132-native-components-in-app/requirements.md`
+  - **Obligation**: the root manifest sets Swift 6 language mode for our module. D4 proves that it builds and that the adopter's mode stays the adopter's.
+- **`.kiro/issues/2026-11-28-ios-pre-claim-minimum-wording.md`**
+  - **Trigger**: `release:16.4.0:phase-1`
+  - **Obligation**: the iOS minimum that shipped 16.x text states between the Core Goals ratification and the first claim. Today that text says 17.0, while Core Goals says 18.0. The 17.0 reading is UNVERIFIED in the shipped files; it comes from the archived iOS 17 record's Class line and from item E of the floor record.
+
+#### [DATA R10]
+
+Read at `683188c44`. Compared against `e167dba9c` and the feedback doc.
+
+**1. Mostly yes.** The outline carries R8 release builds (L81) and P-3's emulator reads (L69, L287). It also carries `compileSdk` 37 and the API-26 floor test, through #881 (L257; the record holds `NewApi` and the 37 finding, VERIFIED). My blend points from R6 and R9 are now 133 U1's: it deletes the native blend files (L139, L299). Two items survive only in the feedback doc's `[DATA R6]` (VERIFIED by grep: not in the new outline, the old outline or #881):
+- **Icon-Base's 48 drawables have no prefix.** Renaming them after the claim is a break. This belongs in § 2's public-API line, owned by Lina with Data verifying.
+- **Whether raising a toolchain floor is a major.** This belongs in #881 as item 3, mine to append, decided with P-9.
+
+**2. Correct but incomplete.** L311, "with Kenya, the goal record's close and the real-app record; T-20", is right. Please add: "append the floor-raise rule to #881 (item 3)".
+
+#### [LINA R13]
+
+Read `design-outline.md` at `683188c44` against `e167dba9c`, and `[THURGOOD R20]`.
+
+**1. Does the outline still carry everything I act on? Yes, with four gaps.** My D-rows, records, ballots and T-items are all there (L102–128, L222–243, L258, § 5.1 "Lina", T-8, T-9, T-18). These four facts have no home in the outline or in a record:
+- **Chip-Filter's selected-and-pressed state is wrong on every platform.** Native fades the chip (`.opacity(0.9)`); web keeps the rest colour. This is only in my consult answers. Fold it into the web defect record I owe.
+- **Icon-Base's ΔL range cannot be met on white.** This is only in my answers. It joins the contract-range act (P-7, item 4).
+- **The native chips' motion does not match their contract** (`duration150` and button-press motion, where the contract names `selectionTransition`). This is only in my R5. Either the drift record takes it, or I file a record.
+- **L149's "belongs in 128's inbound list" names no owner.** It is mine, as a rule-10 record for 128.
+
+**2. Is my owed-acts list correct?** It is correct but incomplete. Add:
+- my T-13 confirmation, which the T-13 line already names but my list leaves out;
+- the 128 record above.
+
+**Thurgood's R18 question: is T-1's identifier still owed? No.** It existed so the render lanes could find the system text field and skip it. Under (A), the lanes check every drawn component whole, so nothing is skipped. If D6's contract tests need to reach the field, they add it as test work in that family's unit. If the `.tint` check fails and (B) reopens, the identifier comes back with it. T-1's line can say this.
+
+#### [ADA R14]
+
+Read at `683188c44`, against `e167dba9c`.
+
+**1. Carried? Yes, with one gap.** The record Stacy R5 proposed is in neither § 5.1 nor a record: chips keep the light `white200` surface on the dark canvas (Ada, with Leonardo on whether it is intended). Add it to my § 5.1 line. The forecast column dropping out with the pivot is correct. The alias scope detail ("`DesignTokens`, the theme types, `ComponentTokens` itself") is now only in R20, and record (c) below carries it.
+
+**2. My § 5.1 owed acts: correct.** Add the dark-surface record above.
+
+**3. Rule-10 records to file** (none is held elsewhere: a grep of `.kiro/issues` finds only the goal record):
+- **(a)** `.kiro/issues/2026-11-28-q12-q13-type-table-provisional-until-d4.md`
+  - Trigger: `path:.kiro/specs/132-native-components-in-app/design.md`
+  - Obligation: D4 shows the fixed binding names read from the adopter's module, Q13 through the adopter theme, and the type table on the primitive path. D10 covers the component-token path, and a unit test covers the provider-name clash.
+- **(b)** `…-generate-native-manifest-conditions.md`
+  - Trigger: `path:…/132-native-components-in-app/requirements.md`
+  - Obligation: requirements carry the manifest's three conditions, plus D10's same-name `.kt` case proving `reservedKotlinPackages.ts`.
+- **(c)** `…-deprecated-aliases-and-public-api-diff-before-claim.md`
+  - Trigger: the same `requirements.md`
+  - Obligation: alias emission for the whole shared token surface, and D9's diff, landing before 17.0.0.
+
+#### [LEONARDO R13]
+
+Read: outline at `683188c44`, `[THURGOOD R20]`, the old outline at `e167dba9c`, and `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` on `main`. Every point is VERIFIED by grep unless marked.
+
+**1. Mostly carried.** My docs duties for the iOS minimum sit in the #888 record (items B–C), which § 4.3 points to. The T-14 inputs (the ratchet, one readiness source) sit in R20, which § 5.2 points to. Both are fine.
+
+Now only in history:
+- **My clean-room build before the first per-family announcement** (my R6). The feedback doc logged it as "Open, not folded" (feedback L2083), and it was never asked or listed. It belongs in § 4.4 or under my owed acts.
+- **Holding a claim also holds D7's served readiness flip** (my R9). § 4.4 lists D7's derivation but not this tie.
+
+**2. The four acts are correct but incomplete.** Add:
+- the support-claim text as a whole, not only its colour line (Stacy R4: "the text itself is Leonardo's");
+- the clean-room build;
+- **conditional**: Kotlin `@RequiresOptIn` ERROR or WARNING, if T-14 picks the compile tier.
+
+One fix as well: in § 4.4, "D7's derivation … Leonardo" reads as if I own it. Ada owns D7 (§ 2, L119); I am only the source of the condition.
+
+**3.** Does not apply to me.
+
+#### [STACY R9]
+
+Read at `683188c44`, against `e167dba9c` and `[THURGOOD R20]`.
+
+**1. What my LENS and CLOSEOUT reads rely on: present** (VERIFIED, grep). These are:
+- the D-row change list (§ 1 L64) and the ruled D4/D10 text;
+- "What stays a reading";
+- the measured-cost record's form (§ 3), whose 133 column the pivot dropped by ruling;
+- T-6, T-17 and T-21;
+- P-3's read fields, by pointer to Stacy R7;
+- the real-app SYMPTOM read (§ 1 L70);
+- ARMING on the lane grants (§ 2).
+
+Two items are now only in history:
+- **The web chips' P0 reading.** Leonardo R9 and my R5 read the served text "consistent state styling (default, hover, pressed)", under `production-ready`, as a P0. The pivot moved the fix to 133 U1. Nothing carries the class, the disclosure, or Peter's waiver ahead of the next release's S. Lina's record should carry the class. Confirming or disputing the P0 reading is my act, and it goes to Peter.
+- **The claim names only the claimed components, with D10's adopter component left out** (Stacy R4). Today it sits only in the feedback doc's L2239. It belongs in § 4.4, or in Leonardo's owed acts beside the colour line.
+
+**2. My owed acts**: correct. To complete them, both are SYMPTOM-class passes with committed records, due by 132's requirements round. A third needs adding: the P0 read above.
+
+#### [PETER] web P0
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; the receipt time is the orchestrator's `date -u`.*
+
+- **What he was asked**, after `[STACY R9]` (spliced above):
+  - **The facts**: 12 web components are served as production-ready with "consistent state styling (default, hover, pressed)". On web they have not darkened since v12.0.0, which makes this a P0 by our definition. The proper fix is now 133 U1.
+  - **His earlier conditional**: he agreed (2026-11-28T03:22:59Z), as the orchestrator relays it, that "Lina should fix it first and leave the text alone, if the fix is quick". The other half: if it cannot ship quickly, correct the text instead.
+  - **The options**: (a) accept it as a known defect until U1, recording his waiver and keeping the served text unchanged; if 16.4.0 ships before U1, its release notes carry one known-issue line, and U1's notes close it. (b) Correct the served text now to "border change only on web", then change it back at U1. (c) Hold 16.4.0 until U1.
+  - **The orchestrator's recommendation**: "(a). It's honest at release time, with no back-and-forth in what we serve."
+  - **What survives**: agents read the served text, not release notes, so until U1 an adopter's agent still assumes hover and pressed styling. Leonardo earlier preferred correcting the text.
+- **Received**: 2026-11-28T04:54:20Z, quoting the recommendation line. **Verbatim**: "Agreed."
+- **What is ruled**: (a). The P0 class is confirmed and waived by Peter until 133 U1, with the served text unchanged. If 16.4.0 ships before U1, its release notes carry one known-issue line, owed by the RELEASE-FLOW walk owner at 16.4.0.
+
+#### [THURGOOD R21]
+
+- **Spliced byte for byte**, in the collation's order: `kenya-reshape-check.md` (`[KENYA R10]`), `data-reshape-check.md` (`[DATA R10]`), `lina-reshape-check.md` (`[LINA R13]`), `ada-reshape-check.md` (`[ADA R14]`), `leonardo-reshape-check.md` (`[LEONARDO R13]`), `stacy-reshape-check.md` (`[STACY R9]`).
+- **The fix pass**, each item restored to its section in design-outline.md, with the seat's words winning over the collation:
+  - Kenya: "Xcode 16 or later" in T-3; the T-13 walk committed (`b6c918828`, README § 4) and #879 ready at `766eb242d`, in § 5.1, T-13 and § 6; the release-time iOS 18.x runner left open, as item A of #888's record leaves it, in § 2, T-15 and § 9;
+  - Data: Icon-Base's 48 unprefixed drawables in § 2's public-API line (Lina; Data verifies); the floor-raise rule as #881's item 3 in his owed acts;
+  - Lina: Chip-Filter's selected-and-pressed state, folded into her web defect record (her words, over the collation's "slice row"); Icon-Base's ΔL range on white, joining the contract-range act; the chips' motion, to the drift record or her own; the 128 note's owner and record; her T-13 confirmation; T-1's identifier not owed under (A);
+  - Leonardo: the clean-room build, as his proposal for the requirements round (it was never put to Peter); the claim holding D7's served readiness flip, in § 4.4; the whole support-claim text and the conditional `@RequiresOptIn` call in his owed acts; D7's owner named as Ada in § 4.4;
+  - Ada: the dark-canvas `white200` chip-surface record in her owed acts. The alias scope goes into her record (c);
+  - Stacy: "the claim names only the claimed components" in § 4.4; her two acts are SYMPTOM-class passes with committed records, due by 132's requirements round.
+- **The web P0**: recorded as `[PETER] web P0`, above, and as a ruling line in design-outline.md § 5.1. It replaces the placeholder the brief first asked for, now that Peter has ruled. Stacy's third act, the P0 read she owed Peter, is answered by his ruling.
+- **Records**: in the next commit, under rule 10.
+
 ---
 
 ## Requirements Feedback
