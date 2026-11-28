@@ -1917,6 +1917,172 @@ Approve P-13 (a) with size bands now: lean H1 at AX5 (no third size option survi
 - **Lina**: Android helper and error text has the same `fontSize050` defect as iOS (Checkbox-Base, Checkbox-Legal, Radio-Base, Radio-Set). Android Nav-SegmentedChoice sets a fixed `dp` height on `sp` text, a present-day defect. She files a rule-10 record for it after this round, with the Android helper weights if they are not already in scope. She also says her R2 record (b) should cite `ButtonVerticalListSet.ios.swift` L546, not L545.
 - **Leonardo**: a question to Lina, whether error and "Required" text should use `labelXs` on every platform. He puts it to her as a record.
 
+#### [KENYA R5]
+
+**1. The plan's D4 app and Peter's demo app are almost the same thing.**
+- **Where they match** (VERIFIED, plan-r2 § 1 and roadmap row 5 at `b89163c41`; outline § 2 at `96e4945db`): the D4 app is already one we build. Kenya and Data build it, Leonardo writes its content, and it has two screens: a catalog, and one filter-and-tags product screen. D10's adopter component already "passes D3–D6 in the D4 app", so Peter's idea of putting D10 in the same demo is what the plan says.
+- **Where they differ**:
+  - *The wording.* The D4 row says "an adopter's own app", which reads as a real customer's project. It is not one. That is the real gap.
+  - *Size.* The app is small in screens but not in coverage. The catalog is generated from the committed component list and fails on any component it did not build, so by the end it holds all 34.
+  - *Where it lives.* It lives in this repo and runs in CI as `native-adopter-ios`. VERIFIED: the row names the context. UNVERIFIED: its folder path. The text I read does not fix one.
+  - *Cost.* My plan-r2 estimate for packaging, fixture screens and `.xcodeproj` is about 2.5–3.5 sessions (VERIFIED, § 8). The demo adds no cost.
+
+**2. Proposed wording for iOS**
+- **D4, "Done means"**: "A fixture adopter app, which we build and keep in this repository, builds and links with the components as a package dependency. It proves the path a stranger follows. It does not prove a stranger's own project."
+- **D4 details, iOS**: "iOS: deployment target 18.0, in a committed, hand-written `.xcodeproj` in `ios/` (Kenya; P-6)."
+- **D10**: replace "lives in the adopter's own module" with "lives in the fixture app's own module", and "in the D4 app" with "in the D4 fixture app".
+
+**3. What a demo we build cannot catch**
+- **The strongest risk is circularity.** The same seats design the generator, the adopter layout and the app, so the app shares every assumption they make and can pass every row while a stranger's app fails.
+- iOS examples a real app brings (REASONING, UNVERIFIED as findings):
+  - an existing `.xcodeproj` that is not in `ios/` next to a root `package.json` (monorepos, Tuist);
+  - Swift 6 language mode with strict concurrency checking;
+  - Release or archive builds;
+  - extension targets, such as widgets;
+  - another SwiftPM dependency or asset colour whose name clashes with ours;
+  - real navigation and state around our components.
+- **What should cover it, and when**:
+  - *Now, cheaply*: build the fixture in both Swift 5 and Swift 6 language modes, and in Release as well as Debug. That is my proposal and is not in the plan.
+  - *When Peter's app is ready*: one dated, named "first real adopter" read, with its findings filed. It is evidence, not a gate, so his app's timing never blocks a claim.
+
+**4. My position: (b), plus the D4/D10 wording edit above.**
+- The edit costs nothing, makes the bar honest, and is exactly Peter's proposal.
+- **Counter-argument I could not fold away**: renaming the app as ours does not stop it being circular. It only makes that visible. Until a stranger's project builds, the acceptance sentence, "a stranger's `init` → `generate`", is proven on a stand-in we wrote. The real-adopter read is the only thing that closes that gap, and I have not made it a gate.
+
+#### [DATA R5]
+
+**1. The plan's D4 app is already the demo app Peter describes.** The words "an adopter's own app" in D4 mean an app laid out the way an adopter's app would be. They do not mean someone else's real app.
+- **Where they match** (VERIFIED, plan-r2 at `b89163c41` and the 132 outline at `96e4945db`):
+  - We build it. Kenya and Data build it, and Leonardo writes its content. The WP4 row gives me about 2.5 rounds for "Android module, fixture app, adopter module and name-clash case".
+  - D10 already sits inside it: the adopter component "passes D3–D6 in the D4 app". Peter's second idea matches the plan too.
+- **Where they differ**:
+  - **Size.** It starts small: three chips, Icon-Base and one `FilterBar`. It grows by one family per unit, and the job fails if it skips any component in the catalog.
+  - **Where it lives.** It is a test fixture in this repo, installed from a packed tarball and built by CI on every PR. It is not a hand-run demo or a showcase.
+  - **What it covers.** Two screens (a catalog and a filter-and-tags product screen). On Android it is also built at both ends of the supported AGP, Kotlin and Compose range, with lint `NewApi` treated as an error.
+
+**2. Proposed wording for Android.**
+- **D4 row**: "**Our fixture adopter app**, built by Kenya and Data in this repo, builds and links, with the components as a dependency. It uses the adopter layout and is installed from a packed tarball. No real adopter's app is part of done (see the real-app reading)."
+- **D4 Android detail**: "The `android/` app module depends on our module under `node_modules/@3fn/core`. It produces a linked APK at `minSdk` 26, with lint `NewApi` as an error, and is built at the bottom and top of the supported range."
+- **D10 row**: "...lives in **the fixture app's own Gradle module and package**, not ours, and passes D3–D6 in the D4 fixture app."
+
+**3. What a demo we build ourselves misses.** The people who wrote the components, the guide and the setup steps also build the app, so it only tests the setup we expect. A real Android app would bring things our app does not have:
+- its own Compose BOM and Kotlin plugin, which can clash with ours when Gradle resolves versions;
+- a Material3 theme already wrapping the screen;
+- dependency injection and multi-module builds;
+- release builds shrunk by R8 (UNVERIFIED: I have not checked whether our module ships consumer keep rules);
+- a person following the guide with no help from us.
+
+**What should cover the gap, and when:**
+- **In 132**, cheaply: build the fixture's release variant with R8 on, and give its `android/` folder its own Material3 theme and version catalog.
+- **When Peter's app is ready**: a recorded real-app reading, filed as an issue that triggers on "Peter's app reaches its first native screen". It does not hold the 132 merge.
+
+**Strongest risk:** per-family announcement is the planned approach (plan-r2 § 7 item 8, VERIFIED). So each family's support claim goes public with only our own app as evidence. The first real adopter, probably Peter, may hit integration breaks after the claim is made.
+
+**4. Position: (b), plus one edit.** Change D4's and D10's wording to say "our fixture app" (as in item 2), and add the real-app reading as a record with a trigger, not as a D row.
+- **Counter-argument I could not fold away:** the new wording makes it plain, but does not fix, that done is checked only by us. The trigger "Peter's app is ready" is an event only Peter can see. It can lapse without anyone noticing, and nothing in D4–D10 would turn red.
+
+#### [LEONARDO R6]
+
+**P-1: Peter's "small scale demo app" against the plan's D4 app.** Sources: plan-r2 at `b89163c41`, § 1 and roadmap row 5; the 132 outline at `96e4945db`, §§ 1, 2 and 5.1.
+
+**1. How they compare.** Peter's proposal is close to what the plan already describes. The row text hides that.
+- **They match on who builds it.** Kenya builds the iOS app, Data builds the Android app, and I write the content (VERIFIED: roadmap row 5, outline § 2 "The app").
+- **They match on where it lives.** It is a fixture in our CI, not an outsider's project (VERIFIED). Its folder is not named yet (VERIFIED: outline L628 says "harness/ or the fixture directory").
+- **They match on size, in screens.** It has two screens: a catalog, and one filter-and-tags product screen. I design both, and the product screen gets a real screen spec in the fixture's own `product/` folder (VERIFIED).
+- **They may differ on how much it covers.** Its component list comes from the catalog, and it fails on any component it leaves out. So by goal-done it holds every shipped component in every theme (VERIFIED: D4/D5 details). It starts small, with the Chip family plus Icon-Base, and grows one family per unit (VERIFIED: § 2 "the slice"). If Peter's "small" means fewer components at goal-done, that cuts D5, and it is a fork for him.
+- **Where they really differ is the title.** D4's title says "An adopter's own app". The app is ours.
+
+**2. Proposed wording**
+- **D4, "Done means"**: "A fixture adopter app, which we build in the adopter layout, builds and links with the components as a dependency. It is small (two screens) and stands in for an adopter's app. It is not one."
+- **D4 details, a new first line**: "**What it is**: a fixture we build and run in our CI (iOS: Kenya; Android: Data; content: Leonardo). A real adopter's first app is not a D row." Also change "iOS: deployment target 17.0" to 18.0.
+- **D10, "Done means"**: "An adopter can build more, shown in the D4 fixture app." In its oracle, change "lives in the adopter's own module" to "lives in the D4 fixture app's own module, not ours".
+
+**3. What a demo of our own misses**
+- **Our screens are built to fit our components.** A real product needs things our contracts never pictured: navigation, real data, long text, and a component we don't have.
+- **Our app starts empty.** A real one already has other packages, its own build settings and its own names.
+- **Our app is built only in debug.** The plan never mentions a release build (VERIFIED by a search of plan-r2). Android's release build shrinks and renames code, and the plan doesn't test that.
+- **Strongest risk**: we wrote the components, the guide and the app, so the app exercises only paths we already know work. Then P-8's per-family announcement reaches adopters before any outsider has tried the package.
+- **What should cover the gap, and when.**
+  - Inside 132: a release-configuration build in D4, which is cheap.
+  - Before the first per-family announcement: one clean-room build that follows only the guide, as T-3 already leans.
+  - When Peter's app is ready: it becomes the first real adopter, and what it finds feeds lessons learned. File it as a record with a trigger under rule 10. It should not be a D row, because 132 could not close on a date nobody knows.
+
+**4. My position: (b), plus the relabel above.** Adding a release build to D4 would be a third edit, if Peter wants it.
+- **What survives**: the relabel makes "done" honest, but it doesn't make it complete. Whatever label we use, "done" will be read as "an adopter can do this" while no outsider has done it. The only thing that closes this is a real app, and that app isn't ready.
+
+#### [STACY R3]
+
+**Premise first.** VERIFIED: D4 was never a real adopter's app. Plan-r2 roadmap row 5 names "The D4 fixture app, with two screens", built by Kenya and Data with Leonardo's content. Outline § 2 "The app" says the same, and D10's row already says "a fixture adopter component … in the D4 app". So Peter's demo is roughly what the plan already describes, and folding D10 into it is already the plan. What is wrong is the **row text**. "An adopter's own app" claims more than a fixture can prove.
+
+**1. Keep or weaken?** A demo keeps the oracle only if it keeps these D4 details. Each one is VERIFIED in plan-r2 "D4 details":
+- a packed install → `init` → `generate`, in the adopter layout (the package at the root, `ios/`, `android/`), never a path into our repo;
+- **plain `import` only**, with no `@testable`;
+- **the anti-copy check**: every DesignerPunk source file resolves under `node_modules/@3fn/core`;
+- **the component list generated from the committed catalog**, so the job fails on any component it did not build. "Small" may mean few product screens. It may never mean a hand-picked set of components;
+- a linked `.app` or APK, a non-`DP` abbreviation and one adopter theme.
+
+Without these, the demo is a showcase: it can only show what we chose to show it. With them, the oracle is unchanged.
+
+**2. What a demo we build misses** (all UNVERIFIED reasoning, none measured):
+- other dependencies pinning their own Compose, AGP or Swift versions;
+- release builds (R8/ProGuard shrinking, strict concurrency, warnings treated as errors);
+- multi-module apps, or apps where `node_modules` is not at the root;
+- an existing app theme or navigation stack we have to fit into.
+
+**Strongest risk**: the fixture grows alongside our package, built by the same seats who fix the components. When it breaks, we fix the fixture. D4 then measures whether we can make our own app build, not whether a stranger can. Partial cover, already planned and VERIFIED in T-3: Leonardo creates the project by following the walkthrough's steps. The gap itself is covered by Peter's real app, once it exists, through a record with a trigger. Its first build is read as a SYMPTOM-class claims audit against what D4 claimed.
+
+**Claim wording for adopters**: "Builds, links and renders in DesignerPunk's own adopter-layout test app (iOS target 18.0, Android API 26), from a packed install." It never says "works in your app".
+
+**3. Row text I would accept.**
+- **D4** "Done means": *"Our fixture adopter app, built in the adopter layout from a packed install, builds and links with the components as a dependency. It proves the path; it does not prove any particular adopter's app."* The oracle and details stay as they are, except iOS 18.0.
+- **D10**: replace "lives in the adopter's own module" with *"lives in the D4 fixture app's own module"*. Everything else in the row stays.
+
+These are row-text edits, so they are Peter's and go on the "D-row changes since `b89163c41`" list.
+
+**4. Final position: (b) plus a named edit.** The edit is the D4 and D10 wording above. In addition, a `.kiro/issues/` record for the real-app read, with its trigger "Peter's app first builds against a release", owned by Kenya and Data, with me reading it.
+
+**Counter-argument I could not fold away**: the real-app record has no forcing date. If Peter's app never becomes ready, the gap between "our fixture" and "your app" stays open for good, and nothing in the D rows ever closes it. Honest wording keeps the claim true, but it does not test anything. My earlier dilution concern also still stands: the D-row change list makes a later change visible, not impossible.
+
+#### [PETER] P-1
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; each receipt time is the orchestrator's `date -u`.*
+
+**The sitting order, first.**
+- **What he was asked**: "(1) answer now, reshape once after" or "(2) reshape first, then answer", after Thurgood's consult on the outline's shape.
+- **Received**: 2026-11-28T02:08:13Z. **Verbatim**: "(1) — let's answer now and reshape after. Let's take the questions and their context one at a time, please".
+- **What it means here**: the sitting-2 questions are answered one at a time from design-outline.md § 5.1 as it stands. Thurgood's one reshape follows the sitting, with the answers folded in, before Kenya and Data's close commit.
+
+**P-1, the first answer.**
+- **What he was asked**: (b), approve D4–D10 with two D-row edits: D8's population fix, and D4's iOS deployment target 17.0 → 18.0.
+- **Received**: 2026-11-28T02:23:27Z. **Verbatim**: "I lean toward (b) with a proposal that I'd want feedback on before we commit it. Re: D4, We'd need an adopter app — which I have an idea for, but isn't ready. Perhaps a more appropriate bar for this would be a small scale demo app that we prepare with Kenya and/or Data? Re: D10, similar concerns as D4, but I agree with need some kind of similar test. Perhaps it can be part of the same small scale demo I mentioned earlier? Honest thoughts?"
+- **What followed**: the four consults spliced above (`[KENYA R5]`, `[DATA R5]`, `[LEONARDO R6]`, `[STACY R3]`). All four found that the plan's D4 app is already a fixture we build, with D10 inside it, and that the row text ("An adopter's own app") claims more than it is.
+
+**P-1, the second answer.**
+- **What he was shown**: the four consults' combined read, then two asks from the orchestrator:
+  - whether "small" means "starts small and grows", not a hand-picked set of components;
+  - which of three additions he wanted:
+    - (1) relabel D4 and D10 as our fixture app, with Stacy's D4 wording as the base: "Our fixture adopter app, built in the adopter layout from a packed install, builds and links with the components as a dependency. It proves the path; it does not prove any particular adopter's app." D10's "the adopter's own module" becomes "the D4 fixture app's own module". He was told that Thurgood writes the final text and that it comes back to him before it counts;
+    - (2) also build the demo as a shipped app is built: a release build on both platforms, Android with R8 on, and iOS also under Swift 6's stricter checks (Kenya);
+    - (3) file his real app as a record, not a D-row. When it first builds against a release it gets a dated read; it is evidence, not a gate.
+- **Received**: 2026-11-28T02:26:04Z. **Verbatim**: "Yes, small means start small and grow; all three additions".
+
+**What is ruled, and what is not yet.**
+- **Ruled**: (b), with all three additions, and "small" read as "starts small and grows".
+- **Not yet in force**: the final D4 and D10 row text and the D4-details additions. Thurgood drafts them (design-outline.md § 1, marked PROPOSED TEXT), and they count only once Peter confirms them.
+- **Not shown to him, not ruled**: Data's proposal that the fixture's `android/` folder carry its own Material3 theme and version catalog (`[DATA R5]` item 3). It is an open item for the requirements round, owned by Data.
+
+#### [THURGOOD R6]
+
+*2026-11-28. The four P-1 consults above are spliced byte for byte from the seats' files in `consults-2026-11-27/answers-132/`, in the orchestrator's order: `kenya-p1-demo.md`, `data-p1-demo.md`, `leonardo-p1-demo.md`, `stacy-p1-demo.md`. Each file carries its own stamp heading.*
+
+- **Stamps, kept as the seats wrote them**: Data's entry is stamped R5, though his previous entry on this artifact is R2; Kenya's R5 follows her R4; Leonardo's R6 follows his R5; Stacy's R3 follows her R2.
+- *[Thurgood: in `[LEONARDO R6]` item 3, "P-8's per-family announcement" means P-2, the per-family announcement question. His text is kept as written.]*
+- Recorded the sitting-order ruling and P-1's two answers as `[PETER] P-1`. → design-outline.md § 5.1
+- **Folded** (→ design-outline.md § 1, "The D-row change list"): the D8 population fix; D4's iOS target 17.0 → 18.0; D4 and D10 relabelled as our fixture app; D4's release builds; the real-app record (not a D row). The final D4 and D10 text and the D4-details additions are drafted there as **PROPOSED TEXT — awaiting Peter's confirmation**, with Stacy's D4 sentence as the base and every carried difference from the other three seats named.
+- **Rule 10**: P-1's third addition creates an owed act, the real-app record. It is filed in this PR, by Kenya and Data in their close commit (design-outline.md § 7, precondition 3), in the shape Stacy set: owners Kenya and Data, Stacy reading it at the first build, Trigger `manual` because its event is one only Peter can see. I file nothing. Data's and Stacy's surviving counter (no forcing date) is carried beside it in § 1.
+- **Open, not folded**: Data's Material3 theme and version catalog for `android/` (→ design-outline.md § 5.2, T-20, owner Data, requirements round). Leonardo's clean-room build before the first per-family announcement bears on P-2 and is not folded into P-1.
+- **Not reshaped**, per Peter's order ruling: the one reshape follows the sitting.
+
 ---
 
 ## Requirements Feedback

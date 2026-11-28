@@ -86,9 +86,38 @@ So the table is two fixed texts at two SHAs. It is cited, not copied, so there i
 - **D1–D3 are Spec 129's part of done** (**RULED**, "C yes"). 129 delivered them at its close (CLOSEOUT pass, § "For the reader"). D3 is "129 builds it; 132 brings it to zero": the pinned component entries are 132's to remove.
 - **D4–D10 are decided at this outline's gate** (native-plan `README.md`, the deferred-decisions table). § 5.1 puts them to Peter. A seat that changes a D row later, its details included, needs his approval (Stacy, condition 2).
 - **The D-row change list** (Stacy R1): 132's requirements round carries, in its Context for Reviewers, a list headed "D-row changes since `b89163c41`", even when it reads `none`. Stacy's LENS and CLOSEOUT reads check it. Changes this round surfaced, each Peter's:
-  - D8's population (P-1);
-  - **D4's iOS deployment target, 17.0 → 18.0** (plan-r2 § 1, "D4 details", "iOS: deployment target 17.0"; it follows from P-6's ruling, and is put to Peter inside P-1 as a D-row edit);
+  - D8's population (P-1, **RULED**);
+  - **D4's iOS deployment target, 17.0 → 18.0** (plan-r2 § 1, "D4 details", "iOS: deployment target 17.0"; it follows from P-6's ruling, and is put to Peter inside P-1 as a D-row edit; P-1, **RULED**);
+  - **D4 and D10 relabelled as our fixture app** (P-1, **RULED**, addition (1); the text is PROPOSED below);
+  - **D4's release builds** (P-1, **RULED**, addition (2); the text is PROPOSED below);
+  - **not a D row: the real-app record** (P-1, **RULED**, addition (3)): an owed act under `.kiro/issues/README.md` rule 10, owned by Kenya and Data, with Stacy reading it at its first build as a SYMPTOM-class claims audit against what D4 claims (Stacy R3).
+    - When Peter's own app first builds against a release, it gets a dated read. It is evidence, not a gate: it holds no claim and no merge.
+    - Its event is one only Peter can see, so its Trigger is `manual`.
+    - **Kenya and Data file it in their close commit on this branch** (§ 7, precondition 3). This outline does not file it.
+    - **Surviving counter-argument** (Data R5, Stacy R3): it has no forcing date. A `manual` trigger can lapse without anyone noticing, and if Peter's app never becomes ready, the gap between our fixture and an adopter's app stays open while nothing in D4–D10 turns red.
   - and, only if they arise, T-12's audit exclusion (P-11) or a static-only iOS evidence kind for D7 (P-12).
+
+**PROPOSED TEXT — awaiting Peter's confirmation** (P-1's additions (1) and (2), with the 18.0 edit; Thurgood's draft, with Stacy R3's D4 sentence as the base). Until he confirms it, plan-r2's rows at `b89163c41` stand, with only the D8 and iOS 18.0 edits above. Every other D4 details line, and D4's oracle, is unchanged.
+- **D4, "Done means"**: "Our fixture adopter app, built in the adopter layout from a packed install, builds and links with the components as a dependency. It proves the path; it does not prove any particular adopter's app."
+- **D4 details, a new first line**: "**What it is**: a fixture adopter app that we build and keep in this repository, and run in our CI (iOS: Kenya; Android: Data; content: Leonardo). It starts small and grows: it begins with the first family's two screens, a catalog and one filter-and-tags product screen, and takes in one family per unit. Its component list still comes from the committed catalog (below), so small never means a hand-picked set of components. A real adopter's app is not a D row: Peter's own app is read through the real-app record."
+- **D4 details, "iOS"**: "**iOS**: deployment target 18.0, in a committed `.xcodeproj` (Kenya; P-6)."
+- **D4 details, a new last line**: "**Release builds**: the app is also built the way a shipped app is built. iOS: a Release build as well as Debug, and the app built in Swift 6 language mode as well as Swift 5 (Kenya). Android: a release build with R8 on, as well as debug (Data)."
+- **D10, "Done means"**: unchanged, "An adopter can build more".
+- **D10, oracle**: "A fixture adopter component, created with the WP6 scaffold and with its own `defineComponentTokens` file, lives in the D4 fixture app's own module. It reads our tokens, composes one of ours, and passes D3–D6 in the D4 fixture app. It includes one deliberate same-name case to prove the naming rule (§ 3 conflict) (Ada D7; Stacy; Leonardo D3 (d); Data PLAN R2)"
+
+**Differences carried into the proposed text, by seat**:
+- **Stacy R3**: the D4 sentence, word for word; "small" never a hand-picked set of components; D10's "the D4 fixture app's own module".
+- **Kenya R5**: "that we build and keep in this repository"; D10's second phrase, "in the D4 app" → "in the D4 fixture app"; Release as well as Debug, and Swift 6 as well as Swift 5 language mode.
+- **Data R5**: R8 on for the Android release build.
+- **Leonardo R6**: a new "What it is" first line in D4's details, with its owners, and "two screens".
+- **Peter**: "start small and grow".
+
+**Not carried** (each would change substance Peter has not been asked; each can go to the requirements round):
+- Kenya R5: "hand-written … in `ios/`" in the iOS line. T-3 already settles the hand-written project, and D4's row already places it in `ios/`.
+- Data R5: his Android line (our module under `node_modules/@3fn/core`, "a linked APK at `minSdk` 26"); "own Gradle module and package, not ours" in D10; "(see the real-app reading)" in the row; the Material3 theme and version catalog (T-20). Whether our module ships consumer keep rules for R8 stays UNVERIFIED (Data); the release build is what answers it.
+- Leonardo R6: "It is small (two screens) and stands in for an adopter's app. It is not one." in "Done means", whose substance is in "What it is" and Stacy's second sentence; D10 "Done means" "shown in the D4 fixture app"; "not ours" in D10.
+- Stacy R3: the adopter claim wording ("Builds, links and renders in DesignerPunk's own adopter-layout test app …"). It is served claim text, for D7 and P-2, not a D row.
+
 
 **What "as described" means and does not mean** (plan-r2 § 1):
 - each component's Stemma contracts pass as tests on that platform, each test shown to fail on a known-bad case.
@@ -317,6 +346,9 @@ Each lands before the release that first claims native support, whatever P-7 dec
 
 #### Answered so far in this round
 
+- **P-1, the definition of done: RULED** (b), with three additions. Peter, received 2026-11-28T02:23:27Z, verbatim: "I lean toward (b) with a proposal that I'd want feedback on before we commit it. Re: D4, We'd need an adopter app — which I have an idea for, but isn't ready. Perhaps a more appropriate bar for this would be a small scale demo app that we prepare with Kenya and/or Data? Re: D10, similar concerns as D4, but I agree with need some kind of similar test. Perhaps it can be part of the same small scale demo I mentioned earlier? Honest thoughts?"; then, received 2026-11-28T02:26:04Z, verbatim: "Yes, small means start small and grow; all three additions".
+  - The additions: (1) D4 and D10 relabelled as our fixture app; (2) release builds; (3) his real app as a record, not a D row. Asks, answers and the four consults: `feedback/design-outline.md` § "[PETER] P-1".
+  - **The final D4 and D10 text is PROPOSED, awaiting his confirmation** (§ 1, "The D-row change list").
 - **P-6, the iOS minimum: RULED.** Peter, received 2026-11-27T18:32:45Z (the orchestrator's receipt time, relayed), verbatim: **"(B), raise to iOS 18"**.
   - **What he was asked**: whether to run the simulations on whatever version Apple recommends at the time (his own question, 2026-11-27T18:18:45Z), then the choice between (A), keep the 17.0 minimum, test every run on the lane's current iOS and run old versions only occasionally, and (B), raise the minimum.
   - **What he read**: `[KENYA R4]` and `[LEONARDO R4]`, spliced byte for byte into `feedback/design-outline.md`.
@@ -342,8 +374,11 @@ Each lands before the release that first claims native support, whatever P-7 dec
 
 The order is mine: each item before the ones that depend on it. Numbering is stable from R1.
 
+**How it is asked** (Peter, received 2026-11-28T02:08:13Z, verbatim): "(1) — let's answer now and reshape after. Let's take the questions and their context one at a time, please". So each question is put to him on its own, from this section as it stands, and Thurgood reshapes the outline once after the sitting, with the answers folded in, before Kenya and Data's close commit (§ 7).
+
 ##### P-1 (order 1)
 
+- **RULED** 2026-11-28: (b), with three additions ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **D4–D10 as 132's definition of done**
 - **Options**:
   - (a) approve as written;
@@ -657,6 +692,12 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 - **Owner**: Leonardo; Kenya, Data
 - **Closes at**: tasks round
 
+#### T-20: The fixture's own Android theme and version catalog
+
+- **State after the cross-read**: Data R5 proposes that the fixture's `android/` folder carry its own Material3 theme and version catalog, so the app meets a theme and version pins as a real Android app would. Not put to Peter with P-1, and not ruled
+- **Owner**: Data
+- **Closes at**: requirements round
+
 ### 5.3 Scope questions
 
 - **S-1, web build work: CLOSED** (Sparky R1; Leonardo concurs). **On web, 132 adds no build work.**
@@ -712,7 +753,8 @@ So **this PR is the carrying event** (`.kiro/issues/README.md` rule 11: a spec a
 1. **#868 merges first: DONE** (`e03d3ae3f`). The record's Trigger on `main` is `merge:#880`, so this merge fires it. *(`issues-owned.sh --pr 880` still reports 0 fires, because it reads records at this branch's head, whose merge base predates #868.)*
 2. **#884 merges before #880: DONE** (`358ca187b`), so the Android probe's result lands in the record before the record is archived.
 3. **The record's close is in this PR's own diff.** A close committed on this branch lands in the squash, which is its own ancestor, so the record does not lapse at the merge (Stacy R1; it also holds under B2 as answered).
-   - It is Kenya's and Data's act (rule 5: a dated outcome line, then the archive move), committed on this branch at Thurgood's signal, **after Peter's sitting-2 batch** and before the PR leaves draft.
+   - It is Kenya's and Data's act (rule 5: a dated outcome line, then the archive move), committed on this branch at Thurgood's signal, **after Peter's sitting-2 batch** and the one reshape that folds it in, and before the PR leaves draft.
+   - **The same close commit files the real-app record** (§ 1, "The D-row change list"; P-1's addition (3)): owners Kenya and Data, Stacy reading it at the first build, Trigger `manual`. That keeps P-1's owed act in this PR (rule 10).
    - **The outcome line must close the whole record** (Stacy, under B2): it says so, and where each remaining item now lives: this outline's § 4.3 and § 6, the toolchain-range record (#881), #888's iOS-18-floor record, § 5.1 P-6, and the access-pass list in § 2.
    - The close carries Kenya's dated pointer for her section's "§ 3" cite, and her check that this outline names her three iOS obligations (it does, VERIFIED by Kenya at `22e21990a`).
 4. **The "Native status" passage does not change at this merge** (T-11, CLOSED by Kenya and Data). No limitation marker names the goal record (VERIFIED, Thurgood: `git grep -c 'limitation:'` finds none in `governance/DesignerPunk-Integration-Guide.md` or `docs/consumer/INSTALL.md`), so the archive move forces nothing.
