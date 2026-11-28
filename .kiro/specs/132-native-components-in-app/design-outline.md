@@ -239,7 +239,7 @@ One list of every record this spec relies on, by path. The requirements round ru
 - `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md` (#881) — Data — intake: the range numbers (P-9) and the API-26 floor test
 - `.kiro/issues/archive/2026-11-27-android-render-probe-workflow-grant.md` (#878) — Data — closed at #884 (`358ca187b`)
 - `.kiro/issues/2026-11-27-ios-18-floor-132-owed-acts.md` (#888) — Thurgood (items name their seats) — intake: P-6's owed acts A–E
-- `.kiro/issues/archive/2026-11-27-ios-17-runtime-probe-owed.md` (#886) — Kenya — moot since P-6; filed under `archive/` with no outcome line (`e85112d7a`), so Kenya's re-rule or close is owed
+- `.kiro/issues/archive/2026-11-27-ios-17-runtime-probe-owed.md` (#886) — Kenya — moot since P-6; closed under rule 5 with a dated outcome line at `db136d10d`, after Kenya brought it back to the root under rule 4 (`b98e6c8a5`)
 - `.kiro/issues/2026-11-27-input-text-base-caret-and-selection-not-themed.md` (#885) — Lina — intake; its fix is proposed for 133 U1 (P-16)
 - `.kiro/issues/2026-11-27-button-verticallist-set-ios-literal-font-size.md` (#885) — Lina — intake: a token-compliance defect (T-12)
 - `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` — Ada — 133's record; its correction is owed (§ 5.1)
@@ -314,7 +314,7 @@ Each lands before the release that first claims native support, which is **17.0.
 
 Each is held by a record with a git-visible trigger: the three filed in this PR (§ 4.2), an existing record named beside it, or a record its owner files on this branch before the close commit (`feedback/design-outline.md` § "[THURGOOD R22]"). Where an item names no event, it is due by 132's requirements.
 
-- **Kenya**: with Data, the goal record's close and the real-app record, in the close commit on this branch (the PR body's merge preconditions), carrying her dated pointer for the "§ 3" cite; the `.tint` selection check (P-16); whether SwiftUI `.fontWeight` works with `Font.custom` (P-13); the re-rule or close of the archived iOS 17 probe record, which has no outcome line (Kenya R10); the pre-claim wording window (§ 4.3); a rule-10 record, or a pointer, for Swift 6 language mode (§ 4.3). Her T-13 walk is committed to #879's evidence (`b6c918828`, README § 4; Kenya R10).
+- **Kenya**: with Data, the goal record's close and the real-app record, in the close commit on this branch (the PR body's merge preconditions), carrying her dated pointer for the "§ 3" cite; the `.tint` selection check (P-16); whether SwiftUI `.fontWeight` works with `Font.custom` (P-13); the pre-claim wording window (§ 4.3); a rule-10 record, or a pointer, for Swift 6 language mode (§ 4.3). Her T-13 walk is committed to #879's evidence (`b6c918828`, README § 4; Kenya R10).
 - **Data**: with Kenya, the goal record's close and the real-app record; T-20; appending the floor-raise rule to `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md` as its item 3 (whether raising a toolchain floor counts as a major), decided with P-9 (Data R10).
 - **Lina**:
   - dated pointers in the Source lines of #877's three records, which cite the placeholder's L7 and L33 (rule 9);
