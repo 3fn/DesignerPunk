@@ -278,7 +278,7 @@ units:
         text: "**From the first tasks round after `P`** (the instruments parser PR's squash SHA — ballot § 4a, M4), a spec also declares its instruments in `tasks.md` at planning time; for such a spec this file is written at branch cut as M4's execution file — the pasted command-output existence delta, one fit line per row keyed by row id, rows found at the cut, `## Found later` — never restating a plan row's state or path."
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-starting-a-parent-task-write-its-instruments-block-first
   "#item-your-open-records":
-    canonicalHash: sha256:42a36743767fe2c303c410d9b9395f8e6ddade32f0934636ed079c11376b9d83
+    canonicalHash: sha256:6a8c264ba4802043385afbabcbcb264ea53eb0cecc1166926d46d7d096716ca9
     items:
       - id: open-records-run
         kind: step
@@ -295,7 +295,7 @@ units:
       - id: open-records-fired
         kind: member
         label: "FIRED: the event happened"
-        text: "`FIRED@<sha>`: the event happened. A fired record that no ancestor of the firing commit closed or re-ruled has lapsed (README rule 11)."
+        text: "`FIRED@<sha>`: the event happened. A fired record has lapsed unless it was closed, or re-ruled after its previous firing and after the commit that set its token (README rule 11)."
       - id: open-records-lapse
         kind: obligation
         label: "Append the Lapse heading and dispose this session"

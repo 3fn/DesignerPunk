@@ -1,0 +1,30 @@
+# sha256 of the 16.3.0 blind J set, as recovered 2026-11-27 (orchestrator). Content stays off-repo at
+# /Users/3fn/Documents/Work Projects/Kiro/j-blind-16.3.0/ (see RECOVERY.md there). P2 and P4 are NOT trusted (short of the originals; to be rebuilt).
+# SEALED-agent-answers/ hashed only; not read by the orchestrator. The verdict key is not here: it is regenerated from git at scoring.
+fb023d5e5c92e5b14bedb73c72e5685b361b0c0b4708417acedcf516987dea9b  RECOVERY.md
+b697ee13b720425a8949ada8dfcec0172a9380e9e9c0bc0848a1bae477511d8b  judge/P1.md
+bb74598f82b057526b31d164674075d61a0d87e790635e6e4f082d323aec7051  judge/P2.md
+51b8bbde64922955d016abdcc1ea40a20dceb93d49b143e0685a31388afbeff4  judge/P3.md
+dbc3ff98ff82db65940a5d66e38335bad7f1564a96b03be05e9034e3f57f91c6  judge/P4.md
+479e30efbb72437c86306e0a7dc117465d820956dbf3b9db0316dc8e90c9a2b2  judge/P5.md
+c25266ba7515836aadffc127bae8f7f4d1a78106703c360ebe0134f655371b35  judge/P6.md
+d974237cab8758d0db8336f6b2dc0aec39cfad0d1e6a3be2289575835f237554  judge/P7.md
+dbc9314be879642063f5334901dc9dbbf9553a2a86196ac4481b19c3d8ddfa08  judge/P8.md
+280b8dc4d45e58571668887935a1c8f8ffde6c192ed1883ce396b34037708d4f  SEALED-agent-answers/leonardo-P1.md
+b8c9e5da6dd01474204d0706d6f99e9b65aa49120748512a4864a3bff3871fc8  SEALED-agent-answers/leonardo-P2.md
+bacf2cd7317c0cd9680eddb812b40b1503a3ca259b24a120890ec04cf99175cb  SEALED-agent-answers/leonardo-P3.md
+df30ff5e91ea4b6b54dfd3e389490ab9fc55c901d9b248e8c1cc6e11bbd97769  SEALED-agent-answers/leonardo-P4.md
+ec824d7f361b8a50c61710dee34c5a7b819de205a8e6c92474b4b8bc9aac1cb8  SEALED-agent-answers/leonardo-P5.md
+2f9ebf3ee44a88292b242871f8da5fb6579ae28e93afb1f0f6e733fd6b4aa57f  SEALED-agent-answers/leonardo-P6.md
+492a38c16bf13cf645f420dadb5d9d5b37f3807583795a9ad92a84075a6307f5  SEALED-agent-answers/leonardo-P7.md
+45c684c77d9e70d4793741c917a586ec0d330f2a157592ec361ba19d57ca3361  SEALED-agent-answers/leonardo-P8.md
+862487a1b58eba79e005f38e09b622fe4a56eed2fcdd748a57bdefe8510adb85  SEALED-agent-answers/stacy-P1.md
+3c30a062fae103f5975854698fffda28879d3e0a9e42cb153d9918987bd1ca68  SEALED-agent-answers/stacy-P2.md
+b9b5f50e803015dfa78601cd21f97d916d6fe091ea6c7fb75c970ceb0c2b4ef9  SEALED-agent-answers/stacy-P3.md
+71f1e415074666c8575dbb777ee2fa6f963f0d7c65f7c41db03c45e7cceec733  SEALED-agent-answers/stacy-P4.md
+b5f3ccded96c26152406fcc53234614647c420c496456090b0383b347b041d03  SEALED-agent-answers/stacy-P5.md
+e7d53445acff43e39e3660684d66f1395cb4836fd32cdb39cc8dfe0158f39ed0  SEALED-agent-answers/stacy-P6.md
+2d745fead016459961d5af573872658bc575ecf5268a30ca93a9dafc35e3a890  SEALED-agent-answers/stacy-P7.md
+3593e91e5cbabddf2ce9637cff440b0a8cc0b0b7e437f30e6ceca19a52abdd0a  SEALED-agent-answers/stacy-P8.md
+3687ed0ac474bae02fad4b1a5f7fa9f31a2119b8a054dcc460efc64165b6878b  peter/P5-answer.md
+a117b9f8c6575073b2ce1f204c9257efe3578a87c75d7c925911a5b5d30916a8  peter/P6-answer.md

@@ -1,0 +1,4 @@
+# Generated token files are copied here from a scratch consumer's `npx designerpunk generate` output
+# (dist/tokens/DesignTokens.ios.swift and dist/tokens/ComponentTokens.ios.swift). They are never committed:
+# a committed copy would be a stale snapshot. See ../../../README.md for the steps.
+*.swift

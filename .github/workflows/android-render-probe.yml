@@ -1,0 +1,140 @@
+# android-render-probe.yml -- the Android render probe (one-off measurement for Spec 132's outline round).
+#
+# Grant: .kiro/issues/2026-11-27-android-render-probe-workflow-grant.md (README rule 8; activated by #878's merge).
+# Plan: .kiro/specs/129-consumer-generation-completeness/evidence/2026-11-05-native-plan/plan-r2.md L172.
+# The result is recorded in .kiro/issues/2026-09-26-native-component-distribution.md by this file's fixing PR.
+#
+# It measures the runner, not DesignerPunk's components: whether /dev/kvm is usable on a free ubuntu-24.04 runner;
+# how long an AOSP system image takes to download and boot, at API 26 (Core Goals' minimum) and API 36 (the
+# harness's compileSdk); one instrumented Compose smoke test at each level; one Robolectric Compose test.
+#
+# Not a required context: it is in neither EXPECTED_CONTEXTS nor complete-task.sh's REQUIRED_WORKFLOWS. It accepts
+# no licence: every sdkmanager and avdmanager call reads stdin from /dev/null, so a licence prompt fails the step
+# instead of being answered. The probe ran on its fixing PR (#884) under a path-filtered pull_request trigger,
+# removed before merge, so on main this file is workflow_dispatch only (the grant record's Run budget).
+
+name: android-render-probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android-render-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      PROBE: harness/android/render-probe
+    steps:
+      # 1.
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # 2.
+      - name: Record /dev/kvm (before the udev rule)
+        run: |
+          # OUT is set here: the runner context is not available in a job-level env.
+          OUT="$RUNNER_TEMP/render-probe"
+          echo "OUT=$OUT" >> "$GITHUB_ENV"
+          mkdir -p "$OUT/logs"
+          s="$OUT/summary.txt"
+          echo "render-probe: runner-image=${ImageOS:-?} ${ImageVersion:-?}" >> "$s"
+          if [ -e /dev/kvm ]; then
+            echo "render-probe: kvm-before exists=yes mode=$(stat -c '%A' /dev/kvm) group=$(stat -c '%G' /dev/kvm)" >> "$s"
+            if ( exec 3<> /dev/kvm ) 2>/dev/null; then echo "render-probe: kvm-before open=yes" >> "$s"; else echo "render-probe: kvm-before open=no" >> "$s"; fi
+          else
+            echo "render-probe: kvm-before exists=no" >> "$s"
+          fi
+          cat "$s"
+
+      # 3.
+      - name: Apply GitHub's documented KVM udev rule, then record /dev/kvm again
+        run: |
+          s="$OUT/summary.txt"
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm || true
+          if [ -e /dev/kvm ]; then
+            echo "render-probe: kvm-after exists=yes mode=$(stat -c '%A' /dev/kvm) group=$(stat -c '%G' /dev/kvm)" >> "$s"
+            if ( exec 3<> /dev/kvm ) 2>/dev/null; then echo "render-probe: kvm-after open=yes" >> "$s"; else echo "render-probe: kvm-after open=no" >> "$s"; fi
+          else
+            echo "render-probe: kvm-after exists=no" >> "$s"
+          fi
+          tail -n 2 "$s"
+
+      # 4.
+      - name: Select JDK 17 (the image default, JAVA_HOME_17_X64)
+        run: |
+          echo "JAVA_HOME=${JAVA_HOME_17_X64}" >> "$GITHUB_ENV"
+          echo "${JAVA_HOME_17_X64}/bin" >> "$GITHUB_PATH"
+
+      # 5. The emulator package is installed here too: the image carries no emulator (plan-r2 L153), and step 6 needs it.
+      - name: Download the emulator and the two AOSP system images (timed; no licence answered)
+        run: |
+          s="$OUT/summary.txt"
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          fetch() {
+            local key="$1" pkg="$2" t0 rc
+            t0=$(date +%s)
+            "$SDKM" --install "$pkg" < /dev/null > "$OUT/logs/sdkmanager-$key.txt" 2>&1; rc=$?
+            if grep -q -i -E 'Accept\? \(y/N\)|licen[cs]e.*not.*accepted|have not been accepted' "$OUT/logs/sdkmanager-$key.txt"; then
+              echo "render-probe: download-$key=LICENCE-PROMPT package=$pkg (not answered; stop)" >> "$s"
+              echo "licence=yes" >> "$GITHUB_OUTPUT"
+              return 1
+            fi
+            if [ "$rc" -eq 0 ] && [ -n "$(ls -A "$ANDROID_HOME/$3" 2>/dev/null)" ]; then
+              echo "render-probe: download-$key=ok seconds=$(( $(date +%s) - t0 ))" >> "$s"
+            else
+              echo "render-probe: download-$key=FAIL exit=$rc seconds=$(( $(date +%s) - t0 ))" >> "$s"
+              return 1
+            fi
+          }
+          ok=0
+          fetch emulator "emulator" "emulator" || ok=1
+          fetch api26 "system-images;android-26;default;x86_64" "system-images/android-26/default/x86_64" || ok=1
+          fetch api36 "system-images;android-36;default;x86_64" "system-images/android-36/default/x86_64" || ok=1
+          if [ -x "$ANDROID_HOME/emulator/emulator" ]; then
+            "$ANDROID_HOME/emulator/emulator" -accel-check > "$OUT/logs/accel-check.txt" 2>&1 || true
+            echo "render-probe: accel-check=$(tr '\n' ' ' < "$OUT/logs/accel-check.txt" | cut -c1-200)" >> "$s"
+          fi
+          tail -n 5 "$s"
+          exit $ok
+        id: download
+
+      # 6 and 7, per API level: create the AVD, boot it headless (timed to sys.boot_completed=1, capped at 10 minutes),
+      # run the instrumented smoke test, then stop the emulator. Not run after a licence prompt.
+      - name: API 26 - boot the emulator and run the instrumented smoke test
+        if: always() && steps.download.outputs.licence != 'yes'
+        run: bash "$PROBE/boot-and-test.sh" 26
+      - name: API 36 - boot the emulator and run the instrumented smoke test
+        if: always() && steps.download.outputs.licence != 'yes'
+        run: bash "$PROBE/boot-and-test.sh" 36
+
+      # 8.
+      - name: Robolectric Compose test (testDebugUnitTest)
+        if: always()
+        run: |
+          s="$OUT/summary.txt"
+          t0=$(date +%s)
+          if harness/android/gradlew -p "$PROBE" --no-daemon testDebugUnitTest > "$OUT/logs/robolectric.txt" 2>&1; then
+            echo "render-probe: robolectric=PASS seconds=$(( $(date +%s) - t0 ))" >> "$s"
+          else
+            echo "render-probe: robolectric=FAIL seconds=$(( $(date +%s) - t0 )) last=$(grep -E 'FAIL|error|Exception' "$OUT/logs/robolectric.txt" | head -n 1 | cut -c1-160)" >> "$s"
+            exit 1
+          fi
+
+      # 9.
+      - name: Summary
+        if: always()
+        run: |
+          cat "$OUT/summary.txt"
+          if grep -q -E '=(FAIL|LICENCE-PROMPT)' "$OUT/summary.txt"; then exit 1; fi
+      - name: Upload the logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-render-probe
+          path: ${{ runner.temp }}/render-probe
+          retention-days: 7

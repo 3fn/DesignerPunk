@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc && node dist/build-provenance/write-build-info.js",
     "test": "jest --testPathIgnorePatterns='tests/performance'",
     "test:performance": "jest --testPathPattern='tests/performance'",
     "test:watch": "jest --watch --testPathIgnorePatterns='tests/performance'",

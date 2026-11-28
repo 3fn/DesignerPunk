@@ -14,7 +14,7 @@ units:
     items: []
     confirmation: canonical/profiles/consumer/confirmations/core-goals.md#core-goals:preamble
   "#core-project-context":
-    canonicalHash: sha256:b7713a75c7bfc484497364b8caf439b82846812d30c39474c44cf2c2aabedf7c
+    canonicalHash: sha256:e5ef0fa0ad159c39602764640e25cbd78648498d5b232a9fcb701940fac19d98
     items:
       - id: principle-1
         kind: obligation
@@ -38,8 +38,8 @@ units:
         text: "Human-AI partnership as foundational value"
       - id: principle-6
         kind: obligation
-        label: "iOS: 17.0+"
-        text: "iOS: 17.0+"
+        label: "iOS: 18.0+"
+        text: "iOS: 18.0+"
       - id: platform-android
         kind: obligation
         label: "Android: API 26 (Android 8.0)+"

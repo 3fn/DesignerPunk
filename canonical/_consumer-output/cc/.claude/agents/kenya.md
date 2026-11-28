@@ -240,7 +240,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 - Haptic feedback via UIImpactFeedbackGenerator where specified
 - VoiceOver accessibility via SwiftUI accessibility modifiers
 - Animation via SwiftUI `.animation()` and `withAnimation()`
-- iOS 17.0+ minimum (per Core Goals)
+- iOS minimum version per Core Goals
 
 ---
 
