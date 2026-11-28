@@ -267,3 +267,5 @@ render-probe: robolectric=PASS seconds=53
 **The archive move is not in this commit.** Data reviews and co-signs first. The `git mv` to `archive/` follows in its own commit on this branch, before #880 merges, so an ancestor of the merge commit closes the record (Trigger line).
 
 *Signed: Kenya, 2026-11-28T05:08:33Z (`date -u`). Co-signature owed: Data.*
+
+*Co-signed: Data, 2026-11-28T05:10:52Z (`date -u`). I agree that the whole record closes at #880's merge, and that each item lives where this outcome says. The Android items are right: the toolchain range and the API-26 floor test, with item 3 (a floor raise and semver) appended at `fdd158dd7`, are in #881's record. The Android render-probe result stays in this file. The Gradle-module shape is in the outline's § 2 and in Ada's manifest-conditions record. Every path named is committed at `650e78ef9`, except the #879 spike README, which merges first.*

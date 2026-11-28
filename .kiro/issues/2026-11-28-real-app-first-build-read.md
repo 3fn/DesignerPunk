@@ -42,3 +42,13 @@ Both quotations are verbatim, except that their inner double quotation marks are
 ## Closes when
 
 The read for each platform that Peter's app targets, and Stacy's SYMPTOM read, are recorded here. Then this record closes under rule 5. If Peter's app targets only one platform, the other platform's line says so.
+
+## Co-owner review (Data, 2026-11-28T05:10:52Z)
+
+**Android, added to item 2** (from `[DATA R5]`, which item 2 cites). On Android, the read also looks at:
+- the app's own AGP, Kotlin and Compose BOM versions, and how Gradle resolves them against our module's;
+- an existing `MaterialTheme`, or the app's own theme, wrapping our theme provider;
+- dependency injection and a multi-module build;
+- a release build shrunk by R8, and whether our module needs keep rules for it.
+
+*Co-signed: Data, 2026-11-28T05:10:52Z (`date -u`). I agree with the record as Kenya filed it: the owners, the reader, the `manual` trigger, its P2 class, and the surviving counter. The only change is the Android addition above.*
