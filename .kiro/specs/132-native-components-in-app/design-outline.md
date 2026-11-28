@@ -336,7 +336,7 @@ Each lands before the release that first claims native support, whatever P-7 dec
 - **The Core Goals ballot raising the iOS minimum to 18.0, ratified: DONE** (P-6; ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md`, RATIFIED on #888 at `b58c73da7`, applied by #889 at `35456bdbc`). After the claim, raising the minimum is a breaking change.
 - **Deprecated-alias emission for the whole shared token surface, and D9's public-API diff** (Peter's "7 (a)"; § 4.3, Ada).
 - **#870's and #873's fixes, and #872's CORRECTION** (Ada R1, P-7's token-side lean).
-- **D7's derivation**, if P-2's overlay text points at served readiness (Leonardo).
+- **D7's derivation**, because P-2's overlay text points at served readiness (P-2, **RULED**, condition 2; Leonardo).
 
 ---
 
@@ -349,6 +349,7 @@ Each lands before the release that first claims native support, whatever P-7 dec
 - **P-1, the definition of done: RULED** (b), with three additions. Peter, received 2026-11-28T02:23:27Z, verbatim: "I lean toward (b) with a proposal that I'd want feedback on before we commit it. Re: D4, We'd need an adopter app — which I have an idea for, but isn't ready. Perhaps a more appropriate bar for this would be a small scale demo app that we prepare with Kenya and/or Data? Re: D10, similar concerns as D4, but I agree with need some kind of similar test. Perhaps it can be part of the same small scale demo I mentioned earlier? Honest thoughts?"; then, received 2026-11-28T02:26:04Z, verbatim: "Yes, small means start small and grow; all three additions".
   - The additions: (1) D4 and D10 relabelled as our fixture app; (2) release builds; (3) his real app as a record, not a D row. Asks, answers and the four consults: `feedback/design-outline.md` § "[PETER] P-1".
   - **The final D4 and D10 text is PROPOSED, awaiting his confirmation** (§ 1, "The D-row change list").
+- **P-2, when adopters are first told to start a native product: RULED** (b), per family, with all three of Leonardo's conditions. Peter, received 2026-11-28T02:28:20Z, verbatim: "(b) with all three conditions". Carried as owed acts: conditions 1 and 2 on the overlay flip ("Not re-asked here"), D7's derivation (§ 4.4), and condition 3 as T-18 (§ 5.2). Record: `feedback/design-outline.md` § "[PETER] P-2".
 - **P-6, the iOS minimum: RULED.** Peter, received 2026-11-27T18:32:45Z (the orchestrator's receipt time, relayed), verbatim: **"(B), raise to iOS 18"**.
   - **What he was asked**: whether to run the simulations on whatever version Apple recommends at the time (his own question, 2026-11-27T18:18:45Z), then the choice between (A), keep the 17.0 minimum, test every run on the lane's current iOS and run old versions only occasionally, and (B), raise the minimum.
   - **What he read**: `[KENYA R4]` and `[LEONARDO R4]`, spliced byte for byte into `feedback/design-outline.md`.
@@ -392,6 +393,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 ##### P-2 (order 2)
 
+- **RULED** 2026-11-28: (b), with all three conditions ("Answered so far", above). The options below are kept as they were asked.
 - **Question**: **Plan decision 8: when adopters are first told to start a native product**
 - **Options**:
   - (a) all 34 at the D5/D6 tier;
@@ -517,7 +519,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 - the Android minimum, API 26 ("Re: 5, 26"; Core Goals amended by ballot `2026-11-05-core-goals-android-minimum`);
 - native changes before the claim ship in minors, with deprecated aliases and D9's diff landing before the claim ("7 (a)");
 - required-check promotion by measured stability (129 `tasks.md` § "Decision 6");
-- the consumer overlays flip at the support claim, which Peter merges as a cost, not a ruling (plan-r2 § 7's closing list).
+- the consumer overlays flip at the support claim, which Peter merges as a cost, not a ruling (plan-r2 § 7's closing list). Under P-2 (**RULED**, (b) with all three conditions), the flip covers consumer Leonardo, the seat that selects components (condition 1), and the flipped text points at served readiness, so later families need no charter edit (condition 2; it needs D7 by the first claim, § 4.4).
 
 **Held elsewhere, not 132's to ask**: #870's colour fork; row 7's re-answer (#864); whether #872's CORRECTION may land from Ada's seat.
 
@@ -682,7 +684,7 @@ The order is mine: each item before the ones that depend on it. Numbering is sta
 
 #### T-18: A readiness warning at selection time
 
-- **State after the cross-read**: Leonardo's class option, P-2's third condition
+- **State after the cross-read**: **Owed under P-2** (**RULED**, condition 3): Leonardo's class option, P-2's third condition
 - **Owner**: Lina; Leonardo; Thurgood (overlay text)
 - **Closes at**: design round
 

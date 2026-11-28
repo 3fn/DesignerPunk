@@ -2083,6 +2083,24 @@ These are row-text edits, so they are Peter's and go on the "D-row changes since
 - **Open, not folded**: Data's Material3 theme and version catalog for `android/` (→ design-outline.md § 5.2, T-20, owner Data, requirements round). Leonardo's clean-room build before the first per-family announcement bears on P-2 and is not folded into P-1.
 - **Not reshaped**, per Peter's order ruling: the one reshape follows the sitting.
 
+#### [PETER] P-2
+
+*Recorded by Thurgood, 2026-11-28. Peter's words, from the orchestrator's relay; the receipt time is the orchestrator's `date -u`.*
+
+- **What he was asked**: (a), all 34 components at the D5/D6 tier; or (b), per family, with Leonardo's three conditions, each takeable on its own:
+  1. the overlay flip covers consumer Leonardo, the seat that selects components;
+  2. the flipped overlay text points at served readiness, so later families need no charter edit;
+  3. a `validate_assembly` warning when a component is not ready for the target platform (T-18).
+- **What he was told survives**: partial support needs careful wording every release; condition 2 depends on D7 shipping no later than the first claim.
+- **Received**: 2026-11-28T02:28:20Z. **Verbatim**: "(b) with all three conditions".
+
+#### [THURGOOD R7]
+
+- Recorded P-2 as RULED. → design-outline.md § 5.1
+- **Carried as owed acts, where the outline already places them**: conditions 1 and 2 on the overlay flip (§ 5.1, "Not re-asked here"); D7's derivation in § 4.4, now unconditional; condition 3 as T-18 (§ 5.2). I filed no record: like P-1's D-row edits, these are 132's own scope, taken in at the requirements gate.
+- **A correction to the context Peter was given, from the orchestrator**: in P-2's context the orchestrator told Peter "a family that isn't ready isn't in the adopter's package at all". That is Leonardo's side of T-14's open inclusion threshold (design-outline.md § 5.2, T-14), not settled. The orchestrator is telling Peter so inside P-7.
+- **The same overstatement is in the outline's own P-2 lean line**, which is my text: "Under T-14 (ii) a family that is not ready is not in the adopter's module at all, which makes per family true in the build". It is left unchanged here, because leans stay as asked; the reshape corrects it to name the open threshold.
+
 ---
 
 ## Requirements Feedback
