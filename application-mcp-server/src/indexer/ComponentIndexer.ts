@@ -22,6 +22,7 @@ import {
   LayoutTemplateCatalogEntry,
   PlatformReadiness,
   PlatformReadinessStatus,
+  BuildProvenanceReport,
 } from '../models';
 import { parseSchemaYaml, parseContractsYaml, parseComponentMetaYaml, ParsedContracts, ParsedSchemaReadiness } from './parsers';
 import { resolveInheritance, validateOmits } from './InheritanceResolver';
@@ -30,6 +31,7 @@ import { PatternIndexer } from './PatternIndexer';
 import { FamilyGuidanceIndexer } from './FamilyGuidanceIndexer';
 import { LayoutTemplateIndexer } from './LayoutTemplateIndexer';
 import { TokenIndexer } from './TokenIndexer';
+import { applyBuildProvenance } from '../build-provenance/BuildProvenance';
 import { ModeClassifier } from './ModeClassifier';
 import { isImmutableContext } from '../staleness/StalenessGate';
 import { normalizeTerms } from './termNormalization';
@@ -515,9 +517,27 @@ export class ComponentIndexer {
   }
 
   /**
-   * Get index health status.
+   * Build-provenance probe (contract: .kiro/issues/2026-11-27-mcp-build-provenance-contract.md).
+   * When set, every health result carries `build` and, for a stale or unrecorded build, a
+   * warning that degrades the status. Set by the server entry point only.
+   */
+  private buildProvenanceProbe?: () => BuildProvenanceReport;
+
+  setBuildProvenanceProbe(probe: (() => BuildProvenanceReport) | undefined): void {
+    this.buildProvenanceProbe = probe;
+  }
+
+  /**
+   * Get index health status: the index against its data, then (when the entry point set a
+   * probe) the running build against its source.
    */
   getHealth(): IndexHealth {
+    const health = this.getContentHealth();
+    return this.buildProvenanceProbe ? applyBuildProvenance(health, this.buildProvenanceProbe()) : health;
+  }
+
+  /** The index-content half of {@link getHealth}: a fresh object on every call. */
+  private getContentHealth(): IndexHealth {
     const count = this.index.size;
     const patternHealth = this.patternIndexer.getHealth();
     const guidanceHealth = this.guidanceIndexer.getHealth();

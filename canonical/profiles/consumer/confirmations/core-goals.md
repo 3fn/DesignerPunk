@@ -37,11 +37,19 @@ date: 2026-10-17
 ## `#core-project-context`
 
 confirmer: stacy
-canonicalHash: sha256:b7713a75c7bfc484497364b8caf439b82846812d30c39474c44cf2c2aabedf7c
+canonicalHash: sha256:e5ef0fa0ad159c39602764640e25cbd78648498d5b232a9fcb701940fac19d98
 items: principle-1, principle-2, principle-3, principle-4, principle-5, principle-6, platform-android, platform-web
-date: 2026-11-05
+date: 2026-11-27
 
-**Re-confirmed 2026-11-05 (Req 11.6.5d): the Core Goals Android-minimum ballot, item 1 (site 1).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491`, 8 items) and stays as a ledger.
+**Re-confirmed 2026-11-27 (Req 11.6.5d): the Core Goals iOS-minimum ballot, item 1 (site 1).** A new act, read fresh. The 2026-11-05 record below is superseded (canonicalHash `sha256:b7713a75c7bfc484497364b8caf439b82846812d30c39474c44cf2c2aabedf7c`, 8 items) and stays as a ledger.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md` (RATIFIED, Peter, 2026-11-27T19:12:17Z; Status commit `f1a677ae7`, #888). Site 1 was applied at `186fed18d` (Thurgood). L28 now reads `- iOS: 18.0+`, followed by its amendment parenthetical; I checked it equals the ratified ballot's site-1 After byte for byte. In the same commit the profile author re-quoted `principle-6` (`kind: obligation`, unchanged; label and text `iOS: 18.0+`). No other line of the unit changed.
+- **What I read, in this session, through tool results**: the unit as `verify-signing-chain --print canonical/operative-sets/core-goals.yaml#core-project-context` printed it on a clean tree at `11077e8a9`; the unit record's 8 items in `canonical/operative-sets/core-goals.yaml`; the overlay's unit pin (`always-set/core-goals.overlay.md` L1); and the ratified ballot's site 1.
+- **The hash**: the canonicalHash moves from `sha256:b7713a75c7bfc484497364b8caf439b82846812d30c39474c44cf2c2aabedf7c` to the value above, as the print reported. It equals the overlay pin, which the profile author re-grounded at `186fed18d`.
+- **Items re-read against the unit**: all 8 item texts are verbatim substrings of the unit as it now stands (checked mechanically, one `grep -F` per text). `principle-6`'s text is the applied line without its parenthetical, which is history, not an item.
+- **The kind, re-ruled**: `principle-6` stays `obligation`. An agent that sets, accepts or recommends an iOS minimum below 18.0 contradicts it, as the 2026-11-05 record reasoned for `platform-android`.
+- **Ruling: CONFIRMED at 8, not corrected.** The set is unchanged (same 8 ids). One item's text is re-authored to the new floor. The 2026-09-29 not-operative list (the orientation line and the further-reading list) stands.
+
+**Re-confirmed 2026-11-05 (prior record, superseded): the Core Goals Android-minimum ballot, item 1 (site 1).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491`, 8 items) and stays as a ledger.
 - **What changed**: ballot `.kiro/docs/ballots/2026-11-05-core-goals-android-minimum.md` (RATIFIED, Peter, 2026-11-05, #673, F-1 (iii)). Site 1 was applied at `179dee853` (Thurgood). L29 now reads `- Android: API 26 (Android 8.0)+`, followed by its amendment parenthetical. I checked it equals § 9's site-1 block byte for byte. At `539beadd7` the profile author re-quoted `platform-android` (`kind: obligation`; label and text `Android: API 26 (Android 8.0)+`), as I ruled in the ballot's review (`[STACY R1]` § 2). No other line of the unit changed. L28 (`iOS: 17.0+`) and L30 (`Web: Not yet constrained`) are as before.
 - **What I read, in this session, through tool results**: `.kiro/steering/core-goals.md` L27–31; the `#core-project-context` unit record in `canonical/operative-sets/core-goals.yaml` (the 8 items, kinds, labels, texts); the overlay's unit pin (`always-set/core-goals.overlay.md` L1); and the ballot's § 9.
 - **The hash**: the canonicalHash moves from `sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491` to the value above. I recomputed it myself with `hashText` over `partition(splitFrontmatter(...).body).units` (unit `#core-project-context`). It equals the overlay pin re-grounded at `539beadd7`, and the value in the PR body.

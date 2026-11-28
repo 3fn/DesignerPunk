@@ -133,7 +133,7 @@ description: Essential pre-task checklist — date verification, governance heal
 9. **Your open records** *(ballot 2026-10-20-manual-records-routed-readers)*. At session start in your seat, run `./scripts/issues-owned.sh <YourName>` and read what it prints, one line per open record of yours:
    - `manual`: the record's event is one only you can see; re-read it against its prose.
    - `due:<ver>`: a release token, read at that release's walk.
-   - `FIRED@<sha>`: the event happened. A fired record that no ancestor of the firing commit closed or re-ruled has lapsed (README rule 11). Append its `## Lapse` heading and close it, re-rule it, or report it this session.
+   - `FIRED@<sha>`: the event happened. A fired record has lapsed unless it was closed, or re-ruled after its previous firing and after the commit that set its token (README rule 11). Append its `## Lapse` heading and close it, re-rule it, or report it this session. *(amended 2026-11-27 by ballot 2026-11-27-rule-11-lapse-window-b2, site 4; prior text at `3a3bd072b`)*
 
    A cited `.kiro/issues/` path that is not at the root resolves by README rule 3. If it is in neither the root nor `archive/`, it is a broken pointer; report it to the owner of the citing sentence.
 

@@ -293,9 +293,22 @@ date: 2026-09-29
 ## `#ios-specific-guidance`
 
 confirmer: kenya
-canonicalHash: sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
+canonicalHash: sha256:0fa41e91a8e4ede4faefbbd69826e19f4b4272ca00847606ef3913a22463a6d7
 items: native-1, native-2, native-3, native-4, native-5, native-6, native-7
-date: 2026-09-29
+date: 2026-11-27
+
+**Re-confirmed 2026-11-27: the Core Goals iOS-minimum ballot, site 2.** This is a new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65`, 7 items) and stays as a ledger.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-27-core-goals-ios-minimum-18.md` (RATIFIED, Peter, 2026-11-27, #888). At `186fed18d` the profile author applied site 2 byte for byte from my final text: L472 of `canonical/agents/kenya.md` now reads `- iOS minimum version per Core Goals`, which is my `[KENYA R1]` text. He also re-quoted `native-7` (label and text `iOS minimum version per Core Goals`, `kind: obligation`). No other line of the unit changed.
+- **What I read, in this session, through tool results**:
+  - the whole unit `#ios-specific-guidance`, as `verify-signing-chain --print canonical/operative-sets/kenya.yaml#ios-specific-guidance` printed it at `6dee7b71e` on a clean tree: the heading and all seven bullets, from `SwiftUI views with NavigationStack for navigation` to `iOS minimum version per Core Goals`;
+  - the unit record in `canonical/operative-sets/kenya.yaml` (7 items, with their kinds, labels and texts);
+  - the overlay's unit pin (`kenya.overlay.md` L110);
+  - the freshness sweep, which lists this unit on `stale` as a confirmation.
+- **The hash** moves from `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65` to the value above. That value is the print's `canonicalHash:`, and it equals the overlay pin re-grounded at `186fed18d`.
+- **Items re-read against the unit**: all 7 item texts are verbatim substrings of the unit as it now stands (checked by script, 7 of 7).
+- **Re-ruled, the kind**: `native-7` is `obligation`. The line now points at a minimum an agent can act against: an iOS agent that sets, accepts or recommends a deployment target below the minimum Core Goals states contradicts it. This is the kind I ruled in the ballot's review (`[KENYA R1]` item 1), the same as Data's `native-7`. `native-1` to `native-6` stay `member`.
+- **The number lives in Core Goals alone.** A later change of the minimum re-confirms Core Goals' unit, not this one.
+- **Ruling: CONFIRMED at 7, not corrected.** The set is unchanged: the same 7 ids. One item's text and kind are re-authored, as ruled.
 
 **Ruling: CONFIRMED at 7 items, as drafted.** Each bullet is a pattern that a non-conforming implementation violates. Examples: navigating with a deprecated `NavigationView`, hand-rolled safe-area insets, or targeting below iOS 17.
 

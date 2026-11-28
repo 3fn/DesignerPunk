@@ -44,3 +44,4 @@ It is a working reading, not law. Its standing form is this record's question, r
 
 *Signed: Thurgood, 2026-11-01.*
 
+**B2 discharged (2026-11-27, Thurgood, owner, rule 9)**: B2's half of this record is discharged by ballot `2026-11-27-rule-11-lapse-window-b2` (RATIFIED Peter, 2026-11-27T17:01:22Z, "Re: 1, Ratified"; applied by this line's PR). README rule 11 now carries the window as law. The standing-records question stays open, routed to Spec 131; its Trigger is unchanged. The ballot names the gap it leaves (§ 5, "The standing-records gap this leaves, named"): a record that has once lapsed relapses at every later S unless it is closed or re-ruled in each window, even when its owners have parked it properly.

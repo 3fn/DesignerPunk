@@ -138,7 +138,7 @@ In the requirements feedback round's Context for Reviewers, write one line per m
 - **re-rule**: its owner names another event.
 - **leave**: no change.
 
-A record the outline cites but the grep misses is added by hand.
+A record that the outline or an `inbound-from-*.md` file in the spec's directory names, but the grep misses, is added by hand: `grep -ohE '[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9.-]+\.md' .kiro/specs/<dir>/design-outline.md .kiro/specs/<dir>/inbound-from-*.md | sort -u`, each hit kept if `.kiro/issues/<hit>` exists at the root. *(amended 2026-11-27 by ballot 2026-11-27-rule-11-lapse-window-b2 site 6; prior text at `3a3bd072b`)*
 
 ---
 
@@ -2822,17 +2822,22 @@ When your spec depends on another spec, declare dependencies explicitly in the h
 
 #### Handoff Notes (`inbound-from-*.md`)
 
-**Current practice**: when one spec (or a named analysis) produces decisions, findings, or obligations that a different spec must consume, a handoff note is written into the receiving spec's directory:
+**What an inbound is**: a note of context for a spec in its design-outline phase, from the commit that creates its `design-outline.md` (a placeholder counts) until its `requirements.md` exists: updated work, a change in direction, missing context, or a report that better forms the spec. An issue record holds an obligation; an inbound surfaces context before implementation. The spec reads its inbounds as considerations for its approach, not direction. It is written into the receiving spec's directory:
 
 ```
 .kiro/specs/[receiving-spec]/inbound-from-[source].md
 ```
 
-- The source may be a spec number (`inbound-from-118.md`) or a named analysis (`inbound-from-wordpress-thesis.md`)
-- Handoff notes capture what the receiving spec must honor or evaluate during formalization — they are inputs to the design outline, not spec artifacts themselves
-- During formalization, the spec author reconciles all inbound notes into the outline and formal documents
+- **When one may be filed**: at the commit on `main` that adds it, the spec's `design-outline.md` exists, and its `requirements.md` does not exist at that commit's first parent (exact paths; `feedback/requirements.md` does not count). Every spec directory created after 2026-11-27 has at least a placeholder `design-outline.md` from its first commit. This filing test differs on purpose from rule 11's carrying test, which reads `design-outline.md` at the inbound's merge base: an inbound added with its spec's first outline may be filed, and cannot carry out a spec answer. An inbound added outside this window is a Low finding on the PR that adds it and on its `**Author**:` seat (or, where it names none, the PR's `Agent:` seat); its content is read as that round's feedback entry, and it carries out no spec answer (`.kiro/issues/README.md` rule 11; after requirements, a spec answer is carried out by the outline route). A later context append to an existing inbound is counted, not flagged.
+- The source may be a spec number (`inbound-from-118.md`), a seat, a date and a slug (`inbound-from-leonardo-2026-11-08-theme-scope.md`), or a named analysis (`inbound-from-wordpress-thesis.md`).
+- The file names its author on an `**Author**:` line, that exact key, with the seat's name (a role in parentheses is optional). A file added before 2026-11-27 that names its author on a `**From**:` line is read as having one. Ballot `2026-11-27-rule-11-lapse-window-b2` item 2's carrying case reads `**Author**:` only.
+- **An obligation lives in an issue record, never only in an inbound.** An obligation is an act a named seat owes by a named event. An issue record holds one: a defect, an owed act, a charter or a grant (`.kiro/issues/README.md` rules 10 and 12). A `[@SEAT]` question to the receiving spec's round is context, not an obligation: it is answered in that round.
+- An inbound that bears on a record points to it by path (`.kiro/issues/<file>`) and does not restate its items; the record stays their only home. A one-line description of what the record is about is a pointer; its items, fix shape, Class and Trigger are restatement. A ruling quoted verbatim, with its record cited, is a pointer: it binds through its record, not through the inbound. An inbound never closes or re-rules a record (rule 11).
+- **After the outline phase**, a seat's input to a requirements, design or tasks round is a stamped entry in that round's feedback doc (Spec-Feedback-Protocol), never an inbound. Input too long for the entry goes in `.kiro/specs/<spec>/evidence/round-input-<seat>-<round>-<date>.md` (`<round>` as defined in the next bullet), which names its author on an `**Author**:` line; the entry points to it by path and itself states the seat's decisions, asks and the records it names. The file binds nothing on its own.
+- Context that arrives between rounds goes in a round-input file for the next round, `evidence/round-input-<seat>-<round>-<date>.md`, where `<round>` is that round's feedback-file name (`requirements`, `design` or `tasks`), filed before the round opens. When a round opens, its Context for Reviewers lists every round-input file in the spec's `evidence/` that no earlier round's Context for Reviewers lists, pasted from `ls .kiro/specs/<spec>/evidence/round-input-*.md`.
+- Inbounds are inputs to the design outline and the requirements, not spec artifacts. The spec author reconciles every inbound before requirements and lists each record an inbound names at the requirements gate (§ "Before Formalizing: Records That Name the Spec").
 
-Precedents in the spec record: 118, 119, 122, 123, 124, and 125 all carry inbound handoff notes.
+Precedents in the spec record: 118, 119, 122 to 125, and 128 to 131 carry inbound notes. *(amended 2026-11-27 by ballot 2026-11-27-inbound-handoff-notes-definition item 1; prior text at `8553499b1`)*
 
 #### When to Check Dependencies
 

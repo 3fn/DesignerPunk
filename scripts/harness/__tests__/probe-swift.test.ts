@@ -389,9 +389,9 @@ const parsePins = (text = PINS_TEXT): IosPins => parseIosPins(text);
 describe('lane: the pins the invocations are built from', () => {
   const pins = parsePins();
 
-  it('pins ios in harness/pins.yaml: runner, deployment target 17.0, the language modes and every K-6 field', () => {
+  it('pins ios in harness/pins.yaml: runner, deployment target equal to Core Goals\' iOS minimum, the language modes and every K-6 field', () => {
     expect(pins.runner).toBe('macos-26');
-    expect(pins.deploymentTarget).toBe('17.0');
+    expect(pins.deploymentTarget).toBe(fs.readFileSync(path.join(REPO, '.kiro', 'steering', 'core-goals.md'), 'utf8').match(/^- iOS: (\d+\.\d+)\+/m)?.[1]);
     expect(pins.compile.tokens).toEqual({ module: 'DPHarnessTokens', swiftVersion: '6' });
     expect(pins.compile.probe).toEqual({ module: 'DPHarnessProbe', swiftVersion: '6' });
     expect(pins.compile.components).toEqual({ module: 'DesignerPunk', swiftVersion: '5' });
@@ -405,8 +405,17 @@ describe('lane: the pins the invocations are built from', () => {
     const doc = yaml.load(PINS_TEXT) as { ios: { statement: string; deploymentTarget: string } };
     expect(doc.ios.statement).toMatch(/harness pins, not platform minimums/);
     const coreGoals = fs.readFileSync(path.join(REPO, '.kiro', 'steering', 'core-goals.md'), 'utf8');
-    expect(coreGoals).toMatch(/iOS: 17\.0\+/);
-    expect(doc.ios.deploymentTarget).toBe('17.0');
+    expect(coreGoals).toMatch(/^- iOS: \d+\.\d+\+/m);
+    expect(doc.ios.deploymentTarget).toBe(coreGoals.match(/^- iOS: (\d+\.\d+)\+/m)?.[1]);
+  });
+
+  it('the Core Goals equality fails on a pin that differs from Core Goals\' iOS minimum (known-bad)', () => {
+    const minimum = fs.readFileSync(path.join(REPO, '.kiro', 'steering', 'core-goals.md'), 'utf8').match(/^- iOS: (\d+\.\d+)\+/m)?.[1];
+    const badText = PINS_TEXT.replace(/deploymentTarget: "[^"]*"/, 'deploymentTarget: "0.0"');
+    expect(badText).not.toBe(PINS_TEXT);
+    const bad = yaml.load(badText) as { ios: { deploymentTarget: string } };
+    expect(minimum).toBeDefined();
+    expect(() => expect(bad.ios.deploymentTarget).toBe(minimum)).toThrow();
   });
 
   it('refuses a pin section with a missing field, naming it', () => {
@@ -416,7 +425,7 @@ describe('lane: the pins the invocations are built from', () => {
   });
 
   it('the target triple is arch-apple-ios<deployment target>-simulator', () => {
-    expect(targetTriple(pins)).toBe('arm64-apple-ios17.0-simulator');
+    expect(targetTriple(pins)).toBe(`arm64-apple-ios${fs.readFileSync(path.join(REPO, '.kiro', 'steering', 'core-goals.md'), 'utf8').match(/^- iOS: (\d+\.\d+)\+/m)?.[1]}-simulator`);
   });
 });
 
@@ -429,7 +438,7 @@ describe('lane: the invocations (Task 3 criteria 1 and 4)', () => {
     expect(line).toContain(
       '-emit-module -emit-module-path /out/T/DPHarnessTokens.swiftmodule -c -wmo -parse-as-library -module-name DPHarnessTokens -swift-version 6 -diagnostic-style llvm',
     );
-    expect(line).toContain('-sdk /sdk/iPhoneSimulator.sdk -target arm64-apple-ios17.0-simulator');
+    expect(line).toContain(`-sdk /sdk/iPhoneSimulator.sdk -target arm64-apple-ios${fs.readFileSync(path.join(REPO, '.kiro', 'steering', 'core-goals.md'), 'utf8').match(/^- iOS: (\d+\.\d+)\+/m)?.[1]}-simulator`);
     expect(line.endsWith('-o /out/T/DPHarnessTokens.o /g/A.ios.swift /g/B.ios.swift')).toBe(true);
   });
 
