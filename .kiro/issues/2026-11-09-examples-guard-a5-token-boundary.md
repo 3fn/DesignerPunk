@@ -43,3 +43,9 @@ The A-5 erratum is drafted as `.kiro/docs/ballots/2026-11-27-governance-examples
 The Trigger line's "`merge:#<N>` once that PR opens", and the Disposition's "it becomes `merge:#<N>` once the fixing PR opens", are **withdrawn**. This record keeps `release:16.4.0:phase-1` until the application PR closes it in its own diff, with rule 5's outcome line and the archive move. **Reason**: Thurgood, [THURGOOD R1] on the A-5 erratum ballot, "On the two points", (i): a re-token to `merge:#<N>` is a re-rule, and after it nothing fires at S, so the 16.4.0 deadline would survive only in prose. The Trigger line itself is not edited here. A Trigger-line change before S is the very case B2's ballot has still to rule on (whether it is a re-rule), and the token does not change.
 
 *Signed: Lina, 2026-11-27.*
+
+## Correction: B2 is ratified and applied (2026-11-28, Lina, owner, rule 9)
+
+The last sentence of the section above, "A Trigger-line change before S is the very case B2's ballot has still to rule on (whether it is a re-rule)", is stale. B2 was ratified (#862, 2026-11-27) and applied (#882), and rule 11 now reads that a change to the line's prose alone, its token unchanged, is a re-rule when it carries a dated reason and authority. The conclusion stands: this record's Trigger line is not edited, so the token `release:16.4.0:phase-1` and its S deadline stay live; an edit to the line's prose would re-rule the record inside its window, and it would then not lapse at S. The Trigger is unchanged. Pointer from Stacy's [STACY R1] on the A-5 erratum ballot, item 5.
+
+*Signed: Lina, 2026-11-28.*
