@@ -4335,6 +4335,47 @@ Two items are now only in history:
 - **The web P0**: recorded as `[PETER] web P0`, above, and as a ruling line in design-outline.md § 5.1. It replaces the placeholder the brief first asked for, now that Peter has ruled. Stacy's third act, the P0 read she owed Peter, is answered by his ruling.
 - **Records**: in the next commit, under rule 10.
 
+#### [THURGOOD R22]
+
+*2026-11-28. Rule-10 records for the owed acts (`.kiro/issues/README.md` rule 10; Stacy R6: "a plan line alone is a finding").*
+
+**The shape: one record per trigger, as #888's `2026-11-27-ios-18-floor-132-owed-acts.md` does, filed by the seat that recorded the rulings, with each item naming its seat.** Those records hold the acts Peter's rulings created. Three are filed in this commit:
+
+| Record | Trigger | Holds |
+|---|---|---|
+| `.kiro/issues/2026-11-28-spec-132-sitting-2-owed-acts.md` | `path:.kiro/specs/132-native-components-in-app/requirements.md` | P-4's reason classes, re-sort and checker (Lina; Thurgood); P-16's validator (Lina) and `.tint` check (Kenya); P-13's `.fontWeight` check (Kenya), Android small-text fix (Lina), AX5 check and two usage lines (Leonardo), and the two `segment*` tokens and the Token-Family-Typography ballot (Ada); the claim text (Leonardo); two SYMPTOM passes (Stacy); the clean-room build, as Leonardo's proposal |
+| `.kiro/issues/2026-11-28-spec-133-intake-from-132-pivot.md` | `path:.kiro/specs/133-color-track/requirements.md` | the 132↔133 state-token handoff (Ada, Lina); the contract ranges in OKLCH, with Icon-Base's on white (Lina); #885 in U1 (Ada, Lina); Peter's token sitting (Ada); the blend record's correction (Ada); `InteractionStateAudit.test.ts` (Thurgood, with Ada and Stacy); enforcement last (Lina) |
+| `.kiro/issues/2026-11-28-main-releasable-as-16x-until-17-0-0.md` | `tag:v17.0.0` | P-7 item 2's standing rule, with Thurgood as its proposed owner; the priorities § 7 row; whether RELEASE-FLOW needs step text (a ballot if so) |
+
+**Ada's three and Kenya's two proposed records: their owners file them; they are not folded in.** Why:
+- they are obligations the 129 inbounds passed down, not acts created by this sitting's rulings, so rule 10's same-PR duty for the rulings does not reach them;
+- each owner drafted the text and chose a trigger for it (Ada (a) at `design.md`, Kenya's wording record at `release:16.4.0:phase-1`); a per-trigger record of mine would make me the editor of their body text under rule 9.
+
+What survives: five records where folding would give two, and each must be on this branch before the close commit, which costs a brief per owner.
+
+**Records other owners file on this branch before Kenya and Data's close commit.** Each needs `**Owner**:`, a one-token `**Trigger**:` and a `**Class**:` line (README rules 1 and 12). Paths, triggers and obligation text are proposals; the owner decides.
+
+- **Ada**
+  - (a) `.kiro/issues/2026-11-28-q12-q13-type-table-provisional-until-d4.md` — `path:.kiro/specs/132-native-components-in-app/design.md` — D4 shows Q12's fixed binding names reached and read from the adopter's module (the access-level ballot names them public), Q13 through the adopter theme, and the native type table on the primitive path; D10 proves the component-token path; a unit test covers the default-name provider clash D4 will not see (Ada R1, R14).
+  - (b) `.kiro/issues/2026-11-28-generate-native-manifest-conditions.md` — `path:.kiro/specs/132-native-components-in-app/requirements.md` — requirements carry the manifest's three conditions: `generate` writes the root `Package.swift` only when it is absent or carries our header, otherwise it stops with a message; writing outside `output` needs per-platform paths and a `COMMIT-POLICY.md` entry; the adopter's component module imports ours as `.package(name: "DesignerPunk", path: …)` on iOS. Also D10's same-name `.kt` case proving `src/cli/shared/reservedKotlinPackages.ts`.
+  - (c) `.kiro/issues/2026-11-28-deprecated-aliases-and-public-api-diff-before-claim.md` — `path:.kiro/specs/132-native-components-in-app/requirements.md` — deprecated-alias emission for the whole shared token surface (`DesignTokens`, the theme types, `ComponentTokens` itself), and D9's public-API diff, landing before 17.0.0 (Peter's "7 (a)").
+  - (d) `.kiro/issues/2026-11-28-typography-label-names-nonexistent-token.md` — proposed `release:16.4.0:phase-1` — `src/tokens/semantic/index.ts` L569 recommends `'typography.label'`, which does not exist (Ada R3).
+  - (e) `.kiro/issues/2026-11-28-chip-surface-white200-on-dark-canvas.md` — proposed `path:.kiro/specs/133-color-track/requirements.md` — the chips keep the light `white200` surface on the dark canvas; Leonardo judges whether it is intended (Stacy R5, Ada R14).
+- **Kenya**
+  - (1) `.kiro/issues/2026-11-28-ios-swift-6-language-mode-for-components.md` — `path:.kiro/specs/132-native-components-in-app/requirements.md` — the root manifest sets Swift 6 language mode for our module; D4 proves it builds and that the adopter's mode stays the adopter's (Kenya R10).
+  - (2) `.kiro/issues/2026-11-28-ios-pre-claim-minimum-wording.md` — `release:16.4.0:phase-1` — the iOS minimum shipped 16.x text states between the Core Goals ratification and the first claim; today the text says 17.0 while Core Goals says 18.0 (the 17.0 reading UNVERIFIED in the shipped files; Kenya R10).
+  - (3) The archived `.kiro/issues/archive/2026-11-27-ios-17-runtime-probe-owed.md` has no outcome line. An archived file's content is immutable (rule 2), so her choice is rule 4's move back to the root with an outcome line and then rule 5's close, or another route she names.
+- **Kenya and Data**: the real-app record, filed in the close commit itself — proposed `.kiro/issues/2026-11-28-real-app-first-build-read.md` — `manual` — when Peter's own app first builds against a release, a dated read; evidence, not a gate; Stacy reads it as a SYMPTOM-class claims audit against what D4 claims. It carries Data's and Stacy's counter: no forcing date.
+- **Data**: append item 3 to `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md` — whether raising a toolchain floor counts as a major, decided with P-9 (Data R10). The record's existing trigger stands.
+- **Lina**
+  - (1) `.kiro/issues/2026-11-28-web-state-colours-do-not-darken.md` — `release:16.4.0:phase-1` — **`**Class**: P0 false-claim · defect`**. Twelve web components are served as production-ready with "consistent state styling (default, hover, pressed)" and have not darkened on web since v12.0.0. The tests' known-bad gap: the helper tests use only hex, and the component tests never load the token CSS. Chip-Filter's selected-and-pressed state is wrong on every platform. The fix is 133 U1. **Peter's waiver**, quoted and dated: received 2026-11-28T04:54:20Z, "Agreed.", to "(a). It's honest at release time, with no back-and-forth in what we serve." The P0 is confirmed and waived until 133 U1, with the served text unchanged. If 16.4.0 ships before U1, its release notes carry one known-issue line, written by the RELEASE-FLOW walk owner at 16.4.0; U1's notes close it.
+    - **A caution for the 16.4.0 walk** (RELEASE-FLOW item 3a): every floor-class row goes to Peter in that release's batch, and a waiver counts "only if quoted and dated, from outside the diff". Whether his 2026-11-28 answer stands as 16.4.0's waiver, or he must answer again in that batch, is UNVERIFIED. The walk author decides at 16.4.0 and says which.
+  - (2) `.kiro/issues/2026-11-28-android-nav-segmentedchoice-fixed-dp-height-on-sp-text.md` — proposed `path:.kiro/specs/132-native-components-in-app/requirements.md` — `.height(segmentHeightDp)` in fixed `dp` while the text is in `sp`, so large font scales probably clip the segments today (Lina R4).
+  - (3) `.kiro/issues/2026-11-28-adopter-components-served-without-evidence-until-128.md` — proposed `path:.kiro/specs/128-react-react-native-platform-admission/requirements.md` — until 128 lands, agents see adopter components in the application MCP beside ours with no evidence of the bar (Lina).
+  - (4) The native chips' motion against their contract (`duration150` and button-press motion, where the contract names `selectionTransition`): appended to `.kiro/issues/2026-10-18-drawn-control-drift-ios-android-web.md`, which is hers, or a record of its own (Lina R13).
+  - (5) Dated pointers in the Source lines of #877's three records, which cite the placeholder's L7 and L33 (rule 9). These are edits to her own records, not new records.
+- **Sparky**: `.kiro/issues/2026-11-28-web-render-evidence-alongside-128.md` — proposed `path:.kiro/specs/128-react-react-native-platform-admission/requirements.md` — P-14's record: web's render evidence placed alongside 128, with 132 keeping the contract-validation format keyed by platform (Peter, 2026-11-28T04:40:39Z, "(b)").
+
 ---
 
 ## Requirements Feedback

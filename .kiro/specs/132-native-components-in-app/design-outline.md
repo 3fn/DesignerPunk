@@ -244,7 +244,11 @@ One list of every record this spec relies on, by path. The requirements round ru
 - `.kiro/issues/2026-11-27-button-verticallist-set-ios-literal-font-size.md` (#885) — Lina — intake: a token-compliance defect (T-12)
 - `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` — Ada — 133's record; its correction is owed (§ 5.1)
 
-Records still to be filed are in § 5.1, "Owed acts".
+- `.kiro/issues/2026-11-28-spec-132-sitting-2-owed-acts.md` — Thurgood (filer; items name their seats) — sitting 2's owed acts for 132's requirements
+- `.kiro/issues/2026-11-28-spec-133-intake-from-132-pivot.md` — Thurgood (filer; items name their seats) — what the pivot hands to 133, for 133's requirements
+- `.kiro/issues/2026-11-28-main-releasable-as-16x-until-17-0-0.md` — Thurgood — P-7 item 2's standing rule, closing at `tag:v17.0.0`
+
+Records their owners still file before the close commit are listed in `feedback/design-outline.md` § "[THURGOOD R22]".
 
 ### 4.3 Obligations from the inbounds, by the record that holds each
 
@@ -308,7 +312,7 @@ Each lands before the release that first claims native support, which is **17.0.
 
 #### Owed acts, by owner
 
-None is filed in this outline. Each is owed by the owner named, by the event named or, where none is named, before 132's requirements.
+Each is held by a record with a git-visible trigger: the three filed in this PR (§ 4.2), an existing record named beside it, or a record its owner files on this branch before the close commit (`feedback/design-outline.md` § "[THURGOOD R22]"). Where an item names no event, it is due by 132's requirements.
 
 - **Kenya**: with Data, the goal record's close and the real-app record, in the close commit on this branch (the PR body's merge preconditions), carrying her dated pointer for the "§ 3" cite; the `.tint` selection check (P-16); whether SwiftUI `.fontWeight` works with `Font.custom` (P-13); the re-rule or close of the archived iOS 17 probe record, which has no outcome line (Kenya R10); the pre-claim wording window (§ 4.3); a rule-10 record, or a pointer, for Swift 6 language mode (§ 4.3). Her T-13 walk is committed to #879's evidence (`b6c918828`, README § 4; Kenya R10).
 - **Data**: with Kenya, the goal record's close and the real-app record; T-20; appending the floor-raise rule to `.kiro/issues/2026-11-27-android-toolchain-range-and-api26-floor-test-owed.md` as its item 3 (whether raising a toolchain floor counts as a major), decided with P-9 (Data R10).
@@ -329,7 +333,7 @@ None is filed in this outline. Each is owed by the owner named, by the event nam
 - **Sparky**: P-14's record, filed under rule 10, with its trigger alongside 128.
 - **Stacy**: two SYMPTOM-class audit passes, each with a committed record, due by 132's requirements round: Spec 005's Dynamic Type completion claim, as a false-claim finding (Ada R11), and the claim side of `InteractionStateAudit.test.ts`'s false assurance (Stacy R9).
 - **Thurgood**: 132's park line and 133's `open` outcome line, each in its own commit, after the close (`[THURGOOD R20]`, "Next"); the priorities record's walk-log line for the pivot's order, its § 7 row for the 16.x rule, and the dated pointer for its stale 2026-11-05 line ("Spec 132's directory does not exist yet"); `InteractionStateAudit.test.ts`'s false assurance, as test-governance owner; P-4's checker, with Lina; T-17's 131 sizing; T-7's RELEASE-FLOW ballot.
-- **Not yet named**: the owner of the 16.x rule (P-7, item 2). **T-10's owners (Kenya, Data)**: D9's baseline.
+- **The 16.x rule's owner**: Thurgood, as RELEASE-FLOW's owner, proposed in `.kiro/issues/2026-11-28-main-releasable-as-16x-until-17-0-0.md` (P-7, item 2, named none). **T-10's owners (Kenya, Data)**: D9's baseline.
 
 ### 5.2 For the team
 
